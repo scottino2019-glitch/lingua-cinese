@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impara gli Ideogrammi Cinesi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .chinese-text {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .character-card {
+            transition: all 0.3s ease;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        
+        .stroke-animation {
+            animation: strokeDraw 2s ease-in-out;
+        }
+        
+        @keyframes strokeDraw {
+            from { stroke-dashoffset: 100; }
+            to { stroke-dashoffset: 0; }
+        }
+        
+        .flip-card {
+            perspective: 1000px;
+            height: 300px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .writing-canvas {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            cursor: crosshair;
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform-origin: 50% 50%;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .bounce-in {
+            animation: bounceIn 0.6s ease;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-yellow-100 min-h-screen font-['Inter']">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-yellow-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl chinese-text">汉</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Impara gli Ideogrammi</h1>
+                        <p class="text-sm text-gray-600">Studia i caratteri cinesi</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600">Caratteri imparati: <span id="learned-count" class="font-bold text-red-600">0</span></p>
+                        <p class="text-xs text-gray-500">Livello: <span id="user-level" class="font-bold">Principiante</span></p>
+                    </div>
+                    <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white">
+                        📚
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Main Menu -->
+        <div id="main-menu" class="mb-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Modalità di Studio</h2>
+                <p class="text-gray-600">Scegli come vuoi imparare i caratteri cinesi</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Flashcards -->
+                <div class="character-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-mode="flashcards">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <span class="text-blue-600 text-2xl">🎴</span>
+                        </div>
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Popolare</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Flashcards</h3>
+                    <p class="text-sm text-gray-600 mb-4">Studia caratteri con significato e pronuncia</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">100+ caratteri</span>
+                        <div class="text-yellow-500">⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+
+                <!-- Writing Practice -->
+                <div class="character-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-mode="writing">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <span class="text-purple-600 text-2xl">✍️</span>
+                        </div>
+                        <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Pratico</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Pratica Scrittura</h3>
+                    <p class="text-sm text-gray-600 mb-4">Impara a scrivere i tratti correttamente</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Ordine tratti</span>
+                        <div class="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+
+                <!-- Quiz -->
+                <div class="character-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-mode="quiz">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <span class="text-green-600 text-2xl">🧠</span>
+                        </div>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Sfida</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Quiz Caratteri</h3>
+                    <p class="text-sm text-gray-600 mb-4">Testa la tua conoscenza</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">20 domande</span>
+                        <div class="text-yellow-500">⭐⭐⭐</div>
+                    </div>
+                </div>
+
+                <!-- Stroke Order -->
+                <div class="character-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-mode="strokes">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                            <span class="text-red-600 text-2xl">🖌️</span>
+                        </div>
+                        <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">Tecnico</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Ordine Tratti</h3>
+                    <p class="text-sm text-gray-600 mb-4">Animazioni dell'ordine dei tratti</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Animazioni</span>
+                        <div class="text-yellow-500">⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+
+                <!-- Radicals -->
+                <div class="character-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-mode="radicals">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <span class="text-indigo-600 text-2xl">🔍</span>
+                        </div>
+                        <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Avanzato</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Radicali</h3>
+                    <p class="text-sm text-gray-600 mb-4">Studia i componenti base</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">214 radicali</span>
+                        <div class="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+
+                <!-- HSK Levels -->
+                <div class="character-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-mode="hsk">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <span class="text-orange-600 text-2xl">🎯</span>
+                        </div>
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Strutturato</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Livelli HSK</h3>
+                    <p class="text-sm text-gray-600 mb-4">Studia per livello di competenza</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">HSK 1-6</span>
+                        <div class="text-yellow-500">⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Area -->
+        <div id="study-area" class="hidden">
+            <!-- Back Button -->
+            <button id="back-btn" class="mb-6 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <span>←</span>
+                <span>Torna al Menu</span>
+            </button>
+
+            <!-- Progress Bar -->
+            <div id="progress-section" class="mb-6 hidden">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 id="mode-title" class="text-lg font-semibold text-gray-900">Modalità Studio</h3>
+                    <span id="progress-counter" class="text-sm text-gray-600">1 / 20</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progress-bar" class="bg-gradient-to-r from-red-500 to-yellow-500 h-2 rounded-full transition-all duration-500" style="width: 5%"></div>
+                </div>
+            </div>
+
+            <!-- Dynamic Content Area -->
+            <div id="content-area" class="bg-white rounded-xl shadow-sm border border-gray-100">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Character Detail Modal -->
+    <div id="character-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Dettagli Carattere</h3>
+                    <button id="close-modal" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+                </div>
+                
+                <div id="modal-content" class="space-y-6">
+                    <!-- Modal content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentMode = '';
+        let currentIndex = 0;
+        let studyData = [];
+        let learnedCharacters = new Set(JSON.parse(localStorage.getItem('learnedCharacters') || '[]'));
+        let userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+
+        // Update display
+        updateProgressDisplay();
+
+        // Character database
+        const characterDatabase = {
+            hsk1: [
+                { char: '人', pinyin: 'rén', meaning: 'persona', strokes: 2, radical: '人', examples: ['人们', '大人', '人口'] },
+                { char: '大', pinyin: 'dà', meaning: 'grande', strokes: 3, radical: '大', examples: ['大家', '大学', '大小'] },
+                { char: '小', pinyin: 'xiǎo', meaning: 'piccolo', strokes: 3, radical: '小', examples: ['小孩', '小时', '大小'] },
+                { char: '我', pinyin: 'wǒ', meaning: 'io', strokes: 7, radical: '戈', examples: ['我们', '我的', '我是'] },
+                { char: '你', pinyin: 'nǐ', meaning: 'tu', strokes: 7, radical: '亻', examples: ['你好', '你们', '你的'] },
+                { char: '他', pinyin: 'tā', meaning: 'lui', strokes: 5, radical: '亻', examples: ['他们', '他的', '他是'] },
+                { char: '好', pinyin: 'hǎo', meaning: 'buono/bene', strokes: 6, radical: '女', examples: ['你好', '很好', '好吃'] },
+                { char: '不', pinyin: 'bù', meaning: 'non', strokes: 4, radical: '一', examples: ['不是', '不好', '不对'] },
+                { char: '是', pinyin: 'shì', meaning: 'essere', strokes: 9, radical: '日', examples: ['是的', '不是', '我是'] },
+                { char: '的', pinyin: 'de', meaning: 'particella possessiva', strokes: 8, radical: '白', examples: ['我的', '你的', '他的'] },
+                { char: '一', pinyin: 'yī', meaning: 'uno', strokes: 1, radical: '一', examples: ['一个', '一天', '一点'] },
+                { char: '二', pinyin: 'èr', meaning: 'due', strokes: 2, radical: '二', examples: ['二十', '第二', '二月'] },
+                { char: '三', pinyin: 'sān', meaning: 'tre', strokes: 3, radical: '一', examples: ['三个', '三十', '三月'] },
+                { char: '四', pinyin: 'sì', meaning: 'quattro', strokes: 5, radical: '囗', examples: ['四个', '四十', '四月'] },
+                { char: '五', pinyin: 'wǔ', meaning: 'cinque', strokes: 4, radical: '二', examples: ['五个', '五十', '五月'] },
+                { char: '六', pinyin: 'liù', meaning: 'sei', strokes: 4, radical: '八', examples: ['六个', '六十', '六月'] },
+                { char: '七', pinyin: 'qī', meaning: 'sette', strokes: 2, radical: '一', examples: ['七个', '七十', '七月'] },
+                { char: '八', pinyin: 'bā', meaning: 'otto', strokes: 2, radical: '八', examples: ['八个', '八十', '八月'] },
+                { char: '九', pinyin: 'jiǔ', meaning: 'nove', strokes: 2, radical: '乙', examples: ['九个', '九十', '九月'] },
+                { char: '十', pinyin: 'shí', meaning: 'dieci', strokes: 2, radical: '十', examples: ['十个', '二十', '十月'] }
+            ],
+            hsk2: [
+                { char: '家', pinyin: 'jiā', meaning: 'casa/famiglia', strokes: 10, radical: '宀', examples: ['家里', '大家', '回家'] },
+                { char: '学', pinyin: 'xué', meaning: 'studiare', strokes: 8, radical: '子', examples: ['学习', '大学', '学生'] },
+                { char: '生', pinyin: 'shēng', meaning: 'nascere/vita', strokes: 5, radical: '生', examples: ['学生', '生活', '出生'] },
+                { char: '会', pinyin: 'huì', meaning: 'sapere/incontrare', strokes: 6, radical: '人', examples: ['会说', '开会', '学会'] },
+                { char: '说', pinyin: 'shuō', meaning: 'dire/parlare', strokes: 9, radical: '讠', examples: ['说话', '会说', '听说'] },
+                { char: '话', pinyin: 'huà', meaning: 'parola/discorso', strokes: 8, radical: '讠', examples: ['说话', '电话', '中国话'] },
+                { char: '看', pinyin: 'kàn', meaning: 'guardare', strokes: 9, radical: '目', examples: ['看书', '看见', '好看'] },
+                { char: '听', pinyin: 'tīng', meaning: 'sentire/ascoltare', strokes: 7, radical: '口', examples: ['听说', '听见', '听音乐'] },
+                { char: '吃', pinyin: 'chī', meaning: 'mangiare', strokes: 6, radical: '口', examples: ['吃饭', '好吃', '吃东西'] },
+                { char: '喝', pinyin: 'hē', meaning: 'bere', strokes: 12, radical: '口', examples: ['喝水', '喝茶', '喝酒'] },
+                { char: '水', pinyin: 'shuǐ', meaning: 'acqua', strokes: 4, radical: '水', examples: ['喝水', '开水', '水果'] },
+                { char: '茶', pinyin: 'chá', meaning: 'tè', strokes: 9, radical: '艹', examples: ['喝茶', '茶叶', '绿茶'] },
+                { char: '米', pinyin: 'mǐ', meaning: 'riso', strokes: 6, radical: '米', examples: ['大米', '米饭', '玉米'] },
+                { char: '饭', pinyin: 'fàn', meaning: 'riso cotto/pasto', strokes: 7, radical: '饣', examples: ['吃饭', '米饭', '晚饭'] },
+                { char: '菜', pinyin: 'cài', meaning: 'verdura/piatto', strokes: 11, radical: '艹', examples: ['青菜', '菜市场', '做菜'] }
+            ],
+            radicals: [
+                { char: '人', pinyin: 'rén', meaning: 'persona', position: 'sinistra', examples: ['他', '你', '们'] },
+                { char: '口', pinyin: 'kǒu', meaning: 'bocca', position: 'ovunque', examples: ['吃', '喝', '说'] },
+                { char: '手', pinyin: 'shǒu', meaning: 'mano', position: 'sinistra', examples: ['打', '拿', '找'] },
+                { char: '水', pinyin: 'shuǐ', meaning: 'acqua', position: 'sinistra', examples: ['河', '海', '湖'] },
+                { char: '火', pinyin: 'huǒ', meaning: 'fuoco', position: 'sotto', examples: ['热', '烧', '煮'] },
+                { char: '木', pinyin: 'mù', meaning: 'legno', position: 'sinistra', examples: ['树', '林', '森'] },
+                { char: '土', pinyin: 'tǔ', meaning: 'terra', position: 'sinistra', examples: ['地', '城', '坐'] },
+                { char: '金', pinyin: 'jīn', meaning: 'metallo', position: 'sinistra', examples: ['钱', '银', '铁'] },
+                { char: '女', pinyin: 'nǚ', meaning: 'donna', position: 'sinistra', examples: ['妈', '姐', '妹'] },
+                { char: '心', pinyin: 'xīn', meaning: 'cuore', position: 'sotto', examples: ['想', '思', '忙'] }
+            ]
+        };
+
+        // Event listeners
+        document.querySelectorAll('[data-mode]').forEach(card => {
+            card.addEventListener('click', () => {
+                startMode(card.dataset.mode);
+            });
+        });
+
+        document.getElementById('back-btn').addEventListener('click', goBackToMenu);
+        document.getElementById('close-modal').addEventListener('click', closeModal);
+
+        // Functions
+        function startMode(mode) {
+            currentMode = mode;
+            currentIndex = 0;
+            
+            document.getElementById('main-menu').classList.add('hidden');
+            document.getElementById('study-area').classList.remove('hidden');
+            
+            switch(mode) {
+                case 'flashcards':
+                    startFlashcards();
+                    break;
+                case 'writing':
+                    startWritingPractice();
+                    break;
+                case 'quiz':
+                    startQuiz();
+                    break;
+                case 'strokes':
+                    startStrokeOrder();
+                    break;
+                case 'radicals':
+                    startRadicals();
+                    break;
+                case 'hsk':
+                    startHSKLevels();
+                    break;
+            }
+        }
+
+        function startFlashcards() {
+            document.getElementById('mode-title').textContent = 'Flashcards - Caratteri HSK';
+            document.getElementById('progress-section').classList.remove('hidden');
+            
+            studyData = [...characterDatabase.hsk1, ...characterDatabase.hsk2];
+            showFlashcard();
+        }
+
+        function showFlashcard() {
+            const character = studyData[currentIndex];
+            updateProgress();
+            
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = `
+                <div class="p-8">
+                    <div class="flip-card mx-auto max-w-md" id="flashcard">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front bg-gradient-to-br from-red-100 to-yellow-100">
+                                <div class="text-center">
+                                    <div class="chinese-text text-8xl font-bold text-gray-800 mb-4">${character.char}</div>
+                                    <p class="text-lg text-gray-600">Clicca per vedere il significato</p>
+                                </div>
+                            </div>
+                            <div class="flip-card-back bg-gradient-to-br from-blue-100 to-purple-100">
+                                <div class="text-center space-y-3">
+                                    <div class="chinese-text text-4xl font-bold text-gray-800">${character.char}</div>
+                                    <div class="text-xl font-semibold text-blue-600">${character.pinyin}</div>
+                                    <div class="text-lg text-gray-700">${character.meaning}</div>
+                                    <div class="text-sm text-gray-600">
+                                        <p>Tratti: ${character.strokes}</p>
+                                        <p>Radicale: ${character.radical}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center space-x-4 mt-8">
+                        <button id="know-btn" class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                            ✓ Lo so
+                        </button>
+                        <button id="details-btn" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                            📖 Dettagli
+                        </button>
+                        <button id="dont-know-btn" class="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                            ✗ Non lo so
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Add event listeners
+            document.getElementById('flashcard').addEventListener('click', () => {
+                document.getElementById('flashcard').classList.toggle('flipped');
+            });
+
+            document.getElementById('know-btn').addEventListener('click', () => {
+                markAsLearned(character.char);
+                nextFlashcard();
+            });
+
+            document.getElementById('dont-know-btn').addEventListener('click', nextFlashcard);
+            
+            document.getElementById('details-btn').addEventListener('click', () => {
+                showCharacterDetails(character);
+            });
+        }
+
+        function startWritingPractice() {
+            document.getElementById('mode-title').textContent = 'Pratica Scrittura';
+            document.getElementById('progress-section').classList.remove('hidden');
+            
+            studyData = characterDatabase.hsk1.slice(0, 10);
+            showWritingPractice();
+        }
+
+        function showWritingPractice() {
+            const character = studyData[currentIndex];
+            updateProgress();
+            
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = `
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <div class="chinese-text text-6xl font-bold text-gray-800 mb-4">${character.char}</div>
+                        <div class="text-xl text-blue-600 mb-2">${character.pinyin}</div>
+                        <div class="text-lg text-gray-700">${character.meaning}</div>
+                    </div>
+                    
+                    <div class="max-w-md mx-auto">
+                        <p class="text-center text-gray-600 mb-4">Pratica scrivendo il carattere qui sotto:</p>
+                        <canvas id="writing-canvas" class="writing-canvas mx-auto" width="300" height="300"></canvas>
+                        <div class="flex justify-center space-x-4 mt-6">
+                            <button id="clear-canvas" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                                🗑️ Cancella
+                            </button>
+                            <button id="next-writing" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                                ➡️ Avanti
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            setupCanvas();
+            
+            document.getElementById('clear-canvas').addEventListener('click', clearCanvas);
+            document.getElementById('next-writing').addEventListener('click', () => {
+                markAsLearned(character.char);
+                nextWriting();
+            });
+        }
+
+        function startQuiz() {
+            document.getElementById('mode-title').textContent = 'Quiz Caratteri';
+            document.getElementById('progress-section').classList.remove('hidden');
+            
+            studyData = shuffleArray([...characterDatabase.hsk1]).slice(0, 10);
+            showQuiz();
+        }
+
+        function showQuiz() {
+            const character = studyData[currentIndex];
+            const options = generateQuizOptions(character);
+            updateProgress();
+            
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = `
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Qual è il significato di questo carattere?</h3>
+                        <div class="chinese-text text-8xl font-bold text-gray-800 mb-6">${character.char}</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
+                        ${options.map((option, index) => `
+                            <button class="quiz-option p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 transition-colors text-left" data-index="${index}">
+                                <div class="font-medium">${option.meaning}</div>
+                                <div class="text-sm text-gray-600">${option.pinyin}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.querySelectorAll('.quiz-option').forEach(btn => {
+                btn.addEventListener('click', () => checkQuizAnswer(btn, character));
+            });
+        }
+
+        function startStrokeOrder() {
+            document.getElementById('mode-title').textContent = 'Ordine dei Tratti';
+            document.getElementById('progress-section').classList.add('hidden');
+            
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = `
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Ordine dei Tratti</h3>
+                        <p class="text-gray-600">Seleziona un carattere per vedere l'animazione dell'ordine dei tratti</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 max-w-4xl mx-auto">
+                        ${characterDatabase.hsk1.slice(0, 16).map(char => `
+                            <div class="character-card bg-gray-50 rounded-lg p-4 text-center cursor-pointer hover:bg-gray-100 transition-colors" data-char='${JSON.stringify(char)}'>
+                                <div class="chinese-text text-3xl font-bold text-gray-800">${char.char}</div>
+                                <div class="text-xs text-gray-600 mt-1">${char.pinyin}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div id="stroke-demo" class="hidden mt-8 text-center">
+                        <div class="bg-gray-50 rounded-lg p-6 max-w-md mx-auto">
+                            <div id="demo-char" class="chinese-text text-6xl font-bold text-gray-800 mb-4"></div>
+                            <div id="demo-info" class="text-sm text-gray-600 mb-4"></div>
+                            <button id="animate-strokes" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                                🎬 Mostra Animazione
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.querySelectorAll('[data-char]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const char = JSON.parse(card.dataset.char);
+                    showStrokeDemo(char);
+                });
+            });
+        }
+
+        function startRadicals() {
+            document.getElementById('mode-title').textContent = 'Radicali Cinesi';
+            document.getElementById('progress-section').classList.add('hidden');
+            
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = `
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Radicali Fondamentali</h3>
+                        <p class="text-gray-600">I componenti base dei caratteri cinesi</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${characterDatabase.radicals.map(radical => `
+                            <div class="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors cursor-pointer" data-radical='${JSON.stringify(radical)}'>
+                                <div class="text-center mb-4">
+                                    <div class="chinese-text text-4xl font-bold text-gray-800">${radical.char}</div>
+                                    <div class="text-lg text-blue-600 mt-2">${radical.pinyin}</div>
+                                    <div class="text-gray-700">${radical.meaning}</div>
+                                </div>
+                                <div class="text-sm text-gray-600">
+                                    <p class="mb-2"><strong>Posizione:</strong> ${radical.position}</p>
+                                    <p><strong>Esempi:</strong> ${radical.examples.map(ex => `<span class="chinese-text">${ex}</span>`).join(', ')}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.querySelectorAll('[data-radical]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const radical = JSON.parse(card.dataset.radical);
+                    showRadicalDetails(radical);
+                });
+            });
+        }
+
+        function startHSKLevels() {
+            document.getElementById('mode-title').textContent = 'Livelli HSK';
+            document.getElementById('progress-section').classList.add('hidden');
+            
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = `
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Studia per Livello HSK</h3>
+                        <p class="text-gray-600">Scegli il tuo livello di competenza</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-6 cursor-pointer hover:bg-green-100 transition-colors" data-level="hsk1">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600 mb-2">HSK 1</div>
+                                <div class="text-sm text-gray-600 mb-4">Principiante</div>
+                                <div class="text-xs text-gray-500">150 caratteri base</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 cursor-pointer hover:bg-blue-100 transition-colors" data-level="hsk2">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600 mb-2">HSK 2</div>
+                                <div class="text-sm text-gray-600 mb-4">Elementare</div>
+                                <div class="text-xs text-gray-500">300 caratteri totali</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 cursor-pointer opacity-50">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-yellow-600 mb-2">HSK 3</div>
+                                <div class="text-sm text-gray-600 mb-4">Intermedio</div>
+                                <div class="text-xs text-gray-500">Prossimamente</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="hsk-content" class="mt-8 hidden">
+                        <!-- HSK level content will be inserted here -->
+                    </div>
+                </div>
+            `;
+
+            document.querySelectorAll('[data-level]').forEach(card => {
+                card.addEventListener('click', () => {
+                    if (!card.classList.contains('opacity-50')) {
+                        showHSKLevel(card.dataset.level);
+                    }
+                });
+            });
+        }
+
+        // Helper functions
+        function updateProgress() {
+            if (studyData.length === 0) return;
+            
+            const progress = ((currentIndex + 1) / studyData.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-counter').textContent = `${currentIndex + 1} / ${studyData.length}`;
+        }
+
+        function nextFlashcard() {
+            currentIndex++;
+            if (currentIndex >= studyData.length) {
+                showCompletionMessage();
+            } else {
+                showFlashcard();
+            }
+        }
+
+        function nextWriting() {
+            currentIndex++;
+            if (currentIndex >= studyData.length) {
+                showCompletionMessage();
+            } else {
+                showWritingPractice();
+            }
+        }
+
+        function markAsLearned(character) {
+            learnedCharacters.add(character);
+            localStorage.setItem('learnedCharacters', JSON.stringify([...learnedCharacters]));
+            updateProgressDisplay();
+        }
+
+        function updateProgressDisplay() {
+            document.getElementById('learned-count').textContent = learnedCharacters.size;
+            
+            let level = 'Principiante';
+            if (learnedCharacters.size >= 50) level = 'Intermedio';
+            if (learnedCharacters.size >= 100) level = 'Avanzato';
+            if (learnedCharacters.size >= 200) level = 'Esperto';
+            
+            document.getElementById('user-level').textContent = level;
+        }
+
+        function setupCanvas() {
+            const canvas = document.getElementById('writing-canvas');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Touch events for mobile
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#374151';
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+
+            function stopDrawing() {
+                if (isDrawing) {
+                    isDrawing = false;
+                    ctx.beginPath();
+                }
+            }
+
+            function handleTouch(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                                 e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }
+        }
+
+        function clearCanvas() {
+            const canvas = document.getElementById('writing-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function generateQuizOptions(correct) {
+            const allChars = [...characterDatabase.hsk1, ...characterDatabase.hsk2];
+            const options = [correct];
+            
+            while (options.length < 4) {
+                const randomChar = allChars[Math.floor(Math.random() * allChars.length)];
+                if (!options.find(opt => opt.char === randomChar.char)) {
+                    options.push(randomChar);
+                }
+            }
+            
+            return shuffleArray(options);
+        }
+
+        function checkQuizAnswer(btn, correct) {
+            const buttons = document.querySelectorAll('.quiz-option');
+            const selectedIndex = parseInt(btn.dataset.index);
+            
+            buttons.forEach(button => button.disabled = true);
+            
+            if (btn.textContent.includes(correct.meaning)) {
+                btn.classList.add('bg-green-100', 'border-green-400');
+                markAsLearned(correct.char);
+            } else {
+                btn.classList.add('bg-red-100', 'border-red-400');
+                // Highlight correct answer
+                buttons.forEach(button => {
+                    if (button.textContent.includes(correct.meaning)) {
+                        button.classList.add('bg-green-100', 'border-green-400');
+                    }
+                });
+            }
+            
+            setTimeout(() => {
+                currentIndex++;
+                if (currentIndex >= studyData.length) {
+                    showCompletionMessage();
+                } else {
+                    showQuiz();
+                }
+            }, 2000);
+        }
+
+        function showStrokeDemo(character) {
+            document.getElementById('stroke-demo').classList.remove('hidden');
+            document.getElementById('demo-char').textContent = character.char;
+            document.getElementById('demo-info').innerHTML = `
+                <strong>${character.pinyin}</strong> - ${character.meaning}<br>
+                Tratti: ${character.strokes} | Radicale: ${character.radical}
+            `;
+            
+            document.getElementById('animate-strokes').onclick = () => {
+                animateStrokes(character);
+            };
+        }
+
+        function animateStrokes(character) {
+            const charElement = document.getElementById('demo-char');
+            charElement.classList.add('stroke-animation');
+            
+            setTimeout(() => {
+                charElement.classList.remove('stroke-animation');
+            }, 2000);
+        }
+
+        function showCharacterDetails(character) {
+            const modal = document.getElementById('character-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modalContent.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="chinese-text text-8xl font-bold text-gray-800 mb-4">${character.char}</div>
+                    <div class="text-2xl text-blue-600 mb-2">${character.pinyin}</div>
+                    <div class="text-xl text-gray-700">${character.meaning}</div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Informazioni Base</h4>
+                            <div class="bg-gray-50 rounded-lg p-4 space-y-2 text-sm">
+                                <p><strong>Numero di tratti:</strong> ${character.strokes}</p>
+                                <p><strong>Radicale:</strong> <span class="chinese-text">${character.radical}</span></p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Esempi d'uso</h4>
+                            <div class="bg-blue-50 rounded-lg p-4 space-y-2">
+                                ${character.examples.map(example => `
+                                    <div class="flex items-center space-x-2">
+                                        <span class="chinese-text font-medium">${example}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Area di Pratica</h4>
+                        <canvas id="modal-canvas" class="writing-canvas w-full" width="250" height="250"></canvas>
+                        <button id="clear-modal-canvas" class="mt-2 w-full px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                            Cancella
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Setup modal canvas
+            setTimeout(() => {
+                setupModalCanvas();
+            }, 100);
+        }
+
+        function setupModalCanvas() {
+            const canvas = document.getElementById('modal-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#374151';
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+
+            function stopDrawing() {
+                if (isDrawing) {
+                    isDrawing = false;
+                    ctx.beginPath();
+                }
+            }
+            
+            document.getElementById('clear-modal-canvas').addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+        }
+
+        function showRadicalDetails(radical) {
+            const modal = document.getElementById('character-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modalContent.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="chinese-text text-8xl font-bold text-gray-800 mb-4">${radical.char}</div>
+                    <div class="text-2xl text-blue-600 mb-2">${radical.pinyin}</div>
+                    <div class="text-xl text-gray-700">${radical.meaning}</div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-3">Informazioni sul Radicale</h4>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <p class="text-sm"><strong>Posizione tipica:</strong> ${radical.position}</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-3">Caratteri che contengono questo radicale</h4>
+                        <div class="grid grid-cols-3 gap-4">
+                            ${radical.examples.map(example => `
+                                <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                    <div class="chinese-text text-3xl font-bold text-gray-800">${example}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function showHSKLevel(level) {
+            const data = characterDatabase[level];
+            const hskContent = document.getElementById('hsk-content');
+            
+            hskContent.innerHTML = `
+                <div class="bg-white rounded-lg p-6 border border-gray-200">
+                    <h4 class="text-xl font-bold text-gray-900 mb-4">${level.toUpperCase()} - Caratteri</h4>
+                    <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+                        ${data.map(char => `
+                            <div class="character-card bg-gray-50 rounded-lg p-3 text-center cursor-pointer hover:bg-gray-100 transition-colors ${learnedCharacters.has(char.char) ? 'bg-green-100 border-2 border-green-300' : ''}" data-char='${JSON.stringify(char)}'>
+                                <div class="chinese-text text-2xl font-bold text-gray-800">${char.char}</div>
+                                <div class="text-xs text-gray-600 mt-1">${char.pinyin}</div>
+                                ${learnedCharacters.has(char.char) ? '<div class="text-green-600 text-xs">✓</div>' : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            hskContent.classList.remove('hidden');
+            
+            hskContent.querySelectorAll('[data-char]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const char = JSON.parse(card.dataset.char);
+                    showCharacterDetails(char);
+                });
+            });
+        }
+
+        function showCompletionMessage() {
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = `
+                <div class="p-8 text-center">
+                    <div class="bounce-in">
+                        <div class="text-6xl mb-4">🎉</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Ottimo Lavoro!</h3>
+                        <p class="text-gray-600 mb-6">Hai completato questa sessione di studio</p>
+                        <div class="space-y-3">
+                            <button id="restart-btn" class="w-full max-w-xs bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition-colors">
+                                🔄 Ricomincia
+                            </button>
+                            <button id="menu-btn" class="w-full max-w-xs bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition-colors">
+                                🏠 Torna al Menu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                currentIndex = 0;
+                startMode(currentMode);
+            });
+            
+            document.getElementById('menu-btn').addEventListener('click', goBackToMenu);
+        }
+
+        function goBackToMenu() {
+            document.getElementById('study-area').classList.add('hidden');
+            document.getElementById('main-menu').classList.remove('hidden');
+            currentMode = '';
+            currentIndex = 0;
+        }
+
+        function closeModal() {
+            document.getElementById('character-modal').classList.add('hidden');
+            document.getElementById('character-modal').classList.remove('flex');
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('character-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9808ebef604fed62',t:'MTc1ODExNTQ0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/caratteri.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+</html>

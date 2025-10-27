@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione Animata - Ideogrammi Cinesi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .lesson-info {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .level-info {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .characters-section, .pinyin-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .character-card, .pinyin-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .audio-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .character-card {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .character-card:hover, .pinyin-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .character-card.selected, .pinyin-card.selected {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .character-card.correct, .pinyin-card.correct {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            animation: correctPulse 0.6s ease;
+        }
+
+        .character-card.wrong, .pinyin-card.wrong {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            animation: wrongShake 0.6s ease;
+        }
+
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback.correct {
+            color: #27ae60;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .feedback.wrong {
+            color: #e74c3c;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .character-card {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇨🇳 Lezione Animata - Ideogrammi Cinesi</h1>
+        
+        <div class="lesson-info">
+            <div class="score">Punteggio: <span id="score">0</span>/50</div>
+            <div class="level-info" id="levelInfo">Livello 1 - Saluti Base</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <p>Clicca su un ideogramma e poi sul pinyin corrispondente! 🔊 Clicca per sentire la pronuncia</p>
+        </div>
+
+        <div class="game-area">
+            <div class="characters-section">
+                <div class="section-title">📝 Ideogrammi</div>
+                <div id="charactersContainer"></div>
+            </div>
+            
+            <div class="pinyin-section">
+                <div class="section-title">🔤 Pinyin</div>
+                <div id="pinyinContainer"></div>
+            </div>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="controls">
+            <button class="btn" onclick="testAudio()">🔊 Test Audio</button>
+            <button class="btn" onclick="nextRound()">Prossima Lezione</button>
+            <button class="btn" onclick="resetGame()">Ricomincia</button>
+        </div>
+    </div>
+
+    <script>
+        const lessons = [
+            {
+                level: "Livello 1 - Saluti Base",
+                characters: ['你', '好', '我', '是', '的'],
+                pinyin: ['nǐ', 'hǎo', 'wǒ', 'shì', 'de'],
+                meanings: ['tu', 'bene/buono', 'io', 'essere', 'particella possessiva']
+            },
+            {
+                level: "Livello 2 - Elementi Base",
+                characters: ['人', '大', '小', '水', '火'],
+                pinyin: ['rén', 'dà', 'xiǎo', 'shuǐ', 'huǒ'],
+                meanings: ['persona', 'grande', 'piccolo', 'acqua', 'fuoco']
+            },
+            {
+                level: "Livello 3 - Natura",
+                characters: ['天', '地', '山', '日', '月'],
+                pinyin: ['tiān', 'dì', 'shān', 'rì', 'yuè'],
+                meanings: ['cielo', 'terra', 'montagna', 'sole', 'luna']
+            },
+            {
+                level: "Livello 4 - Famiglia",
+                characters: ['爸', '妈', '儿', '女', '家'],
+                pinyin: ['bà', 'mā', 'ér', 'nǚ', 'jiā'],
+                meanings: ['papà', 'mamma', 'figlio', 'figlia', 'casa/famiglia']
+            },
+            {
+                level: "Livello 5 - Numeri",
+                characters: ['一', '二', '三', '四', '五'],
+                pinyin: ['yī', 'èr', 'sān', 'sì', 'wǔ'],
+                meanings: ['uno', 'due', 'tre', 'quattro', 'cinque']
+            },
+            {
+                level: "Livello 6 - Colori",
+                characters: ['红', '蓝', '绿', '黄', '黑'],
+                pinyin: ['hóng', 'lán', 'lǜ', 'huáng', 'hēi'],
+                meanings: ['rosso', 'blu', 'verde', 'giallo', 'nero']
+            },
+            {
+                level: "Livello 7 - Cibo",
+                characters: ['饭', '茶', '肉', '菜', '果'],
+                pinyin: ['fàn', 'chá', 'ròu', 'cài', 'guǒ'],
+                meanings: ['riso/cibo', 'tè', 'carne', 'verdura', 'frutta']
+            },
+            {
+                level: "Livello 8 - Tempo",
+                characters: ['年', '月', '日', '时', '分'],
+                pinyin: ['nián', 'yuè', 'rì', 'shí', 'fēn'],
+                meanings: ['anno', 'mese', 'giorno', 'ora', 'minuto']
+            },
+            {
+                level: "Livello 9 - Azioni",
+                characters: ['看', '听', '说', '走', '来'],
+                pinyin: ['kàn', 'tīng', 'shuō', 'zǒu', 'lái'],
+                meanings: ['guardare', 'sentire', 'parlare', 'camminare', 'venire']
+            },
+            {
+                level: "Livello 10 - Avanzato",
+                characters: ['学', '工', '买', '卖', '钱'],
+                pinyin: ['xué', 'gōng', 'mǎi', 'mài', 'qián'],
+                meanings: ['studiare', 'lavoro', 'comprare', 'vendere', 'soldi']
+            }
+        ];
+
+        let currentLesson = 0;
+        let score = 0;
+        let selectedCharacter = null;
+        let selectedPinyin = null;
+        let correctPairs = 0;
+
+        function initGame() {
+            loadLesson(currentLesson);
+            updateScore();
+            updateProgress();
+        }
+
+        function loadLesson(lessonIndex) {
+            const lesson = lessons[lessonIndex];
+            const charactersContainer = document.getElementById('charactersContainer');
+            const pinyinContainer = document.getElementById('pinyinContainer');
+            
+            // Update level info
+            document.getElementById('levelInfo').textContent = lesson.level;
+            
+            // Shuffle arrays for variety
+            const shuffledCharacters = [...lesson.characters].sort(() => Math.random() - 0.5);
+            const shuffledPinyin = [...lesson.pinyin].sort(() => Math.random() - 0.5);
+            
+            charactersContainer.innerHTML = '';
+            pinyinContainer.innerHTML = '';
+            
+            shuffledCharacters.forEach((char, index) => {
+                const card = document.createElement('div');
+                card.className = 'character-card';
+                card.dataset.character = char;
+                card.onclick = () => selectCharacter(card);
+                
+                const charText = document.createElement('span');
+                charText.textContent = char;
+                charText.style.fontSize = '2rem';
+                charText.style.fontWeight = 'bold';
+                
+                const audioBtn = document.createElement('button');
+                audioBtn.className = 'audio-btn';
+                audioBtn.innerHTML = '🔊';
+                audioBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    const charIndex = lesson.characters.indexOf(char);
+                    playAudio(lesson.pinyin[charIndex]);
+                };
+                
+                card.appendChild(charText);
+                card.appendChild(audioBtn);
+                charactersContainer.appendChild(card);
+            });
+            
+            shuffledPinyin.forEach((pin, index) => {
+                const card = document.createElement('div');
+                card.className = 'pinyin-card';
+                card.dataset.pinyin = pin;
+                card.onclick = () => selectPinyin(card);
+                
+                const pinyinText = document.createElement('span');
+                pinyinText.textContent = pin;
+                
+                const audioBtn = document.createElement('button');
+                audioBtn.className = 'audio-btn';
+                audioBtn.innerHTML = '🔊';
+                audioBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    playAudio(pin);
+                };
+                
+                card.appendChild(pinyinText);
+                card.appendChild(audioBtn);
+                pinyinContainer.appendChild(card);
+            });
+            
+            correctPairs = 0;
+            clearFeedback();
+        }
+
+        function playAudio(pinyin) {
+            // Stop any current speech
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                
+                // Wait for voices to load
+                const speakWithVoice = () => {
+                    const voices = speechSynthesis.getVoices();
+                    const utterance = new SpeechSynthesisUtterance(pinyin);
+                    
+                    // Try to find Chinese voice
+                    const chineseVoice = voices.find(voice => 
+                        voice.lang.includes('zh') || 
+                        voice.lang.includes('cmn') ||
+                        voice.name.toLowerCase().includes('chinese') ||
+                        voice.name.toLowerCase().includes('mandarin')
+                    );
+                    
+                    if (chineseVoice) {
+                        utterance.voice = chineseVoice;
+                        utterance.lang = chineseVoice.lang;
+                    } else {
+                        utterance.lang = 'zh-CN';
+                    }
+                    
+                    utterance.rate = 0.7;
+                    utterance.pitch = 1;
+                    utterance.volume = 1;
+                    
+                    // Add error handling
+                    utterance.onerror = (event) => {
+                        console.log('Speech error:', event.error);
+                        showFeedback(`Pronuncia: ${pinyin}`, 'correct');
+                    };
+                    
+                    utterance.onstart = () => {
+                        console.log('Playing:', pinyin);
+                    };
+                    
+                    speechSynthesis.speak(utterance);
+                };
+                
+                // Check if voices are loaded
+                if (speechSynthesis.getVoices().length > 0) {
+                    speakWithVoice();
+                } else {
+                    // Wait for voices to load
+                    speechSynthesis.onvoiceschanged = () => {
+                        speakWithVoice();
+                        speechSynthesis.onvoiceschanged = null;
+                    };
+                }
+            } else {
+                // Fallback: show pronunciation guide
+                showFeedback(`Pronuncia: ${pinyin}`, 'correct');
+            }
+        }
+
+        function selectCharacter(card) {
+            // Remove previous selection
+            document.querySelectorAll('.character-card').forEach(c => c.classList.remove('selected'));
+            
+            selectedCharacter = card;
+            card.classList.add('selected');
+            
+            if (selectedPinyin) {
+                checkMatch();
+            }
+        }
+
+        function selectPinyin(card) {
+            // Remove previous selection
+            document.querySelectorAll('.pinyin-card').forEach(c => c.classList.remove('selected'));
+            
+            selectedPinyin = card;
+            card.classList.add('selected');
+            
+            if (selectedCharacter) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const lesson = lessons[currentLesson];
+            const charIndex = lesson.characters.indexOf(selectedCharacter.dataset.character);
+            const pinyinIndex = lesson.pinyin.indexOf(selectedPinyin.dataset.pinyin);
+            
+            if (charIndex === pinyinIndex && charIndex !== -1) {
+                // Correct match
+                selectedCharacter.classList.add('correct');
+                selectedPinyin.classList.add('correct');
+                
+                // Play pronunciation on correct match
+                playAudio(selectedPinyin.dataset.pinyin);
+                
+                showFeedback('正确! Corretto! 🎉', 'correct');
+                score++;
+                correctPairs++;
+                
+                setTimeout(() => {
+                    selectedCharacter.style.opacity = '0.5';
+                    selectedPinyin.style.opacity = '0.5';
+                    selectedCharacter.onclick = null;
+                    selectedPinyin.onclick = null;
+                }, 1000);
+                
+                if (correctPairs === lesson.characters.length) {
+                    setTimeout(() => {
+                        showFeedback('Lezione completata! 完成了! 🏆', 'correct');
+                    }, 1500);
+                }
+            } else {
+                // Wrong match
+                selectedCharacter.classList.add('wrong');
+                selectedPinyin.classList.add('wrong');
+                
+                showFeedback('Riprova! 再试一次! 🤔', 'wrong');
+                
+                setTimeout(() => {
+                    selectedCharacter.classList.remove('wrong', 'selected');
+                    selectedPinyin.classList.remove('wrong', 'selected');
+                }, 1000);
+            }
+            
+            selectedCharacter = null;
+            selectedPinyin = null;
+            updateScore();
+            updateProgress();
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback ${type}`;
+            
+            setTimeout(() => {
+                feedback.textContent = '';
+                feedback.className = 'feedback';
+            }, 2000);
+        }
+
+        function clearFeedback() {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = '';
+            feedback.className = 'feedback';
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+
+        function updateProgress() {
+            const totalLessons = lessons.length * 5; // 5 characters per lesson
+            const progress = (score / totalLessons) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function nextRound() {
+            if (currentLesson < lessons.length - 1) {
+                currentLesson++;
+                loadLesson(currentLesson);
+            } else {
+                showFeedback('Tutte le lezioni completate! 所有课程完成! 🎊', 'correct');
+            }
+        }
+
+        function resetGame() {
+            currentLesson = 0;
+            score = 0;
+            selectedCharacter = null;
+            selectedPinyin = null;
+            correctPairs = 0;
+            initGame();
+        }
+
+        function testAudio() {
+            // Test audio with a simple Chinese word
+            playAudio('nǐ hǎo');
+            
+            // Show available voices for debugging
+            if ('speechSynthesis' in window) {
+                const voices = speechSynthesis.getVoices();
+                console.log('Available voices:', voices.map(v => `${v.name} (${v.lang})`));
+                
+                const chineseVoices = voices.filter(voice => 
+                    voice.lang.includes('zh') || 
+                    voice.lang.includes('cmn') ||
+                    voice.name.toLowerCase().includes('chinese') ||
+                    voice.name.toLowerCase().includes('mandarin')
+                );
+                
+                if (chineseVoices.length > 0) {
+                    showFeedback(`Voce cinese trovata: ${chineseVoices[0].name}`, 'correct');
+                } else {
+                    showFeedback('Nessuna voce cinese disponibile - usando voce predefinita', 'wrong');
+                }
+            } else {
+                showFeedback('Audio non supportato dal browser', 'wrong');
+            }
+        }
+
+        // Initialize the game
+        initGame();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9634725a65208bf9',t:'MTc1MzIwMzEyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/caratteri.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+</html>

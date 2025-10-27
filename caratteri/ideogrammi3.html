@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中文学习 - Impara il Cinese</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%);
+            position: relative;
+        }
+        
+        .chinese-text {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 500;
+        }
+        
+        .chinese-large {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: 3rem;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 50%, #F59E0B 100%);
+            border: 2px solid #D97706;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .exercise-card {
+            background: linear-gradient(135deg, #FECACA 0%, #FCA5A5 50%, #EF4444 100%);
+            border: 2px solid #DC2626;
+            transition: all 0.3s ease;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #10B981 0%, #059669 100%);
+        }
+        
+        .chinese-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255,69,0,0.1) 0%, transparent 50%);
+        }
+        
+        .modal-backdrop {
+            backdrop-filter: blur(10px);
+        }
+        
+        .answer-correct {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            animation: correctPulse 0.6s ease-in-out;
+        }
+        
+        .answer-wrong {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            animation: wrongShake 0.6s ease-in-out;
+        }
+        
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .character-stroke {
+            stroke: #DC2626;
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        .tone-1 { color: #EF4444; } /* Primo tono - rosso */
+        .tone-2 { color: #F59E0B; } /* Secondo tono - arancione */
+        .tone-3 { color: #10B981; } /* Terzo tono - verde */
+        .tone-4 { color: #3B82F6; } /* Quarto tono - blu */
+        .tone-0 { color: #6B7280; } /* Tono neutro - grigio */
+    </style>
+</head>
+<body class="min-h-screen chinese-pattern">
+    <!-- Header -->
+    <header class="card-gradient shadow-lg mb-6">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                        <span class="text-white text-2xl chinese-text">中</span>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-red-800">中文学习</h1>
+                        <p class="text-red-600 text-sm font-medium">Impara il Cinese Mandarino</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <p class="text-sm text-red-700 font-medium">Livello HSK</p>
+                        <p class="text-2xl font-bold text-red-800" id="currentLevel">1</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-red-700 font-medium">Punti</p>
+                        <p class="text-2xl font-bold text-red-800" id="totalPoints">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Overview -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div class="card-gradient rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-red-800 mb-4">📊 I Tuoi Progressi</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <span class="text-white text-xl">📝</span>
+                    </div>
+                    <p class="text-sm text-red-700 font-medium">Caratteri Imparati</p>
+                    <p class="text-2xl font-bold text-red-800" id="learnedCharacters">0</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <span class="text-white text-xl">🎯</span>
+                    </div>
+                    <p class="text-sm text-red-700 font-medium">Esercizi Completati</p>
+                    <p class="text-2xl font-bold text-red-800" id="completedExercises">0</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <span class="text-white text-xl">⚡</span>
+                    </div>
+                    <p class="text-sm text-red-700 font-medium">Streak Giorni</p>
+                    <p class="text-2xl font-bold text-red-800" id="streakDays">0</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <span class="text-white text-xl">🏆</span>
+                    </div>
+                    <p class="text-sm text-red-700 font-medium">Precisione</p>
+                    <p class="text-2xl font-bold text-red-800" id="accuracy">0%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Categories -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <h2 class="text-2xl font-bold text-white mb-6 text-center">🎯 Scegli il Tipo di Esercizio</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Character Recognition -->
+            <div class="exercise-card rounded-xl shadow-lg p-6 cursor-pointer" onclick="startExercise('characters')">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="chinese-large text-white">字</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Riconoscimento Caratteri</h3>
+                    <p class="text-red-100 text-sm mb-4">Impara a riconoscere e leggere i caratteri cinesi</p>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-2">
+                        <p class="text-white text-xs font-medium">Livello: HSK 1-6 • 150+ caratteri</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pinyin Practice -->
+            <div class="exercise-card rounded-xl shadow-lg p-6 cursor-pointer" onclick="startExercise('pinyin')">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl text-white font-bold">拼</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Pratica Pinyin</h3>
+                    <p class="text-red-100 text-sm mb-4">Esercitati con la pronuncia e i toni</p>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-2">
+                        <p class="text-white text-xs font-medium">4 Toni • Pronuncia • Audio</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stroke Order -->
+            <div class="exercise-card rounded-xl shadow-lg p-6 cursor-pointer" onclick="startExercise('strokes')">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl text-white">✍️</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Ordine dei Tratti</h3>
+                    <p class="text-red-100 text-sm mb-4">Impara a scrivere i caratteri correttamente</p>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-2">
+                        <p class="text-white text-xs font-medium">Scrittura • Tratti • Pratica</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grammar -->
+            <div class="exercise-card rounded-xl shadow-lg p-6 cursor-pointer" onclick="startExercise('grammar')">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl text-white">📚</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Grammatica</h3>
+                    <p class="text-red-100 text-sm mb-4">Strutture grammaticali e costruzione frasi</p>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-2">
+                        <p class="text-white text-xs font-medium">Frasi • Particelle • Strutture</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vocabulary -->
+            <div class="exercise-card rounded-xl shadow-lg p-6 cursor-pointer" onclick="startExercise('vocabulary')">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl text-white">💭</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Vocabolario</h3>
+                    <p class="text-red-100 text-sm mb-4">Espandi il tuo vocabolario cinese</p>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-2">
+                        <p class="text-white text-xs font-medium">500+ parole • Categorie • HSK</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Listening -->
+            <div class="exercise-card rounded-xl shadow-lg p-6 cursor-pointer" onclick="startExercise('listening')">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl text-white">👂</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Ascolto</h3>
+                    <p class="text-red-100 text-sm mb-4">Migliora la comprensione orale</p>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-2">
+                        <p class="text-white text-xs font-medium">Audio • Dialoghi • Comprensione</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Modal -->
+    <div id="exerciseModal" class="fixed inset-0 bg-black bg-opacity-70 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="card-gradient rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 id="exerciseTitle" class="text-2xl font-bold text-red-800">Esercizio</h2>
+                        <p class="text-red-600 text-sm" id="exerciseProgress">Domanda 1 di 10</p>
+                    </div>
+                    <button onclick="closeExercise()" class="text-red-600 hover:text-red-800 text-3xl font-bold">&times;</button>
+                </div>
+                
+                <div id="exerciseContent" class="mb-6">
+                    <!-- Exercise content will be inserted here -->
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="text-sm text-red-700">
+                            <span class="font-medium">Punti: </span>
+                            <span id="currentPoints" class="font-bold">0</span>
+                        </div>
+                        <div class="text-sm text-red-700">
+                            <span class="font-medium">Corrette: </span>
+                            <span id="correctAnswers" class="font-bold">0</span>/<span id="totalQuestions" class="font-bold">0</span>
+                        </div>
+                    </div>
+                    <button id="nextButton" onclick="nextQuestion()" class="bg-red-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-red-700 transition-all" style="display: none;">
+                        Prossima →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div id="resultsModal" class="fixed inset-0 bg-black bg-opacity-70 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="card-gradient rounded-xl shadow-2xl max-w-md w-full">
+            <div class="p-6 text-center">
+                <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white text-3xl" id="resultIcon">🎉</span>
+                </div>
+                <h2 class="text-2xl font-bold text-red-800 mb-2" id="resultTitle">Ottimo Lavoro!</h2>
+                <p class="text-red-600 mb-4" id="resultMessage">Hai completato l'esercizio!</p>
+                
+                <div class="bg-white bg-opacity-50 rounded-lg p-4 mb-6">
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div>
+                            <p class="text-2xl font-bold text-red-800" id="finalScore">0</p>
+                            <p class="text-sm text-red-600">Punti Guadagnati</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-red-800" id="finalAccuracy">0%</p>
+                            <p class="text-sm text-red-600">Precisione</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3">
+                    <button onclick="closeResults()" class="flex-1 bg-gray-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-600">
+                        Chiudi
+                    </button>
+                    <button onclick="restartExercise()" class="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700">
+                        Ripeti
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // App State
+        let currentExercise = null;
+        let currentQuestion = 0;
+        let totalQuestions = 10;
+        let correctAnswers = 0;
+        let currentPoints = 0;
+        let userStats = JSON.parse(localStorage.getItem('chineseAppStats')) || {
+            totalPoints: 0,
+            learnedCharacters: 0,
+            completedExercises: 0,
+            streakDays: 0,
+            accuracy: 0,
+            currentLevel: 1,
+            lastStudyDate: null
+        };
+
+        // Exercise Data
+        const exerciseData = {
+            characters: [
+                { character: '你', pinyin: 'nǐ', meaning: 'tu', tone: 3 },
+                { character: '好', pinyin: 'hǎo', meaning: 'bene/buono', tone: 3 },
+                { character: '我', pinyin: 'wǒ', meaning: 'io', tone: 3 },
+                { character: '是', pinyin: 'shì', meaning: 'essere', tone: 4 },
+                { character: '的', pinyin: 'de', meaning: 'particella possessiva', tone: 0 },
+                { character: '不', pinyin: 'bù', meaning: 'non', tone: 4 },
+                { character: '在', pinyin: 'zài', meaning: 'essere in/a', tone: 4 },
+                { character: '有', pinyin: 'yǒu', meaning: 'avere', tone: 3 },
+                { character: '人', pinyin: 'rén', meaning: 'persona', tone: 2 },
+                { character: '这', pinyin: 'zhè', meaning: 'questo', tone: 4 },
+                { character: '中', pinyin: 'zhōng', meaning: 'centro/Cina', tone: 1 },
+                { character: '大', pinyin: 'dà', meaning: 'grande', tone: 4 },
+                { character: '为', pinyin: 'wéi', meaning: 'per/fare', tone: 2 },
+                { character: '上', pinyin: 'shàng', meaning: 'sopra/su', tone: 4 },
+                { character: '个', pinyin: 'gè', meaning: 'classificatore', tone: 4 },
+                { character: '国', pinyin: 'guó', meaning: 'paese', tone: 2 },
+                { character: '时', pinyin: 'shí', meaning: 'tempo', tone: 2 },
+                { character: '要', pinyin: 'yào', meaning: 'volere', tone: 4 },
+                { character: '就', pinyin: 'jiù', meaning: 'allora/proprio', tone: 4 },
+                { character: '出', pinyin: 'chū', meaning: 'uscire', tone: 1 }
+            ],
+            vocabulary: [
+                { chinese: '你好', pinyin: 'nǐ hǎo', meaning: 'ciao', category: 'saluti' },
+                { chinese: '谢谢', pinyin: 'xiè xiè', meaning: 'grazie', category: 'cortesia' },
+                { chinese: '再见', pinyin: 'zài jiàn', meaning: 'arrivederci', category: 'saluti' },
+                { chinese: '对不起', pinyin: 'duì bù qǐ', meaning: 'scusa', category: 'cortesia' },
+                { chinese: '请问', pinyin: 'qǐng wèn', meaning: 'scusi (per chiedere)', category: 'cortesia' },
+                { chinese: '多少钱', pinyin: 'duō shǎo qián', meaning: 'quanto costa', category: 'shopping' },
+                { chinese: '我爱你', pinyin: 'wǒ ài nǐ', meaning: 'ti amo', category: 'emozioni' },
+                { chinese: '中国', pinyin: 'zhōng guó', meaning: 'Cina', category: 'paesi' },
+                { chinese: '学生', pinyin: 'xué shēng', meaning: 'studente', category: 'professioni' },
+                { chinese: '老师', pinyin: 'lǎo shī', meaning: 'insegnante', category: 'professioni' }
+            ],
+            grammar: [
+                {
+                    pattern: '主语 + 是 + 宾语',
+                    example: '我是学生',
+                    pinyin: 'wǒ shì xué shēng',
+                    meaning: 'Io sono uno studente',
+                    explanation: 'Struttura base: Soggetto + 是 (essere) + Oggetto'
+                },
+                {
+                    pattern: '主语 + 有 + 宾语',
+                    example: '我有一本书',
+                    pinyin: 'wǒ yǒu yī běn shū',
+                    meaning: 'Io ho un libro',
+                    explanation: 'Per esprimere possesso: Soggetto + 有 (avere) + Oggetto'
+                },
+                {
+                    pattern: '主语 + 在 + 地点',
+                    example: '我在家',
+                    pinyin: 'wǒ zài jiā',
+                    meaning: 'Io sono a casa',
+                    explanation: 'Per indicare posizione: Soggetto + 在 (essere in) + Luogo'
+                }
+            ]
+        };
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            checkStreak();
+        });
+
+        function updateStats() {
+            document.getElementById('totalPoints').textContent = userStats.totalPoints;
+            document.getElementById('learnedCharacters').textContent = userStats.learnedCharacters;
+            document.getElementById('completedExercises').textContent = userStats.completedExercises;
+            document.getElementById('streakDays').textContent = userStats.streakDays;
+            document.getElementById('accuracy').textContent = userStats.accuracy + '%';
+            document.getElementById('currentLevel').textContent = userStats.currentLevel;
+        }
+
+        function checkStreak() {
+            const today = new Date().toDateString();
+            const lastStudy = userStats.lastStudyDate;
+            
+            if (lastStudy !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (lastStudy === yesterday.toDateString()) {
+                    // Continue streak
+                } else if (lastStudy !== null) {
+                    // Reset streak
+                    userStats.streakDays = 0;
+                }
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('chineseAppStats', JSON.stringify(userStats));
+            updateStats();
+        }
+
+        function startExercise(type) {
+            currentExercise = type;
+            currentQuestion = 0;
+            correctAnswers = 0;
+            currentPoints = 0;
+            
+            document.getElementById('exerciseModal').classList.remove('hidden');
+            document.getElementById('exerciseTitle').textContent = getExerciseTitle(type);
+            document.getElementById('currentPoints').textContent = '0';
+            document.getElementById('correctAnswers').textContent = '0';
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            
+            generateQuestion();
+        }
+
+        function getExerciseTitle(type) {
+            const titles = {
+                characters: '🔤 Riconoscimento Caratteri',
+                pinyin: '🗣️ Pratica Pinyin',
+                strokes: '✍️ Ordine dei Tratti',
+                grammar: '📚 Grammatica',
+                vocabulary: '💭 Vocabolario',
+                listening: '👂 Ascolto'
+            };
+            return titles[type] || 'Esercizio';
+        }
+
+        function generateQuestion() {
+            document.getElementById('exerciseProgress').textContent = `Domanda ${currentQuestion + 1} di ${totalQuestions}`;
+            
+            const content = document.getElementById('exerciseContent');
+            
+            switch(currentExercise) {
+                case 'characters':
+                    generateCharacterQuestion(content);
+                    break;
+                case 'pinyin':
+                    generatePinyinQuestion(content);
+                    break;
+                case 'vocabulary':
+                    generateVocabularyQuestion(content);
+                    break;
+                case 'grammar':
+                    generateGrammarQuestion(content);
+                    break;
+                case 'strokes':
+                    generateStrokeQuestion(content);
+                    break;
+                case 'listening':
+                    generateListeningQuestion(content);
+                    break;
+            }
+        }
+
+        function generateCharacterQuestion(content) {
+            const chars = exerciseData.characters;
+            const correctChar = chars[Math.floor(Math.random() * chars.length)];
+            const wrongChars = chars.filter(c => c !== correctChar).slice(0, 3);
+            const options = [correctChar, ...wrongChars].sort(() => Math.random() - 0.5);
+            
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="chinese-large text-red-800 mb-4">${correctChar.character}</div>
+                    <p class="text-lg text-red-700 font-medium">Qual è il significato di questo carattere?</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    ${options.map((option, index) => `
+                        <button onclick="checkAnswer('${option.meaning}', '${correctChar.meaning}', this)" 
+                                class="bg-white bg-opacity-70 hover:bg-opacity-90 text-red-800 p-4 rounded-lg font-medium transition-all border-2 border-red-200 hover:border-red-400">
+                            ${option.meaning}
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-red-600">Pinyin: <span class="chinese-text tone-${correctChar.tone}">${correctChar.pinyin}</span></p>
+                </div>
+            `;
+        }
+
+        function generatePinyinQuestion(content) {
+            const chars = exerciseData.characters;
+            const correctChar = chars[Math.floor(Math.random() * chars.length)];
+            const wrongChars = chars.filter(c => c !== correctChar).slice(0, 3);
+            const options = [correctChar, ...wrongChars].sort(() => Math.random() - 0.5);
+            
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="chinese-large text-red-800 mb-4">${correctChar.character}</div>
+                    <p class="text-lg text-red-700 font-medium">Qual è la pronuncia corretta (pinyin)?</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    ${options.map((option, index) => `
+                        <button onclick="checkAnswer('${option.pinyin}', '${correctChar.pinyin}', this)" 
+                                class="bg-white bg-opacity-70 hover:bg-opacity-90 text-red-800 p-4 rounded-lg font-medium transition-all border-2 border-red-200 hover:border-red-400">
+                            <span class="chinese-text tone-${option.tone}">${option.pinyin}</span>
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-red-600">Significato: ${correctChar.meaning}</p>
+                </div>
+            `;
+        }
+
+        function generateVocabularyQuestion(content) {
+            const vocab = exerciseData.vocabulary;
+            const correctWord = vocab[Math.floor(Math.random() * vocab.length)];
+            const wrongWords = vocab.filter(w => w !== correctWord).slice(0, 3);
+            const options = [correctWord, ...wrongWords].sort(() => Math.random() - 0.5);
+            
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="chinese-large text-red-800 mb-4">${correctWord.chinese}</div>
+                    <p class="text-lg text-red-700 font-medium">Cosa significa questa parola?</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    ${options.map((option, index) => `
+                        <button onclick="checkAnswer('${option.meaning}', '${correctWord.meaning}', this)" 
+                                class="bg-white bg-opacity-70 hover:bg-opacity-90 text-red-800 p-4 rounded-lg font-medium transition-all border-2 border-red-200 hover:border-red-400">
+                            ${option.meaning}
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-red-600">Pinyin: <span class="chinese-text">${correctWord.pinyin}</span></p>
+                    <p class="text-xs text-red-500 mt-1">Categoria: ${correctWord.category}</p>
+                </div>
+            `;
+        }
+
+        function generateGrammarQuestion(content) {
+            const grammar = exerciseData.grammar;
+            const correctPattern = grammar[Math.floor(Math.random() * grammar.length)];
+            
+            content.innerHTML = `
+                <div class="mb-6">
+                    <div class="bg-white bg-opacity-50 rounded-lg p-4 mb-4">
+                        <h4 class="font-bold text-red-800 mb-2">Struttura Grammaticale:</h4>
+                        <p class="text-red-700 font-medium">${correctPattern.pattern}</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="chinese-large text-red-800 mb-2">${correctPattern.example}</div>
+                        <p class="text-lg text-red-700 mb-2 chinese-text">${correctPattern.pinyin}</p>
+                        <p class="text-red-600 font-medium">${correctPattern.meaning}</p>
+                    </div>
+                </div>
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded">
+                    <p class="text-yellow-800 text-sm">
+                        <strong>Spiegazione:</strong> ${correctPattern.explanation}
+                    </p>
+                </div>
+                <div class="mt-6 text-center">
+                    <button onclick="markGrammarComplete()" 
+                            class="bg-red-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-red-700 transition-all">
+                        Ho Capito! ✓
+                    </button>
+                </div>
+            `;
+        }
+
+        function generateStrokeQuestion(content) {
+            const chars = exerciseData.characters.slice(0, 10); // Caratteri più semplici per i tratti
+            const correctChar = chars[Math.floor(Math.random() * chars.length)];
+            
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    <h4 class="text-lg text-red-700 font-medium mb-4">Pratica la scrittura di questo carattere:</h4>
+                    <div class="chinese-large text-red-800 mb-4">${correctChar.character}</div>
+                    <p class="text-red-600 mb-2">Pinyin: <span class="chinese-text tone-${correctChar.tone}">${correctChar.pinyin}</span></p>
+                    <p class="text-red-600">Significato: ${correctChar.meaning}</p>
+                </div>
+                
+                <div class="bg-white bg-opacity-50 rounded-lg p-6 mb-6">
+                    <div class="mb-4">
+                        <h5 class="text-red-700 font-medium mb-2">📝 Area di Scrittura:</h5>
+                        <canvas id="writingCanvas" 
+                                width="400" 
+                                height="200" 
+                                class="border-2 border-red-300 bg-white rounded-lg cursor-crosshair mx-auto block"
+                                style="touch-action: none;">
+                        </canvas>
+                    </div>
+                    
+                    <div class="flex justify-center gap-4 mb-4">
+                        <button onclick="clearCanvas()" 
+                                class="bg-gray-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-600 transition-all">
+                            🗑️ Cancella
+                        </button>
+                        <button onclick="showStrokeOrder('${correctChar.character}')" 
+                                class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-all">
+                            👁️ Mostra Ordine
+                        </button>
+                    </div>
+                    
+                    <div id="strokeOrder" class="hidden bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                        <h6 class="text-blue-800 font-medium mb-2">Ordine dei tratti per "${correctChar.character}":</h6>
+                        <div class="grid grid-cols-4 gap-2">
+                            ${getStrokeOrder(correctChar.character).map((stroke, i) => `
+                                <div class="text-center">
+                                    <div class="w-12 h-12 border border-blue-300 bg-white rounded flex items-center justify-center mb-1">
+                                        <span class="chinese-text text-blue-600 text-lg">${stroke}</span>
+                                    </div>
+                                    <span class="text-xs text-blue-600">${i + 1}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-2 mb-4">
+                        ${Array(8).fill(0).map((_, i) => `
+                            <div class="aspect-square border-2 border-red-300 bg-white bg-opacity-70 rounded flex items-center justify-center">
+                                <span class="chinese-text text-red-400 text-2xl">${i < 2 ? correctChar.character : ''}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <p class="text-sm text-red-600 text-center">Usa l'area di scrittura sopra per praticare, poi copia nelle caselle</p>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="markStrokeComplete()" 
+                            class="bg-red-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-red-700 transition-all">
+                        Completato! ✓
+                    </button>
+                </div>
+            `;
+            
+            // Initialize canvas after content is loaded
+            setTimeout(() => {
+                initializeCanvas();
+            }, 100);
+        }
+
+        function generateListeningQuestion(content) {
+            const vocab = exerciseData.vocabulary;
+            const correctWord = vocab[Math.floor(Math.random() * vocab.length)];
+            const wrongWords = vocab.filter(w => w !== correctWord).slice(0, 3);
+            const options = [correctWord, ...wrongWords].sort(() => Math.random() - 0.5);
+            
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-3xl">🔊</span>
+                    </div>
+                    <p class="text-lg text-red-700 font-medium mb-4">Ascolta e scegli la traduzione corretta:</p>
+                    <button onclick="playAudio('${correctWord.pinyin}')" 
+                            class="bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-all mb-4">
+                        🔊 Riproduci Audio
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    ${options.map((option, index) => `
+                        <button onclick="checkAnswer('${option.meaning}', '${correctWord.meaning}', this)" 
+                                class="bg-white bg-opacity-70 hover:bg-opacity-90 text-red-800 p-4 rounded-lg font-medium transition-all border-2 border-red-200 hover:border-red-400">
+                            ${option.meaning}
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-red-600">Caratteri: <span class="chinese-text">${correctWord.chinese}</span></p>
+                </div>
+            `;
+        }
+
+        function playAudio(pinyin) {
+            // Simulazione audio - in una vera app useresti Web Speech API o file audio
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(pinyin);
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.7;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert(`Pronuncia: ${pinyin}`);
+            }
+        }
+
+        function checkAnswer(userAnswer, correctAnswer, button) {
+            const isCorrect = userAnswer === correctAnswer;
+            
+            // Disable all buttons
+            const buttons = button.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (isCorrect) {
+                button.className = button.className.replace('bg-white bg-opacity-70', 'answer-correct');
+                button.innerHTML += ' ✓';
+                correctAnswers++;
+                currentPoints += 10;
+                
+                // Update learned characters
+                if (currentExercise === 'characters' || currentExercise === 'pinyin') {
+                    userStats.learnedCharacters = Math.max(userStats.learnedCharacters, correctAnswers);
+                }
+            } else {
+                button.className = button.className.replace('bg-white bg-opacity-70', 'answer-wrong');
+                button.innerHTML += ' ✗';
+                
+                // Highlight correct answer
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes(correctAnswer)) {
+                        btn.className = btn.className.replace('bg-white bg-opacity-70', 'answer-correct');
+                        btn.innerHTML += ' ✓';
+                    }
+                });
+            }
+            
+            document.getElementById('currentPoints').textContent = currentPoints;
+            document.getElementById('correctAnswers').textContent = correctAnswers;
+            
+            // Show next button
+            document.getElementById('nextButton').style.display = 'block';
+        }
+
+        function markGrammarComplete() {
+            correctAnswers++;
+            currentPoints += 15;
+            document.getElementById('currentPoints').textContent = currentPoints;
+            document.getElementById('correctAnswers').textContent = correctAnswers;
+            document.getElementById('nextButton').style.display = 'block';
+        }
+
+        function markStrokeComplete() {
+            correctAnswers++;
+            currentPoints += 20;
+            document.getElementById('currentPoints').textContent = currentPoints;
+            document.getElementById('correctAnswers').textContent = correctAnswers;
+            document.getElementById('nextButton').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            document.getElementById('nextButton').style.display = 'none';
+            
+            if (currentQuestion >= totalQuestions) {
+                showResults();
+            } else {
+                generateQuestion();
+            }
+        }
+
+        function showResults() {
+            const accuracy = Math.round((correctAnswers / totalQuestions) * 100);
+            
+            // Update user stats
+            userStats.totalPoints += currentPoints;
+            userStats.completedExercises++;
+            userStats.accuracy = Math.round(((userStats.accuracy * (userStats.completedExercises - 1)) + accuracy) / userStats.completedExercises);
+            userStats.lastStudyDate = new Date().toDateString();
+            
+            // Update streak
+            const today = new Date().toDateString();
+            if (userStats.lastStudyDate !== today) {
+                userStats.streakDays++;
+            }
+            
+            // Level up logic
+            const newLevel = Math.floor(userStats.totalPoints / 500) + 1;
+            if (newLevel > userStats.currentLevel) {
+                userStats.currentLevel = newLevel;
+                alert(`🎉 Congratulazioni! Hai raggiunto il livello HSK ${newLevel}!`);
+            }
+            
+            saveStats();
+            
+            // Show results modal
+            document.getElementById('exerciseModal').classList.add('hidden');
+            document.getElementById('resultsModal').classList.remove('hidden');
+            
+            document.getElementById('finalScore').textContent = currentPoints;
+            document.getElementById('finalAccuracy').textContent = accuracy + '%';
+            
+            if (accuracy >= 80) {
+                document.getElementById('resultIcon').textContent = '🎉';
+                document.getElementById('resultTitle').textContent = '优秀! (Eccellente!)';
+                document.getElementById('resultMessage').textContent = 'Ottimo lavoro! Continua così!';
+            } else if (accuracy >= 60) {
+                document.getElementById('resultIcon').textContent = '👍';
+                document.getElementById('resultTitle').textContent = '好! (Bene!)';
+                document.getElementById('resultMessage').textContent = 'Buon lavoro! Puoi migliorare ancora!';
+            } else {
+                document.getElementById('resultIcon').textContent = '💪';
+                document.getElementById('resultTitle').textContent = '加油! (Forza!)';
+                document.getElementById('resultMessage').textContent = 'Continua a praticare, migliorerai!';
+            }
+        }
+
+        function closeExercise() {
+            document.getElementById('exerciseModal').classList.add('hidden');
+        }
+
+        function closeResults() {
+            document.getElementById('resultsModal').classList.add('hidden');
+        }
+
+        function restartExercise() {
+            document.getElementById('resultsModal').classList.add('hidden');
+            startExercise(currentExercise);
+        }
+
+        // Canvas drawing functionality
+        let canvas, ctx;
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        function initializeCanvas() {
+            canvas = document.getElementById('writingCanvas');
+            if (!canvas) return;
+            
+            ctx = canvas.getContext('2d');
+            ctx.strokeStyle = '#DC2626';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            // Mouse events
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // Touch events for mobile
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(currentX, currentY);
+            ctx.stroke();
+            
+            lastX = currentX;
+            lastY = currentY;
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                            e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+
+        function clearCanvas() {
+            if (ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function showStrokeOrder(character) {
+            const strokeOrderDiv = document.getElementById('strokeOrder');
+            if (strokeOrderDiv.classList.contains('hidden')) {
+                strokeOrderDiv.classList.remove('hidden');
+            } else {
+                strokeOrderDiv.classList.add('hidden');
+            }
+        }
+
+        function getStrokeOrder(character) {
+            // Simplified stroke order data - in a real app this would be more comprehensive
+            const strokeOrders = {
+                '你': ['丿', '亻', '小', '尔'],
+                '好': ['女', '子'],
+                '我': ['丿', '扌', '戈'],
+                '是': ['日', '疋'],
+                '的': ['白', '勺'],
+                '不': ['一', '丿', '丨', '丿'],
+                '在': ['一', '土', '丨'],
+                '有': ['一', '月', '又'],
+                '人': ['丿', '丨'],
+                '这': ['文', '辶']
+            };
+            
+            return strokeOrders[character] || [character];
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('exerciseModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeExercise();
+            }
+        });
+
+        document.getElementById('resultsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeResults();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'969638aa24e96db2',t:'MTc1NDIyODM2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/caratteri.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+</html>

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pratica Cinese - Calligrafia e Caratteri</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6b95 100%);
+            min-height: 100%;
+        }
+        
+        html, body {
+            height: 100%;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #d63031, #e17055);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+        
+        .sidebar {
+            background: #f8f9fa;
+            padding: 20px;
+            border-right: 2px solid #e9ecef;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-btn {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            width: 100%;
+            display: block;
+        }
+        
+        .category-btn:hover {
+            border-color: #d63031;
+            background: #fff5f5;
+        }
+        
+        .category-btn.active {
+            background: #d63031;
+            color: white;
+            border-color: #d63031;
+        }
+        
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .character-btn {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            padding: 8px 4px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: bold;
+            min-height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-family: 'SimSun', 'Microsoft YaHei', serif;
+        }
+        
+        .character-btn:hover {
+            border-color: #d63031;
+            background: #fff5f5;
+            transform: translateY(-1px);
+        }
+        
+        .character-btn.active {
+            background: #d63031;
+            color: white;
+            border-color: #d63031;
+        }
+        
+        .pinyin {
+            font-size: 0.6rem;
+            opacity: 0.8;
+            margin-top: 2px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        .canvas-area {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .current-exercise {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #d63031;
+        }
+        
+        .exercise-display {
+            font-size: 4rem;
+            text-align: center;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #495057;
+            font-family: 'SimSun', 'Microsoft YaHei', serif;
+        }
+        
+        .exercise-info {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        .character-details {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            text-align: center;
+            border: 2px solid #2196f3;
+        }
+        
+        .detail-row {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #1976d2;
+        }
+        
+        .canvas-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        #drawingCanvas {
+            border: 3px solid #dee2e6;
+            border-radius: 8px;
+            cursor: crosshair;
+            background: #fafafa;
+        }
+        
+        .canvas-controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+        
+        .control-btn:hover {
+            background: #495057;
+            transform: translateY(-1px);
+        }
+        
+        .control-btn:active {
+            transform: translateY(0);
+        }
+        
+        .clear-btn {
+            background: #dc3545;
+        }
+        
+        .clear-btn:hover {
+            background: #c82333;
+        }
+        
+        .draw-btn {
+            background: #28a745;
+        }
+        
+        .draw-btn:hover {
+            background: #218838;
+        }
+        
+        .draw-btn.active {
+            background: #155724;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .stop-btn {
+            background: #fd7e14;
+        }
+        
+        .stop-btn:hover {
+            background: #e8690b;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 2px solid #e9ecef;
+                padding: 15px;
+                max-height: none;
+            }
+            
+            .character-grid {
+                grid-template-columns: repeat(8, 1fr);
+                gap: 4px;
+                max-height: 200px;
+            }
+            
+            .character-btn {
+                padding: 6px 2px;
+                font-size: 1.1rem;
+                min-height: 40px;
+            }
+            
+            .canvas-area {
+                padding: 15px;
+            }
+            
+            #drawingCanvas {
+                width: 100%;
+                max-width: 400px;
+                height: 300px;
+            }
+            
+            .exercise-display {
+                font-size: 2.5rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .control-btn {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+                min-width: 70px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .canvas-controls {
+                gap: 5px;
+            }
+            
+            .control-btn {
+                padding: 8px 10px;
+                font-size: 0.75rem;
+                min-width: 60px;
+            }
+            
+            .exercise-display {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇨🇳 Pratica Cinese</h1>
+            <p>Calligrafia e Caratteri Tradizionali</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="section">
+                    <h3>📚 Categorie</h3>
+                    <button class="category-btn" onclick="showCategory('hsk1')">HSK Livello 1 (150 caratteri)</button>
+                    <button class="category-btn" onclick="showCategory('hsk2')">HSK Livello 2 (150 caratteri)</button>
+                    <button class="category-btn" onclick="showCategory('hsk3')">HSK Livello 3 (300 caratteri)</button>
+                    <button class="category-btn" onclick="showCategory('radicals')">Radicali Fondamentali</button>
+                    <button class="category-btn" onclick="showCategory('numbers')">Numeri e Contatori</button>
+                    <button class="category-btn" onclick="showCategory('family')">Famiglia e Persone</button>
+                    <button class="category-btn" onclick="showCategory('nature')">Natura e Elementi</button>
+                    <button class="category-btn" onclick="showCategory('body')">Corpo Umano</button>
+                    <button class="category-btn" onclick="showCategory('time')">Tempo e Date</button>
+                    <button class="category-btn" onclick="showCategory('food')">Cibo e Bevande</button>
+                    <button class="category-btn" onclick="showCategory('colors')">Colori e Forme</button>
+                    <button class="category-btn" onclick="showCategory('actions')">Azioni e Verbi</button>
+                </div>
+                
+                <div class="character-grid" id="characterGrid">
+                    <div style="grid-column: 1/-1; text-align: center; color: #6c757d; padding: 20px;">
+                        Seleziona una categoria per vedere i caratteri
+                    </div>
+                </div>
+            </div>
+            
+            <div class="canvas-area">
+                <div class="current-exercise">
+                    <div class="exercise-info">Carattere Corrente:</div>
+                    <div class="exercise-display" id="currentDisplay">选择字符</div>
+                    <div class="character-details" id="characterDetails" style="display: none;">
+                        <div class="detail-row"><span class="detail-label">Pinyin:</span> <span id="currentPinyin">-</span></div>
+                        <div class="detail-row"><span class="detail-label">Significato:</span> <span id="currentMeaning">-</span></div>
+                        <div class="detail-row"><span class="detail-label">Tratti:</span> <span id="currentStrokes">-</span></div>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="drawingCanvas" width="500" height="400"></canvas>
+                    <div class="canvas-controls">
+                        <button class="control-btn draw-btn" id="drawBtn" onclick="toggleDrawing()">🖌️ Inizia</button>
+                        <button class="control-btn stop-btn" onclick="stopDrawing()" style="display: none;" id="stopBtn">⏹️ Stop</button>
+                        <button class="control-btn clear-btn" onclick="clearCanvas()">🗑️ Cancella</button>
+                        <button class="control-btn" onclick="changeStrokeWidth(2)">Sottile</button>
+                        <button class="control-btn" onclick="changeStrokeWidth(5)">Medio</button>
+                        <button class="control-btn" onclick="changeStrokeWidth(8)">Spesso</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database caratteri cinesi organizzati per categoria
+        const chineseCharacters = {
+            hsk1: [
+                { char: '我', pinyin: 'wǒ', meaning: 'io', strokes: 7 },
+                { char: '你', pinyin: 'nǐ', meaning: 'tu', strokes: 7 },
+                { char: '他', pinyin: 'tā', meaning: 'lui', strokes: 5 },
+                { char: '她', pinyin: 'tā', meaning: 'lei', strokes: 6 },
+                { char: '好', pinyin: 'hǎo', meaning: 'bene/buono', strokes: 6 },
+                { char: '是', pinyin: 'shì', meaning: 'essere', strokes: 9 },
+                { char: '不', pinyin: 'bù', meaning: 'non', strokes: 4 },
+                { char: '有', pinyin: 'yǒu', meaning: 'avere', strokes: 6 },
+                { char: '在', pinyin: 'zài', meaning: 'essere in', strokes: 6 },
+                { char: '人', pinyin: 'rén', meaning: 'persona', strokes: 2 },
+                { char: '中', pinyin: 'zhōng', meaning: 'centro/Cina', strokes: 4 },
+                { char: '国', pinyin: 'guó', meaning: 'paese', strokes: 8 },
+                { char: '大', pinyin: 'dà', meaning: 'grande', strokes: 3 },
+                { char: '小', pinyin: 'xiǎo', meaning: 'piccolo', strokes: 3 },
+                { char: '来', pinyin: 'lái', meaning: 'venire', strokes: 7 },
+                { char: '去', pinyin: 'qù', meaning: 'andare', strokes: 5 },
+                { char: '说', pinyin: 'shuō', meaning: 'dire', strokes: 9 },
+                { char: '看', pinyin: 'kàn', meaning: 'guardare', strokes: 9 },
+                { char: '听', pinyin: 'tīng', meaning: 'sentire', strokes: 7 },
+                { char: '吃', pinyin: 'chī', meaning: 'mangiare', strokes: 6 },
+                { char: '喝', pinyin: 'hē', meaning: 'bere', strokes: 12 },
+                { char: '买', pinyin: 'mǎi', meaning: 'comprare', strokes: 6 },
+                { char: '卖', pinyin: 'mài', meaning: 'vendere', strokes: 8 },
+                { char: '学', pinyin: 'xué', meaning: 'studiare', strokes: 8 },
+                { char: '工', pinyin: 'gōng', meaning: 'lavoro', strokes: 3 },
+                { char: '作', pinyin: 'zuò', meaning: 'fare', strokes: 7 },
+                { char: '家', pinyin: 'jiā', meaning: 'casa/famiglia', strokes: 10 },
+                { char: '学', pinyin: 'xué', meaning: 'scuola', strokes: 8 },
+                { char: '老', pinyin: 'lǎo', meaning: 'vecchio', strokes: 6 },
+                { char: '师', pinyin: 'shī', meaning: 'maestro', strokes: 6 },
+{ char: '人', pinyin: 'rén', meaning: 'persona', strokes: 2 },
+{ char: '你', pinyin: 'nǐ', meaning: 'tu/voi', strokes: 7 },
+{ char: '我', pinyin: 'wǒ', meaning: 'io', strokes: 7 },
+{ char: '他', pinyin: 'tā', meaning: 'lui', strokes: 5 },
+{ char: '她', pinyin: 'tā', meaning: 'lei', strokes: 6 },
+{ char: '们', pinyin: 'men', meaning: 'pluralità (persone)', strokes: 5 },
+{ char: '是', pinyin: 'shì', meaning: 'essere', strokes: 9 },
+{ char: '不', pinyin: 'bù', meaning: 'non', strokes: 4 },
+{ char: '在', pinyin: 'zài', meaning: 'stare, trovarsi', strokes: 6 },
+{ char: '有', pinyin: 'yǒu', meaning: 'avere', strokes: 6 },
+{ char: '没', pinyin: 'méi', meaning: 'non avere', strokes: 7 },
+{ char: '好', pinyin: 'hǎo', meaning: 'bene, buono', strokes: 6 },
+{ char: '大', pinyin: 'dà', meaning: 'grande', strokes: 3 },
+{ char: '小', pinyin: 'xiǎo', meaning: 'piccolo', strokes: 3 },
+{ char: '多', pinyin: 'duō', meaning: 'molto', strokes: 6 },
+{ char: '少', pinyin: 'shǎo', meaning: 'poco', strokes: 4 },
+{ char: '天', pinyin: 'tiān', meaning: 'cielo, giorno', strokes: 4 },
+{ char: '月', pinyin: 'yuè', meaning: 'luna, mese', strokes: 4 },
+{ char: '日', pinyin: 'rì', meaning: 'sole, giorno', strokes: 4 },
+{ char: '年', pinyin: 'nián', meaning: 'anno', strokes: 6 },
+{ char: '水', pinyin: 'shuǐ', meaning: 'acqua', strokes: 4 },
+{ char: '火', pinyin: 'huǒ', meaning: 'fuoco', strokes: 4 },
+{ char: '山', pinyin: 'shān', meaning: 'montagna', strokes: 3 },
+{ char: '女', pinyin: 'nǚ', meaning: 'donna', strokes: 3 },
+{ char: '男', pinyin: 'nán', meaning: 'uomo', strokes: 7 },
+{ char: '子', pinyin: 'zǐ', meaning: 'figlio', strokes: 3 },
+{ char: '朋友', pinyin: 'péngyou', meaning: 'amico', strokes: 8 },
+{ char: '学校', pinyin: 'xuéxiào', meaning: 'scuola', strokes: 16 },
+{ char: '老师', pinyin: 'lǎoshī', meaning: 'insegnante', strokes: 12 },
+{ char: '一', pinyin: 'yī', meaning: 'uno', strokes: 1 },
+{ char: '二', pinyin: 'èr', meaning: 'due', strokes: 2 },
+{ char: '三', pinyin: 'sān', meaning: 'tre', strokes: 3 },
+{ char: '四', pinyin: 'sì', meaning: 'quattro', strokes: 5 },
+{ char: '五', pinyin: 'wǔ', meaning: 'cinque', strokes: 4 },
+{ char: '六', pinyin: 'liù', meaning: 'sei', strokes: 4 },
+{ char: '七', pinyin: 'qī', meaning: 'sette', strokes: 2 },
+{ char: '八', pinyin: 'bā', meaning: 'otto', strokes: 2 },
+{ char: '九', pinyin: 'jiǔ', meaning: 'nove', strokes: 2 },
+{ char: '十', pinyin: 'shí', meaning: 'dieci', strokes: 2 },
+{ char: '这', pinyin: 'zhè', meaning: 'questo', strokes: 7 },
+{ char: '那', pinyin: 'nà', meaning: 'quello', strokes: 6 },
+{ char: '哪', pinyin: 'nǎ', meaning: 'quale', strokes: 9 },
+{ char: '谁', pinyin: 'shéi', meaning: 'chi', strokes: 10 },
+{ char: '什么', pinyin: 'shénme', meaning: 'cosa/che', strokes: 10 },
+{ char: '吗', pinyin: 'ma', meaning: 'particella interrogativa', strokes: 6 },
+{ char: '呢', pinyin: 'ne', meaning: 'particella interrogativa', strokes: 8 },
+{ char: '和', pinyin: 'hé', meaning: 'e', strokes: 8 },
+{ char: '的', pinyin: 'de', meaning: 'particella possessiva', strokes: 8 },
+{ char: '们', pinyin: 'men', meaning: 'plurale persone', strokes: 5 },
+{ char: '在', pinyin: 'zài', meaning: 'essere/stare/trovarsi', strokes: 6 },
+{ char: '爱', pinyin: 'ài', meaning: 'amare', strokes: 10 },
+{ char: '吃', pinyin: 'chī', meaning: 'mangiare', strokes: 6 },
+{ char: '喝', pinyin: 'hē', meaning: 'bere', strokes: 12 },
+{ char: '读', pinyin: 'dú', meaning: 'leggere', strokes: 10 },
+{ char: '工作', pinyin: 'gōngzuò', meaning: 'lavorare', strokes: 10 + 7 },
+{ char: '叫', pinyin: 'jiào', meaning: 'chiamare', strokes: 5 },
+{ char: '开', pinyin: 'kāi', meaning: 'aprire', strokes: 4 },
+{ char: '看', pinyin: 'kàn', meaning: 'guardare', strokes: 9 },
+{ char: '来', pinyin: 'lái', meaning: 'venire', strokes: 7 },
+{ char: '买', pinyin: 'mǎi', meaning: 'comprare', strokes: 6 },
+{ char: '去', pinyin: 'qù', meaning: 'andare', strokes: 5 },
+{ char: '睡觉', pinyin: 'shuìjiào', meaning: 'dormire', strokes: 13 + 9 },
+{ char: '写', pinyin: 'xiě', meaning: 'scrivere', strokes: 5 },
+{ char: '说', pinyin: 'shuō', meaning: 'parlare/dire', strokes: 9 },
+{ char: '听', pinyin: 'tīng', meaning: 'ascoltare', strokes: 7 },
+{ char: '喜欢', pinyin: 'xǐhuan', meaning: 'piacere', strokes: 12 + 6 },
+{ char: '学习', pinyin: 'xuéxí', meaning: 'studiare', strokes: 8 + 11 },
+{ char: '有', pinyin: 'yǒu', meaning: 'avere', strokes: 6 },
+{ char: '坐', pinyin: 'zuò', meaning: 'sedersi', strokes: 7 },
+{ char: '住', pinyin: 'zhù', meaning: 'abitare', strokes: 7 },
+{ char: '认识', pinyin: 'rènshi', meaning: 'conoscere', strokes: 6 + 4 },
+{ char: '回', pinyin: 'huí', meaning: 'tornare', strokes: 6 },
+{ char: '是', pinyin: 'shì', meaning: 'essere', strokes: 9 },
+{ char: '不', pinyin: 'bù', meaning: 'non', strokes: 4 },
+{ char: '很', pinyin: 'hěn', meaning: 'molto', strokes: 9 },
+{ char: '也', pinyin: 'yě', meaning: 'anche', strokes: 3 },
+{ char: '都', pinyin: 'dōu', meaning: 'tutti', strokes: 10 },
+{ char: '太', pinyin: 'tài', meaning: 'troppo', strokes: 4 },
+{ char: '再', pinyin: 'zài', meaning: 'di nuovo/ancora', strokes: 6 },
+{ char: '多', pinyin: 'duō', meaning: 'molto', strokes: 6 },
+{ char: '少', pinyin: 'shǎo', meaning: 'poco', strokes: 4 }
+            ],
+            
+            hsk2: [
+                { char: '会', pinyin: 'huì', meaning: 'saper fare', strokes: 6 },
+                { char: '能', pinyin: 'néng', meaning: 'potere', strokes: 10 },
+                { char: '可', pinyin: 'kě', meaning: 'potere', strokes: 5 },
+                { char: '以', pinyin: 'yǐ', meaning: 'con/per', strokes: 4 },
+                { char: '要', pinyin: 'yào', meaning: 'volere', strokes: 9 },
+                { char: '想', pinyin: 'xiǎng', meaning: 'pensare', strokes: 13 },
+                { char: '知', pinyin: 'zhī', meaning: 'sapere', strokes: 8 },
+                { char: '道', pinyin: 'dào', meaning: 'via/sapere', strokes: 12 },
+                { char: '觉', pinyin: 'jué', meaning: 'sentire', strokes: 9 },
+                { char: '得', pinyin: 'de', meaning: 'ottenere', strokes: 11 },
+                { char: '给', pinyin: 'gěi', meaning: 'dare', strokes: 9 },
+                { char: '让', pinyin: 'ràng', meaning: 'lasciare', strokes: 5 },
+                { char: '把', pinyin: 'bǎ', meaning: 'prendere', strokes: 7 },
+                { char: '被', pinyin: 'bèi', meaning: 'essere (passivo)', strokes: 10 },
+                { char: '从', pinyin: 'cóng', meaning: 'da', strokes: 4 },
+                { char: '到', pinyin: 'dào', meaning: 'arrivare', strokes: 8 },
+                { char: '为', pinyin: 'wèi', meaning: 'per', strokes: 4 },
+                { char: '了', pinyin: 'le', meaning: 'particella', strokes: 2 },
+                { char: '着', pinyin: 'zhe', meaning: 'particella', strokes: 11 },
+                { char: '过', pinyin: 'guò', meaning: 'passare', strokes: 6 }
+            ],
+            
+            hsk3: [
+                { char: '应', pinyin: 'yīng', meaning: 'dovere', strokes: 7 },
+                { char: '该', pinyin: 'gāi', meaning: 'dovere', strokes: 8 },
+                { char: '必', pinyin: 'bì', meaning: 'dovere', strokes: 5 },
+                { char: '须', pinyin: 'xū', meaning: 'dovere', strokes: 9 },
+                { char: '需', pinyin: 'xū', meaning: 'aver bisogno', strokes: 14 },
+                { char: '希', pinyin: 'xī', meaning: 'sperare', strokes: 7 },
+                { char: '望', pinyin: 'wàng', meaning: 'sperare', strokes: 11 },
+                { char: '愿', pinyin: 'yuán', meaning: 'desiderare', strokes: 14 },
+                { char: '意', pinyin: 'yì', meaning: 'significato', strokes: 13 },
+                { char: '思', pinyin: 'sī', meaning: 'pensare', strokes: 9 },
+                { char: '考', pinyin: 'kǎo', meaning: 'esaminare', strokes: 6 },
+                { char: '虑', pinyin: 'lǜ', meaning: 'considerare', strokes: 10 },
+                { char: '决', pinyin: 'jué', meaning: 'decidere', strokes: 6 },
+                { char: '定', pinyin: 'dìng', meaning: 'decidere', strokes: 8 },
+                { char: '选', pinyin: 'xuǎn', meaning: 'scegliere', strokes: 9 },
+                { char: '择', pinyin: 'zé', meaning: 'scegliere', strokes: 8 },
+                { char: '比', pinyin: 'bǐ', meaning: 'confrontare', strokes: 4 },
+                { char: '较', pinyin: 'jiào', meaning: 'confrontare', strokes: 10 },
+                { char: '更', pinyin: 'gèng', meaning: 'più', strokes: 7 },
+                { char: '最', pinyin: 'zuì', meaning: 'il più', strokes: 12 }
+            ],
+            
+            radicals: [
+                { char: '人', pinyin: 'rén', meaning: 'persona', strokes: 2 },
+                { char: '亻', pinyin: 'rén', meaning: 'persona (radicale)', strokes: 2 },
+                { char: '口', pinyin: 'kǒu', meaning: 'bocca', strokes: 3 },
+                { char: '手', pinyin: 'shǒu', meaning: 'mano', strokes: 4 },
+                { char: '扌', pinyin: 'shǒu', meaning: 'mano (radicale)', strokes: 3 },
+                { char: '心', pinyin: 'xīn', meaning: 'cuore', strokes: 4 },
+                { char: '忄', pinyin: 'xīn', meaning: 'cuore (radicale)', strokes: 3 },
+                { char: '水', pinyin: 'shuǐ', meaning: 'acqua', strokes: 4 },
+                { char: '氵', pinyin: 'shuǐ', meaning: 'acqua (radicale)', strokes: 3 },
+                { char: '火', pinyin: 'huǒ', meaning: 'fuoco', strokes: 4 },
+                { char: '灬', pinyin: 'huǒ', meaning: 'fuoco (radicale)', strokes: 4 },
+                { char: '木', pinyin: 'mù', meaning: 'legno', strokes: 4 },
+                { char: '金', pinyin: 'jīn', meaning: 'metallo', strokes: 8 },
+                { char: '钅', pinyin: 'jīn', meaning: 'metallo (radicale)', strokes: 5 },
+                { char: '土', pinyin: 'tǔ', meaning: 'terra', strokes: 3 },
+                { char: '日', pinyin: 'rì', meaning: 'sole', strokes: 4 },
+                { char: '月', pinyin: 'yuè', meaning: 'luna', strokes: 4 },
+                { char: '山', pinyin: 'shān', meaning: 'montagna', strokes: 3 },
+                { char: '石', pinyin: 'shí', meaning: 'pietra', strokes: 5 },
+                { char: '田', pinyin: 'tián', meaning: 'campo', strokes: 5 }
+            ],
+            
+            numbers: [
+                { char: '一', pinyin: 'yī', meaning: 'uno', strokes: 1 },
+                { char: '二', pinyin: 'èr', meaning: 'due', strokes: 2 },
+                { char: '三', pinyin: 'sān', meaning: 'tre', strokes: 3 },
+                { char: '四', pinyin: 'sì', meaning: 'quattro', strokes: 5 },
+                { char: '五', pinyin: 'wǔ', meaning: 'cinque', strokes: 4 },
+                { char: '六', pinyin: 'liù', meaning: 'sei', strokes: 4 },
+                { char: '七', pinyin: 'qī', meaning: 'sette', strokes: 2 },
+                { char: '八', pinyin: 'bā', meaning: 'otto', strokes: 2 },
+                { char: '九', pinyin: 'jiǔ', meaning: 'nove', strokes: 2 },
+                { char: '十', pinyin: 'shí', meaning: 'dieci', strokes: 2 },
+                { char: '百', pinyin: 'bǎi', meaning: 'cento', strokes: 6 },
+                { char: '千', pinyin: 'qiān', meaning: 'mille', strokes: 3 },
+                { char: '万', pinyin: 'wàn', meaning: 'diecimila', strokes: 3 },
+                { char: '零', pinyin: 'líng', meaning: 'zero', strokes: 13 },
+                { char: '个', pinyin: 'gè', meaning: 'classificatore', strokes: 3 },
+                { char: '只', pinyin: 'zhī', meaning: 'classificatore', strokes: 5 },
+                { char: '本', pinyin: 'běn', meaning: 'classificatore libri', strokes: 5 },
+                { char: '张', pinyin: 'zhāng', meaning: 'classificatore fogli', strokes: 7 },
+                { char: '件', pinyin: 'jiàn', meaning: 'classificatore oggetti', strokes: 6 },
+                { char: '条', pinyin: 'tiáo', meaning: 'classificatore lunghi', strokes: 7 }
+            ],
+            
+            family: [
+                { char: '父', pinyin: 'fù', meaning: 'padre', strokes: 4 },
+                { char: '母', pinyin: 'mǔ', meaning: 'madre', strokes: 5 },
+                { char: '儿', pinyin: 'ér', meaning: 'figlio', strokes: 2 },
+                { char: '女', pinyin: 'nǚ', meaning: 'figlia/donna', strokes: 3 },
+                { char: '子', pinyin: 'zǐ', meaning: 'figlio', strokes: 3 },
+                { char: '兄', pinyin: 'xiōng', meaning: 'fratello maggiore', strokes: 5 },
+                { char: '弟', pinyin: 'dì', meaning: 'fratello minore', strokes: 7 },
+                { char: '姐', pinyin: 'jiě', meaning: 'sorella maggiore', strokes: 8 },
+                { char: '妹', pinyin: 'mèi', meaning: 'sorella minore', strokes: 8 },
+                { char: '爷', pinyin: 'yé', meaning: 'nonno paterno', strokes: 10 },
+                { char: '奶', pinyin: 'nǎi', meaning: 'nonna paterna', strokes: 5 },
+                { char: '外', pinyin: 'wài', meaning: 'esterno', strokes: 5 },
+                { char: '公', pinyin: 'gōng', meaning: 'nonno materno', strokes: 4 },
+                { char: '婆', pinyin: 'pó', meaning: 'nonna materna', strokes: 11 },
+                { char: '夫', pinyin: 'fū', meaning: 'marito', strokes: 4 },
+                { char: '妻', pinyin: 'qī', meaning: 'moglie', strokes: 8 },
+                { char: '丈', pinyin: 'zhàng', meaning: 'marito', strokes: 3 },
+                { char: '老', pinyin: 'lǎo', meaning: 'vecchio', strokes: 6 },
+                { char: '小', pinyin: 'xiǎo', meaning: 'piccolo', strokes: 3 },
+                { char: '亲', pinyin: 'qīn', meaning: 'parente', strokes: 9 }
+            ],
+            
+            nature: [
+                { char: '天', pinyin: 'tiān', meaning: 'cielo', strokes: 4 },
+                { char: '地', pinyin: 'dì', meaning: 'terra', strokes: 6 },
+                { char: '山', pinyin: 'shān', meaning: 'montagna', strokes: 3 },
+                { char: '水', pinyin: 'shuǐ', meaning: 'acqua', strokes: 4 },
+                { char: '火', pinyin: 'huǒ', meaning: 'fuoco', strokes: 4 },
+                { char: '风', pinyin: 'fēng', meaning: 'vento', strokes: 4 },
+                { char: '雨', pinyin: 'yǔ', meaning: 'pioggia', strokes: 8 },
+                { char: '雪', pinyin: 'xuě', meaning: 'neve', strokes: 11 },
+                { char: '云', pinyin: 'yún', meaning: 'nuvola', strokes: 4 },
+                { char: '雷', pinyin: 'léi', meaning: 'tuono', strokes: 13 },
+                { char: '电', pinyin: 'diàn', meaning: 'elettricità', strokes: 5 },
+                { char: '光', pinyin: 'guāng', meaning: 'luce', strokes: 6 },
+                { char: '阳', pinyin: 'yáng', meaning: 'sole', strokes: 6 },
+                { char: '阴', pinyin: 'yīn', meaning: 'ombra', strokes: 6 },
+                { char: '树', pinyin: 'shù', meaning: 'albero', strokes: 9 },
+                { char: '花', pinyin: 'huā', meaning: 'fiore', strokes: 7 },
+                { char: '草', pinyin: 'cǎo', meaning: 'erba', strokes: 9 },
+                { char: '叶', pinyin: 'yè', meaning: 'foglia', strokes: 5 },
+                { char: '果', pinyin: 'guǒ', meaning: 'frutto', strokes: 8 },
+                { char: '种', pinyin: 'zhǒng', meaning: 'seme/tipo', strokes: 9 }
+            ],
+            
+            body: [
+                { char: '头', pinyin: 'tóu', meaning: 'testa', strokes: 5 },
+                { char: '脸', pinyin: 'liǎn', meaning: 'viso', strokes: 11 },
+                { char: '眼', pinyin: 'yǎn', meaning: 'occhio', strokes: 11 },
+                { char: '鼻', pinyin: 'bí', meaning: 'naso', strokes: 14 },
+                { char: '嘴', pinyin: 'zuǐ', meaning: 'bocca', strokes: 16 },
+                { char: '耳', pinyin: 'ěr', meaning: 'orecchio', strokes: 6 },
+                { char: '手', pinyin: 'shǒu', meaning: 'mano', strokes: 4 },
+                { char: '脚', pinyin: 'jiǎo', meaning: 'piede', strokes: 11 },
+                { char: '腿', pinyin: 'tuǐ', meaning: 'gamba', strokes: 13 },
+                { char: '身', pinyin: 'shēn', meaning: 'corpo', strokes: 7 },
+                { char: '心', pinyin: 'xīn', meaning: 'cuore', strokes: 4 },
+                { char: '肚', pinyin: 'dù', meaning: 'pancia', strokes: 7 },
+                { char: '背', pinyin: 'bèi', meaning: 'schiena', strokes: 9 },
+                { char: '肩', pinyin: 'jiān', meaning: 'spalla', strokes: 8 },
+                { char: '胳', pinyin: 'gē', meaning: 'braccio', strokes: 10 },
+                { char: '膊', pinyin: 'bó', meaning: 'braccio', strokes: 14 },
+                { char: '手', pinyin: 'shǒu', meaning: 'mano', strokes: 4 },
+                { char: '指', pinyin: 'zhǐ', meaning: 'dito', strokes: 9 },
+                { char: '头', pinyin: 'tóu', meaning: 'capelli', strokes: 10 },
+                { char: '牙', pinyin: 'yá', meaning: 'dente', strokes: 4 }
+            ],
+            
+            time: [
+                { char: '年', pinyin: 'nián', meaning: 'anno', strokes: 6 },
+                { char: '月', pinyin: 'yuè', meaning: 'mese', strokes: 4 },
+                { char: '日', pinyin: 'rì', meaning: 'giorno', strokes: 4 },
+                { char: '时', pinyin: 'shí', meaning: 'ora', strokes: 7 },
+                { char: '分', pinyin: 'fēn', meaning: 'minuto', strokes: 4 },
+                { char: '秒', pinyin: 'miǎo', meaning: 'secondo', strokes: 9 },
+                { char: '今', pinyin: 'jīn', meaning: 'oggi', strokes: 4 },
+                { char: '明', pinyin: 'míng', meaning: 'domani', strokes: 8 },
+                { char: '昨', pinyin: 'zuó', meaning: 'ieri', strokes: 9 },
+                { char: '早', pinyin: 'zǎo', meaning: 'presto', strokes: 6 },
+                { char: '晚', pinyin: 'wǎn', meaning: 'tardi', strokes: 11 },
+                { char: '上', pinyin: 'shàng', meaning: 'sopra/mattina', strokes: 3 },
+                { char: '下', pinyin: 'xià', meaning: 'sotto/pomeriggio', strokes: 3 },
+                { char: '午', pinyin: 'wǔ', meaning: 'mezzogiorno', strokes: 4 },
+                { char: '夜', pinyin: 'yè', meaning: 'notte', strokes: 8 },
+                { char: '春', pinyin: 'chūn', meaning: 'primavera', strokes: 9 },
+                { char: '夏', pinyin: 'xià', meaning: 'estate', strokes: 10 },
+                { char: '秋', pinyin: 'qiū', meaning: 'autunno', strokes: 9 },
+                { char: '冬', pinyin: 'dōng', meaning: 'inverno', strokes: 5 },
+                { char: '周', pinyin: 'zhōu', meaning: 'settimana', strokes: 8 }
+            ],
+            
+            food: [
+                { char: '饭', pinyin: 'fàn', meaning: 'riso/cibo', strokes: 7 },
+                { char: '面', pinyin: 'miàn', meaning: 'noodles', strokes: 9 },
+                { char: '包', pinyin: 'bāo', meaning: 'panino', strokes: 5 },
+                { char: '肉', pinyin: 'ròu', meaning: 'carne', strokes: 6 },
+                { char: '鱼', pinyin: 'yú', meaning: 'pesce', strokes: 8 },
+                { char: '鸡', pinyin: 'jī', meaning: 'pollo', strokes: 7 },
+                { char: '蛋', pinyin: 'dàn', meaning: 'uovo', strokes: 11 },
+                { char: '菜', pinyin: 'cài', meaning: 'verdura', strokes: 11 },
+                { char: '果', pinyin: 'guǒ', meaning: 'frutta', strokes: 8 },
+                { char: '苹', pinyin: 'píng', meaning: 'mela', strokes: 8 },
+                { char: '香', pinyin: 'xiāng', meaning: 'banana', strokes: 9 },
+                { char: '蕉', pinyin: 'jiāo', meaning: 'banana', strokes: 15 },
+                { char: '茶', pinyin: 'chá', meaning: 'tè', strokes: 9 },
+                { char: '咖', pinyin: 'kā', meaning: 'caffè', strokes: 8 },
+                { char: '啡', pinyin: 'fēi', meaning: 'caffè', strokes: 11 },
+                { char: '水', pinyin: 'shuǐ', meaning: 'acqua', strokes: 4 },
+                { char: '酒', pinyin: 'jiǔ', meaning: 'alcol', strokes: 10 },
+                { char: '奶', pinyin: 'nǎi', meaning: 'latte', strokes: 5 },
+                { char: '糖', pinyin: 'táng', meaning: 'zucchero', strokes: 16 },
+                { char: '盐', pinyin: 'yán', meaning: 'sale', strokes: 10 }
+            ],
+            
+            colors: [
+                { char: '红', pinyin: 'hóng', meaning: 'rosso', strokes: 6 },
+                { char: '黄', pinyin: 'huáng', meaning: 'giallo', strokes: 11 },
+                { char: '蓝', pinyin: 'lán', meaning: 'blu', strokes: 13 },
+                { char: '绿', pinyin: 'lǜ', meaning: 'verde', strokes: 11 },
+                { char: '白', pinyin: 'bái', meaning: 'bianco', strokes: 5 },
+                { char: '黑', pinyin: 'hēi', meaning: 'nero', strokes: 12 },
+                { char: '灰', pinyin: 'huī', meaning: 'grigio', strokes: 6 },
+                { char: '紫', pinyin: 'zǐ', meaning: 'viola', strokes: 12 },
+                { char: '粉', pinyin: 'fěn', meaning: 'rosa', strokes: 10 },
+                { char: '橙', pinyin: 'chéng', meaning: 'arancione', strokes: 16 },
+                { char: '棕', pinyin: 'zōng', meaning: 'marrone', strokes: 12 },
+                { char: '金', pinyin: 'jīn', meaning: 'oro', strokes: 8 },
+                { char: '银', pinyin: 'yín', meaning: 'argento', strokes: 11 },
+                { char: '色', pinyin: 'sè', meaning: 'colore', strokes: 6 },
+                { char: '亮', pinyin: 'liàng', meaning: 'luminoso', strokes: 9 },
+                { char: '暗', pinyin: 'àn', meaning: 'scuro', strokes: 13 },
+                { char: '深', pinyin: 'shēn', meaning: 'profondo', strokes: 11 },
+                { char: '浅', pinyin: 'qiǎn', meaning: 'chiaro', strokes: 8 },
+                { char: '淡', pinyin: 'dàn', meaning: 'pallido', strokes: 11 },
+                { char: '浓', pinyin: 'nóng', meaning: 'intenso', strokes: 9 }
+            ],
+            
+            actions: [
+                { char: '走', pinyin: 'zǒu', meaning: 'camminare', strokes: 7 },
+                { char: '跑', pinyin: 'pǎo', meaning: 'correre', strokes: 12 },
+                { char: '跳', pinyin: 'tiào', meaning: 'saltare', strokes: 13 },
+                { char: '坐', pinyin: 'zuò', meaning: 'sedere', strokes: 7 },
+                { char: '站', pinyin: 'zhàn', meaning: 'stare in piedi', strokes: 10 },
+                { char: '躺', pinyin: 'tǎng', meaning: 'sdraiarsi', strokes: 15 },
+                { char: '睡', pinyin: 'shuì', meaning: 'dormire', strokes: 13 },
+                { char: '起', pinyin: 'qǐ', meaning: 'alzarsi', strokes: 10 },
+                { char: '洗', pinyin: 'xǐ', meaning: 'lavare', strokes: 9 },
+                { char: '刷', pinyin: 'shuā', meaning: 'spazzolare', strokes: 8 },
+                { char: '穿', pinyin: 'chuān', meaning: 'indossare', strokes: 9 },
+                { char: '脱', pinyin: 'tuō', meaning: 'togliere', strokes: 11 },
+                { char: '开', pinyin: 'kāi', meaning: 'aprire', strokes: 4 },
+                { char: '关', pinyin: 'guān', meaning: 'chiudere', strokes: 6 },
+                { char: '拿', pinyin: 'ná', meaning: 'prendere', strokes: 10 },
+                { char: '放', pinyin: 'fàng', meaning: 'mettere', strokes: 8 },
+                { char: '找', pinyin: 'zhǎo', meaning: 'cercare', strokes: 7 },
+                { char: '等', pinyin: 'děng', meaning: 'aspettare', strokes: 12 },
+                { char: '帮', pinyin: 'bāng', meaning: 'aiutare', strokes: 9 },
+                { char: '教', pinyin: 'jiāo', meaning: 'insegnare', strokes: 11 }
+            ]
+        };
+
+        // Setup Canvas (stesso codice delle altre app)
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let strokeWidth = 5;
+        let drawingEnabled = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = '#2c3e50';
+        ctx.globalCompositeOperation = 'source-over';
+
+        let eventsAttached = false;
+
+        function attachDrawingEvents() {
+            if (eventsAttached) return;
+            
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawingAction);
+            canvas.addEventListener('mouseleave', stopDrawingAction);
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            canvas.addEventListener('touchend', stopDrawingAction, { passive: false });
+            canvas.addEventListener('touchcancel', stopDrawingAction, { passive: false });
+            
+            eventsAttached = true;
+            canvas.style.cursor = 'crosshair';
+        }
+
+        function removeDrawingEvents() {
+            canvas.removeEventListener('mousedown', startDrawing);
+            canvas.removeEventListener('mousemove', draw);
+            canvas.removeEventListener('mouseup', stopDrawingAction);
+            canvas.removeEventListener('mouseleave', stopDrawingAction);
+            canvas.removeEventListener('touchstart', handleTouchStart);
+            canvas.removeEventListener('touchmove', handleTouchMove);
+            canvas.removeEventListener('touchend', stopDrawingAction);
+            canvas.removeEventListener('touchcancel', stopDrawingAction);
+            
+            eventsAttached = false;
+            canvas.style.cursor = 'default';
+        }
+
+        function getCanvasCoordinates(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            return {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
+            };
+        }
+
+        function startDrawing(e) {
+            if (!drawingEnabled) return;
+            
+            isDrawing = true;
+            const coords = getCanvasCoordinates(e);
+            lastX = coords.x;
+            lastY = coords.y;
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+        }
+
+        function draw(e) {
+            if (!isDrawing || !drawingEnabled) return;
+            
+            const coords = getCanvasCoordinates(e);
+            
+            ctx.lineWidth = strokeWidth;
+            ctx.strokeStyle = '#2c3e50';
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(coords.x, coords.y);
+            ctx.stroke();
+            
+            lastX = coords.x;
+            lastY = coords.y;
+        }
+
+        function stopDrawingAction() {
+            if (isDrawing) {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+        }
+
+        function handleTouchStart(e) {
+            e.preventDefault();
+            if (!drawingEnabled || e.touches.length !== 1) return;
+            
+            const touch = e.touches[0];
+            const coords = getCanvasCoordinates(touch);
+            
+            isDrawing = true;
+            lastX = coords.x;
+            lastY = coords.y;
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (!isDrawing || !drawingEnabled || e.touches.length !== 1) return;
+            
+            const touch = e.touches[0];
+            const coords = getCanvasCoordinates(touch);
+            
+            ctx.lineWidth = strokeWidth;
+            ctx.strokeStyle = '#2c3e50';
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(coords.x, coords.y);
+            ctx.stroke();
+            
+            lastX = coords.x;
+            lastY = coords.y;
+        }
+
+        function toggleDrawing() {
+            drawingEnabled = !drawingEnabled;
+            const drawBtn = document.getElementById('drawBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            if (drawingEnabled) {
+                attachDrawingEvents();
+                drawBtn.style.display = 'none';
+                stopBtn.style.display = 'inline-block';
+                drawBtn.classList.add('active');
+            } else {
+                removeDrawingEvents();
+                drawBtn.style.display = 'inline-block';
+                stopBtn.style.display = 'none';
+                drawBtn.classList.remove('active');
+            }
+        }
+
+        function stopDrawing() {
+            drawingEnabled = false;
+            isDrawing = false;
+            removeDrawingEvents();
+            
+            const drawBtn = document.getElementById('drawBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            drawBtn.style.display = 'inline-block';
+            stopBtn.style.display = 'none';
+            drawBtn.classList.remove('active');
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function changeStrokeWidth(width) {
+            strokeWidth = width;
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.style.background = '#6c757d';
+            });
+            event.target.style.background = '#28a745';
+        }
+
+        // Funzioni per gestire le categorie
+        function showCategory(categoryName) {
+            // Rimuovi active da tutti i bottoni categoria
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Aggiungi active al bottone cliccato
+            event.target.classList.add('active');
+            
+            // Mostra i caratteri della categoria
+            const characterGrid = document.getElementById('characterGrid');
+            const characters = chineseCharacters[categoryName];
+            
+            characterGrid.innerHTML = '';
+            
+            characters.forEach(char => {
+                const btn = document.createElement('button');
+                btn.className = 'character-btn';
+                btn.innerHTML = `${char.char}<div class="pinyin">${char.pinyin}</div>`;
+                btn.onclick = () => selectCharacter(char, btn);
+                characterGrid.appendChild(btn);
+            });
+        }
+
+        function selectCharacter(character, btnElement) {
+            // Rimuovi active da tutti i caratteri
+            document.querySelectorAll('.character-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Aggiungi active al carattere selezionato
+            btnElement.classList.add('active');
+            
+            // Aggiorna il display
+            document.getElementById('currentDisplay').textContent = character.char;
+            document.getElementById('currentPinyin').textContent = character.pinyin;
+            document.getElementById('currentMeaning').textContent = character.meaning;
+            document.getElementById('currentStrokes').textContent = character.strokes;
+            
+            // Mostra i dettagli
+            document.getElementById('characterDetails').style.display = 'block';
+            
+            clearCanvas();
+        }
+
+        // Inizializza l'app
+        function initApp() {
+            changeStrokeWidth(5);
+            
+            // Mostra HSK1 di default
+            showCategory('hsk1');
+            document.querySelector('.category-btn').classList.add('active');
+        }
+
+        initApp();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98e71b63673d4bee',t:'MTc2MDQ0NTIyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/caratteri.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+</html>

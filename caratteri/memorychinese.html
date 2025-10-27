@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco di Memoria Cinese</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .level-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .level-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .level-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .level-btn.active {
+            background: #ff6b6b;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+        }
+
+        .start-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            background: #4ecdc4;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78,205,196,0.4);
+        }
+
+        .start-btn:hover {
+            background: #45b7aa;
+            transform: translateY(-2px);
+        }
+
+        .game-info {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            opacity: 0.8;
+        }
+
+        .game-board {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .game-board.easy {
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 600px;
+        }
+
+        .game-board.medium {
+            grid-template-columns: repeat(5, 1fr);
+            max-width: 750px;
+        }
+
+        .game-board.hard {
+            grid-template-columns: repeat(6, 1fr);
+            max-width: 900px;
+        }
+
+        .card {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        }
+
+        .card.flipped {
+            background: linear-gradient(145deg, #4ecdc4, #45b7aa);
+            color: white;
+        }
+
+        .card.matched {
+            background: linear-gradient(145deg, #51cf66, #40c057);
+            color: white;
+            animation: matchPulse 0.6s ease;
+        }
+
+        .card.wrong {
+            background: linear-gradient(145deg, #ff6b6b, #fa5252);
+            color: white;
+            animation: wrongShake 0.5s ease;
+        }
+
+        .card-content {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .card-back {
+            font-size: 2rem;
+            color: #667eea;
+        }
+
+        @keyframes matchPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            min-height: 30px;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #51cf66;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .card-content {
+                font-size: 1.2rem;
+            }
+            
+            .game-board.easy {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 300px;
+            }
+            
+            .game-board.medium {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 400px;
+            }
+            
+            .game-board.hard {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧠 Gioco di Memoria Cinese</h1>
+        <p>Abbina gli ideogrammi al loro pinyin</p>
+    </div>
+
+    <div class="game-controls">
+        <div class="level-selector">
+            <span>Livello:</span>
+            <button class="level-btn active" data-level="easy">Facile (6 coppie)</button>
+            <button class="level-btn" data-level="medium">Medio (10 coppie)</button>
+            <button class="level-btn" data-level="hard">Difficile (15 coppie)</button>
+        </div>
+        <button class="start-btn" onclick="startGame()">Inizia Gioco</button>
+    </div>
+
+    <div class="game-info">
+        <div class="info-item">
+            <h3 id="moves">0</h3>
+            <p>Mosse</p>
+        </div>
+        <div class="info-item">
+            <h3 id="matches">0</h3>
+            <p>Abbinamenti</p>
+        </div>
+        <div class="info-item">
+            <h3 id="timer">00:00</h3>
+            <p>Tempo</p>
+        </div>
+    </div>
+
+    <div class="message" id="message">Seleziona un livello e clicca "Inizia Gioco"!</div>
+
+    <div class="game-board" id="gameBoard"></div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        // Dati del gioco per diversi livelli
+        const gameData = {
+            easy: [
+                { chinese: '你好', pinyin: 'nǐ hǎo' },
+                { chinese: '谢谢', pinyin: 'xiè xie' },
+                { chinese: '再见', pinyin: 'zài jiàn' },
+                { chinese: '朋友', pinyin: 'péng yǒu' },
+                { chinese: '学习', pinyin: 'xué xí' },
+                { chinese: '工作', pinyin: 'gōng zuò' }
+            ],
+            medium: [
+                { chinese: '你好', pinyin: 'nǐ hǎo' },
+                { chinese: '谢谢', pinyin: 'xiè xie' },
+                { chinese: '再见', pinyin: 'zài jiàn' },
+                { chinese: '朋友', pinyin: 'péng yǒu' },
+                { chinese: '学习', pinyin: 'xué xí' },
+                { chinese: '工作', pinyin: 'gōng zuò' },
+                { chinese: '家庭', pinyin: 'jiā tíng' },
+                { chinese: '时间', pinyin: 'shí jiān' },
+                { chinese: '地方', pinyin: 'dì fāng' },
+                { chinese: '问题', pinyin: 'wèn tí' }
+            ],
+            hard: [
+                { chinese: '你好', pinyin: 'nǐ hǎo' },
+                { chinese: '谢谢', pinyin: 'xiè xie' },
+                { chinese: '再见', pinyin: 'zài jiàn' },
+                { chinese: '朋友', pinyin: 'péng yǒu' },
+                { chinese: '学习', pinyin: 'xué xí' },
+                { chinese: '工作', pinyin: 'gōng zuò' },
+                { chinese: '家庭', pinyin: 'jiā tíng' },
+                { chinese: '时间', pinyin: 'shí jiān' },
+                { chinese: '地方', pinyin: 'dì fāng' },
+                { chinese: '问题', pinyin: 'wèn tí' },
+                { chinese: '机会', pinyin: 'jī huì' },
+                { chinese: '发展', pinyin: 'fā zhǎn' },
+                { chinese: '经验', pinyin: 'jīng yàn' },
+                { chinese: '文化', pinyin: 'wén huà' },
+                { chinese: '历史', pinyin: 'lì shǐ' }
+            ]
+        };
+
+        let currentLevel = 'easy';
+        let gameCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+        let gameStarted = false;
+        let gameTimer;
+        let startTime;
+
+        // Gestione selezione livello
+        document.querySelectorAll('.level-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentLevel = this.dataset.level;
+                resetGame();
+            });
+        });
+
+        function startGame() {
+            gameStarted = true;
+            resetGame();
+            createGameBoard();
+            startTimer();
+            document.getElementById('message').textContent = 'Trova le coppie abbinando ideogrammi e pinyin!';
+        }
+
+        function resetGame() {
+            clearInterval(gameTimer);
+            matchedPairs = 0;
+            moves = 0;
+            flippedCards = [];
+            updateStats();
+            document.getElementById('timer').textContent = '00:00';
+            document.getElementById('message').textContent = gameStarted ? 'Trova le coppie abbinando ideogrammi e pinyin!' : 'Seleziona un livello e clicca "Inizia Gioco"!';
+        }
+
+        function createGameBoard() {
+            const board = document.getElementById('gameBoard');
+            const data = gameData[currentLevel];
+            
+            // Crea le carte (ideogrammi e pinyin)
+            gameCards = [];
+            data.forEach((item, index) => {
+                gameCards.push({
+                    id: `chinese-${index}`,
+                    content: item.chinese,
+                    type: 'chinese',
+                    pairId: index
+                });
+                gameCards.push({
+                    id: `pinyin-${index}`,
+                    content: item.pinyin,
+                    type: 'pinyin',
+                    pairId: index
+                });
+            });
+
+            // Mescola le carte
+            gameCards = shuffleArray(gameCards);
+
+            // Imposta la classe CSS per il layout
+            board.className = `game-board ${currentLevel}`;
+            board.innerHTML = '';
+
+            // Crea gli elementi delle carte
+            gameCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.dataset.cardId = card.id;
+                cardElement.dataset.pairId = card.pairId;
+                cardElement.innerHTML = `
+                    <div class="card-content" style="display: none;">${card.content}</div>
+                    <div class="card-back">🀄</div>
+                `;
+                cardElement.addEventListener('click', () => flipCard(cardElement, card));
+                board.appendChild(cardElement);
+            });
+        }
+
+        function flipCard(cardElement, card) {
+            if (!gameStarted || cardElement.classList.contains('flipped') || cardElement.classList.contains('matched') || flippedCards.length >= 2) {
+                return;
+            }
+
+            cardElement.classList.add('flipped');
+            cardElement.querySelector('.card-content').style.display = 'block';
+            cardElement.querySelector('.card-back').style.display = 'none';
+            
+            flippedCards.push({ element: cardElement, card: card });
+
+            if (flippedCards.length === 2) {
+                moves++;
+                updateStats();
+                setTimeout(checkMatch, 800);
+            }
+        }
+
+        function checkMatch() {
+            const [first, second] = flippedCards;
+            
+            if (first.card.pairId === second.card.pairId) {
+                // Abbinamento corretto
+                first.element.classList.add('matched');
+                second.element.classList.add('matched');
+                matchedPairs++;
+                updateStats();
+                
+                document.getElementById('message').textContent = '🎉 Ottimo abbinamento!';
+                
+                if (matchedPairs === gameData[currentLevel].length) {
+                    endGame();
+                }
+            } else {
+                // Abbinamento sbagliato
+                first.element.classList.add('wrong');
+                second.element.classList.add('wrong');
+                
+                document.getElementById('message').textContent = '❌ Riprova!';
+                
+                setTimeout(() => {
+                    first.element.classList.remove('flipped', 'wrong');
+                    second.element.classList.remove('flipped', 'wrong');
+                    first.element.querySelector('.card-content').style.display = 'none';
+                    first.element.querySelector('.card-back').style.display = 'block';
+                    second.element.querySelector('.card-content').style.display = 'none';
+                    second.element.querySelector('.card-back').style.display = 'block';
+                }, 1000);
+            }
+            
+            flippedCards = [];
+        }
+
+        function endGame() {
+            clearInterval(gameTimer);
+            gameStarted = false;
+            
+            const finalTime = document.getElementById('timer').textContent;
+            document.getElementById('message').innerHTML = `
+                🎊 Congratulazioni! Hai completato il livello ${currentLevel.toUpperCase()}!<br>
+                Tempo: ${finalTime} | Mosse: ${moves}
+            `;
+            
+            createCelebration();
+        }
+
+        function createCelebration() {
+            const celebration = document.getElementById('celebration');
+            celebration.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7aa', '#51cf66', '#667eea'][Math.floor(Math.random() * 5)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                celebration.appendChild(confetti);
+            }
+            
+            setTimeout(() => {
+                celebration.innerHTML = '';
+            }, 3000);
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            gameTimer = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+                const seconds = (elapsed % 60).toString().padStart(2, '0');
+                document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function updateStats() {
+            document.getElementById('moves').textContent = moves;
+            document.getElementById('matches').textContent = matchedPairs;
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        // Inizializza il gioco
+        resetGame();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9636908001baee65',t:'MTc1MzIyNTMzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/caratteri.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+</html>
