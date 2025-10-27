@@ -132,6 +132,41 @@
     <div class="description">Rappresenta casa e famiglia, cuore della cultura cinese.</div>
  
   </div>
+  <div class="card" tabindex="0" aria-label="Carattere: Pennello">
+    <div class="character">筆</div>
+ <div class="title">Pennello (bǐ)</div>
+<div class="description">Strumento per scrivere e dipingere
+    </div>
+ </div>
+  <div class="card" tabindex="0" aria-label="Carattere: Tesoro">
+    <div class="character">寶</div>
+ <div class="title">Tesoro (bǎo)</div>
+<div class="description">Tetto sopra simboli di soldi e preziosi
+    </div>
+ </div>
+    <div class="card" tabindex="0" aria-label="Carattere: Sogno">
+  <div class="character">梦</div>
+<div class="title">Sogno (mèng)</div>
+<div class="description">Le cose viste mentre si dorme (occhio + letto)</div>
+</div>
+     <div class="card" tabindex="0" aria-label="Carattere: Primavera">
+<div class="character">春</div>
+<div class="title">Primavera (chūn)</div>
+<div class="description">Spuntare di un seme dalla terra con il sole</div>
+</div>
+  <div class="card" tabindex="0" aria-label="Carattere: Virtù">
+<div class="character">德</div>
+<div class="title">Virtù (dé)</div>
+<div class="description">Camminare dritti con il cuore, comportarsi in maniera virtuosa</div>
+    </div>
+  <div class="card" tabindex="0" aria-label="Carattere: Eterno">
+<div class="character">永</div>
+<div class="title">Eterno (yǒng)</div>
+<div class="description">Simbolo dell’infinito, come un fiume che scorre a lungo</div>
+</div> 
+
+
+  
 </main>
 <footer>
 <button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-redl-500 to-yellow-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"> <a href="index.html"> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>Home</a></button>
