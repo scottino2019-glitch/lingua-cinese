@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore Frasi Cinesi</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
+        }
+        
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        }
+
+        .category-card.active {
+            border: 3px solid #667eea;
+            transform: translateY(-3px);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .category-desc {
+            color: #666;
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .phrase-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .phrase-section.active {
+            display: block;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-bottom: 25px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .generate-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .phrase-display {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .chinese-text {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .pinyin {
+            font-size: 1.1rem;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .translation {
+            font-size: 1.1rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .no-selection {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            padding: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .chinese-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🇨🇳 Generatore Frasi Cinesi</h1>
+            <p>Impara il cinese con frasi di esempio organizzate per categoria</p>
+        </header>
+
+        <div class="categories">
+            <div class="category-card" data-category="saluti">
+                <div class="category-icon">👋</div>
+                <div class="category-title">Saluti</div>
+                <div class="category-desc">Saluti quotidiani e presentazioni</div>
+            </div>
+
+            <div class="category-card" data-category="famiglia">
+                <div class="category-icon">👨‍👩‍👧‍👦</div>
+                <div class="category-title">Famiglia</div>
+                <div class="category-desc">Membri della famiglia e relazioni</div>
+            </div>
+
+            <div class="category-card" data-category="cibo">
+                <div class="category-icon">🍜</div>
+                <div class="category-title">Cibo</div>
+                <div class="category-desc">Piatti, ingredienti e ristoranti</div>
+            </div>
+
+            <div class="category-card" data-category="tempo">
+                <div class="category-icon">⏰</div>
+                <div class="category-title">Tempo</div>
+                <div class="category-desc">Ore, giorni, stagioni e meteo</div>
+            </div>
+
+            <div class="category-card" data-category="shopping">
+                <div class="category-icon">🛍️</div>
+                <div class="category-title">Shopping</div>
+                <div class="category-desc">Acquisti, prezzi e negozi</div>
+            </div>
+
+            <div class="category-card" data-category="viaggio">
+                <div class="category-icon">✈️</div>
+                <div class="category-title">Viaggio</div>
+                <div class="category-desc">Trasporti, direzioni e turismo</div>
+            </div>
+        </div>
+
+        <div class="phrase-section" id="phrase-section">
+            <div class="no-selection">
+                Seleziona una categoria sopra per iniziare a generare frasi! 🎯
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const phrases = {
+            saluti: [
+                { chinese: "你好！", pinyin: "Nǐ hǎo!", translation: "Ciao!" },
+                { chinese: "早上好！", pinyin: "Zǎoshang hǎo!", translation: "Buongiorno!" },
+                { chinese: "晚上好！", pinyin: "Wǎnshang hǎo!", translation: "Buonasera!" },
+                { chinese: "再见！", pinyin: "Zàijiàn!", translation: "Arrivederci!" },
+                { chinese: "我叫李明。", pinyin: "Wǒ jiào Lǐ Míng.", translation: "Mi chiamo Li Ming." },
+                { chinese: "很高兴认识你。", pinyin: "Hěn gāoxìng rènshi nǐ.", translation: "Piacere di conoscerti." },
+                { chinese: "你好吗？", pinyin: "Nǐ hǎo ma?", translation: "Come stai?" },
+                { chinese: "我很好，谢谢。", pinyin: "Wǒ hěn hǎo, xièxie.", translation: "Sto bene, grazie." }
+            ],
+            famiglia: [
+                { chinese: "这是我的家人。", pinyin: "Zhè shì wǒ de jiārén.", translation: "Questa è la mia famiglia." },
+                { chinese: "我有一个哥哥。", pinyin: "Wǒ yǒu yīgè gēge.", translation: "Ho un fratello maggiore." },
+                { chinese: "我妈妈是老师。", pinyin: "Wǒ māma shì lǎoshī.", translation: "Mia madre è un'insegnante." },
+                { chinese: "我爸爸在工作。", pinyin: "Wǒ bàba zài gōngzuò.", translation: "Mio padre è al lavoro." },
+                { chinese: "我的妹妹很可爱。", pinyin: "Wǒ de mèimei hěn kě'ài.", translation: "Mia sorella minore è molto carina." },
+                { chinese: "爷爷奶奶住在北京。", pinyin: "Yéye nǎinai zhù zài Běijīng.", translation: "I nonni vivono a Pechino." },
+                { chinese: "我们是一个大家庭。", pinyin: "Wǒmen shì yīgè dà jiātíng.", translation: "Siamo una famiglia numerosa." }
+            ],
+            cibo: [
+                { chinese: "我想吃中国菜。", pinyin: "Wǒ xiǎng chī Zhōngguó cài.", translation: "Voglio mangiare cibo cinese." },
+                { chinese: "这个菜很好吃。", pinyin: "Zhège cài hěn hǎochī.", translation: "Questo piatto è molto buono." },
+                { chinese: "我要一碗米饭。", pinyin: "Wǒ yào yī wǎn mǐfàn.", translation: "Voglio una ciotola di riso." },
+                { chinese: "你喜欢吃什么？", pinyin: "Nǐ xǐhuan chī shénme?", translation: "Cosa ti piace mangiare?" },
+                { chinese: "我不吃辣的。", pinyin: "Wǒ bù chī là de.", translation: "Non mangio piccante." },
+                { chinese: "请给我菜单。", pinyin: "Qǐng gěi wǒ càidān.", translation: "Per favore dammi il menu." },
+                { chinese: "买单，谢谢。", pinyin: "Mǎidān, xièxie.", translation: "Il conto, grazie." },
+                { chinese: "这家餐厅很有名。", pinyin: "Zhè jiā cāntīng hěn yǒumíng.", translation: "Questo ristorante è molto famoso." }
+            ],
+            tempo: [
+                { chinese: "现在几点？", pinyin: "Xiànzài jǐ diǎn?", translation: "Che ore sono?" },
+                { chinese: "今天是星期一。", pinyin: "Jīntiān shì xīngqīyī.", translation: "Oggi è lunedì." },
+                { chinese: "明天会下雨。", pinyin: "Míngtiān huì xiàyǔ.", translation: "Domani pioverà." },
+                { chinese: "春天很美丽。", pinyin: "Chūntiān hěn měilì.", translation: "La primavera è molto bella." },
+                { chinese: "今天天气很好。", pinyin: "Jīntiān tiānqì hěn hǎo.", translation: "Oggi il tempo è bello." },
+                { chinese: "我八点起床。", pinyin: "Wǒ bā diǎn qǐchuáng.", translation: "Mi alzo alle otto." },
+                { chinese: "冬天很冷。", pinyin: "Dōngtiān hěn lěng.", translation: "L'inverno è molto freddo." },
+                { chinese: "昨天是我的生日。", pinyin: "Zuótiān shì wǒ de shēngrì.", translation: "Ieri era il mio compleanno." }
+            ],
+            shopping: [
+                { chinese: "这个多少钱？", pinyin: "Zhège duōshao qián?", translation: "Quanto costa questo?" },
+                { chinese: "太贵了！", pinyin: "Tài guì le!", translation: "È troppo caro!" },
+                { chinese: "可以便宜一点吗？", pinyin: "Kěyǐ piányi yīdiǎn ma?", translation: "Puoi fare un po' di sconto?" },
+                { chinese: "我要买这个。", pinyin: "Wǒ yào mǎi zhège.", translation: "Voglio comprare questo." },
+                { chinese: "有没有小一点的？", pinyin: "Yǒu méiyǒu xiǎo yīdiǎn de?", translation: "Ce n'è uno più piccolo?" },
+                { chinese: "我在找一件衬衫。", pinyin: "Wǒ zài zhǎo yī jiàn chènshān.", translation: "Sto cercando una camicia." },
+                { chinese: "可以试穿吗？", pinyin: "Kěyǐ shìchuān ma?", translation: "Posso provarlo?" },
+                { chinese: "我用信用卡付款。", pinyin: "Wǒ yòng xìnyòngkǎ fùkuǎn.", translation: "Pago con carta di credito." }
+            ],
+            viaggio: [
+                { chinese: "火车站在哪里？", pinyin: "Huǒchēzhàn zài nǎlǐ?", translation: "Dov'è la stazione ferroviaria?" },
+                { chinese: "我要去机场。", pinyin: "Wǒ yào qù jīchǎng.", translation: "Devo andare all'aeroporto." },
+                { chinese: "请问怎么走？", pinyin: "Qǐngwèn zěnme zǒu?", translation: "Scusi, come si arriva?" },
+                { chinese: "我迷路了。", pinyin: "Wǒ mílù le.", translation: "Mi sono perso." },
+                { chinese: "这里有地铁吗？", pinyin: "Zhèlǐ yǒu dìtiě ma?", translation: "C'è una metropolitana qui?" },
+                
+                { chinese: "长城很壮观。", pinyin: "Chángchéng hěn zhuàngguān.", translation: "La Grande Muraglia è spettacolare." },
+                { chinese: "我们去旅游吧。", pinyin: "Wǒmen qù lǚyóu ba.", translation: "Andiamo in viaggio." }
+            ]
+        };
+
+        let currentCategory = null;
+
+        function selectCategory(category) {
+            // Remove active class from all cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            // Add active class to selected card
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+
+            currentCategory = category;
+            showPhraseSection();
+        }
+
+        function showPhraseSection() {
+            const section = document.getElementById('phrase-section');
+            section.classList.add('active');
+            
+            section.innerHTML = `
+                <button class="generate-btn" onclick="generatePhrase()">
+                    🎲 Genera Nuova Frase
+                </button>
+                <div id="phrase-display"></div>
+            `;
+            
+            generatePhrase();
+        }
+
+        function generatePhrase() {
+            if (!currentCategory) return;
+
+            const categoryPhrases = phrases[currentCategory];
+            const randomPhrase = categoryPhrases[Math.floor(Math.random() * categoryPhrases.length)];
+            
+            const displayDiv = document.getElementById('phrase-display');
+            displayDiv.innerHTML = `
+                <div class="phrase-display">
+                    <div class="chinese-text">${randomPhrase.chinese}</div>
+                    <div class="pinyin">${randomPhrase.pinyin}</div>
+                    <div class="translation">${randomPhrase.translation}</div>
+                </div>
+            `;
+        }
+
+        // Add click event listeners to category cards
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.getAttribute('data-category');
+                selectCategory(category);
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9940efd360010e83',t:'MTc2MTM4NzE1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabolario Cinese</title>
+    <style>
+        body { box-sizing: border-box; font-family: Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .search-section { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .search-box { width: 100%; padding: 15px; border: 2px solid #ff9a9e; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+        .search-box:focus { border-color: #ff6b9d; outline: none; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-top: 20px; }
+        .vocab-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+        .vocab-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .chinese-char { font-size: 2.5em; font-family: "Microsoft YaHei", "SimSun", sans-serif; text-align: center; margin-bottom: 10px; font-weight: bold; }
+        .pinyin { font-size: 1.1em; text-align: center; margin-bottom: 15px; opacity: 0.9; font-style: italic; }
+        .translation { font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 15px; }
+        .examples { font-size: 0.9em; opacity: 0.9; line-height: 1.4; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px; }
+        .example-item { margin-bottom: 8px; }
+.header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    
+
+<div class="container">
+
+        <div class="header">
+            <h1>🇨🇳 Vocabolario Cinese</h1>
+<button class="inline-flex items-center justify-center rounded-md px-3 py-1.5 text-sm text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95" onclick="window.history.back()" ><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg>
+    indietro
+</button>
+            
+        </div>
+<!-- Barra di ricerca -->
+<div class="search-section">
+    <h2>🔍 Cerca nel vocabolario</h2>
+    <input type="text" id="searchInput" class="search-box" placeholder="Cerca per caratteri cinesi, pinyin o traduzione italiana..." oninput="cercaParole()">
+</div>
+
+<!-- Container vocabolario -->
+<div id="vocabContainer" class="vocab-grid">
+<div class="vocab-card" data-chinese="好" data-pinyin="hǎo" data-translation="buono" data-examples="">
+        <div class="chinese-char">好</div>
+        <div class="pinyin">hǎo</div>
+        <div class="translation">buono</div>
+    </div>
+
+    <div class="vocab-card" data-chinese="你" data-pinyin="nǐ" data-translation="tu" data-examples="">
+        <div class="chinese-char">你</div>
+        <div class="pinyin">nǐ</div>
+        <div class="translation">Tu</div>
+    </div>
+    <div class="vocab-card" data-chinese="我" data-pinyin="wǒ" data-translation="io" data-examples="">
+        <div class="chinese-char">我</div>
+        <div class="pinyin">wǒ</div>
+        <div class="translation">io</div>
+    </div>
+    <div class="vocab-card" data-chinese="你好" data-pinyin="nǐ hǎo" data-translation="ciao" data-examples="">
+        <div class="chinese-char">你好</div>
+        <div class="pinyin">nǐ hǎo</div>
+        <div class="translation">ciao</div>
+    </div>
+    <div class="vocab-card" data-chinese="你好吗？" data-pinyin="nǐ hǎo ma" data-translation="come stai？" data-examples="">
+        <div class="chinese-char">你好吗？</div>
+        <div class="pinyin">nǐ hǎo ma</div>
+        <div class="translation">come stai？</div>
+    </div>
+    <div class="vocab-card" data-chinese="去" data-pinyin="qù" data-translation="andare" data-examples="">
+        <div class="chinese-char">去</div>
+        <div class="pinyin">qù</div>
+        <div class="translation">andare</div>
+    </div>
+    <div class="vocab-card" data-chinese="妈妈" data-pinyin="mā ma" data-translation="mamma" data-examples="">
+        <div class="chinese-char">妈妈</div>
+        <div class="pinyin">mā ma</div>
+        <div class="translation">mamma</div>
+    </div>
+    <div class="vocab-card" data-chinese="爸爸" data-pinyin="bà ba" data-translation="papá" data-examples="">
+        <div class="chinese-char">爸爸</div>
+        <div class="pinyin">Bà ba</div>
+        <div class="translation">papá</div>
+    </div>
+    <div class="vocab-card" data-chinese="哥哥" data-pinyin="gē gē" data-translation="fratello maggiore" data-examples="">
+        <div class="chinese-char">哥哥</div>
+        <div class="pinyin">gē gē</div>
+        <div class="translation">fratello maggiore</div>
+    </div>
+    <div class="vocab-card" data-chinese="大" data-pinyin="dà" data-translation="grande" data-examples="">
+        <div class="chinese-char">大</div>
+        <div class="pinyin">dà</div>
+        <div class="translation">grande</div>
+    </div>
+    <div class="vocab-card" data-chinese="小" data-pinyin="xiǎo" data-translation="piccolo" data-examples="">
+        <div class="chinese-char">小</div>
+        <div class="pinyin">Xiǎo</div>
+        <div class="translation">Piccolo</div>
+    </div>
+    <div class="vocab-card" data-chinese="听" data-pinyin="tīng" data-translation="ascoltare" data-examples="">
+        <div class="chinese-char">听</div>
+        <div class="pinyin">Tīng</div>
+        <div class="translation">Ascoltare</div>
+    </div>
+    <div class="vocab-card" data-chinese="电影" data-pinyin="diànyǐng" data-translation="film" data-examples="">
+        <div class="chinese-char">电影</div>
+        <div class="pinyin">Diànyǐng</div>
+        <div class="translation">film</div>
+    </div>
+    <div class="vocab-card" data-chinese="音乐" data-pinyin="yīnyuè" data-translation="musica" data-examples="">
+        <div class="chinese-char">音乐</div>
+        <div class="pinyin">Yīnyuè</div>
+        <div class="translation">musica</div>
+    </div>
+</div>
+
+    <div class="vocab-card" data-chinese="中文" data-pinyin="zhōngwén" data-translation="lingua cinese" data-examples="​中文 (zhōngwén) è il termine più generale e neutrale per riferirsi alla lingua e alla scrittura cinese.
+​significato letterale: lingua/scrittura cinese.
+​ambito: è il termine più comune e universale per dire "cinese" (sia lingua parlata che scritta) in un contesto non linguistico o colloquiale. è spesso usato come sinonimo di 汉语.
+​uso principale: è molto comune per parlare della materia scolastica, della lingua in senso lato, o quando si fa riferimento alla scrittura/testi.
+​esempio d'uso:
+​你会说中文吗？ (nǐ huì shuō zhōngwén ma?)
+​sai parlare cinese?
+​这是一本中文书。 (zhè shì yī běn zhōngwén shū.)
+​questo è un libro in cinese.">
+        <div class="chinese-char">中文</div>
+        <div class="pinyin">Zhōngwén</div>
+        <div class="translation">Lingua cinese</div>
+        <div class="examples">
+            <div class="example-item">​中文 (Zhōngwén) è il termine più generale e neutrale per riferirsi alla lingua e alla scrittura cinese.</div>
+            <div class="example-item">​Significato letterale: Lingua/Scrittura cinese.</div>
+            <div class="example-item">​Ambito: È il termine più comune e universale per dire "cinese" (sia lingua parlata che scritta) in un contesto non linguistico o colloquiale. È spesso usato come sinonimo di 汉语.</div>
+            <div class="example-item">​Uso principale: È molto comune per parlare della materia scolastica, della lingua in senso lato, o quando si fa riferimento alla scrittura/testi.</div>
+            <div class="example-item">​Esempio d'uso:</div>
+            <div class="example-item">​你会说中文吗？ (Nǐ huì shuō Zhōngwén ma?)</div>
+            <div class="example-item">​Sai parlare cinese?</div>
+            <div class="example-item">​这是一本中文书。 (Zhè shì yī běn Zhōngwén shū.)</div>
+            <div class="example-item">​Questo è un libro in cinese.</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="​普通话" data-pinyin="pǔtōnghuà" data-translation="lingua cinese (mandarino)" data-examples="​普通话 (pǔtōnghuà) è il termine specifico per il mandarino standard.
+​significato letterale: lingua comune.
+​ambito: è il nome ufficiale in cina continentale per la lingua standard basata sul dialetto di pechino, usata nell'istruzione, nei media e negli affari in tutta la nazione.
+​uso principale: lo si usa quando si vuole specificare che non ci si riferisce a uno degli altri dialetti/varietà regionali (es. cantonese o hakka), ma alla lingua standard.
+​esempio d'uso:
+​我的普通话说得很好。 (wǒ de pǔtōnghuà shuō de hěn hǎo.)
+​parlo molto bene il mandarino standard.
+​请说普通话。 (qǐng shuō pǔtōnghuà.)
+​per favore, parla mandarino.
+​(nota: a taiwan è chiamato 国语 / guóyǔ.)">
+        <div class="chinese-char">​普通话</div>
+        <div class="pinyin">Pǔtōnghuà</div>
+        <div class="translation">Lingua cinese (Mandarino)</div>
+        <div class="examples">
+            <div class="example-item">​普通话 (Pǔtōnghuà) è il termine specifico per il mandarino standard.</div>
+            <div class="example-item">​Significato letterale: Lingua comune.</div>
+            <div class="example-item">​Ambito: È il nome ufficiale in Cina continentale per la lingua standard basata sul dialetto di Pechino, usata nell'istruzione, nei media e negli affari in tutta la nazione.</div>
+            <div class="example-item">​Uso principale: Lo si usa quando si vuole specificare che non ci si riferisce a uno degli altri dialetti/varietà regionali (es. Cantonese o Hakka), ma alla lingua standard.</div>
+            <div class="example-item">​Esempio d'uso:</div>
+            <div class="example-item">​我的普通话说得很好。 (Wǒ de Pǔtōnghuà shuō de hěn hǎo.)</div>
+            <div class="example-item">​Parlo molto bene il Mandarino standard.</div>
+            <div class="example-item">​请说普通话。 (Qǐng shuō Pǔtōnghuà.)</div>
+            <div class="example-item">​Per favore, parla Mandarino.</div>
+            <div class="example-item">​(Nota: A Taiwan è chiamato 国语 / Guóyǔ.)</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="哪（哪儿）" data-pinyin="nǎ (nǎr)" data-translation="quale?(utilizzato prima di un clssificatore)" data-examples="哪 (nǎ) e 哪儿 (nǎr) sono pronomi interrogativi essenziali in cinese che significano "quale" e "dove".
+sebbene siano correlati, hanno usi e significati leggermente diversi.
+1. 哪 (nǎ) – quale
+哪 (nǎ) significa "quale" e deve essere sempre seguito da un classificatore (misuratore) o da un nome.
+struttura comune: 
+哪 + classificatore + nome
+esempi:
+你是哪国人？ (nǐ shì nǎ guó rén?)
+di quale paese sei?
+(qui 国 guó "paese" funge da sostantivo, non da classificatore, ma segue direttamente 哪.)
+你想喝哪一杯茶？ (nǐ xiǎng hē nǎ yì bēi chá?)
+quale tazza di tè vuoi bere?
+(一杯 yì bēi è il classificatore "una tazza".)
+你在哪家公司工作？ (nǐ zài nǎ jiā gōngsī gōngzuò?)
+in quale azienda lavori?
+(家 jiā è il classificatore per aziende/negozi.)
+哪本书是你的？ (nǎ běn shū shì nǐ de?)
+quale libro è tuo?
+(本 běn è il classificatore per libri.)
+你学的是哪种语言？ (nǐ xué de shì nǎ zhǒng yǔyán?)
+quale tipo di lingua stai studiando?
+(种 zhǒng è il classificatore per tipi/generi.)">
+        <div class="chinese-char">哪（哪儿）</div>
+        <div class="pinyin">nǎ (nǎr)</div>
+        <div class="translation">Quale?(utilizzato prima di un clssificatore)</div>
+        <div class="examples">
+            <div class="example-item">哪 (nǎ) e 哪儿 (nǎr) sono pronomi interrogativi essenziali in cinese che significano "quale" e "dove".</div>
+            <div class="example-item">Sebbene siano correlati, hanno usi e significati leggermente diversi.</div>
+            <div class="example-item">1. 哪 (nǎ) – Quale</div>
+            <div class="example-item">哪 (nǎ) significa "quale" e deve essere sempre seguito da un classificatore (misuratore) o da un nome.</div>
+            <div class="example-item">Struttura comune:</div>
+            <div class="example-item">哪 + classificatore + nome</div>
+            <div class="example-item">Esempi:</div>
+            <div class="example-item">你是哪国人？ (Nǐ shì nǎ guó rén?)</div>
+            <div class="example-item">Di quale paese sei?</div>
+            <div class="example-item">(Qui 国 guó "paese" funge da sostantivo, non da classificatore, ma segue direttamente 哪.)</div>
+            <div class="example-item">你想喝哪一杯茶？ (Nǐ xiǎng hē nǎ yì bēi chá?)</div>
+            <div class="example-item">Quale tazza di tè vuoi bere?</div>
+            <div class="example-item">(一杯 yì bēi è il classificatore "una tazza".)</div>
+            <div class="example-item">你在哪家公司工作？ (Nǐ zài nǎ jiā gōngsī gōngzuò?)</div>
+            <div class="example-item">In quale azienda lavori?</div>
+            <div class="example-item">(家 jiā è il classificatore per aziende/negozi.)</div>
+            <div class="example-item">哪本书是你的？ (Nǎ běn shū shì nǐ de?)</div>
+            <div class="example-item">Quale libro è tuo?</div>
+            <div class="example-item">(本 běn è il classificatore per libri.)</div>
+            <div class="example-item">你学的是哪种语言？ (Nǐ xué de shì nǎ zhǒng yǔyán?)</div>
+            <div class="example-item">Quale tipo di lingua stai studiando?</div>
+            <div class="example-item">(种 zhǒng è il classificatore per tipi/generi.)</div>
+        </div>
+    </div>
+
+    <div class="vocab-card" data-chinese="吗" data-pinyin="ma" data-translation="particella modale finale con valore interrogativo" data-examples="吗 (ma) è una particella modale che viene posta alla fine di una frase dichiarativa per trasformarla in una domanda sì/no. non ha un significato proprio, ma indica semplicemente l'intonazione interrogativa, proprio come il punto interrogativo in italiano.
+​ecco alcuni esempi di frasi con 吗:
+​你是意大利人吗？ (nǐ shì yìdàlì rén ma?)
+​sei italiano/a?
+​你喜欢喝茶吗？ (nǐ xǐhuān hē chá ma?)
+​ti piace bere il tè?
+​你今天很忙吗？ (nǐ jīntiān hěn máng ma?)
+​sei molto impegnato/a oggi?
+​他懂中文吗？ (tā dǒng zhōngwén ma?)
+​lui capisce il cinese?
+​你觉得这件衣服好看吗？ (nǐ juéde zhè jiàn yīfu hǎokàn ma?)
+​pensi che questi vestiti siano belli?
+​现在我们应该上课吗？ (xiànzài wǒmen yīnggāi shàng kè ma?)
+​dovremmo fare lezione adesso? (o dovremmo iniziare la lezione adesso?)">
+        <div class="chinese-char">吗</div>
+        <div class="pinyin">ma</div>
+        <div class="translation">particella modale finale con valore interrogativo</div>
+        <div class="examples">
+            <div class="example-item">吗 (ma) è una particella modale che viene posta alla fine di una frase dichiarativa per trasformarla in una domanda Sì/No. Non ha un significato proprio, ma indica semplicemente l'intonazione interrogativa, proprio come il punto interrogativo in italiano.</div>
+            <div class="example-item">​Ecco alcuni esempi di frasi con 吗:</div>
+            <div class="example-item">​你是意大利人吗？ (Nǐ shì Yìdàlì rén ma?)</div>
+            <div class="example-item">​Sei italiano/a?</div>
+            <div class="example-item">​你喜欢喝茶吗？ (Nǐ xǐhuān hē chá ma?)</div>
+            <div class="example-item">​Ti piace bere il tè?</div>
+            <div class="example-item">​你今天很忙吗？ (Nǐ jīntiān hěn máng ma?)</div>
+            <div class="example-item">​Sei molto impegnato/a oggi?</div>
+            <div class="example-item">​他懂中文吗？ (Tā dǒng Zhōngwén ma?)</div>
+            <div class="example-item">​Lui capisce il cinese?</div>
+            <div class="example-item">​你觉得这件衣服好看吗？ (Nǐ juéde zhè jiàn yīfu hǎokàn ma?)</div>
+            <div class="example-item">​Pensi che questi vestiti siano belli?</div>
+            <div class="example-item">​现在我们应该上课吗？ (Xiànzài wǒmen yīnggāi shàng kè ma?)</div>
+            <div class="example-item">​Dovremmo fare lezione adesso? (o Dovremmo iniziare la lezione adesso?)</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="谁" data-pinyin="shéi/shuí" data-translation="(pron. interr.) chi? (sing. e plur.)" data-examples="谁 (shéi) è un pronome interrogativo che significa "chi". viene usato esattamente come in italiano per chiedere l'identità di una persona.
+​ecco alcuni esempi di frasi con 谁:
+​他是谁？ (tā shì shéi?)
+​chi è lui?
+​这是谁的书？ (zhè shì shéi de shū?)
+​di chi è questo libro? (letteralmente: questo è il libro di chi?)
+​你想跟谁一起去？ (nǐ xiǎng gēn shéi yīqǐ qù?)
+​con chi vuoi andare? (letteralmente: tu vuoi con chi insieme andare?)
+​谁知道答案？ (shéi zhīdào dá'àn?)
+​chi sa la risposta? (in questo caso, 谁 funge da soggetto della frase.)
+​你看到了谁？ (nǐ kàndào le shéi?)
+​chi hai visto?
+​谁会说汉语？ (shéi huì shuō hànyǔ?)
+​chi sa parlare cinese?
+​你刚才跟谁说话呢？ (nǐ gāngcái gēn shéi shuōhuà ne?)
+​con chi stavi parlando un attimo fa?
+​nota importante:
+​quando 谁 è usato per chiedere chi è il soggetto della frase (come nell'esempio 4 e 6), la struttura della frase rimane invariata, in quanto 谁 prende il posto del soggetto sconosciuto. non hai bisogno di altre particelle interrogative come 吗 (ma).">
+        <div class="chinese-char">谁</div>
+        <div class="pinyin">shéi/shuí</div>
+        <div class="translation">(pron. Interr.) chi? (sing. e plur.)</div>
+        <div class="examples">
+            <div class="example-item">谁 (shéi) è un pronome interrogativo che significa "chi". Viene usato esattamente come in italiano per chiedere l'identità di una persona.</div>
+            <div class="example-item">​Ecco alcuni esempi di frasi con 谁:</div>
+            <div class="example-item">​他是谁？ (Tā shì shéi?)</div>
+            <div class="example-item">​Chi è lui?</div>
+            <div class="example-item">​这是谁的书？ (Zhè shì shéi de shū?)</div>
+            <div class="example-item">​Di chi è questo libro? (Letteralmente: Questo è il libro di chi?)</div>
+            <div class="example-item">​你想跟谁一起去？ (Nǐ xiǎng gēn shéi yīqǐ qù?)</div>
+            <div class="example-item">​Con chi vuoi andare? (Letteralmente: Tu vuoi con chi insieme andare?)</div>
+            <div class="example-item">​谁知道答案？ (Shéi zhīdào dá'àn?)</div>
+            <div class="example-item">​Chi sa la risposta? (In questo caso, 谁 funge da soggetto della frase.)</div>
+            <div class="example-item">​你看到了谁？ (Nǐ kàndào le shéi?)</div>
+            <div class="example-item">​Chi hai visto?</div>
+            <div class="example-item">​谁会说汉语？ (Shéi huì shuō Hànyǔ?)</div>
+            <div class="example-item">​Chi sa parlare cinese?</div>
+            <div class="example-item">​你刚才跟谁说话呢？ (Nǐ gāngcái gēn shéi shuōhuà ne?)</div>
+            <div class="example-item">​Con chi stavi parlando un attimo fa?</div>
+            <div class="example-item">​Nota importante:</div>
+            <div class="example-item">​Quando 谁 è usato per chiedere chi è il soggetto della frase (come nell'esempio 4 e 6), la struttura della frase rimane invariata, in quanto 谁 prende il posto del soggetto sconosciuto. Non hai bisogno di altre particelle interrogative come 吗 (ma).</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="班" data-pinyin="bān" data-translation="(sost.) classe (insieme degli studenti)" data-examples="我们班 wǒmen bān - la nostra classe
+汉语班 hànyǔ bān - lezione di cinese
+一班 yi bān - classe 1">
+        <div class="chinese-char">班</div>
+        <div class="pinyin">bān</div>
+        <div class="translation">(sost.) classe (insieme degli studenti)</div>
+        <div class="examples">
+            <div class="example-item">我们班 Wǒmen bān - la nostra classe</div>
+            <div class="example-item">汉语班 Hànyǔ bān - lezione di cinese</div>
+            <div class="example-item">一班 yi bān - classe 1</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="的" data-pinyin="de" data-translation="particella strutturale" data-examples="particella strutturale che marca la relazione tra determinate e determinato 
+我的朋友 wǒ de péngyǒu - il mio amico  
+他的老师 tā de lǎoshī - il suo insegnante 
+谁的同学 shéi de tóngxué di chi è il compagno di classe?">
+        <div class="chinese-char">的</div>
+        <div class="pinyin">de</div>
+        <div class="translation">particella strutturale</div>
+        <div class="examples">
+            <div class="example-item">Particella strutturale che marca la relazione tra determinate e determinato</div>
+            <div class="example-item">我的朋友 Wǒ de péngyǒu - il mio amico</div>
+            <div class="example-item">他的老师 Tā de lǎoshī - il suo insegnante</div>
+            <div class="example-item">谁的同学 Shéi de tóngxué di chi è il compagno di classe?</div>
+        </div>
+    </div>
+     <div class="vocab-card" data-chinese="老师好" data-pinyin="lǎoshī hǎo" data-translation="salve maestro" data-examples="">
+        <div class="chinese-char">老师好</div>
+        <div class="pinyin">Lǎoshī hǎo</div>
+        <div class="translation">Salve Maestro</div>
+    </div>
+    <div class="vocab-card" data-chinese="明白了" data-pinyin="míngbai le" data-translation="chiaro" data-examples="​我明白了。 (wǒ míngbái le.)
+​ho capito.
+​你明白了吗？ (nǐ míngbái le ma?)
+​hai capito?
+​我现在终于明白了你说的话。 (wǒ xiànzài zhōngyú míngbái le nǐ shuō de huà.)
+​ora finalmente ho capito quello che hai detto. (o ora capisco finalmente quello che volevi dire.)
+​老师，我已经明白了这道题的做法。 (lǎoshī, wǒ yǐjīng míngbái le zhè dào tí de zuòfǎ.)
+​professore/professoressa, ho già capito come si fa questo esercizio.
+​听了你的解释，我完全明白了。 (tīng le nǐ de jiěshì, wǒ wánquán míngbái le.)
+​dopo aver ascoltato la tua spiegazione, ho capito completamente.
+​好的，我明白了，会照你说的做。 (hǎo de, wǒ míngbái le, huì zhào nǐ shuō de zuò.)
+​va bene, ho capito, farò come hai detto.">
+        <div class="chinese-char">明白了</div>
+        <div class="pinyin">Míngbai le</div>
+        <div class="translation">Chiaro</div>
+        <div class="examples">
+            <div class="example-item">​我明白了。 (Wǒ míngbái le.)</div>
+            <div class="example-item">​Ho capito.</div>
+            <div class="example-item">​你明白了吗？ (Nǐ míngbái le ma?)</div>
+            <div class="example-item">​Hai capito?</div>
+            <div class="example-item">​我现在终于明白了你说的话。 (Wǒ xiànzài zhōngyú míngbái le nǐ shuō de huà.)</div>
+            <div class="example-item">​Ora finalmente ho capito quello che hai detto. (o Ora capisco finalmente quello che volevi dire.)</div>
+            <div class="example-item">​老师，我已经明白了这道题的做法。 (Lǎoshī, wǒ yǐjīng míngbái le zhè dào tí de zuòfǎ.)</div>
+            <div class="example-item">​Professore/Professoressa, ho già capito come si fa questo esercizio.</div>
+            <div class="example-item">​听了你的解释，我完全明白了。 (Tīng le nǐ de jiěshì, wǒ wánquán míngbái le.)</div>
+            <div class="example-item">​Dopo aver ascoltato la tua spiegazione, ho capito completamente.</div>
+            <div class="example-item">​好的，我明白了，会照你说的做。 (Hǎo de, wǒ míngbái le, huì zhào nǐ shuō de zuò.)</div>
+            <div class="example-item">​Va bene, ho capito, farò come hai detto.</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="不明白" data-pinyin="bù míngbai" data-translation="non è chiaro" data-examples="​我不明白。 (wǒ bù míngbái.)
+​non capisco. (è la forma più semplice e diretta.)
+​你为什么不明白？ (nǐ wèishénme bù míngbái?)
+​perché non capisci?
+​对不起，我还是不明白你的意思。 (duìbuqǐ, wǒ háishì bù míngbái nǐ de yìsi.)
+​scusa, ancora non capisco cosa intendi. (o il tuo significato.)
+​他似乎不明白这个问题的严重性。 (tā sìhū bù míngbái zhège wèntí de yánzhòngxìng.)
+​lui apparentemente non capisce la serietà di questo problema.
+​我有点不明白你刚才说的那一点。 (wǒ yǒudiǎn bù míngbái nǐ gāngcái shuō de nà yīdiǎn.)
+​non capisco bene (un po') quel punto che hai appena menzionato.
+​即使你解释了，我也不明白。 (jíshǐ nǐ jiěshì le, wǒ yě bù míngbái.)
+​anche se hai spiegato, (io) non capisco.">
+        <div class="chinese-char">不明白</div>
+        <div class="pinyin">Bù míngbai</div>
+        <div class="translation">Non è chiaro</div>
+        <div class="examples">
+            <div class="example-item">​我不明白。 (Wǒ bù míngbái.)</div>
+            <div class="example-item">​Non capisco. (È la forma più semplice e diretta.)</div>
+            <div class="example-item">​你为什么不明白？ (Nǐ wèishénme bù míngbái?)</div>
+            <div class="example-item">​Perché non capisci?</div>
+            <div class="example-item">​对不起，我还是不明白你的意思。 (Duìbuqǐ, wǒ háishì bù míngbái nǐ de yìsi.)</div>
+            <div class="example-item">​Scusa, ancora non capisco cosa intendi. (o il tuo significato.)</div>
+            <div class="example-item">​他似乎不明白这个问题的严重性。 (Tā sìhū bù míngbái zhège wèntí de yánzhòngxìng.)</div>
+            <div class="example-item">​Lui apparentemente non capisce la serietà di questo problema.</div>
+            <div class="example-item">​我有点不明白你刚才说的那一点。 (Wǒ yǒudiǎn bù míngbái nǐ gāngcái shuō de nà yīdiǎn.)</div>
+            <div class="example-item">​Non capisco bene (un po') quel punto che hai appena menzionato.</div>
+            <div class="example-item">​即使你解释了，我也不明白。 (Jíshǐ nǐ jiěshì le, wǒ yě bù míngbái.)</div>
+            <div class="example-item">​Anche se hai spiegato, (io) non capisco.</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="懂了" data-pinyin="dǒng le" data-translation="capito" data-examples="​我懂了。 (wǒ dǒng le.)
+​ho capito. (molto comune e diretto.)
+​你懂了吗？ (nǐ dǒng le ma?)
+​hai capito?
+​请再说一遍，我就懂了。 (qǐng zài shuō yī biàn, wǒ jiù dǒng le.)
+​per favore, dillo di nuovo, e allora capirò.
+​现在我完全懂了如何使用这个软件。 (xiànzài wǒ wánquán dǒng le rúhé shǐyòng zhège ruǎnjiàn.)
+​ora ho capito completamente come usare questo software.
+​他终于懂了生活的意义。 (tā zhōngyú dǒng le shēnghuó de yìyì.)
+​lui ha finalmente capito il senso della vita. (in questo contesto, "懂" è più profondo, quasi "capire l'essenza/il significato").
+​好的，我懂了，谢谢你的指导。 (hǎo de, wǒ dǒng le, xièxie nǐ de zhǐdǎo.)
+​ok, ho capito, grazie per la tua guida/istruzione.
+​nota sulla differenza tra 明白了 e 懂了:
+​明白了 (míngbái le) è spesso usato per "capire le informazioni" o "capire le istruzioni".
+​懂了 (dǒng le) può essere usato in modo intercambiabile per le istruzioni, ma si estende anche a "capire un'abilità", "capire una lingua" o "capire un concetto profondo" (come nell'esempio 5). nella conversazione quotidiana, sono molto simili.">
+        <div class="chinese-char">懂了</div>
+        <div class="pinyin">Dǒng le</div>
+        <div class="translation">Capito</div>
+        <div class="examples">
+            <div class="example-item">​我懂了。 (Wǒ dǒng le.)</div>
+            <div class="example-item">​Ho capito. (Molto comune e diretto.)</div>
+            <div class="example-item">​你懂了吗？ (Nǐ dǒng le ma?)</div>
+            <div class="example-item">​Hai capito?</div>
+            <div class="example-item">​请再说一遍，我就懂了。 (Qǐng zài shuō yī biàn, wǒ jiù dǒng le.)</div>
+            <div class="example-item">​Per favore, dillo di nuovo, e allora capirò.</div>
+            <div class="example-item">​现在我完全懂了如何使用这个软件。 (Xiànzài wǒ wánquán dǒng le rúhé shǐyòng zhège ruǎnjiàn.)</div>
+            <div class="example-item">​Ora ho capito completamente come usare questo software.</div>
+            <div class="example-item">​他终于懂了生活的意义。 (Tā zhōngyú dǒng le shēnghuó de yìyì.)</div>
+            <div class="example-item">​Lui ha finalmente capito il senso della vita. (In questo contesto, "懂" è più profondo, quasi "capire l'essenza/il significato").</div>
+            <div class="example-item">​好的，我懂了，谢谢你的指导。 (Hǎo de, wǒ dǒng le, xièxie nǐ de zhǐdǎo.)</div>
+            <div class="example-item">​Ok, ho capito, grazie per la tua guida/istruzione.</div>
+            <div class="example-item">​Nota sulla differenza tra 明白了 e 懂了:</div>
+            <div class="example-item">​明白了 (míngbái le) è spesso usato per "capire le informazioni" o "capire le istruzioni".</div>
+            <div class="example-item">​懂了 (dǒng le) può essere usato in modo intercambiabile per le istruzioni, ma si estende anche a "capire un'abilità", "capire una lingua" o "capire un concetto profondo" (come nell'esempio 5). Nella conversazione quotidiana, sono molto simili.</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="汉语" data-pinyin="hànyǔ" data-translation="(sost.)lingua cinese" data-examples="significato letterale: lingua degli han.
+​ambito: si riferisce alla lingua cinese in generale, includendo tutte le sue principali varietà/dialetti (mandarin/普通话, cantonese/广东话, shanghai/上海话, ecc.).
+​uso principale: è il termine preferito negli studi linguistici, nell'insegnamento del cinese come lingua straniera, e nei contesti ufficiali in cui si vuole specificare la lingua parlata dal gruppo etnico dominante. è la lingua madre di tutti i locutori di cinese.
+​esempio d'uso:
+​我想学汉语。 (wǒ xiǎng xué hànyǔ.)
+​voglio studiare il cinese (come lingua han).
+​汉语是世界上使用人数最多的语言。 (hànyǔ shì shìjiè shàng shǐyòng rénshù zuì duō de yǔyán.)
+​il cinese (la lingua han) è la lingua più parlata al mondo per numero di persone.">
+        <div class="chinese-char">汉语</div>
+        <div class="pinyin">Hànyǔ</div>
+        <div class="translation">(sost.)Lingua cinese</div>
+        <div class="examples">
+            <div class="example-item">Significato letterale: Lingua degli Han.</div>
+            <div class="example-item">​Ambito: Si riferisce alla lingua cinese in generale, includendo tutte le sue principali varietà/dialetti (Mandarin/普通话, Cantonese/广东话, Shanghai/上海话, ecc.).</div>
+            <div class="example-item">​Uso principale: È il termine preferito negli studi linguistici, nell'insegnamento del cinese come lingua straniera, e nei contesti ufficiali in cui si vuole specificare la lingua parlata dal gruppo etnico dominante. È la lingua madre di tutti i locutori di cinese.</div>
+            <div class="example-item">​Esempio d'uso:</div>
+            <div class="example-item">​我想学汉语。 (Wǒ xiǎng xué Hànyǔ.)</div>
+            <div class="example-item">​Voglio studiare il cinese (come lingua Han).</div>
+            <div class="example-item">​汉语是世界上使用人数最多的语言。 (Hànyǔ shì shìjiè shàng shǐyòng rénshù zuì duō de yǔyán.)</div>
+            <div class="example-item">​Il cinese (la lingua Han) è la lingua più parlata al mondo per numero di persone.</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="课" data-pinyin="kè" data-translation="lezione" data-examples="">
+        <div class="chinese-char">课</div>
+        <div class="pinyin">Kè</div>
+        <div class="translation">Lezione</div>
+    </div>
+    <div class="vocab-card" data-chinese="谢谢" data-pinyin="xièxie" data-translation="(v.) grazie" data-examples="">
+        <div class="chinese-char">谢谢</div>
+        <div class="pinyin">xièxie</div>
+        <div class="translation">(v.) grazie</div>
+    </div>
+    <div class="vocab-card" data-chinese="学习" data-pinyin="xuéxí" data-translation="(v.) studiare" data-examples="">
+        <div class="chinese-char">学习</div>
+        <div class="pinyin">Xuéxí</div>
+        <div class="translation">(v.) studiare</div>
+    </div>
+    <div class="vocab-card" data-chinese="再见" data-pinyin="zàijiàn" data-translation="(v.) arrivederci" data-examples="">
+        <div class="chinese-char">再见</div>
+        <div class="pinyin">Zàijiàn</div>
+        <div class="translation">(v.) arrivederci</div>
+    </div>
+    <div class="vocab-card" data-chinese="安静" data-pinyin="ānjing" data-translation="(agg.) tranquillo, silenzioso" data-examples="">
+        <div class="chinese-char">安静</div>
+        <div class="pinyin">ānjing</div>
+        <div class="translation">(agg.) tranquillo, silenzioso</div>
+    </div>
+    <div class="vocab-card" data-chinese="吃" data-pinyin="chī" data-translation="mangiare" data-examples="">
+        <div class="chinese-char">吃</div>
+        <div class="pinyin">Chī</div>
+        <div class="translation">Mangiare</div>
+    </div>
+    <div class="vocab-card" data-chinese="请" data-pinyin="qǐng" data-translation="(v.) invitare" data-examples="">
+        <div class="chinese-char">请</div>
+        <div class="pinyin">qǐng</div>
+        <div class="translation">(v.) invitare</div>
+    </div>
+    <div class="vocab-card" data-chinese="上课" data-pinyin="shàng/kè" data-translation="(v.) fare lezione, seguire una lezione" data-examples="​我们九点开始上课。 (wǒmen jiǔ diǎn kāishǐ shàng kè.)
+​iniziamo la lezione alle nove. (significa l'inizio dell'attività di insegnamento/apprendimento.)
+​老师正在上课。 (lǎoshī zhèngzài shàng kè.)
+​il professore sta facendo lezione/sta insegnando.
+​请不要在上课的时候说话。 (qǐng bùyào zài shàng kè de shíhou shuōhuà.)
+​per favore, non parlare durante (il momento di) lezione. / per favore, non parlare mentre si fa lezione.
+​今天下午你有上课吗？ (jīntiān xiàwǔ nǐ yǒu shàng kè ma?)
+​hai lezione questo pomeriggio? / devi andare a lezione questo pomeriggio?
+​他生病了，所以没来上课。 (tā shēngbìng le, suǒyǐ méi lái shàng kè.)
+​lui è malato, perciò non è venuto a lezione. (qui si usa lai shàng kè 'venire a lezione'.)
+​我们快要上课了，快点！ (wǒmen kuàiyào shàng kè le, kuài diǎn!)
+​stiamo per iniziare la lezione, sbrigati!">
+        <div class="chinese-char">上课</div>
+        <div class="pinyin">shàng/kè</div>
+        <div class="translation">(v.) fare lezione, seguire una lezione</div>
+        <div class="examples">
+            <div class="example-item">​我们九点开始上课。 (Wǒmen jiǔ diǎn kāishǐ shàng kè.)</div>
+            <div class="example-item">​Iniziamo la lezione alle nove. (Significa l'inizio dell'attività di insegnamento/apprendimento.)</div>
+            <div class="example-item">​老师正在上课。 (Lǎoshī zhèngzài shàng kè.)</div>
+            <div class="example-item">​Il professore sta facendo lezione/sta insegnando.</div>
+            <div class="example-item">​请不要在上课的时候说话。 (Qǐng bùyào zài shàng kè de shíhou shuōhuà.)</div>
+            <div class="example-item">​Per favore, non parlare durante (il momento di) lezione. / Per favore, non parlare mentre si fa lezione.</div>
+            <div class="example-item">​今天下午你有上课吗？ (Jīntiān xiàwǔ nǐ yǒu shàng kè ma?)</div>
+            <div class="example-item">​Hai lezione questo pomeriggio? / Devi andare a lezione questo pomeriggio?</div>
+            <div class="example-item">​他生病了，所以没来上课。 (Tā shēngbìng le, suǒyǐ méi lái shàng kè.)</div>
+            <div class="example-item">​Lui è malato, perciò non è venuto a lezione. (Qui si usa lai shàng kè 'venire a lezione'.)</div>
+            <div class="example-item">​我们快要上课了，快点！ (Wǒmen kuàiyào shàng kè le, kuài diǎn!)</div>
+            <div class="example-item">​Stiamo per iniziare la lezione, sbrigati!</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="下课" data-pinyin="xià kè" data-translation="finire la lezione" data-examples="​下课了！ (xià kè le!)
+​lezione finita! / intervallo! (detto dall'insegnante.)
+​我们什么时候下课？ (wǒmen shénme shíhou xià kè?)
+​quando finiamo la lezione?">
+        <div class="chinese-char">下课</div>
+        <div class="pinyin">xià kè</div>
+        <div class="translation">Finire la lezione</div>
+        <div class="examples">
+            <div class="example-item">​下课了！ (Xià kè le!)</div>
+            <div class="example-item">​Lezione finita! / Intervallo! (Detto dall'insegnante.)</div>
+            <div class="example-item">​我们什么时候下课？ (Wǒmen shénme shíhou xià kè?)</div>
+            <div class="example-item">​Quando finiamo la lezione?</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="休息" data-pinyin="xiūxi" data-translation="(v.) riposare" data-examples="">
+        <div class="chinese-char">休息</div>
+        <div class="pinyin">Xiūxi</div>
+        <div class="translation">(v.) riposare</div>
+    </div>
+    <div class="vocab-card" data-chinese="学生" data-pinyin="xuésheng" data-translation="(sost.) studente" data-examples="">
+        <div class="chinese-char">学生</div>
+        <div class="pinyin">Xuésheng</div>
+        <div class="translation">(sost.) studente</div>
+    </div>
+    <div class="vocab-card" data-chinese="对不起" data-pinyin="dui bu qǐ" data-translation="scusa!" data-examples="对不起 (duìbuqǐ) è il modo più comune e formale in cinese per dire "mi dispiace" o "scusa" (quando ci si scusa per un errore o un'offesa).
+​ecco alcuni esempi di frasi che lo utilizzano:
+​对不起，我迟到了。 (duìbuqǐ, wǒ chídào le.)
+​mi dispiace, sono in ritardo.
+​真的对不起，我不是故意的。 (zhēnde duìbuqǐ, wǒ bú shì gùyì de.)
+​mi dispiace davvero, non l'ho fatto apposta.
+​请问，对不起，这个座位有人坐吗？ (qǐng wèn, duìbuqǐ, zhège zuòwèi yǒu rén zuò ma?)
+​scusi (per attirare l'attenzione), mi scusi, questo posto è occupato? (usato qui per cortesia prima di fare una domanda.)
+​对不起，我把你的杯子打碎了。 (duìbuqǐ, wǒ bǎ nǐ de bēizi dǎ suì le.)
+​mi dispiace, ho rotto la tua tazza.
+​你为什么要说对不起？ (nǐ wèishénme yào shuō duìbuqǐ?)
+​perché devi chiedere scusa?
+​我应该跟你说对不起。 (wǒ yīnggāi gēn nǐ shuō duìbuqǐ.)
+​dovrei scusarmi con te.">
+        <div class="chinese-char">对不起</div>
+        <div class="pinyin">Dui bu qǐ</div>
+        <div class="translation">scusa!</div>
+        <div class="examples">
+            <div class="example-item">对不起 (duìbuqǐ) è il modo più comune e formale in cinese per dire "Mi dispiace" o "Scusa" (quando ci si scusa per un errore o un'offesa).</div>
+            <div class="example-item">​Ecco alcuni esempi di frasi che lo utilizzano:</div>
+            <div class="example-item">​对不起，我迟到了。 (Duìbuqǐ, wǒ chídào le.)</div>
+            <div class="example-item">​Mi dispiace, sono in ritardo.</div>
+            <div class="example-item">​真的对不起，我不是故意的。 (Zhēnde duìbuqǐ, wǒ bú shì gùyì de.)</div>
+            <div class="example-item">​Mi dispiace davvero, non l'ho fatto apposta.</div>
+            <div class="example-item">​请问，对不起，这个座位有人坐吗？ (Qǐng wèn, duìbuqǐ, zhège zuòwèi yǒu rén zuò ma?)</div>
+            <div class="example-item">​Scusi (per attirare l'attenzione), mi scusi, questo posto è occupato? (Usato qui per cortesia prima di fare una domanda.)</div>
+            <div class="example-item">​对不起，我把你的杯子打碎了。 (Duìbuqǐ, wǒ bǎ nǐ de bēizi dǎ suì le.)</div>
+            <div class="example-item">​Mi dispiace, ho rotto la tua tazza.</div>
+            <div class="example-item">​你为什么要说对不起？ (Nǐ wèishénme yào shuō duìbuqǐ?)</div>
+            <div class="example-item">​Perché devi chiedere scusa?</div>
+            <div class="example-item">​我应该跟你说对不起。 (Wǒ yīnggāi gēn nǐ shuō duìbuqǐ.)</div>
+            <div class="example-item">​Dovrei scusarmi con te.</div>
+        </div>
+    </div>
+    <div class="vocab-card" data-chinese="不好意思" data-pinyin="bù hǎoyìsi" data-translation="scusi" data-examples="不好意思 (bù hǎoyìsi) è più leggero e può significare:
+​"scusa/scusami" (per piccole cose, come disturbare o passare in mezzo alla folla).
+​"sono imbarazzato" (per una situazione sociale).
+​esempi con 不好意思:
+​不好意思，请让一下。 (bù hǎoyìsi, qǐng ràng yīxià.)
+​scusi (permesso), per favore si sposti/faccia passare. (quando si è in una folla.)
+​我不好意思问他这个问题。 (wǒ bù hǎoyìsi wèn tā zhège wèntí.)
+​sono imbarazzato a fargli questa domanda.">
+        <div class="chinese-char">不好意思</div>
+        <div class="pinyin">bù hǎoyìsi</div>
+        <div class="translation">Scusi</div>
+        <div class="examples">
+            <div class="example-item">不好意思 (bù hǎoyìsi) è più leggero e può significare:</div>
+            <div class="example-item">​"Scusa/Scusami" (per piccole cose, come disturbare o passare in mezzo alla folla).</div>
+            <div class="example-item">​"Sono imbarazzato" (per una situazione sociale).</div>
+            <div class="example-item">​Esempi con 不好意思:</div>
+            <div class="example-item">​不好意思，请让一下。 (Bù hǎoyìsi, qǐng ràng yīxià.)</div>
+            <div class="example-item">​Scusi (permesso), per favore si sposti/faccia passare. (Quando si è in una folla.)</div>
+            <div class="example-item">​我不好意思问他这个问题。 (Wǒ bù hǎoyìsi wèn tā zhège wèntí.)</div>
+            <div class="example-item">​Sono imbarazzato a fargli questa domanda.</div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript per la ricerca -->
+<script>
+function cercaParole() {
+    var termineRicerca = document.getElementById("searchInput").value.toLowerCase().trim();
+    var cards = document.querySelectorAll(".vocab-card");
+    
+    for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        var chinese = card.getAttribute("data-chinese");
+        var pinyin = card.getAttribute("data-pinyin");
+        var translation = card.getAttribute("data-translation");
+        var examples = card.getAttribute("data-examples");
+        
+        if (!termineRicerca || chinese.includes(termineRicerca) || pinyin.includes(termineRicerca) || translation.includes(termineRicerca) || examples.includes(termineRicerca)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+    }
+}
+</script>
+
+    </div>
+</body>
+</html>

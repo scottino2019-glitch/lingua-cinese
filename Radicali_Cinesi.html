@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radicali Cinesi - App Completa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .chinese-font {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .radical-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .radical-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .active-tab {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .search-highlight {
+            background-color: #fef3c7;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .stroke-order {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 2s ease-in-out forwards;
+        }
+        
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="text-3xl">📚</div>
+                    <div>
+                        <h1 class="text-2xl font-bold">Radicali Cinesi</h1>
+                        <p class="text-blue-100 text-sm">214 Radicali Kangxi Completi</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white/20 px-3 py-1 rounded-full text-sm">
+                        <span id="totalRadicals">214</span> radicali
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex space-x-8">
+                <button onclick="showTab('browse')" id="browseTab" class="active-tab px-4 py-3 font-medium text-sm rounded-t-lg transition-all">
+                    🔍 Esplora
+                </button>
+                <button onclick="showTab('search')" id="searchTab" class="px-4 py-3 font-medium text-sm text-gray-600 hover:text-blue-600 transition-all">
+                    🔎 Ricerca
+                </button>
+                <button onclick="showTab('practice')" id="practiceTab" class="px-4 py-3 font-medium text-sm text-gray-600 hover:text-blue-600 transition-all">
+                    ✏️ Pratica
+                </button>
+                <button onclick="showTab('favorites')" id="favoritesTab" class="px-4 py-3 font-medium text-sm text-gray-600 hover:text-blue-600 transition-all">
+                    ❤️ Preferiti
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Browse Tab -->
+        <div id="browseContent" class="tab-content">
+            <!-- Filters -->
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Filtra per Tratti</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterByStrokes('all')" class="filter-btn active bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-all">
+                        Tutti
+                    </button>
+                    <button onclick="filterByStrokes(1)" class="filter-btn bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-full text-sm font-medium transition-all">
+                        1 tratto
+                    </button>
+                    <button onclick="filterByStrokes(2)" class="filter-btn bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-full text-sm font-medium transition-all">
+                        2 tratti
+                    </button>
+                    <button onclick="filterByStrokes(3)" class="filter-btn bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-full text-sm font-medium transition-all">
+                        3 tratti
+                    </button>
+                    <button onclick="filterByStrokes(4)" class="filter-btn bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-full text-sm font-medium transition-all">
+                        4+ tratti
+                    </button>
+                </div>
+            </div>
+
+            <!-- Radicals Grid -->
+            <div id="radicalsGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+                <!-- Radicals will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Search Tab -->
+        <div id="searchContent" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Cerca Radicali</h3>
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="Cerca per numero, significato o carattere..." 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <div class="absolute right-3 top-3 text-gray-400">🔍</div>
+                </div>
+            </div>
+            <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Search results will appear here -->
+            </div>
+        </div>
+
+        <!-- Practice Tab -->
+        <div id="practiceContent" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Modalità Pratica</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <button onclick="startQuiz('meaning')" class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-lg hover:from-green-600 hover:to-green-700 transition-all">
+                        <div class="text-2xl mb-2">🧠</div>
+                        <h4 class="font-semibold">Quiz Significati</h4>
+                        <p class="text-sm text-green-100">Indovina il significato del radicale</p>
+                    </button>
+                    <button onclick="startQuiz('character')" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all">
+                        <div class="text-2xl mb-2">✍️</div>
+                        <h4 class="font-semibold">Quiz Caratteri</h4>
+                        <p class="text-sm text-purple-100">Riconosci il radicale dal significato</p>
+                    </button>
+                </div>
+            </div>
+            <div id="quizContainer" class="hidden bg-white rounded-lg shadow-sm p-6">
+                <!-- Quiz content will be populated here -->
+            </div>
+        </div>
+
+        <!-- Favorites Tab -->
+        <div id="favoritesContent" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <h3 class="text-lg font-semibold mb-4">I Tuoi Radicali Preferiti</h3>
+                <div id="favoritesList" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+                    <div class="text-center text-gray-500 col-span-full py-8">
+                        <div class="text-4xl mb-2">💝</div>
+                        <p>Nessun radicale nei preferiti ancora</p>
+                        <p class="text-sm">Clicca sul cuore per aggiungere radicali ai preferiti</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Radical Detail Modal -->
+    <div id="radicalModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 class="text-2xl font-bold">Dettagli Radicale</h2>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                <div id="modalContent">
+                    <!-- Modal content will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive Kangxi Radicals Database with detailed explanations
+        const radicals = [
+            {id: 1, character: "一", strokes: 1, meaning: "uno", pinyin: "yī", examples: ["不", "七", "万"], category: "numeri", 
+             explanation: "Il radicale più semplice, rappresenta l'unità e l'inizio. Originariamente una linea orizzontale che simboleggia il numero uno. Appare in caratteri che esprimono concetti di base, negazione (不 = non) e numeri. È fondamentale per comprendere la struttura dei caratteri cinesi."},
+            {id: 2, character: "丨", strokes: 1, meaning: "linea verticale", pinyin: "gǔn", examples: ["中", "丰"], category: "linee",
+             explanation: "Una linea verticale che rappresenta la verticalità e la centralità. Nel carattere 中 (centro/mezzo), questa linea attraversa un rettangolo simboleggiando il centro. È uno dei tratti fondamentali della calligrafia cinese."},
+            {id: 3, character: "丶", strokes: 1, meaning: "punto", pinyin: "zhǔ", examples: ["主", "丸"], category: "punti",
+             explanation: "Un semplice punto che spesso indica importanza o enfasi. Nel carattere 主 (padrone/principale), il punto sopra la linea orizzontale simboleggia l'autorità. È il tratto più piccolo ma significativo nella scrittura cinese."},
+            {id: 4, character: "丿", strokes: 1, meaning: "linea obliqua", pinyin: "piě", examples: ["乃", "久"], category: "linee",
+             explanation: "Una linea diagonale che scende da sinistra a destra. Rappresenta movimento, flusso o inclinazione. Nel carattere 人 (persona), due di questi tratti formano una figura umana stilizzata che cammina."},
+            {id: 5, character: "乙", strokes: 1, meaning: "secondo", pinyin: "yǐ", examples: ["也", "乞"], category: "forme",
+             explanation: "Originariamente rappresentava un germoglio che spunta dalla terra, simboleggiando crescita e sviluppo. È il secondo dei dieci tronchi celesti nel calendario cinese. La sua forma curva suggerisce flessibilità e adattamento."},
+            {id: 6, character: "亅", strokes: 1, meaning: "uncino", pinyin: "jué", examples: ["了", "予"], category: "uncini",
+             explanation: "Un tratto ad uncino che indica completamento o conclusione. Nel carattere 了 (finito/completato), simboleggia la fine di un'azione. È essenziale per formare molti caratteri che esprimono stati completivi."},
+            {id: 7, character: "二", strokes: 2, meaning: "due", pinyin: "èr", examples: ["于", "云"], category: "numeri",
+             explanation: "Due linee orizzontali parallele che rappresentano il numero due e la dualità. Simboleggia equilibrio, coppia e divisione. Appare in caratteri che esprimono concetti di molteplicità e relazione tra elementi."},
+            {id: 8, character: "亠", strokes: 2, meaning: "coperchio", pinyin: "tóu", examples: ["亡", "交"], category: "coperchi",
+             explanation: "Rappresenta un tetto o copertura, simboleggiando protezione e contenimento. Nel carattere 交 (incrociare/scambiare), indica l'idea di qualcosa che si sovrappone o si incontra sotto una copertura comune."},
+            {id: 9, character: "人", strokes: 2, meaning: "persona", pinyin: "rén", examples: ["今", "他"], category: "persone",
+             explanation: "Stilizzazione di una persona vista di profilo mentre cammina. È uno dei radicali più importanti, presente in centinaia di caratteri relativi agli esseri umani, alle relazioni sociali e alle attività umane. Rappresenta l'umanità in tutte le sue forme."},
+            {id: 10, character: "儿", strokes: 2, meaning: "gambe", pinyin: "ér", examples: ["兄", "先"], category: "corpo",
+             explanation: "Rappresenta le gambe di una persona, simboleggiando movimento, supporto e crescita. Nel carattere 兄 (fratello maggiore), suggerisce qualcuno che sta in piedi con autorità. È legato ai concetti di famiglia e gerarchia."},
+            {id: 11, character: "入", strokes: 2, meaning: "entrare", pinyin: "rù", examples: ["内", "全"], category: "movimento",
+             explanation: "Rappresenta l'azione di entrare o penetrare. La forma suggerisce qualcosa che si inserisce in uno spazio. Nel carattere 内 (dentro), mostra l'idea di essere all'interno di qualcosa. È fondamentale per esprimere concetti di ingresso e interiorità."},
+            {id: 12, character: "八", strokes: 2, meaning: "otto", pinyin: "bā", examples: ["公", "六"], category: "numeri",
+             explanation: "Due linee che si separano verso l'esterno, rappresentando il numero otto e l'idea di divisione o separazione. Nel carattere 公 (pubblico), simboleggia l'apertura e la condivisione. È associato ai concetti di espansione e molteplicità."},
+            {id: 13, character: "冂", strokes: 2, meaning: "confine", pinyin: "jiōng", examples: ["冊", "再"], category: "contenitori",
+             explanation: "Rappresenta un confine o un recinto aperto in alto. Simboleggia delimitazione e contenimento parziale. Nel carattere 再 (di nuovo), suggerisce l'idea di ripetizione all'interno di limiti definiti."},
+            {id: 14, character: "冖", strokes: 2, meaning: "copertura", pinyin: "mì", examples: ["军", "农"], category: "coperchi",
+             explanation: "Una copertura che protegge dall'alto, simboleggiando protezione e nascondimento. Nel carattere 军 (esercito), rappresenta l'organizzazione sotto un comando unificato. È legato ai concetti di autorità e protezione."},
+            {id: 15, character: "冫", strokes: 2, meaning: "ghiaccio", pinyin: "bīng", examples: ["冷", "冻"], category: "natura",
+             explanation: "Due gocce di ghiaccio che rappresentano il freddo e la solidificazione. Appare in caratteri legati alle basse temperature come 冷 (freddo) e 冻 (congelare). Simboleggia la trasformazione dell'acqua in stato solido."},
+            {id: 16, character: "几", strokes: 2, meaning: "tavolo", pinyin: "jī", examples: ["凡", "风"], category: "mobili",
+             explanation: "Rappresenta un tavolo basso o una superficie di appoggio. Nel carattere 风 (vento), suggerisce qualcosa che si muove sopra una superficie. È associato ai concetti di supporto e stabilità."},
+            {id: 17, character: "凵", strokes: 2, meaning: "contenitore aperto", pinyin: "qū", examples: ["出", "函"], category: "contenitori",
+             explanation: "Un contenitore aperto in alto, simboleggiando ricettività e capacità di contenere. Nel carattere 出 (uscire), rappresenta qualcosa che emerge da un contenitore. È legato ai concetti di contenimento e emergenza."},
+            {id: 18, character: "刀", strokes: 2, meaning: "coltello", pinyin: "dāo", examples: ["分", "切"], category: "strumenti",
+             explanation: "Rappresenta un coltello o lama, simboleggiando taglio e separazione. Nel carattere 分 (dividere), mostra l'azione di separare in parti. È fondamentale per esprimere concetti di divisione, precisione e azione decisa."},
+            {id: 19, character: "力", strokes: 2, meaning: "forza", pinyin: "lì", examples: ["加", "助"], category: "azioni",
+             explanation: "Rappresenta un braccio muscoloso che simboleggia forza fisica e potere. Nel carattere 加 (aggiungere), indica l'applicazione di forza per unire elementi. È essenziale per esprimere concetti di energia, sforzo e capacità."},
+            {id: 20, character: "勹", strokes: 2, meaning: "avvolgere", pinyin: "bāo", examples: ["包", "勺"], category: "azioni",
+             explanation: "Rappresenta l'azione di avvolgere o abbracciare. Nel carattere 包 (pacchetto), mostra qualcosa che è completamente avvolto. Simboleggia protezione, contenimento e cura attraverso l'avvolgimento."},
+            {id: 21, character: "匕", strokes: 2, meaning: "cucchiaio", pinyin: "bǐ", examples: ["化", "北"], category: "strumenti"},
+            {id: 22, character: "匚", strokes: 2, meaning: "scatola", pinyin: "fāng", examples: ["区", "医"], category: "contenitori"},
+            {id: 23, character: "匸", strokes: 2, meaning: "nascondere", pinyin: "xì", examples: ["匹", "区"], category: "azioni"},
+            {id: 24, character: "十", strokes: 2, meaning: "dieci", pinyin: "shí", examples: ["千", "南"], category: "numeri"},
+            {id: 25, character: "卜", strokes: 2, meaning: "divinazione", pinyin: "bǔ", examples: ["占", "卡"], category: "spirituale"},
+            {id: 26, character: "卩", strokes: 2, meaning: "sigillo", pinyin: "jié", examples: ["印", "卯"], category: "oggetti"},
+            {id: 27, character: "厂", strokes: 2, meaning: "scogliera", pinyin: "hàn", examples: ["厅", "历"], category: "luoghi"},
+            {id: 28, character: "厶", strokes: 2, meaning: "privato", pinyin: "sī", examples: ["公", "去"], category: "concetti"},
+            {id: 29, character: "又", strokes: 2, meaning: "di nuovo", pinyin: "yòu", examples: ["友", "取"], category: "azioni"},
+            {id: 30, character: "口", strokes: 3, meaning: "bocca", pinyin: "kǒu", examples: ["吃", "说"], category: "corpo",
+             explanation: "Uno dei radicali più importanti, rappresenta la bocca umana. È presente in tutti i caratteri legati al parlare, mangiare e comunicare. Nel carattere 说 (dire), simboleggia l'atto della parola. È essenziale per esprimere azioni orali e comunicative."},
+            {id: 31, character: "囗", strokes: 3, meaning: "recinto", pinyin: "wéi", examples: ["国", "园"], category: "contenitori",
+             explanation: "Rappresenta un recinto o confine chiuso che delimita uno spazio. Nel carattere 国 (paese), simboleggia i confini nazionali che racchiudono un territorio. È fondamentale per esprimere concetti di delimitazione e appartenenza territoriale."},
+            {id: 32, character: "土", strokes: 3, meaning: "terra", pinyin: "tǔ", examples: ["地", "城"], category: "natura",
+             explanation: "Rappresenta la terra, il suolo e tutto ciò che è legato al terreno. Nel carattere 地 (terra/luogo), simboleggia la superficie terrestre. È uno dei radicali più frequenti, presente in caratteri che esprimono concetti geografici, agricoli e materiali."},
+            {id: 33, character: "士", strokes: 3, meaning: "studioso", pinyin: "shì", examples: ["志", "壮"], category: "persone",
+             explanation: "Rappresenta uno studioso o persona colta, simboleggiando educazione e nobiltà intellettuale. Nel carattere 志 (volontà/aspirazione), indica la determinazione di una persona educata. È legato ai concetti di cultura, educazione e status sociale."},
+            {id: 34, character: "夂", strokes: 3, meaning: "andare lentamente", pinyin: "zhǐ", examples: ["冬", "各"], category: "movimento",
+             explanation: "Rappresenta un piede che cammina lentamente, simboleggiando movimento graduale e riflessivo. Nel carattere 冬 (inverno), suggerisce il lento avanzare della stagione fredda. È associato ai concetti di pazienza e progressione graduale."},
+            {id: 35, character: "夊", strokes: 3, meaning: "camminare lentamente", pinyin: "suī", examples: ["夏", "复"], category: "movimento",
+             explanation: "Simile al precedente ma con una forma leggermente diversa, rappresenta il camminare con cautela. Nel carattere 夏 (estate), simboleggia l'avanzare della stagione calda. È legato ai concetti di movimento controllato e progressione naturale."},
+            {id: 36, character: "夕", strokes: 3, meaning: "sera", pinyin: "xī", examples: ["外", "多"], category: "tempo",
+             explanation: "Rappresenta la luna crescente vista di sera, simboleggiando il tramonto e la fine del giorno. Nel carattere 外 (fuori/esterno), suggerisce ciò che è oltre i confini familiari. È associato ai concetti di tempo, ciclicità e transizione."},
+            {id: 37, character: "大", strokes: 3, meaning: "grande", pinyin: "dà", examples: ["天", "太"], category: "dimensioni",
+             explanation: "Rappresenta una persona con braccia e gambe allargate, simboleggiando grandezza e importanza. Nel carattere 天 (cielo), indica l'immensità celeste. È fondamentale per esprimere concetti di dimensione, importanza e magnificenza."},
+            {id: 38, character: "女", strokes: 3, meaning: "donna", pinyin: "nǚ", examples: ["好", "她"], category: "persone",
+             explanation: "Rappresenta una donna in posizione inginocchiata, simboleggiando femminilità e grazia. Nel carattere 好 (buono/bello), combinato con 子 (bambino), rappresenta l'armonia familiare. È presente in molti caratteri legati al genere femminile e alle relazioni familiari."},
+            {id: 39, character: "子", strokes: 3, meaning: "bambino", pinyin: "zǐ", examples: ["学", "字"], category: "persone",
+             explanation: "Rappresenta un bambino con le braccia allargate, simboleggiando innocenza e potenzialità. Nel carattere 学 (studiare), indica l'apprendimento tipico dell'infanzia. È fondamentale per esprimere concetti legati alla famiglia, all'educazione e alla crescita."},
+            {id: 40, character: "宀", strokes: 3, meaning: "tetto", pinyin: "mián", examples: ["家", "安"], category: "edifici"},
+            {id: 41, character: "寸", strokes: 3, meaning: "pollice", pinyin: "cùn", examples: ["对", "寺"], category: "misure"},
+            {id: 42, character: "小", strokes: 3, meaning: "piccolo", pinyin: "xiǎo", examples: ["少", "尖"], category: "dimensioni"},
+            {id: 43, character: "尢", strokes: 3, meaning: "zoppo", pinyin: "wāng", examples: ["尤", "就"], category: "corpo"},
+            {id: 44, character: "尸", strokes: 3, meaning: "cadavere", pinyin: "shī", examples: ["尺", "局"], category: "corpo"},
+            {id: 45, character: "屮", strokes: 3, meaning: "germoglio", pinyin: "chè", examples: ["屯", "山"], category: "piante"},
+            {id: 46, character: "山", strokes: 3, meaning: "montagna", pinyin: "shān", examples: ["岛", "岩"], category: "natura"},
+            {id: 47, character: "巛", strokes: 3, meaning: "fiume", pinyin: "chuān", examples: ["川", "州"], category: "natura"},
+            {id: 48, character: "工", strokes: 3, meaning: "lavoro", pinyin: "gōng", examples: ["左", "巧"], category: "azioni"},
+            {id: 49, character: "己", strokes: 3, meaning: "se stesso", pinyin: "jǐ", examples: ["已", "巴"], category: "pronomi"},
+            {id: 50, character: "巾", strokes: 3, meaning: "panno", pinyin: "jīn", examples: ["市", "帝"], category: "tessuti"},
+            {id: 51, character: "干", strokes: 3, meaning: "secco", pinyin: "gān", examples: ["平", "年"], category: "stati"},
+            {id: 52, character: "幺", strokes: 3, meaning: "filo sottile", pinyin: "yāo", examples: ["幻", "幼"], category: "oggetti"},
+            {id: 53, character: "广", strokes: 3, meaning: "edificio con tetto spiovente", pinyin: "guǎng", examples: ["店", "座"], category: "edifici"},
+            {id: 54, character: "廴", strokes: 3, meaning: "camminare a lungo", pinyin: "yǐn", examples: ["建", "廷"], category: "movimento"},
+            {id: 55, character: "廾", strokes: 3, meaning: "due mani", pinyin: "gǒng", examples: ["开", "弄"], category: "corpo"},
+            {id: 56, character: "弋", strokes: 3, meaning: "freccia con corda", pinyin: "yì", examples: ["式", "戈"], category: "armi"},
+            {id: 57, character: "弓", strokes: 3, meaning: "arco", pinyin: "gōng", examples: ["张", "强"], category: "armi"},
+            {id: 58, character: "彐", strokes: 3, meaning: "testa di maiale", pinyin: "jì", examples: ["当", "录"], category: "animali"},
+            {id: 59, character: "彡", strokes: 3, meaning: "decorazione", pinyin: "shān", examples: ["形", "影"], category: "decorazioni"},
+            {id: 60, character: "彳", strokes: 3, meaning: "passo", pinyin: "chì", examples: ["行", "街"], category: "movimento"},
+            {id: 61, character: "心", strokes: 4, meaning: "cuore", pinyin: "xīn", examples: ["思", "想"], category: "emozioni",
+             explanation: "Rappresenta il cuore umano, centro delle emozioni e dei pensieri. Nel carattere 思 (pensare), simboleggia l'attività mentale ed emotiva. È uno dei radicali più importanti per esprimere sentimenti, emozioni e stati mentali. Appare in centinaia di caratteri psicologici."},
+            {id: 62, character: "戈", strokes: 4, meaning: "alabarda", pinyin: "gē", examples: ["我", "战"], category: "armi",
+             explanation: "Rappresenta un'alabarda o lancia da guerra, simboleggiando conflitto e protezione. Nel carattere 我 (io), originariamente indicava 'la mia arma', evolvendosi nel pronome personale. È legato ai concetti di guerra, difesa e identità personale."},
+            {id: 63, character: "戶", strokes: 4, meaning: "porta", pinyin: "hù", examples: ["房", "所"], category: "edifici",
+             explanation: "Rappresenta una porta o ingresso di casa, simboleggiando dimora e famiglia. Nel carattere 房 (stanza), indica uno spazio abitativo. È fondamentale per esprimere concetti domestici, familiari e di appartenenza a un luogo."},
+            {id: 64, character: "手", strokes: 4, meaning: "mano", pinyin: "shǒu", examples: ["打", "拿"], category: "corpo",
+             explanation: "Rappresenta una mano umana, simboleggiando azione, abilità e manipolazione. Nel carattere 打 (colpire), mostra l'azione diretta della mano. È presente in tutti i caratteri che esprimono azioni manuali, abilità e interazione fisica con il mondo."},
+            {id: 65, character: "支", strokes: 4, meaning: "ramo", pinyin: "zhī", examples: ["技", "收"], category: "piante",
+             explanation: "Rappresenta un ramo che si dirama da un tronco, simboleggiando ramificazione e supporto. Nel carattere 技 (abilità), indica le diverse competenze che si sviluppano. È legato ai concetti di specializzazione, supporto e crescita organica."},
+            {id: 66, character: "攴", strokes: 4, meaning: "colpire", pinyin: "pū", examples: ["教", "救"], category: "azioni",
+             explanation: "Rappresenta una mano che tiene un bastone per colpire, simboleggiando azione educativa o correttiva. Nel carattere 教 (insegnare), indica l'azione di guidare attraverso la disciplina. È presente in caratteri che esprimono azioni decisive e educative."},
+            {id: 67, character: "文", strokes: 4, meaning: "scrittura", pinyin: "wén", examples: ["斋", "斌"], category: "cultura",
+             explanation: "Rappresenta decorazioni incrociate o tatuaggi, evolvendosi nel concetto di scrittura e cultura. Simboleggia civilizzazione, educazione e raffinatezza. È fondamentale per esprimere concetti legati alla letteratura, all'arte e alla cultura intellettuale."},
+            {id: 68, character: "斗", strokes: 4, meaning: "misura", pinyin: "dǒu", examples: ["料", "斜"], category: "misure",
+             explanation: "Rappresenta un contenitore per misurare cereali, simboleggiando quantità e valutazione. Nel carattere 料 (materiale), indica la misurazione e classificazione di sostanze. È legato ai concetti di misurazione, commercio e organizzazione."},
+            {id: 69, character: "斤", strokes: 4, meaning: "ascia", pinyin: "jīn", examples: ["新", "断"], category: "strumenti",
+             explanation: "Rappresenta un'ascia per tagliare legna, simboleggiando taglio e trasformazione. Nel carattere 新 (nuovo), indica il processo di rinnovamento attraverso il taglio del vecchio. È presente in caratteri che esprimono cambiamento e lavorazione."},
+            {id: 70, character: "方", strokes: 4, meaning: "quadrato", pinyin: "fāng", examples: ["放", "旅"], category: "forme",
+             explanation: "Rappresenta una forma quadrata o rettangolare, simboleggiando ordine e direzione. Nel carattere 放 (mettere/rilasciare), indica l'azione di posizionare in modo ordinato. È legato ai concetti di direzione, metodo e organizzazione spaziale."},
+            {id: 71, character: "无", strokes: 4, meaning: "non avere", pinyin: "wú", examples: ["既", "旡"], category: "negazione",
+             explanation: "Rappresenta l'assenza o la mancanza di qualcosa, simboleggiando il vuoto e la negazione. È una forma alternativa di 無, usata per esprimere concetti di assenza, mancanza e negazione. È fondamentale nella filosofia e logica cinese."},
+            {id: 72, character: "日", strokes: 4, meaning: "sole", pinyin: "rì", examples: ["时", "明"], category: "natura",
+             explanation: "Rappresenta il sole, originariamente disegnato come un cerchio con un punto centrale. Nel carattere 明 (luminoso), combinato con 月 (luna), simboleggia la luce completa. È uno dei radicali più importanti per esprimere tempo, luce e chiarezza."},
+            {id: 73, character: "曰", strokes: 4, meaning: "dire", pinyin: "yuē", examples: ["更", "曾"], category: "comunicazione",
+             explanation: "Rappresenta una bocca che parla, simile a 口 ma più largo, simboleggiando discorso formale o antico. È usato in caratteri che esprimono comunicazione solenne o tradizionale. Si distingue da 口 per il suo uso più letterario e formale."},
+            {id: 74, character: "月", strokes: 4, meaning: "luna", pinyin: "yuè", examples: ["有", "朋"], category: "natura",
+             explanation: "Rappresenta la luna crescente, simboleggiando ciclicità e tempo. Nel carattere 有 (avere), indica possesso e presenza. È anche usato per rappresentare la carne nei caratteri anatomici. È fondamentale per esprimere tempo, corpo e possesso."},
+            {id: 75, character: "木", strokes: 4, meaning: "albero", pinyin: "mù", examples: ["林", "森"], category: "piante",
+             explanation: "Rappresenta un albero con tronco, rami e radici, simboleggiando crescita e natura. Nel carattere 林 (bosco), due alberi insieme rappresentano una piccola foresta. È presente in tutti i caratteri legati al legno, alle piante e alla natura vegetale."},
+            {id: 76, character: "欠", strokes: 4, meaning: "sbadigliare", pinyin: "qiàn", examples: ["次", "欢"], category: "azioni"},
+            {id: 77, character: "止", strokes: 4, meaning: "fermare", pinyin: "zhǐ", examples: ["正", "步"], category: "movimento"},
+            {id: 78, character: "歹", strokes: 4, meaning: "cattivo", pinyin: "dǎi", examples: ["死", "残"], category: "qualità"},
+            {id: 79, character: "殳", strokes: 4, meaning: "arma", pinyin: "shū", examples: ["段", "殿"], category: "armi"},
+            {id: 80, character: "毋", strokes: 4, meaning: "non", pinyin: "wú", examples: ["每", "毒"], category: "negazione"},
+            {id: 81, character: "比", strokes: 4, meaning: "confrontare", pinyin: "bǐ", examples: ["毕", "毙"], category: "azioni"},
+            {id: 82, character: "毛", strokes: 4, meaning: "pelo", pinyin: "máo", examples: ["毡", "毯"], category: "corpo"},
+            {id: 83, character: "氏", strokes: 4, meaning: "clan", pinyin: "shì", examples: ["民", "氓"], category: "società"},
+            {id: 84, character: "气", strokes: 4, meaning: "vapore", pinyin: "qì", examples: ["氛", "氢"], category: "natura"},
+            {id: 85, character: "水", strokes: 4, meaning: "acqua", pinyin: "shuǐ", examples: ["河", "海"], category: "natura"},
+            {id: 86, character: "火", strokes: 4, meaning: "fuoco", pinyin: "huǒ", examples: ["烧", "热"], category: "natura"},
+            {id: 87, character: "爪", strokes: 4, meaning: "artiglio", pinyin: "zhǎo", examples: ["爱", "受"], category: "corpo"},
+            {id: 88, character: "父", strokes: 4, meaning: "padre", pinyin: "fù", examples: ["爸", "爷"], category: "famiglia"},
+            {id: 89, character: "爻", strokes: 4, meaning: "diagramma", pinyin: "yáo", examples: ["爽", "爾"], category: "simboli"},
+            {id: 90, character: "爿", strokes: 4, meaning: "letto", pinyin: "qiáng", examples: ["状", "将"], category: "mobili"},
+            {id: 91, character: "片", strokes: 4, meaning: "fetta", pinyin: "piàn", examples: ["版", "牌"], category: "oggetti"},
+            {id: 92, character: "牙", strokes: 4, meaning: "dente", pinyin: "yá", examples: ["牙", "芽"], category: "corpo"},
+            {id: 93, character: "牛", strokes: 4, meaning: "bue", pinyin: "niú", examples: ["牧", "物"], category: "animali"},
+            {id: 94, character: "犬", strokes: 4, meaning: "cane", pinyin: "quǎn", examples: ["狗", "狼"], category: "animali"},
+            {id: 95, character: "玄", strokes: 5, meaning: "misterioso", pinyin: "xuán", examples: ["率", "玆"], category: "concetti"},
+            {id: 96, character: "玉", strokes: 5, meaning: "giada", pinyin: "yù", examples: ["王", "珠"], category: "minerali"},
+            {id: 97, character: "瓜", strokes: 5, meaning: "melone", pinyin: "guā", examples: ["瓢", "瓣"], category: "piante"},
+            {id: 98, character: "瓦", strokes: 5, meaning: "tegola", pinyin: "wǎ", examples: ["瓶", "瓷"], category: "materiali"},
+            {id: 99, character: "甘", strokes: 5, meaning: "dolce", pinyin: "gān", examples: ["甚", "甜"], category: "sapori"},
+            {id: 100, character: "生", strokes: 5, meaning: "nascere", pinyin: "shēng", examples: ["产", "星"], category: "vita"},
+            {id: 101, character: "用", strokes: 5, meaning: "usare", pinyin: "yòng", examples: ["甩", "甪"], category: "azioni"},
+            {id: 102, character: "田", strokes: 5, meaning: "campo", pinyin: "tián", examples: ["男", "界"], category: "agricoltura"},
+            {id: 103, character: "疋", strokes: 5, meaning: "rotolo di seta", pinyin: "pǐ", examples: ["疏", "疑"], category: "tessuti"},
+            {id: 104, character: "疒", strokes: 5, meaning: "malattia", pinyin: "nè", examples: ["病", "痛"], category: "salute"},
+            {id: 105, character: "癶", strokes: 5, meaning: "camminare", pinyin: "bō", examples: ["登", "發"], category: "movimento"},
+            {id: 106, character: "白", strokes: 5, meaning: "bianco", pinyin: "bái", examples: ["百", "的"], category: "colori"},
+            {id: 107, character: "皮", strokes: 5, meaning: "pelle", pinyin: "pí", examples: ["破", "被"], category: "corpo"},
+            {id: 108, character: "皿", strokes: 5, meaning: "piatto", pinyin: "mǐn", examples: ["盆", "盐"], category: "utensili"},
+            {id: 109, character: "目", strokes: 5, meaning: "occhio", pinyin: "mù", examples: ["看", "见"], category: "corpo"},
+            {id: 110, character: "矛", strokes: 5, meaning: "lancia", pinyin: "máo", examples: ["矜", "矞"], category: "armi"},
+            {id: 111, character: "矢", strokes: 5, meaning: "freccia", pinyin: "shǐ", examples: ["知", "短"], category: "armi"},
+            {id: 112, character: "石", strokes: 5, meaning: "pietra", pinyin: "shí", examples: ["破", "硬"], category: "minerali"},
+            {id: 113, character: "示", strokes: 5, meaning: "mostrare", pinyin: "shì", examples: ["神", "祝"], category: "spirituale"},
+            {id: 114, character: "禸", strokes: 5, meaning: "traccia", pinyin: "róu", examples: ["禹", "离"], category: "segni"},
+            {id: 115, character: "禾", strokes: 5, meaning: "cereale", pinyin: "hé", examples: ["和", "种"], category: "agricoltura"},
+            {id: 116, character: "穴", strokes: 5, meaning: "buco", pinyin: "xué", examples: ["空", "究"], category: "luoghi"},
+            {id: 117, character: "立", strokes: 5, meaning: "stare in piedi", pinyin: "lì", examples: ["站", "章"], category: "posizioni"},
+            {id: 118, character: "竹", strokes: 6, meaning: "bambù", pinyin: "zhú", examples: ["笔", "管"], category: "piante"},
+            {id: 119, character: "米", strokes: 6, meaning: "riso", pinyin: "mǐ", examples: ["粉", "粮"], category: "cibo"},
+            {id: 120, character: "糸", strokes: 6, meaning: "seta", pinyin: "mì", examples: ["红", "线"], category: "tessuti"},
+            {id: 121, character: "缶", strokes: 6, meaning: "vaso", pinyin: "fǒu", examples: ["缸", "罐"], category: "utensili"},
+            {id: 122, character: "网", strokes: 6, meaning: "rete", pinyin: "wǎng", examples: ["罗", "罚"], category: "strumenti"},
+            {id: 123, character: "羊", strokes: 6, meaning: "pecora", pinyin: "yáng", examples: ["美", "群"], category: "animali"},
+            {id: 124, character: "羽", strokes: 6, meaning: "piuma", pinyin: "yǔ", examples: ["翅", "翻"], category: "animali"},
+            {id: 125, character: "老", strokes: 6, meaning: "vecchio", pinyin: "lǎo", examples: ["考", "者"], category: "età"},
+            {id: 126, character: "而", strokes: 6, meaning: "e", pinyin: "ér", examples: ["耍", "耐"], category: "congiunzioni"},
+            {id: 127, character: "耒", strokes: 6, meaning: "aratro", pinyin: "lěi", examples: ["耕", "耘"], category: "agricoltura"},
+            {id: 128, character: "耳", strokes: 6, meaning: "orecchio", pinyin: "ěr", examples: ["听", "聊"], category: "corpo"},
+            {id: 129, character: "聿", strokes: 6, meaning: "pennello", pinyin: "yù", examples: ["书", "画"], category: "strumenti"},
+            {id: 130, character: "肉", strokes: 6, meaning: "carne", pinyin: "ròu", examples: ["肚", "肥"], category: "cibo"},
+            {id: 131, character: "臣", strokes: 6, meaning: "ministro", pinyin: "chén", examples: ["臧", "臨"], category: "politica"},
+            {id: 132, character: "自", strokes: 6, meaning: "se stesso", pinyin: "zì", examples: ["臭", "至"], category: "pronomi"},
+            {id: 133, character: "至", strokes: 6, meaning: "arrivare", pinyin: "zhì", examples: ["致", "臺"], category: "movimento"},
+            {id: 134, character: "臼", strokes: 6, meaning: "mortaio", pinyin: "jiù", examples: ["舂", "舅"], category: "strumenti"},
+            {id: 135, character: "舌", strokes: 6, meaning: "lingua", pinyin: "shé", examples: ["话", "舔"], category: "corpo"},
+            {id: 136, character: "舛", strokes: 6, meaning: "opposto", pinyin: "chuǎn", examples: ["舜", "舞"], category: "concetti"},
+            {id: 137, character: "舟", strokes: 6, meaning: "barca", pinyin: "zhōu", examples: ["船", "航"], category: "trasporti"},
+            {id: 138, character: "艮", strokes: 6, meaning: "fermare", pinyin: "gèn", examples: ["良", "艰"], category: "azioni"},
+            {id: 139, character: "色", strokes: 6, meaning: "colore", pinyin: "sè", examples: ["艳", "艺"], category: "colori"},
+            {id: 140, character: "艸", strokes: 6, meaning: "erba", pinyin: "cǎo", examples: ["花", "草"], category: "piante"},
+            {id: 141, character: "虍", strokes: 6, meaning: "tigre", pinyin: "hū", examples: ["虎", "虚"], category: "animali"},
+            {id: 142, character: "虫", strokes: 6, meaning: "insetto", pinyin: "chóng", examples: ["蛇", "蚂"], category: "animali"},
+            {id: 143, character: "血", strokes: 6, meaning: "sangue", pinyin: "xuè", examples: ["衅", "衄"], category: "corpo"},
+            {id: 144, character: "行", strokes: 6, meaning: "camminare", pinyin: "xíng", examples: ["街", "衍"], category: "movimento"},
+            {id: 145, character: "衣", strokes: 6, meaning: "vestiti", pinyin: "yī", examples: ["裤", "裙"], category: "abbigliamento"},
+            {id: 146, character: "襾", strokes: 6, meaning: "coprire", pinyin: "yà", examples: ["要", "覆"], category: "azioni"},
+            {id: 147, character: "見", strokes: 7, meaning: "vedere", pinyin: "jiàn", examples: ["观", "视"], category: "percezione"},
+            {id: 148, character: "角", strokes: 7, meaning: "corno", pinyin: "jiǎo", examples: ["解", "触"], category: "animali"},
+            {id: 149, character: "言", strokes: 7, meaning: "parola", pinyin: "yán", examples: ["说", "话"], category: "comunicazione"},
+            {id: 150, character: "谷", strokes: 7, meaning: "valle", pinyin: "gǔ", examples: ["豁", "豆"], category: "geografia"},
+            {id: 151, character: "豆", strokes: 7, meaning: "fagiolo", pinyin: "dòu", examples: ["豉", "豊"], category: "cibo"},
+            {id: 152, character: "豕", strokes: 7, meaning: "maiale", pinyin: "shǐ", examples: ["家", "豪"], category: "animali"},
+            {id: 153, character: "豸", strokes: 7, meaning: "animale", pinyin: "zhì", examples: ["貂", "貅"], category: "animali"},
+            {id: 154, character: "貝", strokes: 7, meaning: "conchiglia", pinyin: "bèi", examples: ["财", "货"], category: "denaro"},
+            {id: 155, character: "赤", strokes: 7, meaning: "rosso", pinyin: "chì", examples: ["赦", "赧"], category: "colori"},
+            {id: 156, character: "走", strokes: 7, meaning: "correre", pinyin: "zǒu", examples: ["起", "超"], category: "movimento"},
+            {id: 157, character: "足", strokes: 7, meaning: "piede", pinyin: "zú", examples: ["跑", "跳"], category: "corpo"},
+            {id: 158, character: "身", strokes: 7, meaning: "corpo", pinyin: "shēn", examples: ["躬", "躯"], category: "corpo"},
+            {id: 159, character: "車", strokes: 7, meaning: "carro", pinyin: "chē", examples: ["轮", "载"], category: "trasporti"},
+            {id: 160, character: "辛", strokes: 7, meaning: "piccante", pinyin: "xīn", examples: ["辞", "辣"], category: "sapori"},
+            {id: 161, character: "辰", strokes: 7, meaning: "mattina", pinyin: "chén", examples: ["震", "振"], category: "tempo"},
+            {id: 162, character: "辵", strokes: 7, meaning: "camminare", pinyin: "chuò", examples: ["道", "远"], category: "movimento"},
+            {id: 163, character: "邑", strokes: 7, meaning: "città", pinyin: "yì", examples: ["都", "郊"], category: "luoghi"},
+            {id: 164, character: "酉", strokes: 7, meaning: "vino", pinyin: "yǒu", examples: ["酒", "醉"], category: "bevande"},
+            {id: 165, character: "釆", strokes: 7, meaning: "distinguere", pinyin: "biàn", examples: ["采", "释"], category: "azioni"},
+            {id: 166, character: "里", strokes: 7, meaning: "villaggio", pinyin: "lǐ", examples: ["重", "野"], category: "luoghi"},
+            {id: 167, character: "金", strokes: 8, meaning: "metallo", pinyin: "jīn", examples: ["银", "铁"], category: "minerali"},
+            {id: 168, character: "長", strokes: 8, meaning: "lungo", pinyin: "cháng", examples: ["张", "账"], category: "dimensioni"},
+            {id: 169, character: "門", strokes: 8, meaning: "porta", pinyin: "mén", examples: ["开", "关"], category: "edifici"},
+            {id: 170, character: "阜", strokes: 8, meaning: "collina", pinyin: "fù", examples: ["阳", "阴"], category: "geografia"},
+            {id: 171, character: "隶", strokes: 8, meaning: "schiavo", pinyin: "lì", examples: ["隷", "隸"], category: "società"},
+            {id: 172, character: "隹", strokes: 8, meaning: "uccello", pinyin: "zhuī", examples: ["雀", "雁"], category: "animali"},
+            {id: 173, character: "雨", strokes: 8, meaning: "pioggia", pinyin: "yǔ", examples: ["雪", "雷"], category: "tempo"},
+            {id: 174, character: "青", strokes: 8, meaning: "blu", pinyin: "qīng", examples: ["清", "静"], category: "colori"},
+            {id: 175, character: "非", strokes: 8, meaning: "non", pinyin: "fēi", examples: ["靠", "靡"], category: "negazione"},
+            {id: 176, character: "面", strokes: 9, meaning: "faccia", pinyin: "miàn", examples: ["颜", "题"], category: "corpo"},
+            {id: 177, character: "革", strokes: 9, meaning: "cuoio", pinyin: "gé", examples: ["鞋", "靴"], category: "materiali"},
+            {id: 178, character: "韋", strokes: 9, meaning: "cuoio conciato", pinyin: "wéi", examples: ["韧", "韩"], category: "materiali"},
+            {id: 179, character: "韭", strokes: 9, meaning: "porro", pinyin: "jiǔ", examples: ["韮", "韯"], category: "piante"},
+            {id: 180, character: "音", strokes: 9, meaning: "suono", pinyin: "yīn", examples: ["韵", "韶"], category: "suoni"},
+            {id: 181, character: "頁", strokes: 9, meaning: "pagina", pinyin: "yè", examples: ["顶", "项"], category: "oggetti"},
+            {id: 182, character: "風", strokes: 9, meaning: "vento", pinyin: "fēng", examples: ["飘", "飞"], category: "natura"},
+            {id: 183, character: "飛", strokes: 9, meaning: "volare", pinyin: "fēi", examples: ["飘", "飞"], category: "movimento"},
+            {id: 184, character: "食", strokes: 9, meaning: "cibo", pinyin: "shí", examples: ["饭", "饿"], category: "cibo"},
+            {id: 185, character: "首", strokes: 9, meaning: "testa", pinyin: "shǒu", examples: ["馗", "馘"], category: "corpo"},
+            {id: 186, character: "香", strokes: 9, meaning: "profumo", pinyin: "xiāng", examples: ["馥", "馨"], category: "odori"},
+            {id: 187, character: "馬", strokes: 10, meaning: "cavallo", pinyin: "mǎ", examples: ["骑", "驾"], category: "animali"},
+            {id: 188, character: "骨", strokes: 10, meaning: "osso", pinyin: "gǔ", examples: ["骼", "髅"], category: "corpo"},
+            {id: 189, character: "高", strokes: 10, meaning: "alto", pinyin: "gāo", examples: ["髙", "髚"], category: "dimensioni"},
+            {id: 190, character: "髟", strokes: 10, meaning: "capelli", pinyin: "biāo", examples: ["髪", "髫"], category: "corpo"},
+            {id: 191, character: "鬥", strokes: 10, meaning: "combattere", pinyin: "dòu", examples: ["鬧", "鬨"], category: "azioni"},
+            {id: 192, character: "鬯", strokes: 10, meaning: "vino aromatico", pinyin: "chàng", examples: ["鬰", "鬱"], category: "bevande"},
+            {id: 193, character: "鬲", strokes: 10, meaning: "calderone", pinyin: "lì", examples: ["鬳", "鬴"], category: "utensili"},
+            {id: 194, character: "鬼", strokes: 10, meaning: "fantasma", pinyin: "guǐ", examples: ["魂", "魄"], category: "spirituale"},
+            {id: 195, character: "魚", strokes: 11, meaning: "pesce", pinyin: "yú", examples: ["鲜", "鲤"], category: "animali"},
+            {id: 196, character: "鳥", strokes: 11, meaning: "uccello", pinyin: "niǎo", examples: ["鸡", "鸭"], category: "animali"},
+            {id: 197, character: "鹵", strokes: 11, meaning: "sale", pinyin: "lǔ", examples: ["鹹", "鹺"], category: "condimenti"},
+            {id: 198, character: "鹿", strokes: 11, meaning: "cervo", pinyin: "lù", examples: ["麋", "麌"], category: "animali"},
+            {id: 199, character: "麥", strokes: 11, meaning: "grano", pinyin: "mài", examples: ["麪", "麫"], category: "cereali"},
+            {id: 200, character: "麻", strokes: 11, meaning: "canapa", pinyin: "má", examples: ["麼", "麽"], category: "piante"},
+            {id: 201, character: "黃", strokes: 12, meaning: "giallo", pinyin: "huáng", examples: ["黃", "黃"], category: "colori"},
+            {id: 202, character: "黍", strokes: 12, meaning: "miglio", pinyin: "shǔ", examples: ["黎", "黏"], category: "cereali"},
+            {id: 203, character: "黑", strokes: 12, meaning: "nero", pinyin: "hēi", examples: ["默", "墨"], category: "colori"},
+            {id: 204, character: "黹", strokes: 12, meaning: "ricamo", pinyin: "zhǐ", examples: ["黺", "黻"], category: "tessuti"},
+            {id: 205, character: "黽", strokes: 13, meaning: "rana", pinyin: "mǐn", examples: ["鼂", "鼃"], category: "animali"},
+            {id: 206, character: "鼎", strokes: 13, meaning: "calderone", pinyin: "dǐng", examples: ["鼏", "鼐"], category: "utensili"},
+            {id: 207, character: "鼓", strokes: 13, meaning: "tamburo", pinyin: "gǔ", examples: ["鼕", "鼖"], category: "strumenti"},
+            {id: 208, character: "鼠", strokes: 13, meaning: "topo", pinyin: "shǔ", examples: ["鼡", "鼢"], category: "animali"},
+            {id: 209, character: "鼻", strokes: 14, meaning: "naso", pinyin: "bí", examples: ["鼾", "鼿"], category: "corpo"},
+            {id: 210, character: "齊", strokes: 14, meaning: "uniforme", pinyin: "qí", examples: ["齋", "齌"], category: "concetti"},
+            {id: 211, character: "齒", strokes: 15, meaning: "dente", pinyin: "chǐ", examples: ["齡", "齢"], category: "corpo"},
+            {id: 212, character: "龍", strokes: 16, meaning: "drago", pinyin: "lóng", examples: ["龔", "龕"], category: "mitologia"},
+            {id: 213, character: "龜", strokes: 16, meaning: "tartaruga", pinyin: "guī", examples: ["龝", "龞"], category: "animali"},
+            {id: 214, character: "龠", strokes: 17, meaning: "flauto", pinyin: "yuè", examples: ["龡", "龢"], category: "strumenti"}
+        ];
+
+        let favorites = JSON.parse(localStorage.getItem('radicalFavorites') || '[]');
+        let currentFilter = 'all';
+        let currentQuiz = null;
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            displayRadicals();
+            setupSearch();
+            updateFavoritesList();
+        });
+
+        // Tab switching
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('nav button').forEach(tab => {
+                tab.classList.remove('active-tab');
+                tab.classList.add('text-gray-600', 'hover:text-blue-600');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Content').classList.remove('hidden');
+            
+            // Add active class to selected tab
+            const activeTab = document.getElementById(tabName + 'Tab');
+            activeTab.classList.add('active-tab');
+            activeTab.classList.remove('text-gray-600', 'hover:text-blue-600');
+        }
+
+        // Display radicals in grid
+        function displayRadicals(radicalsToShow = radicals) {
+            const grid = document.getElementById('radicalsGrid');
+            grid.innerHTML = '';
+            
+            radicalsToShow.forEach(radical => {
+                const card = createRadicalCard(radical);
+                grid.appendChild(card);
+            });
+        }
+
+        // Create radical card
+        function createRadicalCard(radical) {
+            const card = document.createElement('div');
+            card.className = 'radical-card bg-white rounded-lg shadow-sm p-4 text-center border hover:border-blue-300 fade-in';
+            
+            const isFavorite = favorites.includes(radical.id);
+            
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs text-gray-500 font-medium">#${radical.id}</span>
+                    <button onclick="toggleFavorite(${radical.id})" class="text-lg hover:scale-110 transition-transform">
+                        ${isFavorite ? '❤️' : '🤍'}
+                    </button>
+                </div>
+                <div class="chinese-font text-4xl mb-2 text-gray-800">${radical.character}</div>
+                <div class="text-sm font-medium text-gray-700 mb-1">${radical.meaning}</div>
+                <div class="text-xs text-gray-500 mb-2">${radical.pinyin}</div>
+                <div class="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+                    ${radical.strokes} tratt${radical.strokes === 1 ? 'o' : 'i'}
+                </div>
+            `;
+            
+            card.addEventListener('click', () => showRadicalDetail(radical));
+            return card;
+        }
+
+        // Filter by strokes
+        function filterByStrokes(strokes) {
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-600', 'text-white');
+                btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
+            });
+            
+            event.target.classList.add('active', 'bg-blue-600', 'text-white');
+            event.target.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+            
+            currentFilter = strokes;
+            
+            let filteredRadicals;
+            if (strokes === 'all') {
+                filteredRadicals = radicals;
+            } else if (strokes === 4) {
+                filteredRadicals = radicals.filter(r => r.strokes >= 4);
+            } else {
+                filteredRadicals = radicals.filter(r => r.strokes === strokes);
+            }
+            
+            displayRadicals(filteredRadicals);
+        }
+
+        // Setup search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', performSearch);
+        }
+
+        // Perform search
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (query.length === 0) {
+                resultsContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 py-8">Inserisci un termine di ricerca</div>';
+                return;
+            }
+            
+            const results = radicals.filter(radical => 
+                radical.character.includes(query) ||
+                radical.meaning.toLowerCase().includes(query) ||
+                radical.pinyin.toLowerCase().includes(query) ||
+                radical.id.toString().includes(query) ||
+                radical.category.toLowerCase().includes(query) ||
+                radical.examples.some(example => example.includes(query))
+            );
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 py-8">Nessun risultato trovato</div>';
+                return;
+            }
+            
+            resultsContainer.innerHTML = '';
+            results.forEach(radical => {
+                const card = createSearchResultCard(radical, query);
+                resultsContainer.appendChild(card);
+            });
+        }
+
+        // Create search result card
+        function createSearchResultCard(radical, query) {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-lg shadow-sm p-4 border hover:border-blue-300 cursor-pointer transition-all fade-in';
+            
+            const isFavorite = favorites.includes(radical.id);
+            
+            // Highlight search terms
+            const highlightText = (text, query) => {
+                if (!query) return text;
+                const regex = new RegExp(`(${query})`, 'gi');
+                return text.replace(regex, '<span class="search-highlight">$1</span>');
+            };
+            
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-3">
+                    <span class="text-xs text-gray-500 font-medium">#${radical.id}</span>
+                    <button onclick="toggleFavorite(${radical.id})" class="text-lg hover:scale-110 transition-transform">
+                        ${isFavorite ? '❤️' : '🤍'}
+                    </button>
+                </div>
+                <div class="text-center mb-3">
+                    <div class="chinese-font text-3xl mb-2 text-gray-800">${radical.character}</div>
+                    <div class="text-sm font-medium text-gray-700">${highlightText(radical.meaning, query)}</div>
+                    <div class="text-xs text-gray-500">${highlightText(radical.pinyin, query)}</div>
+                </div>
+                <div class="text-xs text-gray-600">
+                    <div class="mb-1"><strong>Categoria:</strong> ${highlightText(radical.category, query)}</div>
+                    <div class="mb-1"><strong>Tratti:</strong> ${radical.strokes}</div>
+                    <div><strong>Esempi:</strong> ${radical.examples.map(ex => highlightText(ex, query)).join(', ')}</div>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => showRadicalDetail(radical));
+            return card;
+        }
+
+        // Show radical detail modal
+        function showRadicalDetail(radical) {
+            const modal = document.getElementById('radicalModal');
+            const content = document.getElementById('modalContent');
+            
+            const isFavorite = favorites.includes(radical.id);
+            
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="chinese-font text-6xl mb-4 text-gray-800">${radical.character}</div>
+                    <div class="flex justify-center items-center space-x-4 mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800">${radical.meaning}</h3>
+                        <button onclick="toggleFavorite(${radical.id})" class="text-2xl hover:scale-110 transition-transform">
+                            ${isFavorite ? '❤️' : '🤍'}
+                        </button>
+                    </div>
+                    <div class="text-lg text-gray-600 mb-2">${radical.pinyin}</div>
+                    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                        Radicale #${radical.id} • ${radical.strokes} tratt${radical.strokes === 1 ? 'o' : 'i'}
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">📚 Informazioni</h4>
+                        <div class="space-y-2 text-sm">
+                            <div><strong>Categoria:</strong> ${radical.category}</div>
+                            <div><strong>Numero Kangxi:</strong> ${radical.id}</div>
+                            <div><strong>Pronuncia:</strong> ${radical.pinyin}</div>
+                            <div><strong>Numero di tratti:</strong> ${radical.strokes}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">✨ Caratteri di esempio</h4>
+                        <div class="grid grid-cols-3 gap-2">
+                            ${radical.examples.map(example => `
+                                <div class="bg-white rounded p-2 text-center">
+                                    <div class="chinese-font text-xl text-gray-800">${example}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 bg-blue-50 rounded-lg p-4">
+                    <h4 class="font-semibold text-blue-800 mb-2">📖 Spiegazione del Radicale</h4>
+                    <p class="text-blue-700 text-sm leading-relaxed">
+                        ${radical.explanation || `Questo radicale rappresenta "${radical.meaning}" ed è presente in molti caratteri cinesi. Memorizzare il suo significato ti aiuterà a comprendere meglio i caratteri che lo contengono e la loro evoluzione storica.`}
+                    </p>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('radicalModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Toggle favorite
+        function toggleFavorite(radicalId) {
+            const index = favorites.indexOf(radicalId);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(radicalId);
+            }
+            
+            localStorage.setItem('radicalFavorites', JSON.stringify(favorites));
+            
+            // Update displays
+            displayRadicals();
+            updateFavoritesList();
+            
+            // Update search results if search is active
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput.value) {
+                performSearch();
+            }
+        }
+
+        // Update favorites list
+        function updateFavoritesList() {
+            const container = document.getElementById('favoritesList');
+            
+            if (favorites.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 col-span-full py-8">
+                        <div class="text-4xl mb-2">💝</div>
+                        <p>Nessun radicale nei preferiti ancora</p>
+                        <p class="text-sm">Clicca sul cuore per aggiungere radicali ai preferiti</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const favoriteRadicals = radicals.filter(r => favorites.includes(r.id));
+            container.innerHTML = '';
+            
+            favoriteRadicals.forEach(radical => {
+                const card = createRadicalCard(radical);
+                container.appendChild(card);
+            });
+        }
+
+        // Start quiz
+        function startQuiz(type) {
+            currentQuiz = {
+                type: type,
+                questions: generateQuizQuestions(type),
+                currentQuestion: 0,
+                score: 0
+            };
+            
+            showQuizQuestion();
+        }
+
+        // Generate quiz questions
+        function generateQuizQuestions(type) {
+            const shuffled = [...radicals].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 10).map(radical => {
+                const options = generateOptions(radical, type);
+                return {
+                    radical: radical,
+                    options: options,
+                    correct: type === 'meaning' ? radical.meaning : radical.character
+                };
+            });
+        }
+
+        // Generate quiz options
+        function generateOptions(correct, type) {
+            const options = [type === 'meaning' ? correct.meaning : correct.character];
+            const otherRadicals = radicals.filter(r => r.id !== correct.id);
+            
+            while (options.length < 4) {
+                const random = otherRadicals[Math.floor(Math.random() * otherRadicals.length)];
+                const option = type === 'meaning' ? random.meaning : random.character;
+                if (!options.includes(option)) {
+                    options.push(option);
+                }
+            }
+            
+            return options.sort(() => 0.5 - Math.random());
+        }
+
+        // Show quiz question
+        function showQuizQuestion() {
+            const container = document.getElementById('quizContainer');
+            const question = currentQuiz.questions[currentQuiz.currentQuestion];
+            
+            container.classList.remove('hidden');
+            container.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm text-gray-500">Domanda ${currentQuiz.currentQuestion + 1} di ${currentQuiz.questions.length}</span>
+                        <span class="text-sm text-blue-600 font-medium">Punteggio: ${currentQuiz.score}/${currentQuiz.questions.length}</span>
+                    </div>
+                    
+                    <div class="mb-6">
+                        ${currentQuiz.type === 'meaning' ? `
+                            <div class="chinese-font text-5xl mb-4 text-gray-800">${question.radical.character}</div>
+                            <p class="text-lg text-gray-700">Qual è il significato di questo radicale?</p>
+                        ` : `
+                            <p class="text-lg text-gray-700 mb-4">Quale radicale significa "${question.radical.meaning}"?</p>
+                        `}
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        ${question.options.map((option, index) => `
+                            <button onclick="selectAnswer('${option}')" 
+                                    class="quiz-option p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all">
+                                ${currentQuiz.type === 'meaning' ? option : `<span class="chinese-font text-2xl">${option}</span>`}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Select quiz answer
+        function selectAnswer(answer) {
+            const question = currentQuiz.questions[currentQuiz.currentQuestion];
+            const isCorrect = answer === question.correct;
+            
+            if (isCorrect) {
+                currentQuiz.score++;
+            }
+            
+            // Show feedback
+            const buttons = document.querySelectorAll('.quiz-option');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent.trim() === question.correct || 
+                    (currentQuiz.type === 'character' && btn.querySelector('.chinese-font')?.textContent === question.correct)) {
+                    btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                } else if (btn.textContent.trim() === answer || 
+                          (currentQuiz.type === 'character' && btn.querySelector('.chinese-font')?.textContent === answer)) {
+                    if (!isCorrect) {
+                        btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                    }
+                }
+            });
+            
+            // Continue to next question after delay
+            setTimeout(() => {
+                currentQuiz.currentQuestion++;
+                if (currentQuiz.currentQuestion < currentQuiz.questions.length) {
+                    showQuizQuestion();
+                } else {
+                    showQuizResults();
+                }
+            }, 1500);
+        }
+
+        // Show quiz results
+        function showQuizResults() {
+            const container = document.getElementById('quizContainer');
+            const percentage = Math.round((currentQuiz.score / currentQuiz.questions.length) * 100);
+            
+            let message = '';
+            let emoji = '';
+            if (percentage >= 90) {
+                message = 'Eccellente! Sei un esperto di radicali!';
+                emoji = '🏆';
+            } else if (percentage >= 70) {
+                message = 'Molto bene! Continua così!';
+                emoji = '🎉';
+            } else if (percentage >= 50) {
+                message = 'Buon lavoro! C\'è ancora spazio per migliorare.';
+                emoji = '👍';
+            } else {
+                message = 'Continua a studiare, migliorerai!';
+                emoji = '💪';
+            }
+            
+            container.innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-4">${emoji}</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Quiz Completato!</h3>
+                    <p class="text-lg text-gray-600 mb-4">${message}</p>
+                    
+                    <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                        <div class="text-3xl font-bold text-blue-600 mb-2">${currentQuiz.score}/${currentQuiz.questions.length}</div>
+                        <div class="text-lg text-blue-800">${percentage}% Corretto</div>
+                    </div>
+                    
+                    <div class="space-x-4">
+                        <button onclick="startQuiz(currentQuiz.type)" 
+                                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all">
+                            Riprova
+                        </button>
+                        <button onclick="document.getElementById('quizContainer').classList.add('hidden')" 
+                                class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-all">
+                            Chiudi
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('radicalModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'981156407137f671',t:'MTc1ODIwMzY4NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button><a href="index.html">Torna alla Home</a></button>
+</html>

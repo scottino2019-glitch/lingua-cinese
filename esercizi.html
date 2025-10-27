@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinese - Lezioni</title>
+<script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            background-color: #e74c3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 { margin: 0; }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        .card {
+            width: 250px;
+            height: 150px;
+            margin: 15px;
+            border-radius: 10px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        /* Colori sezioni */
+        .esercizi { background-color: #c0392b; }
+        .esercizi2 { background-color: #d35400; }
+        .esercizi3 { background-color: #c0392b; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🀄国</h1>
+    <p>Esercizi</p>
+</header>
+
+<div class="container">
+    <a href="esercizi/esercizi_cinese.html" class="card esercizi">🎯 Esercizi</a>
+    <a href="esercizi/traduzione.html" class="card esercizi2">🎯 Traduzione</a>
+ <a href="esercizi/scelta_multipla.html" class="card esercizi3">🎯 Scelta Multipla</a>
+</div>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95">
+  <a href="index.html">  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+</svg></a>
+</button>
+
+</body>
+</html>
