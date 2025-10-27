@@ -1,1109 +1,450 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esercizi di Cinese - Pratica Interattiva</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        .chinese-text {
-            font-family: 'Noto Sans SC', sans-serif;
+<!doctype html>
+<html lang="it" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizi Interattivi di Cinese</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
         }
-        
-        .exercise-card {
-            transition: all 0.3s ease;
+        .chinese-char {
+            font-family: 'SimSun', 'Microsoft YaHei', serif;
         }
-        
-        .exercise-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-        }
-        
         .fade-in {
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 0.3s ease-in;
         }
-        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        .slide-in {
-            animation: slideIn 0.6s ease-out;
+        .correct-answer {
+            animation: correctPulse 0.5s ease-in-out;
         }
-        
-        @keyframes slideIn {
-            from { transform: translateX(-30px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        .bounce {
-            animation: bounce 0.6s ease-in-out;
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-        
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        
-        .progress-bar {
-            transition: width 0.5s ease-in-out;
-        }
-        
-        .memory-card {
-            perspective: 1000px;
-            cursor: pointer;
-        }
-        
-        .memory-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        
-        .memory-card.flipped .memory-card-inner {
-            transform: rotateY(180deg);
-        }
-        
-        .memory-card-front, .memory-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .memory-card-back {
-            transform: rotateY(180deg);
-        }
-        
-        .streak-counter {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .score-animation {
-            animation: scoreUp 0.8s ease-out;
-        }
-        
-        @keyframes scoreUp {
+        @keyframes correctPulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        
-        .timer-warning {
-            animation: pulse 1s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
     </style>
-</head>
-<body class="bg-gradient-to-br from-purple-50 to-pink-100 min-h-screen font-['Inter']">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-6xl mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-xl">练</span>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold text-gray-900">Esercizi di Cinese</h1>
-                        <p class="text-sm text-gray-600">Pratica interattiva e divertente</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="text-right">
-                        <div class="flex items-center space-x-2 mb-1">
-                            <span class="text-sm text-gray-600">Punteggio:</span>
-                            <span id="total-score" class="font-bold text-purple-600 text-lg">0</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs text-gray-500">Serie:</span>
-                            <span id="streak-counter" class="streak-counter">0</span>
-                        </div>
-                    </div>
-                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white">
-                        🎯
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="max-w-6xl mx-auto px-4 py-8">
-        <!-- Main Menu -->
-        <div id="main-menu">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">Scegli il Tuo Esercizio</h2>
-                <p class="text-gray-600">Migliora il tuo cinese con esercizi interattivi e divertenti</p>
-            </div>
-
-            <!-- Exercise Types Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                <div class="exercise-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-exercise="vocabulary">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl">📚</span>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Quiz Vocabolario</h3>
-                        <p class="text-sm text-gray-600 mb-4">Traduci parole e riconosci caratteri</p>
-                        <div class="flex justify-center space-x-4 text-xs text-gray-500">
-                            <span>⏱️ 2-3 min</span>
-                            <span>🎯 10 domande</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="exercise-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-exercise="sentence">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl">✏️</span>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Completamento Frasi</h3>
-                        <p class="text-sm text-gray-600 mb-4">Riempi gli spazi vuoti nelle frasi</p>
-                        <div class="flex justify-center space-x-4 text-xs text-gray-500">
-                            <span>⏱️ 3-4 min</span>
-                            <span>🎯 8 frasi</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="exercise-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-exercise="pinyin">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl">🔤</span>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Pinyin Practice</h3>
-                        <p class="text-sm text-gray-600 mb-4">Associa caratteri e pronuncia</p>
-                        <div class="flex justify-center space-x-4 text-xs text-gray-500">
-                            <span>⏱️ 2-3 min</span>
-                            <span>🎯 12 caratteri</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="exercise-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-exercise="memory">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-r from-pink-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl">🧠</span>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Memory Game</h3>
-                        <p class="text-sm text-gray-600 mb-4">Memorizza coppie carattere-significato</p>
-                        <div class="flex justify-center space-x-4 text-xs text-gray-500">
-                            <span>⏱️ 3-5 min</span>
-                            <span>🎯 8 coppie</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="exercise-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-exercise="quick">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-r from-indigo-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl">⚡</span>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Esercizi Rapidi</h3>
-                        <p class="text-sm text-gray-600 mb-4">Test veloci per ripassare</p>
-                        <div class="flex justify-center space-x-4 text-xs text-gray-500">
-                            <span>⏱️ 1-2 min</span>
-                            <span>🎯 15 domande</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="exercise-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer" data-exercise="stats">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-r from-teal-400 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-white text-2xl">📊</span>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Statistiche</h3>
-                        <p class="text-sm text-gray-600 mb-4">Visualizza i tuoi progressi</p>
-                        <div class="flex justify-center space-x-4 text-xs text-gray-500">
-                            <span>📈 Progressi</span>
-                            <span>🏆 Risultati</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Activity -->
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <h3 class="font-semibold text-gray-900 mb-4">Attività Recente</h3>
-                <div id="recent-activity" class="space-y-3">
-                    <div class="text-gray-500 text-center py-4">Inizia un esercizio per vedere i tuoi progressi!</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Exercise Container -->
-        <div id="exercise-container" class="hidden">
-            <!-- Back Button -->
-            <button id="back-btn" class="mb-6 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
-                <span>←</span>
-                <span>Torna al Menu</span>
-            </button>
-
-            <!-- Exercise Header -->
-            <div id="exercise-header" class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-6">
-                <!-- Header content will be inserted here -->
-            </div>
-
-            <!-- Exercise Content -->
-            <div id="exercise-content" class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <!-- Exercise content will be inserted here -->
-            </div>
-
-            <!-- Exercise Results -->
-            <div id="exercise-results" class="hidden mt-6 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <!-- Results will be inserted here -->
-            </div>
-        </div>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full bg-gradient-to-br from-red-50 to-yellow-50 font-sans">
+  <div class="min-h-full p-4">
+   <div class="max-w-4xl mx-auto"><!-- Header -->
+    <header class="text-center mb-8">
+     <h1 id="app-title" class="text-4xl font-bold text-red-700 mb-2 chinese-char">汉语练习</h1>
+     <p id="welcome-message" class="text-lg text-gray-600">Scegli un tipo di esercizio per iniziare</p>
+    </header><!-- Progress Bar -->
+    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+     <div class="flex justify-between items-center mb-2"><span id="progress-label" class="text-sm font-medium text-gray-700">Progresso</span> <span id="progress-text" class="text-sm text-gray-500">0/0 completati</span>
+     </div>
+     <div class="w-full bg-gray-200 rounded-full h-2">
+      <div id="progress-bar" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+     </div>
+    </div><!-- Exercise Type Selection -->
+    <div id="exercise-selection" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"><button onclick="startExercise('characters')" class="bg-white hover:bg-red-50 border-2 border-red-200 hover:border-red-400 rounded-lg p-6 text-center transition-all duration-200">
+      <div class="text-3xl mb-2 chinese-char">
+       汉字
+      </div><h3 class="text-lg font-semibold text-gray-800 mb-1">Caratteri</h3><p class="text-sm text-gray-600">Riconosci i caratteri cinesi</p></button> <button onclick="startExercise('pinyin')" class="bg-white hover:bg-yellow-50 border-2 border-yellow-200 hover:border-yellow-400 rounded-lg p-6 text-center transition-all duration-200">
+      <div class="text-3xl mb-2">
+       🗣️
+      </div><h3 class="text-lg font-semibold text-gray-800 mb-1">Pinyin</h3><p class="text-sm text-gray-600">Pronuncia e toni</p></button> <button onclick="startExercise('translation')" class="bg-white hover:bg-blue-50 border-2 border-blue-200 hover:border-blue-400 rounded-lg p-6 text-center transition-all duration-200">
+      <div class="text-3xl mb-2">
+       📖
+      </div><h3 class="text-lg font-semibold text-gray-800 mb-1">Traduzione</h3><p class="text-sm text-gray-600">Significato delle parole</p></button>
+    </div><!-- Exercise Container -->
+    <div id="exercise-container" class="hidden">
+     <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="flex justify-between items-center mb-4">
+       <h2 id="exercise-title" class="text-xl font-bold text-gray-800"></h2><button onclick="backToSelection()" class="text-gray-500 hover:text-gray-700 text-sm">← Torna alla selezione</button>
+      </div>
+      <div id="exercise-content" class="text-center"><!-- Exercise content will be inserted here -->
+      </div>
+      <div id="exercise-feedback" class="mt-4 text-center hidden"><!-- Feedback will be shown here -->
+      </div>
+      <div class="flex justify-center mt-6"><button id="next-exercise-btn" onclick="nextExercise()" class="hidden bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"> Prossimo Esercizio </button>
+      </div>
+     </div>
+    </div><!-- Statistics -->
+    <div id="stats-container" class="mt-6 bg-white rounded-lg shadow-md p-4">
+     <h3 class="text-lg font-semibold text-gray-800 mb-3">Statistiche</h3>
+     <div class="grid grid-cols-3 gap-4 text-center">
+      <div>
+       <div id="total-exercises" class="text-2xl font-bold text-blue-600">
+        0
+       </div>
+       <div class="text-sm text-gray-600">
+        Totale
+       </div>
+      </div>
+      <div>
+       <div id="correct-exercises" class="text-2xl font-bold text-green-600">
+        0
+       </div>
+       <div class="text-sm text-gray-600">
+        Corretti
+       </div>
+      </div>
+      <div>
+       <div id="accuracy-percentage" class="text-2xl font-bold text-purple-600">
+        0%
+       </div>
+       <div class="text-sm text-gray-600">
+        Precisione
+       </div>
+      </div>
+     </div>
     </div>
+   </div>
+  </div>
+  <script>
+        // Chinese vocabulary database
+        const chineseVocabulary = [
+            { character: '你好', pinyin: 'nǐ hǎo', translation: 'ciao', type: 'greeting' },
+            { character: '谢谢', pinyin: 'xiè xiè', translation: 'grazie', type: 'courtesy' },
+            { character: '水', pinyin: 'shuǐ', translation: 'acqua', type: 'noun' },
+            { character: '吃', pinyin: 'chī', translation: 'mangiare', type: 'verb' },
+            { character: '学习', pinyin: 'xué xí', translation: 'studiare', type: 'verb' },
+            { character: '朋友', pinyin: 'péng yǒu', translation: 'amico', type: 'noun' },
+            { character: '家', pinyin: 'jiā', translation: 'casa', type: 'noun' },
+            { character: '爱', pinyin: 'ài', translation: 'amare', type: 'verb' },
+            { character: '书', pinyin: 'shū', translation: 'libro', type: 'noun' },
+            { character: '学校', pinyin: 'xué xiào', translation: 'scuola', type: 'noun' },
+            { character: '老师', pinyin: 'lǎo shī', translation: 'insegnante', type: 'noun' },
+            { character: '学生', pinyin: 'xué shēng', translation: 'studente', type: 'noun' },
+            { character: '中国', pinyin: 'zhōng guó', translation: 'Cina', type: 'noun' },
+            { character: '时间', pinyin: 'shí jiān', translation: 'tempo', type: 'noun' },
+            { character: '工作', pinyin: 'gōng zuò', translation: 'lavoro', type: 'noun' }
+        ];
 
-    <!-- Feedback Modal -->
-    <div id="feedback-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl max-w-md w-full p-6">
-            <div id="feedback-content" class="text-center">
-                <!-- Feedback content will be inserted here -->
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Global variables
+        let currentExerciseType = '';
         let currentExercise = null;
-        let currentQuestion = 0;
-        let score = 0;
-        let streak = 0;
-        let totalScore = parseInt(localStorage.getItem('totalScore') || '0');
-        let exerciseData = [];
-        let timer = null;
-        let timeLeft = 0;
-        let exerciseStats = JSON.parse(localStorage.getItem('exerciseStats') || '{}');
+        let exerciseHistory = [];
+        let stats = { total: 0, correct: 0 };
 
-        // Exercise databases
-        const vocabularyData = [
-            { chinese: '你好', pinyin: 'nǐ hǎo', italian: 'ciao', type: 'greeting' },
-            { chinese: '谢谢', pinyin: 'xiè xie', italian: 'grazie', type: 'courtesy' },
-            { chinese: '水', pinyin: 'shuǐ', italian: 'acqua', type: 'noun' },
-            { chinese: '吃', pinyin: 'chī', italian: 'mangiare', type: 'verb' },
-            { chinese: '学生', pinyin: 'xuésheng', italian: 'studente', type: 'noun' },
-            { chinese: '老师', pinyin: 'lǎoshī', italian: 'insegnante', type: 'noun' },
-            { chinese: '书', pinyin: 'shū', italian: 'libro', type: 'noun' },
-            { chinese: '家', pinyin: 'jiā', italian: 'casa', type: 'noun' },
-            { chinese: '朋友', pinyin: 'péngyou', italian: 'amico', type: 'noun' },
-            { chinese: '时间', pinyin: 'shíjiān', italian: 'tempo', type: 'noun' },
-            { chinese: '工作', pinyin: 'gōngzuò', italian: 'lavoro', type: 'noun' },
-            { chinese: '喜欢', pinyin: 'xǐhuan', italian: 'piacere', type: 'verb' },
-            { chinese: '中国', pinyin: 'zhōngguó', italian: 'Cina', type: 'noun' },
-            { chinese: '电话', pinyin: 'diànhuà', italian: 'telefono', type: 'noun' },
-            { chinese: '今天', pinyin: 'jīntiān', italian: 'oggi', type: 'time' }
-        ];
+        // SDK Configuration
+        const defaultConfig = {
+            app_title: 'Esercizi Interattivi di Cinese',
+            welcome_message: 'Scegli un tipo di esercizio per iniziare',
+            progress_label: 'Progresso',
+            primary_color: '#dc2626',
+            surface_color: '#ffffff',
+            text_color: '#374151',
+            accent_color: '#fbbf24',
+            success_color: '#059669'
+        };
 
-        const sentenceData = [
-            {
-                sentence: '我___学生。',
-                options: ['是', '有', '在', '做'],
-                correct: 0,
-                translation: 'Io sono studente.',
-                explanation: '是 è il verbo "essere" per identità'
-            },
-            {
-                sentence: '他___中文。',
-                options: ['说', '看', '听', '写'],
-                correct: 0,
-                translation: 'Lui parla cinese.',
-                explanation: '说 significa "parlare" una lingua'
-            },
-            {
-                sentence: '这___我的书。',
-                options: ['是', '有', '在', '做'],
-                correct: 0,
-                translation: 'Questo è il mio libro.',
-                explanation: '是 collega soggetto e predicato nominale'
-            },
-            {
-                sentence: '我___去学校。',
-                options: ['要', '是', '有', '在'],
-                correct: 0,
-                translation: 'Voglio andare a scuola.',
-                explanation: '要 esprime volontà o intenzione'
-            },
-            {
-                sentence: '她___很漂亮。',
-                options: ['很', '是', '有', '在'],
-                correct: 0,
-                translation: 'Lei è molto bella.',
-                explanation: '很 è l\'avverbio "molto" con aggettivi'
+        let config = { ...defaultConfig };
+
+        // Data handler for SDK
+        const dataHandler = {
+            onDataChanged(data) {
+                exerciseHistory = data;
+                updateStats();
+                updateProgress();
             }
-        ];
+        };
 
-        const pinyinData = [
-            { chinese: '马', pinyin: 'mǎ', italian: 'cavallo' },
-            { chinese: '妈', pinyin: 'mā', italian: 'mamma' },
-            { chinese: '麻', pinyin: 'má', italian: 'canapa' },
-            { chinese: '骂', pinyin: 'mà', italian: 'rimproverare' },
-            { chinese: '好', pinyin: 'hǎo', italian: 'bene' },
-            { chinese: '号', pinyin: 'hào', italian: 'numero' },
-            { chinese: '毛', pinyin: 'máo', italian: 'pelo' },
-            { chinese: '猫', pinyin: 'māo', italian: 'gatto' },
-            { chinese: '买', pinyin: 'mǎi', italian: 'comprare' },
-            { chinese: '卖', pinyin: 'mài', italian: 'vendere' }
-        ];
+        // Initialize SDKs
+        async function initializeApp() {
+            // Initialize Data SDK
+            const dataResult = await window.dataSdk.init(dataHandler);
+            if (!dataResult.isOk) {
+                console.error('Failed to initialize data SDK');
+            }
 
-        // Initialize app
-        updateScoreDisplay();
-        loadRecentActivity();
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                await window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange: async (newConfig) => {
+                        config = { ...newConfig };
+                        updateUIFromConfig();
+                    },
+                    mapToCapabilities: (config) => ({
+                        recolorables: [
+                            {
+                                get: () => config.primary_color || defaultConfig.primary_color,
+                                set: (value) => {
+                                    config.primary_color = value;
+                                    window.elementSdk.setConfig({ primary_color: value });
+                                }
+                            },
+                            {
+                                get: () => config.surface_color || defaultConfig.surface_color,
+                                set: (value) => {
+                                    config.surface_color = value;
+                                    window.elementSdk.setConfig({ surface_color: value });
+                                }
+                            },
+                            {
+                                get: () => config.text_color || defaultConfig.text_color,
+                                set: (value) => {
+                                    config.text_color = value;
+                                    window.elementSdk.setConfig({ text_color: value });
+                                }
+                            },
+                            {
+                                get: () => config.accent_color || defaultConfig.accent_color,
+                                set: (value) => {
+                                    config.accent_color = value;
+                                    window.elementSdk.setConfig({ accent_color: value });
+                                }
+                            },
+                            {
+                                get: () => config.success_color || defaultConfig.success_color,
+                                set: (value) => {
+                                    config.success_color = value;
+                                    window.elementSdk.setConfig({ success_color: value });
+                                }
+                            }
+                        ],
+                        borderables: [],
+                        fontEditable: undefined,
+                        fontSizeable: undefined
+                    }),
+                    mapToEditPanelValues: (config) => new Map([
+                        ['app_title', config.app_title || defaultConfig.app_title],
+                        ['welcome_message', config.welcome_message || defaultConfig.welcome_message],
+                        ['progress_label', config.progress_label || defaultConfig.progress_label]
+                    ])
+                });
+            }
 
-        // Event listeners
-        document.querySelectorAll('[data-exercise]').forEach(card => {
-            card.addEventListener('click', () => {
-                startExercise(card.dataset.exercise);
-            });
-        });
+            updateUIFromConfig();
+        }
 
-        document.getElementById('back-btn').addEventListener('click', goBackToMenu);
+        function updateUIFromConfig() {
+            document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+            document.getElementById('welcome-message').textContent = config.welcome_message || defaultConfig.welcome_message;
+            document.getElementById('progress-label').textContent = config.progress_label || defaultConfig.progress_label;
 
-        // Functions
-        function startExercise(type) {
-            currentExercise = type;
-            currentQuestion = 0;
-            score = 0;
+            // Apply colors
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const successColor = config.success_color || defaultConfig.success_color;
+
+            document.querySelector('h1').style.color = primaryColor;
+            document.getElementById('progress-bar').style.backgroundColor = primaryColor;
             
-            document.getElementById('main-menu').classList.add('hidden');
+            // Update surface colors
+            document.querySelectorAll('.bg-white').forEach(el => {
+                el.style.backgroundColor = surfaceColor;
+            });
+
+            // Update text colors
+            document.querySelectorAll('.text-gray-800, .text-gray-700, .text-gray-600').forEach(el => {
+                el.style.color = textColor;
+            });
+        }
+
+        function startExercise(type) {
+            currentExerciseType = type;
+            document.getElementById('exercise-selection').classList.add('hidden');
             document.getElementById('exercise-container').classList.remove('hidden');
             
-            switch(type) {
-                case 'vocabulary':
-                    startVocabularyExercise();
-                    break;
-                case 'sentence':
-                    startSentenceExercise();
-                    break;
-                case 'pinyin':
-                    startPinyinExercise();
-                    break;
-                case 'memory':
-                    startMemoryGame();
-                    break;
-                case 'quick':
-                    startQuickExercise();
-                    break;
-                case 'stats':
-                    showStats();
-                    break;
-            }
-        }
-
-        function startVocabularyExercise() {
-            exerciseData = shuffleArray([...vocabularyData]).slice(0, 10);
-            timeLeft = 180; // 3 minutes
-            
-            updateExerciseHeader('Quiz Vocabolario', 'Traduci le parole dal cinese all\'italiano', 10);
-            startTimer();
-            showVocabularyQuestion();
-        }
-
-        function showVocabularyQuestion() {
-            if (currentQuestion >= exerciseData.length) {
-                endExercise();
-                return;
-            }
-            
-            const question = exerciseData[currentQuestion];
-            const wrongAnswers = vocabularyData
-                .filter(item => item.italian !== question.italian)
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 3)
-                .map(item => item.italian);
-            
-            const allAnswers = shuffleArray([question.italian, ...wrongAnswers]);
-            
-            document.getElementById('exercise-content').innerHTML = `
-                <div class="text-center mb-8">
-                    <div class="chinese-text text-6xl font-bold text-gray-800 mb-4">${question.chinese}</div>
-                    <div class="text-xl text-blue-600 mb-2">${question.pinyin}</div>
-                    <div class="text-gray-600">Seleziona la traduzione corretta:</div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-                    ${allAnswers.map((answer, index) => `
-                        <button class="answer-btn p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors text-lg font-medium" data-answer="${answer}">
-                            ${answer}
-                        </button>
-                    `).join('')}
-                </div>
-            `;
-            
-            document.querySelectorAll('.answer-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    checkVocabularyAnswer(btn.dataset.answer, question.italian);
-                });
-            });
-        }
-
-        function checkVocabularyAnswer(selected, correct) {
-            const isCorrect = selected === correct;
-            const buttons = document.querySelectorAll('.answer-btn');
-            
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                if (btn.dataset.answer === correct) {
-                    btn.classList.add('bg-green-100', 'border-green-400', 'text-green-700');
-                } else if (btn.dataset.answer === selected && !isCorrect) {
-                    btn.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
-                }
-            });
-            
-            if (isCorrect) {
-                score += 10;
-                streak++;
-                showFeedback('Corretto!', '✓', 'green');
-            } else {
-                streak = 0;
-                showFeedback('Sbagliato!', '✗', 'red');
-            }
-            
-            updateScoreDisplay();
-            
-            setTimeout(() => {
-                currentQuestion++;
-                showVocabularyQuestion();
-            }, 1500);
-        }
-
-        function startSentenceExercise() {
-            exerciseData = shuffleArray([...sentenceData]).slice(0, 8);
-            timeLeft = 240; // 4 minutes
-            
-            updateExerciseHeader('Completamento Frasi', 'Riempi gli spazi vuoti con la parola corretta', 8);
-            startTimer();
-            showSentenceQuestion();
-        }
-
-        function showSentenceQuestion() {
-            if (currentQuestion >= exerciseData.length) {
-                endExercise();
-                return;
-            }
-            
-            const question = exerciseData[currentQuestion];
-            
-            document.getElementById('exercise-content').innerHTML = `
-                <div class="text-center mb-8">
-                    <div class="chinese-text text-4xl font-bold text-gray-800 mb-4">${question.sentence}</div>
-                    <div class="text-gray-600 mb-2">Traduzione: ${question.translation}</div>
-                    <div class="text-sm text-gray-500">${question.explanation}</div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4 max-w-xl mx-auto">
-                    ${question.options.map((option, index) => `
-                        <button class="answer-btn chinese-text p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors text-2xl font-medium" data-index="${index}">
-                            ${option}
-                        </button>
-                    `).join('')}
-                </div>
-            `;
-            
-            document.querySelectorAll('.answer-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    checkSentenceAnswer(parseInt(btn.dataset.index), question.correct);
-                });
-            });
-        }
-
-        function checkSentenceAnswer(selected, correct) {
-            const isCorrect = selected === correct;
-            const buttons = document.querySelectorAll('.answer-btn');
-            
-            buttons.forEach((btn, index) => {
-                btn.disabled = true;
-                if (index === correct) {
-                    btn.classList.add('bg-green-100', 'border-green-400', 'text-green-700');
-                } else if (index === selected && !isCorrect) {
-                    btn.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
-                }
-            });
-            
-            if (isCorrect) {
-                score += 15;
-                streak++;
-                showFeedback('Perfetto!', '✓', 'green');
-            } else {
-                streak = 0;
-                showFeedback('Riprova!', '✗', 'red');
-            }
-            
-            updateScoreDisplay();
-            
-            setTimeout(() => {
-                currentQuestion++;
-                showSentenceQuestion();
-            }, 2000);
-        }
-
-        function startPinyinExercise() {
-            exerciseData = shuffleArray([...pinyinData]).slice(0, 12);
-            timeLeft = 180; // 3 minutes
-            
-            updateExerciseHeader('Pinyin Practice', 'Associa ogni carattere alla sua pronuncia corretta', 12);
-            startTimer();
-            showPinyinQuestion();
-        }
-
-        function showPinyinQuestion() {
-            if (currentQuestion >= exerciseData.length) {
-                endExercise();
-                return;
-            }
-            
-            const question = exerciseData[currentQuestion];
-            const wrongAnswers = pinyinData
-                .filter(item => item.pinyin !== question.pinyin)
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 3)
-                .map(item => item.pinyin);
-            
-            const allAnswers = shuffleArray([question.pinyin, ...wrongAnswers]);
-            
-            document.getElementById('exercise-content').innerHTML = `
-                <div class="text-center mb-8">
-                    <div class="chinese-text text-8xl font-bold text-gray-800 mb-4">${question.chinese}</div>
-                    <div class="text-lg text-gray-600 mb-4">Significato: ${question.italian}</div>
-                    <div class="text-gray-600">Seleziona la pronuncia corretta:</div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-                    ${allAnswers.map((answer, index) => `
-                        <button class="answer-btn p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors text-xl font-medium text-blue-600" data-answer="${answer}">
-                            ${answer}
-                        </button>
-                    `).join('')}
-                </div>
-            `;
-            
-            document.querySelectorAll('.answer-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    checkPinyinAnswer(btn.dataset.answer, question.pinyin);
-                });
-            });
-        }
-
-        function checkPinyinAnswer(selected, correct) {
-            const isCorrect = selected === correct;
-            const buttons = document.querySelectorAll('.answer-btn');
-            
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                if (btn.dataset.answer === correct) {
-                    btn.classList.add('bg-green-100', 'border-green-400', 'text-green-700');
-                } else if (btn.dataset.answer === selected && !isCorrect) {
-                    btn.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
-                }
-            });
-            
-            if (isCorrect) {
-                score += 12;
-                streak++;
-                showFeedback('Esatto!', '✓', 'green');
-            } else {
-                streak = 0;
-                showFeedback('Sbagliato!', '✗', 'red');
-            }
-            
-            updateScoreDisplay();
-            
-            setTimeout(() => {
-                currentQuestion++;
-                showPinyinQuestion();
-            }, 1500);
-        }
-
-        function startMemoryGame() {
-            const gameData = shuffleArray([...vocabularyData]).slice(0, 8);
-            exerciseData = [...gameData, ...gameData].sort(() => Math.random() - 0.5);
-            timeLeft = 300; // 5 minutes
-            
-            updateExerciseHeader('Memory Game', 'Trova le coppie carattere-significato', 8);
-            startTimer();
-            showMemoryGame();
-        }
-
-        function showMemoryGame() {
-            let flippedCards = [];
-            let matchedPairs = 0;
-            
-            document.getElementById('exercise-content').innerHTML = `
-                <div class="grid grid-cols-4 gap-4 max-w-4xl mx-auto">
-                    ${exerciseData.map((item, index) => `
-                        <div class="memory-card h-24" data-index="${index}" data-value="${item.chinese || item.italian}">
-                            <div class="memory-card-inner h-full">
-                                <div class="memory-card-front bg-purple-500 text-white font-bold text-lg">
-                                    ?
-                                </div>
-                                <div class="memory-card-back bg-white border-2 border-purple-300 text-lg font-medium ${item.chinese ? 'chinese-text text-2xl' : 'text-base'} text-gray-800">
-                                    ${item.chinese || item.italian}
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div class="text-center mt-6">
-                    <div class="text-lg font-medium text-gray-700">
-                        Coppie trovate: <span id="pairs-found">0</span>/8
-                    </div>
-                </div>
-            `;
-            
-            document.querySelectorAll('.memory-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
-                        card.classList.add('flipped');
-                        flippedCards.push(card);
-                        
-                        if (flippedCards.length === 2) {
-                            setTimeout(() => {
-                                checkMemoryMatch(flippedCards);
-                                flippedCards = [];
-                            }, 1000);
-                        }
-                    }
-                });
-            });
-            
-            function checkMemoryMatch(cards) {
-                const [card1, card2] = cards;
-                const value1 = card1.dataset.value;
-                const value2 = card2.dataset.value;
-                
-                // Find if they're a matching pair
-                const item1 = vocabularyData.find(item => item.chinese === value1 || item.italian === value1);
-                const item2 = vocabularyData.find(item => item.chinese === value2 || item.italian === value2);
-                
-                if (item1 && item2 && item1.chinese === item2.chinese && value1 !== value2) {
-                    // Match found
-                    card1.style.opacity = '0.7';
-                    card2.style.opacity = '0.7';
-                    matchedPairs++;
-                    score += 20;
-                    streak++;
-                    
-                    document.getElementById('pairs-found').textContent = matchedPairs;
-                    
-                    if (matchedPairs === 8) {
-                        setTimeout(() => {
-                            endExercise();
-                        }, 1000);
-                    }
-                } else {
-                    // No match
-                    card1.classList.remove('flipped');
-                    card2.classList.remove('flipped');
-                    streak = 0;
-                }
-                
-                updateScoreDisplay();
-            }
-        }
-
-        function startQuickExercise() {
-            exerciseData = shuffleArray([...vocabularyData]).slice(0, 15);
-            timeLeft = 120; // 2 minutes
-            
-            updateExerciseHeader('Esercizi Rapidi', 'Rispondi il più velocemente possibile!', 15);
-            startTimer();
-            showQuickQuestion();
-        }
-
-        function showQuickQuestion() {
-            if (currentQuestion >= exerciseData.length) {
-                endExercise();
-                return;
-            }
-            
-            const question = exerciseData[currentQuestion];
-            const isChineseToItalian = Math.random() > 0.5;
-            
-            let questionText, correctAnswer, wrongAnswers;
-            
-            if (isChineseToItalian) {
-                questionText = question.chinese;
-                correctAnswer = question.italian;
-                wrongAnswers = vocabularyData
-                    .filter(item => item.italian !== question.italian)
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, 2)
-                    .map(item => item.italian);
-            } else {
-                questionText = question.italian;
-                correctAnswer = question.chinese;
-                wrongAnswers = vocabularyData
-                    .filter(item => item.chinese !== question.chinese)
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, 2)
-                    .map(item => item.chinese);
-            }
-            
-            const allAnswers = shuffleArray([correctAnswer, ...wrongAnswers]);
-            
-            document.getElementById('exercise-content').innerHTML = `
-                <div class="text-center mb-6">
-                    <div class="${isChineseToItalian ? 'chinese-text text-5xl' : 'text-3xl'} font-bold text-gray-800 mb-4">${questionText}</div>
-                    <div class="text-gray-600">Traduzione:</div>
-                </div>
-                
-                <div class="grid grid-cols-3 gap-3 max-w-2xl mx-auto">
-                    ${allAnswers.map((answer, index) => `
-                        <button class="answer-btn ${!isChineseToItalian ? 'chinese-text text-xl' : 'text-lg'} p-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors font-medium" data-answer="${answer}">
-                            ${answer}
-                        </button>
-                    `).join('')}
-                </div>
-            `;
-            
-            document.querySelectorAll('.answer-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    checkQuickAnswer(btn.dataset.answer, correctAnswer);
-                });
-            });
-        }
-
-        function checkQuickAnswer(selected, correct) {
-            const isCorrect = selected === correct;
-            
-            if (isCorrect) {
-                score += 8;
-                streak++;
-                document.getElementById('exercise-content').classList.add('bounce');
-            } else {
-                streak = 0;
-                document.getElementById('exercise-content').classList.add('shake');
-            }
-            
-            updateScoreDisplay();
-            
-            setTimeout(() => {
-                document.getElementById('exercise-content').classList.remove('bounce', 'shake');
-                currentQuestion++;
-                showQuickQuestion();
-            }, 500);
-        }
-
-        function showStats() {
-            updateExerciseHeader('Statistiche', 'I tuoi progressi negli esercizi', 0);
-            
-            const stats = exerciseStats;
-            const totalExercises = Object.values(stats).reduce((sum, stat) => sum + stat.completed, 0);
-            const totalPoints = Object.values(stats).reduce((sum, stat) => sum + stat.totalScore, 0);
-            
-            document.getElementById('exercise-content').innerHTML = `
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Statistiche Generali</h3>
-                        
-                        <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-purple-700">${totalScore}</div>
-                            <div class="text-sm text-purple-600">Punteggio Totale</div>
-                        </div>
-                        
-                        <div class="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-blue-700">${totalExercises}</div>
-                            <div class="text-sm text-blue-600">Esercizi Completati</div>
-                        </div>
-                        
-                        <div class="bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-green-700">${Math.round(totalPoints / Math.max(totalExercises, 1))}</div>
-                            <div class="text-sm text-green-600">Punteggio Medio</div>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Per Tipo di Esercizio</h3>
-                        
-                        ${Object.entries(stats).map(([type, stat]) => {
-                            const typeNames = {
-                                vocabulary: 'Quiz Vocabolario',
-                                sentence: 'Completamento Frasi',
-                                pinyin: 'Pinyin Practice',
-                                memory: 'Memory Game',
-                                quick: 'Esercizi Rapidi'
-                            };
-                            
-                            return `
-                                <div class="bg-gray-50 rounded-lg p-4">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <div class="font-medium text-gray-900">${typeNames[type] || type}</div>
-                                        <div class="text-sm text-gray-600">${stat.completed} volte</div>
-                                    </div>
-                                    <div class="text-lg font-bold text-gray-700">${stat.totalScore} punti</div>
-                                    <div class="text-sm text-gray-500">Media: ${Math.round(stat.totalScore / Math.max(stat.completed, 1))} punti</div>
-                                </div>
-                            `;
-                        }).join('')}
-                        
-                        ${Object.keys(stats).length === 0 ? '<div class="text-gray-500 text-center py-8">Nessun dato disponibile.<br>Completa alcuni esercizi per vedere le statistiche!</div>' : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        function updateExerciseHeader(title, description, totalQuestions) {
-            document.getElementById('exercise-header').innerHTML = `
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-900 mb-2">${title}</h2>
-                        <p class="text-gray-600">${description}</p>
-                    </div>
-                    <div class="text-right">
-                        ${totalQuestions > 0 ? `
-                            <div class="text-sm text-gray-600 mb-2">
-                                Domanda <span id="current-q">${currentQuestion + 1}</span> di ${totalQuestions}
-                            </div>
-                            <div class="w-32 bg-gray-200 rounded-full h-2">
-                                <div class="progress-bar bg-purple-500 h-2 rounded-full" style="width: ${(currentQuestion / totalQuestions) * 100}%"></div>
-                            </div>
-                        ` : ''}
-                        <div id="timer" class="text-lg font-bold text-purple-600 mt-2"></div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function startTimer() {
-            if (timer) clearInterval(timer);
-            
-            timer = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    endExercise();
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            const timerElement = document.getElementById('timer');
-            
-            if (timerElement) {
-                timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 30) {
-                    timerElement.classList.add('timer-warning', 'text-red-600');
-                    timerElement.classList.remove('text-purple-600');
-                }
-            }
-        }
-
-        function showFeedback(message, icon, color) {
-            const modal = document.getElementById('feedback-modal');
-            const content = document.getElementById('feedback-content');
-            
-            content.innerHTML = `
-                <div class="text-6xl mb-4">${icon}</div>
-                <div class="text-2xl font-bold text-${color}-600 mb-2">${message}</div>
-                <div class="text-lg text-gray-600">+${color === 'green' ? (currentExercise === 'memory' ? '20' : currentExercise === 'sentence' ? '15' : currentExercise === 'pinyin' ? '12' : currentExercise === 'quick' ? '8' : '10') : '0'} punti</div>
-            `;
-            
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }, 1000);
-        }
-
-        function endExercise() {
-            if (timer) clearInterval(timer);
-            
-            // Update statistics
-            if (!exerciseStats[currentExercise]) {
-                exerciseStats[currentExercise] = { completed: 0, totalScore: 0 };
-            }
-            exerciseStats[currentExercise].completed++;
-            exerciseStats[currentExercise].totalScore += score;
-            
-            totalScore += score;
-            localStorage.setItem('totalScore', totalScore.toString());
-            localStorage.setItem('exerciseStats', JSON.stringify(exerciseStats));
-            
-            // Add to recent activity
-            addToRecentActivity(currentExercise, score);
-            
-            // Show results
-            const resultsDiv = document.getElementById('exercise-results');
-            const percentage = Math.round((score / getMaxScore()) * 100);
-            
-            resultsDiv.innerHTML = `
-                <div class="text-center">
-                    <div class="text-6xl mb-4">${percentage >= 80 ? '🎉' : percentage >= 60 ? '👍' : '💪'}</div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Esercizio Completato!</h3>
-                    
-                    <div class="grid grid-cols-3 gap-4 max-w-md mx-auto mb-6">
-                        <div class="bg-purple-100 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-purple-700">${score}</div>
-                            <div class="text-sm text-purple-600">Punti</div>
-                        </div>
-                        <div class="bg-blue-100 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-blue-700">${percentage}%</div>
-                            <div class="text-sm text-blue-600">Precisione</div>
-                        </div>
-                        <div class="bg-green-100 rounded-lg p-4">
-                            <div class="text-2xl font-bold text-green-700">${Math.max(streak, 0)}</div>
-                            <div class="text-sm text-green-600">Serie Max</div>
-                        </div>
-                    </div>
-                    
-                    <div class="text-lg text-gray-700 mb-6">
-                        ${percentage >= 90 ? 'Eccellente! Sei un maestro!' : 
-                          percentage >= 80 ? 'Ottimo lavoro! Continua così!' :
-                          percentage >= 60 ? 'Buon lavoro! Puoi migliorare ancora!' :
-                          'Non mollare! La pratica rende perfetti!'}
-                    </div>
-                    
-                    <div class="space-x-4">
-                        <button id="retry-btn" class="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors">
-                            Riprova
-                        </button>
-                        <button id="menu-btn" class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
-                            Menu Principale
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            resultsDiv.classList.remove('hidden');
-            
-            document.getElementById('retry-btn').addEventListener('click', () => {
-                resultsDiv.classList.add('hidden');
-                startExercise(currentExercise);
-            });
-            
-            document.getElementById('menu-btn').addEventListener('click', goBackToMenu);
-            
-            updateScoreDisplay();
-        }
-
-        function getMaxScore() {
-            switch(currentExercise) {
-                case 'vocabulary': return 100; // 10 questions × 10 points
-                case 'sentence': return 120; // 8 questions × 15 points
-                case 'pinyin': return 144; // 12 questions × 12 points
-                case 'memory': return 160; // 8 pairs × 20 points
-                case 'quick': return 120; // 15 questions × 8 points
-                default: return 100;
-            }
-        }
-
-        function updateScoreDisplay() {
-            document.getElementById('total-score').textContent = totalScore;
-            document.getElementById('streak-counter').textContent = streak;
-            
-            if (streak > 0) {
-                document.getElementById('total-score').classList.add('score-animation');
-                setTimeout(() => {
-                    document.getElementById('total-score').classList.remove('score-animation');
-                }, 800);
-            }
-        }
-
-        function addToRecentActivity(exerciseType, score) {
-            const activities = JSON.parse(localStorage.getItem('recentActivities') || '[]');
-            const typeNames = {
-                vocabulary: 'Quiz Vocabolario',
-                sentence: 'Completamento Frasi',
-                pinyin: 'Pinyin Practice',
-                memory: 'Memory Game',
-                quick: 'Esercizi Rapidi'
+            const titles = {
+                'characters': 'Riconoscimento Caratteri',
+                'pinyin': 'Esercizi Pinyin',
+                'translation': 'Traduzione'
             };
             
-            activities.unshift({
-                type: typeNames[exerciseType] || exerciseType,
-                score: score,
-                date: new Date().toLocaleString('it-IT'),
-                timestamp: Date.now()
-            });
-            
-            // Keep only last 10 activities
-            activities.splice(10);
-            localStorage.setItem('recentActivities', JSON.stringify(activities));
-            loadRecentActivity();
+            document.getElementById('exercise-title').textContent = titles[type];
+            generateExercise();
         }
 
-        function loadRecentActivity() {
-            const activities = JSON.parse(localStorage.getItem('recentActivities') || '[]');
-            const container = document.getElementById('recent-activity');
+        function generateExercise() {
+            const word = chineseVocabulary[Math.floor(Math.random() * chineseVocabulary.length)];
+            currentExercise = { ...word, id: Date.now().toString() };
             
-            if (activities.length === 0) {
-                container.innerHTML = '<div class="text-gray-500 text-center py-4">Inizia un esercizio per vedere i tuoi progressi!</div>';
-                return;
+            const content = document.getElementById('exercise-content');
+            content.innerHTML = '';
+            
+            if (currentExerciseType === 'characters') {
+                generateCharacterExercise(word, content);
+            } else if (currentExerciseType === 'pinyin') {
+                generatePinyinExercise(word, content);
+            } else if (currentExerciseType === 'translation') {
+                generateTranslationExercise(word, content);
             }
             
-            container.innerHTML = activities.map(activity => `
-                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                        <div class="font-medium text-gray-900">${activity.type}</div>
-                        <div class="text-sm text-gray-500">${activity.date}</div>
-                    </div>
-                    <div class="text-lg font-bold text-purple-600">${activity.score} punti</div>
-                </div>
-            `).join('');
+            document.getElementById('exercise-feedback').classList.add('hidden');
+            document.getElementById('next-exercise-btn').classList.add('hidden');
         }
 
-        function goBackToMenu() {
-            if (timer) clearInterval(timer);
-            document.getElementById('exercise-container').classList.add('hidden');
-            document.getElementById('main-menu').classList.remove('hidden');
-            document.getElementById('exercise-results').classList.add('hidden');
-            currentExercise = null;
-            currentQuestion = 0;
-            score = 0;
-            streak = 0;
+        function generateCharacterExercise(word, content) {
+            const options = getRandomOptions(word.character, 'character');
+            
+            content.innerHTML = `
+                <div class="mb-6">
+                    <p class="text-lg mb-4">Quale carattere significa "${word.translation}"?</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        ${options.map(option => `
+                            <button onclick="checkAnswer('${option}', '${word.character}')" 
+                                    class="bg-gray-100 hover:bg-gray-200 border-2 border-gray-300 rounded-lg p-4 text-2xl chinese-char transition-all duration-200">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function generatePinyinExercise(word, content) {
+            const options = getRandomOptions(word.pinyin, 'pinyin');
+            
+            content.innerHTML = `
+                <div class="mb-6">
+                    <p class="text-lg mb-2">Come si pronuncia questo carattere?</p>
+                    <div class="text-4xl chinese-char mb-4">${word.character}</div>
+                    <div class="grid grid-cols-2 gap-4">
+                        ${options.map(option => `
+                            <button onclick="checkAnswer('${option}', '${word.pinyin}')" 
+                                    class="bg-gray-100 hover:bg-gray-200 border-2 border-gray-300 rounded-lg p-4 text-lg transition-all duration-200">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateTranslationExercise(word, content) {
+            const options = getRandomOptions(word.translation, 'translation');
+            
+            content.innerHTML = `
+                <div class="mb-6">
+                    <p class="text-lg mb-2">Cosa significa?</p>
+                    <div class="text-4xl chinese-char mb-2">${word.character}</div>
+                    <div class="text-lg text-gray-600 mb-4">${word.pinyin}</div>
+                    <div class="grid grid-cols-2 gap-4">
+                        ${options.map(option => `
+                            <button onclick="checkAnswer('${option}', '${word.translation}')" 
+                                    class="bg-gray-100 hover:bg-gray-200 border-2 border-gray-300 rounded-lg p-4 text-lg transition-all duration-200">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getRandomOptions(correct, type) {
+            const options = [correct];
+            const allOptions = chineseVocabulary.map(word => word[type]);
+            
+            while (options.length < 4) {
+                const randomOption = allOptions[Math.floor(Math.random() * allOptions.length)];
+                if (!options.includes(randomOption)) {
+                    options.push(randomOption);
+                }
+            }
+            
+            return shuffleArray(options);
         }
 
         function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
-            return newArray;
+            return shuffled;
         }
+
+        async function checkAnswer(userAnswer, correctAnswer) {
+            const isCorrect = userAnswer === correctAnswer;
+            const feedback = document.getElementById('exercise-feedback');
+            
+            // Disable all buttons
+            document.querySelectorAll('#exercise-content button').forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-gray-200');
+                if (btn.textContent.trim() === correctAnswer) {
+                    btn.classList.add('correct-answer');
+                    btn.style.backgroundColor = config.success_color || defaultConfig.success_color;
+                    btn.style.color = 'white';
+                } else if (btn.textContent.trim() === userAnswer && !isCorrect) {
+                    btn.style.backgroundColor = '#ef4444';
+                    btn.style.color = 'white';
+                }
+            });
+            
+            // Show feedback
+            feedback.innerHTML = `
+                <div class="fade-in">
+                    <div class="text-lg font-semibold ${isCorrect ? 'text-green-600' : 'text-red-600'}">
+                        ${isCorrect ? '✅ Corretto!' : '❌ Sbagliato!'}
+                    </div>
+                    ${!isCorrect ? `<div class="text-sm text-gray-600 mt-1">La risposta corretta è: ${correctAnswer}</div>` : ''}
+                </div>
+            `;
+            feedback.classList.remove('hidden');
+            
+            // Save result
+            if (exerciseHistory.length < 999) {
+                const result = await window.dataSdk.create({
+                    exercise_id: currentExercise.id,
+                    exercise_type: currentExerciseType,
+                    user_answer: userAnswer,
+                    correct_answer: correctAnswer,
+                    is_correct: isCorrect,
+                    completed_at: new Date().toISOString()
+                });
+                
+                if (!result.isOk) {
+                    console.error('Failed to save exercise result');
+                }
+            }
+            
+            document.getElementById('next-exercise-btn').classList.remove('hidden');
+        }
+
+        function nextExercise() {
+            generateExercise();
+        }
+
+        function backToSelection() {
+            document.getElementById('exercise-container').classList.add('hidden');
+            document.getElementById('exercise-selection').classList.remove('hidden');
+            currentExerciseType = '';
+        }
+
+        function updateStats() {
+            stats.total = exerciseHistory.length;
+            stats.correct = exerciseHistory.filter(ex => ex.is_correct).length;
+            
+            document.getElementById('total-exercises').textContent = stats.total;
+            document.getElementById('correct-exercises').textContent = stats.correct;
+            
+            const accuracy = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+            document.getElementById('accuracy-percentage').textContent = accuracy + '%';
+        }
+
+        function updateProgress() {
+            const totalToday = exerciseHistory.filter(ex => {
+                const today = new Date().toDateString();
+                const exerciseDate = new Date(ex.completed_at).toDateString();
+                return exerciseDate === today;
+            }).length;
+            
+            const target = 10; // Daily target
+            const progress = Math.min((totalToday / target) * 100, 100);
+            
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = `${totalToday}/${target} oggi`;
+        }
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98090184c3c6ed56',t:'MTc1ODExNjMyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/esercizi.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-</svg> Indietro </a></button>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99561805071b59fb',t:'MTc2MTYwOTAwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"> <a href="https://scottino2019-glitch.github.io/lingua-cinese/esercizi.html"> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></a></button>
 </html>
+
