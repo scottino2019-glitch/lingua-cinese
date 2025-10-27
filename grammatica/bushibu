@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Uso della particella 是不是 in cinese</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px; line-height: 1.6; color: #333; }
+        h1, h2 { color: #2c3e50; }
+        p, ul { margin-bottom: 15px; }
+        ul { padding-left: 20px; }
+        code { background-color: #eee; padding: 2px 4px; font-family: monospace; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px;}
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <h1>Uso della particella 是不是 in cinese</h1>
+
+    <p>La struttura <code>是不是</code> (shì bù shì) viene usata in cinese per formulare domande di tipo "sei o non sei...?", "è o non è...?", una forma che chiede conferma o fa una domanda alternativa.</p>
+
+    <h2>Regole principali</h2>
+    <ul>
+        <li>È formata dalla ripetizione del verbo 是 (shì), "essere", prima in forma affermativa e poi in forma negativa con 不 (bù).</li>
+        <li>Il suo uso è equivalente a domande sì/no molto precise o retoriche come "È vero che...?" o "È o non è...?".</li>
+        <li>La struttura può essere seguita da un nome, pronome o frase nominale di riferimento.</li>
+    </ul>
+
+    <h2>Esempi pratici con traduzione</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Frase</th>
+                <th>Traduzione</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>你是不是学生？<br />(Nǐ shì bù shì xuéshēng?)</td>
+                <td>Sei uno studente o no?</td>
+            </tr>
+            <tr>
+                <td>他是不是老师？<br />(Tā shì bù shì lǎoshī?)</td>
+                <td>Lui è un insegnante o no?</td>
+            </tr>
+            <tr>
+                <td>这是不是你的书？<br />(Zhè shì bù shì nǐ de shū?)</td>
+                <td>Questo è il tuo libro o no?</td>
+            </tr>
+            <tr>
+                <td>我们是不是朋友？<br />(Wǒmen shì bù shì péngyǒu?)</td>
+                <td>Siamo amici o no?</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>La particella 是不是 è molto utile per chiedere conferma in modo diretto e per formulare domande alternative che richiedono una risposta precisa.</p>
+<h1>Struttura verbo + 不 + verbo in cinese</h1>
+
+<p>In cinese, la struttura <code>verbo + 不 + verbo</code> è usata per esprimere una scelta, un'alternativa o una possibilità negativa/affirmativa tra due azioni opposte. Questo si applica a verbi diversi da <code>是 (shì)</code>.</p>
+
+<h2>Regole principali</h2>
+<ul>
+  <li>Si ripete il verbo, ma si inserisce la particella di negazione <code>不 (bù)</code> tra le due occorrenze per indicare contrasto o alternativa.</li>
+  <li>Non si usa questa struttura con il verbo <code>是 (shì)</code>, per cui le alternative si esprimono con <code>是不是</code>.</li>
+  <li>La struttura può essere usata per fare domande diverse dal semplice sì/no, indicando "fare o non fare qualcosa".</li>
+</ul>
+
+<h2>Esempi con pinyin e traduzione</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Frase</th>
+      <th>Pinyin</th>
+      <th>Traduzione italiana</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>喝不喝茶？</td>
+      <td>Hē bù hē chá?</td>
+      <td>Bevi o non bevi tè?</td>
+    </tr>
+    <tr>
+      <td>去不去学校？</td>
+      <td>Qù bù qù xuéxiào?</td>
+      <td>Vai o non vai a scuola?</td>
+    </tr>
+    <tr>
+      <td>做不做作业？</td>
+      <td>Zuò bù zuò zuòyè?</td>
+      <td>Fai o non fai i compiti?</td>
+    </tr>
+    <tr>
+      <td>吃不吃饭？</td>
+      <td>Chī bù chī fàn?</td>
+      <td>Mangi o non mangi?</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Questa struttura è molto comune nelle domande per chiedere esplicitamente una scelta o una preferenza tra fare e non fare un'azione.</p>
+
+</body>
+</html>
