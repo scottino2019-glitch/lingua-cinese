@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezioni Complete di Cinese</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .lesson-selector {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .lesson-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .lesson-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .lesson-card p {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .lesson-content {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .lesson-content.active {
+            display: block;
+        }
+
+        .lesson-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reading-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .chinese-text {
+            font-size: 1.8rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .pinyin-text {
+            font-size: 1.2rem;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .translation {
+            font-size: 1.1rem;
+            color: #555;
+            text-align: center;
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .vocab-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .vocab-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .vocab-character {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .vocab-pinyin {
+            font-size: 1.3rem;
+            color: #e74c3c;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .vocab-meaning {
+            font-size: 1.1rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .dictation-area {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .dictation-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .dictation-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .audio-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .feedback {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .progress-container {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .lesson-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 200px;
+                margin: 5px 0;
+            }
+            
+            .chinese-text {
+                font-size: 1.5rem;
+            }
+            
+            .vocab-character {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇨🇳 Lezioni Complete di Cinese</h1>
+            <p>Lettura • Vocabolario • Dettato</p>
+        </div>
+
+        <div class="lesson-selector" id="lessonSelector">
+            <h2 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">Scegli una Lezione</h2>
+            <div class="lesson-grid" id="lessonGrid"></div>
+        </div>
+
+        <div class="lesson-content" id="lessonContent">
+            <div class="lesson-nav">
+                <button class="nav-btn active" onclick="showSection('reading')">📖 Lettura</button>
+                <button class="nav-btn" onclick="showSection('vocabulary')">📚 Vocabolario</button>
+                <button class="nav-btn" onclick="showSection('dictation')">✍️ Dettato</button>
+                <button class="nav-btn" onclick="showSection('quiz')">🎯 Quiz</button>
+            </div>
+
+            <div class="progress-container">
+                <div class="score-display">
+                    Punteggio: <span id="totalScore">0</span> | Lezione: <span id="currentLessonTitle">-</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Reading Section -->
+            <div class="section active" id="reading">
+                <div class="reading-section">
+                    <div class="chinese-text" id="chineseText"></div>
+                    <div class="pinyin-text" id="pinyinText"></div>
+                    <div class="translation" id="translationText"></div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="audio-btn" onclick="playReading()" title="Ascolta la lettura">🔊</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vocabulary Section -->
+            <div class="section" id="vocabulary">
+                <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">Vocabolario della Lezione</h3>
+                <div class="vocab-grid" id="vocabGrid"></div>
+            </div>
+
+            <!-- Dictation Section -->
+            <div class="section" id="dictation">
+                <div class="dictation-area">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">Dettato</h3>
+                    <p style="color: #666; margin-bottom: 20px;">Ascolta e scrivi quello che senti in caratteri cinesi</p>
+                    
+                    <div>
+                        <button class="audio-btn" onclick="playDictation()" title="Riproduci audio">🔊</button>
+                        <button class="btn" onclick="playDictation()" style="margin-left: 10px;">Riproduci</button>
+                        <button class="btn" onclick="showHint()" style="margin-left: 10px;">💡 Aiuto</button>
+                    </div>
+                    
+                    <input type="text" class="dictation-input" id="dictationInput" placeholder="写汉字..." style="font-size: 1.5rem;" />
+                    
+                    <div id="hintArea" style="margin: 15px 0; padding: 10px; background: #f0f8ff; border-radius: 8px; display: none;">
+                        <strong>Suggerimento Pinyin:</strong> <span id="hintText"></span>
+                    </div>
+                    
+                    <div>
+                        <button class="btn" onclick="checkDictation()">Controlla</button>
+                        <button class="btn" onclick="nextDictation()">Prossima</button>
+                    </div>
+                    
+                    <div class="feedback" id="dictationFeedback"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="section" id="quiz">
+                <div class="dictation-area">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px;">Quiz Finale</h3>
+                    <div id="quizQuestion"></div>
+                    <div id="quizOptions"></div>
+                    <div class="feedback" id="quizFeedback"></div>
+                    <div style="margin-top: 20px;">
+                        <button class="btn" onclick="nextQuiz()">Prossima Domanda</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn" onclick="backToLessons()">← Torna alle Lezioni</button>
+                <button class="btn" onclick="resetLesson()">🔄 Ricomincia</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const lessons = [
+            {
+                id: 1,
+                title: "Primo Incontro",
+                level: "Principiante",
+                reading: {
+                    chinese: "A: 你好！我叫李明。你叫什么名字？\nB: 你好！我叫玛丽。很高兴认识你。\nA: 我也很高兴认识你。你是哪国人？\nB: 我是意大利人。你呢？\nA: 我是中国人。",
+                    pinyin: "A: Nǐ hǎo! Wǒ jiào Lǐ Míng. Nǐ jiào shénme míngzi?\nB: Nǐ hǎo! Wǒ jiào Mǎlì. Hěn gāoxìng rènshi nǐ.\nA: Wǒ yě hěn gāoxìng rènshi nǐ. Nǐ shì nǎ guó rén?\nB: Wǒ shì Yìdàlì rén. Nǐ ne?\nA: Wǒ shì Zhōngguó rén.",
+                    translation: "A: Ciao! Mi chiamo Li Ming. Come ti chiami?\nB: Ciao! Mi chiamo Maria. Piacere di conoscerti.\nA: Anche io sono felice di conoscerti. Di che nazionalità sei?\nB: Sono italiana. E tu?\nA: Sono cinese."
+                },
+                vocabulary: [
+                    { chinese: "你好", pinyin: "nǐ hǎo", meaning: "ciao" },
+                    { chinese: "叫", pinyin: "jiào", meaning: "chiamarsi" },
+                    { chinese: "什么", pinyin: "shénme", meaning: "cosa/che" },
+                    { chinese: "名字", pinyin: "míngzi", meaning: "nome" },
+                    { chinese: "很高兴", pinyin: "hěn gāoxìng", meaning: "molto felice" },
+                    { chinese: "认识", pinyin: "rènshi", meaning: "conoscere" },
+                    { chinese: "哪国人", pinyin: "nǎ guó rén", meaning: "di che nazionalità" },
+                    { chinese: "意大利人", pinyin: "Yìdàlì rén", meaning: "italiano" },
+                    { chinese: "中国人", pinyin: "Zhōngguó rén", meaning: "cinese" }
+                ],
+                dictation: [
+                    { chinese: "你好", pinyin: "nǐ hǎo" },
+                    { chinese: "我叫", pinyin: "wǒ jiào" },
+                    { chinese: "什么名字", pinyin: "shénme míngzi" },
+                    { chinese: "很高兴", pinyin: "hěn gāoxìng" },
+                    { chinese: "认识你", pinyin: "rènshi nǐ" }
+                ],
+                quiz: [
+                    {
+                        question: "Come si dice 'Come ti chiami?' in cinese?",
+                        options: ["你好吗？", "你叫什么名字？", "你是谁？", "你多大？"],
+                        correct: 1
+                    },
+                    {
+                        question: "Cosa significa '很高兴认识你'?",
+                        options: ["Come stai?", "Piacere di conoscerti", "Arrivederci", "Grazie"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Presentare la Famiglia",
+                level: "Principiante",
+                reading: {
+                    chinese: "A: 这是我的家人。这是我爸爸，这是我妈妈。\nB: 你爸爸做什么工作？\nA: 他是医生。我妈妈是老师。\nB: 你有兄弟姐妹吗？\nA: 有，我有一个哥哥和一个妹妹。你呢？\nB: 我只有一个弟弟。我们家人都很好。",
+                    pinyin: "A: Zhè shì wǒ de jiārén. Zhè shì wǒ bàba, zhè shì wǒ māma.\nB: Nǐ bàba zuò shénme gōngzuò?\nA: Tā shì yīshēng. Wǒ māma shì lǎoshī.\nB: Nǐ yǒu xiōngdì jiěmèi ma?\nA: Yǒu, wǒ yǒu yí ge gēge hé yí ge mèimei. Nǐ ne?\nB: Wǒ zhǐ yǒu yí ge dìdi. Wǒmen jiārén dōu hěn hǎo.",
+                    translation: "A: Questa è la mia famiglia. Questo è mio papà, questa è mia mamma.\nB: Che lavoro fa tuo papà?\nA: È un dottore. Mia mamma è un'insegnante.\nB: Hai fratelli o sorelle?\nA: Sì, ho un fratello maggiore e una sorella minore. E tu?\nB: Ho solo un fratello minore. La nostra famiglia sta tutta bene."
+                },
+                vocabulary: [
+                    { chinese: "家人", pinyin: "jiārén", meaning: "famiglia" },
+                    { chinese: "爸爸", pinyin: "bàba", meaning: "papà" },
+                    { chinese: "妈妈", pinyin: "māma", meaning: "mamma" },
+                    { chinese: "工作", pinyin: "gōngzuò", meaning: "lavoro" },
+                    { chinese: "医生", pinyin: "yīshēng", meaning: "dottore" },
+                    { chinese: "老师", pinyin: "lǎoshī", meaning: "insegnante" },
+                    { chinese: "哥哥", pinyin: "gēge", meaning: "fratello maggiore" },
+                    { chinese: "妹妹", pinyin: "mèimei", meaning: "sorella minore" },
+                    { chinese: "弟弟", pinyin: "dìdi", meaning: "fratello minore" }
+                ],
+                dictation: [
+                    { chinese: "我的家人", pinyin: "wǒ de jiārén" },
+                    { chinese: "做什么工作", pinyin: "zuò shénme gōngzuò" },
+                    { chinese: "他是医生", pinyin: "tā shì yīshēng" },
+                    { chinese: "兄弟姐妹", pinyin: "xiōngdì jiěmèi" },
+                    { chinese: "一个哥哥", pinyin: "yí ge gēge" }
+                ],
+                quiz: [
+                    {
+                        question: "Come si dice 'dottore' in cinese?",
+                        options: ["老师", "医生", "学生", "工人"],
+                        correct: 1
+                    },
+                    {
+                        question: "Cosa significa '兄弟姐妹'?",
+                        options: ["Genitori", "Fratelli e sorelle", "Amici", "Colleghi"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Al Ristorante",
+                level: "Principiante",
+                reading: {
+                    chinese: "A: 服务员，我们想点菜。\nB: 好的，您想吃什么？\nA: 我要一碗米饭，一个菜。你有什么推荐吗？\nB: 我们的宫保鸡丁很好吃。您要喝什么？\nA: 我要一杯茶。我朋友要咖啡。\nB: 好的，请稍等。",
+                    pinyin: "A: Fúwùyuán, wǒmen xiǎng diǎn cài.\nB: Hǎo de, nín xiǎng chī shénme?\nA: Wǒ yào yì wǎn mǐfàn, yí ge cài. Nǐ yǒu shénme tuījiàn ma?\nB: Wǒmen de gōngbào jīdīng hěn hǎochī. Nín yào hē shénme?\nA: Wǒ yào yì bēi chá. Wǒ péngyou yào kāfēi.\nB: Hǎo de, qǐng shāo děng.",
+                    translation: "A: Cameriere, vorremmo ordinare.\nB: Bene, cosa desidera mangiare?\nA: Vorrei una ciotola di riso e un piatto. Cosa ci consiglia?\nB: Il nostro pollo kung pao è molto buono. Cosa desidera bere?\nA: Vorrei una tazza di tè. Il mio amico vuole un caffè.\nB: Bene, aspetti un momento."
+                },
+                vocabulary: [
+                    { chinese: "服务员", pinyin: "fúwùyuán", meaning: "cameriere" },
+                    { chinese: "点菜", pinyin: "diǎn cài", meaning: "ordinare" },
+                    { chinese: "米饭", pinyin: "mǐfàn", meaning: "riso" },
+                    { chinese: "推荐", pinyin: "tuījiàn", meaning: "consigliare" },
+                    { chinese: "好吃", pinyin: "hǎochī", meaning: "buono (cibo)" },
+                    { chinese: "茶", pinyin: "chá", meaning: "tè" },
+                    { chinese: "咖啡", pinyin: "kāfēi", meaning: "caffè" },
+                    { chinese: "朋友", pinyin: "péngyou", meaning: "amico" },
+                    { chinese: "稍等", pinyin: "shāo děng", meaning: "aspettare un momento" }
+                ],
+                dictation: [
+                    { chinese: "我们想点菜", pinyin: "wǒmen xiǎng diǎn cài" },
+                    { chinese: "一碗米饭", pinyin: "yì wǎn mǐfàn" },
+                    { chinese: "什么推荐", pinyin: "shénme tuījiàn" },
+                    { chinese: "很好吃", pinyin: "hěn hǎochī" },
+                    { chinese: "一杯茶", pinyin: "yì bēi chá" }
+                ],
+                quiz: [
+                    {
+                        question: "Come si dice 'ordinare' in cinese?",
+                        options: ["吃饭", "点菜", "喝茶", "买菜"],
+                        correct: 1
+                    },
+                    {
+                        question: "Cosa significa '好吃'?",
+                        options: ["Caro", "Buono (sapore)", "Veloce", "Caldo"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Fare Shopping",
+                level: "Intermedio",
+                reading: {
+                    chinese: "A: 请问，这件衣服多少钱？\nB: 这件T恤衫八十块钱。\nA: 有点贵。能便宜一点吗？\nB: 这已经是最低价了。质量很好的。\nA: 有其他颜色吗？我不太喜欢红色。\nB: 有蓝色和白色的。您要试试吗？\nA: 好的，我试试蓝色的。",
+                    pinyin: "A: Qǐng wèn, zhè jiàn yīfu duōshao qián?\nB: Zhè jiàn T-xùshān bāshí kuài qián.\nA: Yǒudiǎn guì. Néng piányi yìdiǎn ma?\nB: Zhè yǐjīng shì zuìdī jià le. Zhìliàng hěn hǎo de.\nA: Yǒu qítā yánsè ma? Wǒ bù tài xǐhuan hóngsè.\nB: Yǒu lánsè hé báisè de. Nín yào shìshi ma?\nA: Hǎo de, wǒ shìshi lánsè de.",
+                    translation: "A: Scusi, quanto costa questo vestito?\nB: Questa maglietta costa ottanta yuan.\nA: È un po' cara. Può fare un po' di sconto?\nB: Questo è già il prezzo più basso. La qualità è molto buona.\nA: Ci sono altri colori? Non mi piace molto il rosso.\nB: Abbiamo blu e bianco. Vuole provare?\nA: Va bene, provo quello blu."
+                },
+                vocabulary: [
+                    { chinese: "衣服", pinyin: "yīfu", meaning: "vestiti" },
+                    { chinese: "多少钱", pinyin: "duōshao qián", meaning: "quanto costa" },
+                    { chinese: "块钱", pinyin: "kuài qián", meaning: "yuan (moneta)" },
+                    { chinese: "贵", pinyin: "guì", meaning: "caro" },
+                    { chinese: "便宜", pinyin: "piányi", meaning: "economico" },
+                    { chinese: "质量", pinyin: "zhìliàng", meaning: "qualità" },
+                    { chinese: "颜色", pinyin: "yánsè", meaning: "colore" },
+                    { chinese: "蓝色", pinyin: "lánsè", meaning: "blu" },
+                    { chinese: "试试", pinyin: "shìshi", meaning: "provare" }
+                ],
+                dictation: [
+                    { chinese: "多少钱", pinyin: "duōshao qián" },
+                    { chinese: "八十块钱", pinyin: "bāshí kuài qián" },
+                    { chinese: "有点贵", pinyin: "yǒudiǎn guì" },
+                    { chinese: "其他颜色", pinyin: "qítā yánsè" },
+                    { chinese: "试试看", pinyin: "shìshi kàn" }
+                ],
+                quiz: [
+                    {
+                        question: "Come si dice 'quanto costa?' in cinese?",
+                        options: ["多少钱？", "什么价格？", "贵不贵？", "怎么卖？"],
+                        correct: 0
+                    },
+                    {
+                        question: "Cosa significa '便宜一点'?",
+                        options: ["Un po' più caro", "Un po' più economico", "Molto caro", "Gratis"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Chiedere Indicazioni",
+                level: "Intermedio",
+                reading: {
+                    chinese: "A: 不好意思，请问银行在哪里？\nB: 银行就在前面，过两个红绿灯就到了。\nA: 走路需要多长时间？\nB: 大概十分钟。你也可以坐公交车。\nA: 公交车站在哪里？\nB: 就在那边，看到了吗？三路车可以到。\nA: 太谢谢你了！\nB: 不客气。",
+                    pinyin: "A: Bù hǎoyìsi, qǐng wèn yínháng zài nǎlǐ?\nB: Yínháng jiù zài qiánmian, guò liǎng ge hónglǜdēng jiù dào le.\nA: Zǒulù xūyào duō cháng shíjiān?\nB: Dàgài shí fēnzhōng. Nǐ yě kěyǐ zuò gōngjiāochē.\nA: Gōngjiāochē zhàn zài nǎlǐ?\nB: Jiù zài nàbiān, kàn dào le ma? Sān lù chē kěyǐ dào.\nA: Tài xièxie nǐ le!\nB: Bù kèqi.",
+                    translation: "A: Scusi, dov'è la banca?\nB: La banca è proprio davanti, dopo due semafori ci arriva.\nA: Quanto tempo ci vuole a piedi?\nB: Circa dieci minuti. Può anche prendere l'autobus.\nA: Dov'è la fermata dell'autobus?\nB: È proprio là, la vede? Il numero 3 ci arriva.\nA: La ringrazio molto!\nB: Prego."
+                },
+                vocabulary: [
+                    { chinese: "不好意思", pinyin: "bù hǎoyìsi", meaning: "scusi" },
+                    { chinese: "银行", pinyin: "yínháng", meaning: "banca" },
+                    { chinese: "前面", pinyin: "qiánmian", meaning: "davanti" },
+                    { chinese: "红绿灯", pinyin: "hónglǜdēng", meaning: "semaforo" },
+                    { chinese: "走路", pinyin: "zǒulù", meaning: "camminare" },
+                    { chinese: "时间", pinyin: "shíjiān", meaning: "tempo" },
+                    { chinese: "公交车", pinyin: "gōngjiāochē", meaning: "autobus" },
+                    { chinese: "车站", pinyin: "chēzhàn", meaning: "fermata" },
+                    { chinese: "谢谢", pinyin: "xièxie", meaning: "grazie" }
+                ],
+                dictation: [
+                    { chinese: "银行在哪里", pinyin: "yínháng zài nǎlǐ" },
+                    { chinese: "就在前面", pinyin: "jiù zài qiánmian" },
+                    { chinese: "多长时间", pinyin: "duō cháng shíjiān" },
+                    { chinese: "坐公交车", pinyin: "zuò gōngjiāochē" },
+                    { chinese: "太谢谢了", pinyin: "tài xièxie le" }
+                ],
+                quiz: [
+                    {
+                        question: "Come si dice 'scusi' in cinese?",
+                        options: ["对不起", "不好意思", "请问", "谢谢"],
+                        correct: 1
+                    },
+                    {
+                        question: "Cosa significa '红绿灯'?",
+                        options: ["Strada", "Semaforo", "Macchina", "Ponte"],
+                        correct: 1
+                    }
+                ]
+            }
+        ];
+
+        let currentLesson = null;
+        let currentSection = 'reading';
+        let dictationIndex = 0;
+        let quizIndex = 0;
+        let totalScore = 0;
+        let audioContext;
+
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioContext;
+        }
+
+        function playTone(frequency, duration = 0.5) {
+            try {
+                const ctx = initAudioContext();
+                const oscillator = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+                
+                oscillator.start(ctx.currentTime);
+                oscillator.stop(ctx.currentTime + duration);
+                
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function playAudio(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.7;
+                utterance.pitch = 1.0;
+                
+                let speechStarted = false;
+                let fallbackTimer = setTimeout(() => {
+                    if (!speechStarted) {
+                        playTone(440, 0.5);
+                    }
+                }, 500);
+                
+                utterance.onstart = () => {
+                    speechStarted = true;
+                    clearTimeout(fallbackTimer);
+                };
+                
+                utterance.onerror = () => {
+                    clearTimeout(fallbackTimer);
+                    playTone(440, 0.5);
+                };
+                
+                speechSynthesis.speak(utterance);
+            } else {
+                playTone(440, 0.5);
+            }
+        }
+
+        function initApp() {
+            loadLessonSelector();
+            updateScore();
+        }
+
+        function loadLessonSelector() {
+            const grid = document.getElementById('lessonGrid');
+            grid.innerHTML = '';
+            
+            lessons.forEach(lesson => {
+                const card = document.createElement('div');
+                card.className = 'lesson-card';
+                card.onclick = () => startLesson(lesson.id);
+                
+                card.innerHTML = `
+                    <h3>${lesson.title}</h3>
+                    <p>Livello: ${lesson.level}</p>
+                    <p>${lesson.vocabulary.length} parole • Lettura • Dettato • Quiz</p>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function startLesson(lessonId) {
+            currentLesson = lessons.find(l => l.id === lessonId);
+            document.getElementById('lessonSelector').style.display = 'none';
+            document.getElementById('lessonContent').classList.add('active');
+            document.getElementById('currentLessonTitle').textContent = currentLesson.title;
+            
+            loadReading();
+            loadVocabulary();
+            resetDictation();
+            resetQuiz();
+            showSection('reading');
+        }
+
+        function showSection(sectionName) {
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show section
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionName).classList.add('active');
+            
+            currentSection = sectionName;
+        }
+
+        function loadReading() {
+            const reading = currentLesson.reading;
+            document.getElementById('chineseText').textContent = reading.chinese;
+            document.getElementById('pinyinText').textContent = reading.pinyin;
+            document.getElementById('translationText').textContent = reading.translation;
+        }
+
+        function loadVocabulary() {
+            const grid = document.getElementById('vocabGrid');
+            grid.innerHTML = '';
+            
+            currentLesson.vocabulary.forEach(word => {
+                const card = document.createElement('div');
+                card.className = 'vocab-card';
+                card.onclick = () => playAudio(word.pinyin);
+                
+                card.innerHTML = `
+                    <div class="vocab-character">${word.chinese}</div>
+                    <div class="vocab-pinyin">${word.pinyin}</div>
+                    <div class="vocab-meaning">${word.meaning}</div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function playReading() {
+            playAudio(currentLesson.reading.pinyin);
+        }
+
+        function resetDictation() {
+            dictationIndex = 0;
+            document.getElementById('dictationInput').value = '';
+            document.getElementById('dictationFeedback').textContent = '';
+            document.getElementById('dictationFeedback').className = 'feedback';
+            document.getElementById('hintArea').style.display = 'none';
+        }
+
+        function playDictation() {
+            if (dictationIndex < currentLesson.dictation.length) {
+                const dictationItem = currentLesson.dictation[dictationIndex];
+                playAudio(dictationItem.pinyin);
+            }
+        }
+
+        function showHint() {
+            if (dictationIndex < currentLesson.dictation.length) {
+                const dictationItem = currentLesson.dictation[dictationIndex];
+                document.getElementById('hintText').textContent = dictationItem.pinyin;
+                document.getElementById('hintArea').style.display = 'block';
+            }
+        }
+
+        function checkDictation() {
+            const input = document.getElementById('dictationInput').value.trim();
+            const dictationItem = currentLesson.dictation[dictationIndex];
+            const correct = dictationItem.chinese;
+            const feedback = document.getElementById('dictationFeedback');
+            
+            if (input === correct) {
+                feedback.innerHTML = `正确! Corretto! 🎉<br><small>Pinyin: ${dictationItem.pinyin}</small>`;
+                feedback.className = 'feedback correct';
+                totalScore += 10;
+                updateScore();
+            } else {
+                feedback.innerHTML = `Sbagliato. La risposta corretta è: <strong>${correct}</strong><br><small>Pinyin: ${dictationItem.pinyin}</small>`;
+                feedback.className = 'feedback wrong';
+            }
+        }
+
+        function nextDictation() {
+            dictationIndex++;
+            if (dictationIndex >= currentLesson.dictation.length) {
+                dictationIndex = 0;
+            }
+            document.getElementById('dictationInput').value = '';
+            document.getElementById('dictationFeedback').textContent = '';
+            document.getElementById('dictationFeedback').className = 'feedback';
+            document.getElementById('hintArea').style.display = 'none';
+        }
+
+        function resetQuiz() {
+            quizIndex = 0;
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            if (quizIndex >= currentLesson.quiz.length) {
+                document.getElementById('quizQuestion').innerHTML = '<h4>Quiz completato! 🏆</h4>';
+                document.getElementById('quizOptions').innerHTML = '';
+                return;
+            }
+            
+            const question = currentLesson.quiz[quizIndex];
+            document.getElementById('quizQuestion').innerHTML = `<h4>${question.question}</h4>`;
+            
+            const optionsDiv = document.getElementById('quizOptions');
+            optionsDiv.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.style.margin = '10px';
+                btn.style.fontSize = '1.2rem';
+                btn.textContent = option;
+                btn.onclick = () => checkQuizAnswer(index);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkQuizAnswer(selectedIndex) {
+            const question = currentLesson.quiz[quizIndex];
+            const feedback = document.getElementById('quizFeedback');
+            
+            if (selectedIndex === question.correct) {
+                feedback.textContent = '正确! Corretto! 🎉';
+                feedback.className = 'feedback correct';
+                totalScore += 20;
+                updateScore();
+            } else {
+                feedback.textContent = `Sbagliato. La risposta corretta è: ${question.options[question.correct]}`;
+                feedback.className = 'feedback wrong';
+            }
+        }
+
+        function nextQuiz() {
+            quizIndex++;
+            document.getElementById('quizFeedback').textContent = '';
+            document.getElementById('quizFeedback').className = 'feedback';
+            loadQuizQuestion();
+        }
+
+        function updateScore() {
+            document.getElementById('totalScore').textContent = totalScore;
+            const maxScore = lessons.length * 50; // Approximate max score
+            const progress = Math.min((totalScore / maxScore) * 100, 100);
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function backToLessons() {
+            document.getElementById('lessonSelector').style.display = 'block';
+            document.getElementById('lessonContent').classList.remove('active');
+            currentLesson = null;
+        }
+
+        function resetLesson() {
+            if (currentLesson) {
+                resetDictation();
+                resetQuiz();
+                showSection('reading');
+            }
+        }
+
+        // Initialize the app
+        initApp();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9634a001c5cacb8b',t:'MTc1MzIwNDk5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/grammatica.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+</html>

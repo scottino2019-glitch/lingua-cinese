@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raccolta Completa - Lezioni di Cinese</title>
+    <style>
+        body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 20px; 
+    line-height: 1.7; 
+    background: #f8fafc;
+    color: #2d3748;
+}
+.main-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 60px 40px;
+    text-align: center;
+}
+.content {
+    padding: 40px;
+}
+.chinese { 
+    font-family: 'Microsoft YaHei', 'SimSun', serif; 
+    font-size: 1.4em; 
+    font-weight: 500;
+    color: #2c3e50;
+}
+.pinyin { 
+    color: #8b5cf6; 
+    font-style: italic; 
+    font-size: 1.1em;
+    margin: 8px 0;
+}
+.lesson { 
+    margin: 10px 0; 
+    padding: 40px; 
+    border: 1px solid #e2e8f0; 
+    border-radius: 16px; 
+    background: #fafbfc;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+   
+    width: 100%;
+    box-sizing: border-box;
+}
+.lesson:first-child {
+    margin-top: 30px;
+}
+.section { 
+    margin: 10px 0; 
+    padding: 20px; 
+    border-radius: 12px; 
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+}
+.grammar { 
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); 
+    border-left: 1px solid #2196f3; 
+}
+.text { 
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%); 
+    border-left: 1px solid #4caf50; 
+}
+.vocab { 
+    background: linear-gradient(135deg, #faf5ff 0%, #fff0f5 100%); 
+    border-left: 6px solid #9c27b0; 
+}
+.vocab-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 20px; 
+    margin-top: 25px;
+}
+.vocab-item { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 12px; 
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+.vocab-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+h1 { 
+    font-size: 3em; 
+    margin: 0 0 20px 0;
+    font-weight: 700;
+}
+h2 { 
+    color: #2d3748; 
+    border-bottom: 3px solid #4299e1; 
+    padding-bottom: 12px; 
+    margin: 30px 0 25px 0;
+    font-size: 2.2em;
+    font-weight: 600;
+}
+h3 { 
+    color: #4a5568; 
+    margin: 25px 0 15px 0;
+    font-size: 1.6em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+h4 {
+    color: #718096;
+    margin: 20px 0 10px 0;
+    font-size: 1.3em;
+}
+h5 {
+    color: #a0aec0;
+    margin: 15px 0 8px 0;
+    font-size: 1.1em;
+}
+.level { 
+    display: inline-block; 
+    padding: 10px 25px; 
+    border-radius: 30px; 
+    font-size: 0.9em; 
+    font-weight: bold; 
+    margin: 0 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    white-space: nowrap;
+}
+.level-principiante { 
+    background: linear-gradient(135deg, #48bb78, #38a169); 
+    color: white; 
+}
+.level-intermedio { 
+    background: linear-gradient(135deg, #ed8936, #dd6b20); 
+    color: white; 
+}
+.level-avanzato { 
+    background: linear-gradient(135deg, #f56565, #e53e3e); 
+    color: white; 
+}
+.toc { 
+    background: linear-gradient(135deg, #edf2f7, #e2e8f0); 
+    padding: 40px; 
+    border-radius: 16px; 
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.toc h2 {
+    color: #2d3748;
+    border-bottom: 3px solid #4299e1;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+.toc ul { 
+    list-style: none; 
+    padding: 0; 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+.toc li { 
+    background: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+.toc li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+.toc a { 
+    text-decoration: none; 
+    color: #4299e1; 
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.toc a:hover { 
+    color: #2b6cb0;
+}
+.grammar-item, .text-item {
+    width: 250px;
+    background: rgba(255,255,255,0.8);
+    padding: 10px;
+    margin-right: 2px 0;
+    border-radius: 12px;
+    border-left: 5px solid #666;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.grammar-item {
+    border-left-color: #2196f3;
+}
+.text-item {
+    border-left-color: #4caf50;
+}
+.translation {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    font-style: italic;
+    color: #4a5568;
+    margin-top: 15px;
+    border-left: 4px solid #cbd5e0;
+}
+.stats {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    text-align: center;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+.stat-item {
+    background: rgba(255,255,255,0.2);
+    padding: 15px;
+    border-radius: 8px;
+}
+.stat-number {
+    font-size: 2em;
+    font-weight: bold;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 12px;
+    }
+    .lesson, .section, .toc li {
+        padding-left: 0px;
+        padding-right: 20px;
+        max-width: 600px;
+        width: 90%;
+        margin: 0 auto 20px auto;
+        box-sizing: border-box;
+    }
+    .toc ul {
+        grid-template-columns: 1fr;
+        padding: 0 10px;
+    }
+    .vocab-grid {
+        grid-template-columns: 1fr;
+        padding: 0 10px;
+    }
+    .level {
+        padding: 6px 15px;
+        font-size: 0.8em;
+        white-space: normal;
+        word-break: break-word;
+        margin: 0 8px 8px 0;
+        display: inline-block;
+    }
+    h1 {
+        font-size: 2.2em;
+    }
+    h2 {
+        font-size: 1.8em;
+    }
+}
+        
+       
+            
+
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header">
+            <h1>⏰ Gli Avverbi di Tempo</h1>
+            <h2 style="border: none; margin: 0; font-size: 1.5em; font-weight: 400;">I determinanti e gli avverbi di tempo</h2>
+            
+        </header>
+
+        <div class="content">
+            <nav class="toc">
+                <h2>📋 Indice delle Lezioni</h2>
+                <ul>
+                    
+                        <li>
+                            <a href="#lesson-1761398059987">
+                                <span>1. I determinati di tempo nella grammatica cinese</span>
+                                <span class="level level-principiante">principiante</span>
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="#lesson-1761401090453">
+                                <span>2. avverbi di tempo in cinese</span>
+                                <span class="level level-principiante">principiante</span>
+                            </a>
+                        </li>
+                    
+                </ul>
+            </nav>
+
+            
+                <article class="lesson" id="lesson-1761398059987">
+                    <header>
+                        <h2>1. I determinati di tempo nella grammatica cinese <span class="level level-principiante">principiante</span></h2>
+                    </header>
+
+                    
+                    <section class="section grammar">
+                        <h3>📚 Grammatica</h3>
+                        
+                            <div class="grammar-item">
+                                <h4>I determinati di tempo nella grammatica cinese con l' uso di 一起</h4>
+                                <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.7;">Nella grammatica cinese, 一起 (yìqǐ) è un avverbio che significa "insieme" e si usa per indicare che un'azione viene compiuta insieme ad altre persone. L'uso di 一起 per esprimere il tempo dipende dalla posizione nella frase e dal verbo che segue; infatti, 一起 precede sempre il verbo o la locuzione verbale.
+
+La struttura tipica è:
+Soggetto + 一起 + verbo + oggetto
+Esempi:
+- 我们一起学习中文。Wǒmen yìqǐ xuéxí zhōngwén. (Noi studiamo cinese insieme.)
+- 他们一起去上大学。Tāmen yìqǐ qù shàng dàxué. (Loro vanno all'università insieme.)
+
+Per indicare un'azione insieme nel tempo, 一起 si combina con gli avverbi o indicatori di tempo che di solito si posizionano all'inizio della frase o immediatamente prima del verbo principale, mantenendo comunque insieme l’ordine: avverbio di tempo + soggetto + 一起 + verbo.
+
+Ad esempio:
+- 明天我们一起去超市。Míngtiān wǒmen yìqǐ qù chāoshì. (Domani andiamo insieme al supermercato.)
+- 昨天他们一起吃饭。Zuótiān tāmen yìqǐ chīfàn. (Ieri hanno pranzato insieme.)
+
+In questo modo, 一起 segnala il modo ("insieme"), mentre gli avverbi o espressioni temporali indicano quando avviene l'azione, non modificando il verbo stesso poiché in cinese i verbi non si coniugano per il tempo. Inoltre, particelle temporali come 了 (le) possono essere usate dopo il verbo per indicare che l'azione è completata.
+
+Riassumendo:
+- 一起 indica che l'azione è fatta "insieme" e si mette prima del verbo.
+- Gli avverbi di tempo si mettono invece all'inizio della frase o subito prima del verbo.
+- Una frase completa con tempo e insieme può essere: Avverbio di tempo + soggetto + 一起 + verbo + oggetto.
+- Il verbo non cambia forma per il tempo, si usano particelle temporali o avverbi per indicare quando [1][3][6].</p>
+                                <div style="margin-top: 15px;">
+                                    <strong>Esempio:</strong>
+                                    <p class="chinese" style="margin: 10px 0; font-size: 1.4em;">- 现在我们一起工作。Xiànzài wǒmen yìqǐ gōngzuò. (Adesso lavoriamo insieme.) - 明年他们一起去旅行。Míngnián tāmen yìqǐ qù lǚxíng. (L'anno prossimo loro viaggeranno insieme.)</p>
+                                </div>
+                            </div>
+                        
+                            <div class="grammar-item">
+                                <h4>Come posizionare avverbi di tempo con 一起 nella frase</h4>
+                                <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.7;">Gli avverbi di tempo in cinese, quando usati con 一起 (yìqǐ, "insieme"), generalmente si collocano nella frase precedendo il soggetto o immediatamente prima di 一起, mantenendo la struttura:
+
+Avverbio di tempo + soggetto + 一起 + verbo + oggetto.
+
+Questo perché 一起 è un avverbio di modo che indica che l'azione è svolta insieme, e quindi deve precedere il verbo. L'avverbio di tempo invece indica "quando" e si posiziona di solito all'inizio della frase o prima di 一起 per specificare il momento dell'azione senza interrompere la relazione verbale con 一起.
+
+Esempi:
+- 明天我们一起去公园。Míngtiān wǒmen yìqǐ qù gōngyuán. (Domani andiamo insieme al parco.)
+- 现在他们一起开始工作。Xiànzài tāmen yìqǐ kāishǐ gōngzuò. (Adesso loro iniziano a lavorare insieme.)
+
+Non si mette l'avverbio di tempo tra 一起 e il verbo, perché 一起 funziona come un modificatore diretto del verbo. Gli avverbi di tempo restano separati e indicano chiaramente il contesto temporale dell'azione insieme.
+
+In sintesi:
+- L'avverbio di tempo può andare all'inizio della frase o subito prima di 一起.
+- 一起 precede sempre il verbo.
+- La posizione dell’avverbio di tempo non spezza la coppia 一起 + verbo.
+
+Questa struttura è importante per mantenere chiarezza nell'espressione del tempo e del modo nell'ambito dell'azione svolta insieme nella frase cinese 
+Esempi pratici: 一起 in frasi con ieri oggi domani
+
+Ecco alcuni esempi pratici di frasi in cinese che usano 一起 (yìqǐ, "insieme") con gli avverbi di tempo ieri, oggi e domani:</p>
+                                <div style="margin-top: 15px;">
+                                    <strong>Esempio:</strong>
+                                    <p class="chinese" style="margin: 10px 0; font-size: 1.4em;">- 昨天我们一起去了电影院。Zuótiān wǒmen yìqǐ qùle diànyǐngyuàn.     (Ieri siamo andati insieme al cinema.)  - 今天我们一起学习汉语。Jīntiān wǒmen yìqǐ xuéxí hànyǔ.     (Oggi studiamo cinese insieme.)  - 明天我们一起去爬山。Míngtiān wǒmen yìqǐ qù páshān.     (Domani andremo insieme a fare escursioni.)</p>
+                                </div>
+                            </div>
+                        
+                            <div class="grammar-item">
+                                <h4>chiarimenti per la frase 明天晚上我们一起去看电影好吗?</h4>
+                                <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.7;">La frase 明天晚上我们一起去看电影好吗？ (Míngtiān wǎnshàng wǒmen yìqǐ qù kàn diànyǐng hǎo ma?) si traduce in italiano con: "Domani sera andiamo insieme a vedere un film, va bene?"
+
+Ecco i chiarimenti sui singoli componenti e la struttura grammaticale:
+
+- 明天晚上 (míngtiān wǎnshàng): indica il tempo "domani sera". 明天 è "domani" e 晚上 è "sera", un avverbio di tempo posizionato all'inizio della frase.
+- 我们 (wǒmen): "noi", il soggetto della frase.
+- 一起 (yìqǐ): "insieme", avverbio che indica che l'azione sarà compiuta congiuntamente. Va sempre posizionato davanti al verbo.
+- 去 (qù): "andare", verbo che indica il movimento verso un luogo.
+- 看电影 (kàn diànyǐng): "vedere un film", verbo + complemento oggetto.
+- 好吗？(hǎo ma?): particella finale usata per proporre qualcosa con tono di domanda, simile a "va bene?" o "ti va?".
+
+Insieme, la frase è una proposta gentile di andare insieme a vedere un film domani sera, formulata come domanda per chiedere il consenso o conferma.
+
+La struttura rispettata è:
+Tempo + Soggetto + 一起 + Verbo + Oggetto + Domanda
+
+Questa forma è molto comune e naturale nel cinese parlato per suggerire un piano o attività condivisa.
+
+Riassumendo:
+- 明天晚上 indica il momento dell'azione.
+- 一起 sottolinea che l'azione avverrà insieme.
+- 好吗? trasforma la frase in domanda per coinvolgere l'interlocutore nel decisione.
+
+Si tratta quindi di una domanda cortese e molto usata per proporre azioni future condivise.</p>
+                                <div style="margin-top: 15px;">
+                                    <strong>Esempio:</strong>
+                                    <p class="chinese" style="margin: 10px 0; font-size: 1.4em;">Tempo + Soggetto + 一起 + Verbo + Oggetto + Domanda</p>
+                                </div>
+                            </div>
+                        
+                    </section>
+                    
+
+                    
+
+                    
+                </article>
+            
+                <article class="lesson" id="lesson-1761401090453">
+                    <header>
+                        <h2>2. avverbi di tempo in cinese <span class="level level-principiante">principiante</span></h2>
+                    </header>
+
+                    
+                    <section class="section grammar">
+                        <h3>📚 Grammatica</h3>
+                        
+                            <div class="grammar-item">
+                                <h4>avverbi di tempo in cinese</h4>
+                                <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.7;">Gli avverbi di tempo in cinese sono parole o espressioni che indicano quando avviene un'azione o un evento. Essi si collocano solitamente prima del verbo o all'inizio della frase per specificare il momento temporale dell'azione. Ecco una lista dei principali avverbi di tempo con la loro traduzione e uso:
+
+- 昨天 (zuótiān) – ieri  
+- 今天 (jīntiān) – oggi  
+- 明天 (míngtiān) – domani  
+- 现在 (xiànzài) – adesso, ora  
+- 早上 (zǎoshang) – mattina  
+- 下午 (xiàwǔ) – pomeriggio  
+- 晚上 (wǎnshàng) – sera  
+- 刚才 (gāngcái) – poco fa  
+- 已经 (yǐjīng) – già  
+- 还 (hái) – ancora  
+- 将来 (jiānglái) – in futuro  
+- 从前 (cóngqián) – una volta, tempo fa
+
+In cinese, i verbi non si coniugano per tempo, quindi gli avverbi sono fondamentali per chiarire quando avviene l'azione. Essi vengono posti preferibilmente:
+
+1. All'inizio della frase per indicare un tempo generale.  
+2. Prima del verbo per specificare l'azione.</p>
+                                <div style="margin-top: 15px;">
+                                    <strong>Esempio:</strong>
+                                    <p class="chinese" style="margin: 10px 0; font-size: 1.4em;">- 我昨天去了学校。Wǒ zuótiān qùle xuéxiào. (Ieri sono andato a scuola.)   - 我们现在一起吃饭。Wǒmen xiànzài yìqǐ chīfàn. (Adesso mangiamo insieme.)</p>
+                                </div>
+                            </div>
+                        
+                            <div class="grammar-item">
+                                <h4>Regole di posizione degli avverbi di tempo nelle frasi cinesi</h4>
+                                <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.7;">Le regole principali per il posizionamento degli avverbi di tempo nelle frasi cinesi sono le seguenti:
+
+1. Gli avverbi di tempo si collocano preferibilmente all'inizio della frase, prima del soggetto, per indicare quando avviene l'azione.
+   Esempio: 明天我去学校。Míngtiān wǒ qù xuéxiào. (Domani vado a scuola.)
+
+2. Alternativamente, gli avverbi di tempo possono essere posizionati immediatamente prima del verbo principale all’interno della frase, senza interrompere la relazione soggetto-verbo.
+   Esempio: 我明天去学校。Wǒ míngtiān qù xuéxiào. (Io domani vado a scuola.)
+
+3. Quando nella frase sono presenti sia avverbi di tempo sia altri avverbi (come avverbi di luogo), l’avverbio di tempo precede sempre l’avverbio di luogo.
+   Esempio: 明天我在学校学习。Míngtiān wǒ zài xuéxiào xuéxí. (Domani studio a scuola.)
+
+4. Gli avverbi in cinese si riferiscono sempre al verbo o all’aggettivo, indicano il tempo dell’azione, ma mai al sostantivo o pronome.
+
+5. Nei casi in cui ci sono più avverbi di tempo, questi seguono un ordine logico dall’avverbio più generale a quello più specifico.
+   Esempio: 今天下午三点我去图书馆。Jīntiān xiàwǔ sān diǎn wǒ qù túshūguǎn. (Oggi pomeriggio alle tre vado in biblioteca.)
+
+6. L’avverbio 一起 (yìqǐ, "insieme") precede sempre il verbo, e qualunque avverbio di tempo va posizionato prima di 一起 o all’inizio della frase per mantenere chiarezza.
+
+Queste regole garantiscono che la frase abbia un ordine naturale, scorrevole e comprensibile in cinese.</p>
+                                <div style="margin-top: 15px;">
+                                    <strong>Esempio:</strong>
+                                    <p class="chinese" style="margin: 10px 0; font-size: 1.4em;">明天晚上我们一起去看电影。Míngtiān wǎnshàng wǒmen yìqǐ qù kàn diànyǐng. (Domani sera andiamo insieme a vedere un film.) [1][2][3][7]</p>
+                                </div>
+                            </div>
+                        
+                    </section>
+                    
+
+                    
+
+                    
+                </article>
+            
+
+            <footer style="margin-top: 80px; padding: 40px; background: linear-gradient(135deg, #edf2f7, #e2e8f0); border-radius: 16px; text-align: center; color: #4a5568;">
+                <h3 style="color: #2d3748; margin-bottom: 20px;">📚 Raccolta Completa di Lezioni di Cinese</h3>
+                <p style="font-size: 1.1em; margin-bottom: 10px;">
+                    <strong>Totale contenuti:</strong> 2 lezioni complete
+                </p>
+                <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px;">
+                    <span>📖 5 regole grammaticali</span>
+                    <span>📝 0 testi con pinyin</span>
+                    <span>🔤 0 parole del vocabolario</span>
+                </div>
+                <button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/grammatica.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

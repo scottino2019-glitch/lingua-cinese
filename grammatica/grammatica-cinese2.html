@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammatica Cinese - Lezioni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .chinese-text {
+            font-family: 'SimSun', 'Microsoft YaHei', serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-yellow-50 min-h-full">
+    <div class="container mx-auto px-4 py-6 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-red-800 mb-2">📚 Grammatica Cinese</h1>
+            <p class="text-gray-600">Impara la grammatica cinese passo dopo passo</p>
+        </div>
+
+        <!-- Lesson Navigation -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Seleziona una Lezione</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <button onclick="showLesson(1)" class="lesson-btn bg-red-100 hover:bg-red-200 text-red-800 p-3 rounded-lg text-left transition-colors">
+                    <div class="font-medium">Lezione 1</div>
+                    <div class="text-sm opacity-75">Ordine delle parole</div>
+                </button>
+                <button onclick="showLesson(2)" class="lesson-btn bg-orange-100 hover:bg-orange-200 text-orange-800 p-3 rounded-lg text-left transition-colors">
+                    <div class="font-medium">Lezione 2</div>
+                    <div class="text-sm opacity-75">Il verbo 是 (shì)</div>
+                </button>
+                <button onclick="showLesson(3)" class="lesson-btn bg-yellow-100 hover:bg-yellow-200 text-yellow-800 p-3 rounded-lg text-left transition-colors">
+                    <div class="font-medium">Lezione 3</div>
+                    <div class="text-sm opacity-75">Particelle interrogative</div>
+                </button>
+                <button onclick="showLesson(4)" class="lesson-btn bg-green-100 hover:bg-green-200 text-green-800 p-3 rounded-lg text-left transition-colors">
+                    <div class="font-medium">Lezione 4</div>
+                    <div class="text-sm opacity-75">Numeri e classificatori</div>
+                </button>
+                <button onclick="showLesson(5)" class="lesson-btn bg-blue-100 hover:bg-blue-200 text-blue-800 p-3 rounded-lg text-left transition-colors">
+                    <div class="font-medium">Lezione 5</div>
+                    <div class="text-sm opacity-75">Particella 的 (de)</div>
+                </button>
+                <button onclick="showLesson(6)" class="lesson-btn bg-purple-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+                    <div class="font-medium">Lezione 6</div>
+                    <div class="text-sm opacity-75">Tempi verbali</div>
+                </button>
+<button onclick="showLesson(7)" class="lesson-btn bg-pink-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 7</div>
+
+                    <div class="text-sm opacity-75">Particelle e di assegnazione e tema</div>
+
+                </button>
+              <button onclick="showLesson(8)" class="lesson-btn bg-orange-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 8</div>
+
+                    <div class="text-sm opacity-75">Preposizioni</div>
+
+                </button>
+              
+              <button onclick="showLesson(9)" class="lesson-btn bg-blue-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 9</div>
+
+                    <div class="text-sm opacity-75">Pronomi personali</div>
+
+                </button>
+              
+          <button onclick="showLesson(10)" class="lesson-btn bg-orange-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 10</div>
+
+                    <div class="text-sm opacity-75">Indicazioni dintempo e negazione</div>
+
+                </button>
+              <button onclick="showLesson(11)" class="lesson-btn bg-red-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 11</div>
+<div class="text-sm opacity-75">Negazione con 不 e aggettivi</div>
+
+                </button>
+              
+              <button onclick="showLesson(12)" class="lesson-btn bg-yellow-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 12</div>
+
+                    <div class="text-sm opacity-75">Verbi e 什么</div>
+
+                </button>
+              <button onclick="showLesson(13)" class="lesson-btn bg-green-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 13</div>
+
+                    <div class="text-sm opacity-75">Connettivi e pronomi dimostrativi</div>
+
+                </button>
+              <button onclick="showLesson(14)" class="lesson-btn bg-purple-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 14</div>
+
+                    <div class="text-sm opacity-75">Domande con 吗</div>
+
+                </button>
+              <button onclick="showLesson(15)" class="lesson-btn bg-pink-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 15</div>
+
+                    <div class="text-sm opacity-75">Forme di domande</div>
+
+                </button>
+              <button onclick="showLesson(16)" class="lesson-btn bg-blue-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 16</div>
+
+                    <div class="text-sm opacity-75">Risposte alle domande</div>
+
+                </button>
+              <button onclick="showLesson(17)" class="lesson-btn bg-blue-100 hover:bg-purple-200 text-purple-800 p-3 rounded-lg text-left transition-colors">
+
+                    <div class="font-medium">Lezione 17</div>
+
+                    <div class="text-sm opacity-75">Risposte complesse e particelle interogative</div>
+
+                </button>
+            </div>
+        </div>
+
+        <!-- Lesson Content -->
+        <div id="lessonContent" class="bg-white rounded-xl shadow-lg p-8">
+            <div class="text-center text-gray-500 py-12">
+                <div class="text-6xl mb-4">🎯</div>
+                <h3 class="text-xl font-medium mb-2">Seleziona una lezione per iniziare</h3>
+                <p>Scegli una delle lezioni sopra per studiare la grammatica cinese</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const lessons = {
+            1: {
+                title: "Ordine delle Parole",
+                content: `
+                    <h3 class="text-2xl font-bold text-red-800 mb-6">Lezione 1: Ordine delle Parole</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-red-800 mb-2">Struttura Base</h4>
+                            <p class="mb-3">In cinese, l'ordine delle parole segue la struttura <strong>Soggetto + Verbo + Oggetto (SVO)</strong>, simile all'italiano.</p>
+                            <div class="bg-white p-3 rounded border-l-4 border-red-400">
+                                <div class="chinese-text text-xl mb-1">我 吃 苹果</div>
+                                <div class="text-sm text-gray-600">wǒ chī píngguǒ</div>
+                                <div class="font-medium">Io mangio una mela</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Altri Esempi</h4>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">他 学 中文</div>
+                                    <div class="text-sm text-gray-600">tā xué zhōngwén</div>
+                                    <div>Lui studia cinese</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">我们 看 电影</div>
+                                    <div class="text-sm text-gray-600">wǒmen kàn diànyǐng</div>
+                                    <div>Noi guardiamo un film</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-blue-800 mb-2">Nota Importante</h4>
+                            <p>A differenza dell'italiano, in cinese non ci sono articoli (il, la, un, una). Il contesto determina se qualcosa è definito o indefinito.</p>
+                        </div>
+                    </div>
+                `
+            },
+            2: {
+                title: "Il Verbo 是 (shì)",
+                content: `
+                    <h3 class="text-2xl font-bold text-orange-800 mb-6">Lezione 2: Il Verbo 是 (shì)</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-orange-800 mb-2">Cos'è 是?</h4>
+                            <p class="mb-3">是 (shì) è il verbo "essere" in cinese. Si usa per identificare, definire o collegare il soggetto con un nome o aggettivo.</p>
+                            <div class="bg-white p-3 rounded border-l-4 border-orange-400">
+                                <div class="chinese-text text-xl mb-1">我 是 学生</div>
+                                <div class="text-sm text-gray-600">wǒ shì xuéshēng</div>
+                                <div class="font-medium">Io sono uno studente</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Forma Negativa</h4>
+                            <p class="mb-3">Per negare 是, si usa 不是 (bù shì):</p>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">他 不是 老师</div>
+                                    <div class="text-sm text-gray-600">tā bù shì lǎoshī</div>
+                                    <div>Lui non è un insegnante</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Forma Interrogativa</h4>
+                            <p class="mb-3">Per fare domande con 是, si aggiunge 吗 (ma) alla fine:</p>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">你 是 医生 吗？</div>
+                                    <div class="text-sm text-gray-600">nǐ shì yīshēng ma?</div>
+                                    <div>Sei un dottore?</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-green-800 mb-2">Attenzione!</h4>
+                            <p>是 non si usa con gli aggettivi semplici. Per dire "Io sono alto" si dice 我很高 (wǒ hěn gāo), non 我是高.</p>
+                        </div>
+                    </div>
+                `
+            },
+            3: {
+                title: "Particelle Interrogative",
+                content: `
+                    <h3 class="text-2xl font-bold text-yellow-800 mb-6">Lezione 3: Particelle Interrogative</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-yellow-800 mb-3">Principali Particelle Interrogative</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg font-bold">什么 (shénme)</div>
+                                    <div class="text-sm">Cosa? / Che cosa?</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg font-bold">谁 (shéi)</div>
+                                    <div class="text-sm">Chi?</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg font-bold">哪里 (nǎlǐ)</div>
+                                    <div class="text-sm">Dove?</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg font-bold">什么时候 (shénme shíhou)</div>
+                                    <div class="text-sm">Quando?</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Esempi d'Uso</h4>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">你 叫 什么 名字？</div>
+                                    <div class="text-sm text-gray-600">nǐ jiào shénme míngzi?</div>
+                                    <div>Come ti chiami?</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">谁 是 你 的 老师？</div>
+                                    <div class="text-sm text-gray-600">shéi shì nǐ de lǎoshī?</div>
+                                    <div>Chi è il tuo insegnante?</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">你 住 在 哪里？</div>
+                                    <div class="text-sm text-gray-600">nǐ zhù zài nǎlǐ?</div>
+                                    <div>Dove abiti?</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-blue-800 mb-2">Struttura delle Domande</h4>
+                            <p>In cinese, le particelle interrogative mantengono la stessa posizione che avrebbe la risposta nella frase.</p>
+                            <div class="mt-3 bg-white p-3 rounded">
+                                <div class="mb-2"><strong>Domanda:</strong> <span class="chinese-text">你 吃 什么？</span> (Cosa mangi?)</div>
+                                <div><strong>Risposta:</strong> <span class="chinese-text">我 吃 苹果</span> (Mangio una mela)</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            4: {
+                title: "Numeri e Classificatori",
+                content: `
+                    <h3 class="text-2xl font-bold text-green-800 mb-6">Lezione 4: Numeri e Classificatori</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-green-800 mb-3">Numeri Base (1-10)</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">一</div>
+                                    <div class="text-xs">yī (1)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">二</div>
+                                    <div class="text-xs">èr (2)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">三</div>
+                                    <div class="text-xs">sān (3)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">四</div>
+                                    <div class="text-xs">sì (4)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">五</div>
+                                    <div class="text-xs">wǔ (5)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">六</div>
+                                    <div class="text-xs">liù (6)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">七</div>
+                                    <div class="text-xs">qī (7)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">八</div>
+                                    <div class="text-xs">bā (8)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">九</div>
+                                    <div class="text-xs">jiǔ (9)</div>
+                                </div>
+                                <div class="bg-white p-2 rounded text-center">
+                                    <div class="chinese-text text-xl">十</div>
+                                    <div class="text-xs">shí (10)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Classificatori Comuni</h4>
+                            <p class="mb-3">In cinese, tra il numero e il nome si deve usare un classificatore:</p>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="font-medium mb-1">个 (gè) - Classificatore generale</div>
+                                    <div class="chinese-text text-lg">三个人 (sān gè rén) - tre persone</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="font-medium mb-1">本 (běn) - Per libri</div>
+                                    <div class="chinese-text text-lg">两本书 (liǎng běn shū) - due libri</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="font-medium mb-1">只 (zhī) - Per animali</div>
+                                    <div class="chinese-text text-lg">一只猫 (yī zhī māo) - un gatto</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-orange-800 mb-2">Nota Speciale</h4>
+                            <p>Per il numero 2, si usa 二 (èr) per contare, ma 两 (liǎng) davanti ai classificatori:</p>
+                            <div class="mt-2 bg-white p-3 rounded">
+                                <div>✓ <span class="chinese-text">两个苹果</span> (liǎng gè píngguǒ) - due mele</div>
+                                <div>✗ <span class="chinese-text">二个苹果</span> (èr gè píngguǒ)</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            5: {
+                title: "Particella 的 (de)",
+                content: `
+                    <h3 class="text-2xl font-bold text-blue-800 mb-6">Lezione 5: Particella 的 (de)</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-blue-800 mb-2">Funzione Principale</h4>
+                            <p class="mb-3">的 (de) è una particella che indica possesso o relazione, simile a "di" in italiano.</p>
+                            <div class="bg-white p-3 rounded border-l-4 border-blue-400">
+                                <div class="chinese-text text-xl mb-1">我的书</div>
+                                <div class="text-sm text-gray-600">wǒ de shū</div>
+                                <div class="font-medium">Il mio libro</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Esempi di Possesso</h4>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">他的朋友</div>
+                                    <div class="text-sm text-gray-600">tā de péngyǒu</div>
+                                    <div>Il suo amico</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">老师的车</div>
+                                    <div class="text-sm text-gray-600">lǎoshī de chē</div>
+                                    <div>L'auto dell'insegnante</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">中国的文化</div>
+                                    <div class="text-sm text-gray-600">zhōngguó de wénhuà</div>
+                                    <div>La cultura della Cina</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <h4 class="font-semibent text-yellow-800 mb-3">Quando Omettere 的</h4>
+                            <p class="mb-3">Con relazioni familiari strette, spesso si omette 的:</p>
+                            <div class="space-y-2">
+                                <div class="bg-white p-2 rounded">
+                                    <span class="chinese-text">我妈妈</span> (wǒ māma) - mia madre
+                                </div>
+                                <div class="bg-white p-2 rounded">
+                                    <span class="chinese-text">他爸爸</span> (tā bàba) - suo padre
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-purple-800 mb-2">Uso Descrittivo</h4>
+                            <p>的 si usa anche per collegare aggettivi a nomi:</p>
+                            <div class="mt-2 bg-white p-3 rounded">
+                                <div class="chinese-text text-lg mb-1">红色的花</div>
+                                <div class="text-sm text-gray-600">hóngsè de huā</div>
+                                <div>Fiori rossi</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            6: {
+                title: "Tempi Verbali",
+                content: `
+                    <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 6: Tempi Verbali</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-purple-800 mb-2">Caratteristica Unica</h4>
+                            <p class="mb-3">In cinese, i verbi non cambiano forma per indicare il tempo. Si usano particelle e avverbi di tempo.</p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Passato - 了 (le)</h4>
+                            <p class="mb-3">了 indica un'azione completata:</p>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">我吃了苹果</div>
+                                    <div class="text-sm text-gray-600">wǒ chī le píngguǒ</div>
+                                    <div>Ho mangiato una mela</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">他去了北京</div>
+                                    <div class="text-sm text-gray-600">tā qù le běijīng</div>
+                                    <div>È andato a Pechino</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Presente Continuo - 在 (zài)</h4>
+                            <p class="mb-3">在 + verbo indica un'azione in corso:</p>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">我在学习</div>
+                                    <div class="text-sm text-gray-600">wǒ zài xuéxí</div>
+                                    <div>Sto studiando</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">他在看电视</div>
+                                    <div class="text-sm text-gray-600">tā zài kàn diànshì</div>
+                                    <div>Sta guardando la TV</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">Futuro - 会 (huì) / 要 (yào)</h4>
+                            <p class="mb-3">Per esprimere il futuro:</p>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">我会去中国</div>
+                                    <div class="text-sm text-gray-600">wǒ huì qù zhōngguó</div>
+                                    <div>Andrò in Cina</div>
+                                </div>
+                                <div class="bg-white p-3 rounded">
+                                    <div class="chinese-text text-lg mb-1">明天我要工作</div>
+                                    <div class="text-sm text-gray-600">míngtiān wǒ yào gōngzuò</div>
+                                    <div>Domani lavorerò</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-green-800 mb-2">Indicatori Temporali</h4>
+                            <p>Spesso si usano parole che indicano il tempo:</p>
+                            <div class="mt-2 grid grid-cols-2 gap-2">
+                                <div class="bg-white p-2 rounded text-sm">
+                                    <span class="chinese-text">昨天</span> (zuótiān) - ieri
+                                </div>
+                                <div class="bg-white p-2 rounded text-sm">
+                                    <span class="chinese-text">今天</span> (jīntiān) - oggi
+                                </div>
+                                <div class="bg-white p-2 rounded text-sm">
+                                    <span class="chinese-text">明天</span> (míngtiān) - domani
+                                </div>
+                                <div class="bg-white p-2 rounded text-sm">
+                                    <span class="chinese-text">现在</span> (xiànzài) - adesso
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+          7: {
+            
+            
+    title: "Particelle di Assegnazione e Tema",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 7: Particelle di Assegnazione e Tema</h3>
+        
+        <div class="space-y-6">
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Particella 的 (de)</h4>
+                <p class="mb-3">Indica possesso o relazione tra due elementi. Può essere usata per formare aggettivi o aggiungere dettagli.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我的书</div>
+                        <div class="text-sm text-gray-600">wǒ de shū</div>
+                        <div>La mia libro</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">中国的文化</div>
+                        <div class="text-sm text-gray-600">Zhōngguó de wénhuà</div>
+                        <div>La cultura cinese</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Particella 吗 (ma)</h4>
+                <p class="mb-3">Usata alla fine di una frase per formare una domanda sì/no.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">你好吗？</div>
+                        <div class="text-sm text-gray-600">Nǐ hǎo ma?</div>
+                        <div>Come stai?</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">他是老师吗？</div>
+                        <div class="text-sm text-gray-600">Tā shì lǎoshī ma?</div>
+                        <div>È un insegnante?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          8: {
+            
+
+    title: "Preposizioni in Cinese",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 8: Preposizioni</h3>
+        
+        <div class="space-y-6">
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Preposizione 在 (zài)</h4>
+                <p class="mb-3">Indica posizione o luogo in cui avviene un'azione.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我在学校</div>
+                        <div class="text-sm text-gray-600">Wǒ zài xuéxiào</div>
+                        <div>Io sono a scuola</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">书在桌子上</div>
+                        <div class="text-sm text-gray-600">Shū zài zhuōzi shàng</div>
+                        <div>Il libro è sul tavolo</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Preposizione 给 (gěi)</h4>
+                <p class="mb-3">Indica il destinatario di un'azione, come "dare a" o "per".</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我给你一本书</div>
+                        <div class="text-sm text-gray-600">Wǒ gěi nǐ yī běn shū</div>
+                        <div>Ti do un libro</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">他给我一个礼物</div>
+                        <div class="text-sm text-gray-600">Tā gěi wǒ yī gè lǐwù</div>
+                        <div>Lui mi dà un regalo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          9: {
+           
+    title: "Pronomi Personali",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 9: Pronomi Personali</h3>
+        
+        <div class="space-y-6">
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Pronomi Soggetto</h4>
+                <p class="mb-3">Indicano chi compie l'azione.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我</div>
+                        <div class="text-sm text-gray-600">wǒ</div>
+                        <div>Io</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">你</div>
+                        <div class="text-sm text-gray-600">nǐ</div>
+                        <div>Tu</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">他</div>
+                        <div class="text-sm text-gray-600">tā</div>
+                        <div>Lui / Egli</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我们</div>
+                        <div class="text-sm text-gray-600">wǒmen</div>
+                        <div>Noi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Pronomi Oggetto</h4>
+                <p class="mb-3">Indicano chi riceve l'azione.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我</div>
+                        <div class="text-sm text-gray-600">wǒ</div>
+                        <div>Me / a me</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">你</div>
+                        <div class="text-sm text-gray-600">nǐ</div>
+                        <div>Te / a te</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          10: {
+            
+
+    title: "Indicazioni di Tempo e Negazione",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 10: Tempo e Negazione</h3>
+        
+        <div class="space-y-6">
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Indicazioni di Tempo</h4>
+                <p class="mb-3">Particelle come 了 (le), 过 (guò) e 在 (zài) aiutano a indicare il tempo.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我去过中国</div>
+                        <div class="text-sm text-gray-600">Wǒ qù guò Zhōngguó</div>
+                        <div>Sono stato in Cina (esperienza passata)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Negazione</h4>
+                <p class="mb-3">Per negare si usa 不 (bù) o 没 (méi).</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我不吃肉</div>
+                        <div class="text-sm text-gray-600">Wǒ bù chī ròu</div>
+                        <div>Non mangio carne</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我没有去过中国</div>
+                        <div class="text-sm text-gray-600">Wǒ méiyǒu qù guò Zhōngguó</div>
+                        <div>Non sono stato in Cina</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          11: {
+            
+
+    title: "Negazione con 不 (bù) e Aggettivi",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 11: Negazione con 不 (bù) e Aggettivi</h3>
+        
+        <div class="space-y-6">
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Negazione con 不 (bù)</h4>
+                <p class="mb-3">不 si usa per negare azioni o stati nel presente e nel futuro.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我不喜欢咖啡</div>
+                        <div class="text-sm text-gray-600">Wǒ bù xǐhuān kāfēi</div>
+                        <div>Non mi piace il caffè</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">他不在家</div>
+                        <div class="text-sm text-gray-600">Tā bù zài jiā</div>
+                        <div>Lui non è a casa</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Aggettivi</h4>
+                <p class="mb-3">Gli aggettivi descrivono i sostantivi. In cinese, la posizione dell'aggettivo davanti al sostantivo è fissa.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">漂亮的女孩</div>
+                        <div class="text-sm text-gray-600">Piàoliang de nǚhái</div>
+                        <div>Una ragazza bella</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">红色的苹果</div>
+                        <div class="text-sm text-gray-600">Hóngsè de píngguǒ</div>
+                        <div>Una mela rossa</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          12: {
+            
+
+    title: "Verbi e 什么 (shénme)",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 12: Verbi e 什么(shénme)</h3>
+        
+        <div class="space-y-6">
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Verbi</h4>
+                <p class="mb-3">In cinese i verbi sono invariabili. L'azione si indica con il verbo di base.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">我吃饭</div>
+                        <div class="text-sm text-gray-600">Wǒ chīfàn</div>
+                        <div>Io mangio</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">他学习汉语</div>
+                        <div class="text-sm text-gray-600">Tā xuéxí Hànyǔ</div>
+                        <div>Lui studia cinese</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">什么(shénme)</h4>
+                <p class="mb-3">Significa "cosa" o "che cosa", usato per fare domande su oggetti o azioni.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">你在做什么？</div>
+                        <div class="text-sm text-gray-600">Nǐ zài zuò shénme?</div>
+                        <div>Che cosa stai facendo?</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">这是什么？</div>
+                        <div class="text-sm text-gray-600">Zhè shì shénme?</div>
+                        <div>Che cosa è questo?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          13: {
+            
+          
+    title: "Connettivi e Pronomi Dimostrativi",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 13: Ma, Nǎ, Nà</h3>
+        
+        <div class="space-y-6">
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">但是 (dànshì) — Ma / Tuttavia</h4>
+                <p class="mb-3">Usato per esprimere contrasto o contraddizione tra due idee.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text text-lg mb-1">我喜欢喝茶，但是我不喜欢咖啡。</div>
+                    <div class="text-sm text-gray-600">Wǒ xǐhuān hē chá, dànshì wǒ bù xǐhuān kāfēi.</div>
+                    <div>Mi piace bere tè, ma non mi piace il caffè.</div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">哪 (nǎ) — quale / quale di</h4>
+                <p class="mb-3">Usato per fare domande su scelta tra due o più opzioni.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text text-lg mb-1">你喜欢哪本书？</div>
+                    <div class="text-sm text-gray-600">Nǐ xǐhuān nǎ běn shū?</div>
+                    <div>Quale libro ti piace?</div>
+                </div>
+            </div>
+
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">那 (nà) — quello / là</h4>
+                <p class="mb-3">Pronominale dimostrativo usato per indicare qualcosa distante o già menzionato.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text text-lg mb-1">那是我的手机。</div>
+                    <div class="text-sm text-gray-600">Nà shì wǒ de shǒujī.</div>
+                    <div>Quello è il mio cellulare.</div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          14: {
+            
+
+        
+          
+    title: "Formare domande con 吗(ma)",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 14: Domande con 嗎 (ma)</h3>
+        
+        <div class="space-y-6">
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Uso di 嗎 (ma)</h4>
+                <p class="mb-3">Si aggiunge alla fine di una frase affermativa per trasformarla in domanda sì/no.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">你是学生吗？</div>
+                        <div class="text-sm text-gray-600">Nǐ shì xuéshēng ma?</div>
+                        <div>Sei uno studente?</div>
+                    </div>
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text text-lg mb-1">他喜欢吃苹果吗？</div>
+                        <div class="text-sm text-gray-600">Tā xǐhuān chī píngguǒ ma?</div>
+                        <div>Gli piace mangiare mele?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Risposte possibili</h4>
+                <p class="mb-3">Le risposte sono semplicemente sì o no, con sì si risponde con 是 (shì), con no si risponde con 不是 (bù shì).</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">是的，我是学生。</div>
+                    <div class="text-sm text-gray-600">Shì de, wǒ shì xuéshēng.</div>
+                    <div>Sì, sono uno studente.</div>
+                </div>
+                <div class="bg-white p-3 rounded mt-2">
+                    <div class="chinese-text mb-1">不是，我不是学生。</div>
+                    <div class="text-sm text-gray-600">Bù shì, wǒ bù shì xuéshēng.</div>
+                    <div>No, non sono uno studente.</div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          15:{
+            
+    
+    title: "Forme di Domanda in Cinese",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 15: Le varie forme di domanda</h3>
+        
+        <div class="space-y-6">
+            <!-- Domanda sì/no con 嗎 (ma) -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Domanda sì/no con 嗎 (ma)</h4>
+                <p class="mb-3">Aggiungi 嗎 alla fine di una frase affermativa per trasformarla in domanda sì/no.</p>
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded">
+                        <div class="chinese-text mb-1">你喜欢咖啡吗？</div>
+                        <div class="text-sm text-gray-600">Nǐ xǐhuān kāfēi ma?</div>
+                        <div>Ti piace il caffè?</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frase con 不是 (bù shì) per domande negative -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Domanda negativa con 不是 (bù shì)</h4>
+                <p class="mb-3">Puoi usare 不是 per chiedere se qualcosa NON è vero.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你不是老师吗？</div>
+                    <div class="text-sm text-gray-600">Nǐ bù shì lǎoshī ma?</div>
+                    <div>Non sei insegnante?</div>
+                </div>
+            </div>
+
+            <!-- Domande con 还是 (háishì) — oppure -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Domande con 还是 (háishì) — oppure</h4>
+                <p class="mb-3">Usato per scegliere tra due opzioni.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你喜欢苹果还是香蕉？</div>
+                    <div class="text-sm text-gray-600">Nǐ xǐhuān píngguǒ háishì xiāngjiāo?</div>
+                    <div>Ti piacciono le mele o le banane?</div>
+                </div>
+            </div>
+
+            <!-- Domande con 哪 (nǎ) — quale -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Domande con 哪 (nǎ) — quale</h4>
+                <p class="mb-3">Usato per chiedere una scelta tra più opzioni.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你喜欢哪本书？</div>
+                    <div class="text-sm text-gray-600">Nǐ xǐhuān nǎ běn shū?</div>
+                    <div>Quale libro ti piace?</div>
+                </div>
+            </div>
+
+            <!-- Domande con 什么 (shénme) — cosa -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Domande con 什么 (shénme) — cosa</h4>
+                <p class="mb-3">Usato per chiedere informazioni su oggetti o azioni.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你在做什么？</div>
+                    <div class="text-sm text-gray-600">Nǐ zài zuò shénme?</div>
+                    <div>Che cosa stai facendo?</div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          16:{
+            
+    title: "Risposte alle Domande in Cinese",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 16: Rispondere alle domande</h3>
+        
+        <div class="space-y-6">
+            <!-- Risposta affermativa con 是 (shì) -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Risposta affermativa</h4>
+                <p class="mb-3">Per rispondere sì, si usa 是 (shì) seguito dal soggetto e dal complemento.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你喜欢咖啡吗？</div>
+                    <div class="text-sm text-gray-600">Nǐ xǐhuān kāfēi ma?</div>
+                    <div><b>Sì:</b> 是的，我喜欢咖啡。</div>
+                    <div class="text-gray-600">Shì de, wǒ xǐhuān kāfēi.</div>
+                </div>
+            </div>
+
+            <!-- Risposta negativa con 不是 (bù shì) -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Risposta negativa</h4>
+                <p class="mb-3">Per rispondere no, si usa 不是 (bù shì) seguito dal soggetto e dal complemento negato.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你喜欢咖啡吗？</div>
+                    <div class="text-sm text-gray-600">Nǐ xǐhuān kāfēi ma?</div>
+                    <div><b>No:</b> 不是，我不喜欢咖啡。</div>
+                    <div class="text-gray-600">Bù shì, wǒ bù xǐhuān kāfēi.</div>
+                </div>
+            </div>
+
+            <!-- Risposta con sì/no breve -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Risposte brevi</h4>
+                <p class="mb-3">Puoi rispondere con 是 (shì) o 不是 (bù shì) senza ripetere tutto.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你在做什么？</div>
+                    <div class="text-sm text-gray-600">Nǐ zài zuò shénme?</div>
+                    <div><b>Sì:</b> 是的，我在看书。</div>
+                    <div class="text-gray-600">Shì de, wǒ zài kàn shū.</div>
+                    <div><b>No:</b> 不是，我在睡觉。</div>
+                    <div class="text-gray-600">Bù shì, wǒ zài shuìjiào.</div>
+                </div>
+            </div>
+        </div>
+    `
+},
+          17:{
+            
+
+
+
+    // Titolo e introduzione
+    title: "Risposte più complesse e particelle interrogative",
+    content: `
+        <h3 class="text-2xl font-bold text-purple-800 mb-6">Lezione 17: Risposte avanzate e particelle interrogative</h3>
+        
+        <!-- Risposte con perché / motivo -->
+        <div class="space-y-6">
+            <!-- Risposte con perché -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Risposte con 为什么 (wèishéme) — perché</h4>
+                <p class="mb-3">Puoi spiegare il motivo della tua risposta usando 为什么.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你喜欢喝茶吗？</div>
+                    <div class="text-sm text-gray-600">Nǐ xǐhuān hē chá ma?</div>
+                    <div><b>Sì, perché:</b> 因为我喜欢喝茶。</div>
+                    <div class="text-gray-600">Yīnwèi wǒ xǐhuān hē chá.</div>
+                </div>
+            </div>
+
+            <!-- Risposte con 其实 (qíshí) — in realtà -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Risposte con 其实 (qíshí) — in realtà</h4>
+                <p class="mb-3">Puoi aggiungere una spiegazione o chiarimento con 其实.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你喜欢喝咖啡吗？</div>
+                    <div class="text-sm text-gray-600">Nǐ xǐhuān hē kāfēi ma?</div>
+                    <div><b>Sì, ma:</b> 其实我更喜欢喝茶。</div>
+                    <div class="text-gray-600">Qíshí wǒ gèng xǐhuān hē chá.</div>
+                </div>
+            </div>
+
+            <!-- Risposte con 但是 (dànshì) — ma/tuttavia -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">Risposte con 但是 (dànshì) — ma</h4>
+                <p class="mb-3">Puoi esprimere un contrasto o una limitazione.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">我喜欢运动，但是没有时间。</div>
+                    <div class="text-sm text-gray-600">Wǒ xǐhuān yùndòng, dànshì méiyǒu shíjiān.</div>
+                    <div>Mi piace fare sport, ma non ho tempo.</div>
+                </div>
+            </div>
+
+            <!-- Risposte con 其实 (qíshí) — in realtà + perché -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Risposte con 其实 (qíshí) + perché</h4>
+                <p class="mb-3">Puoi spiegare meglio il motivo della tua risposta.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你会说汉语吗？</div>
+                    <div class="text-sm text-gray-600">Nǐ huì shuō Hànyǔ ma?</div>
+                    <div><b>Sì, perché:</b> 因为我在中国学习过。</div>
+                    <div class="text-gray-600">Yīnwèi wǒ zài Zhōngguó xuéxí guò.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Particelle interrogative -->
+        <h3 class="text-2xl font-bold text-purple-800 mb-6 mt-10">Particelle interrogative e risposte avanzate</h3>
+        <div class="space-y-6">
+            <!-- 了 (le) per azioni completate -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">了 (le) — azione completata</h4>
+                <p class="mb-3">Puoi rispondere specificando se hai fatto qualcosa o meno.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你吃饭了吗？</div>
+                    <div class="text-sm text-gray-600">Nǐ chīfàn le ma?</div>
+                    <div><b>Sì:</b> 是的，我吃了饭。</div>
+                    <div class="text-gray-600">Shì de, wǒ chī le fàn.</div>
+                    <div><b>No:</b> 还没有。</div>
+                    <div class="text-gray-600">Hái méiyǒu.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Risposte con altre particelle -->
+        <h3 class="text-2xl font-bold text-purple-800 mb-6 mt-10">Altre risposte e particelle</h3>
+        <div class="space-y-6">
+            <!-- 过 (guò) — esperienza passata -->
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-purple-800 mb-2">过 (guò) — esperienza passata</h4>
+                <p class="mb-3">Puoi rispondere indicando di aver già fatto qualcosa.</p>
+                <div class="bg-white p-3 rounded">
+                    <div class="chinese-text mb-1">你去过中国吗？</div>
+                    <div class="text-sm text-gray-600">Nǐ qùguò Zhōngguó ma?</div>
+                    <div><b>Sì:</b> 是的，我去过中国。</div>
+                    <div class="text-gray-600">Shì de, wǒ qùguò Zhōngguó.</div>
+                </div>
+            </div>
+        </div>
+    `
+}
+
+
+        };
+          
+
+        function showLesson(lessonNumber) {
+            const lesson = lessons[lessonNumber];
+            const contentDiv = document.getElementById('lessonContent');
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.lesson-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-offset-2');
+            });
+            
+            // Add active class to clicked button
+            event.target.closest('.lesson-btn').classList.add('ring-2', 'ring-offset-2', 'ring-blue-400');
+            
+            contentDiv.innerHTML = lesson.content;
+            contentDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98ddf43d64884bea',t:'MTc2MDM0OTI1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/grammatica.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+</html>
+

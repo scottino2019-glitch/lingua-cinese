@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"shì"- 是</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 40px 20px; 
+            line-height: 1.7; 
+            background: #fafafa;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .chinese { 
+            font-family: 'Microsoft YaHei', 'SimSun', serif; 
+            font-size: 1.4em; 
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .pinyin { 
+            color: #8b5cf6; 
+            font-style: italic; 
+            font-size: 1.1em;
+            margin: 8px 0;
+        }
+        .section { 
+            margin: 10px 0; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .grammar { 
+           width: 200px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); 
+            border-left: 6px solid #2196f3; 
+        }
+        .text { 
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%); 
+            border-left: 6px solid #4caf50; 
+        }
+        .vocab { 
+            background: linear-gradient(135deg, #faf5ff 0%, #fff0f5 100%); 
+            border-left: 6px solid #9c27b0; 
+        }
+        .vocab-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; 
+            margin-top: 20px;
+        }
+        .vocab-item { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease;
+        }
+        .vocab-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+        h1 { 
+            color: #1a237e; 
+            border-bottom: 4px solid #3f51b5; 
+            padding-bottom: 15px; 
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        h2 { 
+            color: #424242; 
+            margin: 30px 0 20px 0; 
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h3 { 
+            color: #555; 
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+        h4 {
+            color: #666;
+            margin: 15px 0 8px 0;
+            font-size: 1.1em;
+        }
+        .level { 
+            display: inline-block; 
+            padding: 8px 20px; 
+            border-radius: 25px; 
+            font-size: 0.9em; 
+            font-weight: bold; 
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .level-principiante { 
+            background: linear-gradient(135deg, #c8e6c9, #a5d6a7); 
+            color: #1b5e20; 
+        }
+        .level-intermedio { 
+            background: linear-gradient(135deg, #fff3e0, #ffcc02); 
+            color: #e65100; 
+        }
+        .level-avanzato { 
+            background: linear-gradient(135deg, #ffebee, #ef5350); 
+            color: #b71c1c; 
+        }
+        .grammar-item, .text-item {
+           width: 250px;
+          
+          background: rgba(255,255,255,0.7);
+            padding: 20px;
+            margin-right: 0px 0;
+            border-radius: 8px;
+            border-left: 4px solid #666;
+        }
+        .grammar-item {
+            border-left-color: #2196f3;
+        }
+        .text-item {
+            border-left-color: #4caf50;
+        }
+        .translation {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            font-style: italic;
+            color: #495057;
+            margin-top: 10px;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            h1 { font-size: 2em; }
+            .vocab-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>"shì" (是) — "essere" in cinese*</h1>
+            <div style="text-align: center;">
+                <button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/grammatica.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+            </div>
+        </header>
+
+        
+        <section class="section grammar">
+            <h2>📚 Grammatica</h2>
+            
+                <div class="grammar-item">
+                    <h3>1. Caratteristiche principali</h3>
+                    <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.6;">- **Invariato:** "shì" **non si coniuga**. È uguale per tutte le persone, numeri, tempi.
+- **Funzione:** serve come **verbo copula**, cioè collega soggetto e predicato nominale o qualificatore.
+
+### 2. **Quando si usa**
+
+- Per **identificare** o **descrivere** qualcuno o qualcosa.
+- Per **rispondere a domande** di identità, nazionalità, professione.
+- Per **confermare** informazioni.</p>
+                    <div style="margin-top: 15px;">
+                        <strong>Esempio:</strong>
+                        <p class="chinese" style="margin: 10px 0;">- Wǒ shì xuéshēng.     (我 是 学生。) — Sono studente.    - Tā shì lǎoshī.     (他 是 老师。) — È insegnante.  - Nǐ shì Měiguó rén.     (你 是 美国人。) — Sei americano.</p>
+                    </div>
+                </div>
+            
+                <div class="grammar-item">
+                    <h3>是</h3>
+                    <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.6;">Altri esempi forma negativa</p>
+                    <div style="margin-top: 15px;">
+                        <strong>Esempio:</strong>
+                        <p class="chinese" style="margin: 10px 0;">Basta aggiungere **bù** (不) prima di "shì":  \[ Soggetto + bù shì + complemento \]  **Esempi:**  - Wǒ bù shì lǎoshī.     (我 不 是 老师。) — Non sono insegnante.    - Tā bù shì Měiguó rén.     (他 不 是 美国人。) — Non è americano.</p>
+                    </div>
+                </div>
+            
+                <div class="grammar-item">
+                    <h3>Forma interrogativa</h3>
+                    <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.6;">Esempi</p>
+                    <div style="margin-top: 15px;">
+                        <strong>Esempio:</strong>
+                        <p class="chinese" style="margin: 10px 0;">- Si aggiunge **ma** (吗) alla fine della frase:  \[ Soggetto + shì + complemento + ma? \]  **Esempi:**  - Nǐ shì xuéshēng ma?     (你 是 学生 吗？) — Sei studente?  - Tā shì lǎoshī ma?     (他 是 老师 吗？) — È insegnante?</p>
+                    </div>
+                </div>
+            
+                <div class="grammar-item">
+                    <h3>Utilizzo in vari contesti</h3>
+                    <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.6;">**1. Identificare persone e cose*</p>
+                    <div style="margin-top: 15px;">
+                        <strong>Esempio:</strong>
+                        <p class="chinese" style="margin: 10px 0;">- Wǒ shì Zhōngguó rén.     (我 是 中国人。) — Sono cinese.  - Zhè shì yí ge píngguǒ.     (这 是 一个 苹果。) — Questa è una mela.  ### **2. Rispondere a domande di identità**  - Q: Nǐ shì lǎoshī ma?     A: Shì, wǒ shì lǎoshī.     (Sì, sono insegnante.)</p>
+                    </div>
+                </div>
+            
+                <div class="grammar-item">
+                    <h3>*2. Rispondere a domande di identità*</h3>
+                    <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.6;">Esempi</p>
+                    <div style="margin-top: 15px;">
+                        <strong>Esempio:</strong>
+                        <p class="chinese" style="margin: 10px 0;">- Q: Nǐ shì lǎoshī ma?     A: Shì, wǒ shì lǎoshī.     (Sì, sono insegnante.)</p>
+                    </div>
+                </div>
+            
+                <div class="grammar-item">
+                    <h3>Qualche nota importante</h3>
+                    <p style="margin: 15px 0; font-size: 1.1em; line-height: 1.6;">**"shì"** può essere omesso in alcune frasi, specialmente nel parlato quotidiano, quando il contesto è chiaro
+- In alcune frasi in cui si vuole enfatizzare o chiarire, si usa **"shì"**.</p>
+                    <div style="margin-top: 15px;">
+                        <strong>Esempio:</strong>
+                        <p class="chinese" style="margin: 10px 0;">- Wǒ xuéshēng.       (Io sono studente — il senso è implicito senza "shì".)</p>
+                    </div>
+                </div>
+            
+        </section>
+        
+
+        
+
+        
+
+        <footer style="margin-top: 60px; padding-top: 30px; border-top: 2px solid #e0e0e0; text-align: center; color: #888;">
+            <p style="font-size: 0.9em;">📚 Lezione di cinese • Creata per lo studio autonomo</p>
+        </footer>
+    </div>
+</body>
+</html>

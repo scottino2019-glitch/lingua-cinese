@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammatica Cinese - Lezioni Dettagliate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .chinese-text {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .lesson-card {
+            transition: all 0.3s ease;
+        }
+        
+        .lesson-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .example-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0ea5e9;
+        }
+        
+        .note-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 4px solid #22c55e;
+        }
+        
+        .progress-circle {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-circle-fill {
+            transition: stroke-dashoffset 0.5s ease-in-out;
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 10;
+        }
+        
+        .grammar-highlight {
+            background: linear-gradient(120deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .pinyin-text {
+            color: #3b82f6;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-['Inter']">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">文</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Grammatica Cinese</h1>
+                        <p class="text-sm text-gray-600">Lezioni dettagliate e strutturate</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600">Lezioni completate: <span id="completed-lessons" class="font-bold text-blue-600">0</span></p>
+                        <p class="text-xs text-gray-500">Progresso: <span id="progress-percentage" class="font-bold">0%</span></p>
+                    </div>
+                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                        📖
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Main Menu -->
+        <div id="main-menu" class="mb-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Lezioni di Grammatica</h2>
+                <p class="text-gray-600">Impara la grammatica cinese con lezioni dettagliate e strutturate</p>
+            </div>
+
+            <!-- Level Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="bg-white rounded-lg p-1 shadow-sm border border-gray-200">
+                    <button class="level-tab px-6 py-2 rounded-md font-medium transition-colors bg-blue-500 text-white" data-level="basic">
+                        Base
+                    </button>
+                    <button class="level-tab px-6 py-2 rounded-md font-medium transition-colors text-gray-600 hover:text-gray-900" data-level="intermediate">
+                        Intermedio
+                    </button>
+                    <button class="level-tab px-6 py-2 rounded-md font-medium transition-colors text-gray-600 hover:text-gray-900" data-level="advanced">
+                        Avanzato
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lessons Grid -->
+            <div id="lessons-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Lessons will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Lesson Content -->
+        <div id="lesson-content" class="hidden">
+            <!-- Back Button -->
+            <button id="back-btn" class="mb-6 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <span>←</span>
+                <span>Torna alle Lezioni</span>
+            </button>
+
+            <!-- Lesson Header -->
+            <div id="lesson-header" class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-6">
+                <!-- Header content will be inserted here -->
+            </div>
+
+            <!-- Lesson Body -->
+            <div id="lesson-body" class="space-y-6">
+                <!-- Lesson content will be inserted here -->
+            </div>
+
+            <!-- Lesson Navigation -->
+            <div id="lesson-nav" class="flex justify-between items-center mt-8 pt-6 border-t border-gray-200">
+                <button id="prev-lesson" class="flex items-center space-x-2 px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50">
+                    <span>←</span>
+                    <span>Precedente</span>
+                </button>
+                <button id="mark-complete" class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                    ✓ Completa Lezione
+                </button>
+                <button id="next-lesson" class="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50">
+                    <span>Successiva</span>
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Modal -->
+    <div id="exercise-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Esercizio</h3>
+                    <button id="close-exercise" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+                </div>
+                
+                <div id="exercise-content" class="space-y-6">
+                    <!-- Exercise content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentLevel = 'basic';
+        let currentLessonId = null;
+        let completedLessons = new Set(JSON.parse(localStorage.getItem('completedLessons') || '[]'));
+        let currentExercise = null;
+
+        // Grammar lessons database
+        const grammarLessons = {
+            basic: [
+                {
+                    id: 'word-order',
+                    title: 'Ordine delle Parole',
+                    description: 'La struttura base delle frasi cinesi',
+                    duration: '15 min',
+                    difficulty: 1,
+                    content: {
+                        introduction: 'Il cinese segue un ordine delle parole relativamente fisso: Soggetto + Verbo + Oggetto (SVO), simile all\'italiano.',
+                        sections: [
+                            {
+                                title: 'Struttura Base: SVO',
+                                content: 'La struttura più comune è Soggetto + Verbo + Oggetto.',
+                                examples: [
+                                    {
+                                        chinese: '我吃苹果。',
+                                        pinyin: 'Wǒ chī píngguǒ.',
+                                        italian: 'Io mangio una mela.',
+                                        breakdown: ['我 (wǒ) = io', '吃 (chī) = mangiare', '苹果 (píngguǒ) = mela']
+                                    },
+                                    {
+                                        chinese: '他学中文。',
+                                        pinyin: 'Tā xué zhōngwén.',
+                                        italian: 'Lui studia cinese.',
+                                        breakdown: ['他 (tā) = lui', '学 (xué) = studiare', '中文 (zhōngwén) = cinese']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Complementi di Tempo',
+                                content: 'I complementi di tempo vanno generalmente prima del verbo.',
+                                examples: [
+                                    {
+                                        chinese: '我今天吃苹果。',
+                                        pinyin: 'Wǒ jīntiān chī píngguǒ.',
+                                        italian: 'Oggi io mangio una mela.',
+                                        breakdown: ['今天 (jīntiān) = oggi', 'va prima del verbo']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            'A differenza dell\'italiano, gli avverbi di tempo vanno prima del verbo',
+                            'L\'ordine delle parole è più rigido rispetto all\'italiano'
+                        ],
+                        exercises: [
+                            {
+                                type: 'order',
+                                question: 'Riordina le parole per formare una frase corretta:',
+                                words: ['我', '书', '读'],
+                                correct: '我读书。',
+                                translation: 'Io leggo un libro.'
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'particles-de',
+                    title: 'La Particella 的 (de)',
+                    description: 'Uso della particella possessiva e attributiva',
+                    duration: '20 min',
+                    difficulty: 2,
+                    content: {
+                        introduction: 'La particella 的 (de) è una delle più importanti in cinese. Ha principalmente due funzioni: possessiva e attributiva.',
+                        sections: [
+                            {
+                                title: 'Funzione Possessiva',
+                                content: '的 indica possesso o appartenenza, simile a "di" in italiano.',
+                                examples: [
+                                    {
+                                        chinese: '我的书',
+                                        pinyin: 'wǒ de shū',
+                                        italian: 'il mio libro',
+                                        breakdown: ['我 (wǒ) = io', '的 (de) = particella possessiva', '书 (shū) = libro']
+                                    },
+                                    {
+                                        chinese: '老师的车',
+                                        pinyin: 'lǎoshī de chē',
+                                        italian: 'la macchina del professore',
+                                        breakdown: ['老师 (lǎoshī) = professore', '车 (chē) = macchina']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Funzione Attributiva',
+                                content: '的 collega aggettivi ai sostantivi che modificano.',
+                                examples: [
+                                    {
+                                        chinese: '红色的苹果',
+                                        pinyin: 'hóngsè de píngguǒ',
+                                        italian: 'mela rossa',
+                                        breakdown: ['红色 (hóngsè) = rosso', '苹果 (píngguǒ) = mela']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Omissione di 的',
+                                content: 'Con relazioni familiari strette, 的 può essere omesso.',
+                                examples: [
+                                    {
+                                        chinese: '我妈妈 (non 我的妈妈)',
+                                        pinyin: 'wǒ māma',
+                                        italian: 'mia madre',
+                                        breakdown: ['Con famiglia stretta, 的 si omette spesso']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            'Con aggettivi monosillabici, 的 spesso si omette: 好人 (brava persona)',
+                            'L\'ordine è sempre: possessore + 的 + posseduto'
+                        ],
+                        exercises: [
+                            {
+                                type: 'choice',
+                                question: 'Quale frase è corretta?',
+                                options: ['我的的书', '我的书', '我书的', '的我书'],
+                                correct: 1,
+                                explanation: '我的书 è corretto: possessore + 的 + posseduto'
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'questions-ma',
+                    title: 'Domande con 吗 (ma)',
+                    description: 'Formare domande sì/no con la particella 吗',
+                    duration: '15 min',
+                    difficulty: 1,
+                    content: {
+                        introduction: 'La particella 吗 (ma) è il modo più semplice per trasformare un\'affermazione in una domanda sì/no.',
+                        sections: [
+                            {
+                                title: 'Formazione Base',
+                                content: 'Aggiungi 吗 alla fine di una frase affermativa per formare una domanda.',
+                                examples: [
+                                    {
+                                        chinese: '你是学生。→ 你是学生吗？',
+                                        pinyin: 'Nǐ shì xuésheng. → Nǐ shì xuésheng ma?',
+                                        italian: 'Tu sei studente. → Sei studente?',
+                                        breakdown: ['Aggiungi semplicemente 吗 alla fine']
+                                    },
+                                    {
+                                        chinese: '他喜欢咖啡吗？',
+                                        pinyin: 'Tā xǐhuan kāfēi ma?',
+                                        italian: 'Gli piace il caffè?',
+                                        breakdown: ['他 (tā) = lui', '喜欢 (xǐhuan) = piacere', '咖啡 (kāfēi) = caffè']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Risposte',
+                                content: 'Le risposte ripetono il verbo principale per "sì" o lo negano per "no".',
+                                examples: [
+                                    {
+                                        chinese: 'Q: 你是学生吗？A: 是的。/ 不是。',
+                                        pinyin: 'Q: Nǐ shì xuésheng ma? A: Shì de. / Bù shì.',
+                                        italian: 'D: Sei studente? R: Sì. / No.',
+                                        breakdown: ['是的 (shì de) = sì', '不是 (bù shì) = no']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            'Non usare 吗 con altre parole interrogative (什么, 哪里, etc.)',
+                            'Il tono di 吗 è neutro (ma senza tono)'
+                        ],
+                        exercises: [
+                            {
+                                type: 'transform',
+                                question: 'Trasforma in domanda: 你喜欢音乐。',
+                                correct: '你喜欢音乐吗？',
+                                explanation: 'Aggiungi 吗 alla fine della frase affermativa'
+                            }
+                        ]
+                    }
+                }
+            ],
+            intermediate: [
+                {
+                    id: 'aspect-le',
+                    title: 'Aspetto Perfettivo 了 (le)',
+                    description: 'Uso di 了 per indicare azioni completate',
+                    duration: '25 min',
+                    difficulty: 3,
+                    content: {
+                        introduction: '了 (le) non indica tempo passato, ma aspetto perfettivo - azioni completate o cambio di stato.',
+                        sections: [
+                            {
+                                title: '了 Verbale',
+                                content: '了 subito dopo il verbo indica che l\'azione è stata completata.',
+                                examples: [
+                                    {
+                                        chinese: '我吃了苹果。',
+                                        pinyin: 'Wǒ chī le píngguǒ.',
+                                        italian: 'Ho mangiato una mela.',
+                                        breakdown: ['吃了 = azione di mangiare completata']
+                                    },
+                                    {
+                                        chinese: '他买了三本书。',
+                                        pinyin: 'Tā mǎi le sān běn shū.',
+                                        italian: 'Ha comprato tre libri.',
+                                        breakdown: ['买了 = azione di comprare completata', '三本 = tre (classificatore per libri)']
+                                    }
+                                ]
+                            },
+                            {
+                                title: '了 Frasale',
+                                content: '了 alla fine della frase indica un nuovo stato o situazione.',
+                                examples: [
+                                    {
+                                        chinese: '下雨了。',
+                                        pinyin: 'Xià yǔ le.',
+                                        italian: 'Sta piovendo. (è iniziato a piovere)',
+                                        breakdown: ['Cambio di stato: ora piove']
+                                    },
+                                    {
+                                        chinese: '我饿了。',
+                                        pinyin: 'Wǒ è le.',
+                                        italian: 'Ho fame. (sono diventato affamato)',
+                                        breakdown: ['Nuovo stato: ora ho fame']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Doppio 了',
+                                content: 'Quando si usano entrambi i 了 nella stessa frase.',
+                                examples: [
+                                    {
+                                        chinese: '我吃了饭了。',
+                                        pinyin: 'Wǒ chī le fàn le.',
+                                        italian: 'Ho mangiato (e la situazione è cambiata).',
+                                        breakdown: ['Primo 了: azione completata', 'Secondo 了: nuovo stato']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            '了 non equivale al passato prossimo italiano',
+                            'Può essere usato per eventi futuri se sono certi',
+                            'Non usare 了 per azioni abituali nel passato'
+                        ],
+                        exercises: [
+                            {
+                                type: 'choice',
+                                question: 'Quale frase indica che l\'azione è completata?',
+                                options: ['我吃苹果', '我吃了苹果', '我要吃苹果', '我在吃苹果'],
+                                correct: 1,
+                                explanation: '吃了 indica che l\'azione di mangiare è stata completata'
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'classifiers',
+                    title: 'Classificatori (Parole di Misura)',
+                    description: 'Uso dei classificatori con numeri e sostantivi',
+                    duration: '30 min',
+                    difficulty: 4,
+                    content: {
+                        introduction: 'I classificatori sono parole che vanno tra numeri/dimostrativi e sostantivi. Ogni sostantivo ha classificatori specifici.',
+                        sections: [
+                            {
+                                title: 'Classificatori Comuni',
+                                content: 'I classificatori più frequenti e i loro usi.',
+                                examples: [
+                                    {
+                                        chinese: '一个人 (yí gè rén)',
+                                        pinyin: 'yí gè rén',
+                                        italian: 'una persona',
+                                        breakdown: ['个 (gè) = classificatore generale per persone e oggetti']
+                                    },
+                                    {
+                                        chinese: '三本书 (sān běn shū)',
+                                        pinyin: 'sān běn shū',
+                                        italian: 'tre libri',
+                                        breakdown: ['本 (běn) = classificatore per libri, riviste']
+                                    },
+                                    {
+                                        chinese: '两只猫 (liǎng zhī māo)',
+                                        pinyin: 'liǎng zhī māo',
+                                        italian: 'due gatti',
+                                        breakdown: ['只 (zhī) = classificatore per animali']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Classificatori Specifici',
+                                content: 'Classificatori per categorie specifiche di oggetti.',
+                                examples: [
+                                    {
+                                        chinese: '一张桌子 (yì zhāng zhuōzi)',
+                                        pinyin: 'yì zhāng zhuōzi',
+                                        italian: 'un tavolo',
+                                        breakdown: ['张 (zhāng) = per oggetti piatti: tavoli, carte, letti']
+                                    },
+                                    {
+                                        chinese: '五辆车 (wǔ liàng chē)',
+                                        pinyin: 'wǔ liàng chē',
+                                        italian: 'cinque macchine',
+                                        breakdown: ['辆 (liàng) = per veicoli']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Con Dimostrativi',
+                                content: 'I classificatori si usano anche con "questo" e "quello".',
+                                examples: [
+                                    {
+                                        chinese: '这个苹果 (zhège píngguǒ)',
+                                        pinyin: 'zhège píngguǒ',
+                                        italian: 'questa mela',
+                                        breakdown: ['这 (zhè) + 个 (gè) = questo']
+                                    },
+                                    {
+                                        chinese: '那本书 (nà běn shū)',
+                                        pinyin: 'nà běn shū',
+                                        italian: 'quel libro',
+                                        breakdown: ['那 (nà) + 本 (běn) = quel']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            '个 (gè) è il classificatore più comune e può essere usato quando non si conosce quello specifico',
+                            'Ogni sostantivo ha un classificatore "corretto", ma 个 è spesso accettabile',
+                            'I classificatori sono obbligatori con numeri e dimostrativi'
+                        ],
+                        exercises: [
+                            {
+                                type: 'fill',
+                                question: 'Completa: 两___狗 (due cani)',
+                                options: ['个', '本', '只', '张'],
+                                correct: 2,
+                                explanation: '只 è il classificatore corretto per gli animali'
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'comparison',
+                    title: 'Costruzioni Comparative',
+                    description: 'Confronti con 比, 没有 e altri pattern',
+                    duration: '25 min',
+                    difficulty: 3,
+                    content: {
+                        introduction: 'Il cinese ha diversi modi per esprimere confronti e comparazioni tra oggetti, persone o situazioni.',
+                        sections: [
+                            {
+                                title: 'Comparativo con 比 (bǐ)',
+                                content: 'Struttura: A + 比 + B + aggettivo per dire "A è più... di B".',
+                                examples: [
+                                    {
+                                        chinese: '我比他高。',
+                                        pinyin: 'Wǒ bǐ tā gāo.',
+                                        italian: 'Io sono più alto di lui.',
+                                        breakdown: ['我 (wǒ) = io', '比 (bǐ) = più di', '他 (tā) = lui', '高 (gāo) = alto']
+                                    },
+                                    {
+                                        chinese: '这本书比那本书有趣。',
+                                        pinyin: 'Zhè běn shū bǐ nà běn shū yǒuqù.',
+                                        italian: 'Questo libro è più interessante di quello.',
+                                        breakdown: ['有趣 (yǒuqù) = interessante']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Comparativo Negativo con 没有',
+                                content: 'Struttura: A + 没有 + B + aggettivo per dire "A non è tanto... quanto B".',
+                                examples: [
+                                    {
+                                        chinese: '我没有他高。',
+                                        pinyin: 'Wǒ méiyǒu tā gāo.',
+                                        italian: 'Io non sono alto quanto lui.',
+                                        breakdown: ['没有 (méiyǒu) = non tanto quanto']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Superlativo con 最 (zuì)',
+                                content: '最 + aggettivo = il più...',
+                                examples: [
+                                    {
+                                        chinese: '他是最高的学生。',
+                                        pinyin: 'Tā shì zuì gāo de xuésheng.',
+                                        italian: 'Lui è lo studente più alto.',
+                                        breakdown: ['最 (zuì) = il più', '的 collega aggettivo e sostantivo']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            'Non usare 更 (gèng) con 比 nella stessa frase',
+                            '没有 è più morbido di 不比 per negare confronti',
+                            'Con 最, spesso si aggiunge 的 prima del sostantivo'
+                        ],
+                        exercises: [
+                            {
+                                type: 'translate',
+                                question: 'Traduci: "Il tè è più buono del caffè"',
+                                correct: '茶比咖啡好。',
+                                explanation: 'Struttura: 茶 (tè) + 比 + 咖啡 (caffè) + 好 (buono)'
+                            }
+                        ]
+                    }
+                }
+            ],
+            advanced: [
+                {
+                    id: 'resultative',
+                    title: 'Complementi Risultativi',
+                    description: 'Verbi composti che indicano il risultato di un\'azione',
+                    duration: '35 min',
+                    difficulty: 5,
+                    content: {
+                        introduction: 'I complementi risultativi indicano il risultato o l\'esito di un\'azione. Si formano combinando un verbo d\'azione con un verbo/aggettivo risultativo.',
+                        sections: [
+                            {
+                                title: 'Struttura Base',
+                                content: 'Verbo d\'azione + Complemento risultativo',
+                                examples: [
+                                    {
+                                        chinese: '我看懂了这本书。',
+                                        pinyin: 'Wǒ kàn dǒng le zhè běn shū.',
+                                        italian: 'Ho capito questo libro (leggendolo).',
+                                        breakdown: ['看 (kàn) = guardare/leggere', '懂 (dǒng) = capire', '看懂 = capire leggendo']
+                                    },
+                                    {
+                                        chinese: '他跑累了。',
+                                        pinyin: 'Tā pǎo lèi le.',
+                                        italian: 'Si è stancato correndo.',
+                                        breakdown: ['跑 (pǎo) = correre', '累 (lèi) = stanco', '跑累 = stancarsi correndo']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Complementi Comuni',
+                                content: 'I complementi risultativi più frequenti.',
+                                examples: [
+                                    {
+                                        chinese: '听清楚 (tīng qīngchu)',
+                                        pinyin: 'tīng qīngchu',
+                                        italian: 'sentire chiaramente',
+                                        breakdown: ['听 (tīng) = sentire', '清楚 (qīngchu) = chiaro']
+                                    },
+                                    {
+                                        chinese: '做完 (zuò wán)',
+                                        pinyin: 'zuò wán',
+                                        italian: 'finire di fare',
+                                        breakdown: ['做 (zuò) = fare', '完 (wán) = finito']
+                                    },
+                                    {
+                                        chinese: '找到 (zhǎo dào)',
+                                        pinyin: 'zhǎo dào',
+                                        italian: 'trovare (con successo)',
+                                        breakdown: ['找 (zhǎo) = cercare', '到 (dào) = arrivare/ottenere']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Forma Potenziale',
+                                content: 'Aggiungere 得/不 per indicare possibilità.',
+                                examples: [
+                                    {
+                                        chinese: '我看得懂中文。',
+                                        pinyin: 'Wǒ kàn de dǒng zhōngwén.',
+                                        italian: 'Riesco a capire il cinese (leggendo).',
+                                        breakdown: ['得 (de) = indica possibilità positiva']
+                                    },
+                                    {
+                                        chinese: '我听不清楚。',
+                                        pinyin: 'Wǒ tīng bu qīngchu.',
+                                        italian: 'Non riesco a sentire chiaramente.',
+                                        breakdown: ['不 (bu) = indica impossibilità']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            'Il complemento risultativo è inseparabile dal verbo principale',
+                            'Con oggetti, la struttura diventa: Soggetto + Verbo + Oggetto + Verbo + Complemento',
+                            'Molto comune nel cinese parlato per esprimere precisione'
+                        ],
+                        exercises: [
+                            {
+                                type: 'choice',
+                                question: 'Come si dice "Non riesco a finire di mangiare"?',
+                                options: ['我吃不完', '我不吃完', '我吃完不', '我不完吃'],
+                                correct: 0,
+                                explanation: '吃不完: 吃 (mangiare) + 不 (non riesco) + 完 (finire)'
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'passive-bei',
+                    title: 'Forma Passiva con 被 (bèi)',
+                    description: 'Costruzione della forma passiva in cinese',
+                    duration: '30 min',
+                    difficulty: 4,
+                    content: {
+                        introduction: 'La forma passiva con 被 (bèi) si usa quando il soggetto subisce l\'azione invece di compierla. È meno comune che in italiano.',
+                        sections: [
+                            {
+                                title: 'Struttura Base',
+                                content: 'Soggetto + 被 + Agente + Verbo + (Oggetto)',
+                                examples: [
+                                    {
+                                        chinese: '书被我看完了。',
+                                        pinyin: 'Shū bèi wǒ kàn wán le.',
+                                        italian: 'Il libro è stato finito di leggere da me.',
+                                        breakdown: ['书 (shū) = libro (soggetto passivo)', '被 (bèi) = da', '我 (wǒ) = io (agente)']
+                                    },
+                                    {
+                                        chinese: '窗户被风吹开了。',
+                                        pinyin: 'Chuānghu bèi fēng chuī kāi le.',
+                                        italian: 'La finestra è stata aperta dal vento.',
+                                        breakdown: ['窗户 (chuānghu) = finestra', '风 (fēng) = vento', '吹开 (chuī kāi) = aprire soffiando']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Passivo Senza Agente',
+                                content: 'Quando l\'agente è sconosciuto o non importante.',
+                                examples: [
+                                    {
+                                        chinese: '我的自行车被偷了。',
+                                        pinyin: 'Wǒ de zìxíngchē bèi tōu le.',
+                                        italian: 'La mia bicicletta è stata rubata.',
+                                        breakdown: ['自行车 (zìxíngchē) = bicicletta', '偷 (tōu) = rubare']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Connotazione Negativa',
+                                content: 'Il passivo con 被 spesso implica qualcosa di spiacevole.',
+                                examples: [
+                                    {
+                                        chinese: '他被老师批评了。',
+                                        pinyin: 'Tā bèi lǎoshī pīpíng le.',
+                                        italian: 'È stato criticato dal professore.',
+                                        breakdown: ['批评 (pīpíng) = criticare (connotazione negativa)']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            'Il passivo è meno usato in cinese che in italiano',
+                            'Spesso implica eventi negativi o indesiderati',
+                            'Per eventi neutri/positivi, si preferisce la forma attiva'
+                        ],
+                        exercises: [
+                            {
+                                type: 'transform',
+                                question: 'Trasforma in passivo: 老师表扬了学生。',
+                                correct: '学生被老师表扬了。',
+                                explanation: 'Soggetto originale (学生) + 被 + agente (老师) + verbo'
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'conditional',
+                    title: 'Frasi Condizionali',
+                    description: 'Esprimere condizioni con 如果, 要是, 的话',
+                    duration: '25 min',
+                    difficulty: 4,
+                    content: {
+                        introduction: 'Le frasi condizionali esprimono situazioni ipotetiche. Il cinese ha diverse strutture per esprimere condizioni.',
+                        sections: [
+                            {
+                                title: 'Condizionale con 如果 (rúguǒ)',
+                                content: '如果 + condizione + 就 + risultato (Se... allora...)',
+                                examples: [
+                                    {
+                                        chinese: '如果明天下雨，我就不去公园。',
+                                        pinyin: 'Rúguǒ míngtiān xià yǔ, wǒ jiù bù qù gōngyuán.',
+                                        italian: 'Se domani piove, allora non andrò al parco.',
+                                        breakdown: ['如果 (rúguǒ) = se', '就 (jiù) = allora', '下雨 (xià yǔ) = piovere']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Condizionale con 要是 (yàoshi)',
+                                content: '要是 è più colloquiale di 如果.',
+                                examples: [
+                                    {
+                                        chinese: '要是你有时间，我们一起吃饭吧。',
+                                        pinyin: 'Yàoshi nǐ yǒu shíjiān, wǒmen yìqǐ chī fàn ba.',
+                                        italian: 'Se hai tempo, mangiamo insieme.',
+                                        breakdown: ['要是 (yàoshi) = se (colloquiale)', '一起 (yìqǐ) = insieme']
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Condizionale con 的话 (de huà)',
+                                content: '的话 va alla fine della clausola condizionale.',
+                                examples: [
+                                    {
+                                        chinese: '你不来的话，我们就开始吧。',
+                                        pinyin: 'Nǐ bù lái de huà, wǒmen jiù kāishǐ ba.',
+                                        italian: 'Se non vieni, allora iniziamo.',
+                                        breakdown: ['的话 (de huà) = se (alla fine della condizione)', '开始 (kāishǐ) = iniziare']
+                                    }
+                                ]
+                            }
+                        ],
+                        notes: [
+                            '就 nella clausola principale è opzionale ma comune',
+                            '要是 è più informale di 如果',
+                            '的话 può essere combinato con 如果: 如果...的话'
+                        ],
+                        exercises: [
+                            {
+                                type: 'complete',
+                                question: 'Completa: ___天气好，我们去爬山。',
+                                options: ['如果', '因为', '虽然', '但是'],
+                                correct: 0,
+                                explanation: '如果 introduce una condizione: "Se il tempo è bello..."'
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
+        // Initialize app
+        updateProgressDisplay();
+        showLessons(currentLevel);
+
+        // Event listeners
+        document.querySelectorAll('.level-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchLevel(tab.dataset.level);
+            });
+        });
+
+        document.getElementById('back-btn').addEventListener('click', goBackToLessons);
+        document.getElementById('close-exercise').addEventListener('click', closeExercise);
+        document.getElementById('mark-complete').addEventListener('click', markLessonComplete);
+        document.getElementById('prev-lesson').addEventListener('click', () => navigateLesson(-1));
+        document.getElementById('next-lesson').addEventListener('click', () => navigateLesson(1));
+
+        // Functions
+        function switchLevel(level) {
+            currentLevel = level;
+            
+            // Update tab appearance
+            document.querySelectorAll('.level-tab').forEach(tab => {
+                tab.classList.remove('bg-blue-500', 'text-white');
+                tab.classList.add('text-gray-600');
+            });
+            
+            document.querySelector(`[data-level="${level}"]`).classList.add('bg-blue-500', 'text-white');
+            document.querySelector(`[data-level="${level}"]`).classList.remove('text-gray-600');
+            
+            showLessons(level);
+        }
+
+        function showLessons(level) {
+            const lessons = grammarLessons[level];
+            const grid = document.getElementById('lessons-grid');
+            
+            grid.innerHTML = lessons.map(lesson => {
+                const isCompleted = completedLessons.has(lesson.id);
+                const difficultyStars = '⭐'.repeat(lesson.difficulty);
+                
+                return `
+                    <div class="lesson-card bg-white rounded-xl p-6 shadow-sm border border-gray-100 cursor-pointer ${isCompleted ? 'ring-2 ring-green-300' : ''}" data-lesson="${lesson.id}">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-900 mb-2">${lesson.title}</h3>
+                                <p class="text-sm text-gray-600 mb-3">${lesson.description}</p>
+                            </div>
+                            ${isCompleted ? '<div class="text-green-500 text-xl">✓</div>' : ''}
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-500">⏱️ ${lesson.duration}</span>
+                            <span class="text-yellow-500" title="Difficoltà">${difficultyStars}</span>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500 capitalize">${level}</span>
+                                <span class="text-xs ${isCompleted ? 'text-green-600 font-medium' : 'text-blue-600'}">${isCompleted ? 'Completata' : 'Inizia →'}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Add click listeners
+            grid.querySelectorAll('[data-lesson]').forEach(card => {
+                card.addEventListener('click', () => {
+                    showLesson(card.dataset.lesson);
+                });
+            });
+        }
+
+        function showLesson(lessonId) {
+            currentLessonId = lessonId;
+            const lesson = findLessonById(lessonId);
+            
+            if (!lesson) return;
+            
+            document.getElementById('main-menu').classList.add('hidden');
+            document.getElementById('lesson-content').classList.remove('hidden');
+            
+            // Update header
+            const header = document.getElementById('lesson-header');
+            header.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">${lesson.title}</h1>
+                        <p class="text-lg text-gray-600 mb-4">${lesson.description}</p>
+                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                            <span>⏱️ ${lesson.duration}</span>
+                            <span>⭐ ${'★'.repeat(lesson.difficulty)}</span>
+                            <span class="capitalize">${currentLevel}</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        ${completedLessons.has(lessonId) ? 
+                            '<div class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">✓ Completata</div>' : 
+                            '<div class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">In corso</div>'
+                        }
+                    </div>
+                </div>
+            `;
+            
+            // Update body
+            const body = document.getElementById('lesson-body');
+            body.innerHTML = `
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="prose max-w-none">
+                        <div class="text-lg text-gray-700 mb-6 leading-relaxed">
+                            ${lesson.content.introduction}
+                        </div>
+                        
+                        ${lesson.content.sections.map(section => `
+                            <div class="mb-8 slide-in">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-4">${section.title}</h3>
+                                <p class="text-gray-700 mb-4">${section.content}</p>
+                                
+                                <div class="space-y-4">
+                                    ${section.examples.map(example => `
+                                        <div class="example-box rounded-lg p-4">
+                                            <div class="chinese-text text-2xl font-bold text-gray-800 mb-2">${example.chinese}</div>
+                                            <div class="pinyin-text text-lg mb-2">${example.pinyin}</div>
+                                            <div class="text-gray-700 font-medium mb-3">${example.italian}</div>
+                                            <div class="text-sm text-gray-600">
+                                                ${example.breakdown.map(item => `<div class="mb-1">• ${item}</div>`).join('')}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                        
+                        ${lesson.content.notes && lesson.content.notes.length > 0 ? `
+                            <div class="note-box rounded-lg p-4 mb-6">
+                                <h4 class="font-semibold text-gray-900 mb-3">📝 Note Importanti</h4>
+                                <ul class="space-y-2">
+                                    ${lesson.content.notes.map(note => `<li class="text-sm text-gray-700">• ${note}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        
+                        ${lesson.content.exercises && lesson.content.exercises.length > 0 ? `
+                            <div class="exercise-box rounded-lg p-4">
+                                <h4 class="font-semibold text-gray-900 mb-3">✏️ Esercizi</h4>
+                                <div class="space-y-4">
+                                    ${lesson.content.exercises.map((exercise, index) => `
+                                        <button class="exercise-btn w-full text-left p-4 bg-white rounded-lg border border-gray-200 hover:border-green-300 transition-colors" data-exercise="${index}">
+                                            <div class="font-medium text-gray-900 mb-2">Esercizio ${index + 1}</div>
+                                            <div class="text-sm text-gray-600">${exercise.question}</div>
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            // Add exercise listeners
+            body.querySelectorAll('.exercise-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const exerciseIndex = parseInt(btn.dataset.exercise);
+                    showExercise(lesson.content.exercises[exerciseIndex]);
+                });
+            });
+            
+            updateLessonNavigation();
+        }
+
+        function showExercise(exercise) {
+            currentExercise = exercise;
+            const modal = document.getElementById('exercise-modal');
+            const content = document.getElementById('exercise-content');
+            
+            let exerciseHTML = '';
+            
+            switch(exercise.type) {
+                case 'choice':
+                    exerciseHTML = `
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">${exercise.question}</h4>
+                            <div class="space-y-3">
+                                ${exercise.options.map((option, index) => `
+                                    <button class="exercise-option w-full text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors" data-index="${index}">
+                                        ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div id="exercise-result" class="hidden"></div>
+                    `;
+                    break;
+                    
+                case 'transform':
+                case 'translate':
+                    exerciseHTML = `
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">${exercise.question}</h4>
+                            <input type="text" id="exercise-input" class="w-full p-3 border border-gray-200 rounded-lg chinese-text text-lg" placeholder="Scrivi la tua risposta...">
+                            <button id="check-answer" class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                                Controlla Risposta
+                            </button>
+                        </div>
+                        <div id="exercise-result" class="hidden"></div>
+                    `;
+                    break;
+                    
+                case 'fill':
+                case 'complete':
+                    exerciseHTML = `
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">${exercise.question}</h4>
+                            <div class="space-y-3">
+                                ${exercise.options.map((option, index) => `
+                                    <button class="exercise-option w-full text-left p-3 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors chinese-text text-lg" data-index="${index}">
+                                        ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div id="exercise-result" class="hidden"></div>
+                    `;
+                    break;
+                    
+                case 'order':
+                    exerciseHTML = `
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">${exercise.question}</h4>
+                            <div class="flex flex-wrap gap-2 mb-4" id="word-bank">
+                                ${exercise.words.map(word => `
+                                    <button class="word-btn px-3 py-2 bg-gray-100 border border-gray-200 rounded-lg chinese-text text-lg hover:bg-blue-100 transition-colors">
+                                        ${word}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 min-h-16 chinese-text text-lg" id="sentence-area">
+                                <span class="text-gray-400">Trascina qui le parole nell'ordine corretto...</span>
+                            </div>
+                            <button id="check-order" class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                                Controlla Ordine
+                            </button>
+                        </div>
+                        <div id="exercise-result" class="hidden"></div>
+                    `;
+                    break;
+            }
+            
+            content.innerHTML = exerciseHTML;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Add exercise-specific listeners
+            setupExerciseListeners(exercise);
+        }
+
+        function setupExerciseListeners(exercise) {
+            switch(exercise.type) {
+                case 'choice':
+                case 'fill':
+                case 'complete':
+                    document.querySelectorAll('.exercise-option').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const selectedIndex = parseInt(btn.dataset.index);
+                            checkMultipleChoice(selectedIndex, exercise);
+                        });
+                    });
+                    break;
+                    
+                case 'transform':
+                case 'translate':
+                    document.getElementById('check-answer').addEventListener('click', () => {
+                        const userAnswer = document.getElementById('exercise-input').value.trim();
+                        checkTextAnswer(userAnswer, exercise);
+                    });
+                    
+                    document.getElementById('exercise-input').addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            document.getElementById('check-answer').click();
+                        }
+                    });
+                    break;
+                    
+                case 'order':
+                    setupWordOrderExercise(exercise);
+                    break;
+            }
+        }
+
+        function checkMultipleChoice(selectedIndex, exercise) {
+            const result = document.getElementById('exercise-result');
+            const options = document.querySelectorAll('.exercise-option');
+            
+            options.forEach(btn => btn.disabled = true);
+            
+            if (selectedIndex === exercise.correct) {
+                options[selectedIndex].classList.add('bg-green-100', 'border-green-400');
+                result.innerHTML = `
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div class="text-green-700 font-medium mb-2">✓ Corretto!</div>
+                        <div class="text-sm text-green-600">${exercise.explanation}</div>
+                    </div>
+                `;
+            } else {
+                options[selectedIndex].classList.add('bg-red-100', 'border-red-400');
+                options[exercise.correct].classList.add('bg-green-100', 'border-green-400');
+                result.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="text-red-700 font-medium mb-2">✗ Non corretto</div>
+                        <div class="text-sm text-red-600">${exercise.explanation}</div>
+                    </div>
+                `;
+            }
+            
+            result.classList.remove('hidden');
+        }
+
+        function checkTextAnswer(userAnswer, exercise) {
+            const result = document.getElementById('exercise-result');
+            const isCorrect = userAnswer === exercise.correct;
+            
+            if (isCorrect) {
+                result.innerHTML = `
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div class="text-green-700 font-medium mb-2">✓ Corretto!</div>
+                        <div class="text-sm text-green-600">${exercise.explanation}</div>
+                    </div>
+                `;
+            } else {
+                result.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="text-red-700 font-medium mb-2">✗ Non corretto</div>
+                        <div class="text-sm text-red-600 mb-2">Risposta corretta: <span class="chinese-text font-bold">${exercise.correct}</span></div>
+                        <div class="text-sm text-red-600">${exercise.explanation}</div>
+                    </div>
+                `;
+            }
+            
+            result.classList.remove('hidden');
+        }
+
+        function setupWordOrderExercise(exercise) {
+            let selectedWords = [];
+            
+            document.querySelectorAll('.word-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const word = btn.textContent.trim();
+                    selectedWords.push(word);
+                    btn.disabled = true;
+                    btn.classList.add('opacity-50');
+                    
+                    updateSentenceArea();
+                });
+            });
+            
+            document.getElementById('check-order').addEventListener('click', () => {
+                const userSentence = selectedWords.join('');
+                const isCorrect = userSentence === exercise.correct;
+                
+                const result = document.getElementById('exercise-result');
+                if (isCorrect) {
+                    result.innerHTML = `
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div class="text-green-700 font-medium mb-2">✓ Corretto!</div>
+                            <div class="text-sm text-green-600">Traduzione: ${exercise.translation}</div>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <div class="text-red-700 font-medium mb-2">✗ Non corretto</div>
+                            <div class="text-sm text-red-600 mb-2">Ordine corretto: <span class="chinese-text font-bold">${exercise.correct}</span></div>
+                            <div class="text-sm text-red-600">Traduzione: ${exercise.translation}</div>
+                        </div>
+                    `;
+                }
+                result.classList.remove('hidden');
+            });
+            
+            function updateSentenceArea() {
+                const area = document.getElementById('sentence-area');
+                if (selectedWords.length > 0) {
+                    area.innerHTML = selectedWords.join(' ');
+                } else {
+                    area.innerHTML = '<span class="text-gray-400">Trascina qui le parole nell\'ordine corretto...</span>';
+                }
+            }
+        }
+
+        function markLessonComplete() {
+            if (currentLessonId) {
+                completedLessons.add(currentLessonId);
+                localStorage.setItem('completedLessons', JSON.stringify([...completedLessons]));
+                updateProgressDisplay();
+                
+                // Update button
+                const btn = document.getElementById('mark-complete');
+                btn.innerHTML = '✓ Completata';
+                btn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                btn.classList.add('bg-gray-400');
+                btn.disabled = true;
+                
+                // Show completion message
+                const header = document.getElementById('lesson-header');
+                const completionBadge = header.querySelector('.bg-blue-100');
+                if (completionBadge) {
+                    completionBadge.className = 'bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium';
+                    completionBadge.innerHTML = '✓ Completata';
+                }
+            }
+        }
+
+        function updateLessonNavigation() {
+            const lessons = grammarLessons[currentLevel];
+            const currentIndex = lessons.findIndex(lesson => lesson.id === currentLessonId);
+            
+            const prevBtn = document.getElementById('prev-lesson');
+            const nextBtn = document.getElementById('next-lesson');
+            const markBtn = document.getElementById('mark-complete');
+            
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === lessons.length - 1;
+            
+            if (completedLessons.has(currentLessonId)) {
+                markBtn.innerHTML = '✓ Completata';
+                markBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                markBtn.classList.add('bg-gray-400');
+                markBtn.disabled = true;
+            }
+        }
+
+        function navigateLesson(direction) {
+            const lessons = grammarLessons[currentLevel];
+            const currentIndex = lessons.findIndex(lesson => lesson.id === currentLessonId);
+            const newIndex = currentIndex + direction;
+            
+            if (newIndex >= 0 && newIndex < lessons.length) {
+                showLesson(lessons[newIndex].id);
+            }
+        }
+
+        function findLessonById(id) {
+            for (const level in grammarLessons) {
+                const lesson = grammarLessons[level].find(l => l.id === id);
+                if (lesson) return lesson;
+            }
+            return null;
+        }
+
+        function updateProgressDisplay() {
+            const totalLessons = Object.values(grammarLessons).flat().length;
+            const completed = completedLessons.size;
+            const percentage = Math.round((completed / totalLessons) * 100);
+            
+            document.getElementById('completed-lessons').textContent = completed;
+            document.getElementById('progress-percentage').textContent = percentage + '%';
+        }
+
+        function goBackToLessons() {
+            document.getElementById('lesson-content').classList.add('hidden');
+            document.getElementById('main-menu').classList.remove('hidden');
+            currentLessonId = null;
+        }
+
+        function closeExercise() {
+            document.getElementById('exercise-modal').classList.add('hidden');
+            document.getElementById('exercise-modal').classList.remove('flex');
+            currentExercise = null;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('exercise-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeExercise();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9808e77fb4b9ed4e',t:'MTc1ODExNTI2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"><a href="https://scottino2019-glitch.github.io/lingua-cinese/grammatica.html"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg> Indietro </a></button>
+</html>
