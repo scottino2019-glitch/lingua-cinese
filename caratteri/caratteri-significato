@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Homepage Caratteri Cinesi</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Noto Sans SC', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f9f0e6, #da291c);
+    color: #333;
+  }
+  header {
+    background-color: #da291c;
+    color: #fff;
+    padding: 2rem 1rem;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: 'Noto Serif SC', serif;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .card {
+    background: #fff8f0;
+    border: 3px solid #da291c;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(218,41,28, 0.3);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(218,41,28, 0.6);
+  }
+  .character {
+    font-size: 6rem;
+    color: #da291c;
+    font-family: 'Noto Serif SC', serif;
+    user-select: none;
+  }
+  .title {
+    margin-top: 1rem;
+    font-size: 1.7rem;
+    font-weight: 700;
+    text-align: center;
+    color: #b22222;
+  }
+  .description {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    text-align: center;
+    color: #5c1a14;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+  button {
+    margin-top: 1.5rem;
+    background-color: #b22222;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  button:hover, button:focus {
+    background-color: #7f1616;
+    outline: none;
+  }
+  footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    background: #da291c;
+    color: white;
+    margin-top: 3rem;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Noto+Serif+SC&display=swap" rel="stylesheet" />
+</head>
+<body>
+<header>
+  Caratteri Cinesi
+</header>
+<main>
+  <div class="card" tabindex="0" aria-label="Carattere: Amore">
+    <div class="character">爱</div>
+    <div class="title">Amore (ài)</div>
+    <div class="description">Simbolo universale dell'amore e dell'affetto in cinese.</div>
+  
+  </div>
+  <div class="card" tabindex="0" aria-label="Carattere: Forza">
+    <div class="character">力</div>
+    <div class="title">Forza (lì)</div>
+    <div class="description">Rappresenta forza, potere e capacità fisica.</div>
+   </div>
+  <div class="card" tabindex="0" aria-label="Carattere: Pace">
+    <div class="character">安</div>
+    <div class="title">Pace (ān)</div>
+    <div class="description">Significa sicurezza, pace e tranquillità.</div>
+ </div>
+  <div class="card" tabindex="0" aria-label="Carattere: Cultura">
+    <div class="character">文</div>
+    <div class="title">Cultura (wén)</div>
+    <div class="description">Il carattere della scrittura e della cultura cinese.</div>
+ 
+  </div>
+  <div class="card" tabindex="0" aria-label="Carattere: Fortuna">
+    <div class="character">福</div>
+    <div class="title">Fortuna (fú)</div>
+    <div class="description">Simbolo di buona fortuna e benessere.</div>
+ 
+  </div>
+  <div class="card" tabindex="0" aria-label="Carattere: Famiglia">
+    <div class="character">家</div>
+    <div class="title">Famiglia (jiā)</div>
+    <div class="description">Rappresenta casa e famiglia, cuore della cultura cinese.</div>
+ 
+  </div>
+</main>
+<footer>
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-redl-500 to-yellow-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"> <a href="index.html"> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>Home</a></button>
+</footer>
+</body>
+</html>
