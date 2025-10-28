@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home Giochi</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0 20px 20px;
+  }
+  header {
+    width: 100%;
+    max-width: 900px;
+    height: 70px;
+    background-color: red;
+    border-radius: 15px 15px 0 0;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .card:hover {
+    transform: scale(1.05);
+  }
+  /* Colori diversi per le card */
+  .card1 { background: #ff6f61; color: white; }
+  .card2 { background: #6b5b95; color: white; }
+  .card3 { background: #88b04b; color: white; }
+  .card4 { background: #f7cac9; color: #333; }
+  .card5 { background: #92a8d1; color: white; }
+  .card6 { background: #f8971f; color: white; }
+
+  .buttons-container {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+  }
+  button {
+    border: none;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+    transition: background-color 0.3s ease;
+  }
+  .btn-red { background-color: #e74c3c; }
+  .btn-red:hover { background-color: #c0392b; }
+  .btn-blue { background-color: #3498db; }
+  .btn-blue:hover { background-color: #217dbb; }
+  .btn-green { background-color: #27ae60; }
+  .btn-green:hover { background-color: #1e8449; }
+
+h1 {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Playground</h1>
+</header>
+
+<div class="cards-container">
+  <div class="card card1" role="button" tabindex="0" aria-label="Gioco 1">🎲</div>
+  <div class="card card2" role="button" tabindex="0" aria-label="Gioco 2">🧩</div>
+  <div class="card card3" role="button" tabindex="0" aria-label="Gioco 3">🎮</div>
+  <div class="card card4" role="button" tabindex="0" aria-label="Gioco 4">♟️</div>
+  <div class="card card5" role="button" tabindex="0" aria-label="Gioco 5">🕹️</div>
+  <div class="card card6" role="button" tabindex="0" aria-label="Gioco 6">🎯</div>
+</div>
+
+<div class="buttons-container">
+ <a href="https://scottino2019-glitch.github.io/lingua-cinese/index.html"> <button class="btn-red" aria-label="Pulsante rosso">Home</button></a>
+ <a href="https://scottino2019-glitch.github.io/lingua-cinese/Radicali.html"> <button class="btn-blue" aria-label="Pulsante blu">Radicali</button></a>
+<a href="https://scottino2019-glitch.github.io/lingua-cinese/caratteri.html">  <button class="btn-green" aria-label="Pulsante verde">Caratteri</button></a>
+</div>
+
+</body>
+</html>
