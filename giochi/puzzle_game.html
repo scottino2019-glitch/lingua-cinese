@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puzzle Cinese</title>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #8B0000, #DC143C);
+            color: #FFD700;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid #FFD700;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            color: #FFD700;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #FFD700;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #FFD700;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .puzzle-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 320px;
+            margin: 0 auto 30px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid #FFD700;
+        }
+
+        .puzzle-tile {
+            aspect-ratio: 1;
+            background: linear-gradient(145deg, #FFD700, #FFA500);
+            border: 2px solid #8B0000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #8B0000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            min-height: 80px;
+        }
+
+        .puzzle-tile:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .puzzle-tile.empty {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px dashed #FFD700;
+            cursor: default;
+        }
+
+        .puzzle-tile.empty:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(145deg, #FFD700, #FFA500);
+            color: #8B0000;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #8B0000;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .instructions {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            text-align: center;
+            color: #FFD700;
+        }
+
+        .instructions p {
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        .solution-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .preview-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            max-width: 180px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .preview-tile {
+            aspect-ratio: 1;
+            background: linear-gradient(145deg, #FFD700, #FFA500);
+            border: 1px solid #8B0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #8B0000;
+            min-height: 40px;
+        }
+
+        .preview-tile.empty {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px dashed #FFD700;
+        }
+
+        .meanings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            max-width: 180px;
+            margin: 10px auto 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .meaning-tile {
+            aspect-ratio: 1;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: normal;
+            color: #FFD700;
+            text-align: center;
+            padding: 2px;
+            min-height: 40px;
+        }
+
+        .meaning-tile.empty {
+            background: transparent;
+            border: 1px dashed rgba(255, 215, 0, 0.2);
+        }
+
+        .success-message {
+            text-align: center;
+            background: rgba(0, 100, 0, 0.8);
+            color: #FFD700;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #FFD700;
+            display: none;
+        }
+
+        .leaderboard {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #FFD700;
+            margin-top: auto;
+        }
+
+        .leaderboard h3 {
+            text-align: center;
+            color: #FFD700;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .score-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .loading {
+            text-align: center;
+            color: #FFD700;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .game-title {
+                font-size: 1.8rem;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .puzzle-board {
+                max-width: 280px;
+                gap: 8px;
+                padding: 12px;
+            }
+            
+            .puzzle-tile {
+                font-size: 1.8rem;
+                min-height: 70px;
+            }
+            
+            .controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="game-container">
+   <header class="header">
+    <h1 class="game-title" id="gameTitle">龍 Puzzle Cinese 龍</h1>
+   </header>
+   <div class="stats-bar">
+    <div class="stat-item">
+     <div class="stat-label">
+      Livello
+     </div>
+     <div class="stat-value" id="currentLevel">
+      1
+     </div>
+    </div>
+    <div class="stat-item">
+     <div class="stat-label">
+      Punteggio
+     </div>
+     <div class="stat-value" id="currentScore">
+      0
+     </div>
+    </div>
+    <div class="stat-item">
+     <div class="stat-label">
+      Mosse
+     </div>
+     <div class="stat-value" id="moveCount">
+      0
+     </div>
+    </div>
+   </div>
+   <div class="instructions" id="instructions">
+    <h3>📋 Come Giocare</h3>
+    <p><strong>Tema Livello:</strong> <span id="levelTheme">Numeri Cinesi</span></p>
+    <p><strong>Obiettivo:</strong> Riordina le tessere come mostrato nell'anteprima qui sotto</p>
+    <p><strong>Come muovere:</strong> Clicca su una tessera adiacente allo spazio vuoto per spostarla</p>
+    <div class="solution-preview" id="solutionPreview">
+     <div class="preview-title">
+      🎯 Ordine Corretto:
+     </div>
+     <div class="preview-grid" id="previewGrid"><!-- Preview tiles will be generated by JavaScript -->
+     </div>
+     <div class="meanings-grid" id="meaningsGrid"><!-- Meanings will be generated by JavaScript -->
+     </div>
+    </div>
+   </div>
+   <div class="success-message" id="successMessage">
+    🎉 Livello completato! 恭喜! 🎉
+   </div>
+   <div class="puzzle-board" id="puzzleBoard"><!-- Tiles will be generated by JavaScript -->
+   </div>
+   <div class="controls"><button class="btn" id="shuffleBtn">🔄 Mescola</button> <button class="btn" id="nextLevelBtn" disabled>➡️ Prossimo Livello</button> <button class="btn" id="resetBtn">🔄 Ricomincia</button>
+   </div>
+   <div class="leaderboard">
+    <h3>🏆 Migliori Punteggi 🏆</h3>
+    <div id="leaderboardList" class="loading">
+     Caricamento punteggi...
+    </div>
+   </div>
+  </div>
+  <script>
+        // Configuration
+        const defaultConfig = {
+            game_title: "龍 Puzzle Cinese 龍",
+            success_message: "🎉 Livello completato! 恭喜! 🎉"
+        };
+
+        // Game state
+        let currentLevel = 1;
+        let currentScore = 0;
+        let moveCount = 0;
+        let gameBoard = [];
+        let isLoading = false;
+        let scores = [];
+
+        // Chinese symbols for different levels with meanings
+        const chineseSymbols = [
+            ['一', '二', '三', '四', '五', '六', '七', '八'],
+            ['龍', '鳳', '虎', '龜', '麒', '麟', '鶴', '鹿'],
+            ['春', '夏', '秋', '冬', '東', '西', '南', '北'],
+            ['金', '木', '水', '火', '土', '日', '月', '星'],
+            ['福', '祿', '壽', '喜', '財', '康', '安', '樂']
+        ];
+
+        const symbolMeanings = [
+            ['Uno', 'Due', 'Tre', 'Quattro', 'Cinque', 'Sei', 'Sette', 'Otto'],
+            ['Drago', 'Fenice', 'Tigre', 'Tartaruga', 'Qilin', 'Qilin', 'Gru', 'Cervo'],
+            ['Primavera', 'Estate', 'Autunno', 'Inverno', 'Est', 'Ovest', 'Sud', 'Nord'],
+            ['Oro', 'Legno', 'Acqua', 'Fuoco', 'Terra', 'Sole', 'Luna', 'Stella'],
+            ['Fortuna', 'Prosperità', 'Longevità', 'Gioia', 'Ricchezza', 'Salute', 'Pace', 'Felicità']
+        ];
+
+        const levelThemes = [
+            'Numeri Cinesi',
+            'Animali Mitologici',
+            'Stagioni e Direzioni',
+            'Elementi Naturali',
+            'Benedizioni e Virtù'
+        ];
+
+        // Data SDK handler
+        const dataHandler = {
+            onDataChanged(data) {
+                scores = data.sort((a, b) => b.score - a.score).slice(0, 5);
+                updateLeaderboard();
+            }
+        };
+
+        // Initialize game
+        async function initGame() {
+            // Initialize Data SDK
+            const initResult = await window.dataSdk.init(dataHandler);
+            if (!initResult.isOk) {
+                console.error("Failed to initialize data SDK");
+            }
+
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                await window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange: async (config) => {
+                        document.getElementById('gameTitle').textContent = config.game_title || defaultConfig.game_title;
+                        document.getElementById('successMessage').textContent = config.success_message || defaultConfig.success_message;
+                    },
+                    mapToCapabilities: (config) => ({
+                        recolorables: [
+                            {
+                                get: () => config.background_color || "#8B0000",
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ background_color: value });
+                                    }
+                                }
+                            },
+                            {
+                                get: () => config.accent_color || "#FFD700",
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ accent_color: value });
+                                    }
+                                }
+                            },
+                            {
+                                get: () => config.tile_color || "#FFA500",
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ tile_color: value });
+                                    }
+                                }
+                            }
+                        ],
+                        borderables: [],
+                        fontEditable: {
+                            get: () => config.font_family || "Georgia",
+                            set: (value) => {
+                                if (window.elementSdk) {
+                                    window.elementSdk.setConfig({ font_family: value });
+                                }
+                            }
+                        },
+                        fontSizeable: {
+                            get: () => config.font_size || 16,
+                            set: (value) => {
+                                if (window.elementSdk) {
+                                    window.elementSdk.setConfig({ font_size: value });
+                                }
+                            }
+                        }
+                    }),
+                    mapToEditPanelValues: (config) => new Map([
+                        ["game_title", config.game_title || defaultConfig.game_title],
+                        ["success_message", config.success_message || defaultConfig.success_message]
+                    ])
+                });
+            }
+
+            setupEventListeners();
+            initializeBoard();
+            shuffleBoard();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('shuffleBtn').addEventListener('click', shuffleBoard);
+            document.getElementById('nextLevelBtn').addEventListener('click', nextLevel);
+            document.getElementById('resetBtn').addEventListener('click', resetGame);
+        }
+
+        function initializeBoard() {
+            const symbols = chineseSymbols[(currentLevel - 1) % chineseSymbols.length];
+            gameBoard = [...symbols.slice(0, 8), null]; // 8 symbols + 1 empty space
+            renderBoard();
+            renderSolutionPreview();
+        }
+
+        function renderSolutionPreview() {
+            const levelIndex = (currentLevel - 1) % chineseSymbols.length;
+            const symbols = chineseSymbols[levelIndex];
+            const meanings = symbolMeanings[levelIndex];
+            const correctOrder = [...symbols.slice(0, 8), null];
+            const correctMeanings = [...meanings.slice(0, 8), null];
+            
+            // Update level theme
+            document.getElementById('levelTheme').textContent = levelThemes[levelIndex];
+            
+            // Render symbol preview
+            const previewGrid = document.getElementById('previewGrid');
+            previewGrid.innerHTML = '';
+
+            correctOrder.forEach((symbol) => {
+                const tile = document.createElement('div');
+                tile.className = symbol ? 'preview-tile' : 'preview-tile empty';
+                tile.textContent = symbol || '';
+                previewGrid.appendChild(tile);
+            });
+
+            // Render meanings preview
+            const meaningsGrid = document.getElementById('meaningsGrid');
+            meaningsGrid.innerHTML = '';
+
+            correctMeanings.forEach((meaning) => {
+                const tile = document.createElement('div');
+                tile.className = meaning ? 'meaning-tile' : 'meaning-tile empty';
+                tile.textContent = meaning || '';
+                meaningsGrid.appendChild(tile);
+            });
+        }
+
+        function renderBoard() {
+            const boardElement = document.getElementById('puzzleBoard');
+            boardElement.innerHTML = '';
+
+            gameBoard.forEach((symbol, index) => {
+                const tile = document.createElement('div');
+                tile.className = symbol ? 'puzzle-tile' : 'puzzle-tile empty';
+                tile.textContent = symbol || '';
+                tile.dataset.index = index;
+                
+                if (symbol) {
+                    tile.addEventListener('click', () => moveTile(index));
+                }
+                
+                boardElement.appendChild(tile);
+            });
+        }
+
+        function shuffleBoard() {
+            // Perform random valid moves to ensure solvability
+            for (let i = 0; i < 100; i++) {
+                const emptyIndex = gameBoard.indexOf(null);
+                const validMoves = getValidMoves(emptyIndex);
+                if (validMoves.length > 0) {
+                    const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+                    swapTiles(emptyIndex, randomMove);
+                }
+            }
+            renderBoard();
+            updateStats();
+        }
+
+        function getValidMoves(emptyIndex) {
+            const validMoves = [];
+            const row = Math.floor(emptyIndex / 3);
+            const col = emptyIndex % 3;
+
+            // Check adjacent positions in 3x3 grid
+            if (row > 0) validMoves.push(emptyIndex - 3); // Up
+            if (row < 2) validMoves.push(emptyIndex + 3); // Down
+            if (col > 0) validMoves.push(emptyIndex - 1); // Left
+            if (col < 2) validMoves.push(emptyIndex + 1); // Right
+
+            return validMoves;
+        }
+
+        function moveTile(tileIndex) {
+            const emptyIndex = gameBoard.indexOf(null);
+            const validMoves = getValidMoves(emptyIndex);
+
+            if (validMoves.includes(tileIndex)) {
+                swapTiles(emptyIndex, tileIndex);
+                moveCount++;
+                renderBoard();
+                updateStats();
+
+                if (isPuzzleSolved()) {
+                    completeLevelAsync();
+                }
+            }
+        }
+
+        function swapTiles(index1, index2) {
+            [gameBoard[index1], gameBoard[index2]] = [gameBoard[index2], gameBoard[index1]];
+        }
+
+        function isPuzzleSolved() {
+            const symbols = chineseSymbols[(currentLevel - 1) % chineseSymbols.length];
+            const correctOrder = [...symbols.slice(0, 8), null];
+            
+            return gameBoard.every((symbol, index) => symbol === correctOrder[index]);
+        }
+
+        async function completeLevelAsync() {
+            if (isLoading) return;
+            isLoading = true;
+
+            // Calculate score
+            const baseScore = currentLevel * 100;
+            const moveBonus = Math.max(0, 50 - moveCount);
+            const levelScore = baseScore + moveBonus;
+            currentScore += levelScore;
+
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+
+            // Save score to Data SDK
+            try {
+                const result = await window.dataSdk.create({
+                    level: currentLevel,
+                    score: levelScore,
+                    moves: moveCount,
+                    completed_at: new Date().toISOString()
+                });
+
+                if (!result.isOk) {
+                    console.error("Failed to save score");
+                }
+            } catch (error) {
+                console.error("Error saving score:", error);
+            }
+
+            // Enable next level button
+            document.getElementById('nextLevelBtn').disabled = false;
+            isLoading = false;
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            moveCount = 0;
+            document.getElementById('nextLevelBtn').disabled = true;
+            initializeBoard();
+            shuffleBoard();
+        }
+
+        function resetGame() {
+            currentLevel = 1;
+            currentScore = 0;
+            moveCount = 0;
+            document.getElementById('nextLevelBtn').disabled = true;
+            initializeBoard();
+            shuffleBoard();
+        }
+
+        function updateStats() {
+            document.getElementById('currentLevel').textContent = currentLevel;
+            document.getElementById('currentScore').textContent = currentScore;
+            document.getElementById('moveCount').textContent = moveCount;
+        }
+
+        function updateLeaderboard() {
+            const leaderboardList = document.getElementById('leaderboardList');
+            
+            if (scores.length === 0) {
+                leaderboardList.innerHTML = '<div class="loading">Nessun punteggio ancora...</div>';
+                return;
+            }
+
+            leaderboardList.innerHTML = scores.map((score, index) => `
+                <div class="score-entry">
+                    <span>${index + 1}. Livello ${score.level}</span>
+                    <span>${score.score} punti (${score.moves} mosse)</span>
+                </div>
+            `).join('');
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'995979bcb402ed90',t:'MTc2MTY0NDQ2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
