@@ -67,7 +67,9 @@
      </div>
     </div><!-- Categorie -->
     <div class="mb-6">
-     <div class="flex flex-wrap justify-center gap-2 mb-4"><button onclick="filterByCategory('all')" class="category-btn active bg-red-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> Tutti </button> <button onclick="filterByCategory('natura')" class="category-btn bg-green-100 text-green-800 hover:bg-green-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 🌿 Natura </button> <button onclick="filterByCategory('animali')" class="category-btn bg-yellow-100 text-yellow-800 hover:bg-yellow-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 🐅 Animali </button> <button onclick="filterByCategory('corpo')" class="category-btn bg-pink-100 text-pink-800 hover:bg-pink-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 👤 Corpo </button> <button onclick="filterByCategory('casa')" class="category-btn bg-blue-100 text-blue-800 hover:bg-blue-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 🏠 Casa </button> <button onclick="filterByCategory('numeri')" class="category-btn bg-purple-100 text-purple-800 hover:bg-purple-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 🔢 Numeri </button>
+     <div class="flex flex-wrap justify-center gap-2 mb-4"><button onclick="filterByCategory('all')" class="category-btn active bg-red-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> Tutti </button> <button onclick="filterByCategory('natura')" class="category-btn bg-green-100 text-green-800 hover:bg-green-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 🌿 Natura </button> <button onclick="filterByCategory('animali')" class="category-btn bg-yellow-100 text-yellow-800 hover:bg-yellow-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 🐅 Animali </button> <button onclick="filterByCategory('corpo')" class="category-btn bg-pink-100 text-pink-800 hover:bg-pink-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 👤 Corpo </button> <button onclick="filterByCategory('casa')" class="category-btn bg-blue-100 text-blue-800 hover:bg-blue-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 🏠 Casa </button> <button onclick="filterByCategory('oggetti')" class="category-btn bg-blue-100 text-blue-800 hover:bg-blue-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200">📒 Oggetti</button>
+<button onclick="filterByCategory('cibo')" class="category-btn bg-blue-100 text-blue-800 hover:bg-blue-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200">🥡Cibo</button>
+<button onclick="filterByCategory('numeri')" class="category-btn bg-purple-100 text-purple-800 hover:bg-purple-200 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"> 🔢 Numeri </button>
      </div>
     </div><!-- Griglia degli ideogrammi -->
     <div id="ideograms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Gli ideogrammi verranno inseriti qui -->
@@ -367,7 +369,225 @@
                 history: 'Rappresenta i cinque elementi della filosofia cinese: legno, fuoco, terra, metallo, acqua.',
                 evolution: 'La forma simboleggia l\'equilibrio e l\'armonia dei cinque elementi.',
                 curiosity: 'Numero molto importante: cinque elementi, cinque direzioni (incluso il centro), cinque sapori.'
-            }
+            },
+{
+    character: '田',
+                pinyin: 'tián',
+                meaning: 'campo',
+               category: 'natura',
+                history: 'Rappresenta la disposizione di un campo agricolo diviso in quattro parti. Era una vista dall’alto dei campi coltivati.',
+
+evolution: 'Il carattere è rimasto sorprendentemente stabile nel tempo, con minime variazioni grafiche.',
+curiosity: 'È un pittogramma chiaro e concreto. Appare in parole legate all’agricoltura come 农田 (campo coltivato).'
+},
+{
+    character: '口',
+                pinyin: 'kǒu',
+                meaning: 'bocca/apertura',
+               category: 'corpo',
+                history: 'Originariamente rappresentava una bocca vista di fronte, simbolo di parola e nutrimento.',
+
+evolution: 'La forma da ovale è diventata quadrata per semplicità grafica.',
+
+curiosity: 'È usato come classificatore per persone e in parole come 吃 (mangiare), 说 (parlare).'
+},
+{
+    character: '石',
+                pinyin: 'shí',
+                meaning: 'pietra/roccia',
+               category: 'natura',
+                history: 'Originariamente mostrava una pietra pesante o una roccia ai piedi di una montagna.',
+
+evolution: 'La forma si è standardizzata mantenendo la componente di montagna nella parte superiore.',
+
+curiosity: 'Simbolo di forza e stabilità. Appare in nomi propri e parole come 石头 (pietra).'
+},
+{
+    character: '风',
+                pinyin: 'fēng',
+                meaning: 'vento',
+               category: 'natura',
+                history: 'Rappresentava un insetto dentro una sacca d’aria, simbolo del movimento invisibile del vento.',
+
+evolution: 'La forma moderna è una versione semplificata di 風, ma mantiene l’essenza del significato.',
+
+curiosity: 'Il vento simboleggia mutamento. Appare in parole come 台风 (tifone) e 风景 (paesaggio).'
+},
+{
+    character: '云',
+                 pinyin: 'yún',
+                 meaning: 'nuvola',
+                category: 'natura',
+                 history: 'Originariamente raffigurava vapore o nebbia che si alzava verso il cielo.',
+
+evolution: 'La forma si è semplificata da 雲, pur conservando l’idea di massa fluttuante.',
+
+curiosity: 'Nella poesia cinese, le nuvole spesso rappresentano sogni o separazione.'
+},
+{
+    character: '雨',
+                pinyin: 'yǔ',
+                meaning: 'pioggia',
+               category: 'natura',
+                history: 'Mostra gocce che cadono dal cielo all’interno di un contenitore, simbolo diretto della pioggia.',
+
+evolution: 'Ha mantenuto la struttura a più “gocce” che cadono dall’alto.',
+
+curiosity: 'Richiamo di fertilità e vita. Compare in parole come 下雨 (piovere) e 雨天 (giorno di pioggia).'
+},
+{
+    character: '花',
+                 pinyin: 'huā',
+                 meaning: 'fiore',
+                category: 'natura',
+                 history: 'Combina “erba” (艹) sopra e il suono di “trasformazione” (化) sotto, rappresentando la fioritura.',
+
+evolution: 'Ha conservato la parte erbacea in alto per identificare piante e fiori.',
+
+curiosity: 'Simbolo di bellezza e rinascita. Appare in parole come 花园 (giardino).'
+},
+{
+    character: '鸟',
+                  pinyin: 'niǎo',
+                 meaning: 'uccello',
+                category: 'animali',
+                 history: 'Mostrava originariamente un uccello intero, con becco e coda.',
+    
+evolution: 'La forma semplificata ha ridotto le zampe e dettagli, mantenendo la silhouette.',
+    
+curiosity: 'Nella mitologia cinese, gli uccelli rappresentano libertà e messaggeri celesti.'
+},
+{
+    character: '车',
+                pinyin: 'chē',
+                meaning: 'veicolo/carro',
+                category: 'oggetti',
+                 history: 'Rappresentava un carro con le ruote ai lati. Era una vista dall’alto dei veicoli primitivi.',
+    
+evolution: 'La forma moderna è semplificata da 車, mantenendo il concetto delle ruote e dell’asse.',
+    
+curiosity: 'Fondamentale nella cultura cinese antica per i trasporti e le guerre. Appare in 汽车 (automobile).'
+},
+{
+    character: '书',
+                 pinyin: 'shū',
+                 meaning: 'libro/scrittura',
+                category: 'oggetti',
+                 history: 'Originariamente rappresentava scrivere con il pennello. La forma tradizionale 書 mostra la mano e il testo.',
+    
+evolution: 'Semplificata nel carattere moderno, ma conserva l’idea di scrittura e testo.',
+    
+curiosity: 'Elemento essenziale nella cultura letteraria cinese. Appare in 书法 (calligrafia).'
+},
+{
+    character: '饭',
+                pinyin: 'fàn',
+    meaning: 'riso cotto， pasto',
+               category: 'cibo',
+                history: 'Originariamente rappresentava il riso cotto, alimento base della dieta cinese.',
+    
+evolution: 'Ha mantenuto una forma semplice, con il radicale di cereale a sinistra.',
+    
+curiosity: 'Il carattere è usato anche in espressioni per pasti, come 吃饭 (mangiare).'
+},
+{
+    character: '茶',
+                pinyin: 'chá',
+                meaning: 'tè',
+                category: 'cibo',
+                history: 'Rappresenta la pianta del tè e la bevanda che se ne ricava, molto tradizionale in Cina.',
+   
+evolution: 'La forma si è stabilizzata nel tempo, mantenendo elementi legati alla pianta.',
+    
+curiosity: 'Il tè è centrale nella cultura cinese. La parola appare in molte espressioni sociali e cerimonie.'
+},
+{
+    character: '肉',
+                 pinyin: 'ròu',
+                 meaning: 'carne',
+                category: 'cibo',
+                history: 'Rappresenta un pezzo di carne, mostrando muscoli e tessuti.',
+   
+ evolution: 'La forma tradizionale è stata semplificata ma ancora riconoscibile.',
+    
+curiosity: 'Carne è considerata una fonte importante di nutrimento e appare in molte ricette.'
+},
+{
+    character: '鱼',
+                 pinyin: 'yú',
+                 meaning: 'pesce',
+                category: 'cibo',
+                history: 'Rappresenta il pesce, un alimento fondamentale nelle cucine cinesi.',
+    
+evolution: 'Ha mantenuto la forma base del pesce semplificando i dettagli.',
+    
+curiosity: 'Il pesce è simbolo di abbondanza e prosperità, particolarmente presente a Capodanno.'
+},
+{
+    character: '果',
+                  pinyin: 'guǒ',
+                 meaning: 'frutta',
+                category: 'cibo',
+                 history: 'Indica il frutto maturo di una pianta, simbolo di raccolto e dolcezza.',
+    
+evolution: 'La forma si è semplificata mantenendo il nucleo del significato.',
+    
+curiosity: 'Spesso usato in combinazione con nomi di frutti come 苹果 (mela).'
+},
+{
+    character: '盐',
+                 pinyin: 'yán',
+                meaning: 'sale',
+               category: 'cibo',
+                history: 'Rappresenta il sale, essenziale nella cucina e conservazione del cibo.',
+    
+evolution: 'Il carattere ha mantenuto una forma stabile con il radicale del sale.',
+    
+curiosity: 'Il sale aveva valore prezioso nella storia cinese, anche come mezzo di scambio.'
+},
+{
+    character: '米',
+                pinyin: 'mǐ',
+                meaning: 'riso non cotto, granello',
+               category: 'cibo',
+               history: 'Indica il riso grezzo, uno dei cereali più coltivati in Cina.',
+    evolution: 'La forma è rimasta semplice e riconoscibile come grano.',
+
+curiosity: 'Elemento fondamentale nella dieta e nelle festività cinesi.'
+},
+{
+    character: '油',
+                pinyin: 'yóu',
+                meaning: 'olio',
+               category: 'cibo',
+               history: 'Rappresenta l’olio, un grasso usato per cucinare e condire.',
+
+evolution: 'Mantenuto il radicale dell’olio con una forma semplificata.',
+
+curiosity: 'Usato tradizionalmente come base per molti piatti cinesi.'
+},
+{
+    character: '酒',
+                 pinyin: 'jiǔ',
+                meaning: 'vino, bevanda alcolica',
+               category: 'cibo',
+                history: 'Indica bevande fermentate, dal vino al liquore.',
+    
+evolution: 'La forma tradizionale è complessa ma riconosciuta.',
+    
+curiosity: 'Le bevande alcoliche hanno un ruolo importante nelle cerimonie.'
+},
+{
+    character: '面',
+                pinyin: 'miàn',
+               meaning: 'farina, noodle',
+               category: 'cibo',
+               history: 'Rappresenta sia la farina che i noodles, prodotti comuni nella cucina cinese.',
+    
+evolution: 'La forma si è semplificata da antichi simboli di cereali.',
+    
+curiosity: 'Elemento centrale nei pasti, soprattutto nel nord della Cina.'
+}
         ];
 
         let filteredIdeograms = [...ideograms];
@@ -491,6 +711,8 @@
                     animali: 'bg-yellow-100 text-yellow-800',
                     corpo: 'bg-pink-100 text-pink-800',
                     casa: 'bg-blue-100 text-blue-800',
+                    oggetti: 'bg-red-100 text-red-800',
+                    cibo: 'bg-yellow-100 text-yellow-800',
                     numeri: 'bg-purple-100 text-purple-800'
                 };
 
@@ -515,6 +737,8 @@
                 animali: '🐅',
                 corpo: '👤',
                 casa: '🏠',
+                oggetti: '📒',
+                cibo: '🥡',
                 numeri: '🔢'
             };
             return emojis[category] || '📝';
@@ -526,6 +750,8 @@
                 animali: 'Animali',
                 corpo: 'Corpo',
                 casa: 'Casa',
+                oggetti: 'Oggetti',
+                cibo: 'Cibo',
                 numeri: 'Numeri'
             };
             return names[category] || 'Altro';
