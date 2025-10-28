@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ricostruttore di Ideogrammi</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
+            color: #333;
+        }
+
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .instruction {
+            font-size: 1.1rem;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f7fafc;
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .level {
+            background: #4299e1;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .lives {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .heart {
+            font-size: 1.5rem;
+            color: #e53e3e;
+        }
+
+        .heart.lost {
+            opacity: 0.3;
+        }
+
+        .challenge-area {
+            background: #e6fffa;
+            border: 2px solid #38b2ac;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .pinyin-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .meaning-display {
+            font-size: 1.5rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .audio-button {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .audio-button:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .hint-button {
+            background: #ed8936;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hint-button:hover {
+            background: #dd6b20;
+        }
+
+        .hint-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .construction-area {
+            background: #f8f9fa;
+            border: 3px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            min-height: 120px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .constructed-character {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .construction-placeholder {
+            color: #a0aec0;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .progress-indicator {
+            margin-top: 20px;
+        }
+
+        .selected-radicals {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .selected-radical {
+            background: #e6fffa;
+            border: 2px solid #38b2ac;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .progress-text {
+            font-size: 1rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .radicals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .radical-card {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            position: relative;
+        }
+
+        .radical-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .radical-char {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .radical-card.selected {
+            border-color: #48bb78;
+            background: #f0fff4;
+            transform: translateY(-3px);
+        }
+
+        .radical-card.correct {
+            border-color: #48bb78;
+            background: #c6f6d5;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .radical-card.wrong {
+            border-color: #e53e3e;
+            background: #fed7d7;
+            animation: wrongShake 0.6s ease;
+        }
+
+        .radical-card.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .feedback.show {
+            opacity: 1;
+        }
+
+        .feedback.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 2px solid #48bb78;
+        }
+
+        .feedback.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 2px solid #e53e3e;
+        }
+
+        .next-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .next-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .next-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .hint-display {
+            background: #fff5b4;
+            border: 2px solid #d69e2e;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 1rem;
+            color: #744210;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .hint-display.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .radicals-grid {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+                gap: 10px;
+            }
+            
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .pinyin-display {
+                font-size: 2.5rem;
+            }
+            
+            .constructed-character {
+                font-size: 3rem;
+            }
+            
+            .radical-char {
+                font-size: 2rem;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="game-container">
+   <header class="header">
+    <h1 class="game-title" id="gameTitle">Ricostruttore di Ideogrammi</h1>
+    <p class="instruction" id="instructionText">Ascolta il Pinyin e ricostruisci l'ideogramma selezionando solo i radicali corretti!</p>
+   </header>
+   <div class="score-board">
+    <div class="score">
+     Punteggio: <span id="score">0</span>
+    </div>
+    <div class="level">
+     Livello <span id="level">1</span>
+    </div>
+    <div class="lives" id="lives"><span class="heart">❤️</span> <span class="heart">❤️</span> <span class="heart">❤️</span>
+    </div>
+   </div>
+   <div class="challenge-area">
+    <div class="pinyin-display" id="pinyinDisplay">
+     xiū
+    </div>
+    <div class="meaning-display" id="meaningDisplay">
+     Riposare
+    </div><button class="audio-button" onclick="playPinyin()">🔊 Ascolta Pinyin</button> <button class="hint-button" id="hintButton" onclick="showHint()">💡 <span id="hintText">Suggerimento</span></button>
+    <div class="hint-display" id="hintDisplay"></div>
+   </div>
+   <div class="construction-area" id="constructionArea">
+    <div class="constructed-character" id="constructedChar" style="display: none;"></div>
+    <div class="construction-placeholder" id="placeholder">
+     Seleziona i radicali per ricostruire l'ideogramma
+    </div>
+    <div class="progress-indicator" id="progressIndicator" style="display: none;">
+     <div class="selected-radicals" id="selectedRadicals"></div>
+     <div class="progress-text" id="progressText">
+      Radicali selezionati: 0
+     </div>
+    </div>
+   </div>
+   <div class="radicals-grid" id="radicalsGrid"><!-- I radicali verranno generati dinamicamente -->
+   </div>
+   <div class="feedback" id="feedback">
+    <div id="feedbackText"></div><button class="next-button" id="nextButton" onclick="nextLevel()" disabled>Prossimo Livello</button>
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            game_title: "Ricostruttore di Ideogrammi",
+            instruction_text: "Ascolta il Pinyin e ricostruisci l'ideogramma selezionando solo i radicali corretti!",
+            success_message: "Eccellente!",
+            hint_text: "Suggerimento",
+            primary_color: "#667eea",
+            secondary_color: "#764ba2",
+            accent_color: "#48bb78",
+            background_color: "#f8f9fa",
+            text_color: "#2d3748"
+        };
+
+        let currentLevel = 1;
+        let score = 0;
+        let lives = 3;
+        let currentWord = {};
+        let selectedRadicals = [];
+        let hintsUsed = 0;
+        let gameCompleted = false;
+
+        const words = [
+            // Livelli 1-8: Caratteri base
+            { char: "休", meaning: "Riposare", pinyin: "xiū", correctRadicals: ["人", "木"], hint: "Una persona che si appoggia a un albero per riposare" },
+            { char: "明", meaning: "Luminoso", pinyin: "míng", correctRadicals: ["日", "月"], hint: "Il sole e la luna insieme creano la luce" },
+            { char: "森", meaning: "Foresta", pinyin: "sēn", correctRadicals: ["木", "木", "木"], hint: "Tre alberi insieme formano una foresta densa" },
+            { char: "好", meaning: "Buono/Bene", pinyin: "hǎo", correctRadicals: ["女", "子"], hint: "Una donna con un bambino rappresenta qualcosa di buono" },
+            { char: "炎", meaning: "Fiamma", pinyin: "yán", correctRadicals: ["火", "火"], hint: "Due fuochi sovrapposti creano una grande fiamma" },
+            { char: "林", meaning: "Bosco", pinyin: "lín", correctRadicals: ["木", "木"], hint: "Due alberi affiancati formano un piccolo bosco" },
+            { char: "从", meaning: "Seguire", pinyin: "cóng", correctRadicals: ["人", "人"], hint: "Una persona che segue un'altra persona" },
+            { char: "众", meaning: "Folla", pinyin: "zhòng", correctRadicals: ["人", "人", "人"], hint: "Tre persone insieme rappresentano una folla" },
+            
+            // Livelli 9-16: Pronomi e azioni base
+            { char: "你", meaning: "Tu", pinyin: "nǐ", correctRadicals: ["人", "尔"], hint: "Una persona con il radicale 'er' per indicare 'tu'" },
+            { char: "他", meaning: "Lui", pinyin: "tā", correctRadicals: ["人", "也"], hint: "Una persona più il carattere 'anche' per indicare un'altra persona" },
+            { char: "她", meaning: "Lei", pinyin: "tā", correctRadicals: ["女", "也"], hint: "Il radicale donna più 'anche' per indicare lei" },
+            { char: "吃", meaning: "Mangiare", pinyin: "chī", correctRadicals: ["口", "乞"], hint: "La bocca che chiede cibo - mangiare" },
+            { char: "喝", meaning: "Bere", pinyin: "hē", correctRadicals: ["口", "曷"], hint: "La bocca con il suono 'he' per bere" },
+            { char: "看", meaning: "Guardare", pinyin: "kàn", correctRadicals: ["手", "目"], hint: "La mano sopra l'occhio per guardare meglio" },
+            { char: "听", meaning: "Ascoltare", pinyin: "tīng", correctRadicals: ["口", "斤"], hint: "La bocca che ascolta attentamente" },
+            { char: "来", meaning: "Venire", pinyin: "lái", correctRadicals: ["木", "人"], hint: "Una persona che viene verso un albero" },
+            
+            // Livelli 17-24: Verbi comuni
+            { char: "说", meaning: "Dire/Parlare", pinyin: "shuō", correctRadicals: ["言", "兑"], hint: "Le parole che escono per dire qualcosa" },
+            { char: "读", meaning: "Leggere", pinyin: "dú", correctRadicals: ["言", "卖"], hint: "Le parole che si vendono - leggere libri" },
+            { char: "写", meaning: "Scrivere", pinyin: "xiě", correctRadicals: ["冖", "与"], hint: "Coprire con segni per scrivere" },
+            { char: "学", meaning: "Studiare", pinyin: "xué", correctRadicals: ["子", "冖"], hint: "Un bambino sotto un tetto che studia" },
+            { char: "工", meaning: "Lavoro", pinyin: "gōng", correctRadicals: ["工"], hint: "Il carattere base per il lavoro e l'industria" },
+            { char: "作", meaning: "Fare/Lavorare", pinyin: "zuò", correctRadicals: ["人", "乍"], hint: "Una persona che fa qualcosa rapidamente" },
+            { char: "去", meaning: "Andare", pinyin: "qù", correctRadicals: ["土", "厶"], hint: "Lasciare la terra per andare via" },
+            { char: "回", meaning: "Tornare", pinyin: "huí", correctRadicals: ["囗", "口"], hint: "Una bocca dentro un recinto - tornare a casa" },
+            
+            // Livelli 25-32: Tempo e numeri
+            { char: "今", meaning: "Oggi", pinyin: "jīn", correctRadicals: ["人", "一"], hint: "Una persona nel momento presente - oggi" },
+            { char: "天", meaning: "Cielo/Giorno", pinyin: "tiān", correctRadicals: ["一", "大"], hint: "Uno grande sopra tutto - il cielo" },
+            { char: "年", meaning: "Anno", pinyin: "nián", correctRadicals: ["禾", "人"], hint: "Il grano raccolto da una persona ogni anno" },
+            { char: "月", meaning: "Luna/Mese", pinyin: "yuè", correctRadicals: ["月"], hint: "La forma della luna crescente" },
+            { char: "日", meaning: "Sole/Giorno", pinyin: "rì", correctRadicals: ["日"], hint: "Il sole rotondo nel cielo" },
+            { char: "时", meaning: "Tempo/Ora", pinyin: "shí", correctRadicals: ["日", "寺"], hint: "Il sole al tempio segna il tempo" },
+            { char: "分", meaning: "Minuto/Dividere", pinyin: "fēn", correctRadicals: ["八", "刀"], hint: "Otto parti divise dal coltello" },
+            { char: "点", meaning: "Punto/Ora", pinyin: "diǎn", correctRadicals: ["占", "灬"], hint: "Predire con punti di fuoco" },
+            
+            // Livelli 33-40: Famiglia e luoghi
+            { char: "家", meaning: "Casa/Famiglia", pinyin: "jiā", correctRadicals: ["宀", "豕"], hint: "Un maiale sotto il tetto - la casa tradizionale" },
+            { char: "爸", meaning: "Papà", pinyin: "bà", correctRadicals: ["父", "巴"], hint: "Il padre con il suono 'ba'" },
+            { char: "妈", meaning: "Mamma", pinyin: "mā", correctRadicals: ["女", "马"], hint: "La donna con il suono del cavallo 'ma'" },
+            { char: "校", meaning: "Scuola", pinyin: "xiào", correctRadicals: ["木", "交"], hint: "Alberi dove le persone si incontrano per studiare" },
+            { char: "店", meaning: "Negozio", pinyin: "diàn", correctRadicals: ["广", "占"], hint: "Un edificio dove si occupa spazio per vendere" },
+            { char: "医", meaning: "Medico", pinyin: "yī", correctRadicals: ["匚", "矢"], hint: "Una scatola con frecce - gli strumenti del medico" },
+            { char: "院", meaning: "Ospedale/Cortile", pinyin: "yuàn", correctRadicals: ["阝", "完"], hint: "Un luogo completo accanto alla collina" },
+            { char: "车", meaning: "Auto/Veicolo", pinyin: "chē", correctRadicals: ["车"], hint: "La forma semplificata di un carro antico" }
+        ];
+
+        // Pool di radicali distrattori
+        const distractorRadicals = [
+            "口", "心", "手", "目", "耳", "土", "金", "马", "鱼", "鸟", "虫", "草", "竹", 
+            "尔", "也", "乞", "曷", "斤", "言", "兑", "卖", "冖", "与", "乍", "厶", "囗", 
+            "禾", "寺", "八", "刀", "占", "灬", "宀", "豕", "父", "巴", "交", "广", 
+            "匚", "矢", "阝", "完", "水", "石", "田", "山", "门", "力", "刂", "又"
+        ];
+
+        function initGame() {
+            loadLevel();
+        }
+
+        function loadLevel() {
+            if (currentLevel > words.length) {
+                showGameComplete();
+                return;
+            }
+
+            currentWord = words[currentLevel - 1];
+            
+            document.getElementById('pinyinDisplay').textContent = currentWord.pinyin;
+            document.getElementById('meaningDisplay').textContent = currentWord.meaning;
+            document.getElementById('level').textContent = currentLevel;
+            
+            generateRadicals();
+            resetConstruction();
+            hideFeedback();
+            hideHint();
+            document.getElementById('hintButton').disabled = false;
+        }
+
+        function generateRadicals() {
+            const grid = document.getElementById('radicalsGrid');
+            grid.innerHTML = '';
+            
+            // Crea array con radicali corretti
+            const allRadicals = [...currentWord.correctRadicals];
+            
+            // Aggiungi radicali distrattori casuali
+            const shuffledDistractors = [...distractorRadicals].sort(() => Math.random() - 0.5);
+            const numDistractors = Math.min(8 - allRadicals.length, shuffledDistractors.length);
+            
+            for (let i = 0; i < numDistractors; i++) {
+                if (!allRadicals.includes(shuffledDistractors[i])) {
+                    allRadicals.push(shuffledDistractors[i]);
+                }
+            }
+            
+            // Mescola tutti i radicali
+            allRadicals.sort(() => Math.random() - 0.5);
+            
+            // Crea le carte dei radicali
+            allRadicals.forEach((radical, index) => {
+                const card = document.createElement('div');
+                card.className = 'radical-card';
+                card.dataset.radical = radical;
+                card.dataset.index = index;
+                
+                const charDiv = document.createElement('div');
+                charDiv.className = 'radical-char';
+                charDiv.textContent = radical;
+                
+                card.appendChild(charDiv);
+                
+                card.addEventListener('click', () => selectRadical(card));
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function selectRadical(card) {
+            if (card.classList.contains('disabled') || gameCompleted) return;
+            
+            const radical = card.dataset.radical;
+            const isCorrect = currentWord.correctRadicals.includes(radical);
+            
+            if (isCorrect) {
+                card.classList.add('correct');
+                selectedRadicals.push(radical);
+                
+                // Disabilita questa carta specifica
+                card.classList.add('disabled');
+                
+                // Aggiorna l'indicatore di progresso
+                updateProgressIndicator();
+                
+                setTimeout(() => {
+                    checkCompletion();
+                }, 800);
+                
+            } else {
+                card.classList.add('wrong');
+                lives--;
+                updateLives();
+                
+                setTimeout(() => {
+                    card.classList.remove('wrong');
+                }, 600);
+                
+                if (lives <= 0) {
+                    offerHelp();
+                }
+            }
+        }
+
+        function checkCompletion() {
+            // Conta quante volte ogni radicale è stato selezionato
+            const selectedCount = {};
+            selectedRadicals.forEach(radical => {
+                selectedCount[radical] = (selectedCount[radical] || 0) + 1;
+            });
+            
+            // Conta quante volte ogni radicale è richiesto
+            const requiredCount = {};
+            currentWord.correctRadicals.forEach(radical => {
+                requiredCount[radical] = (requiredCount[radical] || 0) + 1;
+            });
+            
+            // Verifica se tutti i radicali richiesti sono stati selezionati il numero corretto di volte
+            const allCorrectSelected = Object.keys(requiredCount).every(radical => 
+                selectedCount[radical] >= requiredCount[radical]
+            );
+            
+            if (allCorrectSelected) {
+                // Mostra il carattere completo
+                document.getElementById('constructedChar').textContent = currentWord.char;
+                document.getElementById('constructedChar').style.display = 'block';
+                document.getElementById('placeholder').style.display = 'none';
+                
+                // Disabilita tutte le carte rimanenti
+                document.querySelectorAll('.radical-card').forEach(c => {
+                    c.classList.add('disabled');
+                });
+                
+                // Calcola punteggio bonus
+                let levelScore = 100 * currentLevel;
+                if (hintsUsed === 0) levelScore *= 1.5; // Bonus senza suggerimenti
+                
+                score += Math.floor(levelScore);
+                document.getElementById('score').textContent = score;
+                
+                showFeedback(true, defaultConfig.success_message);
+                document.getElementById('nextButton').disabled = false;
+                gameCompleted = true;
+            }
+        }
+
+        function playPinyin() {
+            // Simulazione audio con feedback visivo
+            const pinyinEl = document.getElementById('pinyinDisplay');
+            pinyinEl.style.transform = 'scale(1.1)';
+            pinyinEl.style.color = '#48bb78';
+            
+            setTimeout(() => {
+                pinyinEl.style.transform = 'scale(1)';
+                pinyinEl.style.color = '#2d3748';
+            }, 300);
+            
+            showToast(`Pronuncia: ${currentWord.pinyin}`);
+        }
+
+        function showHint() {
+            const hintDisplay = document.getElementById('hintDisplay');
+            hintDisplay.textContent = currentWord.hint;
+            hintDisplay.classList.add('show');
+            
+            document.getElementById('hintButton').disabled = true;
+            hintsUsed++;
+        }
+
+        function hideHint() {
+            document.getElementById('hintDisplay').classList.remove('show');
+        }
+
+        function updateLives() {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach((heart, index) => {
+                if (index >= lives) {
+                    heart.classList.add('lost');
+                } else {
+                    heart.classList.remove('lost');
+                }
+            });
+        }
+
+        function offerHelp() {
+            showFeedback(false, "Hai esaurito le vite! Ti mostro i radicali corretti per questo carattere.");
+            
+            // Disabilita tutte le carte
+            document.querySelectorAll('.radical-card').forEach(card => {
+                card.classList.add('disabled');
+            });
+            
+            // Evidenzia i radicali corretti dopo 2 secondi
+            setTimeout(() => {
+                highlightCorrectRadicals();
+            }, 2000);
+            
+            // Passa al livello successivo dopo 5 secondi
+            setTimeout(() => {
+                nextLevel();
+            }, 5000);
+        }
+
+        function highlightCorrectRadicals() {
+            document.querySelectorAll('.radical-card').forEach(card => {
+                const radical = card.dataset.radical;
+                if (currentWord.correctRadicals.includes(radical)) {
+                    card.classList.remove('disabled');
+                    card.classList.add('correct');
+                    card.style.border = '3px solid #48bb78';
+                    card.style.background = '#c6f6d5';
+                    card.style.transform = 'scale(1.1)';
+                }
+            });
+            
+            // Mostra anche il carattere completo
+            document.getElementById('constructedChar').textContent = currentWord.char;
+            document.getElementById('constructedChar').style.display = 'block';
+            document.getElementById('placeholder').style.display = 'none';
+            
+            showToast(`Carattere: ${currentWord.char} (${currentWord.meaning})`);
+        }
+
+        function resetGame() {
+            currentLevel = 1;
+            score = 0;
+            lives = 3;
+            hintsUsed = 0;
+            document.getElementById('score').textContent = score;
+            updateLives();
+            loadLevel();
+        }
+
+        function showGameComplete() {
+            showFeedback(true, `🎉 Complimenti! Hai completato tutti i 40 caratteri HSK 1 con ${score} punti! 🎉`);
+            document.getElementById('nextButton').textContent = "Ricomincia";
+            document.getElementById('nextButton').disabled = false;
+            document.getElementById('nextButton').onclick = resetGame;
+        }
+
+        function updateProgressIndicator() {
+            const progressIndicator = document.getElementById('progressIndicator');
+            const selectedRadicalsDiv = document.getElementById('selectedRadicals');
+            const progressText = document.getElementById('progressText');
+            
+            if (selectedRadicals.length > 0) {
+                progressIndicator.style.display = 'block';
+                document.getElementById('placeholder').style.display = 'none';
+                
+                // Mostra i radicali selezionati
+                selectedRadicalsDiv.innerHTML = '';
+                selectedRadicals.forEach(radical => {
+                    const radicalSpan = document.createElement('span');
+                    radicalSpan.className = 'selected-radical';
+                    radicalSpan.textContent = radical;
+                    selectedRadicalsDiv.appendChild(radicalSpan);
+                });
+                
+                // Aggiorna il testo del progresso
+                const totalNeeded = currentWord.correctRadicals.length;
+                progressText.textContent = `Radicali selezionati: ${selectedRadicals.length}/${totalNeeded}`;
+            } else {
+                progressIndicator.style.display = 'none';
+                document.getElementById('placeholder').style.display = 'block';
+            }
+        }
+
+        function resetConstruction() {
+            selectedRadicals = [];
+            gameCompleted = false;
+            document.getElementById('constructedChar').style.display = 'none';
+            document.getElementById('progressIndicator').style.display = 'none';
+            document.getElementById('placeholder').style.display = 'block';
+        }
+
+        function showFeedback(isSuccess, message) {
+            const feedback = document.getElementById('feedback');
+            const feedbackText = document.getElementById('feedbackText');
+            
+            feedbackText.textContent = message;
+            feedback.className = `feedback show ${isSuccess ? 'success' : 'error'}`;
+        }
+
+        function hideFeedback() {
+            const feedback = document.getElementById('feedback');
+            feedback.classList.remove('show');
+            document.getElementById('nextButton').disabled = true;
+            document.getElementById('nextButton').textContent = "Prossimo Livello";
+            document.getElementById('nextButton').onclick = nextLevel;
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            hintsUsed = 0;
+            lives = 3; // Ripristina le vite per ogni nuovo livello
+            updateLives();
+            loadLevel();
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4299e1;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-weight: bold;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+
+        // Inizializza il gioco
+        initGame();
+
+        // Configurazione SDK
+        async function onConfigChange(config) {
+            document.getElementById('gameTitle').textContent = config.game_title || defaultConfig.game_title;
+            document.getElementById('instructionText').textContent = config.instruction_text || defaultConfig.instruction_text;
+            document.getElementById('hintText').textContent = config.hint_text || defaultConfig.hint_text;
+            
+            // Applica i colori
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            
+            document.body.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+            document.querySelector('.game-title').style.color = textColor;
+            document.querySelector('.construction-area').style.backgroundColor = backgroundColor;
+            
+            const nextButton = document.querySelector('.next-button');
+            nextButton.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+            
+            const audioButton = document.querySelector('.audio-button');
+            audioButton.style.backgroundColor = accentColor;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_color || defaultConfig.secondary_color,
+                        set: (value) => {
+                            config.secondary_color = value;
+                            window.elementSdk.setConfig({ secondary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            config.accent_color = value;
+                            window.elementSdk.setConfig({ accent_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["game_title", config.game_title || defaultConfig.game_title],
+                ["instruction_text", config.instruction_text || defaultConfig.instruction_text],
+                ["success_message", config.success_message || defaultConfig.success_message],
+                ["hint_text", config.hint_text || defaultConfig.hint_text]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9959e369e58eee50',t:'MTc2MTY0ODc5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

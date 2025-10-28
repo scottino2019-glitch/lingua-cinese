@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizi Ideogrammi Cinesi</title>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .character-display {
+            font-family: 'SimSun', 'Microsoft YaHei', serif;
+            font-size: 4rem;
+            line-height: 1.2;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .correct-flash {
+            animation: correctFlash 0.6s ease-in-out;
+        }
+        
+        .incorrect-shake {
+            animation: incorrectShake 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes correctFlash {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: #dcfce7; }
+        }
+        
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="min-h-full bg-gradient-to-br from-red-50 to-orange-50">
+  <main class="container mx-auto px-4 py-8 max-w-4xl"><!-- Header -->
+   <header class="text-center mb-8">
+    <h1 id="app-title" class="text-4xl font-bold text-red-800 mb-4">Esercizi Ideogrammi Cinesi</h1>
+    <p id="welcome-message" class="text-lg text-gray-700">Impara gli ideogrammi cinesi con esercizi interattivi!</p>
+   </header><!-- Stats Dashboard -->
+   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+     <div class="text-3xl font-bold text-green-600" id="correct-count">
+      0
+     </div>
+     <div class="text-sm text-gray-600">
+      Risposte Corrette
+     </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+     <div class="text-3xl font-bold text-red-600" id="total-count">
+      0
+     </div>
+     <div class="text-sm text-gray-600">
+      Totale Esercizi
+     </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+     <div class="text-3xl font-bold text-blue-600" id="accuracy-rate">
+      0%
+     </div>
+     <div class="text-sm text-gray-600">
+      Precisione
+     </div>
+    </div>
+   </div><!-- Exercise Area -->
+   <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
+    <div id="exercise-container" class="text-center">
+     <div id="start-screen">
+      <div class="mb-8">
+       <div class="text-6xl mb-4">
+        🈯
+       </div>
+       <h2 class="text-2xl font-semibold text-gray-800 mb-4">Scegli il tipo di esercizio</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto"><button onclick="startExercise('meaning')" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200">
+        <div class="text-2xl mb-2">
+         📖
+        </div>
+        <div>
+         Significato → Carattere
+        </div>
+        <div class="text-sm opacity-90">
+         Trova il carattere giusto
+        </div></button> <button onclick="startExercise('reading')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200">
+        <div class="text-2xl mb-2">
+         🗣️
+        </div>
+        <div>
+         Carattere → Pronuncia
+        </div>
+        <div class="text-sm opacity-90">
+         Scrivi la pronuncia
+        </div></button>
+      </div>
+     </div>
+     <div id="exercise-screen" class="hidden">
+      <div class="mb-6">
+       <div class="flex justify-between items-center mb-4"><button onclick="goHome()" class="text-gray-600 hover:text-gray-800 font-medium">← Torna al Menu</button>
+        <div class="text-sm text-gray-600">
+         Esercizio <span id="current-exercise">1</span>
+        </div>
+       </div>
+       <div id="question-area" class="mb-8">
+        <div id="character-display" class="character-display text-center mb-4 text-gray-800"></div>
+        <div id="question-text" class="text-xl text-gray-700 mb-6"></div>
+       </div>
+       <div id="answer-area">
+        <div id="multiple-choice" class="hidden grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto"><!-- Multiple choice buttons will be inserted here -->
+        </div>
+        <div id="text-input" class="hidden max-w-md mx-auto"><input type="text" id="answer-input" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-center text-lg focus:border-blue-500 focus:outline-none" placeholder="Scrivi la tua risposta..."> <button onclick="submitAnswer()" id="submit-btn" class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"> Conferma Risposta </button>
+        </div>
+       </div>
+       <div id="feedback" class="hidden mt-6 p-4 rounded-lg">
+        <div id="feedback-text" class="text-lg font-semibold mb-2"></div>
+        <div id="feedback-details" class="text-sm"></div><button onclick="nextExercise()" id="next-btn" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors duration-200"> Prossimo Esercizio </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Recent Results -->
+   <div class="bg-white rounded-xl shadow-lg p-6">
+    <h3 class="text-xl font-semibold text-gray-800 mb-4">Risultati Recenti</h3>
+    <div id="recent-results" class="space-y-2">
+     <div class="text-gray-500 text-center py-4">
+      Nessun esercizio completato ancora
+     </div>
+    </div>
+   </div>
+  </main>
+  <script>
+        // Chinese characters database
+        const charactersDB = [
+            { character: '人', meaning: 'persona', pinyin: 'rén' },
+            { character: '大', meaning: 'grande', pinyin: 'dà' },
+            { character: '小', meaning: 'piccolo', pinyin: 'xiǎo' },
+            { character: '水', meaning: 'acqua', pinyin: 'shuǐ' },
+            { character: '火', meaning: 'fuoco', pinyin: 'huǒ' },
+            { character: '山', meaning: 'montagna', pinyin: 'shān' },
+            { character: '日', meaning: 'sole', pinyin: 'rì' },
+            { character: '月', meaning: 'luna', pinyin: 'yuè' },
+            { character: '木', meaning: 'albero', pinyin: 'mù' },
+            { character: '金', meaning: 'oro/metallo', pinyin: 'jīn' },
+            { character: '土', meaning: 'terra', pinyin: 'tǔ' },
+            { character: '心', meaning: 'cuore', pinyin: 'xīn' },
+            { character: '手', meaning: 'mano', pinyin: 'shǒu' },
+            { character: '口', meaning: 'bocca', pinyin: 'kǒu' },
+            { character: '目', meaning: 'occhio', pinyin: 'mù' },
+            { character: '耳', meaning: 'orecchio', pinyin: 'ěr' },
+            { character: '鼻', meaning: 'naso', pinyin: 'bí' },
+            { character: '头', meaning: 'testa', pinyin: 'tóu' },
+            { character: '身', meaning: 'corpo', pinyin: 'shēn' },
+            { character: '足', meaning: 'piede', pinyin: 'zú' }
+        ];
+
+        // App state
+        let currentExerciseType = '';
+        let currentCharacter = null;
+        let exerciseCount = 0;
+        let allResults = [];
+        let isLoading = false;
+
+        // Default configuration
+        const defaultConfig = {
+            app_title: "Esercizi Ideogrammi Cinesi",
+            welcome_message: "Impara gli ideogrammi cinesi con esercizi interattivi!",
+            button_text: "Inizia Esercizio"
+        };
+
+        // Data SDK handler
+        const dataHandler = {
+            onDataChanged(data) {
+                allResults = data;
+                updateStats();
+                updateRecentResults();
+            }
+        };
+
+        // Element SDK implementation
+        const element = {
+            defaultConfig,
+            onConfigChange: async (config) => {
+                document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+                document.getElementById('welcome-message').textContent = config.welcome_message || defaultConfig.welcome_message;
+            },
+            mapToCapabilities: (config) => ({
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            }),
+            mapToEditPanelValues: (config) => new Map([
+                ["app_title", config.app_title || defaultConfig.app_title],
+                ["welcome_message", config.welcome_message || defaultConfig.welcome_message],
+                ["button_text", config.button_text || defaultConfig.button_text]
+            ])
+        };
+
+        // Initialize SDKs
+        async function initializeApp() {
+            try {
+                if (window.elementSdk) {
+                    await window.elementSdk.init(element);
+                }
+                
+                if (window.dataSdk) {
+                    const result = await window.dataSdk.init(dataHandler);
+                    if (!result.isOk) {
+                        console.error('Failed to initialize data SDK');
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to initialize app:', error);
+            }
+        }
+
+        // Start exercise
+        function startExercise(type) {
+            currentExerciseType = type;
+            exerciseCount++;
+            
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('exercise-screen').classList.remove('hidden');
+            document.getElementById('current-exercise').textContent = exerciseCount;
+            
+            generateExercise();
+        }
+
+        // Generate new exercise
+        function generateExercise() {
+            currentCharacter = charactersDB[Math.floor(Math.random() * charactersDB.length)];
+            
+            const questionArea = document.getElementById('question-area');
+            const characterDisplay = document.getElementById('character-display');
+            const questionText = document.getElementById('question-text');
+            const multipleChoice = document.getElementById('multiple-choice');
+            const textInput = document.getElementById('text-input');
+            const feedback = document.getElementById('feedback');
+            
+            // Reset UI
+            feedback.classList.add('hidden');
+            multipleChoice.classList.add('hidden');
+            textInput.classList.add('hidden');
+            
+            if (currentExerciseType === 'meaning') {
+                // Show meaning, ask for character
+                characterDisplay.textContent = '';
+                questionText.textContent = `Quale carattere significa "${currentCharacter.meaning}"?`;
+                
+                // Generate multiple choice options
+                const options = [currentCharacter];
+                while (options.length < 4) {
+                    const randomChar = charactersDB[Math.floor(Math.random() * charactersDB.length)];
+                    if (!options.find(opt => opt.character === randomChar.character)) {
+                        options.push(randomChar);
+                    }
+                }
+                
+                // Shuffle options
+                options.sort(() => Math.random() - 0.5);
+                
+                multipleChoice.innerHTML = '';
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.className = 'character-display bg-gray-100 hover:bg-gray-200 border-2 border-gray-300 rounded-lg py-4 px-6 transition-colors duration-200';
+                    button.textContent = option.character;
+                    button.onclick = () => selectAnswer(option.character);
+                    multipleChoice.appendChild(button);
+                });
+                
+                multipleChoice.classList.remove('hidden');
+                
+            } else if (currentExerciseType === 'reading') {
+                // Show character, ask for pronunciation
+                characterDisplay.textContent = currentCharacter.character;
+                questionText.textContent = 'Come si pronuncia questo carattere? (scrivi in pinyin)';
+                
+                const answerInput = document.getElementById('answer-input');
+                answerInput.value = '';
+                answerInput.focus();
+                
+                textInput.classList.remove('hidden');
+            }
+            
+            questionArea.classList.add('fade-in');
+        }
+
+        // Select answer (multiple choice)
+        function selectAnswer(answer) {
+            if (isLoading) return;
+            
+            const isCorrect = answer === currentCharacter.character;
+            showFeedback(isCorrect, answer);
+            saveResult(answer, currentCharacter.character, isCorrect);
+        }
+
+        // Submit answer (text input)
+        async function submitAnswer() {
+            if (isLoading) return;
+            
+            const answerInput = document.getElementById('answer-input');
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            const correctAnswer = currentCharacter.pinyin.toLowerCase();
+            
+            if (!userAnswer) {
+                answerInput.classList.add('incorrect-shake');
+                setTimeout(() => answerInput.classList.remove('incorrect-shake'), 500);
+                return;
+            }
+            
+            isLoading = true;
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-btn').textContent = 'Verificando...';
+            
+            // Simple pinyin matching (could be enhanced)
+            const isCorrect = userAnswer === correctAnswer || 
+                             userAnswer.replace(/[0-9]/g, '') === correctAnswer.replace(/[0-9]/g, '');
+            
+            setTimeout(() => {
+                showFeedback(isCorrect, userAnswer);
+                saveResult(userAnswer, correctAnswer, isCorrect);
+                isLoading = false;
+                document.getElementById('submit-btn').disabled = false;
+                document.getElementById('submit-btn').textContent = 'Conferma Risposta';
+            }, 500);
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, userAnswer) {
+            const feedback = document.getElementById('feedback');
+            const feedbackText = document.getElementById('feedback-text');
+            const feedbackDetails = document.getElementById('feedback-details');
+            
+            if (isCorrect) {
+                feedback.className = 'mt-6 p-4 rounded-lg bg-green-100 border border-green-300 correct-flash';
+                feedbackText.textContent = '🎉 Corretto!';
+                feedbackText.className = 'text-lg font-semibold mb-2 text-green-800';
+                
+                if (currentExerciseType === 'meaning') {
+                    feedbackDetails.innerHTML = `<strong>${currentCharacter.character}</strong> significa "${currentCharacter.meaning}" e si pronuncia <strong>${currentCharacter.pinyin}</strong>`;
+                } else {
+                    feedbackDetails.innerHTML = `<strong>${currentCharacter.character}</strong> si pronuncia <strong>${currentCharacter.pinyin}</strong> e significa "${currentCharacter.meaning}"`;
+                }
+                feedbackDetails.className = 'text-sm text-green-700';
+                
+            } else {
+                feedback.className = 'mt-6 p-4 rounded-lg bg-red-100 border border-red-300 incorrect-shake';
+                feedbackText.textContent = '❌ Non corretto';
+                feedbackText.className = 'text-lg font-semibold mb-2 text-red-800';
+                
+                if (currentExerciseType === 'meaning') {
+                    feedbackDetails.innerHTML = `La risposta corretta è <strong>${currentCharacter.character}</strong><br>Significa "${currentCharacter.meaning}" e si pronuncia <strong>${currentCharacter.pinyin}</strong>`;
+                } else {
+                    feedbackDetails.innerHTML = `La pronuncia corretta è <strong>${currentCharacter.pinyin}</strong><br><strong>${currentCharacter.character}</strong> significa "${currentCharacter.meaning}"`;
+                }
+                feedbackDetails.className = 'text-sm text-red-700';
+            }
+            
+            feedback.classList.remove('hidden');
+            feedback.classList.add('slide-up');
+        }
+
+        // Save result to Data SDK
+        async function saveResult(userAnswer, correctAnswer, isCorrect) {
+            if (!window.dataSdk) return;
+            
+            if (allResults.length >= 999) {
+                const feedbackDetails = document.getElementById('feedback-details');
+                feedbackDetails.innerHTML += '<br><br>⚠️ Limite massimo di 999 esercizi raggiunto. I nuovi risultati non verranno salvati.';
+                return;
+            }
+            
+            const result = await window.dataSdk.create({
+                character: currentCharacter.character,
+                user_answer: userAnswer,
+                correct_answer: correctAnswer,
+                is_correct: isCorrect,
+                timestamp: new Date().toISOString(),
+                exercise_type: currentExerciseType
+            });
+            
+            if (!result.isOk) {
+                console.error('Failed to save result');
+            }
+        }
+
+        // Next exercise
+        function nextExercise() {
+            exerciseCount++;
+            document.getElementById('current-exercise').textContent = exerciseCount;
+            generateExercise();
+        }
+
+        // Go back to home
+        function goHome() {
+            document.getElementById('exercise-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+            exerciseCount = 0;
+        }
+
+        // Update statistics
+        function updateStats() {
+            const correctCount = allResults.filter(r => r.is_correct).length;
+            const totalCount = allResults.length;
+            const accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+            
+            document.getElementById('correct-count').textContent = correctCount;
+            document.getElementById('total-count').textContent = totalCount;
+            document.getElementById('accuracy-rate').textContent = accuracy + '%';
+        }
+
+        // Update recent results
+        function updateRecentResults() {
+            const recentResults = document.getElementById('recent-results');
+            
+            if (allResults.length === 0) {
+                recentResults.innerHTML = '<div class="text-gray-500 text-center py-4">Nessun esercizio completato ancora</div>';
+                return;
+            }
+            
+            const recent = allResults.slice(-10).reverse();
+            recentResults.innerHTML = recent.map(result => {
+                const date = new Date(result.timestamp).toLocaleString('it-IT');
+                const icon = result.is_correct ? '✅' : '❌';
+                const typeLabel = result.exercise_type === 'meaning' ? 'Significato' : 'Pronuncia';
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">${icon}</span>
+                            <div>
+                                <div class="font-medium">${result.character} - ${typeLabel}</div>
+                                <div class="text-sm text-gray-600">Risposta: ${result.user_answer}</div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500">${date}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Handle Enter key in input
+        document.addEventListener('DOMContentLoaded', function() {
+            const answerInput = document.getElementById('answer-input');
+            answerInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitAnswer();
+                }
+            });
+            
+            initializeApp();
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99596a39c70aee50',t:'MTc2MTY0MzgzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
