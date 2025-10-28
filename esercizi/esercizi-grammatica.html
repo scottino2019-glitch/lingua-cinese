@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizi di Grammatica Cinese</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100%;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-title {
+            font-size: 42px;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin: 0;
+        }
+
+        .exercise-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .exercise-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .exercise-card.active {
+            border-color: #764ba2;
+            background: linear-gradient(135deg, #fff5f5, #f8f9fa);
+        }
+
+        .exercise-title {
+            font-size: 20px;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+
+        .exercise-description {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .start-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+
+        .exercise-area {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .exercise-area.active {
+            display: block;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .question-text {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .chinese-text {
+            font-size: 24px;
+            color: #e74c3c;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #fff5f5;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #dee2e6;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .option-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #5a6fd8;
+        }
+
+        .option-btn.correct {
+            background: #28a745;
+            color: white;
+            border-color: #1e7e34;
+        }
+
+        .option-btn.wrong {
+            background: #dc3545;
+            color: white;
+            border-color: #bd2130;
+        }
+
+        .drag-area {
+            min-height: 80px;
+            background: white;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .drag-area.drag-over {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .word-chip {
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            cursor: move;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .word-chip:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 10px;
+        }
+
+        .word-bank .word-chip {
+            background: #6c757d;
+        }
+
+        .word-bank .word-chip:hover {
+            background: #5a6268;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 10px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .feedback {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .explanation {
+            background: #e7f3ff;
+            border: 1px solid #b8daff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .nav-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #5a6268;
+        }
+
+        .nav-btn.primary {
+            background: #667eea;
+        }
+
+        .nav-btn.primary:hover {
+            background: #5a6fd8;
+        }
+
+        .nav-btn:disabled {
+            background: #dee2e6;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .final-score {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .final-score h2 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .final-score p {
+            font-size: 18px;
+            color: #6c757d;
+            margin-bottom: 25px;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <header class="header">
+    <h1 class="main-title" id="mainTitle">Esercizi di Grammatica Cinese</h1>
+    <p class="subtitle" id="subtitle">Impara la grammatica con esercizi interattivi e correzione automatica 📚</p>
+   </header>
+   <main id="exerciseSelector" class="exercise-selector">
+    <div class="exercise-card" onclick="startExercise('word-order')">
+     <h3 class="exercise-title" id="exercise1Title">📝 Ordine delle Parole</h3>
+     <p class="exercise-description">Riordina le parole per formare frasi grammaticalmente corrette</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('particles')">
+     <h3 class="exercise-title" id="exercise2Title">🔤 Particelle Grammaticali</h3>
+     <p class="exercise-description">Scegli la particella corretta (的, 了, 吗, 呢, etc.)</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('verb-tenses')">
+     <h3 class="exercise-title" id="exercise3Title">⏰ Tempi Verbali</h3>
+     <p class="exercise-description">Completa le frasi con la forma verbale corretta</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('classifiers')">
+     <h3 class="exercise-title" id="exercise4Title">📏 Classificatori</h3>
+     <p class="exercise-description">Impara a usare i classificatori cinesi (个, 本, 只, 张, 辆)</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('negatives')">
+     <h3 class="exercise-title" id="exercise5Title">❌ Forme Negative</h3>
+     <p class="exercise-description">Padroneggia l'uso di 不 e 没 per le negazioni</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('questions')">
+     <h3 class="exercise-title" id="exercise6Title">❓ Formazione Domande</h3>
+     <p class="exercise-description">Crea domande con 吗, 什么, 谁, 哪里, 几</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('comparatives')">
+     <h3 class="exercise-title" id="exercise7Title">⚖️ Comparativi</h3>
+     <p class="exercise-description">Usa 比 e altre strutture per fare paragoni</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('ba-construction')">
+     <h3 class="exercise-title" id="exercise8Title">🔄 Costruzione 把</h3>
+     <p class="exercise-description">Impara questa importante struttura grammaticale</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('directional')">
+     <h3 class="exercise-title" id="exercise9Title">🧭 Complementi Direzionali</h3>
+     <p class="exercise-description">Usa 到, 从, 在, 向 per indicare movimento e posizione</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+    <div class="exercise-card" onclick="startExercise('adverbs')">
+     <h3 class="exercise-title" id="exercise10Title">⚡ Avverbi</h3>
+     <p class="exercise-description">Impara 很, 太, 非常, 已经, 还, 就, 才, 都</p><button class="start-btn">Inizia Esercizio</button>
+    </div>
+   </main><!-- Area Esercizi -->
+   <div id="exerciseArea" class="exercise-area">
+    <div class="navigation-buttons"><button class="nav-btn" onclick="backToMenu()">← Menu Principale</button>
+     <div class="score-display">
+      Domanda <span id="currentQuestion">1</span> di <span id="totalQuestions">10</span> | Punteggio: <span id="currentScore">0</span>
+     </div><button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()" disabled>Avanti →</button>
+    </div>
+    <div class="progress-bar">
+     <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <div id="questionContainer" class="question-card"><!-- Le domande verranno inserite qui dinamicamente -->
+    </div>
+    <div id="feedbackContainer"></div>
+   </div><!-- Schermata Risultati Finali -->
+   <div id="finalResults" class="exercise-area">
+    <div class="final-score">
+     <h2>🎉 Esercizio Completato!</h2>
+     <p id="finalScoreText">Hai ottenuto 0/10 risposte corrette</p>
+     <div class="navigation-buttons"><button class="nav-btn" onclick="backToMenu()">← Menu Principale</button> <button class="nav-btn primary" onclick="restartExercise()">Ripeti Esercizio</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        // Configurazione predefinita
+        const defaultConfig = {
+            main_title: "Esercizi di Grammatica Cinese",
+            subtitle: "Impara la grammatica con esercizi interattivi e correzione automatica 📚",
+            exercise1_title: "📝 Ordine delle Parole",
+            exercise2_title: "🔤 Particelle Grammaticali",
+            exercise3_title: "⏰ Tempi Verbali",
+            exercise4_title: "📏 Classificatori",
+            exercise5_title: "❌ Forme Negative",
+            exercise6_title: "❓ Formazione Domande",
+            exercise7_title: "⚖️ Comparativi",
+            exercise8_title: "🔄 Costruzione 把",
+            exercise9_title: "🧭 Complementi Direzionali",
+            exercise10_title: "⚡ Avverbi"
+        };
+
+        // Dati degli esercizi
+        const exercises = {
+            'word-order': [
+                {
+                    question: "Riordina le parole per dire 'Io mangio riso':",
+                    words: ['我', '吃', '米饭', '很', '好'],
+                    correct: ['我', '吃', '米饭'],
+                    explanation: "In cinese l'ordine base è Soggetto + Verbo + Oggetto (SVO), come in italiano."
+                },
+                {
+                    question: "Riordina per dire 'Lui studia cinese':",
+                    words: ['他', '学习', '中文', '每天', '很'],
+                    correct: ['他', '学习', '中文'],
+                    explanation: "La struttura SVO è mantenuta: 他 (lui) + 学习 (studiare) + 中文 (cinese)."
+                },
+                {
+                    question: "Riordina per dire 'Noi andiamo a scuola':",
+                    words: ['我们', '去', '学校', '今天', '不'],
+                    correct: ['我们', '去', '学校'],
+                    explanation: "我们 (noi) + 去 (andare) + 学校 (scuola). Il verbo di movimento precede il luogo."
+                },
+                {
+                    question: "Riordina per dire 'Lei beve tè':",
+                    words: ['她', '喝', '茶', '很', '热'],
+                    correct: ['她', '喝', '茶'],
+                    explanation: "Struttura semplice SVO: 她 (lei) + 喝 (bere) + 茶 (tè)."
+                },
+                {
+                    question: "Riordina per dire 'Loro leggono libri':",
+                    words: ['他们', '看', '书', '每天', '三'],
+                    correct: ['他们', '看', '书'],
+                    explanation: "他们 (loro) + 看 (leggere/guardare) + 书 (libro/libri)."
+                }
+            ],
+            'particles': [
+                {
+                    question: "Completa la frase: 这是我___ 书",
+                    options: ['的', '了', '吗', '呢'],
+                    correct: '的',
+                    explanation: "的 è la particella possessiva. 这是我的书 = 'Questo è il mio libro'."
+                },
+                {
+                    question: "Completa la domanda: 你好___?",
+                    options: ['的', '了', '吗', '呢'],
+                    correct: '吗',
+                    explanation: "吗 trasforma una frase in domanda sì/no. 你好吗? = 'Come stai?'"
+                },
+                {
+                    question: "Completa: 我吃___饭",
+                    options: ['的', '了', '吗', '呢'],
+                    correct: '了',
+                    explanation: "了 indica un'azione completata. 我吃了饭 = 'Ho mangiato (il riso)'."
+                },
+                {
+                    question: "Completa: 你___?",
+                    options: ['的', '了', '吗', '呢'],
+                    correct: '呢',
+                    explanation: "呢 si usa per domande informali o per chiedere 'e tu?'. 你呢? = 'E tu?'"
+                },
+                {
+                    question: "Completa: 很好___朋友",
+                    options: ['的', '了', '吗', '呢'],
+                    correct: '的',
+                    explanation: "的 collega aggettivi a sostantivi. 很好的朋友 = 'un buon amico'."
+                }
+            ],
+            'verb-tenses': [
+                {
+                    question: "Scegli la forma corretta per 'Ieri ho mangiato':",
+                    options: ['我吃', '我吃了', '我要吃', '我在吃'],
+                    correct: '我吃了',
+                    explanation: "了 indica un'azione completata nel passato. 我吃了 = 'Ho mangiato'."
+                },
+                {
+                    question: "Scegli per 'Sto mangiando ora':",
+                    options: ['我吃', '我吃了', '我要吃', '我在吃'],
+                    correct: '我在吃',
+                    explanation: "在 + verbo indica un'azione in corso. 我在吃 = 'Sto mangiando'."
+                },
+                {
+                    question: "Scegli per 'Mangerò domani':",
+                    options: ['我吃', '我吃了', '我要吃', '我在吃'],
+                    correct: '我要吃',
+                    explanation: "要 + verbo indica intenzione futura. 我要吃 = 'Mangerò/Voglio mangiare'."
+                },
+                {
+                    question: "Scegli per 'Di solito mangio':",
+                    options: ['我吃', '我吃了', '我要吃', '我在吃'],
+                    correct: '我吃',
+                    explanation: "La forma base del verbo indica azioni abituali. 我吃 = 'Mangio (abitualmente)'."
+                },
+                {
+                    question: "Scegli per 'Ho già studiato':",
+                    options: ['我学习', '我学习了', '我要学习', '我在学习'],
+                    correct: '我学习了',
+                    explanation: "了 indica completamento. 我学习了 = 'Ho studiato/Ho già studiato'."
+                }
+            ],
+            'classifiers': [
+                {
+                    question: "Scegli il classificatore per 'tre libri':",
+                    options: ['三个书', '三本书', '三只书', '三张书'],
+                    correct: '三本书',
+                    explanation: "本 è il classificatore per libri, riviste e oggetti rilegati. 三本书 = 'tre libri'."
+                },
+                {
+                    question: "Scegli il classificatore per 'due persone':",
+                    options: ['两个人', '两本人', '两只人', '两张人'],
+                    correct: '两个人',
+                    explanation: "个 è il classificatore generale per persone e molti oggetti. 两个人 = 'due persone'."
+                },
+                {
+                    question: "Scegli il classificatore per 'un gatto':",
+                    options: ['一个猫', '一本猫', '一只猫', '一张猫'],
+                    correct: '一只猫',
+                    explanation: "只 è il classificatore per animali. 一只猫 = 'un gatto'."
+                },
+                {
+                    question: "Scegli il classificatore per 'cinque fogli di carta':",
+                    options: ['五个纸', '五本纸', '五只纸', '五张纸'],
+                    correct: '五张纸',
+                    explanation: "张 è il classificatore per fogli, tavoli, letti e superfici piatte. 五张纸 = 'cinque fogli di carta'."
+                },
+                {
+                    question: "Scegli il classificatore per 'una macchina':",
+                    options: ['一个车', '一辆车', '一只车', '一张车'],
+                    correct: '一辆车',
+                    explanation: "辆 è il classificatore per veicoli. 一辆车 = 'una macchina/un veicolo'."
+                }
+            ],
+            'negatives': [
+                {
+                    question: "Scegli la negazione corretta per 'Non mangio carne':",
+                    options: ['我不吃肉', '我没吃肉', '我不要吃肉', '我没有吃肉'],
+                    correct: '我不吃肉',
+                    explanation: "不 si usa per negare azioni abituali o stati. 我不吃肉 = 'Non mangio carne (abitualmente)'."
+                },
+                {
+                    question: "Scegli la negazione per 'Non ho mangiato':",
+                    options: ['我不吃了', '我没吃', '我不要吃', '我不吃'],
+                    correct: '我没吃',
+                    explanation: "没 si usa per negare azioni completate. 我没吃 = 'Non ho mangiato'."
+                },
+                {
+                    question: "Scegli la negazione per 'Non sono cinese':",
+                    options: ['我不是中国人', '我没是中国人', '我不要是中国人', '我没有是中国人'],
+                    correct: '我不是中国人',
+                    explanation: "不 si usa con il verbo 是 (essere). 我不是中国人 = 'Non sono cinese'."
+                },
+                {
+                    question: "Scegli la negazione per 'Non ho soldi':",
+                    options: ['我不有钱', '我没有钱', '我不要钱', '我没钱'],
+                    correct: '我没有钱',
+                    explanation: "没有 si usa per indicare mancanza o assenza. 我没有钱 = 'Non ho soldi'."
+                },
+                {
+                    question: "Scegli la negazione per 'Non voglio andare':",
+                    options: ['我不要去', '我没要去', '我不去', '我没去'],
+                    correct: '我不要去',
+                    explanation: "不要 si usa per negare volontà o intenzione. 我不要去 = 'Non voglio andare'."
+                }
+            ],
+            'questions': [
+                {
+                    question: "Trasforma in domanda: 你是学生 (Tu sei studente)",
+                    options: ['你是学生吗？', '你是什么学生？', '你是谁学生？', '你是哪里学生？'],
+                    correct: '你是学生吗？',
+                    explanation: "吗 trasforma una frase affermativa in domanda sì/no. 你是学生吗？ = 'Sei studente?'"
+                },
+                {
+                    question: "Chiedi 'Cosa fai?' usando 什么:",
+                    options: ['你做什么？', '你什么做？', '什么你做？', '做什么你？'],
+                    correct: '你做什么？',
+                    explanation: "什么 significa 'cosa/che cosa'. 你做什么？ = 'Cosa fai?'"
+                },
+                {
+                    question: "Chiedi 'Chi è lui?' usando 谁:",
+                    options: ['他是谁？', '谁他是？', '是谁他？', '他谁是？'],
+                    correct: '他是谁？',
+                    explanation: "谁 significa 'chi'. 他是谁？ = 'Chi è lui?'"
+                },
+                {
+                    question: "Chiedi 'Dove vai?' usando 哪里:",
+                    options: ['你去哪里？', '哪里你去？', '去哪里你？', '你哪里去？'],
+                    correct: '你去哪里？',
+                    explanation: "哪里 significa 'dove'. 你去哪里？ = 'Dove vai?'"
+                },
+                {
+                    question: "Chiedi 'Quanti anni hai?' usando 几:",
+                    options: ['你几岁？', '几你岁？', '岁你几？', '你岁几？'],
+                    correct: '你几岁？',
+                    explanation: "几 si usa per chiedere 'quanti' (numeri piccoli). 你几岁？ = 'Quanti anni hai?'"
+                }
+            ],
+            'comparatives': [
+                {
+                    question: "Traduci 'Lui è più alto di me':",
+                    options: ['他比我高', '他我比高', '比他我高', '我比他高'],
+                    correct: '他比我高',
+                    explanation: "La struttura è A + 比 + B + aggettivo. 他比我高 = 'Lui è più alto di me'."
+                },
+                {
+                    question: "Traduci 'Il cinese è più difficile dell'inglese':",
+                    options: ['中文比英文难', '英文比中文难', '中文英文比难', '比中文英文难'],
+                    correct: '中文比英文难',
+                    explanation: "中文比英文难 = 'Il cinese è più difficile dell'inglese'. A + 比 + B + aggettivo."
+                },
+                {
+                    question: "Traduci 'Oggi fa più caldo di ieri':",
+                    options: ['今天比昨天热', '昨天比今天热', '今天昨天比热', '比今天昨天热'],
+                    correct: '今天比昨天热',
+                    explanation: "今天比昨天热 = 'Oggi fa più caldo di ieri'. Struttura: A + 比 + B + aggettivo."
+                },
+                {
+                    question: "Traduci 'Lei è bella quanto te':",
+                    options: ['她跟你一样漂亮', '她比你漂亮', '你比她漂亮', '她你一样漂亮'],
+                    correct: '她跟你一样漂亮',
+                    explanation: "跟...一样 indica uguaglianza. 她跟你一样漂亮 = 'Lei è bella quanto te'."
+                },
+                {
+                    question: "Traduci 'Questo libro è il più interessante':",
+                    options: ['这本书最有趣', '这本书比有趣', '这本书很有趣', '这本书一样有趣'],
+                    correct: '这本书最有趣',
+                    explanation: "最 indica il superlativo. 这本书最有趣 = 'Questo libro è il più interessante'."
+                }
+            ],
+            'ba-construction': [
+                {
+                    question: "Trasforma usando 把: 我吃了苹果 (Ho mangiato la mela)",
+                    options: ['我把苹果吃了', '我吃把苹果了', '把我苹果吃了', '我苹果把吃了'],
+                    correct: '我把苹果吃了',
+                    explanation: "La costruzione 把 è: Soggetto + 把 + Oggetto + Verbo + Risultato. 我把苹果吃了 = 'Ho mangiato la mela'."
+                },
+                {
+                    question: "Trasforma usando 把: 他关了门 (Ha chiuso la porta)",
+                    options: ['他把门关了', '他关把门了', '把他门关了', '他门把关了'],
+                    correct: '他把门关了',
+                    explanation: "他把门关了 = 'Ha chiuso la porta'. La costruzione 把 enfatizza l'effetto dell'azione sull'oggetto."
+                },
+                {
+                    question: "Trasforma usando 把: 我写完了作业 (Ho finito i compiti)",
+                    options: ['我把作业写完了', '我写把作业完了', '把我作业写完了', '我作业把写完了'],
+                    correct: '我把作业写完了',
+                    explanation: "我把作业写完了 = 'Ho finito i compiti'. 把 + oggetto + verbo + complemento di risultato."
+                },
+                {
+                    question: "Trasforma usando 把: 她打破了杯子 (Ha rotto il bicchiere)",
+                    options: ['她把杯子打破了', '她打把杯子破了', '把她杯子打破了', '她杯子把打破了'],
+                    correct: '她把杯子打破了',
+                    explanation: "她把杯子打破了 = 'Ha rotto il bicchiere'. La costruzione 把 mostra come l'azione cambia l'oggetto."
+                },
+                {
+                    question: "Trasforma usando 把: 老师教会了学生 (Il maestro ha insegnato agli studenti)",
+                    options: ['老师把学生教会了', '老师教把学生会了', '把老师学生教会了', '老师学生把教会了'],
+                    correct: '老师把学生教会了',
+                    explanation: "老师把学生教会了 = 'Il maestro ha insegnato (con successo) agli studenti'. 把 enfatizza il risultato."
+                }
+            ],
+            'directional': [
+                {
+                    question: "Scegli il complemento per 'Vado a casa':",
+                    options: ['我回到家', '我回从家', '我回在家', '我回向家'],
+                    correct: '我回到家',
+                    explanation: "到 indica movimento verso una destinazione. 我回到家 = 'Vado/Torno a casa'."
+                },
+                {
+                    question: "Scegli il complemento per 'Vengo da Pechino':",
+                    options: ['我到北京来', '我从北京来', '我在北京来', '我向北京来'],
+                    correct: '我从北京来',
+                    explanation: "从 indica provenienza, origine. 我从北京来 = 'Vengo da Pechino'."
+                },
+                {
+                    question: "Scegli il complemento per 'Sono a scuola':",
+                    options: ['我到学校', '我从学校', '我在学校', '我向学校'],
+                    correct: '我在学校',
+                    explanation: "在 indica posizione, ubicazione. 我在学校 = 'Sono a scuola'."
+                },
+                {
+                    question: "Scegli il complemento per 'Cammino verso il parco':",
+                    options: ['我到公园走', '我从公园走', '我在公园走', '我向公园走'],
+                    correct: '我向公园走',
+                    explanation: "向 indica direzione verso qualcosa. 我向公园走 = 'Cammino verso il parco'."
+                },
+                {
+                    question: "Scegli il complemento per 'Arrivo alla stazione':",
+                    options: ['我到车站了', '我从车站了', '我在车站了', '我向车站了'],
+                    correct: '我到车站了',
+                    explanation: "到 + 了 indica arrivo completato. 我到车站了 = 'Sono arrivato alla stazione'."
+                }
+            ],
+            'adverbs': [
+                {
+                    question: "Scegli l'avverbio corretto per 'È molto bello':",
+                    options: ['他很漂亮', '他太漂亮', '他非常漂亮', '他都漂亮'],
+                    correct: '他很漂亮',
+                    explanation: "很 è l'avverbio base per 'molto'. 他很漂亮 = 'È molto bello'. 很 è neutro e si usa sempre con aggettivi."
+                },
+                {
+                    question: "Scegli l'avverbio per 'È troppo caro':",
+                    options: ['这个很贵', '这个太贵了', '这个非常贵', '这个都贵'],
+                    correct: '这个太贵了',
+                    explanation: "太 significa 'troppo' (eccessivo). 这个太贵了 = 'Questo è troppo caro'. 太 implica un eccesso negativo."
+                },
+                {
+                    question: "Scegli l'avverbio per 'È estremamente interessante':",
+                    options: ['很有趣', '太有趣', '非常有趣', '都有趣'],
+                    correct: '非常有趣',
+                    explanation: "非常 significa 'estremamente/molto' (più forte di 很). 非常有趣 = 'È estremamente interessante'."
+                },
+                {
+                    question: "Scegli l'avverbio per 'Ho già mangiato':",
+                    options: ['我很吃了', '我太吃了', '我已经吃了', '我都吃了'],
+                    correct: '我已经吃了',
+                    explanation: "已经 significa 'già/ormai'. 我已经吃了 = 'Ho già mangiato'. Si usa per azioni completate."
+                },
+                {
+                    question: "Scegli l'avverbio per 'Ancora non ho finito':",
+                    options: ['我很没完成', '我还没完成', '我已经没完成', '我都没完成'],
+                    correct: '我还没完成',
+                    explanation: "还 + 没 significa 'ancora non'. 我还没完成 = 'Ancora non ho finito'. 还 indica continuità."
+                },
+                {
+                    question: "Scegli l'avverbio per 'Tutti sono venuti':",
+                    options: ['很来了', '太来了', '已经来了', '都来了'],
+                    correct: '都来了',
+                    explanation: "都 significa 'tutti/tutto'. 都来了 = 'Sono venuti tutti'. 都 indica totalità o inclusività."
+                },
+                {
+                    question: "Scegli per 'Arriverò alle 8 in punto' (enfasi sulla puntualità):",
+                    options: ['我很八点到', '我就八点到', '我才八点到', '我都八点到'],
+                    correct: '我就八点到',
+                    explanation: "就 enfatizza puntualità o precisione. 我就八点到 = 'Arriverò proprio alle 8'. 就 = 'proprio/esattamente'."
+                },
+                {
+                    question: "Scegli per 'Arriverò solo alle 8' (più tardi del previsto):",
+                    options: ['我很八点到', '我就八点到', '我才八点到', '我都八点到'],
+                    correct: '我才八点到',
+                    explanation: "才 indica 'solo/soltanto' (più tardi del previsto). 我才八点到 = 'Arriverò solo alle 8' (tardi)."
+                }
+            ]
+        };
+
+        // Variabili di stato
+        let currentExerciseType = '';
+        let currentQuestionIndex = 0;
+        let currentScore = 0;
+        let currentExerciseData = [];
+        let userAnswer = null;
+        let draggedWords = [];
+
+        // Funzioni principali
+        function startExercise(type) {
+            currentExerciseType = type;
+            currentQuestionIndex = 0;
+            currentScore = 0;
+            currentExerciseData = [...exercises[type]];
+            userAnswer = null;
+            draggedWords = [];
+
+            document.getElementById('exerciseSelector').style.display = 'none';
+            document.getElementById('exerciseArea').style.display = 'block';
+            document.getElementById('finalResults').style.display = 'none';
+
+            updateProgress();
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentExerciseData[currentQuestionIndex];
+            const container = document.getElementById('questionContainer');
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            
+            feedbackContainer.innerHTML = '';
+            document.getElementById('nextBtn').disabled = true;
+            userAnswer = null;
+            draggedWords = [];
+
+            if (currentExerciseType === 'word-order') {
+                container.innerHTML = `
+                    <div class="question-text">${question.question}</div>
+                    <div class="drag-area" id="dropArea" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <span style="color: #6c757d; font-style: italic;">Trascina qui le parole nell'ordine corretto...</span>
+                    </div>
+                    <div class="word-bank" id="wordBank">
+                        ${question.words.map(word => 
+                            `<span class="word-chip" draggable="true" ondragstart="drag(event, '${word}')">${word}</span>`
+                        ).join('')}
+                    </div>
+                `;
+            } else if (currentExerciseType === 'particles') {
+                container.innerHTML = `
+                    <div class="question-text">${question.question}</div>
+                    <div class="chinese-text">${question.question.replace('___', '___')}</div>
+                    <div class="options-grid">
+                        ${question.options.map(option => 
+                            `<button class="option-btn" onclick="selectOption('${option}')">${option}</button>`
+                        ).join('')}
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="question-text">${question.question}</div>
+                    <div class="options-grid">
+                        ${question.options.map(option => 
+                            `<button class="option-btn" onclick="selectOption('${option}')">${option}</button>`
+                        ).join('')}
+                    </div>
+                `;
+            }
+
+            updateQuestionCounter();
+        }
+
+        function selectOption(option) {
+            userAnswer = option;
+            
+            // Rimuovi selezione precedente
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Seleziona opzione corrente
+            event.target.classList.add('selected');
+            
+            checkAnswer();
+        }
+
+        function drag(event, word) {
+            event.dataTransfer.setData("text", word);
+        }
+
+        function allowDrop(event) {
+            event.preventDefault();
+            event.target.classList.add('drag-over');
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            event.target.classList.remove('drag-over');
+            
+            const word = event.dataTransfer.getData("text");
+            if (word && !draggedWords.includes(word)) {
+                draggedWords.push(word);
+                updateDropArea();
+                
+                // Nascondi la parola dalla word bank
+                const wordChips = document.querySelectorAll('#wordBank .word-chip');
+                wordChips.forEach(chip => {
+                    if (chip.textContent === word && !chip.style.display) {
+                        chip.style.display = 'none';
+                        return;
+                    }
+                });
+                
+                // Controlla se abbiamo abbastanza parole
+                const question = currentExerciseData[currentQuestionIndex];
+                if (draggedWords.length >= question.correct.length) {
+                    userAnswer = draggedWords.slice(0, question.correct.length);
+                    checkAnswer();
+                }
+            }
+        }
+
+        function updateDropArea() {
+            const dropArea = document.getElementById('dropArea');
+            if (draggedWords.length === 0) {
+                dropArea.innerHTML = '<span style="color: #6c757d; font-style: italic;">Trascina qui le parole nell\'ordine corretto...</span>';
+            } else {
+                dropArea.innerHTML = draggedWords.map((word, index) => 
+                    `<span class="word-chip" onclick="removeWord(${index})">${word}</span>`
+                ).join('');
+            }
+        }
+
+        function removeWord(index) {
+            const removedWord = draggedWords[index];
+            draggedWords.splice(index, 1);
+            updateDropArea();
+            
+            // Rimetti la parola nella word bank
+            const wordChips = document.querySelectorAll('#wordBank .word-chip');
+            wordChips.forEach(chip => {
+                if (chip.textContent === removedWord && chip.style.display === 'none') {
+                    chip.style.display = 'inline-block';
+                    return;
+                }
+            });
+        }
+
+        function checkAnswer() {
+            const question = currentExerciseData[currentQuestionIndex];
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            let isCorrect = false;
+
+            if (currentExerciseType === 'word-order') {
+                isCorrect = JSON.stringify(userAnswer) === JSON.stringify(question.correct);
+            } else {
+                isCorrect = userAnswer === question.correct;
+            }
+
+            if (isCorrect) {
+                currentScore++;
+                feedbackContainer.innerHTML = `
+                    <div class="feedback correct">
+                        ✅ <strong>Corretto!</strong> Ottimo lavoro!
+                        <div class="explanation">${question.explanation}</div>
+                    </div>
+                `;
+                
+                // Evidenzia risposta corretta
+                if (currentExerciseType !== 'word-order') {
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        if (btn.textContent === question.correct) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                }
+            } else {
+                feedbackContainer.innerHTML = `
+                    <div class="feedback wrong">
+                        ❌ <strong>Non corretto.</strong> La risposta giusta è: <strong>${
+                            currentExerciseType === 'word-order' ? 
+                            question.correct.join(' ') : 
+                            question.correct
+                        }</strong>
+                        <div class="explanation">${question.explanation}</div>
+                    </div>
+                `;
+                
+                // Evidenzia risposte
+                if (currentExerciseType !== 'word-order') {
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        if (btn.textContent === question.correct) {
+                            btn.classList.add('correct');
+                        } else if (btn.textContent === userAnswer) {
+                            btn.classList.add('wrong');
+                        }
+                    });
+                }
+            }
+
+            // Disabilita interazioni
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.disabled = true;
+            });
+
+            document.getElementById('nextBtn').disabled = false;
+            updateScore();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= currentExerciseData.length) {
+                showFinalResults();
+            } else {
+                updateProgress();
+                showQuestion();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex) / currentExerciseData.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function updateQuestionCounter() {
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = currentExerciseData.length;
+        }
+
+        function updateScore() {
+            document.getElementById('currentScore').textContent = currentScore;
+        }
+
+        function showFinalResults() {
+            document.getElementById('exerciseArea').style.display = 'none';
+            document.getElementById('finalResults').style.display = 'block';
+            
+            const percentage = Math.round((currentScore / currentExerciseData.length) * 100);
+            let message = '';
+            
+            if (percentage >= 90) {
+                message = `Eccellente! ${currentScore}/${currentExerciseData.length} (${percentage}%) - Hai una padronanza ottima della grammatica! 🌟`;
+            } else if (percentage >= 70) {
+                message = `Molto bene! ${currentScore}/${currentExerciseData.length} (${percentage}%) - Continua così! 👏`;
+            } else if (percentage >= 50) {
+                message = `Buon lavoro! ${currentScore}/${currentExerciseData.length} (${percentage}%) - Con un po' di pratica migliorerai! 💪`;
+            } else {
+                message = `${currentScore}/${currentExerciseData.length} (${percentage}%) - Non scoraggiarti, la grammatica cinese richiede tempo! 📚`;
+            }
+            
+            document.getElementById('finalScoreText').textContent = message;
+        }
+
+        function backToMenu() {
+            document.getElementById('exerciseSelector').style.display = 'grid';
+            document.getElementById('exerciseArea').style.display = 'none';
+            document.getElementById('finalResults').style.display = 'none';
+        }
+
+        function restartExercise() {
+            startExercise(currentExerciseType);
+        }
+
+        // Inizializzazione SDK
+        async function onConfigChange(config) {
+            document.getElementById('mainTitle').textContent = config.main_title || defaultConfig.main_title;
+            document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+            document.getElementById('exercise1Title').textContent = config.exercise1_title || defaultConfig.exercise1_title;
+            document.getElementById('exercise2Title').textContent = config.exercise2_title || defaultConfig.exercise2_title;
+            document.getElementById('exercise3Title').textContent = config.exercise3_title || defaultConfig.exercise3_title;
+            document.getElementById('exercise4Title').textContent = config.exercise4_title || defaultConfig.exercise4_title;
+            document.getElementById('exercise5Title').textContent = config.exercise5_title || defaultConfig.exercise5_title;
+            document.getElementById('exercise6Title').textContent = config.exercise6_title || defaultConfig.exercise6_title;
+            document.getElementById('exercise7Title').textContent = config.exercise7_title || defaultConfig.exercise7_title;
+            document.getElementById('exercise8Title').textContent = config.exercise8_title || defaultConfig.exercise8_title;
+            document.getElementById('exercise9Title').textContent = config.exercise9_title || defaultConfig.exercise9_title;
+            document.getElementById('exercise10Title').textContent = config.exercise10_title || defaultConfig.exercise10_title;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["main_title", config.main_title || defaultConfig.main_title],
+                ["subtitle", config.subtitle || defaultConfig.subtitle],
+                ["exercise1_title", config.exercise1_title || defaultConfig.exercise1_title],
+                ["exercise2_title", config.exercise2_title || defaultConfig.exercise2_title],
+                ["exercise3_title", config.exercise3_title || defaultConfig.exercise3_title],
+                ["exercise4_title", config.exercise4_title || defaultConfig.exercise4_title],
+                ["exercise5_title", config.exercise5_title || defaultConfig.exercise5_title],
+                ["exercise6_title", config.exercise6_title || defaultConfig.exercise6_title],
+                ["exercise7_title", config.exercise7_title || defaultConfig.exercise7_title],
+                ["exercise8_title", config.exercise8_title || defaultConfig.exercise8_title],
+                ["exercise9_title", config.exercise9_title || defaultConfig.exercise9_title],
+                ["exercise10_title", config.exercise10_title || defaultConfig.exercise10_title]
+            ]);
+        }
+
+        // Inizializza l'SDK quando disponibile
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9959351bd2a1ee50',t:'MTc2MTY0MTY1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
