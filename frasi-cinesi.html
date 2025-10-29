@@ -218,6 +218,34 @@
                 <div class="category-title">Viaggio</div>
                 <div class="category-desc">Trasporti, direzioni e turismo</div>
             </div>
+          <div class="category-card" data-category="hotel">
+
+                <div class="category-icon">🏨</div>
+
+                <div class="category-title">Hotel</div>
+
+                <div class="category-desc">In hotel</div>
+
+            </div>
+          
+            <div class="category-card" data-category="servizi">
+
+                <div class="category-icon">🛏️</div>
+
+                <div class="category-title">Servizi in Hotel</div>
+
+                <div class="category-desc">Chiedere servizi specifici in hotel</div>
+
+            </div>
+          <div class="category-card" data-category="scuola">
+
+                <div class="category-icon">🏫</div>
+
+                <div class="category-title">Scuola</div>
+
+                <div class="category-desc">Frasi tipiche che si usano in classe</div>
+
+            </div>
         </div>
 
         <div class="phrase-section" id="phrase-section">
@@ -287,7 +315,42 @@
                 
                 { chinese: "长城很壮观。", pinyin: "Chángchéng hěn zhuàngguān.", translation: "La Grande Muraglia è spettacolare." },
                 { chinese: "我们去旅游吧。", pinyin: "Wǒmen qù lǚyóu ba.", translation: "Andiamo in viaggio." }
-            ]
+            ],
+          hotel: [
+              { chinese: "我有预订。", pinyin: "Wǒ yǒu yùdìng.", translation: "Ho una prenotazione." },
+               { chinese: "请帮我办理入住。", pinyin: "Qǐng bāng wǒ bànlǐ rùzhù.", translation: "Per favore, aiutami a fare il check-in." },
+
+               { chinese: "我可以看看房间吗？", pinyin: "Wǒ kěyǐ kànkan fángjiān ma?", translation: "Posso vedere la stanza?" },
+                 { chinese: "有空房吗？", pinyin: "Yǒu kòng fáng ma?", translation: "Avete camere libere?" },
+               { chinese: "请给我一间单人房。", pinyin: "Qǐng gěi wǒ yī jiān dānrén fáng.", translation: "Per favore, una camera singola." },
+                  { chinese: "请给我一间双人房。", pinyin: "Qǐng gěi wǒ yī jiān shuāngrén fáng.", translation: "Per favore, una camera doppia." },
+                 { chinese: "多少钱一晚？", pinyin: "Duōshao qián yī wǎn?", translation: "Quanto costa a notte?" },
+                 { chinese: "我想延长住宿。", pinyin: "Wǒ xiǎng yáncháng zhùsù.", translation: "Vorrei prolungare il soggiorno." },
+                { chinese: "请帮我叫出租车。", pinyin: "Qǐng bāng wǒ jiào chūzūchē.", translation: "Per favore, chiamami un taxi." },
+                { chinese: "我要退房。", pinyin: "Wǒ yào tuì fáng.", translation: "Devo fare il check-out." }
+          ],
+          servizi: [
+                { chinese: "有免费无线网吗？", pinyin: "Yǒu miǎnfèi wúxiànwǎng ma?", translation: "C'è il Wi-Fi gratuito?" },
+                 { chinese: "请给我Wi-Fi密码。", pinyin: "Qǐng gěi wǒ Wi-Fi mìmǎ.", translation: "Per favore, mi dia la password del Wi-Fi." },
+                  { chinese: "有早餐吗？", pinyin: "Yǒu zǎocān ma?", translation: "C'è la colazione?" },
+                 { chinese: "几点开始提供早餐？", pinyin: "Jǐ diǎn kāishǐ tígōng zǎocān?", translation: "A che ora viene servita la colazione?" },
+                 { chinese: "请帮我打扫房间。", pinyin: "Qǐng bāng wǒ dǎsǎo fángjiān.", translation: "Per favore, pulite la mia stanza." },
+                 { chinese: "可以借一个吹风机吗？", pinyin: "Kěyǐ jiè yī gè chuīfēngjī ma?", translation: "Posso avere un asciugacapelli?" },
+                 { chinese: "有洗衣服务吗？", pinyin: "Yǒu xǐyī fúwù ma?", translation: "C'è il servizio lavanderia?" },
+                 { chinese: "空调坏了。", pinyin: "Kōngtiáo huài le.", translation: "L’aria condizionata non funziona." },
+                { chinese: "请修一下空调。", pinyin: "Qǐng xiū yīxià kōngtiáo.", translation: "Per favore, riparate l’aria condizionata." },
+                { chinese: "可以晚一点退房吗？", pinyin: "Kěyǐ wǎn yīdiǎn tuìfáng ma?", translation: "Posso fare il check‑out più tardi?" }
+          ],
+          scuola: [
+                 { chinese: "你会说英语吗？", pinyin: "Nǐ huì shuō Yīngyǔ ma?", translation: "Parli inglese?" },
+               { chinese: "洗手间在哪里？", pinyin: "Xǐshǒujiān zài nǎlǐ?", translation: "Dove si trova il bagno?" },
+                { chinese: "我有一个问题。", pinyin: "Wǒ yǒu yí gè wèntí.", translation: "Ho una domanda." },                     { chinese: "对不起。", pinyin: "Duìbuqǐ.", translation: "Scusa." },
+                 { chinese: "我不明白。", pinyin: "Wǒ bù míngbái.", translation: "Non capisco." },
+                  { chinese: "请。", pinyin: "Qǐng.", translation: "Per favore."},
+            { chinese: "我叫...", pinyin: "Wǒ jiào...", translation: "Mi chiamo..." },
+            { chinese: "我很好，谢谢。", pinyin: "Wǒ hěn hǎo, xièxie.", translation: "Sto bene, grazie." },
+            { chinese: "请慢一点说。", pinyin: "Qǐng màn yīdiǎn shuō.", translation: "Parla lentamente, per favore." }
+          ]
         };
 
         let currentCategory = null;
