@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="it" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lettore Testo Cinese</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .speaking-indicator {
+            animation: speaking 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes speaking {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg">
+  <main class="min-h-full flex items-center justify-center p-4">
+   <div class="w-full max-w-2xl"><!-- Header -->
+    <div class="text-center mb-8">
+     <h1 id="app-title" class="text-4xl font-bold text-white mb-2">Lettore Testo Cinese</h1>
+     <p class="text-white/80 text-lg">🇨🇳 Incolla testo e ascoltalo in mandarino</p>
+    </div><!-- Main Card -->
+    <div class="glass-effect rounded-2xl p-8 shadow-2xl"><!-- Text Input Area -->
+     <div class="mb-6"><label for="chinese-text" class="block text-white font-semibold mb-3 text-lg"> 📝 Testo Cinese </label> <textarea id="chinese-text" placeholder="Incolla qui il tuo testo cinese..." class="w-full h-40 p-4 rounded-xl border-2 border-white/20 bg-white/10 text-white placeholder-white/60 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 resize-none text-lg leading-relaxed" style="font-family: 'Microsoft YaHei', 'SimHei', sans-serif;"></textarea>
+     </div><!-- Controls -->
+     <div class="flex flex-col sm:flex-row gap-4 mb-6"><button id="play-btn" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg text-lg"> ▶️ Leggi in Cinese </button> <button id="stop-btn" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg text-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled> ⏹️ Ferma </button>
+     </div><!-- Speed Control -->
+     <div class="mb-6"><label for="speed-control" class="block text-white font-semibold mb-3"> 🎚️ Velocità di Lettura </label>
+      <div class="flex items-center gap-4"><span class="text-white/80 text-sm">Lenta</span> <input type="range" id="speed-control" min="0.5" max="2" step="0.1" value="1" class="flex-1 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"> <span class="text-white/80 text-sm">Veloce</span> <span id="speed-value" class="text-white font-semibold min-w-12 text-center">1.0x</span>
+      </div>
+     </div><!-- Status -->
+     <div id="status" class="text-center text-white/80 text-sm">
+      Pronto per la lettura
+     </div>
+    </div><!-- Info Card -->
+    <div class="glass-effect rounded-xl p-6 mt-6">
+     <h3 class="text-white font-semibold mb-3 flex items-center gap-2">💡 Come usare</h3>
+     <ul class="text-white/80 text-sm space-y-2">
+      <li>• Incolla o scrivi testo in cinese nell'area di testo</li>
+      <li>• Regola la velocità di lettura con il cursore</li>
+      <li>• Clicca "Leggi in Cinese" per iniziare</li>
+      <li>• Usa "Ferma" per interrompere la lettura</li>
+     </ul>
+    </div>
+   </div>
+  </main>
+  <script>
+        // Default configuration
+        const defaultConfig = {
+            app_title: "Lettore Testo Cinese",
+            paste_instruction: "Incolla qui il tuo testo cinese...",
+            play_button_text: "▶️ Leggi in Cinese",
+            stop_button_text: "⏹️ Ferma"
+        };
+
+        // Speech synthesis variables
+        let currentUtterance = null;
+        let isReading = false;
+
+        // DOM elements
+        const textArea = document.getElementById('chinese-text');
+        const playBtn = document.getElementById('play-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const speedControl = document.getElementById('speed-control');
+        const speedValue = document.getElementById('speed-value');
+        const status = document.getElementById('status');
+
+        // Update speed display
+        speedControl.addEventListener('input', () => {
+            speedValue.textContent = parseFloat(speedControl.value).toFixed(1) + 'x';
+        });
+
+        // Play button functionality
+        playBtn.addEventListener('click', () => {
+            const text = textArea.value.trim();
+            
+            if (!text) {
+                updateStatus('⚠️ Inserisci del testo cinese prima di iniziare');
+                return;
+            }
+
+            if (!window.speechSynthesis) {
+                updateStatus('❌ Sintesi vocale non supportata in questo browser');
+                return;
+            }
+
+            // Stop any current speech
+            window.speechSynthesis.cancel();
+
+            // Create new utterance
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            currentUtterance.lang = 'zh-CN'; // Chinese Mandarin
+            currentUtterance.rate = parseFloat(speedControl.value);
+            currentUtterance.pitch = 1;
+            currentUtterance.volume = 1;
+
+            // Event listeners
+            currentUtterance.onstart = () => {
+                isReading = true;
+                updateUI();
+                updateStatus('🔊 Lettura in corso...');
+                playBtn.classList.add('speaking-indicator');
+            };
+
+            currentUtterance.onend = () => {
+                isReading = false;
+                updateUI();
+                updateStatus('✅ Lettura completata');
+                playBtn.classList.remove('speaking-indicator');
+            };
+
+            currentUtterance.onerror = (event) => {
+                isReading = false;
+                updateUI();
+                updateStatus('❌ Errore durante la lettura: ' + event.error);
+                playBtn.classList.remove('speaking-indicator');
+            };
+
+            // Start speaking
+            window.speechSynthesis.speak(currentUtterance);
+        });
+
+        // Stop button functionality
+        stopBtn.addEventListener('click', () => {
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+                isReading = false;
+                updateUI();
+                updateStatus('⏹️ Lettura interrotta');
+                playBtn.classList.remove('speaking-indicator');
+            }
+        });
+
+        // Update UI based on reading state
+        function updateUI() {
+            playBtn.disabled = isReading;
+            stopBtn.disabled = !isReading;
+            
+            if (isReading) {
+                playBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                stopBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                playBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                stopBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // Update status message
+        function updateStatus(message) {
+            status.textContent = message;
+            status.classList.add('pulse-animation');
+            setTimeout(() => {
+                status.classList.remove('pulse-animation');
+            }, 2000);
+        }
+
+        // Sample text suggestions
+        const sampleTexts = [
+            "你好，欢迎使用中文阅读器！",
+            "今天天气很好，我们去公园散步吧。",
+            "学习中文是一件很有趣的事情。",
+            "北京是中国的首都，有很多历史文化。"
+        ];
+
+        // Add sample text button
+        const sampleBtn = document.createElement('button');
+        sampleBtn.textContent = '📝 Testo di esempio';
+        sampleBtn.className = 'w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg mt-4';
+        sampleBtn.addEventListener('click', () => {
+            const randomText = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
+            textArea.value = randomText;
+            updateStatus('📝 Testo di esempio caricato');
+        });
+
+        // Insert sample button after the textarea
+        textArea.parentNode.insertBefore(sampleBtn, textArea.nextSibling);
+
+        // Element SDK configuration
+        async function onConfigChange(config) {
+            const appTitle = document.getElementById('app-title');
+            const playButton = document.getElementById('play-btn');
+            const stopButton = document.getElementById('stop-btn');
+            
+            if (appTitle) {
+                appTitle.textContent = config.app_title || defaultConfig.app_title;
+            }
+            
+            if (playButton) {
+                playButton.textContent = config.play_button_text || defaultConfig.play_button_text;
+            }
+            
+            if (stopButton) {
+                stopButton.textContent = config.stop_button_text || defaultConfig.stop_button_text;
+            }
+            
+            if (textArea) {
+                textArea.placeholder = config.paste_instruction || defaultConfig.paste_instruction;
+            }
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["app_title", config.app_title || defaultConfig.app_title],
+                ["paste_instruction", config.paste_instruction || defaultConfig.paste_instruction],
+                ["play_button_text", config.play_button_text || defaultConfig.play_button_text],
+                ["stop_button_text", config.stop_button_text || defaultConfig.stop_button_text]
+            ]);
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Initialize UI
+        updateUI();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9973af0c358bee67',t:'MTc2MTkxOTI4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

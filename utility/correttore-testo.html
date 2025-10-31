@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="it" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Correttore Testi Cinesi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .chinese-font {
+            font-family: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;
+        }
+        
+        .correction-highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            animation: highlight 0.5s ease-in-out;
+        }
+        
+        .error-highlight {
+            background: linear-gradient(120deg, #fecaca 0%, #fca5a5 100%);
+            border-left: 4px solid #ef4444;
+        }
+        
+        .success-highlight {
+            background: linear-gradient(120deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 4px solid #10b981;
+        }
+        
+        @keyframes highlight {
+            0% { transform: translateX(-5px); opacity: 0.8; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg">
+  <main class="min-h-full p-6">
+   <div class="max-w-4xl mx-auto"><!-- Header -->
+    <div class="text-center mb-8">
+     <h1 id="app-title" class="text-4xl font-bold text-white mb-3">Correttore Testi Cinesi</h1>
+     <p id="instructions-text" class="text-white/90 text-lg">📝 Incolla il tuo testo cinese per controllare grammatica e stile</p>
+    </div><!-- Main Card -->
+    <div class="card rounded-2xl shadow-2xl p-8 mb-6"><!-- Text Input Area -->
+     <div class="mb-6"><label for="chinese-text" class="block text-gray-800 font-bold mb-3 text-lg"> ✍️ Testo da Controllare </label> <textarea id="chinese-text" placeholder="Incolla qui il tuo testo cinese..." class="w-full h-48 p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 resize-none text-lg chinese-font leading-relaxed"></textarea>
+      <div class="text-sm text-gray-500 mt-2">
+       Caratteri: <span id="char-count">0</span>
+      </div>
+     </div><!-- Action Buttons -->
+     <div class="flex gap-4 mb-6"><button id="check-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"> 🔍 Controlla Testo </button> <button id="clear-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"> 🗑️ Pulisci </button>
+     </div><!-- Results Area -->
+     <div id="results-area" style="display: none;"><!-- Overall Score -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+       <div class="bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-4 text-center">
+        <div class="text-2xl font-bold text-green-800" id="grammar-score">
+         0
+        </div>
+        <div class="text-green-700 text-sm font-semibold">
+         Punteggio Grammatica
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl p-4 text-center">
+        <div class="text-2xl font-bold text-blue-800" id="style-score">
+         0
+        </div>
+        <div class="text-blue-700 text-sm font-semibold">
+         Punteggio Stile
+        </div>
+       </div>
+      </div><!-- Corrections -->
+      <div id="corrections-container">
+       <h3 class="text-xl font-bold text-gray-800 mb-4">📋 Analisi e Correzioni</h3>
+       <div id="corrections-list"></div>
+      </div>
+     </div>
+    </div><!-- History Card -->
+    <div class="card rounded-2xl shadow-xl p-6">
+     <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">📚 Cronologia Controlli</h3>
+     <div id="history-list" class="space-y-3">
+      <div class="text-gray-500 text-center py-4">
+       Nessun testo controllato ancora
+      </div>
+     </div>
+    </div>
+   </div>
+  </main>
+  <script>
+        // Default configuration
+        const defaultConfig = {
+            app_title: "Correttore Testi Cinesi",
+            instructions_text: "📝 Incolla il tuo testo cinese per controllare grammatica e stile",
+            check_button_text: "🔍 Controlla Testo",
+            clear_button_text: "🗑️ Pulisci"
+        };
+
+        // Common Chinese grammar patterns and corrections
+        const grammarRules = [
+            {
+                pattern: /的的/g,
+                correction: "的",
+                message: "Doppio '的' non necessario",
+                type: "grammar"
+            },
+            {
+                pattern: /了了/g,
+                correction: "了",
+                message: "Doppio '了' non necessario",
+                type: "grammar"
+            },
+            {
+                pattern: /在在/g,
+                correction: "在",
+                message: "Doppio '在' non necessario",
+                type: "grammar"
+            },
+            {
+                pattern: /很很/g,
+                correction: "很",
+                message: "Doppio '很' non necessario",
+                type: "grammar"
+            },
+            {
+                pattern: /我们们/g,
+                correction: "我们",
+                message: "'我们' non ha bisogno di doppio '们'",
+                type: "grammar"
+            },
+            {
+                pattern: /他们们/g,
+                correction: "他们",
+                message: "'他们' non ha bisogno di doppio '们'",
+                type: "grammar"
+            },
+            {
+                pattern: /是是/g,
+                correction: "是",
+                message: "Doppio '是' non necessario",
+                type: "grammar"
+            },
+            {
+                pattern: /有有/g,
+                correction: "有",
+                message: "Doppio '有' non necessario",
+                type: "grammar"
+            },
+            {
+                pattern: /不不/g,
+                correction: "不",
+                message: "Doppio '不' non necessario",
+                type: "grammar"
+            },
+            {
+                pattern: /也也/g,
+                correction: "也",
+                message: "Doppio '也' non necessario",
+                type: "grammar"
+            }
+        ];
+
+        const styleRules = [
+            {
+                pattern: /\s+/g,
+                correction: "",
+                message: "Spazi non necessari rimossi",
+                type: "style"
+            },
+            {
+                pattern: /，，/g,
+                correction: "，",
+                message: "Virgole doppie corrette",
+                type: "style"
+            },
+            {
+                pattern: /。。/g,
+                correction: "。",
+                message: "Punti doppi corretti",
+                type: "style"
+            }
+        ];
+
+        // State
+        let isLoading = false;
+        let checkHistory = [];
+
+        // DOM elements
+        const textArea = document.getElementById('chinese-text');
+        const checkBtn = document.getElementById('check-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const charCount = document.getElementById('char-count');
+        const resultsArea = document.getElementById('results-area');
+        const grammarScore = document.getElementById('grammar-score');
+        const styleScore = document.getElementById('style-score');
+        const correctionsList = document.getElementById('corrections-list');
+        const historyList = document.getElementById('history-list');
+
+        // Local storage for history
+        function loadHistory() {
+            const saved = localStorage.getItem('chinese-checker-history');
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveToHistory(item) {
+            checkHistory.push(item);
+            // Keep only last 50 items
+            if (checkHistory.length > 50) {
+                checkHistory = checkHistory.slice(-50);
+            }
+            localStorage.setItem('chinese-checker-history', JSON.stringify(checkHistory));
+            updateHistoryDisplay();
+        }
+
+        // Character count
+        textArea.addEventListener('input', () => {
+            charCount.textContent = textArea.value.length;
+        });
+
+        // Check text function
+        function checkText() {
+            const text = textArea.value.trim();
+            
+            if (!text) {
+                showInlineMessage("⚠️ Inserisci del testo cinese da controllare", "error");
+                return;
+            }
+
+            isLoading = true;
+            updateCheckButton();
+
+            // Simulate processing delay
+            setTimeout(() => {
+                // Analyze text
+                const corrections = analyzeText(text);
+                const grammarScoreValue = calculateGrammarScore(text, corrections);
+                const styleScoreValue = calculateStyleScore(text, corrections);
+
+                // Save to local storage
+                const historyItem = {
+                    text_id: `check_${Date.now()}`,
+                    original_text: text,
+                    corrections: corrections,
+                    grammar_score: grammarScoreValue,
+                    style_score: styleScoreValue,
+                    checked_at: new Date().toISOString(),
+                    correction_type: corrections.length > 0 ? "with_corrections" : "no_corrections"
+                };
+
+                saveToHistory(historyItem);
+
+                isLoading = false;
+                updateCheckButton();
+
+                displayResults(grammarScoreValue, styleScoreValue, corrections);
+                showInlineMessage("✅ Testo analizzato con successo!", "success");
+            }, 800);
+        }
+
+        // Analyze text for errors
+        function analyzeText(text) {
+            const corrections = [];
+            
+            // Check grammar rules
+            grammarRules.forEach(rule => {
+                const matches = text.match(rule.pattern);
+                if (matches) {
+                    corrections.push({
+                        type: rule.type,
+                        message: rule.message,
+                        original: matches[0],
+                        corrected: rule.correction,
+                        count: matches.length
+                    });
+                }
+            });
+
+            // Check style rules
+            styleRules.forEach(rule => {
+                const matches = text.match(rule.pattern);
+                if (matches) {
+                    corrections.push({
+                        type: rule.type,
+                        message: rule.message,
+                        original: matches[0],
+                        corrected: rule.correction,
+                        count: matches.length
+                    });
+                }
+            });
+
+            return corrections;
+        }
+
+        // Calculate grammar score
+        function calculateGrammarScore(text, corrections) {
+            const grammarErrors = corrections.filter(c => c.type === 'grammar').length;
+            const textLength = text.length;
+            const errorRate = textLength > 0 ? grammarErrors / (textLength / 10) : 0;
+            return Math.max(0, Math.min(100, Math.round(100 - (errorRate * 20))));
+        }
+
+        // Calculate style score
+        function calculateStyleScore(text, corrections) {
+            const styleErrors = corrections.filter(c => c.type === 'style').length;
+            const textLength = text.length;
+            const errorRate = textLength > 0 ? styleErrors / (textLength / 10) : 0;
+            return Math.max(0, Math.min(100, Math.round(100 - (errorRate * 15))));
+        }
+
+        // Display results
+        function displayResults(grammarScoreValue, styleScoreValue, corrections) {
+            grammarScore.textContent = grammarScoreValue + "/100";
+            styleScore.textContent = styleScoreValue + "/100";
+
+            if (corrections.length === 0) {
+                correctionsList.innerHTML = `
+                    <div class="success-highlight rounded-xl p-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <div class="font-bold text-green-800">Ottimo lavoro!</div>
+                                <div class="text-green-700">Non sono stati trovati errori evidenti nel tuo testo.</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                correctionsList.innerHTML = corrections.map(correction => `
+                    <div class="correction-highlight rounded-xl p-4 mb-3">
+                        <div class="flex items-start gap-3">
+                            <span class="text-xl">${correction.type === 'grammar' ? '📝' : '🎨'}</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-amber-800 mb-1">${correction.message}</div>
+                                <div class="text-amber-700 chinese-font">
+                                    <span class="bg-red-100 px-2 py-1 rounded">${correction.original}</span>
+                                    →
+                                    <span class="bg-green-100 px-2 py-1 rounded">${correction.corrected}</span>
+                                </div>
+                                <div class="text-sm text-amber-600 mt-1">
+                                    Trovato ${correction.count} volta${correction.count > 1 ? 'e' : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            resultsArea.style.display = 'block';
+            resultsArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Update check button
+        function updateCheckButton() {
+            if (isLoading) {
+                checkBtn.innerHTML = '<div class="loading-spinner"></div> Analizzando...';
+                checkBtn.disabled = true;
+            } else {
+                checkBtn.innerHTML = defaultConfig.check_button_text;
+                checkBtn.disabled = false;
+            }
+        }
+
+        // Show inline message
+        function showInlineMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            } text-white font-semibold`;
+            messageDiv.textContent = message;
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        // Update history display
+        function updateHistoryDisplay() {
+            if (checkHistory.length === 0) {
+                historyList.innerHTML = '<div class="text-gray-500 text-center py-4">Nessun testo controllato ancora</div>';
+                return;
+            }
+
+            const recent = checkHistory.slice(-5).reverse();
+            historyList.innerHTML = recent.map(item => {
+                const date = new Date(item.checked_at).toLocaleString('it-IT');
+                const preview = item.original_text.substring(0, 50) + (item.original_text.length > 50 ? '...' : '');
+                const corrections = item.corrections;
+                
+                return `
+                    <div class="bg-gray-50 rounded-lg p-4 border-l-4 ${corrections.length > 0 ? 'border-amber-400' : 'border-green-400'}">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="chinese-font text-gray-800 font-medium">${preview}</div>
+                            <div class="text-xs text-gray-500">${date}</div>
+                        </div>
+                        <div class="flex gap-4 text-sm">
+                            <span class="text-green-600">Grammatica: ${item.grammar_score}/100</span>
+                            <span class="text-blue-600">Stile: ${item.style_score}/100</span>
+                            <span class="text-gray-600">${corrections.length} correzioni</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Event listeners
+        checkBtn.addEventListener('click', checkText);
+
+        clearBtn.addEventListener('click', () => {
+            textArea.value = '';
+            charCount.textContent = '0';
+            resultsArea.style.display = 'none';
+            showInlineMessage("🗑️ Testo pulito", "success");
+        });
+
+        // Enter key support
+        textArea.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                checkText();
+            }
+        });
+
+        // Initialize the app
+        function initialize() {
+            checkHistory = loadHistory();
+            updateHistoryDisplay();
+        }
+
+        // Start the app
+        initialize();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9973c38af0f7ed15',t:'MTc2MTkyMDExOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

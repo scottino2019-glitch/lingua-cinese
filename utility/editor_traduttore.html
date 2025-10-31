@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="it" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor con Traduttore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-blue-50 to-indigo-100 font-sans">
+  <div class="h-full flex flex-col max-w-6xl mx-auto p-6"><!-- Header -->
+   <header class="text-center mb-8">
+    <h1 id="app-title" class="text-4xl font-bold text-gray-800 mb-2">Editor con Traduttore</h1>
+    <p class="text-gray-600">Scrivi e traduci istantaneamente in oltre 100 lingue</p>
+   </header><!-- Language Selection -->
+   <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+     <div><label for="source-lang" class="block text-sm font-medium text-gray-700 mb-2">Lingua di origine</label> <select id="source-lang" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="auto">Rileva automaticamente</option> <option value="it">Italiano</option> <option value="en">Inglese</option> <option value="es">Spagnolo</option> <option value="fr">Francese</option> <option value="de">Tedesco</option> <option value="pt">Portoghese</option> <option value="ru">Russo</option> <option value="ja">Giapponese</option> <option value="ko">Coreano</option> <option value="zh">Cinese</option> <option value="ar">Arabo</option> <option value="hi">Hindi</option> </select>
+     </div>
+     <div><label for="target-lang" class="block text-sm font-medium text-gray-700 mb-2">Traduci in</label> <select id="target-lang" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="en">Inglese</option> <option value="it">Italiano</option> <option value="es">Spagnolo</option> <option value="fr">Francese</option> <option value="de">Tedesco</option> <option value="pt">Portoghese</option> <option value="ru">Russo</option> <option value="ja">Giapponese</option> <option value="ko">Coreano</option> <option value="zh">Cinese</option> <option value="ar">Arabo</option> <option value="hi">Hindi</option> </select>
+     </div>
+    </div>
+   </div><!-- Editor and Translation Area -->
+   <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6"><!-- Editor Panel -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+     <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+      <div class="flex items-center justify-between">
+       <h2 class="text-lg font-semibold text-gray-800">Editor</h2>
+       <div class="flex items-center space-x-2"><span id="char-count" class="text-sm text-gray-500">0 caratteri</span> <button id="clear-btn" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"> Cancella </button>
+       </div>
+      </div>
+     </div>
+     <div class="p-6"><!-- Editor Toolbar -->
+      <div class="mb-3 flex items-center justify-between">
+       <div class="flex space-x-1 p-1 bg-gray-50 rounded-lg border border-gray-200"><button id="bold-btn" class="p-2 hover:bg-gray-200 rounded text-gray-700 transition-colors" title="Grassetto (Ctrl+B)">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path d="M5 3a1 1 0 000 2h1v10H5a1 1 0 100 2h6a4 4 0 001.866-7.539A3.5 3.5 0 0011 3H5zm6 2a1.5 1.5 0 010 3H8V5h3zm0 5a2 2 0 010 4H8v-4h3z" />
+         </svg></button> <button id="italic-btn" class="p-2 hover:bg-gray-200 rounded text-gray-700 transition-colors" title="Corsivo (Ctrl+I)">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path d="M8 3a1 1 0 000 2h1.5l-3 10H5a1 1 0 100 2h6a1 1 0 100-2h-1.5l3-10H14a1 1 0 100-2H8z" />
+         </svg></button>
+        <div class="border-l border-gray-300 mx-1"></div><button id="undo-btn" class="p-2 hover:bg-gray-200 rounded text-gray-700 transition-colors" title="Annulla (Ctrl+Z)">
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+         </svg></button> <button id="redo-btn" class="p-2 hover:bg-gray-200 rounded text-gray-700 transition-colors" title="Ripeti (Ctrl+Y)">
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2m18-10l-6-6m6 6l-6 6" />
+         </svg></button>
+       </div><button id="documents-btn" class="px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded-md hover:bg-purple-200 transition-colors flex items-center space-x-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg><span>Documenti</span> </button>
+      </div><textarea id="source-text" placeholder="Scrivi qui il tuo testo..." class="w-full h-80 p-4 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 leading-relaxed"></textarea> <!-- Editor Stats and Actions -->
+      <div class="mt-4 flex items-center justify-between">
+       <div class="flex items-center space-x-4"><button id="translate-btn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center space-x-2">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+         </svg><span id="translate-btn-text">Traduci</span> </button> <button id="save-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2">
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+         </svg><span>Salva</span> </button>
+       </div>
+       <div class="flex items-center space-x-4 text-sm text-gray-500"><span id="word-count">0 parole</span> <span id="detected-lang"></span>
+       </div>
+      </div>
+     </div>
+    </div><!-- Translation Panel -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+     <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+      <div class="flex items-center justify-between">
+       <h2 class="text-lg font-semibold text-gray-800">Traduzione</h2><button id="copy-btn" class="px-3 py-1 text-sm bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors flex items-center space-x-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg><span>Copia</span> </button>
+      </div>
+     </div>
+     <div class="p-6">
+      <div id="translation-area" class="w-full h-80 p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 leading-relaxed overflow-y-auto">
+       <div class="text-gray-400 text-center mt-32">
+        La traduzione apparirà qui...
+       </div>
+      </div>
+      <div class="mt-4 flex items-center justify-between">
+       <div class="text-sm text-gray-500"><span id="translation-info"></span>
+       </div><button id="swap-langs" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center space-x-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+        </svg><span>Inverti</span> </button>
+      </div>
+     </div>
+    </div>
+   </div><!-- Documents Modal -->
+   <div id="documents-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-96 overflow-hidden">
+     <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-gray-800">Documenti Salvati</h3><button id="close-modal" class="text-gray-500 hover:text-gray-700">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <div class="p-6 overflow-y-auto max-h-80">
+      <div id="documents-list" class="space-y-3"><!-- Documents will be loaded here -->
+      </div>
+      <div id="no-documents" class="text-center text-gray-500 py-8 hidden">
+       <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+       </svg>
+       <p>Nessun documento salvato</p>
+       <p class="text-sm mt-1">I tuoi documenti salvati appariranno qui</p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Toast Notification -->
+   <div id="toast" class="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
+    <div class="flex items-center space-x-2">
+     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+     </svg><span>Testo copiato negli appunti!</span>
+    </div>
+   </div>
+  </div>
+  <script>
+        // Configuration
+        const defaultConfig = {
+            app_title: "Editor con Traduttore",
+            placeholder_text: "Scrivi qui il tuo testo..."
+        };
+
+        // Elements
+        const sourceText = document.getElementById('source-text');
+        const translationArea = document.getElementById('translation-area');
+        const translateBtn = document.getElementById('translate-btn');
+        const translateBtnText = document.getElementById('translate-btn-text');
+        const sourceLang = document.getElementById('source-lang');
+        const targetLang = document.getElementById('target-lang');
+        const charCount = document.getElementById('char-count');
+        const wordCount = document.getElementById('word-count');
+        const clearBtn = document.getElementById('clear-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const swapLangs = document.getElementById('swap-langs');
+        const detectedLang = document.getElementById('detected-lang');
+        const translationInfo = document.getElementById('translation-info');
+        const toast = document.getElementById('toast');
+        const saveBtn = document.getElementById('save-btn');
+        const boldBtn = document.getElementById('bold-btn');
+        const italicBtn = document.getElementById('italic-btn');
+        const undoBtn = document.getElementById('undo-btn');
+        const redoBtn = document.getElementById('redo-btn');
+        const documentsBtn = document.getElementById('documents-btn');
+        const documentsModal = document.getElementById('documents-modal');
+        const closeModal = document.getElementById('close-modal');
+        const documentsList = document.getElementById('documents-list');
+        const noDocuments = document.getElementById('no-documents');
+
+        // Editor state
+        let undoStack = [];
+        let redoStack = [];
+        let currentText = '';
+        let savedDocuments = JSON.parse(localStorage.getItem('editorDocuments') || '[]');
+
+        // Language names
+        const languageNames = {
+            'auto': 'Auto',
+            'it': 'Italiano',
+            'en': 'English',
+            'es': 'Español',
+            'fr': 'Français',
+            'de': 'Deutsch',
+            'pt': 'Português',
+            'ru': 'Русский',
+            'ja': '日本語',
+            'ko': '한국어',
+            'zh': '中文',
+            'ar': 'العربية',
+            'hi': 'हिन्दी'
+        };
+
+        // Real translation function using Google Translate API
+        async function translateText(text, fromLang, toLang) {
+            try {
+                // Use Google Translate API via public endpoint
+                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang}&tl=${toLang}&dt=t&q=${encodeURIComponent(text)}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data && data[0]) {
+                    let translatedText = '';
+                    data[0].forEach(item => {
+                        if (item[0]) {
+                            translatedText += item[0];
+                        }
+                    });
+                    
+                    // Detect source language if auto-detect was used
+                    const detectedLanguage = data[2] || fromLang;
+                    
+                    return {
+                        translatedText: translatedText.trim(),
+                        detectedLanguage: detectedLanguage
+                    };
+                }
+                
+                throw new Error('Risposta non valida dal servizio di traduzione');
+                
+            } catch (error) {
+                console.error('Errore traduzione:', error);
+                
+                // Fallback to MyMemory API
+                try {
+                    const fallbackUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`;
+                    const fallbackResponse = await fetch(fallbackUrl);
+                    const fallbackData = await fallbackResponse.json();
+                    
+                    if (fallbackData.responseStatus === 200) {
+                        return {
+                            translatedText: fallbackData.responseData.translatedText,
+                            detectedLanguage: fromLang === 'auto' ? 'en' : fromLang
+                        };
+                    }
+                } catch (fallbackError) {
+                    console.error('Errore fallback:', fallbackError);
+                }
+                
+                throw new Error('Servizio di traduzione non disponibile');
+            }
+        }
+
+        // Update character and word count
+        function updateCounts() {
+            const text = sourceText.value;
+            const charCount_val = text.length;
+            const wordCount_val = text.trim() ? text.trim().split(/\s+/).length : 0;
+            
+            charCount.textContent = `${charCount_val} caratteri`;
+            wordCount.textContent = `${wordCount_val} parole`;
+        }
+
+        // Editor history management
+        function saveToHistory() {
+            if (currentText !== sourceText.value) {
+                undoStack.push(currentText);
+                if (undoStack.length > 50) undoStack.shift(); // Limit history
+                redoStack = []; // Clear redo stack on new action
+                currentText = sourceText.value;
+            }
+        }
+
+        function undo() {
+            if (undoStack.length > 0) {
+                redoStack.push(sourceText.value);
+                const previousText = undoStack.pop();
+                sourceText.value = previousText;
+                currentText = previousText;
+                updateCounts();
+            }
+        }
+
+        function redo() {
+            if (redoStack.length > 0) {
+                undoStack.push(sourceText.value);
+                const nextText = redoStack.pop();
+                sourceText.value = nextText;
+                currentText = nextText;
+                updateCounts();
+            }
+        }
+
+        // Text formatting functions
+        function insertTextAtCursor(startTag, endTag = '') {
+            const start = sourceText.selectionStart;
+            const end = sourceText.selectionEnd;
+            const selectedText = sourceText.value.substring(start, end);
+            const beforeText = sourceText.value.substring(0, start);
+            const afterText = sourceText.value.substring(end);
+            
+            saveToHistory();
+            
+            const newText = beforeText + startTag + selectedText + endTag + afterText;
+            sourceText.value = newText;
+            
+            // Set cursor position
+            const newCursorPos = start + startTag.length + selectedText.length + endTag.length;
+            sourceText.setSelectionRange(newCursorPos, newCursorPos);
+            sourceText.focus();
+            
+            updateCounts();
+        }
+
+        function makeBold() {
+            insertTextAtCursor('**', '**');
+        }
+
+        function makeItalic() {
+            insertTextAtCursor('*', '*');
+        }
+
+        // Save document function
+        function saveDocument() {
+            const text = sourceText.value.trim();
+            if (!text) {
+                showToast('Nessun testo da salvare');
+                return;
+            }
+
+            const doc = {
+                id: Date.now(),
+                title: text.substring(0, 50) + (text.length > 50 ? '...' : ''),
+                content: text,
+                createdAt: new Date().toISOString(),
+                language: sourceLang.value
+            };
+
+            savedDocuments.unshift(doc);
+            if (savedDocuments.length > 20) savedDocuments.pop(); // Limit to 20 documents
+            
+            localStorage.setItem('editorDocuments', JSON.stringify(savedDocuments));
+            showToast('Documento salvato con successo!');
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toastSpan = toast.querySelector('span');
+            toastSpan.textContent = message;
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-full', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        // Documents management
+        function showDocumentsModal() {
+            loadDocumentsList();
+            documentsModal.classList.remove('hidden');
+        }
+
+        function hideDocumentsModal() {
+            documentsModal.classList.add('hidden');
+        }
+
+        function loadDocumentsList() {
+            documentsList.innerHTML = '';
+            
+            if (savedDocuments.length === 0) {
+                noDocuments.classList.remove('hidden');
+                return;
+            }
+            
+            noDocuments.classList.add('hidden');
+            
+            savedDocuments.forEach(doc => {
+                const docElement = document.createElement('div');
+                docElement.className = 'bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors';
+                docElement.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-medium text-gray-900 truncate">${doc.title}</h4>
+                            <p class="text-xs text-gray-500 mt-1">
+                                ${new Date(doc.createdAt).toLocaleDateString('it-IT')} • 
+                                ${languageNames[doc.language] || doc.language}
+                            </p>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <button onclick="loadDocument(${doc.id})" class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors">
+                                Carica
+                            </button>
+                            <button onclick="deleteDocument(${doc.id})" class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors">
+                                Elimina
+                            </button>
+                        </div>
+                    </div>
+                `;
+                documentsList.appendChild(docElement);
+            });
+        }
+
+        function loadDocument(docId) {
+            const doc = savedDocuments.find(d => d.id === docId);
+            if (doc) {
+                saveToHistory();
+                sourceText.value = doc.content;
+                sourceLang.value = doc.language;
+                updateCounts();
+                hideDocumentsModal();
+                showToast('Documento caricato!');
+                sourceText.focus();
+            }
+        }
+
+        function deleteDocument(docId) {
+            savedDocuments = savedDocuments.filter(d => d.id !== docId);
+            localStorage.setItem('editorDocuments', JSON.stringify(savedDocuments));
+            loadDocumentsList();
+            showToast('Documento eliminato');
+        }
+
+        // Make functions global for onclick handlers
+        window.loadDocument = loadDocument;
+        window.deleteDocument = deleteDocument;
+
+        // Translate function
+        async function performTranslation() {
+            const text = sourceText.value.trim();
+            if (!text) {
+                translationArea.innerHTML = '<div class="text-gray-400 text-center mt-32">Inserisci del testo da tradurre...</div>';
+                return;
+            }
+
+            const fromLang = sourceLang.value;
+            const toLang = targetLang.value;
+
+            if (fromLang === toLang && fromLang !== 'auto') {
+                translationArea.innerHTML = '<div class="text-orange-500 text-center mt-32">⚠️ Le lingue di origine e destinazione sono uguali</div>';
+                return;
+            }
+
+            // Show loading state
+            translateBtn.disabled = true;
+            translateBtnText.textContent = 'Traduzione in corso';
+            translateBtnText.classList.add('loading-dots');
+            translationArea.innerHTML = '<div class="text-blue-500 text-center mt-32">🔄 Traduzione in corso...</div>';
+
+            try {
+                const result = await translateText(text, fromLang, toLang);
+                
+                // Show translation
+                translationArea.innerHTML = `<div class="fade-in">${result.translatedText}</div>`;
+                
+                // Update detected language info
+                if (fromLang === 'auto') {
+                    detectedLang.textContent = `Lingua rilevata: ${languageNames[result.detectedLanguage]}`;
+                } else {
+                    detectedLang.textContent = '';
+                }
+                
+                translationInfo.textContent = `Tradotto da ${languageNames[result.detectedLanguage]} a ${languageNames[toLang]}`;
+                
+            } catch (error) {
+                translationArea.innerHTML = '<div class="text-red-500 text-center mt-32">❌ Errore durante la traduzione</div>';
+                translationInfo.textContent = '';
+            } finally {
+                // Reset button state
+                translateBtn.disabled = false;
+                translateBtnText.textContent = 'Traduci';
+                translateBtnText.classList.remove('loading-dots');
+            }
+        }
+
+        // Copy translation to clipboard
+        async function copyTranslation() {
+            const translationText = translationArea.textContent.trim();
+            if (!translationText || translationText.includes('apparirà qui') || translationText.includes('Errore')) {
+                showToast('Nessuna traduzione da copiare');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(translationText);
+                showToast('Testo copiato negli appunti!');
+            } catch (error) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = translationText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('Testo copiato negli appunti!');
+            }
+        }
+
+        // Swap languages
+        function swapLanguages() {
+            if (sourceLang.value === 'auto') {
+                showToast('Impossibile invertire con rilevamento automatico');
+                return;
+            }
+
+            const temp = sourceLang.value;
+            sourceLang.value = targetLang.value;
+            targetLang.value = temp;
+
+            // If there's translated text, move it to source
+            const translationText = translationArea.textContent.trim();
+            if (translationText && !translationText.includes('apparirà qui') && !translationText.includes('Errore')) {
+                sourceText.value = translationText;
+                updateCharCount();
+                translationArea.innerHTML = '<div class="text-gray-400 text-center mt-32">La traduzione apparirà qui...</div>';
+                detectedLang.textContent = '';
+                translationInfo.textContent = '';
+            }
+        }
+
+        // Clear text
+        function clearText() {
+            saveToHistory();
+            sourceText.value = '';
+            translationArea.innerHTML = '<div class="text-gray-400 text-center mt-32">La traduzione apparirà qui...</div>';
+            updateCounts();
+            detectedLang.textContent = '';
+            translationInfo.textContent = '';
+            sourceText.focus();
+        }
+
+        // Event listeners
+        sourceText.addEventListener('input', () => {
+            updateCounts();
+            saveToHistory();
+        });
+        
+        sourceText.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case 'Enter':
+                        e.preventDefault();
+                        performTranslation();
+                        break;
+                    case 'b':
+                        e.preventDefault();
+                        makeBold();
+                        break;
+                    case 'i':
+                        e.preventDefault();
+                        makeItalic();
+                        break;
+                    case 'z':
+                        e.preventDefault();
+                        undo();
+                        break;
+                    case 'y':
+                        e.preventDefault();
+                        redo();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        saveDocument();
+                        break;
+                }
+            }
+        });
+
+        translateBtn.addEventListener('click', performTranslation);
+        clearBtn.addEventListener('click', clearText);
+        copyBtn.addEventListener('click', copyTranslation);
+        swapLangs.addEventListener('click', swapLanguages);
+        saveBtn.addEventListener('click', saveDocument);
+        boldBtn.addEventListener('click', makeBold);
+        italicBtn.addEventListener('click', makeItalic);
+        undoBtn.addEventListener('click', undo);
+        redoBtn.addEventListener('click', redo);
+        documentsBtn.addEventListener('click', showDocumentsModal);
+        closeModal.addEventListener('click', hideDocumentsModal);
+        
+        // Close modal when clicking outside
+        documentsModal.addEventListener('click', (e) => {
+            if (e.target === documentsModal) {
+                hideDocumentsModal();
+            }
+        });
+
+        // Auto-translate on language change
+        sourceLang.addEventListener('change', () => {
+            if (sourceText.value.trim()) {
+                setTimeout(performTranslation, 300);
+            }
+        });
+
+        targetLang.addEventListener('change', () => {
+            if (sourceText.value.trim()) {
+                setTimeout(performTranslation, 300);
+            }
+        });
+
+        // Element SDK integration
+        async function onConfigChange(config) {
+            const appTitle = document.getElementById('app-title');
+            const placeholderText = config.placeholder_text || defaultConfig.placeholder_text;
+            const title = config.app_title || defaultConfig.app_title;
+            
+            appTitle.textContent = title;
+            sourceText.placeholder = placeholderText;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.primary_color || "#3b82f6",
+                        set: (value) => {
+                            config.primary_color = value;
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ primary_color: value });
+                            }
+                        }
+                    },
+                    {
+                        get: () => config.background_color || "#f8fafc",
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || "system-ui, -apple-system, sans-serif",
+                    set: (value) => {
+                        config.font_family = value;
+                        if (window.elementSdk) {
+                            window.elementSdk.setConfig({ font_family: value });
+                        }
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || 16,
+                    set: (value) => {
+                        config.font_size = value;
+                        if (window.elementSdk) {
+                            window.elementSdk.setConfig({ font_size: value });
+                        }
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["app_title", config.app_title || defaultConfig.app_title],
+                ["placeholder_text", config.placeholder_text || defaultConfig.placeholder_text]
+            ]);
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Initialize
+        updateCounts();
+        currentText = sourceText.value;
+        sourceText.focus();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9973f646076d0d6e',t:'MTc2MTkyMjE5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
