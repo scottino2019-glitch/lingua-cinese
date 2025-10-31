@@ -28,21 +28,21 @@ Content-Location: https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/dir
         </header>
 
         <div class="cards-grid">
-            <a href="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/90a640426534a5d5b7e9c36e3a071a6b/176d6b3e-3b7c-4f63-bf5e-a7b3561898ba/canvas-app/index.html?rnd=1761925772993&amp;utm_source=perplexity#traduttore" class="card card--translator" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+            <a href="utility/editor_traduttore" class="card card--translator" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
                 <div class="card-icon">🔤</div>
                 <h2>Traduttore</h2>
-                <p>Traduci frasi e parole dal cinese all'italiano e viceversa con esempi pratici</p>
+                <p>Traduci frasi e parole dal cinese all'italino con un piccolo editor</p>
                 <span class="card-badge">Apri →</span>
             </a>
 
-            <a href="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/90a640426534a5d5b7e9c36e3a071a6b/176d6b3e-3b7c-4f63-bf5e-a7b3561898ba/canvas-app/index.html?rnd=1761925772993&amp;utm_source=perplexity#correttore" class="card card--corrector" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+            <a href="utility/correttore-testo.html" class="card card--corrector" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
                 <div class="card-icon">✓</div>
                 <h2>Correttore Esercizi</h2>
                 <p>Verifica i tuoi esercizi di grammatica, caratteri e frasi con feedback immediato</p>
                 <span class="card-badge">Apri →</span>
             </a>
 
-            <a href="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/90a640426534a5d5b7e9c36e3a071a6b/176d6b3e-3b7c-4f63-bf5e-a7b3561898ba/canvas-app/index.html?rnd=1761925772993&amp;utm_source=perplexity#audio" class="card card--audio" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
+            <a href="utility/lettore.html" class="card card--audio" style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
                 <div class="card-icon">🔊</div>
                 <h2>Riproduzione Audio</h2>
                 <p>Ascolta la pronuncia corretta di parole e frasi in mandarino standard (Beijing)</p>
@@ -52,6 +52,7 @@ Content-Location: https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/dir
     </div>
 
     
+<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-redl-500 to-yellow-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"> <a href="index.html"> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>Home</a></button>
 
 
 </body></html>
