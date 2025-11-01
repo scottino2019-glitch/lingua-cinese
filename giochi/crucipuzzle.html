@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crucipuzzle Pinyin</title>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
+            color: #333;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            background: white;
+            border-radius: 0;
+            padding: 15px;
+            box-shadow: none;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .instructions {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .grid-container {
+            flex: 1;
+        }
+
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 3px;
+            background: #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .grid-cell {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 1px solid #cbd5e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .grid-cell:hover {
+            background: #f7fafc;
+            border-color: #4299e1;
+        }
+
+        .grid-cell.selected {
+            background: #4299e1;
+            color: white;
+            border-color: #3182ce;
+        }
+
+        .grid-cell.found {
+            background: #48bb78;
+            color: white;
+            border-color: #38a169;
+        }
+
+        .words-panel {
+            width: 100%;
+            max-width: 350px;
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .words-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .word-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 6px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .word-item.found {
+            background: #c6f6d5;
+            border-color: #48bb78;
+        }
+
+        .chinese-char {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .pinyin {
+            font-size: 0.9rem;
+            color: #22543d;
+            font-weight: bold;
+            display: none;
+        }
+
+        .word-item.found .pinyin {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #edf2f7;
+            border-radius: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4299e1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .difficulty-btn {
+            padding: 8px 16px;
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .difficulty-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+
+        .difficulty-btn:hover {
+            background: #cbd5e0;
+        }
+
+        .difficulty-btn.active:hover {
+            background: #3182ce;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 12px;
+            background: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #3182ce;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 20px;
+            background: #c6f6d5;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #22543d;
+            display: none;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <div class="header">
+    <h1 class="title" id="gameTitle">Crucipuzzle Pinyin</h1>
+    <p class="instructions" id="gameInstructions">Trova le traduzioni Pinyin degli ideogrammi cinesi nella griglia. Clicca e trascina per selezionare le parole!</p>
+   </div>
+   <div class="stats">
+    <div class="stat-item">
+     <div class="stat-number" id="foundCount">
+      0
+     </div>
+     <div class="stat-label">
+      Trovate
+     </div>
+    </div>
+    <div class="stat-item">
+     <div class="stat-number" id="totalCount">
+      6
+     </div>
+     <div class="stat-label">
+      Totali
+     </div>
+    </div>
+    <div class="stat-item">
+     <div class="stat-number" id="timeCount">
+      0
+     </div>
+     <div class="stat-label">
+      Secondi
+     </div>
+    </div>
+   </div>
+   <div class="game-area">
+    <div class="grid-container">
+     <div class="difficulty-selector"><button class="difficulty-btn active" onclick="changeDifficulty('facile')">Facile</button> <button class="difficulty-btn" onclick="changeDifficulty('medio')">Medio</button> <button class="difficulty-btn" onclick="changeDifficulty('difficile')">Difficile</button>
+     </div>
+     <div class="word-grid" id="wordGrid"></div><button class="reset-btn" onclick="resetGame()">Nuova Partita</button>
+    </div>
+    <div class="words-panel">
+     <h3 class="words-title">Parole da Trovare</h3>
+     <div id="wordsList"></div>
+    </div>
+   </div>
+   <div class="success-message" id="successMessage">
+    🎉 Complimenti! Hai trovato tutte le parole! 🎉
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            game_title: "Crucipuzzle Pinyin",
+            instructions: "Trova le traduzioni Pinyin degli ideogrammi cinesi nella griglia. Clicca e trascina per selezionare le parole!"
+        };
+
+        // Schemi di parole per diversi livelli di difficoltà
+        const wordSchemes = {
+            facile: [
+                { chinese: '你好', pinyin: 'nihao', meaning: 'ciao' },
+                { chinese: '谢谢', pinyin: 'xiexie', meaning: 'grazie' },
+                { chinese: '朋友', pinyin: 'pengyou', meaning: 'amico' },
+                { chinese: '学校', pinyin: 'xuexiao', meaning: 'scuola' },
+                { chinese: '家庭', pinyin: 'jiating', meaning: 'famiglia' },
+                { chinese: '工作', pinyin: 'gongzuo', meaning: 'lavoro' }
+            ],
+            medio: [
+                { chinese: '时间', pinyin: 'shijian', meaning: 'tempo' },
+                { chinese: '地方', pinyin: 'difang', meaning: 'posto' },
+                { chinese: '问题', pinyin: 'wenti', meaning: 'problema' },
+                { chinese: '机会', pinyin: 'jihui', meaning: 'opportunità' },
+                { chinese: '历史', pinyin: 'lishi', meaning: 'storia' },
+                { chinese: '文化', pinyin: 'wenhua', meaning: 'cultura' },
+                { chinese: '经济', pinyin: 'jingji', meaning: 'economia' },
+                { chinese: '政治', pinyin: 'zhengzhi', meaning: 'politica' }
+            ],
+            difficile: [
+                { chinese: '哲学', pinyin: 'zhexue', meaning: 'filosofia' },
+                { chinese: '心理学', pinyin: 'xinlixue', meaning: 'psicologia' },
+                { chinese: '环境', pinyin: 'huanjing', meaning: 'ambiente' },
+                { chinese: '技术', pinyin: 'jishu', meaning: 'tecnologia' },
+                { chinese: '科学', pinyin: 'kexue', meaning: 'scienza' },
+                { chinese: '医学', pinyin: 'yixue', meaning: 'medicina' },
+                { chinese: '建筑', pinyin: 'jianzhu', meaning: 'architettura' },
+                { chinese: '艺术', pinyin: 'yishu', meaning: 'arte' },
+                { chinese: '音乐', pinyin: 'yinyue', meaning: 'musica' },
+                { chinese: '文学', pinyin: 'wenxue', meaning: 'letteratura' }
+            ]
+        };
+
+        let currentDifficulty = 'facile';
+        let words = wordSchemes[currentDifficulty];
+
+        let grid = [];
+        let foundWords = [];
+        let selectedCells = [];
+        let isSelecting = false;
+        let startTime = Date.now();
+        let timerInterval;
+
+        function initializeGame() {
+            createGrid();
+            placeWords();
+            fillEmptySpaces();
+            renderGrid();
+            renderWordsList();
+            startTimer();
+        }
+
+        function createGrid() {
+            grid = Array(10).fill().map(() => Array(10).fill(''));
+            foundWords = [];
+            selectedCells = [];
+        }
+
+        function placeWords() {
+            const directions = [
+                [0, 1],   // orizzontale
+                [1, 0],   // verticale
+                [1, 1],   // diagonale
+                [-1, 1],  // diagonale inversa
+            ];
+
+            words.forEach(word => {
+                let placed = false;
+                let attempts = 0;
+                
+                while (!placed && attempts < 100) {
+                    const direction = directions[Math.floor(Math.random() * directions.length)];
+                    const startRow = Math.floor(Math.random() * 12);
+                    const startCol = Math.floor(Math.random() * 12);
+                    
+                    if (canPlaceWord(word.pinyin, startRow, startCol, direction)) {
+                        placeWord(word.pinyin, startRow, startCol, direction);
+                        placed = true;
+                    }
+                    attempts++;
+                }
+            });
+        }
+
+        function canPlaceWord(word, row, col, direction) {
+            for (let i = 0; i < word.length; i++) {
+                const newRow = row + direction[0] * i;
+                const newCol = col + direction[1] * i;
+                
+                if (newRow < 0 || newRow >= 10 || newCol < 0 || newCol >= 10) {
+                    return false;
+                }
+                
+                if (grid[newRow][newCol] !== '' && grid[newRow][newCol] !== word[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function placeWord(word, row, col, direction) {
+            for (let i = 0; i < word.length; i++) {
+                const newRow = row + direction[0] * i;
+                const newCol = col + direction[1] * i;
+                grid[newRow][newCol] = word[i];
+            }
+        }
+
+        function fillEmptySpaces() {
+            const letters = 'abcdefghijklmnopqrstuvwxyz';
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    if (grid[i][j] === '') {
+                        grid[i][j] = letters[Math.floor(Math.random() * letters.length)];
+                    }
+                }
+            }
+        }
+
+        function renderGrid() {
+            const gridElement = document.getElementById('wordGrid');
+            gridElement.innerHTML = '';
+            
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.textContent = grid[i][j].toUpperCase();
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    
+                    // Mouse events
+                    cell.addEventListener('mousedown', startSelection);
+                    cell.addEventListener('mouseenter', continueSelection);
+                    cell.addEventListener('mouseup', endSelection);
+                    
+                    // Touch events for mobile
+                    cell.addEventListener('touchstart', handleTouchStart);
+                    cell.addEventListener('touchmove', handleTouchMove);
+                    cell.addEventListener('touchend', handleTouchEnd);
+                    
+                    gridElement.appendChild(cell);
+                }
+            }
+        }
+
+        function renderWordsList() {
+            const wordsListElement = document.getElementById('wordsList');
+            wordsListElement.innerHTML = '';
+            
+            words.forEach(word => {
+                const wordItem = document.createElement('div');
+                wordItem.className = 'word-item';
+                if (foundWords.includes(word.pinyin)) {
+                    wordItem.classList.add('found');
+                }
+                
+                wordItem.innerHTML = `
+                    <div>
+                        <div class="chinese-char">${word.chinese}</div>
+                        <div class="pinyin">${word.pinyin}</div>
+                    </div>
+                `;
+                
+                wordsListElement.appendChild(wordItem);
+            });
+        }
+
+        function startSelection(e) {
+            isSelecting = true;
+            selectedCells = [e.target];
+            e.target.classList.add('selected');
+        }
+
+        function continueSelection(e) {
+            if (!isSelecting) return;
+            
+            if (!selectedCells.includes(e.target)) {
+                selectedCells.push(e.target);
+                e.target.classList.add('selected');
+            }
+        }
+
+        function endSelection() {
+            if (!isSelecting) return;
+            isSelecting = false;
+            
+            const selectedWord = selectedCells.map(cell => cell.textContent.toLowerCase()).join('');
+            const foundWord = words.find(word => word.pinyin === selectedWord);
+            
+            if (foundWord && !foundWords.includes(foundWord.pinyin)) {
+                foundWords.push(foundWord.pinyin);
+                selectedCells.forEach(cell => {
+                    cell.classList.remove('selected');
+                    cell.classList.add('found');
+                });
+                updateStats();
+                renderWordsList();
+                
+                if (foundWords.length === words.length) {
+                    showSuccess();
+                }
+            } else {
+                selectedCells.forEach(cell => cell.classList.remove('selected'));
+            }
+            
+            selectedCells = [];
+        }
+
+        function updateStats() {
+            document.getElementById('foundCount').textContent = foundWords.length;
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                document.getElementById('timeCount').textContent = elapsed;
+            }, 1000);
+        }
+
+        function showSuccess() {
+            clearInterval(timerInterval);
+            document.getElementById('successMessage').style.display = 'block';
+        }
+
+        function resetGame() {
+            clearInterval(timerInterval);
+            document.getElementById('successMessage').style.display = 'none';
+            initializeGame();
+        }
+
+        function changeDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            words = wordSchemes[currentDifficulty];
+            
+            // Aggiorna i pulsanti di difficoltà
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Aggiorna il contatore totale
+            document.getElementById('totalCount').textContent = words.length;
+            
+            // Riavvia il gioco
+            resetGame();
+        }
+
+        // Touch event handlers for mobile
+        function handleTouchStart(e) {
+            e.preventDefault();
+            startSelection(e);
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (element && element.classList.contains('grid-cell')) {
+                continueSelection({ target: element });
+            }
+        }
+
+        function handleTouchEnd(e) {
+            e.preventDefault();
+            endSelection();
+        }
+
+        // Prevent context menu and text selection
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('selectstart', e => e.preventDefault());
+
+        // Start the game
+        initializeGame();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9961673e519c0d6e',t:'MTc2MTcyNzU5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

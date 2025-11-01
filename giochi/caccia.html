@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caccia ai Radicali</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            min-height: 100%;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            font-size: 1.1rem;
+            color: #636e72;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .character-display {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .main-character {
+            font-size: 8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1;
+        }
+
+        .character-info {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .character-pinyin {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .game-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .radicals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .radical-card {
+            background: white;
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .radical-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #ff6b6b;
+        }
+
+        .radical-card.selected {
+            border-color: #ff6b6b;
+            background: #fff5f5;
+            transform: translateY(-3px);
+        }
+
+        .radical-card.correct {
+            border-color: #00b894;
+            background: #d5f4e6;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .radical-card.incorrect {
+            border-color: #e17055;
+            background: #ffeaa7;
+            animation: incorrectShake 0.6s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .radical-character {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .radical-meaning {
+            font-size: 0.9rem;
+            color: #636e72;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .radical-pinyin {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .selected-radicals {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 80px;
+            border: 2px dashed #ddd;
+        }
+
+        .selected-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #636e72;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .selected-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .selected-item {
+            background: white;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d3436;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remove-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ee5a52;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #74b9ff;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #0984e3;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.success {
+            background: #d5f4e6;
+            color: #00b894;
+            border: 2px solid #00b894;
+        }
+
+        .feedback.error {
+            background: #ffeaa7;
+            color: #e17055;
+            border: 2px solid #e17055;
+        }
+
+        .explanation {
+            background: #e8f4fd;
+            border: 2px solid #74b9ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .explanation h3 {
+            color: #0984e3;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .explanation-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #74b9ff;
+        }
+
+        .explanation-radical {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-right: 10px;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .main-character {
+                font-size: 6rem;
+            }
+
+            .radicals-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .radical-character {
+                font-size: 2rem;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <main class="container">
+   <header class="header">
+    <h1 class="title" id="gameTitle">🔍 Caccia ai Radicali</h1>
+    <div class="instructions" id="instructions">
+     Trova tutti i radicali nascosti in questo carattere complesso! Clicca sui radicali che riconosci.
+    </div>
+   </header>
+   <div class="character-display">
+    <div class="main-character" id="mainCharacter">
+     看
+    </div>
+    <div class="character-info" id="characterLabel">
+     "guardare"
+    </div>
+    <div class="character-pinyin" id="characterPinyin">
+     kàn
+    </div>
+   </div>
+   <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+   </div>
+   <div class="game-section">
+    <h2 class="section-title">Radicali Selezionati</h2>
+    <div class="selected-radicals">
+     <div class="selected-title">
+      I tuoi radicali trovati:
+     </div>
+     <div class="selected-items" id="selectedItems">
+      <div style="color: #999; font-style: italic;">
+       Nessun radicale selezionato ancora...
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="game-section">
+    <h2 class="section-title">Scegli i Radicali</h2>
+    <div class="radicals-grid" id="radicalsGrid"><!-- Radicals will be generated here -->
+    </div>
+   </div>
+   <div class="controls"><button class="btn btn-primary" id="checkBtn">Verifica Risposta</button> <button class="btn btn-secondary" id="resetBtn">Ricomincia</button> <button class="btn btn-secondary" id="hintBtn">💡 Suggerimento</button>
+   </div>
+   <div class="controls" style="margin-top: 10px;"><button class="btn btn-secondary" id="prevBtn">⬅️ Carattere Precedente</button> <span style="padding: 12px 20px; background: #f8f9fa; border-radius: 25px; font-weight: bold; color: #636e72;"> <span id="currentIndex">1</span> di <span id="totalCharacters">10</span> </span> <button class="btn btn-secondary" id="nextBtn">Carattere Successivo ➡️</button>
+   </div>
+   <div class="feedback" id="feedback"></div>
+   <div class="explanation" id="explanation"></div>
+  </main>
+  <script>
+        const defaultConfig = {
+            game_title: "🔍 Caccia ai Radicali",
+            instructions: "Trova tutti i radicali nascosti in questo carattere complesso! Clicca sui radicali che riconosci.",
+            character_label: "\"guardare\"",
+            check_button: "Verifica Risposta"
+        };
+
+        let config = { ...defaultConfig };
+        let selectedRadicals = [];
+        let gameCompleted = false;
+        let hintsUsed = 0;
+
+        // Dati del gioco - diversi caratteri con i loro radicali
+        const charactersData = [
+            {
+                character: "看",
+                meaning: "guardare",
+                pinyin: "kàn",
+                correctRadicals: ["手", "目", "一", "二"],
+                explanation: {
+                    "手": "La parte superiore rappresenta una 'mano' che si mette sopra l'occhio",
+                    "目": "La parte inferiore è l'ideogramma per 'occhio'", 
+                    "一": "Il tratto orizzontale singolo, radicale numero 1",
+                    "二": "I due tratti orizzontali, radicale numero 7"
+                },
+                story: "Il carattere 看 combina 'mano' (手) e 'occhio' (目) per rappresentare l'azione di mettere la mano sopra l'occhio per guardare lontano!"
+            },
+            {
+                character: "休",
+                meaning: "riposare",
+                pinyin: "xiū",
+                correctRadicals: ["人", "木"],
+                explanation: {
+                    "人": "Una persona che si appoggia",
+                    "木": "Un albero per fare ombra"
+                },
+                story: "Una persona (人) che si riposa appoggiata a un albero (木) - il perfetto riposo all'ombra!"
+            },
+            {
+                character: "明",
+                meaning: "luminoso",
+                pinyin: "míng",
+                correctRadicals: ["日", "月"],
+                explanation: {
+                    "日": "Il sole che illumina di giorno",
+                    "月": "La luna che illumina di notte"
+                },
+                story: "Sole (日) + Luna (月) = massima luminosità! Quando ci sono entrambi, tutto è chiaro e luminoso."
+            },
+            {
+                character: "森",
+                meaning: "foresta",
+                pinyin: "sēn",
+                correctRadicals: ["木"],
+                explanation: {
+                    "木": "Tre alberi insieme formano una foresta densa"
+                },
+                story: "Tre caratteri 木 (albero) insieme creano 森 (foresta) - tanti alberi fanno una foresta!"
+            },
+            {
+                character: "好",
+                meaning: "buono/bene",
+                pinyin: "hǎo",
+                correctRadicals: ["女", "子"],
+                explanation: {
+                    "女": "Una donna, una madre",
+                    "子": "Un bambino, un figlio"
+                },
+                story: "Una donna (女) con il suo bambino (子) rappresenta l'armonia familiare - cosa c'è di più 'buono'?"
+            },
+            {
+                character: "家",
+                meaning: "casa/famiglia",
+                pinyin: "jiā",
+                correctRadicals: ["宀", "豕"],
+                explanation: {
+                    "宀": "Il tetto della casa",
+                    "豕": "Un maiale sotto il tetto (ricchezza antica)"
+                },
+                story: "Un tetto (宀) con un maiale (豕) sotto - nell'antica Cina avere un maiale in casa significava prosperità!"
+            },
+            {
+                character: "想",
+                meaning: "pensare",
+                pinyin: "xiǎng",
+                correctRadicals: ["相", "心"],
+                explanation: {
+                    "相": "Guardare, osservare attentamente",
+                    "心": "Il cuore, la mente"
+                },
+                story: "Osservare (相) con il cuore (心) - pensare significa guardare con la mente e il cuore!"
+            },
+            {
+                character: "听",
+                meaning: "ascoltare",
+                pinyin: "tīng",
+                correctRadicals: ["口", "斤"],
+                explanation: {
+                    "口": "La bocca per parlare",
+                    "斤": "Antico simbolo per 'prestare attenzione'"
+                },
+                story: "Usare la bocca (口) prestando attenzione (斤) - ascoltare richiede attenzione attiva!"
+            },
+            {
+                character: "花",
+                meaning: "fiore",
+                pinyin: "huā",
+                correctRadicals: ["艹", "化"],
+                explanation: {
+                    "艹": "Erba, piante (radicale dell'erba)",
+                    "化": "Trasformazione, cambiamento"
+                },
+                story: "Le piante (艹) che si trasformano (化) in bellissimi fiori colorati!"
+            },
+            {
+                character: "河",
+                meaning: "fiume",
+                pinyin: "hé",
+                correctRadicals: ["氵", "可"],
+                explanation: {
+                    "氵": "Acqua (forma semplificata del radicale acqua)",
+                    "可": "Può, possibile (suono fonetico)"
+                },
+                story: "Acqua (氵) che può (可) scorrere liberamente - ecco cos'è un fiume!"
+            }
+        ];
+
+        let currentCharacterIndex = 0;
+        let gameData = charactersData[0];
+
+        // Tutti i radicali disponibili
+        const allRadicals = [
+            { char: "手", meaning: "mano", pinyin: "shǒu" },
+            { char: "目", meaning: "occhio", pinyin: "mù" },
+            { char: "一", meaning: "uno", pinyin: "yī" },
+            { char: "二", meaning: "due", pinyin: "èr" },
+            { char: "人", meaning: "persona", pinyin: "rén" },
+            { char: "木", meaning: "albero", pinyin: "mù" },
+            { char: "日", meaning: "sole", pinyin: "rì" },
+            { char: "月", meaning: "luna", pinyin: "yuè" },
+            { char: "女", meaning: "donna", pinyin: "nǚ" },
+            { char: "子", meaning: "bambino", pinyin: "zǐ" },
+            { char: "宀", meaning: "tetto", pinyin: "mián" },
+            { char: "豕", meaning: "maiale", pinyin: "shǐ" },
+            { char: "相", meaning: "guardare", pinyin: "xiāng" },
+            { char: "心", meaning: "cuore", pinyin: "xīn" },
+            { char: "口", meaning: "bocca", pinyin: "kǒu" },
+            { char: "斤", meaning: "attenzione", pinyin: "jīn" },
+            { char: "艹", meaning: "erba", pinyin: "cǎo" },
+            { char: "化", meaning: "cambiare", pinyin: "huà" },
+            { char: "氵", meaning: "acqua", pinyin: "shuǐ" },
+            { char: "可", meaning: "possibile", pinyin: "kě" },
+            { char: "水", meaning: "acqua", pinyin: "shuǐ" },
+            { char: "火", meaning: "fuoco", pinyin: "huǒ" },
+            { char: "金", meaning: "metallo", pinyin: "jīn" },
+            { char: "土", meaning: "terra", pinyin: "tǔ" }
+        ];
+
+        function initializeGame() {
+            setupEventListeners();
+            loadCharacter();
+            updateNavigationButtons();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+            document.getElementById('resetBtn').addEventListener('click', resetGame);
+            document.getElementById('hintBtn').addEventListener('click', showHint);
+            document.getElementById('prevBtn').addEventListener('click', previousCharacter);
+            document.getElementById('nextBtn').addEventListener('click', nextCharacter);
+        }
+
+        function loadCharacter() {
+            gameData = charactersData[currentCharacterIndex];
+            
+            // Aggiorna la visualizzazione del carattere
+            document.getElementById('mainCharacter').textContent = gameData.character;
+            document.getElementById('characterLabel').textContent = `"${gameData.meaning}"`;
+            document.getElementById('characterPinyin').textContent = gameData.pinyin;
+            
+            // Aggiorna il contatore
+            document.getElementById('currentIndex').textContent = currentCharacterIndex + 1;
+            document.getElementById('totalCharacters').textContent = charactersData.length;
+            
+            createRadicalCards();
+            resetGame();
+        }
+
+        function nextCharacter() {
+            if (currentCharacterIndex < charactersData.length - 1) {
+                currentCharacterIndex++;
+                loadCharacter();
+                updateNavigationButtons();
+            }
+        }
+
+        function previousCharacter() {
+            if (currentCharacterIndex > 0) {
+                currentCharacterIndex--;
+                loadCharacter();
+                updateNavigationButtons();
+            }
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prevBtn').disabled = currentCharacterIndex === 0;
+            document.getElementById('nextBtn').disabled = currentCharacterIndex === charactersData.length - 1;
+        }
+
+        function createRadicalCards() {
+            const container = document.getElementById('radicalsGrid');
+            container.innerHTML = '';
+            
+            // Seleziona i radicali corretti per il carattere attuale + alcuni distrattori
+            const correctRadicals = gameData.correctRadicals;
+            const distractors = allRadicals.filter(r => !correctRadicals.includes(r.char));
+            
+            // Prendi 8-10 distrattori casuali
+            const selectedDistractors = distractors
+                .sort(() => Math.random() - 0.5)
+                .slice(0, Math.max(8, 12 - correctRadicals.length));
+            
+            // Combina radicali corretti e distrattori
+            const gameRadicals = [
+                ...correctRadicals.map(char => allRadicals.find(r => r.char === char)),
+                ...selectedDistractors
+            ].filter(Boolean);
+            
+            // Mescola tutti i radicali
+            const shuffledRadicals = gameRadicals.sort(() => Math.random() - 0.5);
+            
+            shuffledRadicals.forEach((radical, index) => {
+                const isCorrect = correctRadicals.includes(radical.char);
+                
+                const card = document.createElement('div');
+                card.className = 'radical-card';
+                card.dataset.radical = radical.char;
+                card.dataset.correct = isCorrect;
+                
+                card.innerHTML = `
+                    <div class="radical-character">${radical.char}</div>
+                    <div class="radical-meaning">${radical.meaning}</div>
+                    <div class="radical-pinyin">${radical.pinyin}</div>
+                `;
+                
+                card.addEventListener('click', () => selectRadical(radical, card));
+                container.appendChild(card);
+            });
+        }
+
+        function selectRadical(radical, card) {
+            if (card.classList.contains('selected') || gameCompleted) return;
+            
+            // Aggiungi alla selezione
+            selectedRadicals.push(radical);
+            card.classList.add('selected');
+            
+            updateSelectedDisplay();
+            updateProgress();
+        }
+
+        function updateSelectedDisplay() {
+            const container = document.getElementById('selectedItems');
+            
+            if (selectedRadicals.length === 0) {
+                container.innerHTML = '<div style="color: #999; font-style: italic;">Nessun radicale selezionato ancora...</div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            selectedRadicals.forEach((radical, index) => {
+                const item = document.createElement('div');
+                item.className = 'selected-item';
+                item.innerHTML = `
+                    <span>${radical.char}</span>
+                    <button class="remove-btn" onclick="removeRadical(${index})">×</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function removeRadical(index) {
+            if (gameCompleted) return;
+            
+            const removedRadical = selectedRadicals[index];
+            selectedRadicals.splice(index, 1);
+            
+            // Rimuovi la selezione dalla card
+            const cards = document.querySelectorAll('.radical-card');
+            cards.forEach(card => {
+                if (card.dataset.radical === removedRadical.char) {
+                    card.classList.remove('selected');
+                }
+            });
+            
+            updateSelectedDisplay();
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (selectedRadicals.length / gameData.correctRadicals.length) * 100;
+            document.getElementById('progressFill').style.width = `${Math.min(progress, 100)}%`;
+        }
+
+        function checkAnswer() {
+            if (selectedRadicals.length === 0) {
+                showFeedback('Seleziona almeno un radicale!', 'error');
+                return;
+            }
+            
+            const selectedChars = selectedRadicals.map(r => r.char);
+            const correctChars = gameData.correctRadicals;
+            
+            // Verifica ogni selezione
+            let correctCount = 0;
+            let incorrectCount = 0;
+            
+            document.querySelectorAll('.radical-card').forEach(card => {
+                const radical = card.dataset.radical;
+                const isCorrect = card.dataset.correct === 'true';
+                const isSelected = card.classList.contains('selected');
+                
+                if (isSelected) {
+                    if (isCorrect) {
+                        card.classList.add('correct');
+                        correctCount++;
+                    } else {
+                        card.classList.add('incorrect');
+                        incorrectCount++;
+                    }
+                }
+            });
+            
+            // Controlla se ha trovato tutti i radicali corretti
+            const foundAllCorrect = correctChars.every(char => selectedChars.includes(char));
+            const hasIncorrect = incorrectCount > 0;
+            
+            if (foundAllCorrect && !hasIncorrect) {
+                showFeedback('🎉 Perfetto! Hai trovato tutti i radicali corretti!', 'success');
+                showExplanation();
+                gameCompleted = true;
+            } else if (foundAllCorrect && hasIncorrect) {
+                showFeedback(`✅ Hai trovato tutti i radicali corretti, ma hai selezionato anche ${incorrectCount} radicali sbagliati. Riprova!`, 'error');
+            } else {
+                const missing = correctChars.filter(char => !selectedChars.includes(char));
+                showFeedback(`❌ Ti mancano ancora alcuni radicali: ${missing.join(', ')}. Continua a cercare!`, 'error');
+            }
+        }
+
+        function showHint() {
+            hintsUsed++;
+            
+            // Suggerimenti generici basati sul numero di radicali
+            const genericHints = [
+                "💡 Suggerimento 1: Osserva attentamente le diverse parti del carattere - ognuna potrebbe essere un radicale!",
+                "💡 Suggerimento 2: Pensa al significato del carattere - quali elementi potrebbero rappresentarlo?",
+                "💡 Suggerimento 3: Cerca forme familiari all'interno del carattere complesso!"
+            ];
+            
+            if (hintsUsed <= genericHints.length) {
+                showFeedback(genericHints[hintsUsed - 1], 'error');
+            } else {
+                const correctList = gameData.correctRadicals.join(', ');
+                showFeedback(`💡 Hai usato tutti i suggerimenti! I radicali corretti sono: ${correctList}`, 'error');
+            }
+        }
+
+        function showExplanation() {
+            const explanation = document.getElementById('explanation');
+            explanation.innerHTML = `
+                <h3>🎓 Spiegazione del Carattere 看</h3>
+                <div class="explanation-item">
+                    <span class="explanation-radical">手</span>
+                    <strong>Mano:</strong> ${gameData.explanation["手"]}
+                </div>
+                <div class="explanation-item">
+                    <span class="explanation-radical">目</span>
+                    <strong>Occhio:</strong> ${gameData.explanation["目"]}
+                </div>
+                <div class="explanation-item">
+                    <span class="explanation-radical">一</span>
+                    <strong>Uno:</strong> ${gameData.explanation["一"]}
+                </div>
+                <div class="explanation-item">
+                    <span class="explanation-radical">二</span>
+                    <strong>Due:</strong> ${gameData.explanation["二"]}
+                </div>
+                <div style="margin-top: 15px; padding: 15px; background: #fff5f5; border-radius: 8px; border-left: 4px solid #ff6b6b;">
+                    <strong>📖 Storia del carattere:</strong> ${gameData.story}
+                </div>
+            `;
+            explanation.style.display = 'block';
+        }
+
+        function resetGame() {
+            selectedRadicals = [];
+            gameCompleted = false;
+            hintsUsed = 0;
+            
+            document.querySelectorAll('.radical-card').forEach(card => {
+                card.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            updateSelectedDisplay();
+            updateProgress();
+            hideFeedback();
+            document.getElementById('explanation').style.display = 'none';
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback ${type}`;
+            feedback.style.display = 'block';
+        }
+
+        function hideFeedback() {
+            document.getElementById('feedback').style.display = 'none';
+        }
+
+        // Funzione globale per rimuovere radicali (chiamata dall'HTML)
+        window.removeRadical = removeRadical;
+
+        // SDK degli elementi
+        async function onConfigChange(newConfig) {
+            config = { ...defaultConfig, ...newConfig };
+            
+            document.getElementById('gameTitle').textContent = config.game_title || defaultConfig.game_title;
+            document.getElementById('instructions').textContent = config.instructions || defaultConfig.instructions;
+            document.getElementById('characterLabel').textContent = config.character_label || defaultConfig.character_label;
+            document.getElementById('checkBtn').textContent = config.check_button || defaultConfig.check_button;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["game_title", config.game_title || defaultConfig.game_title],
+                ["instructions", config.instructions || defaultConfig.instructions],
+                ["character_label", config.character_label || defaultConfig.character_label],
+                ["check_button", config.check_button || defaultConfig.check_button]
+            ]);
+        }
+
+        // Inizializza l'SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Inizializza il gioco
+        document.addEventListener('DOMContentLoaded', initializeGame);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9975326e16c8ed15',t:'MTc2MTkzNTE0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

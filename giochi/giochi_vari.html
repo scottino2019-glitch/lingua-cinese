@@ -1,0 +1,1472 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giochi Enigmistica Cinese</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        .chinese-char {
+            font-family: 'SimSun', 'Microsoft YaHei', serif;
+        }
+        .game-card {
+            transition: all 0.3s ease;
+        }
+        .game-card:hover {
+            transform: translateY(-4px);
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="min-h-full">
+  <main class="min-h-full p-6">
+   <div class="max-w-4xl mx-auto"><!-- Header -->
+    <header class="text-center mb-8">
+     <h1 id="app-title" class="text-4xl font-bold mb-4 chinese-char">汉字游戏 - Giochi Enigmistica Cinese</h1>
+     <p id="welcome-message" class="text-lg">Scegli un gioco per iniziare a imparare il cinese divertendoti!</p>
+    </header><!-- Game Selection -->
+    <div id="game-menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+     <div class="game-card p-6 rounded-xl shadow-lg cursor-pointer" onclick="startGame('radicals')">
+      <div class="text-center">
+       <div class="text-4xl mb-4 chinese-char">
+        部首
+       </div>
+       <h3 class="text-xl font-bold mb-2">Caccia ai Radicali</h3>
+       <p class="text-sm">Trova i componenti nascosti nei caratteri</p>
+      </div>
+     </div>
+     <div class="game-card p-6 rounded-xl shadow-lg cursor-pointer" onclick="startGame('evolution')">
+      <div class="text-center">
+       <div class="text-4xl mb-4 chinese-char">
+        演化
+       </div>
+       <h3 class="text-xl font-bold mb-2">Evoluzione Caratteri</h3>
+       <p class="text-sm">Ricostruisci la storia dei simboli</p>
+      </div>
+     </div>
+     <div class="game-card p-6 rounded-xl shadow-lg cursor-pointer" onclick="startGame('logic')">
+      <div class="text-center">
+       <div class="text-4xl mb-4 chinese-char">
+        逻辑
+       </div>
+       <h3 class="text-xl font-bold mb-2">Logica Cinese</h3>
+       <p class="text-sm">Indovina il carattere dai suoi elementi</p>
+      </div>
+     </div>
+     <div class="game-card p-6 rounded-xl shadow-lg cursor-pointer" onclick="startGame('memory')">
+      <div class="text-center">
+       <div class="text-4xl mb-4 chinese-char">
+        记忆
+       </div>
+       <h3 class="text-xl font-bold mb-2">Memory Cinese</h3>
+       <p class="text-sm">Abbina caratteri e significati</p>
+      </div>
+     </div>
+     <div class="game-card p-6 rounded-xl shadow-lg cursor-pointer" onclick="startGame('stroke')">
+      <div class="text-center">
+       <div class="text-4xl mb-4 chinese-char">
+        笔画
+       </div>
+       <h3 class="text-xl font-bold mb-2">Ordine Tratti</h3>
+       <p class="text-sm">Impara l'ordine corretto dei tratti</p>
+      </div>
+     </div>
+     <div class="game-card p-6 rounded-xl shadow-lg cursor-pointer" onclick="startGame('pronunciation')">
+      <div class="text-center">
+       <div class="text-4xl mb-4 chinese-char">
+        拼音
+       </div>
+       <h3 class="text-xl font-bold mb-2">Quiz Pronuncia</h3>
+       <p class="text-sm">Abbina caratteri alla pronuncia corretta</p>
+      </div>
+     </div>
+    </div><!-- Game Area -->
+    <div id="game-area" class="hidden">
+     <div class="flex justify-between items-center mb-6"><button id="back-btn" class="px-4 py-2 rounded-lg font-medium" onclick="showMenu()"> ← Torna al Menu </button>
+      <div id="game-timer" class="text-lg font-semibold">
+       Tempo: 0s
+      </div>
+     </div><!-- Radicals Game -->
+     <div id="radicals-game" class="hidden">
+      <h2 class="text-2xl font-bold mb-4 text-center">Caccia ai Radicali</h2>
+      <div class="max-w-3xl mx-auto">
+       <div id="radicals-instruction" class="text-center mb-6">
+        <p class="text-lg mb-4">Trova tutti i radicali nascosti in questo carattere complesso!</p>
+        <div id="target-character" class="text-8xl chinese-char mb-4"></div>
+        <p id="character-meaning" class="text-md italic"></p>
+       </div>
+       <div id="radicals-grid" class="grid grid-cols-3 md:grid-cols-4 gap-4 mb-6"></div>
+       <div id="found-radicals" class="text-center">
+        <p class="font-semibold mb-2">Radicali trovati: <span id="found-count">0</span>/<span id="total-count">0</span></p>
+        <div id="found-list" class="flex flex-wrap justify-center gap-2"></div>
+       </div>
+      </div>
+     </div><!-- Evolution Game -->
+     <div id="evolution-game" class="hidden">
+      <h2 class="text-2xl font-bold mb-4 text-center">Evoluzione dei Caratteri</h2>
+      <div class="max-w-4xl mx-auto">
+       <div id="evolution-instruction" class="text-center mb-6 p-4 rounded-lg" style="background-color: #f0f9ff;">
+        <p class="text-lg font-semibold mb-2">📜 Come si è evoluto questo carattere nella storia?</p>
+        <p class="text-md mb-3">Trascina i simboli nelle caselle per ricostruire l'evoluzione dal pittogramma antico (sinistra) al carattere moderno (destra)</p>
+        <div id="evolution-target" class="text-center mb-2"><span class="text-sm">Carattere finale: </span> <span id="evolution-final-char" class="text-3xl chinese-char font-bold"></span> <span id="evolution-meaning" class="text-sm italic ml-2"></span>
+        </div>
+       </div>
+       <div class="mb-4 text-center">
+        <div class="inline-flex items-center gap-2 text-sm text-gray-600"><span>Antico</span>
+         <div class="w-8 h-0.5 bg-gray-400"></div><span>Moderno</span>
+        </div>
+       </div>
+       <div id="evolution-stages" class="flex justify-center items-center gap-4 mb-8 flex-wrap">
+        <div class="text-center">
+         <div class="text-xs mb-1">
+          1° Pittogramma
+         </div>
+         <div class="evolution-slot border-4 border-dashed w-24 h-24 flex items-center justify-center text-3xl chinese-char rounded-lg" data-position="0">
+          ?
+         </div>
+        </div>
+        <div class="text-2xl text-gray-400">
+         →
+        </div>
+        <div class="text-center">
+         <div class="text-xs mb-1">
+          2° Semplificato
+         </div>
+         <div class="evolution-slot border-4 border-dashed w-24 h-24 flex items-center justify-center text-3xl chinese-char rounded-lg" data-position="1">
+          ?
+         </div>
+        </div>
+        <div class="text-2xl text-gray-400">
+         →
+        </div>
+        <div class="text-center">
+         <div class="text-xs mb-1">
+          3° Stilizzato
+         </div>
+         <div class="evolution-slot border-4 border-dashed w-24 h-24 flex items-center justify-center text-3xl chinese-char rounded-lg" data-position="2">
+          ?
+         </div>
+        </div>
+        <div class="text-2xl text-gray-400">
+         →
+        </div>
+        <div class="text-center">
+         <div class="text-xs mb-1">
+          4° Moderno
+         </div>
+         <div class="evolution-slot border-4 border-dashed w-24 h-24 flex items-center justify-center text-3xl chinese-char rounded-lg" data-position="3">
+          ?
+         </div>
+        </div>
+       </div>
+       <div class="text-center mb-4">
+        <p class="text-sm font-medium">Clicca sui simboli qui sotto per posizionarli in ordine:</p>
+       </div>
+       <div id="evolution-pieces" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"></div>
+       <div class="text-center"><button id="check-evolution" class="px-6 py-2 rounded-lg font-medium" onclick="checkEvolution()"> Verifica Sequenza </button>
+       </div>
+      </div>
+     </div><!-- Logic Game -->
+     <div id="logic-game" class="hidden">
+      <h2 class="text-2xl font-bold mb-4 text-center">Logica dei Caratteri</h2>
+      <div class="max-w-3xl mx-auto">
+       <div id="logic-puzzle" class="text-center mb-8">
+        <div class="p-4 rounded-lg mb-6" style="background-color: #f0f9ff;">
+         <p class="text-lg font-semibold mb-2">🧩 Enigma della Composizione</p>
+         <p class="text-md mb-3">Indovina quale carattere corrisponde alla pronuncia e significato indicati. Usa la tua conoscenza dei caratteri cinesi!</p>
+        </div>
+        <div class="mb-6">
+         <div class="text-center mb-6">
+          <div class="text-4xl font-bold mb-3" id="logic-pinyin"></div>
+          <div class="text-xl italic mb-4" id="logic-meaning-hint"></div>
+          <div id="logic-hint" class="text-md italic p-3 rounded-lg" style="background-color: #fff7ed;"></div>
+         </div>
+        </div>
+       </div>
+       <div class="text-center mb-4">
+        <p class="text-sm font-medium">Scegli la risposta corretta:</p>
+       </div>
+       <div id="logic-options" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"></div>
+       <div id="logic-feedback" class="text-center hidden"></div>
+      </div>
+     </div><!-- Memory Game -->
+     <div id="memory-game" class="hidden">
+      <h2 class="text-2xl font-bold mb-4 text-center">Memory Cinese</h2>
+      <div class="max-w-4xl mx-auto">
+       <div class="text-center mb-6 p-4 rounded-lg" style="background-color: #f0f9ff;">
+        <p class="text-lg font-semibold mb-2">🧠 Allena la Memoria</p>
+        <p class="text-md">Trova le coppie abbinando ogni carattere cinese al suo significato italiano!</p>
+       </div>
+       <div class="text-center mb-4">
+        <p class="font-semibold">Coppie trovate: <span id="memory-pairs">0</span>/6</p>
+       </div>
+       <div id="memory-grid" class="grid grid-cols-3 md:grid-cols-4 gap-4 mb-6"></div>
+       <div id="memory-feedback" class="text-center hidden"></div>
+      </div>
+     </div><!-- Stroke Order Game -->
+     <div id="stroke-game" class="hidden">
+      <h2 class="text-2xl font-bold mb-4 text-center">Ordine dei Tratti</h2>
+      <div class="max-w-3xl mx-auto">
+       <div class="text-center mb-6 p-4 rounded-lg" style="background-color: #f0f9ff;">
+        <p class="text-lg font-semibold mb-2">✍️ Impara a Scrivere</p>
+        <p class="text-md">Clicca sui tratti nell'ordine corretto per scrivere il carattere!</p>
+       </div>
+       <div class="text-center mb-6">
+        <div id="stroke-character" class="text-6xl chinese-char mb-2"></div>
+        <p id="stroke-meaning" class="text-lg italic"></p>
+        <p class="text-sm mt-2">Tratto <span id="stroke-current">1</span> di <span id="stroke-total">0</span></p>
+       </div>
+       <div id="stroke-canvas" class="relative mx-auto mb-6" style="width: 300px; height: 300px; border: 2px solid #ccc; background: #fff;">
+        <svg width="300" height="300" class="absolute inset-0"><defs>
+          <pattern id="grid" width="30" height="30" patternunits="userSpaceOnUse">
+           <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#f0f0f0" stroke-width="1" />
+          </pattern>
+         </defs> <rect width="100%" height="100%" fill="url(#grid)" /> <line x1="150" y1="0" x2="150" y2="300" stroke="#e0e0e0" stroke-width="2" /> <line x1="0" y1="150" x2="300" y2="150" stroke="#e0e0e0" stroke-width="2" />
+        </svg>
+        <div id="stroke-paths" class="absolute inset-0"></div>
+       </div>
+       <div id="stroke-feedback" class="text-center hidden"></div>
+      </div>
+     </div><!-- Pronunciation Game -->
+     <div id="pronunciation-game" class="hidden">
+      <h2 class="text-2xl font-bold mb-4 text-center">Quiz Pronuncia</h2>
+      <div class="max-w-3xl mx-auto">
+       <div class="text-center mb-6 p-4 rounded-lg" style="background-color: #f0f9ff;">
+        <p class="text-lg font-semibold mb-2">🗣️ Impara la Pronuncia</p>
+        <p class="text-md">Abbina ogni carattere cinese alla sua pronuncia corretta in pinyin!</p>
+       </div>
+       <div class="text-center mb-8">
+        <div id="pronunciation-character" class="text-8xl chinese-char mb-4"></div>
+        <p id="pronunciation-meaning" class="text-lg italic mb-4"></p>
+        <p class="text-md font-medium">Come si pronuncia questo carattere?</p>
+       </div>
+       <div class="text-center mb-6">
+        <div id="pronunciation-options" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+       </div>
+       <div id="pronunciation-feedback" class="text-center hidden"></div>
+      </div>
+     </div>
+    </div><!-- Results -->
+    <div id="results-area" class="hidden text-center">
+     <h2 class="text-3xl font-bold mb-4">Complimenti! 🎉</h2>
+     <div id="final-score" class="text-2xl mb-4"></div>
+     <div id="final-time" class="text-lg mb-6"></div>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center"><button id="continue-same-game" class="px-6 py-3 rounded-lg font-medium text-lg" onclick="continueSameGame()"> 🔄 Stesso Esercizio </button> <button class="px-6 py-3 rounded-lg font-medium text-lg" onclick="showMenu()"> 🏠 Menu Principale </button>
+     </div>
+    </div>
+   </div>
+  </main>
+  <script>
+        // Configuration and SDK setup
+        const defaultConfig = {
+            app_title: "汉字游戏 - Giochi Enigmistica Cinese",
+            welcome_message: "Scegli un gioco per iniziare a imparare il cinese divertendoti!",
+            score_label: "Punteggio",
+            background_color: "#f0f9ff",
+            surface_color: "#ffffff",
+            text_color: "#1f2937",
+            primary_action_color: "#3b82f6",
+            secondary_action_color: "#6b7280"
+        };
+
+        let gameData = [];
+        let currentScore = 0;
+        let gameTimer = null;
+        let startTime = 0;
+
+        // Advanced Chinese learning data
+        const complexCharacters = [
+            {
+                char: "森", 
+                meaning: "foresta", 
+                radicals: ["木", "木", "木"],
+                evolution: ["🌲", "林", "森林", "森"],
+                components: { left: "木", right: "林", meaning: "molti alberi = foresta" }
+            },
+            {
+                char: "明", 
+                meaning: "luminoso", 
+                radicals: ["日", "月"],
+                evolution: ["☀️", "日", "🌙月", "明"],
+                components: { left: "日", right: "月", meaning: "sole + luna = luminoso" }
+            },
+            {
+                char: "休", 
+                meaning: "riposare", 
+                radicals: ["人", "木"],
+                evolution: ["👤", "人", "🌳木", "休"],
+                components: { left: "人", right: "木", meaning: "persona + albero = riposare all'ombra" }
+            },
+            {
+                char: "好", 
+                meaning: "bene/buono", 
+                radicals: ["女", "子"],
+                evolution: ["👩", "女", "👶子", "好"],
+                components: { left: "女", right: "子", meaning: "donna + bambino = bene" }
+            },
+            {
+                char: "安", 
+                meaning: "pace/sicurezza", 
+                radicals: ["宀", "女"],
+                evolution: ["🏠", "宀", "👩女", "安"],
+                components: { top: "宀", bottom: "女", meaning: "tetto + donna = sicurezza domestica" }
+            },
+            {
+                char: "家", 
+                meaning: "casa/famiglia", 
+                radicals: ["宀", "豕"],
+                evolution: ["🏠", "宀", "🐷豕", "家"],
+                components: { top: "宀", bottom: "豕", meaning: "tetto + maiale = casa (ricchezza)" }
+            },
+            {
+                char: "看", 
+                meaning: "guardare", 
+                radicals: ["手", "目"],
+                evolution: ["👁️", "目", "✋手", "看"],
+                components: { top: "手", bottom: "目", meaning: "mano + occhio = guardare" }
+            },
+            {
+                char: "想", 
+                meaning: "pensare", 
+                radicals: ["相", "心"],
+                evolution: ["🤔", "相", "❤️心", "想"],
+                components: { top: "相", bottom: "心", meaning: "osservare + cuore = pensare" }
+            },
+            {
+                char: "听", 
+                meaning: "ascoltare", 
+                radicals: ["口", "斤"],
+                evolution: ["👂", "耳", "口", "听"],
+                components: { left: "口", right: "斤", meaning: "bocca + orecchio = ascoltare" }
+            },
+            {
+                char: "吃", 
+                meaning: "mangiare", 
+                radicals: ["口", "乞"],
+                evolution: ["🍽️", "口", "乞", "吃"],
+                components: { left: "口", right: "乞", meaning: "bocca + chiedere = mangiare" }
+            },
+            {
+                char: "喝", 
+                meaning: "bere", 
+                radicals: ["口", "曷"],
+                evolution: ["🥤", "口", "曷", "喝"],
+                components: { left: "口", right: "曷", meaning: "bocca + cosa = bere" }
+            },
+            {
+                char: "学", 
+                meaning: "studiare", 
+                radicals: ["子", "冖"],
+                evolution: ["📚", "學", "学", "学"],
+                components: { top: "冖", bottom: "子", meaning: "copertura + bambino = studiare" }
+            }
+        ];
+
+        const radicalMeanings = {
+            "木": "legno/albero",
+            "日": "sole",
+            "月": "luna",
+            "人": "persona", 
+            "女": "donna",
+            "子": "bambino",
+            "宀": "tetto",
+            "水": "acqua",
+            "火": "fuoco",
+            "土": "terra",
+            "金": "metallo",
+            "心": "cuore",
+            "手": "mano",
+            "口": "bocca",
+            "豕": "maiale",
+            "目": "occhio",
+            "相": "osservare",
+            "斤": "ascia",
+            "乞": "chiedere",
+            "曷": "cosa",
+            "冖": "copertura",
+            "耳": "orecchio",
+            "足": "piede",
+            "雨": "pioggia",
+            "山": "montagna",
+            "石": "pietra",
+            "田": "campo",
+            "竹": "bambù",
+            "糸": "seta",
+            "言": "parola"
+        };
+
+        const logicPuzzles = [
+            {
+                components: ["日", "月"],
+                pinyin: "míng",
+                meaning: "luminoso/brillante",
+                answer: "明",
+                options: ["明", "暗", "光", "亮"],
+                hint: "Quando il sole e la luna si uniscono...",
+                explanation: "Il sole (日) e la luna (月) insieme creano luminosità"
+            },
+            {
+                components: ["人", "木"],
+                pinyin: "xiū", 
+                meaning: "riposare",
+                answer: "休",
+                options: ["休", "体", "保", "依"],
+                hint: "Una persona che si appoggia a un albero...",
+                explanation: "Una persona (人) accanto a un albero (木) si riposa"
+            },
+            {
+                components: ["女", "子"],
+                pinyin: "hǎo",
+                meaning: "bene/buono", 
+                answer: "好",
+                options: ["好", "妈", "爱", "美"],
+                hint: "Donna con bambino rappresenta qualcosa di...",
+                explanation: "Donna (女) e bambino (子) insieme rappresentano armonia"
+            },
+            {
+                components: ["宀", "豕"],
+                pinyin: "jiā",
+                meaning: "casa/famiglia",
+                answer: "家", 
+                options: ["家", "富", "宝", "安"],
+                hint: "Un tetto sopra un maiale simboleggia...",
+                explanation: "Tetto (宀) sopra maiale (豕) = ricchezza domestica"
+            },
+            {
+                components: ["口", "乞"],
+                pinyin: "chī",
+                meaning: "mangiare",
+                answer: "吃",
+                options: ["吃", "说", "喝", "问"],
+                hint: "Bocca che chiede cibo...",
+                explanation: "Bocca (口) che chiede (乞) = mangiare"
+            },
+            {
+                components: ["手", "目"],
+                pinyin: "kàn", 
+                meaning: "guardare",
+                answer: "看",
+                options: ["看", "摸", "指", "找"],
+                hint: "Mano sopra l'occhio per...",
+                explanation: "Mano (手) sopra occhio (目) per vedere meglio"
+            }
+        ];
+
+        // Memory game data
+        const memoryPairs = [
+            { char: "水", meaning: "acqua" },
+            { char: "火", meaning: "fuoco" },
+            { char: "山", meaning: "montagna" },
+            { char: "天", meaning: "cielo" },
+            { char: "地", meaning: "terra" },
+            { char: "心", meaning: "cuore" },
+            { char: "手", meaning: "mano" },
+            { char: "足", meaning: "piede" },
+            { char: "眼", meaning: "occhio" },
+            { char: "耳", meaning: "orecchio" },
+            { char: "口", meaning: "bocca" },
+            { char: "头", meaning: "testa" },
+            { char: "鱼", meaning: "pesce" },
+            { char: "鸟", meaning: "uccello" },
+            { char: "花", meaning: "fiore" },
+            { char: "草", meaning: "erba" }
+        ];
+
+        // Stroke order data with interactive drawing
+        const strokeCharacters = [
+            {
+                char: "一",
+                meaning: "uno",
+                strokes: [
+                    { start: {x: 50, y: 150}, end: {x: 250, y: 150}, order: 1, description: "Tratto orizzontale da sinistra a destra" }
+                ]
+            },
+            {
+                char: "二",
+                meaning: "due", 
+                strokes: [
+                    { start: {x: 60, y: 120}, end: {x: 240, y: 120}, order: 1, description: "Primo tratto orizzontale" },
+                    { start: {x: 50, y: 180}, end: {x: 250, y: 180}, order: 2, description: "Secondo tratto orizzontale" }
+                ]
+            },
+            {
+                char: "三",
+                meaning: "tre",
+                strokes: [
+                    { start: {x: 70, y: 100}, end: {x: 230, y: 100}, order: 1, description: "Primo tratto orizzontale" },
+                    { start: {x: 60, y: 150}, end: {x: 240, y: 150}, order: 2, description: "Secondo tratto orizzontale" },
+                    { start: {x: 50, y: 200}, end: {x: 250, y: 200}, order: 3, description: "Terzo tratto orizzontale" }
+                ]
+            },
+            {
+                char: "十",
+                meaning: "dieci",
+                strokes: [
+                    { start: {x: 80, y: 150}, end: {x: 220, y: 150}, order: 1, description: "Tratto orizzontale" },
+                    { start: {x: 150, y: 80}, end: {x: 150, y: 220}, order: 2, description: "Tratto verticale" }
+                ]
+            },
+            {
+                char: "口",
+                meaning: "bocca",
+                strokes: [
+                    { start: {x: 100, y: 100}, end: {x: 100, y: 200}, order: 1, description: "Tratto verticale sinistro" },
+                    { start: {x: 100, y: 100}, end: {x: 200, y: 100}, order: 2, description: "Tratto orizzontale superiore" },
+                    { start: {x: 200, y: 100}, end: {x: 200, y: 200}, order: 3, description: "Tratto verticale destro" },
+                    { start: {x: 100, y: 200}, end: {x: 200, y: 200}, order: 4, description: "Tratto orizzontale inferiore" }
+                ]
+            },
+            {
+                char: "日",
+                meaning: "sole",
+                strokes: [
+                    { start: {x: 100, y: 80}, end: {x: 100, y: 220}, order: 1, description: "Tratto verticale sinistro" },
+                    { start: {x: 100, y: 80}, end: {x: 200, y: 80}, order: 2, description: "Tratto orizzontale superiore" },
+                    { start: {x: 200, y: 80}, end: {x: 200, y: 220}, order: 3, description: "Tratto verticale destro" },
+                    { start: {x: 100, y: 150}, end: {x: 200, y: 150}, order: 4, description: "Tratto orizzontale centrale" },
+                    { start: {x: 100, y: 220}, end: {x: 200, y: 220}, order: 5, description: "Tratto orizzontale inferiore" }
+                ]
+            }
+        ];
+
+        // Pronunciation data
+        const pronunciationData = [
+            { char: "你", pinyin: "nǐ", meaning: "tu", options: ["nǐ", "nī", "ní", "nì"] },
+            { char: "好", pinyin: "hǎo", meaning: "bene", options: ["hǎo", "hāo", "háo", "hào"] },
+            { char: "我", pinyin: "wǒ", meaning: "io", options: ["wǒ", "wō", "wó", "wò"] },
+            { char: "是", pinyin: "shì", meaning: "essere", options: ["shì", "shī", "shí", "shǐ"] },
+            { char: "的", pinyin: "de", meaning: "di", options: ["de", "dē", "dé", "dè"] },
+            { char: "在", pinyin: "zài", meaning: "stare", options: ["zài", "zāi", "zái", "zǎi"] },
+            { char: "有", pinyin: "yǒu", meaning: "avere", options: ["yǒu", "yōu", "yóu", "yòu"] },
+            { char: "人", pinyin: "rén", meaning: "persona", options: ["rén", "rēn", "rěn", "rèn"] },
+            { char: "中", pinyin: "zhōng", meaning: "centro", options: ["zhōng", "zhóng", "zhǒng", "zhòng"] },
+            { char: "国", pinyin: "guó", meaning: "paese", options: ["guó", "guō", "guǒ", "guò"] },
+{ char: "爱", pinyin: "ài", meaning: "amare", options: ["ài", "āi", "ǎi", "ái"] },
+            { char: "八", pinyin: "bā", meaning: "otto", options: ["bā", "bá", "bǎ", "bà"] },
+             { char: "爸爸", pinyin: "bàba", meaning: "papà", options: ["bàba", "bāba", "bǎba", "bába"] },
+             { char: "杯子", pinyin: "bēizi", meaning: "bicchiere/tazza", options: ["bēizi", "běizi", "báizi", "bàizi"] },
+              { char: "北京", pinyin: "Běijīng", meaning: "Pechino", options: ["Běijīng", "Báijīng", "Bǎijīng", "Bàijīng"] },
+             { char: "不", pinyin: "bù", meaning: "no/non", options: ["bù", "bú", "bū", "bǔ"] },
+             { char: "菜", pinyin: "cài", meaning: "verdura/pietanza", options: ["cài", "cǎi", "cái", "cāi"] },
+               { char: "茶", pinyin: "chá", meaning: "tè", options: ["chá", "chā", "chǎ", "chà"] },
+               { char: "吃", pinyin: "chī", meaning: "mangiare", options: ["chī", "chí", "chǐ", "chì"] },
+               { char: "出租车", pinyin: "chūzūchē", meaning: "taxi", options: ["chūzūchē", "chǔzūchē", "chūzǔchē", "chūzūchè"] },
+               { char: "天", pinyin: "tiān", meaning: "cielo", options: ["tiān", "tián", "tiǎn", "tiàn"] },
+               { char: "学", pinyin: "xué", meaning: "studiare", options: ["xué", "xuē", "xuě", "xuè"] },
+               { char: "见", pinyin: "jiàn", meaning: "vedere", options:     ["jiàn", "jiān", "jiǎn", "jián"] },
+               { char: "来", pinyin: "lái", meaning: "venire", options: ["lái", "lāi", "lǎi", "làị"] },
+                { char: "去", pinyin: "qù", meaning: "andare", options: ["qù", "qū", "qǔ", "qú"] },
+                { char: "吃", pinyin: "chī", meaning: "mangiare", options: ["chī", "chǐ", "chí", "chì"] },
+                { char: "喝", pinyin: "hē", meaning: "bere", options: ["hē", "hé", "hě", "hè"] },
+                { char: "小", pinyin: "xiǎo", meaning: "piccolo", options: ["xiǎo", "xiāo", "xiáo", "xiào"] }
+        ];
+
+        // Data SDK handler
+        const dataHandler = {
+            onDataChanged(data) {
+                gameData = data;
+                updateScoreDisplay();
+            }
+        };
+
+        // Element SDK setup
+        async function onConfigChange(config) {
+            const appTitle = config.app_title || defaultConfig.app_title;
+            const welcomeMessage = config.welcome_message || defaultConfig.welcome_message;
+            const scoreLabel = config.score_label || defaultConfig.score_label;
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+            const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+            document.getElementById('app-title').textContent = appTitle;
+            document.getElementById('welcome-message').textContent = welcomeMessage;
+            document.getElementById('score-label').textContent = scoreLabel;
+
+            document.body.style.backgroundColor = backgroundColor;
+            document.body.style.color = textColor;
+
+            // Apply colors to game cards
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                card.style.backgroundColor = surfaceColor;
+                card.style.color = textColor;
+            });
+
+            // Apply colors to buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                if (button.id === 'back-btn') {
+                    button.style.backgroundColor = secondaryColor;
+                    button.style.color = '#ffffff';
+                } else {
+                    button.style.backgroundColor = primaryColor;
+                    button.style.color = '#ffffff';
+                }
+            });
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["app_title", config.app_title || defaultConfig.app_title],
+                ["welcome_message", config.welcome_message || defaultConfig.welcome_message],
+                ["score_label", config.score_label || defaultConfig.score_label]
+            ]);
+        }
+
+        // Initialize SDKs
+        async function initializeApp() {
+            if (window.elementSdk) {
+                await window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues
+                });
+            }
+
+            if (window.dataSdk) {
+                const initResult = await window.dataSdk.init(dataHandler);
+                if (!initResult.isOk) {
+                    console.error("Failed to initialize data SDK");
+                }
+            }
+        }
+
+        // Game functions
+        function startGame(gameType) {
+            document.getElementById('game-menu').classList.add('hidden');
+            document.getElementById('game-area').classList.remove('hidden');
+            
+            startTime = Date.now();
+            startTimer();
+            currentScore = 0;
+
+            switch(gameType) {
+                case 'radicals':
+                    initRadicalsGame();
+                    break;
+                case 'evolution':
+                    initEvolutionGame();
+                    break;
+                case 'logic':
+                    initLogicGame();
+                    break;
+                case 'memory':
+                    initMemoryGame();
+                    break;
+                case 'stroke':
+                    initStrokeGame();
+                    break;
+                case 'pronunciation':
+                    initPronunciationGame();
+                    break;
+            }
+        }
+
+        function showMenu() {
+            document.getElementById('game-area').classList.add('hidden');
+            document.getElementById('results-area').classList.add('hidden');
+            document.getElementById('game-menu').classList.remove('hidden');
+            
+            // Hide all games
+            document.getElementById('radicals-game').classList.add('hidden');
+            document.getElementById('evolution-game').classList.add('hidden');
+            document.getElementById('logic-game').classList.add('hidden');
+            document.getElementById('memory-game').classList.add('hidden');
+            document.getElementById('stroke-game').classList.add('hidden');
+            document.getElementById('pronunciation-game').classList.add('hidden');
+            
+            stopTimer();
+        }
+
+        function startTimer() {
+            gameTimer = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                document.getElementById('game-timer').textContent = `Tempo: ${elapsed}s`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+        }
+
+        function updateScoreDisplay() {
+            const totalScore = gameData.reduce((sum, game) => sum + game.score, 0);
+            document.getElementById('current-score').textContent = totalScore;
+        }
+
+        async function saveGameResult(gameType, score) {
+            if (window.dataSdk && gameData.length < 999) {
+                const result = await window.dataSdk.create({
+                    game_type: gameType,
+                    score: score,
+                    completed_at: new Date().toISOString(),
+                    time_taken: Math.floor((Date.now() - startTime) / 1000)
+                });
+                
+                if (!result.isOk) {
+                    console.error("Failed to save game result");
+                }
+            }
+        }
+
+        // Radicals Game
+        function initRadicalsGame() {
+            document.getElementById('radicals-game').classList.remove('hidden');
+            
+            const character = complexCharacters[Math.floor(Math.random() * complexCharacters.length)];
+            document.getElementById('target-character').textContent = character.char;
+            document.getElementById('character-meaning').textContent = `"${character.meaning}"`;
+            
+            // Create radical options (correct + distractors)
+            const allRadicals = Object.keys(radicalMeanings);
+            const distractors = allRadicals.filter(r => !character.radicals.includes(r)).slice(0, 8);
+            const options = [...character.radicals, ...distractors];
+            
+            // Shuffle options
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            
+            const grid = document.getElementById('radicals-grid');
+            grid.innerHTML = '';
+            
+            options.forEach(radical => {
+                const button = document.createElement('button');
+                button.className = 'radical-option p-4 rounded-lg border-2 text-2xl chinese-char transition-all';
+                button.style.backgroundColor = window.elementSdk?.config?.surface_color || defaultConfig.surface_color;
+                button.style.borderColor = window.elementSdk?.config?.secondary_action_color || defaultConfig.secondary_action_color;
+                button.textContent = radical;
+                button.title = radicalMeanings[radical];
+                button.onclick = () => selectRadical(button, radical, character);
+                grid.appendChild(button);
+            });
+            
+            document.getElementById('found-count').textContent = '0';
+            document.getElementById('total-count').textContent = character.radicals.length;
+            document.getElementById('found-list').innerHTML = '';
+            
+            window.radicalsGame = {
+                character: character,
+                found: [],
+                total: character.radicals.length
+            };
+        }
+
+        function selectRadical(button, radical, character) {
+            if (character.radicals.includes(radical) && !window.radicalsGame.found.includes(radical)) {
+                // Correct radical
+                button.style.backgroundColor = '#dcfce7';
+                button.style.borderColor = '#16a34a';
+                button.disabled = true;
+                
+                window.radicalsGame.found.push(radical);
+                
+                // Add to found list
+                const foundList = document.getElementById('found-list');
+                const foundItem = document.createElement('span');
+                foundItem.className = 'px-3 py-1 rounded-full text-sm chinese-char';
+                foundItem.style.backgroundColor = window.elementSdk?.config?.primary_action_color || defaultConfig.primary_action_color;
+                foundItem.style.color = '#ffffff';
+                foundItem.textContent = `${radical} (${radicalMeanings[radical]})`;
+                foundList.appendChild(foundItem);
+                
+                document.getElementById('found-count').textContent = window.radicalsGame.found.length;
+                
+                if (window.radicalsGame.found.length === window.radicalsGame.total) {
+                    setTimeout(() => endGame('radicals', 'Completo!'), 1000);
+                }
+            } else {
+                // Wrong radical
+                button.style.backgroundColor = '#fecaca';
+                button.style.borderColor = '#dc2626';
+                setTimeout(() => {
+                    button.style.backgroundColor = window.elementSdk?.config?.surface_color || defaultConfig.surface_color;
+                    button.style.borderColor = window.elementSdk?.config?.secondary_action_color || defaultConfig.secondary_action_color;
+                }, 1000);
+            }
+        }
+
+        // Evolution Game
+        function initEvolutionGame() {
+            document.getElementById('evolution-game').classList.remove('hidden');
+            
+            const character = complexCharacters[Math.floor(Math.random() * complexCharacters.length)];
+            const evolution = [...character.evolution];
+            
+            // Show target character and meaning
+            document.getElementById('evolution-final-char').textContent = character.char;
+            document.getElementById('evolution-meaning').textContent = `"${character.meaning}"`;
+            
+            // Shuffle the pieces
+            const shuffled = [...evolution];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            const piecesContainer = document.getElementById('evolution-pieces');
+            piecesContainer.innerHTML = '';
+            
+            shuffled.forEach((stage, index) => {
+                const piece = document.createElement('div');
+                piece.className = 'evolution-piece p-4 rounded-lg border-2 cursor-pointer text-3xl text-center chinese-char transition-all hover:shadow-lg';
+                piece.style.backgroundColor = window.elementSdk?.config?.surface_color || defaultConfig.surface_color;
+                piece.style.borderColor = window.elementSdk?.config?.secondary_action_color || defaultConfig.secondary_action_color;
+                piece.textContent = stage;
+                piece.dataset.stage = stage;
+                piece.onclick = () => placeEvolutionPiece(piece, stage);
+                
+                // Add tooltip with stage description
+                const descriptions = {
+                    '🌲': 'Pittogramma originale',
+                    '林': 'Prima semplificazione', 
+                    '森林': 'Forma intermedia',
+                    '森': 'Carattere moderno',
+                    '☀️': 'Simbolo del sole',
+                    '日': 'Carattere sole',
+                    '🌙月': 'Simbolo luna',
+                    '明': 'Carattere moderno',
+                    '👤': 'Figura umana',
+                    '人': 'Carattere persona',
+                    '🌳木': 'Simbolo albero',
+                    '休': 'Carattere moderno',
+                    '👩': 'Figura femminile',
+                    '女': 'Carattere donna',
+                    '👶子': 'Simbolo bambino',
+                    '好': 'Carattere moderno',
+                    '🏠': 'Simbolo casa',
+                    '宀': 'Radicale tetto',
+                    '👩女': 'Carattere donna',
+                    '安': 'Carattere moderno'
+                };
+                
+                piece.title = descriptions[stage] || 'Fase evolutiva';
+                piecesContainer.appendChild(piece);
+            });
+            
+            // Reset slots
+            const slots = document.querySelectorAll('.evolution-slot');
+            slots.forEach(slot => {
+                slot.textContent = '?';
+                slot.style.backgroundColor = window.elementSdk?.config?.surface_color || defaultConfig.surface_color;
+                slot.style.borderColor = window.elementSdk?.config?.secondary_action_color || defaultConfig.secondary_action_color;
+                slot.dataset.filled = '';
+            });
+            
+            window.evolutionGame = {
+                correctOrder: evolution,
+                currentOrder: ['', '', '', ''],
+                character: character
+            };
+        }
+
+        function placeEvolutionPiece(piece, stage) {
+            const slots = document.querySelectorAll('.evolution-slot');
+            let emptySlot = null;
+            
+            for (let slot of slots) {
+                if (!slot.dataset.filled) {
+                    emptySlot = slot;
+                    break;
+                }
+            }
+            
+            if (emptySlot) {
+                emptySlot.textContent = stage;
+                emptySlot.dataset.filled = stage;
+                emptySlot.style.backgroundColor = window.elementSdk?.config?.primary_action_color || defaultConfig.primary_action_color;
+                emptySlot.style.color = '#ffffff';
+                
+                const position = parseInt(emptySlot.dataset.position);
+                window.evolutionGame.currentOrder[position] = stage;
+                
+                piece.style.opacity = '0.3';
+                piece.onclick = null;
+            }
+        }
+
+        function checkEvolution() {
+            const correct = window.evolutionGame.correctOrder;
+            const current = window.evolutionGame.currentOrder;
+            
+            let score = 0;
+            const slots = document.querySelectorAll('.evolution-slot');
+            
+            slots.forEach((slot, index) => {
+                if (current[index] === correct[index]) {
+                    slot.style.backgroundColor = '#16a34a';
+                    score += 25;
+                } else {
+                    slot.style.backgroundColor = '#dc2626';
+                }
+            });
+            
+            currentScore += score;
+            setTimeout(() => endGame('evolution', score), 2000);
+        }
+
+        // Logic Game - Interactive Composition
+        function initLogicGame() {
+            document.getElementById('logic-game').classList.remove('hidden');
+            
+            const puzzle = logicPuzzles[Math.floor(Math.random() * logicPuzzles.length)];
+            
+            // Create interactive composition area
+            document.getElementById('logic-pinyin').innerHTML = `
+                <div class="text-lg mb-4">Pronuncia: <strong>${puzzle.pinyin}</strong></div>
+                <div class="text-lg mb-4">Significato: <em>"${puzzle.meaning}"</em></div>
+            `;
+            document.getElementById('logic-meaning-hint').innerHTML = `
+                <div class="mb-4">
+                    <p class="text-md mb-3">🧩 <strong>Componi il carattere!</strong></p>
+                    <p class="text-sm mb-4">${puzzle.hint}</p>
+                </div>
+                <div class="composition-area mb-6">
+                    <p class="text-sm mb-2">Trascina i componenti nelle caselle per formare il carattere:</p>
+                    <div class="flex justify-center items-center gap-4 mb-4">
+                        <div id="component-slot-1" class="component-slot border-4 border-dashed w-20 h-20 flex items-center justify-center text-3xl chinese-char rounded-lg cursor-pointer" 
+                             style="border-color: #6b7280; background-color: #f9fafb;" onclick="clearSlot(1)">?</div>
+                        <div class="text-2xl">+</div>
+                        <div id="component-slot-2" class="component-slot border-4 border-dashed w-20 h-20 flex items-center justify-center text-3xl chinese-char rounded-lg cursor-pointer"
+                             style="border-color: #6b7280; background-color: #f9fafb;" onclick="clearSlot(2)">?</div>
+                        <div class="text-2xl">=</div>
+                        <div id="result-display" class="w-20 h-20 flex items-center justify-center text-4xl chinese-char rounded-lg border-2"
+                             style="border-color: #3b82f6; background-color: #dbeafe;">?</div>
+                    </div>
+                </div>
+            `;
+            
+            // Show the logical hint without revealing the answer
+            document.getElementById('logic-hint').innerHTML = `
+                <div class="available-components mb-4">
+                    <p class="text-sm font-medium mb-2">Componenti disponibili (clicca per usare):</p>
+                    <div class="flex justify-center gap-3 flex-wrap">
+                        ${puzzle.components.map(comp => 
+                            `<div class="component-piece border-2 rounded-lg p-3 cursor-pointer text-2xl chinese-char transition-all hover:shadow-md"
+                                 style="border-color: #6b7280; background-color: #ffffff;"
+                                 onclick="selectComponent('${comp}')" data-component="${comp}">${comp}</div>`
+                        ).join('')}
+                        ${getDistractorComponents(puzzle.components).map(comp => 
+                            `<div class="component-piece border-2 rounded-lg p-3 cursor-pointer text-2xl chinese-char transition-all hover:shadow-md"
+                                 style="border-color: #6b7280; background-color: #ffffff;"
+                                 onclick="selectComponent('${comp}')" data-component="${comp}">${comp}</div>`
+                        ).join('')}
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button id="check-composition" class="px-6 py-2 rounded-lg font-medium" 
+                            style="background-color: #3b82f6; color: white;" onclick="checkComposition()">
+                        Verifica Composizione
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('logic-feedback').classList.add('hidden');
+            
+            window.logicGame = {
+                puzzle: puzzle,
+                selectedComponents: [null, null],
+                answered: false
+            };
+        }
+
+        function getDistractorComponents(correctComponents) {
+            const allComponents = ["木", "水", "火", "土", "金", "石", "雨", "风", "雪", "云"];
+            return allComponents.filter(comp => !correctComponents.includes(comp)).slice(0, 4);
+        }
+
+        function selectComponent(component) {
+            if (window.logicGame.answered) return;
+            
+            // Find first empty slot
+            let targetSlot = null;
+            if (window.logicGame.selectedComponents[0] === null) {
+                targetSlot = 1;
+            } else if (window.logicGame.selectedComponents[1] === null) {
+                targetSlot = 2;
+            } else {
+                // Both slots full, replace first one
+                targetSlot = 1;
+            }
+            
+            // Update slot
+            const slotElement = document.getElementById(`component-slot-${targetSlot}`);
+            slotElement.textContent = component;
+            slotElement.style.backgroundColor = '#dbeafe';
+            slotElement.style.borderColor = '#3b82f6';
+            
+            window.logicGame.selectedComponents[targetSlot - 1] = component;
+            
+            // Disable the component piece
+            const componentPiece = document.querySelector(`[data-component="${component}"]`);
+            componentPiece.style.opacity = '0.3';
+            componentPiece.onclick = null;
+            
+            // Update result display if both slots filled
+            if (window.logicGame.selectedComponents[0] && window.logicGame.selectedComponents[1]) {
+                document.getElementById('result-display').textContent = '?';
+                document.getElementById('result-display').style.backgroundColor = '#fef3c7';
+            }
+        }
+
+        function clearSlot(slotNumber) {
+            if (window.logicGame.answered) return;
+            
+            const component = window.logicGame.selectedComponents[slotNumber - 1];
+            if (component) {
+                // Re-enable the component piece
+                const componentPiece = document.querySelector(`[data-component="${component}"]`);
+                if (componentPiece) {
+                    componentPiece.style.opacity = '1';
+                    componentPiece.onclick = () => selectComponent(component);
+                }
+                
+                // Clear slot
+                const slotElement = document.getElementById(`component-slot-${slotNumber}`);
+                slotElement.textContent = '?';
+                slotElement.style.backgroundColor = '#f9fafb';
+                slotElement.style.borderColor = '#6b7280';
+                
+                window.logicGame.selectedComponents[slotNumber - 1] = null;
+                
+                // Reset result display
+                document.getElementById('result-display').textContent = '?';
+                document.getElementById('result-display').style.backgroundColor = '#dbeafe';
+            }
+        }
+
+        function checkComposition() {
+            if (window.logicGame.answered) return;
+            
+            const selected = window.logicGame.selectedComponents;
+            const correct = window.logicGame.puzzle.components;
+            
+            if (!selected[0] || !selected[1]) {
+                const feedback = document.getElementById('logic-feedback');
+                feedback.textContent = 'Seleziona entrambi i componenti prima di verificare!';
+                feedback.className = 'text-center text-yellow-600 font-medium';
+                feedback.classList.remove('hidden');
+                setTimeout(() => feedback.classList.add('hidden'), 2000);
+                return;
+            }
+            
+            window.logicGame.answered = true;
+            const feedback = document.getElementById('logic-feedback');
+            
+            // Check if components match (order doesn't matter for some characters)
+            const isCorrect = (selected[0] === correct[0] && selected[1] === correct[1]) ||
+                             (selected[0] === correct[1] && selected[1] === correct[0]);
+            
+            if (isCorrect) {
+                document.getElementById('result-display').textContent = window.logicGame.puzzle.answer;
+                document.getElementById('result-display').style.backgroundColor = '#dcfce7';
+                document.getElementById('result-display').style.borderColor = '#16a34a';
+                
+                feedback.innerHTML = `
+                    <div class="text-green-600 font-bold mb-2">🎉 Perfetto!</div>
+                    <div class="text-sm">${window.logicGame.puzzle.explanation}</div>
+                `;
+                feedback.className = 'text-center';
+                currentScore += 50;
+            } else {
+                document.getElementById('result-display').textContent = '❌';
+                document.getElementById('result-display').style.backgroundColor = '#fecaca';
+                document.getElementById('result-display').style.borderColor = '#dc2626';
+                
+                feedback.innerHTML = `
+                    <div class="text-red-600 font-bold mb-2">Non corretto!</div>
+                    <div class="text-sm mb-2">La risposta era: <span class="chinese-char text-2xl">${window.logicGame.puzzle.answer}</span></div>
+                    <div class="text-sm">${window.logicGame.puzzle.explanation}</div>
+                `;
+                feedback.className = 'text-center';
+            }
+            
+            feedback.classList.remove('hidden');
+            
+            setTimeout(() => endGame('logic', currentScore), 4000);
+        }
+
+        function selectLogicAnswer(button, selected, correct) {
+            if (window.logicGame.answered) return;
+            
+            window.logicGame.answered = true;
+            const feedback = document.getElementById('logic-feedback');
+            
+            if (selected === correct) {
+                button.style.backgroundColor = '#dcfce7';
+                button.style.borderColor = '#16a34a';
+                feedback.textContent = 'Perfetto! Hai capito la logica! 🎉';
+                feedback.className = 'text-center text-green-600 font-bold';
+                currentScore += 30;
+            } else {
+                button.style.backgroundColor = '#fecaca';
+                button.style.borderColor = '#dc2626';
+                
+                // Show correct answer
+                const buttons = document.querySelectorAll('.logic-option');
+                buttons.forEach(btn => {
+                    if (btn.textContent === correct) {
+                        btn.style.backgroundColor = '#dcfce7';
+                        btn.style.borderColor = '#16a34a';
+                    }
+                });
+                
+                feedback.textContent = `La risposta corretta era: ${correct}`;
+                feedback.className = 'text-center text-red-600 font-bold';
+            }
+            
+            feedback.classList.remove('hidden');
+            
+            setTimeout(() => endGame('logic', currentScore), 3000);
+        }
+
+        // Memory Game
+        function initMemoryGame() {
+            document.getElementById('memory-game').classList.remove('hidden');
+            
+            // Create cards array (characters + meanings)
+            const cards = [];
+            memoryPairs.forEach(pair => {
+                cards.push({ type: 'char', content: pair.char, id: pair.char });
+                cards.push({ type: 'meaning', content: pair.meaning, id: pair.char });
+            });
+            
+            // Shuffle cards
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            
+            const grid = document.getElementById('memory-grid');
+            grid.innerHTML = '';
+            
+            cards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'memory-card p-4 rounded-lg border-2 cursor-pointer text-center transition-all min-h-20 flex items-center justify-center';
+                cardElement.style.backgroundColor = window.elementSdk?.config?.surface_color || defaultConfig.surface_color;
+                cardElement.style.borderColor = window.elementSdk?.config?.secondary_action_color || defaultConfig.secondary_action_color;
+                cardElement.dataset.cardId = card.id;
+                cardElement.dataset.cardType = card.type;
+                cardElement.dataset.flipped = 'false';
+                
+                const cardContent = document.createElement('div');
+                cardContent.className = 'card-content';
+                cardContent.innerHTML = `
+                    <div class="card-back">❓</div>
+                    <div class="card-front hidden ${card.type === 'char' ? 'chinese-char text-2xl' : 'text-sm'}">${card.content}</div>
+                `;
+                
+                cardElement.appendChild(cardContent);
+                cardElement.onclick = () => flipMemoryCard(cardElement);
+                grid.appendChild(cardElement);
+            });
+            
+            document.getElementById('memory-pairs').textContent = '0';
+            
+            window.memoryGame = {
+                flippedCards: [],
+                matchedPairs: 0,
+                totalPairs: memoryPairs.length
+            };
+        }
+
+        function flipMemoryCard(cardElement) {
+            if (cardElement.dataset.flipped === 'true' || window.memoryGame.flippedCards.length >= 2) return;
+            
+            cardElement.dataset.flipped = 'true';
+            cardElement.querySelector('.card-back').classList.add('hidden');
+            cardElement.querySelector('.card-front').classList.remove('hidden');
+            cardElement.style.backgroundColor = window.elementSdk?.config?.primary_action_color || defaultConfig.primary_action_color;
+            cardElement.style.color = '#ffffff';
+            
+            window.memoryGame.flippedCards.push(cardElement);
+            
+            if (window.memoryGame.flippedCards.length === 2) {
+                setTimeout(checkMemoryMatch, 1000);
+            }
+        }
+
+        function checkMemoryMatch() {
+            const [card1, card2] = window.memoryGame.flippedCards;
+            
+            if (card1.dataset.cardId === card2.dataset.cardId) {
+                // Match found
+                card1.style.backgroundColor = '#dcfce7';
+                card1.style.borderColor = '#16a34a';
+                card2.style.backgroundColor = '#dcfce7';
+                card2.style.borderColor = '#16a34a';
+                
+                window.memoryGame.matchedPairs++;
+                currentScore += 20;
+                
+                document.getElementById('memory-pairs').textContent = window.memoryGame.matchedPairs;
+                
+                if (window.memoryGame.matchedPairs === window.memoryGame.totalPairs) {
+                    setTimeout(() => endGame('memory', currentScore), 1000);
+                }
+            } else {
+                // No match - flip back
+                card1.dataset.flipped = 'false';
+                card1.querySelector('.card-back').classList.remove('hidden');
+                card1.querySelector('.card-front').classList.add('hidden');
+                card1.style.backgroundColor = window.elementSdk?.config?.surface_color || defaultConfig.surface_color;
+                card1.style.color = window.elementSdk?.config?.text_color || defaultConfig.text_color;
+                
+                card2.dataset.flipped = 'false';
+                card2.querySelector('.card-back').classList.remove('hidden');
+                card2.querySelector('.card-front').classList.add('hidden');
+                card2.style.backgroundColor = window.elementSdk?.config?.surface_color || defaultConfig.surface_color;
+                card2.style.color = window.elementSdk?.config?.text_color || defaultConfig.text_color;
+            }
+            
+            window.memoryGame.flippedCards = [];
+        }
+
+        // Stroke Order Game
+        function initStrokeGame() {
+            document.getElementById('stroke-game').classList.remove('hidden');
+            
+            const character = strokeCharacters[Math.floor(Math.random() * strokeCharacters.length)];
+            document.getElementById('stroke-character').textContent = character.char;
+            document.getElementById('stroke-meaning').textContent = `"${character.meaning}"`;
+            document.getElementById('stroke-total').textContent = character.strokes.length;
+            document.getElementById('stroke-current').textContent = '1';
+            
+            const pathsContainer = document.getElementById('stroke-paths');
+            pathsContainer.innerHTML = '';
+            
+            // Clear any existing SVG strokes
+            const svg = document.querySelector('#stroke-canvas svg');
+            const existingLines = svg.querySelectorAll('line');
+            existingLines.forEach(line => line.remove());
+            
+            // Create clickable areas for each stroke
+            character.strokes.forEach((stroke, index) => {
+                const strokeArea = document.createElement('div');
+                strokeArea.className = 'stroke-area absolute cursor-pointer';
+                strokeArea.style.left = Math.min(stroke.start.x, stroke.end.x) - 20 + 'px';
+                strokeArea.style.top = Math.min(stroke.start.y, stroke.end.y) - 20 + 'px';
+                strokeArea.style.width = Math.abs(stroke.end.x - stroke.start.x) + 40 + 'px';
+                strokeArea.style.height = Math.abs(stroke.end.y - stroke.start.y) + 40 + 'px';
+                strokeArea.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+                strokeArea.style.border = '2px dashed rgba(59, 130, 246, 0.3)';
+                strokeArea.style.borderRadius = '8px';
+                strokeArea.style.display = 'block';
+                strokeArea.dataset.strokeIndex = index;
+                strokeArea.title = stroke.description;
+                strokeArea.onclick = () => selectStroke(index, stroke);
+                pathsContainer.appendChild(strokeArea);
+            });
+            
+            window.strokeGame = {
+                character: character,
+                currentStroke: 0,
+                completedStrokes: []
+            };
+        }
+
+        function selectStroke(strokeIndex, stroke) {
+            if (strokeIndex !== window.strokeGame.currentStroke) {
+                // Wrong stroke order
+                const feedback = document.getElementById('stroke-feedback');
+                feedback.textContent = `Ordine sbagliato! Devi fare il tratto ${window.strokeGame.currentStroke + 1}: ${window.strokeGame.character.strokes[window.strokeGame.currentStroke].description}`;
+                feedback.className = 'text-center text-red-600 font-bold';
+                feedback.classList.remove('hidden');
+                setTimeout(() => feedback.classList.add('hidden'), 3000);
+                return;
+            }
+            
+            // Correct stroke - draw the line
+            const svg = document.querySelector('#stroke-canvas svg');
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', stroke.start.x);
+            line.setAttribute('y1', stroke.start.y);
+            line.setAttribute('x2', stroke.end.x);
+            line.setAttribute('y2', stroke.end.y);
+            line.setAttribute('stroke', window.elementSdk?.config?.primary_action_color || defaultConfig.primary_action_color);
+            line.setAttribute('stroke-width', '6');
+            line.setAttribute('stroke-linecap', 'round');
+            svg.appendChild(line);
+            
+            // Hide the clickable area
+            const strokeArea = document.querySelector(`[data-stroke-index="${strokeIndex}"]`);
+            strokeArea.style.display = 'none';
+            
+            window.strokeGame.completedStrokes.push(strokeIndex);
+            window.strokeGame.currentStroke++;
+            
+            document.getElementById('stroke-current').textContent = window.strokeGame.currentStroke + 1;
+            
+            if (window.strokeGame.currentStroke >= window.strokeGame.character.strokes.length) {
+                const feedback = document.getElementById('stroke-feedback');
+                feedback.textContent = 'Perfetto! Hai completato il carattere! 🎉';
+                feedback.className = 'text-center text-green-600 font-bold';
+                feedback.classList.remove('hidden');
+                setTimeout(() => endGame('stroke', 100), 2000);
+            } else {
+                const feedback = document.getElementById('stroke-feedback');
+                feedback.textContent = `Bene! Prossimo: ${window.strokeGame.character.strokes[window.strokeGame.currentStroke].description}`;
+                feedback.className = 'text-center text-green-600 font-medium';
+                feedback.classList.remove('hidden');
+                setTimeout(() => feedback.classList.add('hidden'), 2000);
+            }
+        }
+
+        // Pronunciation Game
+        function initPronunciationGame() {
+            document.getElementById('pronunciation-game').classList.remove('hidden');
+            
+            const character = pronunciationData[Math.floor(Math.random() * pronunciationData.length)];
+            document.getElementById('pronunciation-character').textContent = character.char;
+            document.getElementById('pronunciation-meaning').textContent = `"${character.meaning}"`;
+            
+            const optionsContainer = document.getElementById('pronunciation-options');
+            optionsContainer.innerHTML = '';
+            
+            character.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'pronunciation-option p-4 rounded-lg border-2 transition-all text-center text-xl';
+                button.style.backgroundColor = window.elementSdk?.config?.surface_color || defaultConfig.surface_color;
+                button.style.borderColor = window.elementSdk?.config?.secondary_action_color || defaultConfig.secondary_action_color;
+                button.textContent = option;
+                button.onclick = () => selectPronunciation(button, option, character.pinyin);
+                optionsContainer.appendChild(button);
+            });
+            
+            document.getElementById('pronunciation-feedback').classList.add('hidden');
+            
+            window.pronunciationGame = {
+                character: character,
+                answered: false
+            };
+        }
+
+        function selectPronunciation(button, selected, correct) {
+            if (window.pronunciationGame.answered) return;
+            
+            window.pronunciationGame.answered = true;
+            const feedback = document.getElementById('pronunciation-feedback');
+            
+            if (selected === correct) {
+                button.style.backgroundColor = '#dcfce7';
+                button.style.borderColor = '#16a34a';
+                feedback.textContent = 'Perfetto! Pronuncia corretta! 🗣️';
+                feedback.className = 'text-center text-green-600 font-bold';
+            } else {
+                button.style.backgroundColor = '#fecaca';
+                button.style.borderColor = '#dc2626';
+                
+                // Show correct answer
+                const buttons = document.querySelectorAll('.pronunciation-option');
+                buttons.forEach(btn => {
+                    if (btn.textContent === correct) {
+                        btn.style.backgroundColor = '#dcfce7';
+                        btn.style.borderColor = '#16a34a';
+                    }
+                });
+                
+                feedback.textContent = `La pronuncia corretta era: ${correct}`;
+                feedback.className = 'text-center text-red-600 font-bold';
+            }
+            
+            feedback.classList.remove('hidden');
+            
+            setTimeout(() => endGame('pronunciation', 50), 3000);
+        }
+
+        function endGame(gameType, score) {
+            stopTimer();
+            const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+            
+            document.getElementById('game-area').classList.add('hidden');
+            document.getElementById('results-area').classList.remove('hidden');
+            
+            document.getElementById('final-score').textContent = `Punteggio: ${score} punti`;
+            document.getElementById('final-time').textContent = `Tempo impiegato: ${timeTaken} secondi`;
+            
+            // Store current game type for continue function
+            window.currentGameType = gameType;
+            
+            saveGameResult(gameType, score);
+        }
+
+        function continueSameGame() {
+            // Hide results and restart the same game
+            document.getElementById('results-area').classList.add('hidden');
+            
+            if (window.currentGameType) {
+                startGame(window.currentGameType);
+            } else {
+                showMenu();
+            }
+        }
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'996277ec20b0ee67',t:'MTc2MTczODc2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

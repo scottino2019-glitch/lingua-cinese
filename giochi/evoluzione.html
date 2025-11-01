@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evoluzione Caratteri Cinesi</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100%;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #6c5ce7;
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            font-size: 1.1rem;
+            color: #636e72;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #6c5ce7;
+        }
+
+        .word-info {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .word-meaning {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .word-pinyin {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .game-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .characters-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .character-card {
+            background: white;
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .character-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #6c5ce7;
+        }
+
+        .character-card.selected {
+            border-color: #6c5ce7;
+            background: #f1f2f6;
+            transform: translateY(-3px);
+        }
+
+        .character-card.correct {
+            border-color: #00b894;
+            background: #d5f4e6;
+        }
+
+        .character-card.incorrect {
+            border-color: #e17055;
+            background: #ffeaa7;
+        }
+
+        .character-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .character {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .character-period {
+            font-size: 0.9rem;
+            color: #636e72;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .character-era {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .order-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #6c5ce7;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .timeline-display {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 100px;
+            border: 2px dashed #ddd;
+        }
+
+        .timeline-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timeline-item {
+            background: white;
+            border: 2px solid #6c5ce7;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3436;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: #6c5ce7;
+            margin: 0 5px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5f3dc4;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #74b9ff;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #0984e3;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.success {
+            background: #d5f4e6;
+            color: #00b894;
+            border: 2px solid #00b894;
+        }
+
+        .feedback.error {
+            background: #ffeaa7;
+            color: #e17055;
+            border: 2px solid #e17055;
+        }
+
+        .level-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .level-btn {
+            padding: 10px 20px;
+            border: 2px solid #6c5ce7;
+            background: white;
+            color: #6c5ce7;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .level-btn.active {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .level-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .characters-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .character {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <main class="container">
+   <header class="header">
+    <h1 class="title" id="gameTitle">Evoluzione Caratteri Cinesi</h1>
+    <div class="instructions" id="instructions">
+     Clicca sui caratteri nell'ordine cronologico corretto per ricostruire l'evoluzione storica.
+    </div>
+   </header>
+   <div class="level-selector"><button class="level-btn active" data-level="0">Facile</button> <button class="level-btn" data-level="1">Medio</button> <button class="level-btn" data-level="2">Difficile</button>
+   </div>
+   <div class="word-info">
+    <div class="word-meaning" id="wordMeaning">
+     Sole
+    </div>
+    <div class="word-pinyin" id="wordPinyin">
+     rì (日)
+    </div>
+   </div>
+   <div class="game-section">
+    <h2 class="section-title">La Tua Sequenza</h2>
+    <div class="timeline-display">
+     <div class="timeline-items" id="timelineItems">
+      <div style="color: #999; font-style: italic;">
+       Clicca sui caratteri per costruire la sequenza...
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="game-section">
+    <h2 class="section-title">Caratteri Disponibili</h2>
+    <div class="characters-container" id="charactersContainer"><!-- Characters will be generated here -->
+    </div>
+   </div>
+   <div class="controls"><button class="btn btn-primary" id="checkBtn">Verifica Ordine</button> <button class="btn btn-secondary" id="resetBtn">Ricomincia</button> <button class="btn btn-secondary" id="nextBtn" style="display: none;">Prossima Parola</button>
+   </div>
+   <div class="feedback" id="feedback"></div>
+  </main>
+  <script>
+        const defaultConfig = {
+            game_title: "Evoluzione Caratteri Cinesi",
+            instructions: "Clicca sui caratteri nell'ordine cronologico corretto per ricostruire l'evoluzione storica.",
+            check_button: "Verifica Ordine"
+        };
+
+        let config = { ...defaultConfig };
+        let currentLevel = 0;
+        let currentWordIndex = 0;
+        let selectedSequence = [];
+        let gameCompleted = false;
+
+        // Dati storici reali dell'evoluzione dei caratteri cinesi
+        const evolutionData = [
+            // Livello Facile - Caratteri base con evoluzioni chiare
+            [
+                {
+                    meaning: "Sole",
+                    pinyin: "rì (日)",
+                    evolution: [
+                        { char: "○", period: "Pittogramma", era: "3000 a.C.", desc: "Cerchio che rappresenta il sole" },
+                        { char: "☉", period: "Bronzo Antico", era: "1500 a.C.", desc: "Sole con punto centrale" },
+                        { char: "囗", period: "Bronzo Tardo", era: "800 a.C.", desc: "Forma quadrata stilizzata" },
+                        { char: "日", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                },
+                {
+                    meaning: "Luna",
+                    pinyin: "yuè (月)",
+                    evolution: [
+                        { char: "☽", period: "Pittogramma", era: "3000 a.C.", desc: "Mezzaluna" },
+                        { char: "⺼", period: "Bronzo", era: "1200 a.C.", desc: "Forma stilizzata" },
+                        { char: "⽉", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "月", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                },
+                {
+                    meaning: "Montagna",
+                    pinyin: "shān (山)",
+                    evolution: [
+                        { char: "⩙", period: "Pittogramma", era: "3000 a.C.", desc: "Tre picchi montani" },
+                        { char: "𡶸", period: "Bronzo", era: "1000 a.C.", desc: "Stilizzazione bronzo" },
+                        { char: "屾", period: "Sigillo", era: "300 a.C.", desc: "Carattere sigillo" },
+                        { char: "山", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                },
+                {
+                    meaning: "Persona",
+                    pinyin: "rén (人)",
+                    evolution: [
+                        { char: "𠂉", period: "Pittogramma", era: "3000 a.C.", desc: "Figura umana di profilo" },
+                        { char: "𠂇", period: "Bronzo", era: "1200 a.C.", desc: "Stilizzazione" },
+                        { char: "⼈", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "人", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                },
+                {
+                    meaning: "Bocca",
+                    pinyin: "kǒu (口)",
+                    evolution: [
+                        { char: "◯", period: "Pittogramma", era: "3000 a.C.", desc: "Bocca aperta" },
+                        { char: "◦", period: "Bronzo", era: "1200 a.C.", desc: "Cerchio più piccolo" },
+                        { char: "⼝", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "口", period: "Moderno", era: "200 d.C.", desc: "Forma quadrata" }
+                    ]
+                },
+                {
+                    meaning: "Occhio",
+                    pinyin: "mù (目)",
+                    evolution: [
+                        { char: "👁", period: "Pittogramma", era: "3000 a.C.", desc: "Occhio con pupilla" },
+                        { char: "𥃭", period: "Bronzo", era: "1200 a.C.", desc: "Stilizzazione" },
+                        { char: "⽬", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "目", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                }
+            ],
+            // Livello Medio - Caratteri più complessi
+            [
+                {
+                    meaning: "Acqua",
+                    pinyin: "shuǐ (水)",
+                    evolution: [
+                        { char: "∿", period: "Pittogramma", era: "3000 a.C.", desc: "Onde d'acqua" },
+                        { char: "氵", period: "Bronzo", era: "1200 a.C.", desc: "Tre gocce" },
+                        { char: "⽔", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "水", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                },
+                {
+                    meaning: "Fuoco",
+                    pinyin: "huǒ (火)",
+                    evolution: [
+                        { char: "𤆍", period: "Pittogramma", era: "3000 a.C.", desc: "Fiamme che salgono" },
+                        { char: "炎", period: "Bronzo", era: "1000 a.C.", desc: "Due fiamme" },
+                        { char: "⽕", period: "Sigillo", era: "300 a.C.", desc: "Carattere sigillo" },
+                        { char: "火", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                },
+                {
+                    meaning: "Albero",
+                    pinyin: "mù (木)",
+                    evolution: [
+                        { char: "🌳", period: "Pittogramma", era: "3000 a.C.", desc: "Albero con rami" },
+                        { char: "𣎳", period: "Bronzo", era: "1200 a.C.", desc: "Stilizzazione" },
+                        { char: "⽊", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "木", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                },
+                {
+                    meaning: "Casa",
+                    pinyin: "jiā (家)",
+                    evolution: [
+                        { char: "𠖔", period: "Pittogramma", era: "3000 a.C.", desc: "Casa con tetto" },
+                        { char: "宀", period: "Bronzo", era: "1200 a.C.", desc: "Tetto stilizzato" },
+                        { char: "⼧", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "家", period: "Moderno", era: "200 d.C.", desc: "Casa con maiale sotto" }
+                    ]
+                },
+                {
+                    meaning: "Mano",
+                    pinyin: "shǒu (手)",
+                    evolution: [
+                        { char: "✋", period: "Pittogramma", era: "3000 a.C.", desc: "Mano aperta" },
+                        { char: "𠂿", period: "Bronzo", era: "1200 a.C.", desc: "Stilizzazione" },
+                        { char: "⼿", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "手", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                },
+                {
+                    meaning: "Campo",
+                    pinyin: "tián (田)",
+                    evolution: [
+                        { char: "⊞", period: "Pittogramma", era: "3000 a.C.", desc: "Campo diviso" },
+                        { char: "𤰖", period: "Bronzo", era: "1200 a.C.", desc: "Terreno agricolo" },
+                        { char: "⽥", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "田", period: "Moderno", era: "200 d.C.", desc: "Forma quadrata divisa" }
+                    ]
+                }
+            ],
+            // Livello Difficile - Caratteri con trasformazioni complesse
+            [
+                {
+                    meaning: "Cavallo",
+                    pinyin: "mǎ (马)",
+                    evolution: [
+                        { char: "𢒠", period: "Pittogramma", era: "3000 a.C.", desc: "Profilo di cavallo" },
+                        { char: "馬", period: "Bronzo", era: "1000 a.C.", desc: "Forma tradizionale" },
+                        { char: "⾺", period: "Sigillo", era: "300 a.C.", desc: "Carattere sigillo" },
+                        { char: "马", period: "Semplificato", era: "1956 d.C.", desc: "Forma semplificata" }
+                    ]
+                },
+                {
+                    meaning: "Pesce",
+                    pinyin: "yú (鱼)",
+                    evolution: [
+                        { char: "𩵋", period: "Pittogramma", era: "3000 a.C.", desc: "Pesce con squame" },
+                        { char: "魚", period: "Bronzo", era: "1200 a.C.", desc: "Forma tradizionale" },
+                        { char: "⿂", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "鱼", period: "Semplificato", era: "1956 d.C.", desc: "Forma semplificata" }
+                    ]
+                },
+                {
+                    meaning: "Uccello",
+                    pinyin: "niǎo (鸟)",
+                    evolution: [
+                        { char: "𪃹", period: "Pittogramma", era: "3000 a.C.", desc: "Uccello con coda" },
+                        { char: "鳥", period: "Bronzo", era: "1000 a.C.", desc: "Forma tradizionale" },
+                        { char: "⿃", period: "Sigillo", era: "300 a.C.", desc: "Carattere sigillo" },
+                        { char: "鸟", period: "Semplificato", era: "1956 d.C.", desc: "Forma semplificata" }
+                    ]
+                },
+                {
+                    meaning: "Drago",
+                    pinyin: "lóng (龙)",
+                    evolution: [
+                        { char: "🐲", period: "Pittogramma", era: "3000 a.C.", desc: "Drago mitologico" },
+                        { char: "龍", period: "Bronzo", era: "1000 a.C.", desc: "Forma tradizionale" },
+                        { char: "⿓", period: "Sigillo", era: "300 a.C.", desc: "Carattere sigillo" },
+                        { char: "龙", period: "Semplificato", era: "1956 d.C.", desc: "Forma semplificata" }
+                    ]
+                },
+                {
+                    meaning: "Tartaruga",
+                    pinyin: "guī (龟)",
+                    evolution: [
+                        { char: "🐢", period: "Pittogramma", era: "3000 a.C.", desc: "Tartaruga vista dall'alto" },
+                        { char: "龜", period: "Bronzo", era: "1200 a.C.", desc: "Forma tradizionale" },
+                        { char: "⿔", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "龟", period: "Semplificato", era: "1956 d.C.", desc: "Forma semplificata" }
+                    ]
+                },
+                {
+                    meaning: "Elefante",
+                    pinyin: "xiàng (象)",
+                    evolution: [
+                        { char: "🐘", period: "Pittogramma", era: "3000 a.C.", desc: "Elefante con proboscide" },
+                        { char: "𧰼", period: "Bronzo", era: "1200 a.C.", desc: "Stilizzazione" },
+                        { char: "⿕", period: "Sigillo", era: "400 a.C.", desc: "Carattere sigillo" },
+                        { char: "象", period: "Moderno", era: "200 d.C.", desc: "Forma attuale" }
+                    ]
+                }
+            ]
+        ];
+
+        function initializeGame() {
+            setupEventListeners();
+            loadWord();
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.level-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    currentLevel = parseInt(e.target.dataset.level);
+                    currentWordIndex = 0;
+                    updateLevelButtons();
+                    loadWord();
+                });
+            });
+
+            document.getElementById('checkBtn').addEventListener('click', checkSequence);
+            document.getElementById('resetBtn').addEventListener('click', resetGame);
+            document.getElementById('nextBtn').addEventListener('click', nextWord);
+        }
+
+        function updateLevelButtons() {
+            document.querySelectorAll('.level-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.dataset.level) === currentLevel) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function loadWord() {
+            const word = evolutionData[currentLevel][currentWordIndex];
+            document.getElementById('wordMeaning').textContent = word.meaning;
+            document.getElementById('wordPinyin').textContent = word.pinyin;
+            
+            createCharacterCards(word.evolution);
+            resetGame();
+        }
+
+        function createCharacterCards(evolution) {
+            const container = document.getElementById('charactersContainer');
+            container.innerHTML = '';
+            
+            // Mescola i caratteri per renderli casuali
+            const shuffledEvolution = [...evolution].sort(() => Math.random() - 0.5);
+            
+            shuffledEvolution.forEach((stage, index) => {
+                const card = document.createElement('div');
+                card.className = 'character-card';
+                card.dataset.correctIndex = evolution.indexOf(stage);
+                card.dataset.cardIndex = index;
+                
+                card.innerHTML = `
+                    <div class="character">${stage.char}</div>
+                    <div class="character-period">${stage.period}</div>
+                    <div class="character-era">${stage.era}</div>
+                `;
+                
+                card.addEventListener('click', () => selectCharacter(card, stage));
+                container.appendChild(card);
+            });
+        }
+
+        function selectCharacter(card, stage) {
+            if (card.classList.contains('disabled') || gameCompleted) return;
+            
+            // Aggiungi alla sequenza
+            selectedSequence.push({
+                card: card,
+                stage: stage,
+                correctIndex: parseInt(card.dataset.correctIndex)
+            });
+            
+            // Aggiorna visualmente
+            card.classList.add('selected', 'disabled');
+            const orderNumber = document.createElement('div');
+            orderNumber.className = 'order-number';
+            orderNumber.textContent = selectedSequence.length;
+            card.appendChild(orderNumber);
+            
+            updateTimeline();
+        }
+
+        function updateTimeline() {
+            const timelineItems = document.getElementById('timelineItems');
+            
+            if (selectedSequence.length === 0) {
+                timelineItems.innerHTML = '<div style="color: #999; font-style: italic;">Clicca sui caratteri per costruire la sequenza...</div>';
+                return;
+            }
+            
+            timelineItems.innerHTML = '';
+            
+            selectedSequence.forEach((item, index) => {
+                if (index > 0) {
+                    const arrow = document.createElement('span');
+                    arrow.className = 'arrow';
+                    arrow.textContent = '→';
+                    timelineItems.appendChild(arrow);
+                }
+                
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.textContent = item.stage.char;
+                timelineItems.appendChild(timelineItem);
+            });
+        }
+
+        function checkSequence() {
+            if (selectedSequence.length === 0) {
+                showFeedback('Seleziona almeno un carattere!', 'error');
+                return;
+            }
+            
+            const word = evolutionData[currentLevel][currentWordIndex];
+            
+            if (selectedSequence.length !== word.evolution.length) {
+                showFeedback('Devi selezionare tutti i caratteri!', 'error');
+                return;
+            }
+            
+            let isCorrect = true;
+            
+            selectedSequence.forEach((item, index) => {
+                if (item.correctIndex !== index) {
+                    isCorrect = false;
+                    item.card.classList.add('incorrect');
+                } else {
+                    item.card.classList.add('correct');
+                }
+            });
+            
+            if (isCorrect) {
+                showFeedback('🎉 Perfetto! Hai ricostruito correttamente l\'evoluzione storica!', 'success');
+                gameCompleted = true;
+                document.getElementById('nextBtn').style.display = 'inline-block';
+                document.getElementById('checkBtn').style.display = 'none';
+            } else {
+                showFeedback('❌ L\'ordine non è corretto. Studia le date e riprova!', 'error');
+            }
+        }
+
+        function resetGame() {
+            selectedSequence = [];
+            gameCompleted = false;
+            
+            document.querySelectorAll('.character-card').forEach(card => {
+                card.classList.remove('selected', 'disabled', 'correct', 'incorrect');
+                const orderNumber = card.querySelector('.order-number');
+                if (orderNumber) {
+                    orderNumber.remove();
+                }
+            });
+            
+            updateTimeline();
+            hideFeedback();
+            
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('checkBtn').style.display = 'inline-block';
+        }
+
+        function nextWord() {
+            currentWordIndex = (currentWordIndex + 1) % evolutionData[currentLevel].length;
+            loadWord();
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback ${type}`;
+            feedback.style.display = 'block';
+        }
+
+        function hideFeedback() {
+            document.getElementById('feedback').style.display = 'none';
+        }
+
+        // SDK degli elementi
+        async function onConfigChange(newConfig) {
+            config = { ...defaultConfig, ...newConfig };
+            
+            document.getElementById('gameTitle').textContent = config.game_title || defaultConfig.game_title;
+            document.getElementById('instructions').textContent = config.instructions || defaultConfig.instructions;
+            document.getElementById('checkBtn').textContent = config.check_button || defaultConfig.check_button;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["game_title", config.game_title || defaultConfig.game_title],
+                ["instructions", config.instructions || defaultConfig.instructions],
+                ["check_button", config.check_button || defaultConfig.check_button]
+            ]);
+        }
+
+        // Inizializza l'SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Inizializza il gioco
+        document.addEventListener('DOMContentLoaded', initializeGame);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99750412c37a525c',t:'MTc2MTkzMzI0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
