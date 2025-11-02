@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="it" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lettore PDF con Quaderno</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .grid-paper {
+            background-image: 
+                linear-gradient(to right, #e5e7eb 1px, transparent 1px),
+                linear-gradient(to bottom, #e5e7eb 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        
+        .notes-textarea {
+            background-image: 
+                linear-gradient(to right, #d1d5db 1px, transparent 1px),
+                linear-gradient(to bottom, #d1d5db 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0px 0px;
+            line-height: 40px;
+            padding: 0px;
+            font-size: 20px;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        .pdf-viewer {
+            border: 2px solid #d1d5db;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Default: Mobile-first vertical layout */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+            height: calc(100% - 140px); /* Account for header */
+        }
+        
+        .books-section {
+            width: 100%;
+            height: 300px;
+            flex-shrink: 0;
+        }
+        
+        .pdf-section {
+            width: 100%;
+            height: 400px;
+            flex-shrink: 0;
+        }
+        
+        .notes-section {
+            width: 100%;
+            height: 300px;
+            flex-shrink: 0;
+        }
+        
+        .book-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .book-button {
+            transition: all 0.3s ease;
+        }
+
+        .book-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .book-button.active {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            border-width: 3px;
+        }
+        
+        .book-icon {
+            font-size: 1.5rem;
+        }
+        
+        .notes-textarea {
+            font-size: 20px;
+            background-size: 40px 40px;
+            line-height: 40px;
+            background-position: 0px 0px;
+        }
+
+        /* Desktop layout - horizontal on large screens */
+        @media (min-width: 1024px) {
+            .main-container {
+                flex-direction: row;
+                gap: 1.5rem;
+                height: calc(100% - 160px);
+            }
+            
+            .books-section {
+                width: 300px;
+                height: auto;
+            }
+            
+            .pdf-section {
+                flex: 1;
+                height: auto;
+            }
+            
+            .notes-section {
+                width: 350px;
+                height: auto;
+            }
+            
+            .book-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .book-icon {
+                font-size: 2rem;
+            }
+            
+            .notes-textarea {
+                font-size: 28px;
+                background-size: 60px 60px;
+                line-height: 60px;
+                background-position: 0px 0px;
+            }
+        }
+
+        .error-message {
+            background: #fee2e2;
+            border: 2px solid #fecaca;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-blue-50 to-indigo-100 font-sans">
+  <div class="h-full flex flex-col max-w-7xl mx-auto"><!-- Header -->
+   <header class="bg-white shadow-lg rounded-b-2xl mx-4 mt-4 p-6">
+    <div class="text-center">
+     <h1 class="text-4xl font-bold text-blue-900 flex items-center justify-center gap-3">📚 <span>Lettore PDF con Quaderno</span></h1>
+     <p class="text-gray-600 mt-2">Clicca su un libro per aprire il PDF e prendi appunti sul quaderno a quadretti grandi</p>
+    </div>
+   </header><!-- Main Content -->
+   <div class="main-container"><!-- Books Section -->
+    <div class="books-section bg-white rounded-2xl shadow-lg flex flex-col overflow-hidden">
+     <div class="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">📖 <span>I Miei Libri</span></h2>
+      <p class="text-xs text-gray-600 mt-1">Cartella: ./libri/</p>
+     </div>
+     <div class="flex-1 overflow-y-auto p-3">
+      <div class="book-grid"><!-- Matematica --> <button class="book-button w-full bg-gradient-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 rounded-lg text-left border-2 border-blue-300" data-pdf="#" data-title="Matematica - Algebra">
+        <div class="flex flex-col items-center text-center gap-1"><span class="book-icon">📐</span>
+         <div>
+          <h3 class="font-bold text-gray-800">Matematica</h3>
+          <p class="text-gray-600">matematica.pdf</p>
+         </div>
+        </div></button> <!-- Fisica --> <button class="book-button w-full bg-gradient-to-r from-green-100 to-green-200 hover:from-green-200 hover:to-green-300 rounded-lg text-left border-2 border-green-300" data-pdf="#" data-title="Fisica - Meccanica">
+        <div class="flex flex-col items-center text-center gap-1"><span class="book-icon">⚛️</span>
+         <div>
+          <h3 class="font-bold text-gray-800">Fisica</h3>
+          <p class="text-gray-600">fisica.pdf</p>
+         </div>
+        </div></button> <!-- Chimica --> <button class="book-button w-full bg-gradient-to-r from-purple-100 to-purple-200 hover:from-purple-200 hover:to-purple-300 rounded-lg text-left border-2 border-purple-300" data-pdf="#" data-title="Chimica Organica">
+        <div class="flex flex-col items-center text-center gap-1"><span class="book-icon">🧪</span>
+         <div>
+          <h3 class="font-bold text-gray-800">Chimica</h3>
+          <p class="text-gray-600">chimica.pdf</p>
+         </div>
+        </div></button> <!-- Storia --> <button class="book-button w-full bg-gradient-to-r from-orange-100 to-orange-200 hover:from-orange-200 hover:to-orange-300 rounded-lg text-left border-2 border-orange-300" data-pdf="#" data-title="Storia Contemporanea">
+        <div class="flex flex-col items-center text-center gap-1"><span class="book-icon">🏛️</span>
+         <div>
+          <h3 class="font-bold text-gray-800">Storia</h3>
+          <p class="text-gray-600">storia.pdf</p>
+         </div>
+        </div></button> <!-- Letteratura --> <button class="book-button w-full bg-gradient-to-r from-red-100 to-red-200 hover:from-red-200 hover:to-red-300 rounded-lg text-left border-2 border-red-300" data-pdf="#" data-title="Letteratura Italiana">
+        <div class="flex flex-col items-center text-center gap-1"><span class="book-icon">📝</span>
+         <div>
+          <h3 class="font-bold text-gray-800">Letteratura</h3>
+          <p class="text-gray-600">letteratura.pdf</p>
+         </div>
+        </div></button> <!-- Biologia --> <button class="book-button w-full bg-gradient-to-r from-teal-100 to-teal-200 hover:from-teal-200 hover:to-teal-300 rounded-lg text-left border-2 border-teal-300" data-pdf="#" data-title="Biologia Cellulare">
+        <div class="flex flex-col items-center text-center gap-1"><span class="book-icon">🔬</span>
+         <div>
+          <h3 class="font-bold text-gray-800">Biologia</h3>
+          <p class="text-gray-600">biologia.pdf</p>
+         </div>
+        </div></button> <!-- Inglese --> <button class="book-button w-full bg-gradient-to-r from-pink-100 to-pink-200 hover:from-pink-200 hover:to-pink-300 rounded-lg text-left border-2 border-pink-300" data-pdf="#" data-title="Inglese Avanzato">
+        <div class="flex flex-col items-center text-center gap-1"><span class="book-icon">🇬🇧</span>
+         <div>
+          <h3 class="font-bold text-gray-800">Inglese</h3>
+          <p class="text-gray-600">inglese.pdf</p>
+         </div>
+        </div></button> <!-- Geografia --> <button class="book-button w-full bg-gradient-to-r from-yellow-100 to-yellow-200 hover:from-yellow-200 hover:to-yellow-300 rounded-lg text-left border-2 border-yellow-300" data-pdf="#" data-title="Geografia Mondiale">
+        <div class="flex flex-col items-center text-center gap-1"><span class="book-icon">🌍</span>
+         <div>
+          <h3 class="font-bold text-gray-800">Geografia</h3>
+          <p class="text-gray-600">geografia.pdf</p>
+         </div>
+        </div></button>
+      </div>
+     </div>
+    </div><!-- PDF Viewer -->
+    <div class="pdf-section bg-white rounded-2xl shadow-lg flex flex-col overflow-hidden">
+     <div class="p-4 bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-200">
+      <h3 id="current-pdf-title" class="font-bold text-lg text-gray-800">Seleziona un libro per aprire il PDF</h3>
+     </div>
+     <div class="flex-1 p-4">
+      <div id="pdf-container" class="h-full">
+       <div id="no-pdf-selected" class="h-full flex items-center justify-center text-gray-500">
+        <div class="text-center">
+         <div class="text-8xl mb-6">
+          📖
+         </div>
+         <p class="text-2xl font-medium">Clicca su un libro per aprire il PDF</p>
+         <p class="text-gray-400 mt-2">Il visualizzatore PDF apparirà qui</p>
+         <div class="mt-6 p-4 bg-blue-50 rounded-lg max-w-md mx-auto">
+          <p class="text-sm text-blue-700">💡 <strong>Suggerimento:</strong> Assicurati che i tuoi PDF siano nella cartella <code class="bg-blue-100 px-1 rounded">./libri/</code></p>
+         </div>
+        </div>
+       </div><iframe id="pdf-viewer" class="w-full h-full pdf-viewer hidden" frameborder="0"></iframe>
+      </div>
+     </div>
+    </div><!-- Notes Panel -->
+    <div class="notes-section bg-white rounded-2xl shadow-lg flex flex-col overflow-hidden">
+     <div class="p-4 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
+      <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">📝 <span>Quaderno Esercizi</span></h2>
+      <p class="text-xs text-gray-600 mt-1">Quadretti extra-grandi per caratteri cinesi</p>
+     </div>
+     <div class="flex-1 p-3"><textarea id="notes-area" class="w-full h-full notes-textarea border-2 border-gray-200 rounded-xl resize-none focus:ring-4 focus:ring-green-200 focus:border-green-400 outline-none transition-all duration-200" placeholder="🈳 Quaderno a quadretti extra-grandi per caratteri cinesi
+
+✏️ Perfetto per:
+• Caratteri cinesi 汉字
+• Kanji giapponesi 漢字
+• Calligrafia orientale
+• Esercizi di scrittura
+• Radicali e tratti
+
+Puoi scrivere subito! Le note si salvano automaticamente."></textarea>
+     </div>
+     <div class="p-3 border-t border-gray-200">
+      <div id="save-status" class="text-center text-xs text-gray-500">
+       Quaderno pronto! Puoi scrivere subito
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        // State
+        let currentBook = null;
+        let bookNotes = JSON.parse(localStorage.getItem('bookNotes') || '{}');
+
+        // Save notes to localStorage
+        function saveBookNotes() {
+            localStorage.setItem('bookNotes', JSON.stringify(bookNotes));
+        }
+
+        // Select book and load PDF
+        function selectBook(pdfPath, title) {
+            currentBook = title;
+            
+            // Update title
+            document.getElementById('current-pdf-title').textContent = title;
+            
+            // Load PDF in iframe
+            const pdfViewer = document.getElementById('pdf-viewer');
+            const noPdfSelected = document.getElementById('no-pdf-selected');
+            
+            // Show loading state
+            pdfViewer.src = '';
+            pdfViewer.classList.remove('hidden');
+            noPdfSelected.classList.add('hidden');
+            
+            // Load the PDF
+            pdfViewer.src = pdfPath;
+            
+            // Handle PDF load errors
+            pdfViewer.onerror = function() {
+                showPdfError(pdfPath);
+            };
+            
+            // Load notes for this book
+            const notesArea = document.getElementById('notes-area');
+            notesArea.value = bookNotes[title] || '';
+            
+            // Update active state
+            document.querySelectorAll('.book-button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.title === title) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update save status
+            document.getElementById('save-status').textContent = 'Le note si salvano automaticamente per questo libro';
+        }
+
+        // Show PDF error
+        function showPdfError(pdfPath) {
+            const pdfContainer = document.getElementById('pdf-container');
+            pdfContainer.innerHTML = `
+                <div class="h-full flex items-center justify-center">
+                    <div class="text-center max-w-md">
+                        <div class="text-6xl mb-4">❌</div>
+                        <h3 class="text-xl font-bold text-red-600 mb-3">Errore nel caricamento del PDF</h3>
+                        <div class="error-message">
+                            <p class="font-medium">Non riesco a caricare il file:</p>
+                            <code class="block mt-2 text-sm">${pdfPath}</code>
+                        </div>
+                        <div class="mt-4 text-sm text-gray-600 space-y-2">
+                            <p><strong>Possibili soluzioni:</strong></p>
+                            <ul class="text-left list-disc list-inside space-y-1">
+                                <li>Verifica che il file esista nella cartella <code>./libri/</code></li>
+                                <li>Controlla che il nome del file sia corretto (maiuscole/minuscole)</li>
+                                <li>Assicurati che il file sia un PDF valido</li>
+                                <li>Prova a modificare il nome del file nel campo di testo</li>
+                            </ul>
+                        </div>
+                        <button onclick="location.reload()" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                            🔄 Ricarica Pagina
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Save notes
+        function saveNotes() {
+            if (!currentBook) return;
+            
+            const notesValue = document.getElementById('notes-area').value;
+            bookNotes[currentBook] = notesValue;
+            saveBookNotes();
+            
+            // Show save status
+            const saveStatus = document.getElementById('save-status');
+            saveStatus.textContent = '✅ Note salvate!';
+            saveStatus.classList.add('text-green-600');
+            
+            setTimeout(() => {
+                saveStatus.textContent = 'Le note si salvano automaticamente per questo libro';
+                saveStatus.classList.remove('text-green-600');
+            }, 2000);
+        }
+
+        // Event listeners for book buttons
+        document.querySelectorAll('.book-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const pdfPath = button.dataset.pdf;
+                const title = button.dataset.title;
+                selectBook(pdfPath, title);
+            });
+        });
+
+        // Auto-save notes on typing (debounced)
+        let saveTimeout;
+        document.getElementById('notes-area').addEventListener('input', () => {
+            if (!currentBook) return;
+            
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveNotes, 1000);
+        });
+
+        // Handle iframe load events
+        document.getElementById('pdf-viewer').addEventListener('load', function() {
+            // PDF loaded successfully
+            console.log('PDF caricato con successo');
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9982597e2161ee67',t:'MTc2MjA3MzA2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
