@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lezione 10</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+  .hero {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100px;
+    background: red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    z-index: 1000;
+    user-select: none;
+  }
+  .pages-container {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+  .page {
+    height: calc(100vh - 100px);
+    width: 100%;
+    background: white;
+    padding: 20px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0; left: 0;
+    transition: transform 0.7s ease;
+    overflow-y: auto;
+    color: #333;
+  }
+  .page h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 5px;
+    margin-top: 20px;
+  }
+  .page .pinyin {
+    font-weight: bold;
+    color: #cc0099;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  table, th, td {
+    border: 1px solid #888;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">Grammatica</div>
+
+<div class="pages-container">
+  <!-- Pagina 1 -->
+ <div class="page scrollable" style="overflow-y:auto; height:calc(100vh - 100px); padding:20px; background: white; color: #333;">
+  <h1>🇨🇳 Regole di Grammatica Cinese Fondamentali</h1>
+
+  <h2>L'espressione cinese "请问"</h2>
+  <p>L'espressione cinese <strong>请问</strong> (qǐngwèn) è un modo cortese e formale per iniziare una domanda. Tradotto letteralmente significa "per favore, chiedi" o "posso chiedere". È un po' come dire "Scusi, potrei chiederle...", "Mi scusi, le chiedo..." o "Le dispiace se chiedo..." in italiano.</p>
+  <p>Si usa in una vasta gamma di situazioni per introdurre una richiesta di informazione, una domanda su una direzione, un chiarimento e così via. È un segno di rispetto verso l'interlocutore.</p>
+
+  <h3>Quando e come usare "请问"</h3>
+  <ul>
+    <li>Per chiedere indicazioni: quando ti sei perso e hai bisogno di chiedere la strada a qualcuno.</li>
+    <li>Per fare una domanda generica: quando hai bisogno di chiedere qualcosa a uno sconosciuto o in un contesto formale.</li>
+    <li>Per interrompere gentilmente: se devi interrompere qualcuno che sta parlando per fare una domanda.</li>
+    <li>Per richiedere un'informazione specifica: ad esempio, in un negozio, in una stazione, o in un ufficio.</li>
+  </ul>
+
+  <h3>Esempi pratici</h3>
+  <p>Ecco alcuni esempi di come "请问" viene utilizzato in contesti diversi:</p>
+
+  <h4>1. Chiedere indicazioni:</h4>
+  <ul>
+    <li>请问, 银行在哪里？ (Qǐngwèn, yínháng zài nǎlǐ?) — Mi scusi, dov'è la banca?</li>
+    <li>请问, 到火车站怎么走？ (Qǐngwèn, dào huǒchēzhàn zěnme zǒu?) — Mi scusi, come si arriva alla stazione dei treni?</li>
+  </ul>
+
+  <h4>2. Fare una domanda in un negozio o ristorante:</h4>
+  <ul>
+    <li>请问, 这个多少钱？ (Qǐngwèn, zhège duōshao qián?) — Mi scusi, quanto costa questo?</li>
+    <li>请问, 你们有素食吗？ (Qǐngwèn, nǐmen yǒu sùshí ma?) — Mi scusi, avete opzioni vegetariane?</li>
+  </ul>
+
+  <h4>3. Chiedere un'informazione in un contesto più formale:</h4>
+  <ul>
+    <li>请问, 会议几点开始？ (Qǐngwèn, huìyì jǐ diǎn kāishǐ?) — Scusi, a che ora inizia la riunione?</li>
+    <li>请问, 您能帮我一下吗？ (Qǐngwèn, nín néng bāng wǒ yīxià ma?) — Mi scusi, potrebbe aiutarmi per favore?</li>
+  </ul>
+
+  <h4>4. In un contesto di conversazione generale, per fare una domanda specifica:</h4>
+  <ul>
+    <li>请问, 您是哪国人？ (Qǐngwèn, nín shì nǎ guórén?) — Posso chiederle, di che nazionalità è?</li>
+    <li>请问, 这个词是什么意思？ (Qǐngwèn, zhège cí shì shénme yìsi?) — Scusi, cosa significa questa parola?</li>
+  </ul>
+
+  <h3>Perché è importante usarlo?</h3>
+  <p>Usare "请问" mostra rispetto e buone maniere. In Cina, la cortesia e l'etichetta sociale sono molto apprezzate, e l'uso di questa espressione rende la tua comunicazione più gentile e ben accolta, specialmente quando parli con estranei o in situazioni formali.</p>
+  <p>In sintesi, "请问" è il tuo "passaporto" per iniziare una domanda in modo educato e rispettoso in cinese.</p>
+</div>
+
+  <!-- Pagina 2: nar.html integrato -->
+  <div class="page scrollable" style="overflow-y:auto; height:calc(100vh - 100px); padding:20px; background: white; color: #333;">
+  <h1>🇨🇳 L'espressione cinese "对" (duì)</h1>
+
+  <p>Questa è una delle parole più versatili e comuni in cinese, e può avere diversi significati e usi a seconda del contesto. Vediamoli nel dettaglio.</p>
+
+  <h2>Significati e Usi di "对" (duì)</h2>
+  <p>"对" può essere un aggettivo, un verbo, o una preposizione. Ecco i suoi usi principali:</p>
+
+  <h3>1. Aggettivo: "Corretto", "Giusto"</h3>
+  <p>Questo è probabilmente il significato più semplice e diretto.</p>
+  <ul>
+    <li><strong>Esempi:</strong></li>
+    <ul>
+      <li>你说得对。 (Nǐ shuō de duì.) - Hai detto giusto / Hai ragione.</li>
+      <li>这个答案不对。 (Zhège dá'àn bù duì.) - Questa risposta non è corretta.</li>
+      <li>对不对？ (Duì bu duì?) - Giusto o no? / È corretto? (Spesso usato come domanda retorica per chiedere conferma)</li>
+    </ul>
+  </ul>
+
+  <h3>2. Verbo: "Affrontare", "Trattare", "Contro"</h3>
+  <p>Quando usato come verbo, "对" implica un'azione di confronto o trattamento.</p>
+  <ul>
+    <li><strong>Esempi:</strong></li>
+    <ul>
+      <li>他对着我说。 (Tā duìzhe wǒ shuō.) - Lui mi ha parlato di fronte / Rivolgendosi a me.</li>
+      <li>他们对视了一眼。 (Tāmen duìshì le yī yǎn.) - Loro si sono guardati negli occhi.</li>
+      <li>对账 (duì zhàng) - Controllare/confrontare i conti (assicurarsi che corrispondano).</li>
+    </ul>
+  </ul>
+
+  <h3>3. Preposizione: "Verso", "A", "Nei confronti di", "Per"</h3>
+  <p>È l'uso più complesso e frequente...</p>
+  <ul>
+    <li><strong>a) Direzione o Obiettivo di un'Azione:</strong></li>
+    <ul>
+      <li>请对我笑一笑。 (Qǐng duì wǒ xiào yī xiào.) - Per favore, sorridimi (verso di me).</li>
+      <li>他对着门大喊。 (Tā duìzhe mén dà hǎn.) - Lui ha gridato forte verso la porta.</li>
+    </ul>
+
+    <li><strong>b) Atteggiamento, Sentimento o Trattamento:</strong></li>
+    <ul>
+      <li>我对他很好。 (Wǒ duì tā hěn hǎo.) - Io sono molto gentile con lui / Lo tratto molto bene.</li>
+      <li>她对学习很感兴趣。 (Tā duì xuéxí hěn gǎnxìngqù.) - Lei è molto interessata allo studio.</li>
+      <li>你对我的建议有什么看法？ (Nǐ duì wǒ de jiànyì yǒu shénme kànfǎ?) - Cosa ne pensi del mio suggerimento?</li>
+      <li>我们对这个结果很满意。 (Wǒmen duì zhège jiéguǒ hěn mǎnyì.) - Siamo molto soddisfatti di questo risultato.</li>
+    </ul>
+
+    <li><strong>c) Confronto o Riferimento a Qualcosa/Qualcuno:</strong></li>
+    <ul>
+      <li>这个价格对我们来说太贵了。 (Zhège jiàgé duì wǒmen lái shuō tài guì le.) - Questo prezzo per noi è troppo caro.</li>
+      <li>对比 (duìbǐ) - Confrontare (letteralmente: "contro" unire, mettere a confronto).</li>
+    </ul>
+
+    <li><strong>d) "Giusto per", "Nei confronti di" (in senso più astratto):</strong></li>
+    <ul>
+      <li>对了！ (Duì le!) - Giusto! / Esatto! / Ah, a proposito! (Spesso usato per ricordarsi qualcosa o per cambiare argomento).</li>
+      <li>这个对身体有好处。 (Zhège duì shēntǐ yǒu hǎochù.) - Questo fa bene alla salute.</li>
+    </ul>
+  </ul>
+
+  <h3>Punti Chiave da Ricordare</h3>
+  <ul>
+    <li>Posizionamento: Quando "对" è una preposizione, precede sempre l'oggetto o la persona a cui si riferisce. La struttura è spesso: Soggetto + 对 + Oggetto/Persona + Verbo/Aggettivo.</li>
+    <li>Contesto: Il significato di "对" dipende fortemente dal contesto.</li>
+    <li>Parola Frequente: È una parola di altissima frequenza, quindi capirne i vari usi è fondamentale per una buona comprensione del cinese.</li>
+  </ul>
+</div>
+
+  <!-- Pagina 3-->
+  <div class="page scrollable" style="overflow-y:auto; height:calc(100vh - 100px); padding:20px; background: white; color: #333;">
+  <h1>🇨🇳 Espressioni 那国人 e 那个人</h1>
+
+  <h2>1. 哪国人 (nǎ guó rén) - "Di che nazionalità?"</h2>
+  <p>Questa è un'espressione interrogativa comune che significa "Di che nazionalità sei?" o, più letteralmente, "persona di quale paese".</p>
+  <ul>
+    <li><strong>哪 (nǎ):</strong> Significa "quale" o "dove" (quando combinato con un suffisso di luogo come 儿 o 里). In questo contesto, introduce una domanda su una scelta o identificazione.</li>
+    <li><strong>国 (guó):</strong> Significa "paese", "nazione".</li>
+    <li><strong>人 (rén):</strong> Significa "persona", "gente".</li>
+  </ul>
+  <p>Quando le metti insieme, 哪国人 chiede a qualcuno di identificare la propria nazionalità o paese d'origine.</p>
+  <h3>Esempi:</h3>
+  <ul>
+    <li>你是哪国人？ (Nǐ shì nǎ guó rén?) — Di che nazionalità sei? / Di quale paese sei?</li>
+    <li>他不是中国人，他是哪国人？ (Tā bù shì Zhōngguórén, tā shì nǎ guó rén?) — Lui non è cinese, di che nazionalità è?</li>
+    <li>我不知道她是哪国人。(Wǒ bù zhīdào tā shì nǎ guó rén.) — Non so di che nazionalità sia.</li>
+  </ul>
+
+  <h2>2. 那个人 (nà ge rén) - "Quella persona"</h2>
+  <p>Questa espressione è un pronome dimostrativo che indica "quella persona" o "quell'individuo".</p>
+  <ul>
+    <li><strong>那 (nà):</strong> Significa "quello/a", pronome dimostrativo che indica qualcosa di lontano o non immediatamente presente.</li>
+    <li><strong>个 (ge):</strong> Classificatore generale usato davanti ai nomi quando accompagnati da numeri o pronomi dimostrativi.</li>
+    <li><strong>人 (rén):</strong> Significa "persona", "gente".</li>
+  </ul>
+  <p>Quindi, 那个人 significa specificamente "quella persona", riferendosi a qualcuno non immediatamente vicino a chi parla o ascolta.</p>
+  <h3>Esempi:</h3>
+  <ul>
+    <li>那个人是谁？ (Nà ge rén shì shuí?) — Quella persona chi è?</li>
+    <li>我认识那个人。 (Wǒ rènshi nà ge rén.) — Conosco quella persona.</li>
+    <li>那个人是我的朋友。 (Nà ge rén shì wǒ de péngyou.) — Quella persona è il mio amico/la mia amica.</li>
+  </ul>
+
+  <h2>Riepilogo delle Differenze Chiave</h2>
+  <ul>
+    <li><strong>哪国人 (nǎ guó rén):</strong> domanda sulla nazionalità usando il carattere interrogativo 哪 (nǎ).</li>
+    <li><strong>那个人 (nà ge rén):</strong> affermazione o riferimento a una persona specifica (lontana) usando il pronome dimostrativo 那 (nà).</li>
+    <li>La differenza tra 哪 (nǎ) e 那 (nà) è cruciale per il significato. La prima chiede informazioni, la seconda indica qualcosa o qualcuno.</li>
+  </ul>
+</div>
+
+    
+<!--pagina 4-->
+
+<div class="page scrollable" style="overflow-y:auto; height:calc(100vh - 100px); padding:20px; background: white; color: #333;">
+  <h1>Predicato Verbale</h1>
+  <p>Il predicato verbale è la componente più comune e fondamentale di una frase cinese, e di solito descrive un'azione, uno stato o un'esistenza. A differenza dell'italiano, dove il verbo si coniuga per persona, numero, tempo, ecc., in cinese il verbo rimane invariato. Il suo significato temporale, aspettuale e modale è espresso tramite avverbi, particelle aspettuali o il contesto.</p>
+  
+  <h2>Struttura Base del Predicato Verbale</h2>
+  <p>La struttura più semplice di una frase con predicato verbale è:</p>
+  <p><strong>Soggetto + Predicato Verbale (Verbo + Oggetto/Altro complemento)</strong></p>
+  <h3>Esempi Semplici:</h3>
+  <ul>
+    <li>我 学习 汉语。(Wǒ xuéxí Hànyǔ.)<br>Io studio cinese.</li>
+    <li>他 吃 饭。(Tā chī fàn.)<br>Lui mangia (il) riso / (un pasto).</li>
+    <li>她 去 学校。(Tā qù xuéxiào.)<br>Lei va a scuola.</li>
+  </ul>
+
+  <h2>Caratteristiche Chiave del Predicato Verbale Cinese</h2>
+
+  <h3>1. Assenza di Coniugazione</h3>
+  <p>I verbi non cambiano forma per indicare persona, numero o tempo.</p>
+  <ul>
+    <li>我吃 (wǒ chī) - io mangio</li>
+    <li>你吃 (nǐ chī) - tu mangi</li>
+    <li>他吃 (tā chī) - lui mangia</li>
+    <li>我们吃 (wǒmen chī) - noi mangiamo</li>
+  </ul>
+
+  <h3>2. Espressione del Tempo e dell'Aspetto</h3>
+  <p>Il tempo (passato, presente, futuro) e l'aspetto (azione completata, in corso, esperienza) sono espressi attraverso:</p>
+  <ul>
+    <li><strong>Avverbi di tempo:</strong></li>
+    <ul>
+      <li>我昨天去了商店。(Wǒ zuótiān qù le shāngdiàn.) - Io ieri sono andato al negozio.</li>
+      <li>我明天会来。(Wǒ míngtiān huì lái.) - Io domani verrò.</li>
+    </ul>
+    <li><strong>Particelle aspettuali:</strong></li>
+    <ul>
+      <li>了 (le): Indica il completamento di un'azione o un cambiamento di stato.</li>
+      <li>我吃了饭。(Wǒ chī le fàn.) - Ho mangiato (il pasto è completato).</li>
+      <li>下雨了。(Xiàyǔ le.) - Ha iniziato a piovere (cambiamento di stato).</li>
+      <li>着 (zhe): Indica un'azione in corso o uno stato continuato.</li>
+      <li>他穿着一件红色的衬衫。(Tā chuān zhe yī jiàn hóngsè de chènshān.) - Lui indossa (e sta indossando) una camicia rossa.</li>
+      <li>过 (guo): Indica un'esperienza (qualcosa che è accaduto almeno una volta in passato).</li>
+      <li>我去过中国。(Wǒ qù guo Zhōngguó.) - Sono stato in Cina (ho avuto l'esperienza di andare in Cina).</li>
+    </ul>
+  </ul>
+
+  <h3>3. Predicato Verbale con Complemento di Risultato (Complementi di Risultato)</h3>
+  <p>Molti verbi cinesi possono essere seguiti da un altro verbo o un aggettivo che indica il risultato dell'azione. Questo è un aspetto molto importante della grammatica cinese.</p>
+  <ul>
+    <li>看懂 (kàn dǒng) - capire leggendo (capire il risultato della lettura)</li>
+    <li>听见 (tīng jiàn) - sentire (sentire il risultato dell'ascolto)</li>
+    <li>吃完 (chī wán) - finire di mangiare (finire come risultato del mangiare)</li>
+    <li>做好 (zuò hǎo) - fare bene (fare con il risultato di essere buono/finito)</li>
+  </ul>
+  <h3>Esempi:</h3>
+  <ul>
+    <li>我看懂了这本书。(Wǒ kàndǒng le zhè běn shū.) - Ho capito questo libro.</li>
+    <li>他吃完了饭。(Tā chīwán le fàn.) - Ha finito di mangiare.</li>
+  </ul>
+
+  <h3>4. Predicato Verbale con Complemento di Direzione</h3>
+  <p>Verbi di movimento possono essere seguiti da complementi che indicano la direzione dell'azione (es. 上来, 下去, 进来, 出去, etc.).</p>
+  <ul>
+    <li>他跑进来了。(Tā pǎo jìnlái le.) - Lui è corso dentro (venendo verso chi parla).</li>
+    <li>请把书拿出去。(Qǐng bǎ shū ná chūqù.) - Per favore, porta fuori il libro.</li>
+  </ul>
+
+  <h3>5. Predicato Verbale con Complemento di Grado/Quantità</h3>
+  <p>Indica il grado o la quantità dell'azione o dell'aggettivo.</p>
+  <ul>
+    <li>她跑得很快。(Tā pǎo de hěn kuài.) - Lei corre molto velocemente.</li>
+    <li>他吃得很多。(Tā chī de hěn duō.) - Lui mangia molto.</li>
+  </ul>
+
+  <h3>6. Frasi con "把 (bǎ)" e "被 (bèi)"</h3>
+  <p>Queste due strutture speciali, spesso tradotte come voci passive o causali, coinvolgono un predicato verbale.</p>
+  <ul>
+    <li><strong>把 (bǎ):</strong> Sposta l'oggetto all'inizio della frase per enfatizzarlo o per indicare che è stato "gestito" dal soggetto.
+      <ul>
+        <li>我把书看了。(Wǒ bǎ shū kàn le.) - Ho letto il libro (ho preso il libro e l'ho letto).</li>
+      </ul>
+    </li>
+    <li><strong>被 (bèi):</strong> Indica la voce passiva.
+      <ul>
+        <li>书被他看了。(Shū bèi tā kàn le.) - Il libro è stato letto da lui.</li>
+      </ul>
+    </li>
+  </ul>
+
+</div>
+<!--pagina 5-->
+<div class="page scrollable" style="overflow-y:auto; height:calc(100vh - 100px); padding:20px; background: white; color: #333;">
+  <h1>Verbi di Copula e Predicato Verbale</h1>
+
+  <p>In cinese, non esiste un verbo "essere" flessibile come in italiano. Il suo equivalente, 是 (shì), è un verbo copula che si usa per identificare, classificare o definire.</p>
+  <p>● 我是学生。(Wǒ shì xuéshēng.) - Io sono uno studente.</p>
+
+  <p>Tuttavia, quando si descrive una qualità (come "è bello", "è stanco"), non si usa 是 (shì) se non per enfasi. L'aggettivo stesso funge da predicato verbale (spesso preceduto da 很, che in questo caso non significa "molto" ma ha una funzione grammaticale per rendere l'aggettivo predicativo).</p>
+  <ul>
+    <li>他很高兴。(Tā hěn gāoxìng.) - Lui è felice. (Letteralmente: Lui molto felice.)</li>
+    <li>这个苹果红。(Zhège píngguǒ hóng.) - Questa mela è rossa.</li>
+  </ul>
+
+  <h2>Negazione del Predicato Verbale</h2>
+  <p>La negazione si forma anteponendo 不 (bù) o 没 (méi) al verbo:</p>
+  <ul>
+    <li><strong>不 (bù):</strong> Per negare azioni abituali, presenti o future, o stati permanenti.</li>
+    <ul>
+      <li>我不吃肉。(Wǒ bù chī ròu.) - Non mangio carne.</li>
+      <li>他不是学生。(Tā bù shì xuéshēng.) - Lui non è uno studente.</li>
+    </ul>
+    <li><strong>没 (méi) / 没有 (méiyǒu):</strong> Per negare un'azione completata o un'esistenza.</li>
+    <ul>
+      <li>我没吃饭。(Wǒ méi chī fàn.) - Non ho mangiato.</li>
+      <li>他没有钱。(Tā méiyǒu qián.) - Non ha soldi.</li>
+    </ul>
+  </ul>
+
+  <p>In sintesi, il predicato verbale cinese è semplice nella sua forma (il verbo non si coniuga) ma ricco nella sua capacità di esprimere sfumature attraverso particelle aspettuali, complementi di risultato/direzione e l'ordine delle parole. Capire questi meccanismi è fondamentale per padroneggiare la lingua cinese.</p>
+
+  <h2>Alcuni esempi di verbi transitivi e intransitivi e la differenze tra l'italiano e il cinese</h2>
+
+  <p>Capire la distinzione tra verbi transitivi e intransitivi in cinese è fondamentale, ma la logica non è sempre la stessa dell'italiano. In cinese, questa classificazione è un po' più fluida e basata sull'uso piuttosto che su una coniugazione rigida.</p>
+
+  <h3>Cosa sono i Verbi Transitivi e Intransitivi?</h3>
+  <ul>
+    <li><strong>Verbo Transitivo (及物动词 - jíwù dòngcí):</strong> Un verbo che richiede un oggetto diretto per completare il suo significato. L'azione "transita" dal soggetto all'oggetto.</li>
+    <ul>
+      <li>Esempio italiano: "mangiare" (mangio cosa? un panino)</li>
+    </ul>
+    <li><strong>Verbo Intransitivo (不及物动词 - bùjíwù dòngcí):</strong> Un verbo che non richiede un oggetto diretto. L'azione si completa con il soggetto stesso.</li>
+    <ul>
+      <li>Esempio italiano: "dormire" (dormo e basta, non "dormo qualcosa")</li>
+    </ul>
+  </ul>
+
+  <h3>Differenze Cruciali tra Italiano e Cinese</h3>
+  <p>La principale differenza sta nel fatto che in cinese, molti verbi che in italiano sono puramente intransitivi, possono avere un oggetto in determinate circostanze, o viceversa. Inoltre, il cinese non usa preposizioni per introdurre oggetti indiretti o complementi di luogo con la stessa rigidità dell'italiano.</p>
+
+  <h3>1. Flessibilità e "Oggetti intrinseci"</h3>
+  <p>Molti verbi cinesi sono intrinsecamente "intransitivi" nel senso che possono stare da soli, ma se si vuole specificare cosa si sta facendo (anche se è parte dell'azione del verbo stesso), si può aggiungere un oggetto.</p>
+  <p>Esempio: 睡觉 (shuìjiào) - dormire</p>
+  <ul>
+    <li>我睡觉。(Wǒ shuìjiào.) - Io dormo. (Intransitivo come in italiano)</li>
+    <li>我睡了一个小时的觉。(Wǒ shuì le yī ge xiǎoshí de jiào.) - Ho dormito per un'ora. (Qui il 觉 riappare come oggetto, con il verbo 睡 al centro e il complemento di durata che lo separa dall'oggetto.)</li>
+  </ul>
+
+  <p>Questo fenomeno è molto comune e confonde spesso gli studenti, perché un singolo carattere funge da verbo, mentre il secondo completa l'idea o agisce come "oggetto intrinseco".</p>
+
+  <h3>2. Verbi che possono essere sia Transitivi che Intransitivi</h3>
+  <p>Molti verbi cinesi possono funzionare in entrambi i modi a seconda del contesto, senza bisogno di preposizioni aggiuntive che specifichino il tipo di complemento.</p>
+  <p>Esempio: 走 (zǒu) - camminare / andare</p>
+  <ul>
+    <li>他走。(Tā zǒu.) - Lui cammina. (Intransitivo)</li>
+    <li>他走路。(Tā zǒu lù.) - Lui cammina (sulla) strada / Lui cammina. (Qui 路 lù - strada, funge da oggetto. Sembra "camminare la strada", ma in realtà significa semplicemente "camminare" con un'enfasi sul movimento).</li>
+    <li>他走了。(Tā zǒu le.) - Lui è andato via. (Intransitivo, con 了 che indica il completamento o cambiamento di stato).</li>
+  </ul>
+  <p>Esempio: 跑步 (pǎobù) - correre</p>
+  <ul>
+    <li>我跑步。(Wǒ pǎobù.) - Io corro. (Intransitivo)</li>
+    <li>我跑了五公里的步。(Wǒ pǎo le wǔ gōnglǐ de bù.) - Ho corso cinque chilometri. (L'oggetto 步 riappare, separato dal verbo dal complemento di quantità).</li>
+  </ul>
+
+  <h3>3. Mancanza di Preposizioni per Oggetti Indiretti</h3>
+  <p>In italiano usiamo spesso preposizioni per gli oggetti indiretti ("dare a qualcuno", "parlare con qualcuno"). In cinese, i verbi che in italiano sono "intransitivi" e prendono complementi indiretti, spesso in cinese prendono un oggetto diretto o usano costruzioni preposizionali specifiche (come 跟/和 - gēn/hé - con; 给 - gěi - dare/a) che non corrispondono esattamente al concetto di transitività/intransitività italiana.</p>
+  <p>Esempio: 说话 (shuōhuà) - parlare (anche questo è un verbo separabile, con 话 huà - parola, come oggetto)</p>
+  <ul>
+    <li>我说话。(Wǒ shuōhuà.) - Io parlo. (Intransitivo)</li>
+    <li>我跟他说话。(Wǒ gēn tā shuōhuà.) - Io parlo con lui. (Qui, 跟 introduce un complemento di compagnia, non un oggetto diretto del verbo 说话.)</li>
+  </ul>
+  <p>Esempio: 给 (gěi) - dare (è un verbo che quasi sempre richiede un oggetto)</p>
+  <ul>
+    <li>我给他一本书。(Wǒ gěi tā yī běn shū.) - Io do a lui un libro. (Qui 他 è l'oggetto indiretto, 一本书 è l'oggetto diretto. In cinese 给 funziona come un verbo che prende due oggetti, il ricevente e ciò che viene dato.)</li>
+  </ul>
+
+  <h2>Conclusione</h2>
+  <p>La chiave per capire i verbi transitivi e intransitivi in cinese non è cercare una corrispondenza perfetta con l'italiano, ma piuttosto osservare:</p>
+  <ul>
+    <li>Se il verbo richiede un oggetto esplicito per avere senso.</li>
+    <li>Se il verbo è un verbo separabile (离合词), dove il secondo carattere agisce come un "oggetto" intrinseco.</li>
+    <li>Il contesto della frase: Molti verbi sono "flessibili" e possono funzionare sia con che senza un oggetto a seconda di ciò che si vuole esprimere.</li>
+  </ul>
+</div>
+<!--pagina 6-->
+<div class="page scrollable" style="overflow-y:auto; height:calc(100vh - 100px); padding:20px; background: white; color: #333;">
+  <h1>Struttura verbale di 学习 e 问</h1>
+
+  <h2>1. 学习 (xuéxí) - Studiare, Imparare</h2>
+  <p>● Tipo: Generalmente considerato un verbo transitivo, ma può essere usato anche intransitivamente. Può prendere un oggetto.</p>
+  <p>● Significato: "Studiare", "imparare".</p>
+  <h3>Usi principali:</h3>
+
+  <h4>a) Uso Intransitivo (senza oggetto esplicito)</h4>
+  <p>Se il contesto è chiaro o si parla di "studiare" in generale.</p>
+  <ul>
+    <li>我每天都学习。(Wǒ měitiān dōu xuéxí.)<br>Io ogni giorno studio. (Qui "studiare" è un'attività generica.)</li>
+    <li>他在图书馆学习。(Tā zài túshūguǎn xuéxí.)<br>Lui studia in biblioteca.</li>
+  </ul>
+
+  <h4>b) Uso Transitivo (con oggetto)</h4>
+  <p>Quando si specifica cosa si studia.</p>
+  <ul>
+    <li>我学习汉语。(Wǒ xuéxí Hànyǔ.)<br>Io studio cinese. (汉语 - Hànyǔ è l'oggetto diretto)</li>
+    <li>她学习历史。(Tā xuéxí lìshǐ.)<br>Lei studia storia. (历史 - lìshǐ è l'oggetto diretto)</li>
+    <li>他们一起学习文化。(Tāmen yīqǐ xuéxí wénhuà.)<br>Loro studiano cultura insieme.</li>
+  </ul>
+
+  <h4>c) Con Complementi di Durata o Frequenza</h4>
+  <p>Questi complementi vanno dopo il verbo o dopo l'oggetto.</p>
+  <ul>
+    <li>我学习了两个小时的汉语。(Wǒ xuéxí le liǎng ge xiǎoshí de Hànyǔ.)<br>Ho studiato cinese per due ore. (Qui il complemento di durata "两个小时" segue il verbo, poi l'oggetto è introdotto da "的".)</li>
+    <li>他每天学习三小时。(Tā měitiān xuéxí sān xiǎoshí.)<br>Lui ogni giorno studia tre ore. (Il complemento di durata può anche seguire direttamente il verbo se non c'è oggetto specifico.)</li>
+  </ul>
+
+  <h4>d) Con Complementi di Risultato</h4>
+  <p>Per indicare il risultato dello studio.</p>
+  <ul>
+    <li>我学习得很认真。(Wǒ xuéxí de hěn rènzhēn.)<br>Studio molto seriamente. (认真 - rènzhēn = serio/a. La particella 得 introduce un complemento di grado/maniera)</li>
+    <li>他学习得很好。(Tā xuéxí de hěn hǎo.)<br>Lui studia molto bene.</li>
+  </ul>
+
+  <h2>2. 问 (wèn) - Chiedere, Domandare</h2>
+  <p>● Tipo: Verbo transitivo. Generalmente richiede uno o due oggetti.</p>
+  <p>● Significato: "Chiedere", "domandare".</p>
+  <h3>Usi Principali:</h3>
+
+  <h4>a) Chiedere a Qualcuno (un oggetto)</h4>
+  <p>Il verbo 问 prende la persona a cui si chiede come oggetto diretto.</p>
+  <ul>
+    <li>我问他。(Wǒ wèn tā.)<br>Io chiedo a lui. (Lui è l'oggetto del chiedere, non c'è bisogno di una preposizione come "a".)</li>
+    <li>你可以问老师。(Nǐ kěyǐ wèn lǎoshī.)<br>Puoi chiedere al professore. (老师 - lǎoshī è l'oggetto diretto)</li>
+  </ul>
+
+  <h4>b) Chiedere Qualcosa (un oggetto)</h4>
+  <p>Può anche prendere direttamente la cosa che si chiede.</p>
+  <ul>
+    <li>我问一个问题。(Wǒ wèn yī ge wèntí.)<br>Io chiedo una domanda. (问题 - wèntí = domanda, è l'oggetto diretto)</li>
+    <li>她问价格。(Tā wèn jiàgé.)<br>Lei chiede il prezzo.</li>
+  </ul>
+
+  <h4>c) Chiedere Qualcosa a Qualcuno (due oggetti - Oggetto Diretto e Indiretto)</h4>
+  <p>A differenza dell'italiano, dove diremmo "chiedo a lui cosa", in cinese la struttura è tipicamente Soggetto + 问 + Persona (a cui si chiede) + Cosa (che si chiede).</p>
+  <ul>
+    <li>我问他一个问题。(Wǒ wèn tā yī ge wèntí.)<br>Io chiedo a lui una domanda. (他 = oggetto indiretto; 一 个问题 = oggetto diretto)</li>
+    <li>你可以问老师这个问题。(Nǐ kěyǐ wèn lǎoshī zhège wèntí.)<br>Puoi chiedere al professore questa domanda.</li>
+    <li>他问我你叫什么名字。(Tā wèn wǒ nǐ jiào shénme míngzi.)<br>Lui mi ha chiesto come ti chiami.</li>
+  </ul>
+
+  <h4>d) Usi con "请问 (qǐngwèn)"</h4>
+  <p>Come abbiamo visto, "请问" è una forma fissa per iniziare una domanda in modo cortese. Qui 问 è parte di un'espressione più ampia.</p>
+  <ul>
+    <li>请问，洗手间在哪儿？(Qǐngwèn, xǐshǒujiān zài nǎr?)<br>Scusi, dov'è il bagno?</li>
+    <li>请问，您有什么问题吗？(Qǐngwèn, nín yǒu shénme wèntí ma?)<br>Mi scusi, ha qualche domanda?</li>
+  </ul>
+
+  <h2>Differenze cruciali con l'italiano:</h2>
+  <ul>
+    <li>学习 (xuéxí): Mentre in italiano "studiare" può essere usato sia transitivamente ("studio la matematica") che intransitivamente ("studio in biblioteca"), in cinese è molto comune usare 学习 con un oggetto esplicito, anche se l'oggetto può essere omesso se il contesto è chiaro.</li>
+    <li>问 (wèn): Questa è la differenza più significativa. In italiano, diciamo "chiedere a qualcuno qualcosa". In cinese, 问 prende la persona a cui si chiede come oggetto diretto, e poi la cosa che si chiede come secondo oggetto (senza preposizioni come "a").</li>
+  </ul>
+</div>
+    </div>
+<script>
+  const pages = document.querySelectorAll('.page');
+  let currentPage = 0;
+  function showPage(index) {
+    pages.forEach((page, i) => {
+      if (i === index) {
+        page.style.transform = 'translateY(0)';
+      } else if (i < index) {
+        page.style.transform = 'translateY(-100%)';
+      } else {
+        page.style.transform = 'translateY(100%)';
+      }
+    });
+  }
+  showPage(currentPage);
+  window.addEventListener('wheel', (e) => {
+    if (e.deltaY > 0 && currentPage < pages.length - 1) {
+      currentPage++;
+      showPage(currentPage);
+    } else if (e.deltaY < 0 && currentPage > 0) {
+      currentPage--;
+      showPage(currentPage);
+    }
+  });
+
+  // Swipe touch
+  let startY = 0;
+  let endY = 0;
+  window.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) startY = e.touches[0].clientY;
+  });
+  window.addEventListener('touchmove', e => {
+    if (e.touches.length === 1) endY = e.touches[0].clientY;
+  });
+  window.addEventListener('touchend', () => {
+    const diff = startY - endY;
+    if (diff > 50 && currentPage < pages.length - 1) {
+      currentPage++;
+      showPage(currentPage);
+    } else if (diff < -50 && currentPage > 0) {
+      currentPage--;
+      showPage(currentPage);
+    }
+  });
+</script>
+
+</body>
+</html>
