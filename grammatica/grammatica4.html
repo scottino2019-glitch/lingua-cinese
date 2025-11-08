@@ -68,6 +68,10 @@
     padding: 8px;
     text-align: left;
   }
+button {
+  color: red;
+  text-color; white;
+}
 </style>
 </head>
 <body>
@@ -544,5 +548,12 @@
   });
 </script>
 
+<button onclick="scrollToTop()">Torna su</button>
+
+<script>
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 </body>
 </html>
