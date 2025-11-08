@@ -502,7 +502,13 @@ button {
   </ul>
 </div>
     </div>
+<button onclick="scrollToTop()">Torna su</button>
+
 <script>
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
   const pages = document.querySelectorAll('.page');
   let currentPage = 0;
   function showPage(index) {
@@ -548,12 +554,6 @@ button {
   });
 </script>
 
-<button onclick="scrollToTop()">Torna su</button>
 
-<script>
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-</script>
 </body>
 </html>
