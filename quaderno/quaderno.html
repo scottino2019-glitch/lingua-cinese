@@ -257,10 +257,13 @@
    </div>
    <div class="main-content">
     <div class="pdf-section">
-     <div class="pdf-controls"><button class="pdf-button" onclick="loadPDF('pdf/grammatica-cinese-I.pdf')"> 📄 Grammatica cinese</button> <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="handleFileSelect(event)"> <button class="pdf-button" onclick="document.getElementById('fileInput').click()"> 📁 Carica PDF Locale </button>
+     <div class="pdf-controls"><button class="pdf-button" onclick="loadPDF('pdf/grammatica-cinese-I.pdf')"> 📄 Grammatica cinese</button> 
      </div>
-     <div class="pdf-controls"><button class="pdf-button" onclick="loadPDF('pdf/caratteri.pdf')"> 📄 Grammatica cinese</button> <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="handleFileSelect(event)"> <button class="pdf-button" onclick="document.getElementById('fileInput').click()"> 📁 Carica PDF Locale </button>
-     </div>
+     <div class="pdf-controls"><button class="pdf-button" onclick="loadPDF('pdf/caratteri.pdf')">🉐 Caratteri</button>
+</div>
+ <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="handleFileSelect(event)"> <button class="pdf-button" onclick="document.getElementById('fileInput').click()"> 📁 Carica PDF Locale </button>
+
+     
      <div class="pdf-viewer" id="pdfViewer">
       <div class="pdf-placeholder">
        <p>🔍 Seleziona un PDF per iniziare la lettura</p>
