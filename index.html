@@ -7,7 +7,47 @@
     <!-- Tailwind via CDN script -->
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="description" content="Grammatica,Caratteri,Esercizi,Vocabolario della Lingua Cinese" />
-
+<style>
+  /* Stili modal completi */
+  #modalIframe {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+  }
+ #modalIframe.active {
+    display: flex;
+  }
+  #modalContent {
+    background: white;
+    border-radius: 8px;
+    width: 90vw;
+    max-width: 800px;
+    height: 80vh;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  #modalContent iframe {
+    width: 100%;
+    height: 100%;
+border: none;
+    border-radius: 8px;
+  }
+  #modalCloseBtn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.7rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+</style>
 
   </head>
   <body class="min-h-screen bg-gradient-to-r from-yellow-500 to-red-500 text-slate-800">
@@ -24,16 +64,16 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
  <!-- Card: forum -->
-        <a href="Https://linguacinese.forumfree.it" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+        <button class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition" onclick="openModal()">
           <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
-            <img src="img/forum.jpg" alt="Forum Lingua" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+            <img src="img/forum.jpg" alt="Vocanolario" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
           </div>
           <div class="p-4">
             <h3 class="text-lg font-semibold">Forum</h3>
             <p class="mt-1 text-sm text-slate-600">Forum per scambiarsi opinioni, chiedere informazioni sulla grammatica e altro.</p>
             <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
           </div>
-        </a>
+        </button>
         <!-- Card: Ideogrammi -->
         <a href="caratteri.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
           <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
@@ -69,7 +109,13 @@
             <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
           </div>
         </a>
-
+        <!-- Modal Completo -->
+<div id="modalIframe">
+  <div id="modalContent">
+    <button id="modalCloseBtn" onclick="closeModal()">&times;</button>
+    <iframe src="https://example.com" title="Esempio iframe"></iframe>
+  </div>
+</div>
         <!-- Card: Radicali -->
         <a href="Radicali_Cinesi.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
           <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
@@ -152,9 +198,26 @@
     </main>
 
 <footer class="bg-gradient-to-r from-red-600 to-yellow-600 text-white">
-<a href='https://www.free-counters.org/'>free-counters.org</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=2968a8036f6ac8edc919b0dec08fbce006d24e08'></script>
+<a href='https://www.free-counters.org/'>free-counters.org</a> <script type='text/javascript' src='https://scottino2019-glitch.github.io/Vocabolario-Cinese/'></script>
 <script type="text/javascript" src="https://freevisitorcounters.com/en/home/counter/1425479/t/13"></script>
 </footer>
+<script>
+  // Funzioni per aprire e chiudere modal
+  function openModal() {
+    document.getElementById('modalIframe').classList.add('active');
+  }
 
+  function closeModal() {
+    document.getElementById('modalIframe').classList.remove('active');
+  }
+
+  // Chiudi modal cliccando fuori dal contenuto
+  window.addEventListener('click', function(event) {
+    const modal = document.getElementById('modalIframe');
+    if(event.target === modal) {
+      closeModal();
+    }
+  });
+</script>
   </body>
 </html>
