@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento senza titolo</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+          body {
+    font-family: Arial, sans-serif;
+    background-color: #b22222;
+    color: #fff8dc;
+    padding: 20px;
+}
+.card {
+width: 300px; 
+border: 1px solid #eee; 
+border-radius: 12px; 
+padding: 18px; 
+margin: 30px auto; 
+box-shadow: 0 2px 8px rgba(0,0,0,0.09); text-align: center;
+color: black;
+background-color: white;
+}
+img {
+width:100%;
+ border-radius: 8px;
+}
+button {
+padding: 8px 18px; 
+border: none; 
+background: #1877f2; 
+color: #fff;
+ border-radius: 6px;
+ cursor: pointer;
+}
+h3 {
+margin: 14px 0 8px;
+}
+#modal1, #modal2 {
+display:none; 
+position:fixed;
+ z-index:1000; 
+left:0; top:0; 
+width:100vw; 
+height:100vh; background:rgba(0,0,0,0.7); 
+align-items:center; justify-content:center;
+}
+    </style>
+</head>
+<body>
+<section class="bg-gradient-to-r from-yellow-600 to-red-800 text-white py-20 shadow-2xl transition-all">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h1 class="text-5xl font-bold mb-6">Video</h1>
+    <p class="text-xl mb-8 opacity-90">Vocabolario</p>
+    
+  </div>
+</section>
+    <!-- Card -->
+<div class="card">
+  <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=300&q=80" alt="Immagine card">
+  <h3>Titolo Card</h3>
+  <p>Descrizione breve della card. Clicca sul pulsante per vedere il video.</p>
+<br>
+  <button data-modal="modal1">Guarda Video</button>
+</div>
+<div class="card">
+  <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=300&q=80" alt="Immagine card">
+  <h3>Titolo Card</h3>
+  <p>Descrizione breve della card. Clicca sul pulsante per vedere il video.</p>
+<br>
+  <button data-modal="modal2">Guarda Video</button>
+</div>
+
+<!-- Modal Video -->
+<div id="modal1" class="modal">
+  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
+    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
+    <h2 style="margin-top:0;">Video nel Modal</h2>
+    <video controls style="width:100%; max-width:600px;">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Il tuo browser non supporta il tag video.
+    </video>
+  </div>
+</div>
+<div id="modal2" class="modal">
+  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
+    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
+    <h2 style="margin-top:0;">Video nel Modal</h2>
+    <video controls style="width:100%; max-width:600px;">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Il tuo browser non supporta il tag video.
+    </video>
+  </div>
+</div>
+<footer class="bg-gradient-to-r from-yellow-600 to-red-800 text-white py-5 shadow-2xl transition-all text-center">
+<h3>Source video <a href=""></h3><button>Facebook</button></a>
+</footer>
+<script>
+// Apri il modal associato al pulsante
+document.querySelectorAll('button[data-modal]').forEach(button => {
+  button.addEventListener('click', () => {
+    const modalId = button.getAttribute('data-modal');
+    document.getElementById(modalId).style.display = 'flex';
+  });
+});
+
+// Chiudi il modal cliccando sulla "x"
+document.querySelectorAll('.modal .close').forEach(span => {
+  span.addEventListener('click', () => {
+    const modal = span.closest('.modal');
+    // Metti pausa al video dentro il modal
+    const video = modal.querySelector('video');
+    if(video) video.pause();
+    modal.style.display = 'none';
+  });
+});
+
+// Chiudi il modal cliccando fuori dal contenuto
+window.addEventListener('click', event => {
+  if(event.target.classList.contains('modal')) {
+    // Metti pausa al video dentro il modal
+    const video = event.target.querySelector('video');
+    if(video) video.pause();
+    event.target.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
