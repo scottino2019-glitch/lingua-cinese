@@ -38,7 +38,7 @@ color: #fff;
 h3 {
 margin: 14px 0 8px;
 }
-#modal1, #modal2, #modal3 {
+#modal1, #modal2, #modal3, #modal4, #modal5 {
 display:none; 
 position:fixed;
  z-index:1000; 
@@ -83,6 +83,22 @@ align-items:center; justify-content:center;
 <br>
   <button data-modal="modal3">Guarda Video</button>
 </div>
+<div class="card">
+  <img src="https://images.unsplash.com/photo-1678801451652-3a7991b94b35?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwzMHx8Q2luZXNlfGVufDB8fHx8MTc2MzM5MTMwN3ww&ixlib=rb-4.1.0&q=85" alt="Immagine card">
+  <h3>Luoghi</h3>
+  
+<br>
+  <button data-modal="modal4">Guarda Video</button>
+</div>
+
+<div class="card">
+  <img src="https://images.unsplash.com/photo-1691683268517-02ec5ebbc732?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyN3x8Q2luZXNlJTIwc2N1b2xhfGVufDB8fHx8MTc2MzM5MTYxMnww&ixlib=rb-4.1.0&q=85" alt="Immagine card">
+  <h3>Scuola-lavoro</h3>
+  
+<br>
+  <button data-modal="modal5">Guarda Video</button>
+</div>
+
 
 <!-- Modal Video -->
 <div id="modal1" class="modal">
@@ -111,6 +127,26 @@ align-items:center; justify-content:center;
     <h2 style="margin-top:0;">Video nel Modal</h2>
     <video controls style="width:100%; max-width:600px;">
       <source src="video/family.mp4" type="video/mp4">
+      Il tuo browser non supporta il tag video.
+    </video>
+  </div>
+</div>
+<div id="modal4" class="modal">
+  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
+    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
+    <h2 style="margin-top:0;">Video nel Modal</h2>
+    <video controls style="width:100%; max-width:600px;">
+      <source src="video/posti.mp4" type="video/mp4">
+      Il tuo browser non supporta il tag video.
+    </video>
+  </div>
+</div>
+<div id="modal5" class="modal">
+  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
+    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
+    <h2 style="margin-top:0;">Video nel Modal</h2>
+    <video controls style="width:100%; max-width:600px;">
+      <source src="video/scuola-lavoro.mp4" type="video/mp4">
       Il tuo browser non supporta il tag video.
     </video>
   </div>
