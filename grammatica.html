@@ -67,7 +67,10 @@
     <p>Grammatica</p>
 </header>
 
-<div class="container">
+  <input type="text" id="searchInput" placeholder="Cerca regola..." onkeyup="filterLinks()" style="width: 300px; padding: 8px; font-size: 16px;">
+</div>
+
+<div class="container" id="linkcontainer">
     <a href="grammatica/grammatica_cinese.html" class="card lezioni">📔Grammatica</a>
     <a href="grammatica/avverbi.html" class="card lezioni2">⏰Avverbi di tempo </a>
 <a href="grammatica/shi.html" class="card lezioni3">是-shí-verbo essere </a>
@@ -87,6 +90,24 @@
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
 </svg></a>
 </button>
+
+<script>
+function filterLinks() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const container = document.getElementById('linkContainer');
+  const links = container.getElementsByTagName('a');
+
+  for (let i = 0; i < links.length; i++) {
+    const linkText = links[i].textContent.toLowerCase();
+    if (linkText.includes(input)) {
+      links[i].style.display = '';
+    } else {
+      links[i].style.display = 'none';
+    }
+  }
+}
+</script>
+
 
 </body>
 </html>
