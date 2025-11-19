@@ -1,89 +1,214 @@
-<!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Lezione 10</title>
-<style>
-  html, body {
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
+    <meta charset="UTF-8" />
+    <title>Libro Interattivo</title>
+    <style>
+      /* Corpo pagina */
+body {
     font-family: Arial, sans-serif;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-  }
-  .hero {
+    line-height: 1.6;
+    margin: 20px;
+    color: #333;
+    text-decoration: none; /* Rimuove sottolineature testuali generali */
+}
+ /* Hero fisso in cima */
+  .hero-fisso {
     position: fixed;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100px;
-    background: red;
+    height: 80px; /* Altezza più equilibrata */
+    background-color: #3498db;
     color: white;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    justify-content: center;
     z-index: 1000;
-    user-select: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   }
-  .pages-container {
-    position: fixed;
-    top: 100px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
+
+  /* Menu fisso sotto l'hero */
+nav.menu-fisso {
+  display: flex;
+  justify-content: center; /* centra gli elementi del menu */
+  align-items: center;     /* allinea verticalmente */
+  gap: 25px;               /* spazio uniforme tra voci del menu */
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  height: 50px;
+  box-sizing: border-box;
+}
+
+nav.menu-fisso ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;           /* forma la lista orizzontale */
+  gap: 25px;
+}
+
+nav.menu-fisso ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;     /* impedisce a testo di andare a capo */
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+nav.menu-fisso ul li a:hover {
+  background-color: #3e5367;
+}
+
+  nav.menu-fisso ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    gap: 25px;
   }
-  .page {
-    height: calc(100vh - 100px);
-    width: 100%;
-    background: white;
-    padding: 20px;
-    box-sizing: border-box;
-    position: absolute;
-    top: 0; left: 0;
-    transition: transform 0.7s ease;
-    overflow-y: auto;
-    color: #333;
+
+  nav.menu-fisso ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
   }
-  .page h2 {
+
+  /* Contenuto pagina */
+  main.contenuto {
+    margin-top: 130px; /* Spazio somma hero + menu + margine */
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 20px;
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+/* Titoli h1, h2, h3 */
+h1, h2, h3 {
     color: #0056b3;
-    border-bottom: 2px solid #0056b3;
+    border-bottom: 1.5px solid #0056b3; /* bordo inferiore sottile */
     padding-bottom: 5px;
     margin-top: 20px;
-  }
-  .page .pinyin {
+    text-decoration: none; /* Assicura nessuna sottolineatura */
+}
+
+/* Specifica per eventuali h1 più grandi senza bordo */
+h1.no-border {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Classi specifiche per testo colorato */
+.pinyin {
     font-weight: bold;
-    color: #cc0099;
-  }
-  table {
+    color: #cc0000;
+}
+
+.chinese {
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+/* Esempi con sfondo azzurro chiaro e bordo sinistro */
+.example {
+    background-color: #e6f7ff;
+    border-left: 5px solid #007bff;
+    padding: 10px 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+/* Traduzioni in corsivo e colore grigio scuro */
+.translation {
+    font-style: italic;
+    color: #555;
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9em;
+    text-decoration: none;
+}
+
+/* Tabelle */
+table {
     border-collapse: collapse;
     width: 100%;
-  }
-  table, th, td {
+    text-decoration: none;
+}
+
+table, th, td {
     border: 1px solid #888;
-  }
-  th, td {
+}
+
+th, td {
     padding: 8px;
     text-align: left;
-  }
+    text-decoration: none;
+}
+
+
+
+/* Blocchi concettuali con sfondo verde chiaro */
+.concept-box {
+    background-color: #e0f2f1;
+    border: 1px solid #b2dfdb;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+/* Evidenziazioni */
+.highlight {
+    background-color: #fff9c4;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Link */
+a {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+
+  
 </style>
 </head>
 <body>
+<header class="hero-fisso">
+    
+            <h1>Il cinese per gli italiani Lezione 10</h1>
+       
+  
+</header>
 
-<div class="hero">Lezione 10
-
-<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95"> <a href="https://scottino2019-glitch.github.io/lingua-cinese/grammatica.html"> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>indietro</a></button>
-</div>
-
-
-<div class="pages-container">
-  <!-- Pagina 1 -->
-  <div class="page scrollable" style="overflow-y:auto; height:calc(100vh - 100px); padding:20px;">
-    <h1>🇨🇳 Regole di Grammatica Cinese Fondamentali</h1>
-
-    <h2>1. Gli Avverbi di Frequenza, Possibilità e Limitazione</h2>
+    <!-- Indice -->
+    <nav class="menu-fisso">
+        <h2>Indice</h2>
+        <ul>
+            <li><a href="#avverbi">Gli avverbi di frequenza</a></li>
+            <li><a href="#formule">Termini colloquiali e di cortesia</a></li>
+            <li><a href="#verbi">Verbi di moto e raddoppiamento</a></li>
+            <li><a href="#quale">那儿 / 那</a></li>
+            <li><a href="#avere">有: avere</a></li>
+            <li><a href="#linguistiche">一下儿, 在, 只</a></li>
+            <li><a href="#esempi">Vocabolario ed esempi d'uso</a></li>
+        </ul>
+    </nav>
+<main class="contenuto">
+    <!-- Sezioni -->
+    <section id="avverbi">
+        <h2>1. Gli Avverbi di Frequenza, Possibilità e Limitazione</h2>
 
     <h3>1.1. 没 (méi) - Negazione</h3>
     <p>Utilizzato per negare l'esistenza (con 有) o il completamento di un'azione nel passato.</p>
@@ -144,11 +269,12 @@
             <tr><td>你 <span class="chinese">只</span> 需要等一下。</td><td>Nǐ <span class="pinyin">zhǐ</span> xūyào děng yī xià.</td><td>Devi solo aspettare un attimo.</td></tr>
         </tbody>
     </table>
+<p>Per tornare all'<a href="#top">indice</a> o vai al <a href="#formule">Formule di cortesia</a>.</p>
+    </section>
 
-    <hr>
-
-    <h2>2. Termini Colloquiali e di Cortesia</h2>
-
+    <section id="formule">
+        <h2>Termini colloquiale e di cortesia</h2>
+       
     <h3>2.1. 事儿 (shìr) - Faccenda / Problema</h3>
     <p>Forma colloquiale (del Nord) di 事 (shì), significa "cosa", "affare", "problema".</p>
     <table>
@@ -202,10 +328,11 @@
             <tr><td><span class="chinese">不客气</span>！</td><td><span class="pinyin">Bú kèqi</span>!</td><td>Prego / Non c'è di che!</td><td>Risposta a "Grazie".</td></tr>
         </tbody>
     </table>
+        <p>Per tornare all'<a href="#top">indice</a> o tornare al <a href="#avverbi">avverbi di frequenza</a>.</p>
+    </section>
 
-    <hr>
-
-    <h2>3. Verbi di Moto e Raddoppiamento</h2>
+    <section id="verbi">
+       <h2>3. Verbi di Moto e Raddoppiamento</h2>
 
     <h3>3.1. 来 (lái) e 去 (qù) - Venire e Andare</h3>
     <p>Indicano la direzione del moto rispetto a chi parla (o al luogo di riferimento).</p>
@@ -247,53 +374,311 @@
             <tr><td>Bisillabico</td><td><strong>A B A B</strong> (es. 休息 → 休息休息)</td><td>我想 <span class="chinese">休息休息</span>。(Voglio riposare un po'.)</td></tr>
         </tbody>
     </table>
-</div>
+              <p>Per tornare all'<a href="#top">indice</a> o tornare al <a href="#formule">termini colloquiali e di cortesia</a>.</p>
+    </section>
+<section id="quale">
+ <h1>✨ Spiegazione Dettagliata di 那儿 (nàr) ✨</h1>
 
-  <!-- Pagina 2: nar.html integrato -->
-  <div class="page scrollable" style="background:#fffce6; transform: translateY(100%);">
-    <h2>Contenuto di nar.html</h2>
-    <!-- Qui inserisco il contenuto integrale del file nar.html -->
-    <!-- Esempio: -->
-    <p>La parola cinese 那儿 (nàr) è un pronome locale molto comune nella lingua cinese standard (Mandarino).</p>
-    <p>那儿 (那里 nàlǐ) è un sinonimo. Sebbene il significato sia lo stesso, ci sono alcune differenze regionali e stilistiche.</p>
-    <p><strong>那儿 (nàr)</strong> funziona come un avverbio di luogo...</p>
+    <p>La parola cinese <span class="chinese">那儿</span> (<span class="pinyin">nàr</span>) è un pronome locale molto comune nella lingua cinese standard (Mandarin).</p>
+
+    <h2>🎯 Significato e Pronuncia</h2>
+
     <ul>
-      <li>那儿 + verbo (post verbo)</li>
-      <li>那儿 + preposizione di luogo</li>
-      <li>Risposte a domande su "dove"</li>
+        <li><strong>Caratteri:</strong> <span class="chinese">那儿</span></li>
+        <li><strong>Pinyin:</strong> <span class="pinyin">nàr</span></li>
+        <li><strong>Significato:</strong> **Lì**, **là**, **quel posto**. Indica un luogo **distante** da chi parla e da chi ascolta (o comunque un luogo non immediatamente vicino).</li>
+        <li><strong>Struttura:</strong> È composto da <span class="chinese">那</span> (<span class="pinyin">nà</span>, "quello/quella") e <span class="chinese">儿</span> (<span class="pinyin">r</span>, suffisso locativo, spesso pronunciato come "rotacizzazione" - **ér** - che unisce il suono alla vocale precedente). La forma **rotacizzata** (nàr) è tipica del cinese parlato nel Nord, in particolare a Beijing.</li>
     </ul>
+
+    <hr>
+
+    <h2>🔄 Equivalenti e Variazioni</h2>
+
+    <p>那儿 (<span class="pinyin">nàr</span>) è essenzialmente un sinonimo di <span class="chinese">那里</span> (<span class="pinyin">nàli</span>). Sebbene il significato sia lo stesso, ci sono alcune differenze regionali e stilistiche:</p>
+
+    <ul>
+        <li><span class="chinese"><strong>那儿</strong></span> (<span class="pinyin">nàr</span>): Più comune nel **Nord della Cina** (es. Beijing) e nel linguaggio **colloquiale/parlato**.</li>
+        <li><span class="chinese"><strong>那里</strong></span> (<span class="pinyin">nàli</span>): Più comune nel **Sud della Cina** e in contesti leggermente più **formali** o nella **scrittura**.</li>
+        <li><strong>Nota:</strong> Entrambe le forme sono **corrette** e pienamente comprese in tutta la Cina.</li>
+    </ul>
+
+    <hr>
+
+    <h2>📚 Esempi di Utilizzo</h2>
+
+    <h3>1. Uso come Avverbio di Luogo</h3>
+
+    <p>那儿 (<span class="pinyin">nàr</span>) funziona come un avverbio di luogo, posizionandosi tipicamente **dopo il verbo** (per verbi che implicano movimento o collocazione) o **come soggetto/complemento** della frase.</p>
+
+    <div class="example">
+        <span class="chinese">我的书包在<strong>那儿</strong>。</span><br>
+        <span class="pinyin">Wǒ de shūbāo zài <strong>nàr</strong>.</span><br>
+        <span class="translation">Il mio zaino è **lì/là**.</span>
+    </div>
+
+    <div class="example">
+        <span class="chinese">你从<strong>那儿</strong>来吗？</span><br>
+        <span class="pinyin">Nǐ cóng <strong>nàr</strong> lái ma?</span><br>
+        <span class="translation">Vieni da **quel posto**?</span>
+    </div>
+
+    <h3>2. Uso come Oggetto di Preposizione (Direzione)</h3>
+
+    <p>Può essere usato con preposizioni di movimento o direzione come **去** (<span class="pinyin">qù</span>, andare).</p>
+
+    <div class="example">
+        <span class="chinese">我们明天要去<strong>那儿</strong>玩。</span><br>
+        <span class="pinyin">Wǒmen míngtiān yào qù <strong>nàr</strong> wán.</span><br>
+        <span class="translation">Domani andremo a divertirci **lì/là**.</span>
+    </div>
+
+    <h3>3. 那儿 come Risposta a un Domanda</h3>
+
+    <p>Spesso risponde alla domanda su dove si trova qualcosa o qualcuno, usando <span class="chinese">哪儿</span> (<span class="pinyin">nǎr</span> - "dove").</p>
+
+    <div class="example">
+        <strong>A:</strong> <span class="chinese">你的手机在<strong>哪儿</strong>？</span> (<span class="pinyin">Nǐ de shǒujī zài nǎr?</span>)<br>
+        <strong>B:</strong> <span class="chinese">它在桌子<strong>那儿</strong>。</span> (<span class="pinyin">Tā zài zhuōzi <strong>nàr</strong>.</span>)<br>
+        <span class="translation">**A:** Dov'è il tuo cellulare? **B:** È **lì** sul tavolo.</span>
+    </div>
+
+    <h3>4. 那儿 riferito a un Luogo Specifico</h3>
+
+    <p>Può riferirsi a un luogo menzionato in precedenza o ben noto nel contesto.</p>
+
+    <div class="example">
+        <span class="chinese">北京有很多好吃的菜。你喜欢<strong>那儿</strong>吗？</span><br>
+        <span class="pinyin">Běijīng yǒu hěnduō hǎochī de cài. Nǐ xǐhuān <strong>nàr</strong> ma?</span><br>
+        <span class="translation">A Pechino ci sono molti piatti deliziosi. Ti piace **quel posto** (Pechino)?</span>
+    </div>
+
+    <hr>
+
+    <h2>⭐ Punti Chiave da Ricordare</h2>
+
+    <ul>
+        <li>那儿 (<span class="pinyin">nàr</span>) e **那** (<span class="pinyin">nà</span>) sono **diversi**: <span class="chinese">那儿</span> è un **luogo** (lì/là); <span class="chinese">那</span> è un **aggettivo/pronome dimostrativo** (quello/quella).</li>
+        <li>那儿 (<span class="pinyin">nàr</span>) è il contrario di <span class="chinese"><strong>这儿</strong></span> (<span class="pinyin">zhèr</span>) che significa **qui** (vicino a chi parla).</li>
+    </ul>
+    <p>Per tornare all'<a href="#top">indice</a> o tornare al <a href="#verbi">verbi di moto e raddoppiamento</a>.</p>
+    </section>
+<section id="avere">
+ <h1>Il Verbo Cinese: 有 (yǒu)</h1>
+
+    <p>有 (yǒu) è un verbo fondamentale della lingua cinese. I suoi significati principali sono **"avere"** (possesso) e **"esserci"** (esistenza).</p>
+
+    <h2>1. Usi Dettagliati di 有 (yǒu)</h2>
+
+    <h3>A. Possesso (Avere)</h3>
+    <p>È l'uso più comune e indica il possesso di un oggetto, di una caratteristica o l'esistenza di una relazione.</p>
+    <ul>
+        <li>**Esempio 1 (Oggetto):** 我有三本书。(Wǒ yǒu sān běn shū.) - Io **ho** tre libri.</li>
+        <li>**Esempio 2 (Relazione/Famiglia):** 他有一个弟弟。(Tā yǒu yīgè dìdi.) - Lui **ha** un fratello minore.</li>
+    </ul>
+
+    <h3>B. Esistenza (Esserci / Ci sono)</h3>
+    <p>Usato per indicare che qualcosa **esiste** o è presente in un luogo specifico. Spesso si traduce con "c'è / ci sono".</p>
+    <ul>
+        <li>**Esempio 3 (Esistenza):** 桌子上有很多吃的。(Zhuōzi shang yǒu hěn duō chī de.) - Sul tavolo **ci sono** molte cose da mangiare.</li>
+    </ul>
+
+    <h3>C. Essere in grado di (Disponibilità)</h3>
+    <p>Può indicare la disponibilità di tempo o l'abilità necessaria per fare qualcosa.</p>
+    <ul>
+        <li>**Esempio 4 (Disponibilità di tempo):** 你有没有空？(Nǐ yǒu méi yǒu kòng?) - **Hai** tempo (sei libero) o no?</li>
+    </ul>
+
+    <h3>D. Comparazione Negativa</h3>
+    <p>Viene usato nella struttura **没有... 这么/那么...** per fare una comparazione, traducibile come "non è così... come...".</p>
+    <ul>
+        <li>**Esempio 5 (Comparazione):** 我的房间没有你的房间那么大。(Wǒ de fángjiān méiyǒu nǐ de fángjiān nàme dà.) - La mia stanza non **è così** grande **come** la tua.</li>
+    </ul>
+
+    <h2>2. La Negazione di 有 (yǒu)</h2>
+
+    <p>La negazione di 有 (yǒu) è **sempre** **没 (méi)** o **没有 (méiyǒu)**. È un'eccezione alla regola generale, in quanto **non si usa** 不 (bù).</p>
+    <ul>
+        <li>**Esempio 6 (Negazione):** 我<strong>没有</strong>钱。(Wǒ méiyǒu qián.) - Io **non ho** soldi.</li>
+        <li>**Domanda Semplificata A-non-A:** 你<strong>有</strong><strong>没有</strong>问题？(Nǐ **yǒu méiyǒu** wèntí?) - **Hai** o **non hai** domande?</li>
+    </ul>
+
+    <h2>3. La Differenza tra 有 (yǒu) e 在 (zài)</h2>
+
+    <p>在 (zài) significa **"stare"** (trovarsi) e indica la **posizione** fisica di qualcosa o qualcuno. Risponde alla domanda "dove?".</p>
+
     <table>
-      <thead>
-        <tr><th>Espressione</th><th>Significato</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>那儿</td><td>Pronome di luogo (lì)</td></tr>
-        <tr><td>哪里</td><td>Sino di 那儿 (regionale)</td></tr>
-        <tr><td>去那儿</td><td>Andare lì</td></tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th>Verbo</th>
+                <th>Significato Primario</th>
+                <th>Funzione</th>
+                <th>Focus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>有 (yǒu)</td>
+                <td>Avere / Esserci</td>
+                <td>Indica **esistenza** o **possesso** (Ci sono libri).</td>
+                <td>Sull'oggetto che esiste.</td>
+            </tr>
+            <tr>
+                <td>在 (zài)</td>
+                <td>Stare / Trovarsi</td>
+                <td>Indica la **posizione** specifica (Il libro è qui).</td>
+                <td>Sulla posizione del soggetto.</td>
+            </tr>
+        </tbody>
     </table>
-    <!-- Continua con tutto il contenuto originale -->
-  </div>
 
-  <!-- Pagina 3: ziar-zhi.html integrato del file allegato -->
-  <div class="page scrollable" style="background:#e0f7fa; transform: translateY(100%);">
-    <h2>Contenuto di ziar-zhi.html</h2>
-    <p><strong>Nota:</strong> La forma con la rotacizzazione (一下儿) è più comune a Beijing e nel Nord, mentre 一下 è diffusa in altre regioni e pienamente accettata.</p>
-
-    <h3>Strutture:</h3>
+    <h3>Contrasto negli Esempi</h3>
+    <p>Osservare come il soggetto della frase cambia:</p>
     <ul>
-      <li><strong>Soggetto + 在 + Luogo</strong></li>
-      <li><strong>Soggetto + 在 + Luogo + Verbo + Oggetto</strong></li>
-      <li><strong>Soggetto + 在 + Verbo + (Oggetto) + (呢)</strong>. In questo caso, 在 è un avverbio che precede il verbo.</li>
+        <li>**Frase con 在 (Posizione):** 我的手机<strong>在</strong>我的包里。(Wǒ de shǒujī **zài** wǒ de bāo lǐ.) - Il mio cellulare **si trova** nella mia borsa. (Soggetto: Il cellulare)</li>
+        <li>**Frase con 有 (Esistenza/Possesso):** 我的包里<strong>有</strong>一个手机。(Wǒ de bāo lǐ **yǒu** yīgè shǒujī.) - Nella mia borsa **c'è** un cellulare. (Soggetto: La borsa/Il luogo)</li>
     </ul>
+   <p>Per tornare all'<a href="#top">indice</a> o tornare al <a href="#quale">那儿 / 那</a>.</p>
+    </section>
+<section id="linguistiche">
+ <h1>📚 Spiegazioni Linguistiche Cinesi: 一下儿, 在, 只 📚</h1>
 
-    <h3>Attenzione</h3>
-    <p>Non confondere l'avverbio <strong>只</strong> (solo) con il classificatore <strong>只</strong> (per animali e alcune cose, es. una nave).</p>
+    <div class="concept-box">
+        <h2>1. 一下儿 (yīxiàr) / 一下 (yīxià)</h2>
 
-    <!-- Continua con tutto il resto del contenuto di ziar-zhi.html -->
-  </div>
-<!--pagina 4-->
-<div class="page scrollable" style="background:#e0f7fa; transform: translateY(100%);">
+        <h3>✨ Significato Principale: Prova Breve o Azione Limitata</h3>
+
+        <ul>
+            <li><strong>Caratteri:</strong> <span class="chinese">一下儿</span> (o <span class="chinese">一下</span>)</li>
+            <li><strong>Pinyin:</strong> <span class="pinyin">yīxiàr</span> / <span class="pinyin">yīxià</span></li>
+            <li><strong>Funzione:</strong> È un **complemento di quantità verbale** che si posiziona **dopo il verbo**.</li>
+            <li><strong>Ruolo:</strong>
+                <ul>
+                    <li>Indica che l'azione dura per un **breve periodo** di tempo.</li>
+                    <li>Rende il tono più **mite, cortese o colloquiale**, spesso traducibile con "un po'", "solo un attimo", "provare a".</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>📚 Esempi di Utilizzo</h3>
+
+        <div class="example">
+            <span class="chinese">请你等我<strong>一下儿</strong>。</span><br>
+            <span class="pinyin">Qǐng nǐ děng wǒ <strong>yīxiàr</strong>.</span><br>
+            <span class="translation">Per favore, aspettami **un attimo/un momento**. (Azione breve)</span>
+        </div>
+
+        <div class="example">
+            <span class="chinese">你看看这件衣服。</span><br>
+            <span class="pinyin">Nǐ kàn <strong>yīxiàr</strong> zhè jiàn yīfu.</span><br>
+            <span class="translation">Guarda/Dai **un'occhiata** a questo vestito. (Prova breve/Azione non intensa)</span>
+        </div>
+
+        <div class="example">
+            <span class="chinese">老师，我可以问你一个问题<strong>一下</strong>吗？</span><br>
+            <span class="pinyin">Lǎoshī, wǒ kěyǐ wèn nǐ yīgè wèntí <strong>yīxià</strong> ma?</span><br>
+            <span class="translation">Professore, posso farti una domanda **un attimo**? (Rende la richiesta più cortese)</span>
+        </div>
+        <p class="highlight">**Nota:** La forma con la rotacizzazione (<span class="pinyin">r</span>, <span class="chinese">一下儿</span>) è più comune a Beijing e nel Nord, mentre <span class="chinese">一下</span> (<span class="pinyin">yīxià</span>) è diffusa in altre regioni e pienamente accettata.</p>
+    </div>
+
+    <div class="concept-box">
+        <h2>2. 在 (zài)</h2>
+
+        <h3>✨ Significato Principale: Trovarsi/Essere in/Stare (Azione in Corso)</h3>
+
+        <ul>
+            <li><strong>Caratteri:</strong> <span class="chinese">在</span></li>
+            <li><strong>Pinyin:</strong> <span class="pinyin">zài</span></li>
+            <li><strong>Doppia Funzione Cruciale:</strong>
+                <ol>
+                    <li>**Verbo** (essere in/trovarsi a).</li>
+                    <li>**Avverbio/Preposizione** (indicare la locazione dell'azione o un'azione in corso).</li>
+                </ol>
+            </li>
+        </ul>
+
+        <h3>A. Uso come Verbo (Trovarsi/Essere a)</h3>
+
+        <p>Struttura: **Soggetto + 在 + Luogo**</p>
+        <div class="example">
+            <span class="chinese">我<strong>在</strong>家。</span><br>
+            <span class="pinyin">Wǒ <strong>zài</strong> jiā.</span><br>
+            <span class="translation">Io **sono a** casa.</span>
+        </div>
+
+        <div class="example">
+            <span class="chinese">我的书<strong>在</strong>桌子上。</span><br>
+            <span class="pinyin">Wǒ de shū <strong>zài</strong> zhuōzi shang.</span><br>
+            <span class="translation">Il mio libro **è** sul tavolo.</span>
+        </div>
+
+        <h3>B. Uso per indicare il Luogo dell'Azione</h3>
+
+        <p>Struttura: **Soggetto + 在 + Luogo + Verbo + Oggetto**</p>
+        <div class="example">
+            <span class="chinese">他们<strong>在</strong>公园跑步。</span><br>
+            <span class="pinyin">Tāmen <strong>zài</strong> gōngyuán pǎobù.</span><br>
+            <span class="translation">Loro corrono **al** parco.</span>
+        </div>
+
+        <h3>C. Uso per indicare un'Azione in Corso (Simile a "-ing")</h3>
+
+        <p>Struttura: **Soggetto + 在 + Verbo + (Oggetto) + (呢)**. In questo caso, <span class="chinese">在</span> è un avverbio che precede il verbo.</p>
+        <div class="example">
+            <span class="chinese">她<strong>在</strong>看电视<strong>呢</strong>。</span><br>
+            <span class="pinyin">Tā <strong>zài</strong> kàn diànshì ne.</span><br>
+            <span class="translation">Lei **sta** guardando la televisione.</span>
+        </div>
+
+        <div class="example">
+            <span class="chinese">你<strong>在</strong>做什么？</span><br>
+            <span class="pinyin">Nǐ <strong>zài</strong> zuò shénme?</span><br>
+            <span class="translation">Cosa **stai** facendo?</span>
+        </div>
+    </div>
+
+    <div class="concept-box">
+        <h2>3. 只 (zhǐ)</h2>
+
+        <h3>✨ Significato Principale: Soltanto/Solo</h3>
+
+        <ul>
+            <li><strong>Caratteri:</strong> <span class="chinese">只</span></li>
+            <li><strong>Pinyin:</strong> <span class="pinyin">zhǐ</span></li>
+            <li><strong>Funzione:</strong> È un **avverbio** di limitazione.</li>
+            <li><strong>Ruolo:</strong> Indica che l'azione o lo stato si applica unicamente a ciò che segue, escludendo tutto il resto. Equivale all'italiano "solo", "soltanto", "appena".</li>
+        </ul>
+
+        <h3>📚 Esempi di Utilizzo</h3>
+
+        <div class="example">
+            <span class="chinese">我<strong>只</strong>有一个苹果。</span><br>
+            <span class="pinyin">Wǒ <strong>zhǐ</strong> yǒu yīgè píngguǒ.</span><br>
+            <span class="translation">Ho **soltanto** una mela. (Limita la quantità)</span>
+        </div>
+
+        <div class="example">
+            <span class="chinese">他<strong>只</strong>想睡觉。</span><br>
+            <span class="pinyin">Tā <strong>zhǐ</strong> xiǎng shuìjiào.</span><br>
+            <span class="translation">Lui vuole **solo** dormire. (Limita l'azione)</span>
+        </div>
+
+        <div class="example">
+            <span class="chinese">现在<strong>只</strong>有四点。</span><br>
+            <span class="pinyin">Xiànzài <strong>zhǐ</strong> yǒu sì diǎn.</span><br>
+            <span class="translation">Ora sono **solo** le quattro. (Limita il tempo)</span>
+        </div>
+
+        <div class="example">
+            <span class="chinese"><strong>只</strong>有你可以帮我。</span><br>
+            <span class="pinyin"><strong>Zhǐ</strong> yǒu nǐ kěyǐ bāng wǒ.</span><br>
+            <span class="translation">**Soltanto** tu puoi aiutarmi. (Limita il soggetto)</span>
+        </div>
+        <p class="highlight">**Attenzione:** Non confondere l'avverbio <span class="chinese">只</span> (<span class="pinyin">zhǐ</span>, solo) con il classificatore <span class="chinese">只</span> (<span class="pinyin">zhī</span>, per animali e alcune cose, es. una nave).</p>
+    </div>
+<p>Per tornare all'<a href="#top">indice</a> o tornare al <a href="#avere">有</a>.</p>
+</section>
+<section id="esempi">
 <h1>🗣️ Esempi di Uso (con Pinyin e Traduzione)</h1>
 
 <table>
@@ -354,171 +739,8 @@
     <tr><td>不知道他在哪儿</td><td>bù zhīdào tā zài nǎr</td><td>Non sapere dove si trova</td></tr>
   </tbody>
 </table>
-</div>
-<!--pagina 5-->
-<div class="page scrollable" style="background:#fffce6; transform: translateY(100%);">
-    <h1>🏮 Radicali Cinesi Fondamentali (71-84)</h1>
-
-    <h2>Significato, Pinyin e Funzione</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th class="number">#</th>
-                <th>Radicale</th>
-                <th>Pinyin</th>
-                <th>Significato Base</th>
-                <th>Funzione e Esempi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="number">71</td>
-                <td class="chinese">无 (无)</td>
-                <td class="pinyin">wú</td>
-                <td>Nessuno, Mancanza, Senza</td>
-                <td>Comune come carattere in sé (es. 无聊 *wúliáo*, annoiato). Indica assenza o mancanza.</td>
-            </tr>
-            <tr>
-                <td class="number">72</td>
-                <td class="chinese">日</td>
-                <td class="pinyin">rì</td>
-                <td>Sole, Giorno</td>
-                <td>Relativo a tempo e luce. <br>Esempi: 早 (*zǎo*, mattina), 明 (*míng*, luminoso), 时 (*shí*, ora).</td>
-            </tr>
-            <tr>
-                <td class="number">73</td>
-                <td class="chinese">曰</td>
-                <td class="pinyin">yuē</td>
-                <td>Dire, Parlare</td>
-                <td>Simile a 日, ma usato in caratteri che implicano un discorso. <br>Esempio: 替 (*tì*, sostituire), 冒 (*mào*, rischiare).</td>
-            </tr>
-            <tr>
-                <td class="number">74</td>
-                <td class="chinese">月</td>
-                <td class="pinyin">yuè</td>
-                <td>Luna, Mese (anche Carne/Corpo)</td>
-                <td>Relativo al tempo (mesi) o spesso sostituisce 肉 (carne), indicando parti del corpo. <br>Esempi: 朋 (*péng*, amico), 服 (*fú*, vestito/servire), 期 (*qī*, periodo).</td>
-            </tr>
-            <tr>
-                <td class="number">75</td>
-                <td class="chinese">木</td>
-                <td class="pinyin">mù</td>
-                <td>Albero, Legno</td>
-                <td>Relativo a piante, alberi, materiali e oggetti in legno. <br>Esempi: 林 (*lín*, foresta), 根 (*gēn*, radice), 椅 (*yǐ*, sedia).</td>
-            </tr>
-            <tr>
-                <td class="number">76</td>
-                <td class="chinese">欠</td>
-                <td class="pinyin">qiàn</td>
-                <td>Mancare, Dovere, Sbadigliare</td>
-                <td>Relativo a bocca, respirazione, sentimenti o desiderio. <br>Esempi: 歌 (*gē*, cantare), 欢 (*huān*, gioia), 欲 (*yù*, desiderio).</td>
-            </tr>
-            <tr>
-                <td class="number">77</td>
-                <td class="chinese">止</td>
-                <td class="pinyin">zhǐ</td>
-                <td>Fermare, Piede</td>
-                <td>Implica arresto, correzione o movimento. Originariamente rappresentava un piede. <br>Esempi: 此 (*cǐ*, questo), 正 (*zhèng*, corretto), 步 (*bù*, passo).</td>
-            </tr>
-            <tr>
-                <td class="number">78</td>
-                <td class="chinese">歹</td>
-                <td class="pinyin">dǎi</td>
-                <td>Malvagio, Morte, Malattia</td>
-                <td>Relativo a morte, distruzione o concetti negativi. <br>Esempi: 死 (*sǐ*, morire), 殊 (*shū*, speciale).</td>
-            </tr>
-            <tr>
-                <td class="number">79</td>
-                <td class="chinese">殳</td>
-                <td class="pinyin">shū</td>
-                <td>Arma, Lancia, Colpire</td>
-                <td>Riguarda l'uso della forza o il colpire. <br>Esempi: 投 (*tóu*, lanciare), 没 (*méi*, sommergere).</td>
-            </tr>
-            <tr>
-                <td class="number">80</td>
-                <td class="chinese">舟</td>
-                <td class="pinyin">zhōu</td>
-                <td>Barca, Nave</td>
-                <td>Relativo alla navigazione e alle imbarcazioni. <br>Esempi: 航 (*háng*, navigare), 般 (*bān*, tipo).</td>
-            </tr>
-            <tr>
-                <td class="number">81</td>
-                <td class="chinese">比</td>
-                <td class="pinyin">bǐ</td>
-                <td>Comparare, Paragonare</td>
-                <td>Implica confronto, raggruppamento o vicinanza. <br>Esempi: 皆 (*jiē*, tutto), 毕 (*bì*, finire).</td>
-            </tr>
-            <tr>
-                <td class="number">82</td>
-                <td class="chinese">毛</td>
-                <td class="pinyin">máo</td>
-                <td>Pelo, Lana, Piuma</td>
-                <td>Relativo a pelliccia, peli e materiali pelosi. <br>Esempi: 笔 (*bǐ*, pennello/penna), 毫 (*háo*, piccolo).</td>
-            </tr>
-            <tr>
-                <td class="number">83</td>
-                <td class="chinese">氏</td>
-                <td class="pinyin">shì</td>
-                <td>Clan, Cognome</td>
-                <td>Indica lignaggio o stirpe. <br>Esempi: 民 (*mín*, popolo), 昏 (*hūn*, crepuscolo).</td>
-            </tr>
-            <tr>
-                <td class="number">84</td>
-                <td class="chinese">气</td>
-                <td class="pinyin">qì</td>
-                <td>Aria, Vapore, Spirito, Energia (Qi)</td>
-                <td>Relativo a gas, clima, atmosfera ed energia vitale. <br>Esempi: 氧 (*yǎng*, ossigeno), 汽 (*qì*, vapore).</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-</div>
-<script>
-  const pages = document.querySelectorAll('.page');
-  let currentPage = 0;
-  function showPage(index) {
-    pages.forEach((page, i) => {
-      if (i === index) {
-        page.style.transform = 'translateY(0)';
-      } else if (i < index) {
-        page.style.transform = 'translateY(-100%)';
-      } else {
-        page.style.transform = 'translateY(100%)';
-      }
-    });
-  }
-  showPage(currentPage);
-  window.addEventListener('wheel', (e) => {
-    if (e.deltaY > 0 && currentPage < pages.length - 1) {
-      currentPage++;
-      showPage(currentPage);
-    } else if (e.deltaY < 0 && currentPage > 0) {
-      currentPage--;
-      showPage(currentPage);
-    }
-  });
-
-  // Swipe touch
-  let startY = 0;
-  let endY = 0;
-  window.addEventListener('touchstart', e => {
-    if (e.touches.length === 1) startY = e.touches[0].clientY;
-  });
-  window.addEventListener('touchmove', e => {
-    if (e.touches.length === 1) endY = e.touches[0].clientY;
-  });
-  window.addEventListener('touchend', () => {
-    const diff = startY - endY;
-    if (diff > 50 && currentPage < pages.length - 1) {
-      currentPage++;
-      showPage(currentPage);
-    } else if (diff < -50 && currentPage > 0) {
-      currentPage--;
-      showPage(currentPage);
-    }
-  });
-</script>
-
+<p>Per tornare all'<a href="#top">indice</a> o tornare al <a href="#linguistiche"> 一下儿</a>.</p>
+</section>
+</main>
 </body>
 </html>
