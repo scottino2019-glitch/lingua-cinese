@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gioco di Parole Cinesi</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #87cefa, #ffb6c1);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  #game {
+    background: white;
+    border-radius: 16px;
+    max-width: 400px;
+    width: 100%;
+    padding: 24px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
+  h1 {
+    margin-top: 0;
+    text-align: center;
+    color: #333;
+  }
+  #scoreboard {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #555;
+  }
+  #chineseWords, #italianWords {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .word {
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    user-select: none;
+    transition: transform 0.15s ease;
+    border: 2px solid transparent;
+  }
+  .word.chineseWord {
+    background: #f0f8ff;
+    color: #003366;
+    font-weight: bold;
+  }
+  .word.italianWord {
+    background: #ffe4e1;
+    color: #800000;
+  }
+  .word.selected {
+    border-color: #48c774;
+    transform: scale(1.1);
+  }
+  .word.correct {
+    background-color: #7fffd4 !important;
+    color: #006400 !important;
+    cursor: default;
+  }
+  .word.wrong {
+    animation: shake 0.3s;
+    background-color: #ff6666 !important;
+    color: white !important;
+  }
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px);}
+    50% { transform: translateX(6px);}
+    75% { transform: translateX(-6px);}
+    100% { transform: translateX(0);}
+  }
+  #message {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 12px;
+    height: 24px;
+    color: #222;
+  }
+  button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 12px;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+  button:disabled {
+    background-color: #9bbef0;
+    cursor: not-allowed;
+  }
+  button:hover:not(:disabled) {
+    background-color: #2563eb;
+  }
+</style>
+</head>
+<body>
+  <div id="game" role="main" aria-label="Gioco di parole cinesi">
+    <h1>Abbina i Parole in Cinese</h1>
+    <div id="scoreboard" aria-live="polite">Punteggio: 0</div>
+    <div id="chineseWords" aria-label="Parole cinesi"></div>
+    <div id="italianWords" aria-label="Traduzioni italiane"></div>
+    <div id="message" aria-live="assertive"></div>
+    <button id="nextBtn" disabled>Prossimo Gioco</button>
+  </div>
+
+<script>
+  const vocabulary = [
+    { chinese: "你好", pinyin: "nǐ hǎo", italian: "ciao" },
+    { chinese: "谢谢", pinyin: "xièxie", italian: "grazie" },
+    { chinese: "再见", pinyin: "zàijiàn", italian: "arrivederci" },
+    { chinese: "请", pinyin: "qǐng", italian: "per favore" },
+    { chinese: "是", pinyin: "shì", italian: "essere" },
+    { chinese: "不", pinyin: "bù", italian: "non" },
+    { chinese: "我", pinyin: "wǒ", italian: "io" },
+    { chinese: "你", pinyin: "nǐ", italian: "tu" },
+    { chinese: "他", pinyin: "tā", italian: "lui" },
+    { chinese: "她", pinyin: "tā", italian: "lei" },
+  { chinese: "家", pinyin: "jiā", italian: "casa" },
+  { chinese: "学校", pinyin: "xuéxiào", italian: "scuola" },
+  { chinese: "老师", pinyin: "lǎoshī", italian: "insegnante" },
+  { chinese: "学生", pinyin: "xuéshēng", italian: "studente" },
+  { chinese: "书", pinyin: "shū", italian: "libro" },
+  { chinese: "水", pinyin: "shuǐ", italian: "acqua" },
+  { chinese: "吃", pinyin: "chī", italian: "mangiare" },
+  { chinese: "喝", pinyin: "hē", italian: "bere" },
+  { chinese: "朋友", pinyin: "péngyǒu", italian: "amico" },
+  { chinese: "爱", pinyin: "ài", italian: "amore" },
+  { chinese: "天气", pinyin: "tiānqì", italian: "tempo (clima)" },
+  { chinese: "阳光", pinyin: "yángguāng", italian: "sole" },
+  { chinese: "月亮", pinyin: "yuèliang", italian: "luna" },
+  { chinese: "星星", pinyin: "xīngxing", italian: "stella" },
+  { chinese: "天气预报", pinyin: "tiānqì yùbào", italian: "previsioni del tempo" },
+  { chinese: "美丽", pinyin: "měilì", italian: "bellissimo" },
+  { chinese: "快乐", pinyin: "kuàilè", italian: "felice" },
+  { chinese: "难过", pinyin: "nánguò", italian: "triste" },
+  { chinese: "工作", pinyin: "gōngzuò", italian: "lavoro" },
+  { chinese: "休息", pinyin: "xiūxí", italian: "riposo" },
+  { chinese: "时间", pinyin: "shíjiān", italian: "tempo (durata)" },
+  { chinese: "日", pinyin: "rì", italian: "giorno" },
+  { chinese: "月", pinyin: "yuè", italian: "mese" },
+  { chinese: "年", pinyin: "nián", italian: "anno" },
+  { chinese: "今天", pinyin: "jīntiān", italian: "oggi" },
+  { chinese: "明天", pinyin: "míngtiān", italian: "domani" },
+  { chinese: "昨天", pinyin: "zuótiān", italian: "ieri" },
+  { chinese: "早上", pinyin: "zǎoshang", italian: "mattina" },
+  { chinese: "晚上", pinyin: "wǎnshàng", italian: "sera" },
+  { chinese: "中午", pinyin: "zhōngwǔ", italian: "mezzogiorno" },
+  { chinese: "个", pinyin: "gè", italian: "classificatore generico" },
+  { chinese: "本", pinyin: "běn", italian: "classificatore per libri" },
+  { chinese: "只", pinyin: "zhī", italian: "classificatore per animali" },
+  { chinese: "位", pinyin: "wèi", italian: "classificatore per persone (formale)" },
+  { chinese: "杯", pinyin: "bēi", italian: "classificatore per tazze" },
+  { chinese: "中国人", pinyin: "Zhōngguó rén", italian: "cinese" },
+  { chinese: "意大利人", pinyin: "Yìdàlì rén", italian: "italiano" },
+  { chinese: "美国人", pinyin: "Měiguó rén", italian: "americano" },
+  { chinese: "日本人", pinyin: "Rìběn rén", italian: "giapponese" },
+  { chinese: "法国人", pinyin: "Fàguó rén", italian: "francese" },
+ { chinese: "走路", pinyin: "zǒulù", italian: "camminare" },
+  { chinese: "学习", pinyin: "xuéxí", italian: "studiare" },
+  { chinese: "吃饭", pinyin: "chīfàn", italian: "mangiare" },
+  { chinese: "说话", pinyin: "shuōhuà", italian: "parlare" },
+  { chinese: "工作", pinyin: "gōngzuò", italian: "lavorare" },
+  { chinese: "看书", pinyin: "kàn shū", italian: "leggere" },
+  { chinese: "买东西", pinyin: "mǎi dōngxi", italian: "fare acquisti" },
+  { chinese: "睡觉", pinyin: "shuìjiào", italian: "dormire" },
+  { chinese: "喝水", pinyin: "hē shuǐ", italian: "bere acqua" }
+  ];
+
+  const chineseContainer = document.getElementById('chineseWords');
+  const italianContainer = document.getElementById('italianWords');
+  const scoreboard = document.getElementById('scoreboard');
+  const message = document.getElementById('message');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let score = 0;
+  let selectedChinese = null;
+  let selectedItalian = null;
+  let matchesLeft = 0;
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function generateGame() {
+    message.textContent = '';
+    nextBtn.disabled = true;
+    chineseContainer.innerHTML = '';
+    italianContainer.innerHTML = '';
+    selectedChinese = null;
+    selectedItalian = null;
+
+    // Select 4 random vocab words
+    const selectedWords = [];
+    while (selectedWords.length < 4) {
+      const word = vocabulary[Math.floor(Math.random() * vocabulary.length)];
+      if (!selectedWords.includes(word)) selectedWords.push(word);
+    }
+    matchesLeft = selectedWords.length;
+
+    // Create Chinese word buttons
+    selectedWords.forEach(word => {
+      const btn = document.createElement('button');
+      btn.textContent = word.chinese;
+      btn.classList.add('word', 'chineseWord');
+      btn.setAttribute('tabindex', '0');
+      btn.dataset.italian = word.italian;
+      btn.addEventListener('click', () => selectWord('chinese', btn));
+      chineseContainer.appendChild(btn);
+    });
+
+    // Create Italian word buttons shuffled
+    let italianWords = selectedWords.map(w => w.italian);
+    shuffleArray(italianWords);
+    italianWords.forEach(word => {
+      const btn = document.createElement('button');
+      btn.textContent = word;
+      btn.classList.add('word', 'italianWord');
+      btn.setAttribute('tabindex', '0');
+      btn.addEventListener('click', () => selectWord('italian', btn));
+      italianContainer.appendChild(btn);
+    });
+  }
+
+  function selectWord(type, btn) {
+    if(type === 'chinese'){
+      if(selectedChinese) selectedChinese.classList.remove('selected');
+      selectedChinese = btn;
+      btn.classList.add('selected');
+    } else {
+      if(selectedItalian) selectedItalian.classList.remove('selected');
+      selectedItalian = btn;
+      btn.classList.add('selected');
+    }
+    checkMatch();
+  }
+
+  function checkMatch() {
+    if(selectedChinese && selectedItalian){
+      if(selectedChinese.dataset.italian === selectedItalian.textContent){
+        // Correct match
+        selectedChinese.classList.add('correct');
+        selectedItalian.classList.add('correct');
+        selectedChinese.classList.remove('selected');
+        selectedItalian.classList.remove('selected');
+        selectedChinese.removeEventListener('click', () => selectWord('chinese', selectedChinese));
+        selectedItalian.removeEventListener('click', () => selectWord('italian', selectedItalian));
+        selectedChinese.disabled = true;
+        selectedItalian.disabled = true;
+        score += 10;
+        matchesLeft--;
+        scoreboard.textContent = 'Punteggio: ' + score;
+        playSound(true);
+        message.textContent = 'Corretto! 🎉';
+        if(matchesLeft === 0){
+          message.textContent = 'Hai completato il gioco! Premi Prossimo Gioco.';
+          nextBtn.disabled = false;
+        }
+      } else {
+        // Wrong match
+        selectedChinese.classList.add('wrong');
+        selectedItalian.classList.add('wrong');
+        playSound(false);
+        message.textContent = 'Sbagliato, riprova.';
+        setTimeout(() => {
+          selectedChinese.classList.remove('wrong', 'selected');
+          selectedItalian.classList.remove('wrong', 'selected');
+          message.textContent = '';
+          selectedChinese = null;
+          selectedItalian = null;
+        }, 800);
+      }
+    }
+  }
+
+  function playSound(correct){
+    // Simple beep for correct or buzz for wrong
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = ctx.createOscillator();
+    oscillator.type = 'sine';
+    oscillator.frequency.value = correct ? 600 : 200;
+    oscillator.connect(ctx.destination);
+    oscillator.start();
+    oscillator.stop(ctx.currentTime + 0.15);
+  }
+
+  nextBtn.addEventListener('click', () => {
+    generateGame();
+  });
+
+  window.addEventListener('load', () => {
+    generateGame();
+  });
+</script>
+</body>
+</html>
