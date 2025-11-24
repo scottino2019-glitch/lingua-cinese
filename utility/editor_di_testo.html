@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor di Testi - Cinese, Coreano, Giapponese</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .phrase-item:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+        .editor-toolbar button:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .chinese-font {
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;
+            line-height: 1.8;
+        }
+        .korean-font {
+            font-family: 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            line-height: 1.7;
+        }
+        .japanese-font {
+            font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Meiryo', sans-serif;
+            line-height: 1.7;
+        }
+        .asian-font {
+            font-family: 'Noto Sans SC', 'Noto Sans KR', 'Noto Sans JP', 'Microsoft YaHei', 'Malgun Gothic', sans-serif;
+            line-height: 1.8;
+        }
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+        .custom-phrase {
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-full">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">Editor di Testi - 中文 • 한국어 • 日本語</h1>
+        
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Frasi Precaricate -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">📝</span>
+                        Frasi Disponibili
+                    </h2>
+                    
+                    <!-- Controlli per aggiungere nuove frasi -->
+                    <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+                        <h3 class="text-sm font-medium text-gray-700 mb-2">Aggiungi Nuova Frase</h3>
+                        <textarea id="newPhraseText" placeholder="Scrivi qui la tua frase o testo..." class="w-full p-2 border border-gray-300 rounded-md text-sm mb-2 resize-none" rows="3"></textarea>
+                        <input id="newPhraseAuthor" placeholder="Autore (opzionale)" class="w-full p-2 border border-gray-300 rounded-md text-sm mb-2">
+                        <div class="flex gap-2">
+                            <button onclick="addNewPhrase()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">
+                                ➕ Aggiungi
+                            </button>
+                            <button onclick="loadFromFile()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-sm">
+                                📁 Carica File
+                            </button>
+                        </div>
+                        <input type="file" id="fileInput" accept=".txt,.md" style="display: none;" onchange="handleFileLoad(event)">
+                    </div>
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        <!-- Frasi Cinesi -->
+                        <div class="phrase-item bg-gradient-to-r from-red-50 to-red-100 p-3 rounded-lg border border-red-200 relative group">
+                            <div onclick="addPhrase('你好世界！')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 chinese-font">"你好世界！"</p>
+                                <span class="text-xs text-red-600">- Ciao, mondo! (Cinese)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-green-50 to-green-100 p-3 rounded-lg border border-green-200 relative group">
+                            <div onclick="addPhrase('안녕하세요!')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 korean-font">"안녕하세요!"</p>
+                                <span class="text-xs text-green-600">- Ciao! (Coreano)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-pink-50 to-pink-100 p-3 rounded-lg border border-pink-200 relative group">
+                            <div onclick="addPhrase('こんにちは世界！')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 japanese-font">"こんにちは世界！"</p>
+                                <span class="text-xs text-pink-600">- Ciao, mondo! (Giapponese)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-orange-50 to-orange-100 p-3 rounded-lg border border-orange-200 relative group">
+                            <div onclick="addPhrase('知识就是力量')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 chinese-font">"知识就是力量"</p>
+                                <span class="text-xs text-orange-600">- La conoscenza è potere (Cinese)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-blue-50 to-blue-100 p-3 rounded-lg border border-blue-200 relative group">
+                            <div onclick="addPhrase('지식은 힘이다')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 korean-font">"지식은 힘이다"</p>
+                                <span class="text-xs text-blue-600">- La conoscenza è potere (Coreano)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-purple-50 to-purple-100 p-3 rounded-lg border border-purple-200 relative group">
+                            <div onclick="addPhrase('知識は力なり')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 japanese-font">"知識は力なり"</p>
+                                <span class="text-xs text-purple-600">- La conoscenza è potere (Giapponese)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-teal-50 to-teal-100 p-3 rounded-lg border border-teal-200 relative group">
+                            <div onclick="addPhrase('学而时习之，不亦说乎')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 chinese-font">"学而时习之，不亦说乎"</p>
+                                <span class="text-xs text-teal-600">- Studiare e praticare (Confucio)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-indigo-50 to-indigo-100 p-3 rounded-lg border border-indigo-200 relative group">
+                            <div onclick="addPhrase('배움에는 끝이 없다')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 korean-font">"배움에는 끝이 없다"</p>
+                                <span class="text-xs text-indigo-600">- L'apprendimento non ha fine (Coreano)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-yellow-50 to-yellow-100 p-3 rounded-lg border border-yellow-200 relative group">
+                            <div onclick="addPhrase('学問に王道なし')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 japanese-font">"学問に王道なし"</p>
+                                <span class="text-xs text-yellow-600">- Non c'è strada facile per l'apprendimento (Giapponese)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-emerald-50 to-emerald-100 p-3 rounded-lg border border-emerald-200 relative group">
+                            <div onclick="addPhrase('欢迎来到学习的世界')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 chinese-font">"欢迎来到学习的世界"</p>
+                                <span class="text-xs text-emerald-600">- Benvenuti nel mondo dell'apprendimento (Cinese)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-cyan-50 to-cyan-100 p-3 rounded-lg border border-cyan-200 relative group">
+                            <div onclick="addPhrase('학습의 세계에 오신 것을 환영합니다')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 korean-font">"학습의 세계에 오신 것을 환영합니다"</p>
+                                <span class="text-xs text-cyan-600">- Benvenuti nel mondo dell'apprendimento (Coreano)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="phrase-item bg-gradient-to-r from-rose-50 to-rose-100 p-3 rounded-lg border border-rose-200 relative group">
+                            <div onclick="addPhrase('学習の世界へようこそ')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 japanese-font">"学習の世界へようこそ"</p>
+                                <span class="text-xs text-rose-600">- Benvenuti nel mondo dell'apprendimento (Giapponese)</span>
+                            </div>
+                        </div>
+                            <div class="phrase-item bg-gradient-to-r from-emerald-50 to-emerald-100 p-3 rounded-lg border border-emerald-200 relative group">
+                            <div onclick="addPhrase('学而时习之，不亦说乎')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 chinese-font">"学而时习之，不亦说乎"</p>
+                                <span class="text-xs text-emerald-600">- Confucio (Cinese)</span>
+                            </div>
+                        </div>
+                          <div class="phrase-item bg-gradient-to-r from-rose-50 to-rose-100 p-3 rounded-lg border border-rose-200 relative group">
+                            <div onclick="addPhrase('桜が咲いている春の日に、新しい始まりを感じます')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 japanese-font">"桜が咲いている春の日に、新しい始まりを感じます"</p>
+                                <span class="text-xs text-rose-600">- Primavera giapponese (Giapponese)</span>
+                            </div>
+                        </div>
+                            <div class="phrase-item bg-gradient-to-r from-cyan-50 to-cyan-100 p-3 rounded-lg border border-cyan-200 relative group">
+                            <div onclick="addPhrase('꿈을 포기하지 마세요. 당신의 미래는 밝습니다.')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 korean-font">"꿈을 포기하지 마세요. 당신의 미래는 밝습니다."</p>
+                                <span class="text-xs text-cyan-600">- Non rinunciare ai sogni (Coreano)</span>
+                            </div>
+                        </div> 
+                    <div class="phrase-item bg-gradient-to-r from-emerald-50 to-emerald-100 p-3 rounded-lg border border-emerald-200 relative group">
+                            <div onclick="addPhrase('学而时习之，不亦说乎')" class="cursor-pointer">
+                                <p class="text-sm text-gray-700 chinese-font">"学而时习之，不亦说乎"</p>
+                                <span class="text-xs text-emerald-600">- Confucio (Cinese)</span>
+                            </div>
+                        </div>                    </div>
+                
+                </div>
+            </div>
+            
+            <!-- Editor -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">✏️</span>
+                        Il Tuo Editor
+                    </h2>
+                    
+                    <!-- Toolbar -->
+                    <div class="editor-toolbar flex flex-wrap gap-2 mb-4 p-3 bg-gray-50 rounded-lg">
+                        <button onclick="formatText('bold')" class="px-3 py-2 rounded-md border border-gray-300 hover:bg-blue-50 transition-colors">
+                            <strong>B</strong>
+                        </button>
+                        <button onclick="formatText('italic')" class="px-3 py-2 rounded-md border border-gray-300 hover:bg-blue-50 transition-colors">
+                            <em>I</em>
+                        </button>
+                        <button onclick="formatText('underline')" class="px-3 py-2 rounded-md border border-gray-300 hover:bg-blue-50 transition-colors">
+                            <u>U</u>
+                        </button>
+                        <div class="border-l border-gray-300 mx-2"></div>
+                        <button onclick="changeFontSize('larger')" class="px-3 py-2 rounded-md border border-gray-300 hover:bg-blue-50 transition-colors">
+                            A+
+                        </button>
+                        <button onclick="changeFontSize('smaller')" class="px-3 py-2 rounded-md border border-gray-300 hover:bg-blue-50 transition-colors">
+                            A-
+                        </button>
+                        <div class="border-l border-gray-300 mx-2"></div>
+                        <select id="fontSelector" onchange="changeFont()" class="px-3 py-2 rounded-md border border-gray-300 hover:bg-blue-50 transition-colors text-sm">
+                            <option value="default">Font Standard</option>
+                            <option value="asian">Font Asiatico</option>
+                            <option value="chinese">中文 (Cinese)</option>
+                            <option value="korean">한국어 (Coreano)</option>
+                            <option value="japanese">日本語 (Giapponese)</option>
+                        </select>
+                        <div class="border-l border-gray-300 mx-2"></div>
+                        <button onclick="toggleWritingMode()" class="px-3 py-2 rounded-md border border-gray-300 hover:bg-blue-50 transition-colors text-sm">
+                            ↕️ Verticale
+                        </button>
+                        <div class="border-l border-gray-300 mx-2"></div>
+                        <button onclick="clearEditor()" class="px-3 py-2 rounded-md border border-red-300 text-red-600 hover:bg-red-50 transition-colors">
+                            🗑️ Pulisci
+                        </button>
+                    </div>
+                    
+                    <!-- Area di Editing -->
+                    <div id="editor" contenteditable="true" class="w-full h-80 p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none overflow-y-auto" style="font-family: 'Georgia', serif; font-size: 16px; line-height: 1.6;">
+                        <p>Benvenuto nel tuo editor asiatico! Clicca su una frase a sinistra per aggiungerla qui, oppure inizia a scrivere direttamente...</p>
+                    </div>
+                    
+                    <!-- Contatore parole -->
+                    <div class="mt-4 flex justify-between items-center text-sm text-gray-600">
+                        <span id="wordCount">Parole: 0</span>
+                        <span id="charCount">Caratteri: 0</span>
+                    </div>
+                    
+                    <!-- Azioni -->
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <button onclick="saveToFile()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            💾 Scarica File
+                        </button>
+                        <button onclick="loadTextFile()" class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            📁 Carica File
+                        </button>
+                        <button onclick="copyText()" class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            📋 Copia
+                        </button>
+                        <button onclick="exportText()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            📄 Esporta TXT
+                        </button>
+                    </div>
+                    <input type="file" id="textFileInput" accept=".html,.txt" style="display: none;" onchange="handleTextFileLoad(event)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const wordCount = document.getElementById('wordCount');
+        const charCount = document.getElementById('charCount');
+
+        // Aggiorna contatori
+        function updateCounts() {
+            const text = editor.innerText || editor.textContent || '';
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            const chars = text.length;
+            
+            wordCount.textContent = `Parole: ${words}`;
+            charCount.textContent = `Caratteri: ${chars}`;
+        }
+
+        // Aggiungi frase all'editor
+        function addPhrase(phrase) {
+            const selection = window.getSelection();
+            const range = selection.getRangeAt(0);
+            
+            // Se l'editor è vuoto o contiene solo il testo di benvenuto
+            if (editor.innerText.includes('Benvenuto nel tuo editor!')) {
+                editor.innerHTML = '';
+            }
+            
+            // Crea un nuovo paragrafo con la frase
+            const p = document.createElement('p');
+            p.textContent = phrase;
+            p.style.marginBottom = '1em';
+            
+            // Rileva la lingua e applica il font appropriato
+            if (isChineseText(phrase)) {
+                p.classList.add('chinese-font');
+            } else if (isKoreanText(phrase)) {
+                p.classList.add('korean-font');
+            } else if (isJapaneseText(phrase)) {
+                p.classList.add('japanese-font');
+            } else {
+                p.classList.add('asian-font');
+            }
+            
+            editor.appendChild(p);
+            editor.focus();
+            
+            // Posiziona il cursore alla fine
+            const newRange = document.createRange();
+            newRange.selectNodeContents(editor);
+            newRange.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+            
+            updateCounts();
+        }
+
+        // Rileva testo cinese
+        function isChineseText(text) {
+            const chineseRegex = /[\u4e00-\u9fff]/;
+            return chineseRegex.test(text);
+        }
+
+        // Rileva testo coreano
+        function isKoreanText(text) {
+            const koreanRegex = /[\uac00-\ud7af\u1100-\u11ff\u3130-\u318f]/;
+            return koreanRegex.test(text);
+        }
+
+        // Rileva testo giapponese
+        function isJapaneseText(text) {
+            const japaneseRegex = /[\u3040-\u309f\u30a0-\u30ff]/;
+            return japaneseRegex.test(text);
+        }
+
+        // Formattazione testo
+        function formatText(command) {
+            document.execCommand(command, false, null);
+            editor.focus();
+        }
+
+        // Cambia dimensione font
+        function changeFontSize(action) {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                if (!range.collapsed) {
+                    const span = document.createElement('span');
+                    const currentSize = window.getComputedStyle(editor).fontSize;
+                    const currentSizeNum = parseInt(currentSize);
+                    
+                    if (action === 'larger') {
+                        span.style.fontSize = (currentSizeNum + 2) + 'px';
+                    } else {
+                        span.style.fontSize = Math.max(currentSizeNum - 2, 10) + 'px';
+                    }
+                    
+                    try {
+                        range.surroundContents(span);
+                    } catch (e) {
+                        // Se non può circondare, applica al contenuto
+                        span.appendChild(range.extractContents());
+                        range.insertNode(span);
+                    }
+                }
+            }
+            editor.focus();
+        }
+
+        // Cambia font per diverse lingue
+        function changeFont() {
+            const fontSelector = document.getElementById('fontSelector');
+            const selectedFont = fontSelector.value;
+            
+            // Rimuovi tutte le classi font esistenti
+            editor.classList.remove('chinese-font', 'korean-font', 'japanese-font', 'asian-font');
+            
+            // Applica il nuovo font
+            switch(selectedFont) {
+                case 'asian':
+                    editor.classList.add('asian-font');
+                    editor.style.fontFamily = "'Noto Sans SC', 'Noto Sans KR', 'Noto Sans JP', 'Microsoft YaHei', 'Malgun Gothic', sans-serif";
+                    break;
+                case 'chinese':
+                    editor.classList.add('chinese-font');
+                    editor.style.fontFamily = "'Noto Sans SC', 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif";
+                    break;
+                case 'korean':
+                    editor.classList.add('korean-font');
+                    editor.style.fontFamily = "'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif";
+                    break;
+                case 'japanese':
+                    editor.classList.add('japanese-font');
+                    editor.style.fontFamily = "'Noto Sans JP', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Meiryo', sans-serif";
+                    break;
+                default:
+                    editor.style.fontFamily = "'Georgia', serif";
+                    break;
+            }
+            
+            editor.focus();
+        }
+
+        // Cambia modalità di scrittura (orizzontale/verticale)
+        function toggleWritingMode() {
+            const currentMode = editor.style.writingMode || 'horizontal-tb';
+            if (currentMode === 'horizontal-tb' || currentMode === '') {
+                editor.style.writingMode = 'vertical-rl';
+                editor.style.textOrientation = 'mixed';
+                editor.style.height = '400px';
+            } else {
+                editor.style.writingMode = 'horizontal-tb';
+                editor.style.textOrientation = 'mixed';
+                editor.style.height = '320px';
+            }
+            editor.focus();
+        }
+
+        // Pulisci editor
+        function clearEditor() {
+            if (confirm('Sei sicuro di voler cancellare tutto il testo?')) {
+                editor.innerHTML = '<p>Inizia a scrivere qui...</p>';
+                updateCounts();
+                editor.focus();
+            }
+        }
+
+        // Salva testo come file HTML
+        function saveToFile() {
+            const content = editor.innerHTML;
+            const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Documento Salvato</title>
+    <style>
+        body { font-family: Georgia, serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .chinese-font { font-family: 'Noto Sans SC', 'Microsoft YaHei', 'SimHei', sans-serif; line-height: 1.8; }
+        .korean-font { font-family: 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; line-height: 1.7; }
+        .japanese-font { font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', sans-serif; line-height: 1.7; }
+        .asian-font { font-family: 'Noto Sans SC', 'Noto Sans KR', 'Noto Sans JP', sans-serif; line-height: 1.8; }
+        .vertical-text { writing-mode: vertical-rl; text-orientation: mixed; }
+    </style>
+</head>
+<body>
+${content}
+</body>
+</html>`;
+            
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'documento-asiatico-' + new Date().toISOString().slice(0,10) + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Carica file di testo nell'editor
+        function loadTextFile() {
+            document.getElementById('textFileInput').click();
+        }
+
+        function handleTextFileLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                
+                if (file.name.endsWith('.html')) {
+                    // Se è un file HTML, estrai il contenuto del body
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(content, 'text/html');
+                    const bodyContent = doc.body.innerHTML;
+                    editor.innerHTML = bodyContent || content;
+                } else {
+                    // Se è un file di testo, convertilo in HTML
+                    const lines = content.split('\n');
+                    const htmlContent = lines.map(line => 
+                        line.trim() ? `<p>${line}</p>` : '<p><br></p>'
+                    ).join('');
+                    editor.innerHTML = htmlContent;
+                }
+                
+                updateCounts();
+                alert('File caricato con successo!');
+            };
+            
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        // Copia testo
+        function copyText() {
+            const text = editor.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Testo copiato negli appunti!');
+            }).catch(() => {
+                // Fallback per browser più vecchi
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Testo copiato negli appunti!');
+            });
+        }
+
+        // Esporta testo
+        function exportText() {
+            const text = editor.innerText;
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'mio-testo-asiatico.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Event listeners
+        editor.addEventListener('input', updateCounts);
+        editor.addEventListener('paste', () => {
+            setTimeout(updateCounts, 100);
+        });
+
+        // Gestione frasi personalizzate
+        let phraseColors = ['blue', 'indigo', 'red', 'green', 'pink', 'orange', 'purple', 'teal', 'yellow', 'emerald', 'cyan', 'rose'];
+        let colorIndex = 0;
+
+        // Aggiungi nuova frase
+        function addNewPhrase() {
+            const text = document.getElementById('newPhraseText').value.trim();
+            const author = document.getElementById('newPhraseAuthor').value.trim();
+            
+            if (!text) {
+                alert('Inserisci il testo della frase!');
+                return;
+            }
+            
+            const color = phraseColors[colorIndex % phraseColors.length];
+            colorIndex++;
+            
+            const phraseContainer = document.querySelector('.space-y-3');
+            const newPhrase = document.createElement('div');
+            newPhrase.className = `phrase-item bg-gradient-to-r from-${color}-50 to-${color}-100 p-3 rounded-lg border border-${color}-200 relative group custom-phrase`;
+            
+            // Rileva la lingua e applica la classe appropriata
+            let fontClass = 'asian-font';
+            if (isChineseText(text)) {
+                fontClass = 'chinese-font';
+            } else if (isKoreanText(text)) {
+                fontClass = 'korean-font';
+            } else if (isJapaneseText(text)) {
+                fontClass = 'japanese-font';
+            }
+            
+            newPhrase.innerHTML = `
+                <div onclick="addPhrase('${text.replace(/'/g, "\\'")}');" class="cursor-pointer">
+                    <p class="text-sm text-gray-700 ${fontClass}">"${text}"</p>
+                    ${author ? `<span class="text-xs text-${color}-600">- ${author}</span>` : ''}
+                </div>
+                <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                    <button onclick="editPhrase(this)" class="bg-white hover:bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs border">✏️</button>
+                    <button onclick="deletePhrase(this)" class="bg-white hover:bg-red-100 text-red-600 px-2 py-1 rounded text-xs border">🗑️</button>
+                </div>
+            `;
+            
+            phraseContainer.appendChild(newPhrase);
+            
+            // Pulisci i campi
+            document.getElementById('newPhraseText').value = '';
+            document.getElementById('newPhraseAuthor').value = '';
+            
+            // Salva le frasi personalizzate
+            saveCustomPhrases();
+            alert('Frase aggiunta e salvata!');
+        }
+
+        // Modifica frase esistente
+        function editPhrase(button) {
+            const phraseItem = button.closest('.phrase-item');
+            const textElement = phraseItem.querySelector('p');
+            const authorElement = phraseItem.querySelector('span');
+            
+            const currentText = textElement.textContent.replace(/"/g, '');
+            const currentAuthor = authorElement ? authorElement.textContent.replace('- ', '') : '';
+            
+            const newText = prompt('Modifica il testo:', currentText);
+            if (newText === null) return;
+            
+            const newAuthor = prompt('Modifica l\'autore (lascia vuoto per rimuovere):', currentAuthor);
+            if (newAuthor === null) return;
+            
+            // Aggiorna il contenuto
+            textElement.textContent = `"${newText}"`;
+            
+            // Aggiorna la classe del font se necessario
+            let fontClass = 'asian-font';
+            if (isChineseText(newText)) {
+                fontClass = 'chinese-font';
+            } else if (isKoreanText(newText)) {
+                fontClass = 'korean-font';
+            } else if (isJapaneseText(newText)) {
+                fontClass = 'japanese-font';
+            }
+            textElement.className = `text-sm text-gray-700 ${fontClass}`;
+            
+            if (newAuthor.trim()) {
+                if (authorElement) {
+                    authorElement.textContent = `- ${newAuthor}`;
+                } else {
+                    const newAuthorSpan = document.createElement('span');
+                    newAuthorSpan.className = 'text-xs text-gray-600';
+                    newAuthorSpan.textContent = `- ${newAuthor}`;
+                    phraseItem.querySelector('div').appendChild(newAuthorSpan);
+                }
+            } else if (authorElement) {
+                authorElement.remove();
+            }
+            
+            // Aggiorna l'onclick
+            const clickableDiv = phraseItem.querySelector('div[onclick]');
+            clickableDiv.setAttribute('onclick', `addPhrase('${newText.replace(/'/g, "\\'")}');`);
+            
+            // Salva solo se è una frase personalizzata
+            if (phraseItem.classList.contains('custom-phrase')) {
+                saveCustomPhrases();
+                alert('Frase modificata e salvata!');
+            }
+        }
+
+        // Elimina frase
+        function deletePhrase(button) {
+            const phraseItem = button.closest('.phrase-item');
+            if (confirm('Sei sicuro di voler eliminare questa frase?')) {
+                const isCustom = phraseItem.classList.contains('custom-phrase');
+                phraseItem.remove();
+                // Salva solo se è una frase personalizzata
+                if (isCustom) {
+                    saveCustomPhrases();
+                    alert('Frase eliminata!');
+                }
+            }
+        }
+
+        // Carica file di testo
+        function loadFromFile() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleFileLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                
+                // Dividi il contenuto in paragrafi o frasi
+                const lines = content.split('\n').filter(line => line.trim());
+                
+                lines.forEach(line => {
+                    if (line.trim().length > 2) { // Solo righe con contenuto significativo
+                        // Cerca pattern "testo" - autore
+                        const match = line.match(/^"?([^"]+)"?\s*-\s*(.+)$/);
+                        if (match) {
+                            addPhraseToList(match[1].trim(), match[2].trim());
+                        } else {
+                            addPhraseToList(line.trim(), '');
+                        }
+                    }
+                });
+                
+                alert(`Caricate ${lines.length} frasi dal file!`);
+            };
+            
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        function addPhraseToList(text, author) {
+            const color = phraseColors[colorIndex % phraseColors.length];
+            colorIndex++;
+            
+            const phraseContainer = document.querySelector('.space-y-3');
+            const newPhrase = document.createElement('div');
+            newPhrase.className = `phrase-item bg-gradient-to-r from-${color}-50 to-${color}-100 p-3 rounded-lg border border-${color}-200 relative group custom-phrase`;
+            
+            // Rileva la lingua e applica la classe appropriata
+            let fontClass = 'asian-font';
+            if (isChineseText(text)) {
+                fontClass = 'chinese-font';
+            } else if (isKoreanText(text)) {
+                fontClass = 'korean-font';
+            } else if (isJapaneseText(text)) {
+                fontClass = 'japanese-font';
+            }
+            
+            newPhrase.innerHTML = `
+                <div onclick="addPhrase('${text.replace(/'/g, "\\'")}');" class="cursor-pointer">
+                    <p class="text-sm text-gray-700 ${fontClass}">"${text}"</p>
+                    ${author ? `<span class="text-xs text-${color}-600">- ${author}</span>` : ''}
+                </div>
+                <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                    <button onclick="editPhrase(this)" class="bg-white hover:bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs border">✏️</button>
+                    <button onclick="deletePhrase(this)" class="bg-white hover:bg-red-100 text-red-600 px-2 py-1 rounded text-xs border">🗑️</button>
+                </div>
+            `;
+            
+            phraseContainer.appendChild(newPhrase);
+        }
+
+        // Salva e carica frasi personalizzate
+        function saveCustomPhrases() {
+            const customPhrases = [];
+            document.querySelectorAll('.phrase-item.custom-phrase').forEach(item => {
+                const text = item.querySelector('p').textContent.replace(/"/g, '');
+                const authorElement = item.querySelector('span');
+                const author = authorElement ? authorElement.textContent.replace('- ', '') : '';
+                customPhrases.push({ text, author });
+            });
+            localStorage.setItem('customPhrasesAsian', JSON.stringify(customPhrases));
+        }
+
+        function loadCustomPhrases() {
+            const saved = localStorage.getItem('customPhrasesAsian');
+            if (saved) {
+                const phrases = JSON.parse(saved);
+                phrases.forEach(phrase => {
+                    addSavedPhraseToList(phrase.text, phrase.author);
+                });
+            }
+        }
+
+        function addSavedPhraseToList(text, author) {
+            const color = phraseColors[colorIndex % phraseColors.length];
+            colorIndex++;
+            
+            const phraseContainer = document.querySelector('.space-y-3');
+            const newPhrase = document.createElement('div');
+            newPhrase.className = `phrase-item bg-gradient-to-r from-${color}-50 to-${color}-100 p-3 rounded-lg border border-${color}-200 relative group custom-phrase`;
+            
+            // Rileva la lingua e applica la classe appropriata
+            let fontClass = 'asian-font';
+            if (isChineseText(text)) {
+                fontClass = 'chinese-font';
+            } else if (isKoreanText(text)) {
+                fontClass = 'korean-font';
+            } else if (isJapaneseText(text)) {
+                fontClass = 'japanese-font';
+            }
+            
+            newPhrase.innerHTML = `
+                <div onclick="addPhrase('${text.replace(/'/g, "\\'")}');" class="cursor-pointer">
+                    <p class="text-sm text-gray-700 ${fontClass}">"${text}"</p>
+                    ${author ? `<span class="text-xs text-${color}-600">- ${author}</span>` : ''}
+                </div>
+                <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                    <button onclick="editPhrase(this)" class="bg-white hover:bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs border">✏️</button>
+                    <button onclick="deletePhrase(this)" class="bg-white hover:bg-red-100 text-red-600 px-2 py-1 rounded text-xs border">🗑️</button>
+                </div>
+            `;
+            
+            phraseContainer.appendChild(newPhrase);
+        }
+
+        // Carica contenuto salvato all'avvio
+        window.addEventListener('load', () => {
+            const savedText = localStorage.getItem('editorTextAsian');
+            if (savedText) {
+                editor.innerHTML = savedText;
+            }
+            // Carica le frasi personalizzate salvate
+            loadCustomPhrases();
+            updateCounts();
+        });
+
+        // Salva automaticamente il contenuto dell'editor
+        editor.addEventListener('input', () => {
+            localStorage.setItem('editorTextAsian', editor.innerHTML);
+        });
+
+        // Inizializza contatori
+        updateCounts();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98e6193661570e45',t:'MTc2MDQzNDY1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
