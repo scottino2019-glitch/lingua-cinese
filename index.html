@@ -62,7 +62,7 @@ border: none;
         <p class="mt-2 text-white/90"> ideogrammi, grammatica, esercizi, radicali, giochi, vocabolario e altre risorse</p>
       </div>
     </header>
-     <!-- SINGOLA CARD CALENDARIO (aggiorna da sola) -->
+<!-- SINGOLA CARD CALENDARIO (aggiorna da sola) -->
     <div class="min-w-32 bg-white min-h-48 p-3 mb-4 font-medium inline-block cursor-pointer" id="cardPrincipale">
         <div class="w-32 flex-none rounded-t lg:rounded-t-none lg:rounded-l text-center shadow-lg">
             <div class="block rounded-t overflow-hidden text-center">
@@ -73,37 +73,27 @@ border: none;
                 <div class="border-l border-r border-b rounded-b-lg text-center border-white bg-white -pt-2 -mb-1">
                     <span class="text-sm" id="giornosettCard">Sunday</span>
                 </div>
-                <div class="pb-2 border-l border-r border-b rounded-b-lg text-center border-white bg-white relative">
+                <div class="pb-2 border-l border-r border-b rounded-b-lg text-center border-white bg-white">
                     <span class="text-xs leading-normal block" id="testoCard">Controlla aggiornamenti</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL per gestire TUTTI gli aggiornamenti -->
+    <!-- MODAL SEMPLICE (SOLO input + salva) -->
     <div id="modalTesto" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div class="bg-white rounded-xl p-6 max-w-md w-full shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-900">Gestisci Aggiornamenti</h3>
+                <h3 class="text-xl font-bold text-gray-900">Aggiorna Card</h3>
                 <button onclick="chiudiModalTesto()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
             </div>
-            
-            <!-- Input per NUOVO aggiornamento -->
-            <div class="mb-6 p-4 bg-blue-50 rounded-lg">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Nuovo Aggiornamento</label>
-                <textarea id="inputTesto" rows="3" 
-                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical font-medium text-sm"
-                    placeholder="Scrivi l'ultimo aggiornamento... (es: Aggiunta sessioni Coreane)"></textarea>
-                <button onclick="salvaContenuto()" 
-                    class="w-full mt-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200">
-                    ➕ Aggiungi
-                </button>
-            </div>
-
-            <!-- LISTA degli aggiornamenti esistenti -->
-            <div id="listaAggiornamenti" class="space-y-2 max-h-64 overflow-y-auto">
-                <!-- Gli aggiornamenti verranno inseriti qui dinamicamente -->
-            </div>
+            <textarea id="inputTesto" rows="6" 
+                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical font-medium text-sm"
+                placeholder="Scrivi cosa vuoi mettere nella card..."></textarea>
+            <button onclick="salvaContenuto()" 
+                class="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200">
+                Salva nella Card
+            </button>
         </div>
     </div>
 
@@ -292,13 +282,11 @@ border: none;
   </div>
 </footer>
 <script>
-    // ========== VARIABILI GLOBALI ==========
-        const CHIAVE_STORAGE = 'aggiornamenti_calendario';
-        let aggiornamenti = JSON.parse(localStorage.getItem(CHIAVE_STORAGE)) || [];
+ 
 
-        // ========== FUNZIONI CALENDARIO + MODAL TESTO ==========
+ // ========== FUNZIONI SEMPLICI ==========
         
-        // AGGIORNA CALENDARIO OGNI MINUTO automaticamente
+        // Aggiorna data/ora ogni minuto
         function aggiornaCalendario() {
             const ora = new Date();
             const giorno = ora.getDate();
@@ -310,102 +298,51 @@ border: none;
             document.getElementById('giornosettCard').textContent = giorniSettimana[ora.getDay()];
         }
 
+        // APRE modal
         function apriModalTesto() {
             document.getElementById('modalTesto').classList.remove('hidden');
             document.getElementById('inputTesto').focus();
-            aggiornaListaAggiornamenti();
         }
 
+        // CHIUDE modal
         function chiudiModalTesto() {
             document.getElementById('modalTesto').classList.add('hidden');
-            document.getElementById('inputTesto').value = '';
         }
 
+        // SALVA nella card (NO localStorage!)
         function salvaContenuto() {
             const testo = document.getElementById('inputTesto').value.trim();
             if (testo) {
-                const nuovoAggiornamento = {
-                    id: Date.now(),
-                    testo: testo,
-                    data: new Date().toLocaleDateString('it-IT', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    })
-                };
-                
-                // Aggiunge in cima alla lista (più recenti prima)
-                aggiornamenti.unshift(nuovoAggiornamento);
-                localStorage.setItem(CHIAVE_STORAGE, JSON.stringify(aggiornamenti));
-                
-                // Aggiorna visualizzazione card
-                aggiornaVisualizzazione();
-                
-                // Pulisce input e chiude modal
-                document.getElementById('inputTesto').value = '';
+                document.getElementById('testoCard').textContent = testo;
                 chiudiModalTesto();
             } else {
                 alert('Scrivi qualcosa!');
             }
         }
 
-        function eliminaAggiornamento(id) {
-            if (confirm('Eliminare questo aggiornamento?')) {
-                aggiornamenti = aggiornamenti.filter(agg => agg.id !== id);
-                localStorage.setItem(CHIAVE_STORAGE, JSON.stringify(aggiornamenti));
-                aggiornaVisualizzazione();
-                aggiornaListaAggiornamenti();
-            }
-        }
-
-        function aggiornaVisualizzazione() {
-            // Mostra l'ultimo aggiornamento nella card (o default se vuota)
-            if (aggiornamenti.length > 0) {
-                document.getElementById('testoCard').textContent = aggiornamenti[0].testo;
-            } else {
-                document.getElementById('testoCard').textContent = 'Controlla aggiornamenti';
-            }
-        }
-
-        function aggiornaListaAggiornamenti() {
-            const container = document.getElementById('listaAggiornamenti');
-            if (aggiornamenti.length === 0) {
-                container.innerHTML = '<div class="text-gray-500 text-sm text-center py-4">Nessun aggiornamento</div>';
-                return;
-            }
-
-            container.innerHTML = aggiornamenti.map(agg => `
-                <div class="flex items-start p-3 bg-gray-50 rounded-lg border-l-4 border-blue-400">
-                    <div class="flex-1">
-                        <p class="font-medium text-sm leading-tight">${agg.testo}</p>
-                        <p class="text-xs text-gray-500 mt-1">${agg.data}</p>
-                    </div>
-                    <button onclick="eliminaAggiornamento(${agg.id})" 
-                        class="ml-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-100 rounded transition-colors">
-                        🗑️
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        // ========== FUNZIONI MODAL VOCABOLARIO ==========
+        // Modal vocabolario (tuo originale)
         function openModalVocabolario() {
             document.getElementById('modalVocabolario').classList.remove('hidden');
         }
-
         function closeModalVocabolario() {
             document.getElementById('modalVocabolario').classList.add('hidden');
         }
 
-        // ========== EVENT LISTENER ==========
+        // ========== AVVIO ==========
         document.addEventListener('DOMContentLoaded', function() {
-            // CLICK sulla card calendario per aprire modal testo
+            // Click card = apri modal
             document.getElementById('cardPrincipale').addEventListener('click', apriModalTesto);
+            
+            // Click fuori modal = chiudi
+            document.getElementById('modalTesto').addEventListener('click', function(e) {
+                if (e.target === this) chiudiModalTesto();
+            });
+            document.getElementById('modalVocabolario').addEventListener('click', function(e) {
+                if (e.target === this) closeModalVocabolario();
+            });
         });
 
-        // ESC chiude tutti i modal
+        // ESC chiude tutto
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 chiudiModalTesto();
@@ -413,31 +350,10 @@ border: none;
             }
         });
 
-        // CLICK fuori modal testo chiude
-        document.getElementById('modalTesto').addEventListener('click', function(e) {
-            if (e.target === this) chiudiModalTesto();
-        });
-
-        // CLICK fuori modal vocabolario chiude
-        document.getElementById('modalVocabolario').addEventListener('click', function(e) {
-            if (e.target === this) closeModalVocabolario();
-        });
-
-        // Salva con Ctrl+Enter nella textarea
-        document.getElementById('inputTesto').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && e.ctrlKey) {
-                salvaContenuto();
-            }
-        });
-
-        // ========== INIZIALIZZAZIONE ==========
+        // Avvio pagina
         window.addEventListener('load', function() {
-            // Carica aggiornamenti salvati e imposta ultimo nella card
-            aggiornaVisualizzazione();
-            
-            // Aggiorna calendario subito e ogni minuto
             aggiornaCalendario();
-            setInterval(aggiornaCalendario, 60000);
+            setInterval(aggiornaCalendario, 60000); // Ogni minuto
         });
 </script>
 <script id="dsq-count-scr" src="//silvy74.disqus.com/count.js" async></script>
