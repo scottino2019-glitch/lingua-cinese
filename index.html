@@ -47,9 +47,164 @@ border: none;
     border: none;
     cursor: pointer;
   }
-      /* Stili per modal vocabolario */
-    #modalVocabolario.hidden {
-        display: none !important;
+     /* ICONA CALENDARIO */
+    .calendar-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      z-index: 1001;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .calendar-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* OVERLAY */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* DRAWER PRINCIPALE */
+    .calendar-drawer {
+      position: fixed;
+      bottom: -300px;
+      right: 20px;
+      width: 260px;
+      height: 300px;
+      background: white;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.25);
+      transition: bottom 0.4s ease;
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .calendar-drawer.open {
+      bottom: 90px;
+    }
+
+    /* CALENDARIO CARD - FLEX COMPLETO */
+    .calendar-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* SEZIONE DATA - FISSA */
+    .current-date-display {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px 15px;
+      color: white;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .weekday-name {
+      font-size: 14px;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+
+    .current-day {
+      font-size: 36px;
+      font-weight: bold;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .current-month {
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+    }
+
+    .current-year {
+      font-size: 14px;
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    /* SEZIONE EVENTI - SCROLL INDEPENDENTE */
+    .events-section {
+      flex: 1;
+      padding: 15px;
+      background: #f7fafc;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .event-item {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border-left: 3px solid #667eea;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      font-size: 12px;
+    }
+
+    .event-date {
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 3px;
+    }
+
+    .event-description {
+      color: #4a5568;
+    }
+
+    .no-events {
+      color: #718096;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 13px;
+    }
+
+    /* SCROLLBAR BELLA */
+    .events-section::-webkit-scrollbar {
+      width: 4px;
+    }
+    .events-section::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 2px;
+    }
+    .events-section::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 2px;
     }
 </style>
 
@@ -62,63 +217,28 @@ border: none;
         <p class="mt-2 text-white/90"> ideogrammi, grammatica, esercizi, radicali, giochi, vocabolario e altre risorse</p>
       </div>
     </header>
-<!-- SINGOLA CARD CALENDARIO (aggiorna da sola) -->
-    <div class="min-w-32 bg-white min-h-48 p-3 mb-4 font-medium inline-block cursor-pointer" id="cardPrincipale">
-        <div class="w-32 flex-none rounded-t lg:rounded-t-none lg:rounded-l text-center shadow-lg">
-            <div class="block rounded-t overflow-hidden text-center">
-                <div class="bg-blue-500 text-white py-1" id="meseCard">March</div>
-                <div class="pt-1 border-l border-r border-white bg-white">
-                    <span class="text-5xl font-bold leading-tight" id="giornoCard">17</span>
-                </div>
-                <div class="border-l border-r border-b rounded-b-lg text-center border-white bg-white -pt-2 -mb-1">
-                    <span class="text-sm" id="giornosettCard">Sunday</span>
-                </div>
-                <div class="pb-2 border-l border-r border-b rounded-b-lg text-center border-white bg-white">
-                    <span class="text-xs leading-normal block" id="testoCard">Controlla aggiornamenti</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL SEMPLICE (SOLO input + salva) -->
-    <div id="modalTesto" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl p-6 max-w-md w-full shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-900">Aggiorna Card</h3>
-                <button onclick="chiudiModalTesto()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
-            </div>
-            <textarea id="inputTesto" rows="6" 
-                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical font-medium text-sm"
-                placeholder="Scrivi cosa vuoi mettere nella card..."></textarea>
-            <button onclick="salvaContenuto()" 
-                class="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200">
-                Salva nella Card
-            </button>
-        </div>
-    </div>
 
     <!-- Grid of Cards -->
     <main class="mx-auto max-w-7xl px-4 py-10 sm:py-12">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-<!-- Card: Vocabolario -->
-<button class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition" onclick="openModalVocabolario()">
-    <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
-        <img src="img/forum.jpg" alt="Vocabolario" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
-    </div>
-    <div class="p-4">
-        <h3 class="text-lg font-semibold">Vocabolario</h3>
-        <p class="mt-1 text-sm text-slate-600">Nuovo vocabolario</p>
-        <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
-    </div>
-</button>
-
-<!-- Modal Completo Vocabolario -->
-<div id="modalVocabolario" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-40 p-4">
-    <div id="modalContentVocabolario" class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl relative">
-        <button id="modalCloseBtnVocabolario" onclick="closeModalVocabolario()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold z-10">&times;</button>
-        <iframe src="https://scottino2019-glitch.github.io/Vocabolario-Cinese/" title="Vocabolario" class="w-full h-[70vh]"></iframe>
-    </div>
+ <!-- Card: Vicabolario -->
+        <button class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition" onclick="openModal()">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/forum.jpg" alt="Vocabolario" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Vocabolario</h3>
+            <p class="mt-1 text-sm text-slate-600">Nuovo vocabolario</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </button>
+   <!-- Modal Completo -->
+<div id="modalIframe">
+  <div id="modalContent">
+    <button id="modalCloseBtn" onclick="closeModal()">&times;</button>
+    <iframe src="https://scottino2019-glitch.github.io/Vocabolario-Cinese/" title="Vocabolario"></iframe>
+  </div>
 </div>
         <!-- Card: Ideogrammi -->
         <a href="caratteri.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
@@ -267,6 +387,26 @@ border: none;
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
     </main>
+      <!-- ICONA -->
+  <button class="calendar-toggle" id="calendarToggle">📅</button>
+
+  <!-- OVERLAY -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- CALENDARIO -->
+  <div class="calendar-drawer" id="calendarDrawer">
+    <div class="calendar-card">
+      <div class="current-date-display">
+        <div class="weekday-name" id="weekdayName"></div>
+        <div class="current-day" id="currentDay"></div>
+        <div class="current-month" id="currentMonth"></div>
+        <div class="current-year" id="currentYear"></div>
+      </div>
+      <div class="events-section">
+        <div id="eventsList"></div>
+      </div>
+    </div>
+  </div>
 
 <footer style="background: linear-gradient(90deg, #d81e06 60%, #ffea00 100%); padding: 1.5rem 0; text-align: center;">
   <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">
@@ -282,79 +422,83 @@ border: none;
   </div>
 </footer>
 <script>
- 
+// Calendario
+   const events = [
+      { giorno: 3, mese: 12, anno: 2025, descrizione: "Aggiunto nuovo gioco abbinamenti" },
+      { giorno: 20, mese: 1, anno: 2025, descrizione: "Compleanno Maria" },
+      { giorno: 25, mese: 1, anno: 2025, descrizione: "Scadenza progetto web app" },
+      { giorno: 1, mese: 2, anno: 2025, descrizione: "Inizio nuovo mese - pianifica" },
+      { giorno: 15, mese: 2, anno: 2025, descrizione: "Riunione team sviluppo" },
+      { giorno: 28, mese: 2, anno: 2025, descrizione: "Test finale app linguistica" }
+    ];
 
- // ========== FUNZIONI SEMPLICI ==========
-        
-        // Aggiorna data/ora ogni minuto
-        function aggiornaCalendario() {
-            const ora = new Date();
-            const giorno = ora.getDate();
-            const mesi = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-            const giorniSettimana = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-            
-            document.getElementById('meseCard').textContent = mesi[ora.getMonth()];
-            document.getElementById('giornoCard').textContent = giorno;
-            document.getElementById('giornosettCard').textContent = giorniSettimana[ora.getDay()];
-        }
+    const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+    const giorniSettimana = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
 
-        // APRE modal
-        function apriModalTesto() {
-            document.getElementById('modalTesto').classList.remove('hidden');
-            document.getElementById('inputTesto').focus();
-        }
+    const toggleBtn = document.getElementById('calendarToggle');
+    const drawer = document.getElementById('calendarDrawer');
+    const overlay = document.getElementById('overlay');
 
-        // CHIUDE modal
-        function chiudiModalTesto() {
-            document.getElementById('modalTesto').classList.add('hidden');
-        }
+    function renderCalendar() {
+      const now = new Date();
+      document.getElementById('weekdayName').textContent = giorniSettimana[now.getDay()];
+      document.getElementById('currentDay').textContent = now.getDate();
+      document.getElementById('currentMonth').textContent = mesi[now.getMonth()];
+      document.getElementById('currentYear').textContent = now.getFullYear();
+      renderEventsList();
+    }
 
-        // SALVA nella card (NO localStorage!)
-        function salvaContenuto() {
-            const testo = document.getElementById('inputTesto').value.trim();
-            if (testo) {
-                document.getElementById('testoCard').textContent = testo;
-                chiudiModalTesto();
-            } else {
-                alert('Scrivi qualcosa!');
-            }
-        }
+    function renderEventsList() {
+      const eventsList = document.getElementById('eventsList');
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-        // Modal vocabolario (tuo originale)
-        function openModalVocabolario() {
-            document.getElementById('modalVocabolario').classList.remove('hidden');
-        }
-        function closeModalVocabolario() {
-            document.getElementById('modalVocabolario').classList.add('hidden');
-        }
+      const upcomingEvents = events
+        .filter(e => new Date(e.anno, e.mese - 1, e.giorno) >= today)
+        .sort((a, b) => new Date(a.anno, a.mese - 1, a.giorno) - new Date(b.anno, b.mese - 1, b.giorno))
+        .slice(0, 10);
 
-        // ========== AVVIO ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            // Click card = apri modal
-            document.getElementById('cardPrincipale').addEventListener('click', apriModalTesto);
-            
-            // Click fuori modal = chiudi
-            document.getElementById('modalTesto').addEventListener('click', function(e) {
-                if (e.target === this) chiudiModalTesto();
-            });
-            document.getElementById('modalVocabolario').addEventListener('click', function(e) {
-                if (e.target === this) closeModalVocabolario();
-            });
-        });
+      if (upcomingEvents.length === 0) {
+        eventsList.innerHTML = '<div class="no-events">Nessun evento</div>';
+        return;
+      }
 
-        // ESC chiude tutto
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                chiudiModalTesto();
-                closeModalVocabolario();
-            }
-        });
+      eventsList.innerHTML = upcomingEvents.map(event => `
+        <div class="event-item">
+          <div class="event-date">${event.giorno} ${mesi[event.mese - 1]}</div>
+          <div class="event-description">${event.descrizione}</div>
+        </div>
+      `).join('');
+    }
 
-        // Avvio pagina
-        window.addEventListener('load', function() {
-            aggiornaCalendario();
-            setInterval(aggiornaCalendario, 60000); // Ogni minuto
-        });
+    function toggleDrawer() {
+      drawer.classList.toggle('open');
+      overlay.classList.toggle('active');
+      toggleBtn.textContent = drawer.classList.contains('open') ? '❌' : '📅';
+    }
+
+    toggleBtn.addEventListener('click', toggleDrawer);
+    overlay.addEventListener('click', toggleDrawer);
+
+    renderCalendar();
+  // Funzioni per aprire e chiudere modal
+  function openModal() {
+    document.getElementById('modalIframe').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('modalIframe').classList.remove('active');
+  }
+
+  // Chiudi modal cliccando fuori dal contenuto
+  window.addEventListener('click', function(event) {
+    const modal = document.getElementById('modalIframe');
+    if(event.target === modal) {
+      closeModal();
+    }
+  });
+
+
 </script>
 <script id="dsq-count-scr" src="//silvy74.disqus.com/count.js" async></script>
   </body>
