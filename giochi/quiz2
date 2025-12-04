@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Mio Quiz Interattivo</title>
+    <!-- CORREZIONE #1:
+        Usa il file TailwindCSS locale per evitare errori di caricamento dal CDN.
+        Scarica la versione compatta di tailwind e inserisci nella stessa directory del tuo progetto.
+        Commenta la riga CDN e decommenta la successiva se usi locale.
+    -->
+     <script src="https://cdn.tailwindcss.com"></script> 
+   <!-- <link rel="stylesheet" href="tailwind.min.css">--> <!-- CORREZIONE #1 -->
+    <style>
+        /* Animazioni personalizzate */
+        .question-card {
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .question-card.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .answer-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .answer-option:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .answer-option.selected {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            transform: scale(1.02);
+        }
+        .answer-option.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            animation: correctPulse 0.6s ease-out;
+        }
+        .answer-option.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            animation: shake 0.5s ease-out;
+        }
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .timer-warning {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-500 to-red-600 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-2">🧠 Il Mio Quiz</h1>
+            <p class="text-blue-100 text-lg">Metti alla prova le tue conoscenze!</p>
+        </div>
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="bg-white rounded-2xl shadow-2xl p-8">
+            <div class="text-center py-12">
+                <div class="text-6xl mb-4">🚀</div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Benvenuto al Quiz!</h2>
+                <p class="text-gray-600 mb-6">Clicca il pulsante per iniziare</p>
+                <button onclick="startQuiz()" class="bg-blue-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition-colors">
+                    Inizia Quiz
+                </button>
+            </div>
+        </div>
+    </div>
+<script>
+    // Database delle domande
+   const questions = [
+    {
+        question: "Qual è la traduzione corretta di '谢谢'?",
+        options: ["Per favore", "Scusa", "Grazie", "Prego"],
+        correct: 2,
+        hint: "Si usa per esprimere gratitudine",
+        category: "Vocabolario cinese"
+    },
+    {
+        question: "Qual è la traduzione corretta di '再见'?",
+        options: ["A domani", "Addio", "Arrivederci", "Buonanotte"],
+        correct: 2,
+        hint: "Si usa quando ci si congeda da qualcuno",
+        category: "Vocabolario cinese"
+    },
+    {
+        question: "Qual è la trascrizione pinyin corretta per '中国'?",
+        options: ["Zhōngguó", "Zhōnggúo", "Zhōngguo", "Zhòngguó"],
+        correct: 0,
+        hint: "Significa 'Cina'",
+        category: "Pinyin"
+    },
+    {
+        question: "Quanti toni principali ha il mandarino standard?",
+        options: ["Tre", "Quattro", "Cinque", "Sei"],
+        correct: 1,
+        hint: "Include toni alto, crescente, cadente-risalente e brusco discendente",
+        category: "Toni cinesi"
+    },
+    {
+        question: "Qual è il significato di '人' (rén)?",
+        options: ["sole", "persona", "giorno", "fuoco"],
+        correct: 1,
+        hint: "Indica un essere umano",
+        category: "Vocabolario cinese"
+    },
+    {
+        question: "Qual è il pinyin corretto per '老师'?",
+        options: ["lǎoshi", "lǎoshī", "laoshī", "láoshī"],
+        correct: 1,
+        hint: "Significa 'insegnante'",
+        category: "Pinyin"
+    },
+    {
+        question: "Qual è il significato di '我' (wǒ)?",
+        options: ["tu", "lui/lei", "io", "noi"],
+        correct: 2,
+        hint: "È un pronome personale singolare",
+        category: "Vocabolario cinese"
+    },
+    {
+        question: "Quale frase significa 'grazie mille' in cinese?",
+        options: [
+            "非常谢谢你 (Fēicháng xièxie nǐ)",
+            "对不起 (Duìbuqǐ)",
+            "没关系 (Méi guānxi)",
+            "不好意思 (Bù hǎoyìsi)"
+        ],
+        correct: 0,
+        hint: "Intensifica il ringraziamento",
+        category: "Frasi comuni"
+    },
+    {
+        question: "Qual è il tono corretto per 'bà' (爸)?",
+        options: ["primo tono", "secondo tono", "terzo tono", "quarto tono"],
+        correct: 3,
+        hint: "È un tono discendente, breve e deciso",
+        category: "Toni cinesi"
+    },
+    {
+        question: "Qual è la traduzione di '中国人' (Zhōngguó rén)?",
+        options: ["lingua cinese", "popolo cinese", "Cina", "paese straniero"],
+        correct: 1,
+        hint: "Si riferisce alle persone di nazionalità cinese",
+        category: "Vocabolario cinese"
+    },
+    {
+        question: "Qual è la traduzione corretta del numero 'uno' in cinese?",
+        options: ["二 (èr)", "一 (yī)", "三 (sān)", "十 (shí)"],
+        correct: 1,
+        hint: "È il numero base più piccolo",
+        category: "Numeri cinesi"
+    },
+    {
+        question: "Come si dice 'sette' in cinese?",
+        options: ["六 (liù)", "七 (qī)", "八 (bā)", "九 (jiǔ)"],
+        correct: 1,
+        hint: "Subito dopo sei",
+        category: "Numeri cinesi"
+    },
+    {
+        question: "Qual è il pinyin per il numero 'dieci'?",
+        options: ["shí", "bā", "jiǔ", "qī"],
+        correct: 0,
+        hint: "È una decina",
+        category: "Numeri cinesi"
+    },
+    {
+        question: "Come si dice 'lunedì' in cinese?",
+        options: ["星期一 (Xīngqī yī)", "星期二 (Xīngqī èr)", "星期三 (Xīngqī sān)", "星期日 (Xīngqī rì)"],
+        correct: 0,
+        hint: "Il primo giorno della settimana",
+        category: "Giorni della settimana"
+    },
+    {
+        question: "Qual è la traduzione corretta di 'sabato'?",
+        options: ["星期六 (Xīngqī liù)", "星期五 (Xīngqī wǔ)", "星期天 (Xīngqī tiān)", "星期三 (Xīngqī sān)"],
+        correct: 0,
+        hint: "È il sesto giorno della settimana",
+        category: "Giorni della settimana"
+    },
+    {
+        question: "Qual è il pinyin per il numero 'quattro'?",
+        options: ["sì", "èr", "wǔ", "sān"],
+        correct: 0,
+        hint: "Numero considerato sfortunato in Cina",
+        category: "Numeri cinesi"
+    },
+    {
+        question: "Come si dice 'domenica' in cinese?",
+        options: ["星期日 (Xīngqī rì)", "星期六 (Xīngqī liù)", "星期一 (Xīngqī yī)", "星期五 (Xīngqī wǔ)"],
+        correct: 0,
+        hint: "Ultimo giorno della settimana",
+        category: "Giorni della settimana"
+    },
+    {
+        question: "Qual è la traduzione corretta del numero 'cinque'?",
+        options: ["四 (sì)", "五 (wǔ)", "六 (liù)", "七 (qī)"],
+        correct: 1,
+        hint: "Subito dopo quattro",
+        category: "Numeri cinesi"
+    },
+    {
+        question: "Come si dice 'mercoledì' in cinese?",
+        options: ["星期一 (Xīngqī yī)", "星期五 (Xīngqī wǔ)", "星期三 (Xīngqī sān)", "星期四 (Xīngqī sì)"],
+        correct: 2,
+        hint: "Il terzo giorno della settimana",
+        category: "Giorni della settimana"
+    },
+    {
+        question: "Qual è il pinyin per il numero 'nove'?",
+        options: ["qī", "bā", "jiǔ", "shí"],
+        correct: 2,
+        hint: "Numero dopo otto",
+        category: "Numeri cinesi"
+    }
+];
+
+ 
+    // Variabili globali del quiz
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let selectedAnswer = null;
+    let quizStarted = false;
+    let timeLeft = 30;
+    let timerInterval = null;
+    // Funzione per iniziare il quiz
+    function startQuiz() {
+        quizStarted = true;
+        currentQuestionIndex = 0;
+        score = 0;
+        showQuestion();
+    }
+    // Funzione per mostrare una domanda
+    function showQuestion() {
+        const question = questions[currentQuestionIndex];
+        selectedAnswer = null;
+        const quizContainer = document.getElementById('quiz-container');
+        quizContainer.innerHTML = `
+            <div class="question-card">
+                <!-- Barra di Progresso -->
+                <div class="mb-6">
+                    <div class="flex justify-between text-sm text-gray-600 mb-2">
+                        <span>Domanda ${currentQuestionIndex + 1} di ${questions.length}</span>
+                        <span>Punteggio: ${score}</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="progress-bar bg-blue-500 h-3 rounded-full" style="width: ${((currentQuestionIndex + 1) / questions.length) * 100}%"></div>
+                    </div>
+                </div>
+                <!-- Timer -->
+                <div class="text-center mb-6">
+                    <div class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
+                        ⏱️ Tempo: <span id="timer">30</span>s
+                    </div>
+                </div>
+                <!-- Domanda -->
+                <div class="text-center mb-8">
+                    <div class="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm mb-4">
+                        ${question.category}
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                        ${question.question}
+                    </h2>
+                </div>
+                <!-- Opzioni -->
+                <div class="space-y-4 mb-8">
+                    ${question.options.map((option, index) => `
+                        <div class="answer-option p-4 border-2 border-gray-200 rounded-lg" onclick="selectAnswer(${index})">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                                    ${String.fromCharCode(65 + index)}
+                                </div>
+                                <span class="text-gray-800">${option}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <!-- Pulsanti Azione -->
+                <div class="flex justify-between">
+                    <button onclick="showHint()" class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition-colors">
+                        💡 Suggerimento
+                    </button>
+                    <!-- CORREZIONE #2: usa nextQuestionUpdated -->
+                    <button id="next-btn" onclick="nextQuestionUpdated()" disabled class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed">
+                        Avanti →
+                    </button>
+                </div>
+            </div>
+        `;
+        // Avvia animazione di entrata
+        setTimeout(() => {
+            document.querySelector('.question-card').classList.add('show');
+        }, 100);
+        // Avvia timer
+        startTimer();
+    }
+    // Funzione per selezionare una risposta
+    function selectAnswer(index) {
+        selectedAnswer = index;
+        // Rimuovi selezione precedente
+        document.querySelectorAll('.answer-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        // Seleziona nuova opzione
+        document.querySelectorAll('.answer-option')[index].classList.add('selected');
+        // Abilita pulsante "Avanti"
+        document.getElementById('next-btn').disabled = false;
+    }
+    // Funzione per passare alla domanda successiva, con nuovo sistema di punteggio
+    function nextQuestionUpdated() {
+        if (selectedAnswer === null) return;
+        clearInterval(timerInterval);
+        const question = questions[currentQuestionIndex];
+        const isCorrect = selectedAnswer === question.correct;
+        const timeUsed = 30 - timeLeft;
+        showFeedback(isCorrect);
+        // Punteggio avanzato con bonus
+        if (isCorrect) {
+            const points = calculateScore(isCorrect, timeUsed);
+            score += points;
+            showPointsEarned(points);
+        }
+        // Vai avanti dopo 2.5s
+        setTimeout(() => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }, 2500);
+    }
+    // Funzione per mostrare feedback visivo
+    function showFeedback(isCorrect) {
+        const options = document.querySelectorAll('.answer-option');
+        const correctIndex = questions[currentQuestionIndex].correct;
+        if (isCorrect) {
+            options[selectedAnswer].classList.add('correct');
+        } else {
+            options[selectedAnswer].classList.add('incorrect');
+            options[correctIndex].classList.add('correct');
+        }
+        // Disabilita tutte le opzioni
+        options.forEach(option => {
+            option.onclick = null;
+        });
+    }
+    // Suggerimento
+    function showHint() {
+        const hint = questions[currentQuestionIndex].hint;
+        alert(`💡 Suggerimento: ${hint}`);
+    }
+    // Sistema timer aggiornato
+    function startTimer() {
+        timeLeft = 30;
+        updateTimerDisplay();
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            // Avviso visivo quando il tempo scarseggia
+            if (timeLeft <= 10) {
+                document.getElementById('timer').parentElement.classList.add('timer-warning');
+                document.getElementById('timer').parentElement.classList.remove('bg-blue-100', 'text-blue-800');
+                document.getElementById('timer').parentElement.classList.add('bg-red-100', 'text-red-800');
+            }
+            // Tempo scaduto
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timeUp();
+            }
+        }, 1000);
+    }
+    function updateTimerDisplay() {
+        const timerElement = document.getElementById('timer');
+        if (timerElement) {
+            timerElement.textContent = timeLeft;
+        }
+    }
+    // Gestione tempo scaduto
+    function timeUp() {
+        // Disabilita opzioni
+        document.querySelectorAll('.answer-option').forEach(option => {
+            option.onclick = null;
+            option.classList.add('opacity-50');
+        });
+        // Mostra la risposta corretta
+        const correctIndex = questions[currentQuestionIndex].correct;
+        document.querySelectorAll('.answer-option')[correctIndex].classList.add('correct');
+        // Messaggio timeout e prossimo
+        const nextBtn = document.getElementById('next-btn');
+        nextBtn.textContent = 'Tempo Scaduto - Avanti →';
+        nextBtn.disabled = false;
+        nextBtn.onclick = () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        };
+    }
+    // Calcolo punteggio avanzato
+    function calculateScore(isCorrect, timeUsed) {
+        if (!isCorrect) return 0;
+        let baseScore = 100;
+        const timeBonus = Math.max(0, (30 - timeUsed) * 3);
+        let streakBonus = 0;
+        if (currentQuestionIndex > 0) {
+            // Bonus streak semplice
+            streakBonus = Math.min(currentQuestionIndex * 10, 50);
+        }
+        return baseScore + timeBonus + streakBonus;
+    }
+    // Mostra i punti guadagnati (popup pulsante)
+    function showPointsEarned(points) {
+        const pointsDiv = document.createElement('div');
+        pointsDiv.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded-lg text-xl font-bold z-50';
+        pointsDiv.textContent = `+${points} punti!`;
+        pointsDiv.style.animation = 'correctPulse 1s ease-out';
+        document.body.appendChild(pointsDiv);
+        setTimeout(() => {
+            pointsDiv.remove();
+        }, 1500);
+    }
+    // Risultati finali
+    function showResults() {
+        const percentage = Math.round((score / (questions.length * 200)) * 100); // 200 = max punteggio per domanda
+        const correctAnswers = Math.round(percentage / 20); // Stima risposte corrette
+        let level, emoji, message, color;
+        if (percentage >= 90) {
+            level = "🏆 Maestro del Quiz!";
+            emoji = "🎉";
+            message = "Prestazione eccezionale! Sei un vero esperto!";
+            color = "text-yellow-500";
+        } else if (percentage >= 75) {
+            level = "⭐ Esperto";
+            emoji = "🌟";
+            message = "Ottimo lavoro! Hai dimostrato ottime conoscenze.";
+            color = "text-blue-500";
+        } else if (percentage >= 60) {
+            level = "👍 Competente";
+            emoji = "💪";
+            message = "Buon risultato! C'è ancora margine di miglioramento.";
+            color = "text-green-500";
+        } else if (percentage >= 40) {
+            level = "📚 Principiante";
+            emoji = "📖";
+            message = "Non male per iniziare! Continua a praticare.";
+            color = "text-orange-500";
+        } else {
+            level = "💪 Novizio";
+            emoji = "🎯";
+            message = "Non scoraggiarti! Ogni esperto è stato un principiante.";
+            color = "text-red-500";
+        }
+        const quizContainer = document.getElementById('quiz-container');
+        quizContainer.innerHTML = `
+            <div class="text-center">
+                <div class="text-8xl mb-6">${emoji}</div>
+                <h2 class="text-3xl font-bold ${color} mb-4">${level}</h2>
+                <p class="text-gray-600 text-lg mb-8">${message}</p>
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6">
+                        <div class="text-3xl font-bold text-blue-600 mb-2">${score}</div>
+                        <div class="text-blue-700 font-semibold">Punteggio Totale</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
+                        <div class="text-3xl font-bold text-green-600 mb-2">${correctAnswers}/${questions.length}</div>
+                        <div class="text-green-700 font-semibold">Risposte Corrette</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">${percentage}%</div>
+                        <div class="text-purple-700 font-semibold">Precisione</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 mb-8">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Dettagli Performance</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Domande totali:</span>
+                            <span class="font-semibold">${questions.length}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Risposte sbagliate:</span>
+                            <span class="font-semibold">${questions.length - correctAnswers}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Punteggio medio:</span>
+                            <span class="font-semibold">${Math.round(score / questions.length)} pts/domanda</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Livello raggiunto:</span>
+                            <span class="font-semibold ${color}">${level.replace(/[🏆⭐👍📚💪]/g, '').trim()}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <button onclick="restartQuiz()" class="bg-blue-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition-colors">
+                        🔄 Riprova
+                    </button>
+                    <button onclick="shareResults()" class="bg-green-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition-colors">
+                        📤 Condividi
+                    </button>
+                </div>
+            </div>
+        `;
+        // Effetto confetti su punteggio alto
+        if (percentage >= 90) {
+            createConfetti();
+        }
+    }
+    // Funzione per riavviare quiz
+    function restartQuiz() {
+        currentQuestionIndex = 0;
+        score = 0;
+        selectedAnswer = null;
+        quizStarted = false;
+        const quizContainer = document.getElementById('quiz-container');
+        quizContainer.innerHTML = `
+            <div class="text-center py-12">
+                <div class="text-6xl mb-4">🚀</div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Benvenuto al Quiz!</h2>
+                <p class="text-gray-600 mb-6">Clicca il pulsante per iniziare</p>
+                <button onclick="startQuiz()" class="bg-blue-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition-colors">
+                    Inizia Quiz
+                </button>
+            </div>
+        `;
+    }
+    // Funzione per condividere i risultati
+    function shareResults() {
+        const shareText = `🧠 Ho completato un quiz e ho ottenuto ${score} punti! Prova anche tu questo quiz interattivo!`;
+        if (navigator.share) {
+            navigator.share({
+                title: 'I miei risultati del Quiz',
+                text: shareText,
+                url: window.location.href
+            });
+        } else {
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert('Risultati copiati negli appunti! 📋');
+            });
+        }
+    }
+    // Effetti confetti per festeggiare!
+    function createConfetti() {
+        const colors = ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ef4444'];
+        for (let i = 0; i < 30; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-10px';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.zIndex = '1000';
+            confetti.style.animation = `fall ${2 + Math.random() * 3}s linear forwards`;
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 5000);
+        }
+    }
+    // Animazione per i confetti
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</body>
+</html>
