@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editor con Traduttore</title>
   <script src="https://cdn.tailwindcss.com"></script>
-<script src="
-https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
   <script src="/_sdk/element_sdk.js"></script>
   <style>
         body {
@@ -33,24 +32,7 @@ https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
             60% { content: '..'; }
             80%, 100% { content: '...'; }
         }
-  #pdfViewer { 
-        min-height: 400px; 
-        border-radius: 12px; 
-        overflow: hidden; 
-    }
-    #pdfViewer canvas { 
-        max-width: 100%; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto; 
-        border-radius: 12px; 
-    }
-#pdf-controls {
-    margin-top: 1rem;
-}
-#pdf-controls input, #pdf-controls select {
-    font-size: 14px;
-}
+  
     </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
@@ -64,42 +46,9 @@ https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <h1 id="app-title" class="text-4xl font-bold text-gray-800 mb-2">Editor con Traduttore</h1>
     <p class="text-gray-600">Scrivi e traduci istantaneamente in oltre 100 lingue</p>
    </header>
-<!-- === LETTORE PDF COMPLETO - COPIA DAL COMMENTO AL COMMENTO === -->
-<div class="bg-white rounded-xl shadow-lg p-6 mb-6">
- <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6">
-  <h2 class="text-xl font-bold text-gray-800 flex items-center space-x-2 flex-shrink-0">
-   <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-   </svg>
-   <span>Lettore PDF</span>
-  </h2>
-  <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-   <label class="flex-1 lg:flex-none bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-5 rounded-xl text-center font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 active:scale-95 flex items-center justify-center space-x-3 cursor-pointer min-h-[65px]">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-    </svg>
-    <span id="pdf-status">📁 Carica PDF</span>
-    <input type="file" id="pdf-upload" accept=".pdf" class="hidden">
-   </label>
-   <select id="pdf-preset" class="flex-1 lg:flex-none p-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white shadow-md">
-    <option value="">📚 Seleziona PDF...</option>
-    <option value="pdf/pinyin.pdf">pinyin学拼音</option>
-    <option value="grammatica-coreano.pdf">🇰🇷 Grammatica Coreano</option>
-    <option value="grammatica-giapponese.pdf">🇯🇵 Grammatica Giapponese</option>
-   </select>
-  </div>
- </div>
- <div id="pdfViewer" class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-gray-500 text-lg p-12 min-h-[420px] md:min-h-[500px] hidden">
-  <div class="text-center">
-   <svg class="w-24 h-24 mx-auto mb-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-   </svg>
-   <p class="font-semibold text-xl mb-2">Nessun PDF caricato</p>
-   <p class="text-gray-500">Tocca il bottone blu per caricare un PDF</p>
-  </div>
- </div>
-</div>
-<!-- === FINE LETTORE PDF === -->
+ 
+    
+  
 
 <!-- Language Selection -->
    <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
@@ -197,140 +146,10 @@ https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
    </div>
   </div>
   <script>
-       // PDF.js setup
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js
+       
 
-// ✅ PDF.js MINIMO - NON rompe l'editor
-// PDF
-// === PDF COMPLETO CON NAVIGAZIONE ===
-document.addEventListener('DOMContentLoaded', function() {
-let pdfDoc = null;
-let paginaAttuale = 1;
-let totalePagine = 0;
-let scala = 1.5;
 
-const pdfViewer = document.getElementById('pdfViewer');
-const pdfUpload = document.getElementById('pdf-upload');
-const pdfStatus = document.getElementById('pdf-status');
-const pdfPreset = document.getElementById('pdf-preset');
 
-async function renderPagina(numero) {
-  if (!pdfDoc) return;
-  
-  const pagina = await pdfDoc.getPage(numero);
-  const viewport = pagina.getViewport({scale: scala});
-  
-  const canvas = document.createElement('canvas');
-  canvas.height = viewport.height;
-  canvas.width = viewport.width;
-  canvas.style.maxWidth = '100%';
-  canvas.style.height = 'auto';
-  canvas.style.borderRadius = '12px';
-  
-  const contesto = canvas.getContext('2d');
-  pdfViewer.innerHTML = '';
-  pdfViewer.appendChild(canvas);
-  
-  await pagina.render({canvasContext: contesto, viewport}).promise;
-  
-  pdfStatus.textContent = `Pagina ${numero} di ${totalePagine}`;
-  aggiornaControlli();
-}
-
-function aggiornaControlli() {
-  let controlli = document.getElementById('pdf-controls');
-  if (!controlli) {
-    controlli = creaControlli();
-    pdfViewer.parentElement.appendChild(controlli);
-  }
-}
-
-function creaControlli() {
-  const div = document.createElement('div');
-  div.id = 'pdf-controls';
-  div.className = 'flex flex-wrap items-center justify-center gap-3 mt-4 p-4 bg-gray-50 rounded-lg border';
-  div.innerHTML = `
-    <button onclick="pdfPrecedente()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm font-medium">← Prev</button>
-    <input type="number" id="pdf-page-input" value="${paginaAttuale}" min="1" max="${totalePagine}" class="w-16 p-2 border rounded text-center text-sm" onchange="pdfVaiPagina(this.value)">
-    <span class="text-sm text-gray-700">di ${totalePagine}</span>
-    <button onclick="pdfSuccessiva()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm font-medium">Succ →</button>
-    <select id="pdf-zoom" onchange="pdfCambiaZoom(this.value)" class="p-2 border rounded text-sm">
-      <option value="1">100%</option>
-      <option value="1.25">125%</option>
-      <option value="1.5" selected>150%</option>
-      <option value="2">200%</option>
-      <option value="2.5">250%</option>
-    </select>
-  `;
-  return div;
-}
-
-window.pdfPrecedente = () => {
-  if (paginaAttuale > 1) {
-    paginaAttuale--;
-    document.getElementById('pdf-page-input').value = paginaAttuale;
-    renderPagina(paginaAttuale);
-  }
-};
-
-window.pdfSuccessiva = () => {
-  if (paginaAttuale < totalePagine) {
-    paginaAttuale++;
-    document.getElementById('pdf-page-input').value = paginaAttuale;
-    renderPagina(paginaAttuale);
-  }
-};
-
-window.pdfVaiPagina = (num) => {
-  num = parseInt(num);
-  if (num >= 1 && num <= totalePagine) {
-    paginaAttuale = num;
-    renderPagina(num);
-  }
-};
-
-window.pdfCambiaZoom = (val) => {
-  scala = parseFloat(val);
-  renderPagina(paginaAttuale);
-};
-
-async function caricaPdf(src) {
-  try {
-    pdfStatus.textContent = '⏳ Caricando PDF...';
-    pdfViewer.classList.remove('hidden');
-    
-    pdfDoc = await pdfjsLib.getDocument(src).promise;
-    totalePagine = pdfDoc.numPages;
-    paginaAttuale = 1;
-    scala = 1.5;
-    
-    await renderPagina(1);
-    pdfStatus.textContent = `Caricato! ${totalePagine} pagine`;
-  } catch(e) {
-    console.error(e);
-    pdfStatus.textContent = '❌ Errore PDF';
-    pdfViewer.innerHTML = '<div class="text-red-500 p-8 text-center">Errore caricamento PDF</div>';
-  }
-}
-
-// UPLOAD FILE
-pdfUpload.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    pdfStatus.textContent = '⏳ Leggendo file...';
-    const reader = new FileReader();
-    reader.onload = () => caricaPdf({data: new Uint8Array(reader.result)});
-    reader.readAsArrayBuffer(file);
-  }
-});
-
-// PDF DAL MENU
-pdfPreset.addEventListener('change', () => {
-  const percorso = pdfPreset.value;
-  if (percorso) {
-    caricaPdf(percorso);
-  }
-});
 
 // ✅ ORA IL TUO CODICE EDITOR ORIGINALE (dal // Configuration in giù)
         // Configuration
