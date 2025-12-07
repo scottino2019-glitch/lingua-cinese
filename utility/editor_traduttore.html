@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editor con Traduttore</title>
   <script src="https://cdn.tailwindcss.com"></script>
+<!-- ❌ MANCANTE nel tuo <head> -->
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <style>
         body {
@@ -31,6 +33,18 @@
             60% { content: '..'; }
             80%, 100% { content: '...'; }
         }
+  #pdfViewer { 
+        min-height: 400px; 
+        border-radius: 12px; 
+        overflow: hidden; 
+    }
+    #pdfViewer canvas { 
+        max-width: 100%; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto; 
+        border-radius: 12px; 
+    }
     </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
@@ -43,7 +57,45 @@
 </svg> Indietro </a></button>
     <h1 id="app-title" class="text-4xl font-bold text-gray-800 mb-2">Editor con Traduttore</h1>
     <p class="text-gray-600">Scrivi e traduci istantaneamente in oltre 100 lingue</p>
-   </header><!-- Language Selection -->
+   </header>
+<!-- === LETTORE PDF COMPLETO - COPIA DAL COMMENTO AL COMMENTO === -->
+<div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+ <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6">
+  <h2 class="text-xl font-bold text-gray-800 flex items-center space-x-2 flex-shrink-0">
+   <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+   </svg>
+   <span>Lettore PDF</span>
+  </h2>
+  <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+   <label class="flex-1 lg:flex-none bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-5 rounded-xl text-center font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 active:scale-95 flex items-center justify-center space-x-3 cursor-pointer min-h-[65px]">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+    </svg>
+    <span id="pdf-status">📁 Carica PDF</span>
+    <input type="file" id="pdf-upload" accept=".pdf" class="hidden">
+   </label>
+   <select id="pdf-preset" class="flex-1 lg:flex-none p-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white shadow-md">
+    <option value="">📚 Seleziona PDF...</option>
+    <option value="grammatica-cinese.pdf">📖 Grammatica Cinese</option>
+    <option value="grammatica-coreano.pdf">🇰🇷 Grammatica Coreano</option>
+    <option value="grammatica-giapponese.pdf">🇯🇵 Grammatica Giapponese</option>
+   </select>
+  </div>
+ </div>
+ <div id="pdfViewer" class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-gray-500 text-lg p-12 min-h-[420px] md:min-h-[500px] hidden">
+  <div class="text-center">
+   <svg class="w-24 h-24 mx-auto mb-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+   </svg>
+   <p class="font-semibold text-xl mb-2">Nessun PDF caricato</p>
+   <p class="text-gray-500">Tocca il bottone blu per caricare un PDF</p>
+  </div>
+ </div>
+</div>
+<!-- === FINE LETTORE PDF === -->
+
+<!-- Language Selection -->
    <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
      <div><label for="source-lang" class="block text-sm font-medium text-gray-700 mb-2">Lingua di origine</label> <select id="source-lang" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="auto">Rileva automaticamente</option> <option value="it">Italiano</option> <option value="en">Inglese</option> <option value="es">Spagnolo</option> <option value="fr">Francese</option> <option value="de">Tedesco</option> <option value="pt">Portoghese</option> <option value="ru">Russo</option> <option value="ja">Giapponese</option> <option value="ko">Coreano</option> <option value="zh">Cinese</option> <option value="ar">Arabo</option> <option value="hi">Hindi</option> </select>
@@ -139,6 +191,53 @@
    </div>
   </div>
   <script>
+// ✅ PDF.js MINIMO - NON rompe l'editor
+document.addEventListener('DOMContentLoaded', async function() {
+  // Carica PDF.js dinamicamente
+  const pdfScript = document.createElement('script');
+  pdfScript.src = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.js';
+  document.head.appendChild(pdfScript);
+  
+  pdfScript.onload = function() {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.js';
+    
+    // PDF elements
+    const pdfViewer = document.getElementById('pdfViewer');
+    const pdfUpload = document.getElementById('pdf-upload');
+    const pdfStatus = document.getElementById('pdf-status');
+    
+    pdfUpload.addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        pdfStatus.textContent = '⏳ Caricando...';
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = async function() {
+          try {
+            const pdf = await pdfjsLib.getDocument(reader.result).promise;
+            const page = await pdf.getPage(1);
+            const viewport = page.getViewport({scale: 1.2});
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            pdfViewer.innerHTML = '';
+            pdfViewer.appendChild(canvas);
+            pdfViewer.classList.remove('hidden');
+            
+            page.render({canvasContext: context, viewport}).promise;
+            pdfStatus.textContent = '✅ PDF caricato!';
+          } catch (error) {
+            pdfStatus.textContent = '❌ Errore PDF';
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    });
+  };
+});
+
+// ✅ ORA IL TUO CODICE EDITOR ORIGINALE (dal // Configuration in giù)
         // Configuration
         const defaultConfig = {
             app_title: "Editor con Traduttore",
