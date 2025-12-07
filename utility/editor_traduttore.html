@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editor con Traduttore</title>
   <script src="https://cdn.tailwindcss.com"></script>
-<!-- ❌ MANCANTE nel tuo <head> -->
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.js';</script>
   <script src="/_sdk/element_sdk.js"></script>
   <style>
         body {
@@ -192,49 +192,44 @@
   </div>
   <script>
 // ✅ PDF.js MINIMO - NON rompe l'editor
-document.addEventListener('DOMContentLoaded', async function() {
-  // Carica PDF.js dinamicamente
-  const pdfScript = document.createElement('script');
-  pdfScript.src = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.js';
-  document.head.appendChild(pdfScript);
-  
-  pdfScript.onload = function() {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.js';
-    
-    // PDF elements
-    const pdfViewer = document.getElementById('pdfViewer');
-    const pdfUpload = document.getElementById('pdf-upload');
-    const pdfStatus = document.getElementById('pdf-status');
-    
-    pdfUpload.addEventListener('change', (e) => {
-      if (e.target.files[0]) {
-        pdfStatus.textContent = '⏳ Caricando...';
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = async function() {
-          try {
-            const pdf = await pdfjsLib.getDocument(reader.result).promise;
-            const page = await pdf.getPage(1);
-            const viewport = page.getViewport({scale: 1.2});
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            
-            pdfViewer.innerHTML = '';
-            pdfViewer.appendChild(canvas);
-            pdfViewer.classList.remove('hidden');
-            
-            page.render({canvasContext: context, viewport}).promise;
-            pdfStatus.textContent = '✅ PDF caricato!';
-          } catch (error) {
-            pdfStatus.textContent = '❌ Errore PDF';
-          }
-        };
-        reader.readAsArrayBuffer(file);
-      }
-    });
-  };
+// PDF
+const pdfViewer=document.getElementById('pdfViewer');
+const pdfUpload=document.getElementById('pdf-upload');
+const pdfStatus=document.getElementById('pdf-status');
+const pdfPreset=document.getElementById('pdf-preset');
+
+async function caricaPdf(src){
+  try{
+    pdfStatus.textContent='⏳ Caricando...';
+    pdfViewer.classList.remove('hidden');
+    pdfViewer.innerHTML='';
+    const pdf=await pdfjsLib.getDocument(src).promise;
+    const pagina=await pdf.getPage(1);
+    const viewport=pagina.getViewport({scale:1.2});
+    const canvas=document.createElement('canvas');
+    const contesto=canvas.getContext('2d');
+    canvas.height=viewport.height;
+    canvas.width=viewport.width;
+    pdfViewer.appendChild(canvas);
+    await pagina.render({canvasContext:conesto,viewport}).promise;
+    pdfStatus.textContent='✅ PDF caricato!';
+  }catch(e){
+    pdfStatus.textContent='❌ Errore PDF';
+  }
+}
+
+pdfUpload.addEventListener('change',e=>{
+  const file=e.target.files[0];
+  if(file){
+    const reader=new FileReader();
+    reader.onload=()=>caricaPdf({data:new Uint8Array(reader.result)});
+    reader.readAsArrayBuffer(file);
+  }
+});
+
+pdfPreset.addEventListener('change',()=>{
+  const percorso=pdfPreset.value;
+  if(percorso) caricaPdf(percorso);
 });
 
 // ✅ ORA IL TUO CODICE EDITOR ORIGINALE (dal // Configuration in giù)
