@@ -45,6 +45,12 @@ https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
         margin: 0 auto; 
         border-radius: 12px; 
     }
+#pdf-controls {
+    margin-top: 1rem;
+}
+#pdf-controls input, #pdf-controls select {
+    font-size: 14px;
+}
     </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
@@ -77,7 +83,7 @@ https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
    </label>
    <select id="pdf-preset" class="flex-1 lg:flex-none p-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white shadow-md">
     <option value="">📚 Seleziona PDF...</option>
-    <option value="pdf/pinyin.pdf">学拼音</option>
+    <option value="pdf/pinyin.pdf">pinyin学拼音</option>
     <option value="grammatica-coreano.pdf">🇰🇷 Grammatica Coreano</option>
     <option value="grammatica-giapponese.pdf">🇯🇵 Grammatica Giapponese</option>
    </select>
@@ -196,43 +202,133 @@ https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 // ✅ PDF.js MINIMO - NON rompe l'editor
 // PDF
-const pdfViewer=document.getElementById('pdfViewer');
-const pdfUpload=document.getElementById('pdf-upload');
-const pdfStatus=document.getElementById('pdf-status');
-const pdfPreset=document.getElementById('pdf-preset');
+// === PDF COMPLETO CON NAVIGAZIONE ===
+let pdfDoc = null;
+let paginaAttuale = 1;
+let totalePagine = 0;
+let scala = 1.5;
 
-async function caricaPdf(src){
-  try{
-    pdfStatus.textContent='⏳ Caricando...';
-    pdfViewer.classList.remove('hidden');
-    pdfViewer.innerHTML='';
-    const pdf=await pdfjsLib.getDocument(src).promise;
-    const pagina=await pdf.getPage(1);
-    const viewport=pagina.getViewport({scale:1.2});
-    const canvas=document.createElement('canvas');
-    const contesto=canvas.getContext('2d');
-    canvas.height=viewport.height;
-    canvas.width=viewport.width;
-    pdfViewer.appendChild(canvas);
-    await pagina.render({canvasContext:contesto,viewport}).promise;
-    pdfStatus.textContent='✅ PDF caricato!';
-  }catch(e){
-    pdfStatus.textContent='❌ Errore PDF';
+const pdfViewer = document.getElementById('pdfViewer');
+const pdfUpload = document.getElementById('pdf-upload');
+const pdfStatus = document.getElementById('pdf-status');
+const pdfPreset = document.getElementById('pdf-preset');
+
+async function renderPagina(numero) {
+  if (!pdfDoc) return;
+  
+  const pagina = await pdfDoc.getPage(numero);
+  const viewport = pagina.getViewport({scale: scala});
+  
+  const canvas = document.createElement('canvas');
+  canvas.height = viewport.height;
+  canvas.width = viewport.width;
+  canvas.style.maxWidth = '100%';
+  canvas.style.height = 'auto';
+  canvas.style.borderRadius = '12px';
+  
+  const contesto = canvas.getContext('2d');
+  pdfViewer.innerHTML = '';
+  pdfViewer.appendChild(canvas);
+  
+  await pagina.render({canvasContext: contesto, viewport}).promise;
+  
+  pdfStatus.textContent = `Pagina ${numero} di ${totalePagine}`;
+  aggiornaControlli();
+}
+
+function aggiornaControlli() {
+  let controlli = document.getElementById('pdf-controls');
+  if (!controlli) {
+    controlli = creaControlli();
+    pdfViewer.parentElement.appendChild(controlli);
   }
 }
 
-pdfUpload.addEventListener('change',e=>{
-  const file=e.target.files[0];
-  if(file){
-    const reader=new FileReader();
-    reader.onload=()=>caricaPdf({data:new Uint8Array(reader.result)});
+function creaControlli() {
+  const div = document.createElement('div');
+  div.id = 'pdf-controls';
+  div.className = 'flex flex-wrap items-center justify-center gap-3 mt-4 p-4 bg-gray-50 rounded-lg border';
+  div.innerHTML = `
+    <button onclick="pdfPrecedente()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm font-medium">← Prev</button>
+    <input type="number" id="pdf-page-input" value="${paginaAttuale}" min="1" max="${totalePagine}" class="w-16 p-2 border rounded text-center text-sm" onchange="pdfVaiPagina(this.value)">
+    <span class="text-sm text-gray-700">di ${totalePagine}</span>
+    <button onclick="pdfSuccessiva()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm font-medium">Succ →</button>
+    <select id="pdf-zoom" onchange="pdfCambiaZoom(this.value)" class="p-2 border rounded text-sm">
+      <option value="1">100%</option>
+      <option value="1.25">125%</option>
+      <option value="1.5" selected>150%</option>
+      <option value="2">200%</option>
+      <option value="2.5">250%</option>
+    </select>
+  `;
+  return div;
+}
+
+window.pdfPrecedente = () => {
+  if (paginaAttuale > 1) {
+    paginaAttuale--;
+    document.getElementById('pdf-page-input').value = paginaAttuale;
+    renderPagina(paginaAttuale);
+  }
+};
+
+window.pdfSuccessiva = () => {
+  if (paginaAttuale < totalePagine) {
+    paginaAttuale++;
+    document.getElementById('pdf-page-input').value = paginaAttuale;
+    renderPagina(paginaAttuale);
+  }
+};
+
+window.pdfVaiPagina = (num) => {
+  num = parseInt(num);
+  if (num >= 1 && num <= totalePagine) {
+    paginaAttuale = num;
+    renderPagina(num);
+  }
+};
+
+window.pdfCambiaZoom = (val) => {
+  scala = parseFloat(val);
+  renderPagina(paginaAttuale);
+};
+
+async function caricaPdf(src) {
+  try {
+    pdfStatus.textContent = '⏳ Caricando PDF...';
+    pdfViewer.classList.remove('hidden');
+    
+    pdfDoc = await pdfjsLib.getDocument(src).promise;
+    totalePagine = pdfDoc.numPages;
+    paginaAttuale = 1;
+    scala = 1.5;
+    
+    await renderPagina(1);
+    pdfStatus.textContent = `Caricato! ${totalePagine} pagine`;
+  } catch(e) {
+    console.error(e);
+    pdfStatus.textContent = '❌ Errore PDF';
+    pdfViewer.innerHTML = '<div class="text-red-500 p-8 text-center">Errore caricamento PDF</div>';
+  }
+}
+
+// UPLOAD FILE
+pdfUpload.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    pdfStatus.textContent = '⏳ Leggendo file...';
+    const reader = new FileReader();
+    reader.onload = () => caricaPdf({data: new Uint8Array(reader.result)});
     reader.readAsArrayBuffer(file);
   }
 });
 
-pdfPreset.addEventListener('change',()=>{
-  const percorso=pdfPreset.value;
-  if(percorso) caricaPdf(percorso);
+// PDF DAL MENU
+pdfPreset.addEventListener('change', () => {
+  const percorso = pdfPreset.value;
+  if (percorso) {
+    caricaPdf(percorso);
+  }
 });
 
 // ✅ ORA IL TUO CODICE EDITOR ORIGINALE (dal // Configuration in giù)
