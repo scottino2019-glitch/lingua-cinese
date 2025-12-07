@@ -211,7 +211,7 @@ async function caricaPdf(src){
     canvas.height=viewport.height;
     canvas.width=viewport.width;
     pdfViewer.appendChild(canvas);
-    await pagina.render({canvasContext:conesto,viewport}).promise;
+    await pagina.render({canvasContext:contesto,viewport}).promise;
     pdfStatus.textContent='✅ PDF caricato!';
   }catch(e){
     pdfStatus.textContent='❌ Errore PDF';
