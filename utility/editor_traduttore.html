@@ -8,10 +8,88 @@
 
   <script src="/_sdk/element_sdk.js"></script>
   <style>
-        body {
-            box-sizing: border-box;
-        }
-        
+         :root{
+      --bg: #f5f7fa;
+      --card: #fff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #4f46e5;
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: linear-gradient(135deg, #f7f9fc 0%, #eef2f7 60%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      width: 100%;
+      max-width: 1000px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.05);
+    }
+    h1 { font-size: 1.25rem; margin: 0 0 12px; }
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    select, input[type="file"] {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 14px;
+    }
+    button {
+      padding: 10px 12px;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    #pdf-canvas {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      background: #f8f9fb;
+    }
+    .status {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .pager {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .pageInfo { font-weight: 600; }
+    @media (max-width: 720px) {
+      .card { padding: 12px; }
+      .controls { grid-template-columns: 1fr; }
+    }
+  
+    
         .fade-in {
             animation: fadeIn 0.3s ease-in;
         }
@@ -47,8 +125,41 @@
     <p class="text-gray-600">Scrivi e traduci istantaneamente in oltre 100 lingue</p>
    </header>
  
-    
-  
+    <!--Pdf-->
+
+  <div class="card">
+    <h1>Mini PDF Viewer locale (pdf.js)</h1>
+
+    <div class="controls">
+      <div class="row" aria-label="Selezione PDF incorporato">
+        <label for="builtInSelect" class="status" style="margin-right:6px;">Seleziona PDF incorporato:</label>
+        <select id="builtInSelect" title="Seleziona un PDF incorporato">
+          <!-- Aggiornato dinamicamente -->
+        </select>
+
+        <button id="openFromList" title="Apri PDF selezionato">Apri</button>
+      </div>
+
+      <div class="row" aria-label="Carica PDF locale">
+        <label class="status" for="fileInput" style="margin-right:6px;">Carica PDF locale:</label>
+        <input type="file" id="fileInput" accept="application/pdf">
+      </div>
+    </div>
+
+    <div class="pager" style="margin-bottom:8px;">
+      <div class="row">
+        <button id="prev" title="Pagina precedente">Precedente</button>
+        <button id="next" title="Pagina successiva">Successiva</button>
+      </div>
+      <div class="row" style="margin-left:auto;">
+        <span class="pageInfo" id="pageInfo">Pagina 0 di 0</span>
+      </div>
+    </div>
+
+    <canvas id="pdf-canvas" aria-label="Renderer PDF"></canvas>
+
+  </div>
+
 
 <!-- Language Selection -->
    <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
@@ -145,8 +256,151 @@
     </div>
    </div>
   </div>
+  <!-- Risorse locali pdf.js -->
+  <script src="pdf/pdf.js"></script>
+  <script src="pdf/pdf.worker.js"></script>
   <script>
-       
+      // pdf 
+// Iniziale referenze
+    const builtinNames = [];
+    // Percorsi dei PDF incorporati usando la cartella locale "pdf/"
+    const builtInPDFs = [
+      { name: "学拼音", url: "pdf/学拼音.pdf" },
+      { name: "Guida Rapida", url: "pdf/guida-rapida.pdf" },
+      { name: "Rapporto 2024", url: "pdf/rapporto2024.pdf" }
+    ];
+
+    const builtInSelect = document.getElementById('builtInSelect');
+    const openFromListBtn = document.getElementById('openFromList');
+    const fileInput = document.getElementById('fileInput');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const pageInfo = document.getElementById('pageInfo');
+    const canvas = document.getElementById('pdf-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let pdfDoc = null;
+    let pageNum = 1;
+    let pageRendering = false;
+    let pageNumPending = null;
+    let scale = 1.5;
+    let totalPages = 0;
+
+    // Init lista incorporata
+    function populateBuiltInList() {
+      builtInSelect.innerHTML = "";
+      const opt0 = document.createElement('option');
+      opt0.value = "";
+      opt0.textContent = "Seleziona un PDF...";
+      builtInSelect.appendChild(opt0);
+
+      builtInPDFs.forEach((f, idx) => {
+        const o = document.createElement('option');
+        o.value = idx;
+        o.textContent = f.name;
+        builtInSelect.appendChild(o);
+      });
+    }
+
+    // Render pagina
+    function renderPage(num) {
+      pageRendering = true;
+      pdfDoc.getPage(num).then(function(page) {
+        const viewport = page.getViewport({ scale: scale });
+        // Imposta dimensioni canvas in base al viewport
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = { canvasContext: ctx, viewport: viewport };
+        return page.render(renderContext).promise;
+      }).then(function() {
+        pageRendering = false;
+        if (pageNumPending !== null) {
+          const p = pageNumPending;
+          pageNumPending = null;
+          queueRenderPage(p);
+        }
+      });
+
+      pageInfo.textContent = `Pagina ${num} di ${totalPages}`;
+    }
+
+    function queueRenderPage(num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    function onPrevPage() {
+      if (pageNum <= 1) return;
+      pageNum--;
+      queueRenderPage(pageNum);
+    }
+
+    function onNextPage() {
+      if (pageNum >= totalPages) return;
+      pageNum++;
+      queueRenderPage(pageNum);
+    }
+
+    // Carica PDF da URL usando pdf.js locale
+    function loadPdf(url) {
+      if (!url) return;
+      pdfDoc = null;
+      pageNum = 1;
+      pageNumPending = null;
+      // Usa pdf.js locali
+      pdfjsLib.getDocument(url).promise.then(function(pdf) {
+        pdfDoc = pdf;
+        totalPages = pdfDoc.numPages;
+        pageInfo.textContent = `Pagina ${pageNum} di ${totalPages}`;
+        // Scala base per schermi comuni
+        scale = Math.max(1, Math.min(2.5, window.innerWidth > 420 ? 1.5 : 1.2));
+        renderPage(pageNum);
+        prevBtn.disabled = (pageNum <= 1);
+        nextBtn.disabled = (pageNum >= totalPages);
+      }).catch(function(err){
+        console.error('Errore caricando PDF:', err);
+        alert('Errore nel caricamento del PDF.');
+      });
+    }
+
+    // Eventi
+    prevBtn.addEventListener('click', onPrevPage);
+    nextBtn.addEventListener('click', onNextPage);
+
+    openFromListBtn.addEventListener('click', function() {
+      const idx = builtInSelect.value;
+      if (idx === "" ) return;
+      const f = builtInPDFs[Number(idx)];
+      if (f && f.url) {
+        loadPdf(f.url);
+      }
+    });
+
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const fileURL = URL.createObjectURL(file);
+      loadPdf(fileURL);
+      // URL.revokeObjectURL(fileURL) se vuoi
+    });
+
+    // Init
+    populateBuiltInList();
+
+    // Resize dinamic
+    window.addEventListener('resize', function() {
+      if (pdfDoc) {
+        scale = Math.max(1, Math.min(2.5, (window.innerWidth > 720 ? 1.5 : 1.2)));
+        queueRenderPage(pageNum);
+      }
+    });
+  
+
+
 
 
 
@@ -689,3 +943,4 @@
 </body>
 
 </html>
+   
