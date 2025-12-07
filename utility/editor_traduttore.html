@@ -191,6 +191,9 @@ https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
    </div>
   </div>
   <script>
+       // PDF.js setup
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js
+
 // ✅ PDF.js MINIMO - NON rompe l'editor
 // PDF
 const pdfViewer=document.getElementById('pdfViewer');
