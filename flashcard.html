@@ -276,7 +276,7 @@
       }
     }
 
-    function handleAddCard() {
+        function handleAddCard() {
       const pinyinInput = document.getElementById('pinyin-input');
       const hanziInput = document.getElementById('hanzi-input');
       const tradInput = document.getElementById('trad-input');
@@ -301,8 +301,13 @@
       tradInput.value = '';
       imgInput.value = '';
       hanziInput.focus();
-// carica le card personali salvate all'apertura pagina
-  window.addEventListener('DOMContentLoaded', loadFromStorage);
+    }
+
+    // carica le card personali salvate all'apertura della pagina
+    window.addEventListener('DOMContentLoaded', loadFromStorage);
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
