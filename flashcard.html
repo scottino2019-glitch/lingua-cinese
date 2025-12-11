@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flashcard Vocabolario</title>
+  <title>Flashcard Vocabolario Cinese</title>
 
   <style>
     * {
@@ -150,9 +150,9 @@
 </head>
 <body>
   <div class="container">
-    <h1>Le Mie Flashcard</h1>
+    <h1>Flashcard Vocabolario Cinese</h1>
 
-    <!-- Form per aggiungere nuove flashcard -->
+    <!-- Form per aggiungere nuove flashcard personali -->
     <div class="add-form">
       <input id="pinyin-input" type="text" placeholder="Pinyin (es. pí jiǔ)">
       <input id="hanzi-input" type="text" placeholder="Caratteri (es. 啤酒)">
@@ -161,8 +161,8 @@
       <button onclick="handleAddCard()">Aggiungi flashcard</button>
     </div>
 
-    <div class="flashcard-grid">
-      <!-- Esempio card BIRRA: fronte immagine+pinyin+caratteri, retro traduzione -->
+    <div class="flashcard-grid" id="flashcard-grid">
+      <!-- CARD STATICHE, uguali per tutti -->
       <div
         class="flashcard"
         onclick="flipCard(this)"
@@ -180,25 +180,21 @@
         </div>
       </div>
 
-      <!-- Alcune card solo testo come prima -->
       <div class="flashcard" onclick="flipCard(this)"
-           data-hanzi="Hello" data-back="Ciao">
+           data-hanzi="你好" data-pinyin="nǐ hǎo" data-back="ciao">
         <div class="card-content">
-          Hello
-        </div>
-      </div>
-
-      <div class="flashcard" onclick="flipCard(this)"
-           data-hanzi="Goodbye" data-back="Arrivederci">
-        <div class="card-content">
-          Goodbye
+          <div class="card-top">
+            <div class="pinyin">nǐ hǎo</div>
+            <div class="hanzi">你好</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Ricostruisce il fronte (pinyin+hanzi+immagine) di una card
+    const STORAGE_KEY = 'flashcards_personali_v1';
+
     function renderFront(cardElement) {
       const content = cardElement.querySelector('.card-content');
       const hanzi = cardElement.dataset.hanzi || '';
@@ -218,7 +214,6 @@
       }
     }
 
-    // Flip carta: fronte (immagine/testo) <-> retro (traduzione)
     function flipCard(cardElement) {
       const content = cardElement.querySelector('.card-content');
       const isFlipped = cardElement.classList.contains('flipped');
@@ -226,18 +221,15 @@
       cardElement.classList.toggle('flipped');
 
       if (isFlipped) {
-        // Torna al fronte
         renderFront(cardElement);
       } else {
-        // Retro: solo traduzione
         const back = cardElement.dataset.back || '';
         content.textContent = back;
       }
     }
 
-    // Aggiunge una nuova card dinamicamente
     function addNewCard(pinyin, hanzi, traduzione, imgUrl) {
-      const grid = document.querySelector('.flashcard-grid');
+      const grid = document.getElementById('flashcard-grid');
       const newCard = document.createElement('div');
       newCard.className = 'flashcard';
       newCard.setAttribute('data-hanzi', hanzi);
@@ -250,7 +242,6 @@
         flipCard(this);
       };
 
-      // Fronte iniziale
       const content = document.createElement('div');
       content.className = 'card-content';
       newCard.appendChild(content);
@@ -259,7 +250,32 @@
       grid.appendChild(newCard);
     }
 
-    // Gestisce il form "Aggiungi flashcard"
+    function loadFromStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const cards = JSON.parse(raw);
+        if (!Array.isArray(cards)) return;
+
+        cards.forEach(card => {
+          addNewCard(card.pinyin, card.hanzi, card.traduzione, card.imgUrl);
+        });
+      } catch (e) {
+        console.error('Errore lettura localStorage', e);
+      }
+    }
+
+    function saveToStorage(cardObj) {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const cards = raw ? JSON.parse(raw) : [];
+        cards.push(cardObj);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+      } catch (e) {
+        console.error('Errore salvataggio localStorage', e);
+      }
+    }
+
     function handleAddCard() {
       const pinyinInput = document.getElementById('pinyin-input');
       const hanziInput = document.getElementById('hanzi-input');
@@ -276,14 +292,12 @@
         return;
       }
 
+      const cardObj = { pinyin, hanzi, traduzione, imgUrl };
       addNewCard(pinyin, hanzi, traduzione, imgUrl);
+      saveToStorage(cardObj);
 
       pinyinInput.value = '';
       hanziInput.value = '';
       tradInput.value = '';
       imgInput.value = '';
       hanziInput.focus();
-    }
-  </script>
-</body>
-</html>
