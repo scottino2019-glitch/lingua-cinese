@@ -14,8 +14,15 @@
 
     body {
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: radial-gradient(circle at top left, red, yellow);
       min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #f9fafb;
+    
       padding: 20px;
     }
 
@@ -146,13 +153,46 @@
         font-size: 1.2rem;
       }
     }
+header {
+  background: #333; color: white; padding: 1rem 2rem; 
+  display: flex; align-items: center; gap: 1rem;
+}
+
+.logo-container {
+  width: 60px; height: 60px; /* Piccola per header */
+  position: relative; overflow: hidden;
+}
+
+.logo-piece {
+  position: absolute; width: 100%; height: 100%;
+  animation: logoBuild 3s ease-out infinite;
+}
+
+.logo-piece-1 { clip-path: inset(0 50% 50% 0); animation-delay: 0s; }
+.logo-piece-2 { clip-path: inset(0 0 50% 50%); animation-delay: 0.75s; }
+.logo-piece-3 { clip-path: inset(50% 50% 0 0); animation-delay: 1.5s; }
+.logo-piece-4 { clip-path: inset(50% 0 0 50%); animation-delay: 2.25s; }
+
+@keyframes logoBuild {
+  0% { opacity: 0; transform: scale(0.3); }
+  30% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
   </style>
 </head>
 <body>
+<header>
+  <div class="logo-container">
+    <img src="https://images.unsplash.com/photo-1736607618767-b35f1230174d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxDYXJkJTIwY2luZXNlfGVufDB8fHx8MTc2NTQ3NzM3MHww&ixlib=rb-4.1.0&q=85 " class="logo-piece logo-piece-1">
+    <img src="https://images.unsplash.com/photo-1736607618767-b35f1230174d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxDYXJkJTIwY2luZXNlfGVufDB8fHx8MTc2NTQ3NzM3MHww&ixlib=rb-4.1.0&q=85 " class="logo-piece logo-piece-2">
+    <img src="https://images.unsplash.com/photo-1736607618767-b35f1230174d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxDYXJkJTIwY2luZXNlfGVufDB8fHx8MTc2NTQ3NzM3MHww&ixlib=rb-4.1.0&q=85 " class="logo-piece logo-piece-3">
+    <img src="https://images.unsplash.com/photo-1736607618767-b35f1230174d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxDYXJkJTIwY2luZXNlfGVufDB8fHx8MTc2NTQ3NzM3MHww&ixlib=rb-4.1.0&q=85 "  class="logo-piece logo-piece-4">
+  </div>
+<h1>Flashcard Vocabolario Cinese</h1>
+</header>
   <div class="container">
-    <h1>Flashcard Vocabolario Cinese</h1>
-
-    <!-- Form per aggiungere nuove flashcard personali -->
+ <!-- Form per aggiungere nuove flashcard personali -->
     <div class="add-form">
       <input id="pinyin-input" type="text" placeholder="Pinyin (es. pí jiǔ)">
       <input id="hanzi-input" type="text" placeholder="Caratteri (es. 啤酒)">
