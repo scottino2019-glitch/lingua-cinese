@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcard Vocabolario</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2d3748;
+      margin-bottom: 20px;
+      font-size: 2.2rem;
+    }
+
+    .add-form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .add-form input {
+      flex: 1 1 150px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e0;
+      font-size: 0.95rem;
+    }
+
+    .add-form button {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      background: #667eea;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .add-form button:hover {
+      background: #5a67d8;
+    }
+
+    .flashcard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .flashcard {
+      background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 100%);
+      border-radius: 20px;
+      padding: 20px 15px;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      border: 4px solid #f6b26b;
+    }
+
+    .flashcard:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .flashcard.flipped {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      border-color: #11998e;
+    }
+
+    .card-content {
+      color: #1a202c;
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.4;
+      width: 100%;
+    }
+
+    .flashcard.flipped .card-content {
+      color: white;
+      font-size: 1.6rem;
+    }
+
+    .card-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .pinyin {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .hanzi {
+      font-size: 1.8rem;
+    }
+
+    .card-image {
+      max-width: 80%;
+      max-height: 140px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .flashcard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card-content {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Le Mie Flashcard</h1>
+
+    <!-- Form per aggiungere nuove flashcard -->
+    <div class="add-form">
+      <input id="pinyin-input" type="text" placeholder="Pinyin (es. pí jiǔ)">
+      <input id="hanzi-input" type="text" placeholder="Caratteri (es. 啤酒)">
+      <input id="trad-input" type="text" placeholder="Traduzione (es. birra)">
+      <input id="img-input" type="text" placeholder="URL immagine (es. img/beer.jpg)">
+      <button onclick="handleAddCard()">Aggiungi flashcard</button>
+    </div>
+
+    <div class="flashcard-grid">
+      <!-- Esempio card BIRRA: fronte immagine+pinyin+caratteri, retro traduzione -->
+      <div
+        class="flashcard"
+        onclick="flipCard(this)"
+        data-hanzi="啤酒"
+        data-pinyin="pí jiǔ"
+        data-back="birra"
+        data-img="img/beer.jpg"
+      >
+        <div class="card-content">
+          <div class="card-top">
+            <div class="pinyin">pí jiǔ</div>
+            <div class="hanzi">啤酒</div>
+          </div>
+          <img src="img/beer.jpg" alt="birra" class="card-image">
+        </div>
+      </div>
+
+      <!-- Alcune card solo testo come prima -->
+      <div class="flashcard" onclick="flipCard(this)"
+           data-hanzi="Hello" data-back="Ciao">
+        <div class="card-content">
+          Hello
+        </div>
+      </div>
+
+      <div class="flashcard" onclick="flipCard(this)"
+           data-hanzi="Goodbye" data-back="Arrivederci">
+        <div class="card-content">
+          Goodbye
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Ricostruisce il fronte (pinyin+hanzi+immagine) di una card
+    function renderFront(cardElement) {
+      const content = cardElement.querySelector('.card-content');
+      const hanzi = cardElement.dataset.hanzi || '';
+      const pinyin = cardElement.dataset.pinyin || '';
+      const imgSrc = cardElement.dataset.img || '';
+
+      if (imgSrc || pinyin) {
+        content.innerHTML = `
+          <div class="card-top">
+            ${pinyin ? `<div class="pinyin">${pinyin}</div>` : ''}
+            ${hanzi ? `<div class="hanzi">${hanzi}</div>` : ''}
+          </div>
+          ${imgSrc ? `<img src="${imgSrc}" alt="${hanzi || pinyin}" class="card-image">` : ''}
+        `;
+      } else {
+        content.textContent = hanzi;
+      }
+    }
+
+    // Flip carta: fronte (immagine/testo) <-> retro (traduzione)
+    function flipCard(cardElement) {
+      const content = cardElement.querySelector('.card-content');
+      const isFlipped = cardElement.classList.contains('flipped');
+
+      cardElement.classList.toggle('flipped');
+
+      if (isFlipped) {
+        // Torna al fronte
+        renderFront(cardElement);
+      } else {
+        // Retro: solo traduzione
+        const back = cardElement.dataset.back || '';
+        content.textContent = back;
+      }
+    }
+
+    // Aggiunge una nuova card dinamicamente
+    function addNewCard(pinyin, hanzi, traduzione, imgUrl) {
+      const grid = document.querySelector('.flashcard-grid');
+      const newCard = document.createElement('div');
+      newCard.className = 'flashcard';
+      newCard.setAttribute('data-hanzi', hanzi);
+      newCard.setAttribute('data-pinyin', pinyin);
+      newCard.setAttribute('data-back', traduzione);
+      if (imgUrl) {
+        newCard.setAttribute('data-img', imgUrl);
+      }
+      newCard.onclick = function () {
+        flipCard(this);
+      };
+
+      // Fronte iniziale
+      const content = document.createElement('div');
+      content.className = 'card-content';
+      newCard.appendChild(content);
+      renderFront(newCard);
+
+      grid.appendChild(newCard);
+    }
+
+    // Gestisce il form "Aggiungi flashcard"
+    function handleAddCard() {
+      const pinyinInput = document.getElementById('pinyin-input');
+      const hanziInput = document.getElementById('hanzi-input');
+      const tradInput = document.getElementById('trad-input');
+      const imgInput = document.getElementById('img-input');
+
+      const pinyin = pinyinInput.value.trim();
+      const hanzi = hanziInput.value.trim();
+      const traduzione = tradInput.value.trim();
+      const imgUrl = imgInput.value.trim();
+
+      if (!hanzi || !traduzione) {
+        alert('Compila almeno i caratteri e la traduzione.');
+        return;
+      }
+
+      addNewCard(pinyin, hanzi, traduzione, imgUrl);
+
+      pinyinInput.value = '';
+      hanziInput.value = '';
+      tradInput.value = '';
+      imgInput.value = '';
+      hanziInput.focus();
+    }
+  </script>
+</body>
+</html>
