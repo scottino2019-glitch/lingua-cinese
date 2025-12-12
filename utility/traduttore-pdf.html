@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Traduttore PDF Multilingua</title>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+ 
   <script src="/_sdk/element_sdk.js"></script>
   <style>
     body {
@@ -112,7 +112,7 @@
       background: #f7fafc;
       border-radius: 12px;
       padding: 24px;
-      height: 400px;
+      height: 700px;
       display: flex;
       flex-direction: column;
     }
@@ -294,7 +294,7 @@
       }
 
       .pdf-section {
-        height: 300px;
+        height: 500px;
       }
 
       .text-area {
@@ -322,12 +322,14 @@
         <svg class="icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path> <polyline points="14 2 14 8 20 8"></polyline> <line x1="16" y1="13" x2="8" y2="13"></line> <line x1="16" y1="17" x2="8" y2="17"></line> <polyline points="10 9 9 9 8 9"></polyline>
         </svg> Visualizzatore PDF</h2>
        <div class="pdf-viewer">
-        <div class="empty-state" id="pdf-empty">
-         <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path> <polyline points="14 2 14 8 20 8"></polyline>
-         </svg>
-         <p>Carica un PDF per consultare il contenuto</p>
-        </div>
-        <div id="pdf-text" style="display: none;"></div>
+  <div id="pdf-empty">
+    <p>Carica un PDF per consultare il contenuto</p>
+  </div>
+  <iframe id="pdf-frame"
+          style="width:100%; height:100%; border:none; display:none;"
+          title="Visualizzatore PDF"></iframe>
+</div>
+       
        </div>
       </div><!-- Translator Section -->
       <div class="translator-section">
@@ -372,93 +374,32 @@
       font_size: 16
     };
 
-    let pdfText = '';
+ let pdfText = ''; // non lo useremo più per il PDF
 
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+// Lettore PDF SEMPLICE con iframe (nessuna estrazione testo)
+document.getElementById('pdf-upload').addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
 
-    async function onConfigChange(config) {
-      const appTitle = config.app_title || defaultConfig.app_title;
-      const uploadLabel = config.upload_label || defaultConfig.upload_label;
-      const translateButtonText = config.translate_button_text || defaultConfig.translate_button_text;
-      const primaryColor = config.primary_color || defaultConfig.primary_color;
-      const surfaceColor = config.surface_color || defaultConfig.surface_color;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const actionColor = config.action_color || defaultConfig.action_color;
-      const backgroundColor = config.background_color || defaultConfig.background_color;
-      const customFont = config.font_family || defaultConfig.font_family;
-      const baseSize = config.font_size || defaultConfig.font_size;
+  if (file.type !== 'application/pdf') {
+    alert('Seleziona un file PDF');
+    return;
+  }
 
-      document.querySelector('.app-title').textContent = appTitle;
-      document.querySelector('.upload-label').textContent = uploadLabel;
-      document.getElementById('translate-btn').textContent = translateButtonText;
+  document.getElementById('file-name').textContent = `File: ${file.name}`;
 
-      document.querySelector('.app-wrapper').style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${primaryColor} 100%)`;
-      document.querySelector('header').style.background = primaryColor;
-      document.querySelector('.upload-label').style.background = primaryColor;
-      document.querySelector('.translate-button').style.background = actionColor;
-      
-      document.querySelectorAll('.pdf-section, .translator-section').forEach(panel => {
-        panel.style.background = surfaceColor;
-      });
-      
-      document.querySelectorAll('.panel-title, #pdf-text, .empty-state').forEach(el => {
-        el.style.color = textColor;
-      });
-      
-      document.querySelectorAll('.language-selector label').forEach(el => {
-        el.style.color = textColor;
-      });
+  const pdfEmpty = document.getElementById('pdf-empty');
+  const pdfFrame = document.getElementById('pdf-frame');
 
-      const fontStack = `${customFont}, sans-serif`;
-      document.querySelector('.app-title').style.fontFamily = fontStack;
-      document.querySelector('.app-title').style.fontSize = `${baseSize * 1.75}px`;
-      document.querySelector('.upload-label').style.fontFamily = fontStack;
-      document.querySelector('.upload-label').style.fontSize = `${baseSize}px`;
-      document.querySelectorAll('.panel-title').forEach(el => {
-        el.style.fontFamily = fontStack;
-        el.style.fontSize = `${baseSize * 1.125}px`;
-      });
-      document.querySelectorAll('#pdf-text, .text-area, .language-select').forEach(el => {
-        el.style.fontFamily = fontStack;
-        el.style.fontSize = `${baseSize * 0.875}px`;
-      });
-      document.querySelector('.translate-button').style.fontFamily = fontStack;
-      document.querySelector('.translate-button').style.fontSize = `${baseSize}px`;
-      document.querySelectorAll('.language-selector label').forEach(el => {
-        el.style.fontFamily = fontStack;
-      });
-    }
+  const fileURL = URL.createObjectURL(file);
 
-    document.getElementById('pdf-upload').addEventListener('change', async (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
+  pdfEmpty.style.display = 'none';
+  pdfFrame.style.display = 'block';
+  pdfFrame.src = fileURL;
 
-      document.getElementById('file-name').textContent = `File: ${file.name}`;
-      document.getElementById('pdf-empty').style.display = 'none';
-      document.getElementById('pdf-text').style.display = 'block';
-      document.getElementById('pdf-text').innerHTML = '<div class="loading">📄 Caricamento PDF...</div>';
-
-      try {
-        const arrayBuffer = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-        let fullText = '';
-
-        for (let i = 1; i <= pdf.numPages; i++) {
-          const page = await pdf.getPage(i);
-          const textContent = await page.getTextContent();
-          const pageText = textContent.items.map(item => item.str).join(' ');
-          fullText += pageText + '\n\n';
-        }
-
-        pdfText = fullText.trim();
-        document.getElementById('pdf-text').textContent = pdfText;
-        document.getElementById('translate-btn').disabled = false;
-      } catch (error) {
-        document.getElementById('pdf-text').innerHTML = '<div style="color: #e53e3e;">❌ Errore nel caricamento del PDF</div>';
-        pdfText = '';
-        document.getElementById('translate-btn').disabled = true;
-      }
-    });
+  // abilita comunque il tasto traduzione
+  document.getElementById('translate-btn').disabled = false;
+});   
 
     // Character counter for source text
     document.getElementById('source-text').addEventListener('input', (e) => {
