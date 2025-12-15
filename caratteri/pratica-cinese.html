@@ -361,6 +361,7 @@
                     <button class="category-btn" onclick="showCategory('food')">Cibo e Bevande</button>
                     <button class="category-btn" onclick="showCategory('colors')">Colori e Forme</button>
                     <button class="category-btn" onclick="showCategory('actions')">Azioni e Verbi</button>
+                     <button class="category-btn" onclick="showCategory('nations')">Nazioni</button>
                 </div>
                 
                 <div class="character-grid" id="characterGrid">
@@ -414,8 +415,6 @@
                 { char: '国', pinyin: 'guó', meaning: 'paese', strokes: 8 },
                 { char: '大', pinyin: 'dà', meaning: 'grande', strokes: 3 },
                 { char: '小', pinyin: 'xiǎo', meaning: 'piccolo', strokes: 3 },
-                { char: '来', pinyin: 'lái', meaning: 'venire', strokes: 7 },
-                { char: '去', pinyin: 'qù', meaning: 'andare', strokes: 5 },
                 { char: '说', pinyin: 'shuō', meaning: 'dire', strokes: 9 },
                 { char: '看', pinyin: 'kàn', meaning: 'guardare', strokes: 9 },
                 { char: '听', pinyin: 'tīng', meaning: 'sentire', strokes: 7 },
@@ -428,22 +427,10 @@
                 { char: '作', pinyin: 'zuò', meaning: 'fare', strokes: 7 },
                 { char: '家', pinyin: 'jiā', meaning: 'casa/famiglia', strokes: 10 },
                 { char: '学', pinyin: 'xué', meaning: 'scuola', strokes: 8 },
-                { char: '老', pinyin: 'lǎo', meaning: 'vecchio', strokes: 6 },
+               { char: '老', pinyin: 'lǎo', meaning: 'vecchio', strokes: 6 },
                 { char: '师', pinyin: 'shī', meaning: 'maestro', strokes: 6 },
 { char: '人', pinyin: 'rén', meaning: 'persona', strokes: 2 },
-{ char: '你', pinyin: 'nǐ', meaning: 'tu/voi', strokes: 7 },
-{ char: '我', pinyin: 'wǒ', meaning: 'io', strokes: 7 },
-{ char: '他', pinyin: 'tā', meaning: 'lui', strokes: 5 },
-{ char: '她', pinyin: 'tā', meaning: 'lei', strokes: 6 },
-{ char: '们', pinyin: 'men', meaning: 'pluralità (persone)', strokes: 5 },
-{ char: '是', pinyin: 'shì', meaning: 'essere', strokes: 9 },
-{ char: '不', pinyin: 'bù', meaning: 'non', strokes: 4 },
-{ char: '在', pinyin: 'zài', meaning: 'stare, trovarsi', strokes: 6 },
-{ char: '有', pinyin: 'yǒu', meaning: 'avere', strokes: 6 },
-{ char: '没', pinyin: 'méi', meaning: 'non avere', strokes: 7 },
 { char: '好', pinyin: 'hǎo', meaning: 'bene, buono', strokes: 6 },
-{ char: '大', pinyin: 'dà', meaning: 'grande', strokes: 3 },
-{ char: '小', pinyin: 'xiǎo', meaning: 'piccolo', strokes: 3 },
 { char: '多', pinyin: 'duō', meaning: 'molto', strokes: 6 },
 { char: '少', pinyin: 'shǎo', meaning: 'poco', strokes: 4 },
 { char: '天', pinyin: 'tiān', meaning: 'cielo, giorno', strokes: 4 },
@@ -509,8 +496,7 @@
 { char: '都', pinyin: 'dōu', meaning: 'tutti', strokes: 10 },
 { char: '太', pinyin: 'tài', meaning: 'troppo', strokes: 4 },
 { char: '再', pinyin: 'zài', meaning: 'di nuovo/ancora', strokes: 6 },
-{ char: '多', pinyin: 'duō', meaning: 'molto', strokes: 6 },
-{ char: '少', pinyin: 'shǎo', meaning: 'poco', strokes: 4 }
+
             ],
             
             hsk2: [
@@ -763,7 +749,34 @@
                 { char: '找', pinyin: 'zhǎo', meaning: 'cercare', strokes: 7 },
                 { char: '等', pinyin: 'děng', meaning: 'aspettare', strokes: 12 },
                 { char: '帮', pinyin: 'bāng', meaning: 'aiutare', strokes: 9 },
-                { char: '教', pinyin: 'jiāo', meaning: 'insegnare', strokes: 11 }
+                { char: '教', pinyin: 'jiāo', meaning: 'insegnare', strokes: 11 },
+                { char: '来', pinyin: 'lái', meaning: 'venire', strokes: 7 },
+                { char: '去', pinyin: 'qù', meaning: 'andare', strokes: 5 }
+            ]
+           nations: [
+               { char: '中', pinyin: 'zhōng', meaning: 'centro', strokes: 4 },
+               { char: '国', pinyin: 'guó', meaning: 'paese', strokes: 8 },
+               { char: '中国', pinyin: 'Zhōngguó', meaning: 'Cina', strokes: 4 + 8 }, 
+               { char: '意大利', pinyin: 'Yìdàlì', meaning: 'Italia', strokes: 13 }, 
+               { char: '法国', pinyin: 'Fǎguó', meaning: 'Francia', strokes: 4 + 8 },
+               {char: '德国', pinyin: 'Déguó', meaning: 'Germania', strokes: 5 + 8 },
+               { char: '英国', pinyin: 'Yīngguó', meaning: 'Regno Unito', strokes: 8 + 8 },
+               { char: '美国', pinyin: 'Měiguó', meaning: 'Stati Uniti', strokes: 9 + 8 },
+               { char: '西班牙', pinyin: 'Xībānyá', meaning: 'Spagna', strokes: 6 + 4 + 3 },
+               { char: '葡萄牙', pinyin: 'Pútáoyá', meaning: 'Portogallo', strokes: 12 },
+               { char: '日本', pinyin: 'Rìběn', meaning: 'Giappone', strokes: 4 + 5 },
+               { char: '韩国', pinyin: 'Hánguó', meaning: 'Corea del Sud', strokes: 12 },
+              { char: '朝鲜', pinyin: 'Cháoxiǎn', meaning: 'Corea del Nord', strokes: 12 },
+              { char: '俄罗斯', pinyin: 'Éluósī', meaning: 'Russia', strokes: 19 },
+              { char: '加拿大', pinyin: 'Jiānádà', meaning: 'Canada', strokes: 8 + 9 + 3 },
+              { char: '澳大利亚', pinyin: 'Àodàlìyà', meaning: 'Australia', strokes: 8 + 8 + 7 + 6 },
+             { char: '巴西', pinyin: 'Bāxī', meaning: 'Brasile', strokes: 4 + 6 },
+              { char: '阿根廷', pinyin: 'Āgēntíng', meaning: 'Argentina', strokes: 8 + 10 + 7 },
+              { char: '墨西哥', pinyin: 'Mòxīgē', meaning: 'Messico', strokes: 15 + 6 + 10 },
+             { char: '埃及', pinyin: 'Āijí', meaning: 'Egitto', strokes: 10 + 8 },
+             { char: '印度', pinyin: 'Yìndù', meaning: 'India', strokes: 6 + 10 },
+            { char: '泰国', pinyin: 'Tàiguó', meaning: 'Thailandia', strokes: 10 + 8 }
+
             ]
         };
 
