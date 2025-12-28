@@ -204,12 +204,20 @@
 <br>
 <br>
   <div class="container2">
-    <h1>🗣️ Traduttore Lingue Asiatiche</h1>
+    <h1>🗣️ Traduttore API Reale</h1>
     
-    <textarea id="inputText" placeholder="Scrivi testo italiano... (es. Ciao mondo)"></textarea>
+    <textarea id="inputText" placeholder="Scrivi qualsiasi testo..."></textarea>
     
     <div class="controls">
+        <select id="sourceLang">
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="zh">🇨🇳 Cinese</option>
+            <option value="ja">🇯🇵 Giapponese</option>
+            <option value="ko">🇰🇷 Coreano</option>
+        </select>
+        ➡️
         <select id="targetLang">
+            <option value="it">🇮🇹 Italiano</option>
             <option value="en">🇺🇸 Inglese</option>
             <option value="zh">🇨🇳 Cinese</option>
             <option value="ja">🇯🇵 Giapponese</option>
@@ -219,42 +227,40 @@
         <button class="btn-copy" onclick="copyOutput()">📋 Copia</button>
     </div>
     
-    <textarea id="outputText" class="output" placeholder="Traduzione qui..." readonly></textarea>
+    <textarea id="outputText" class="output" placeholder="Risultato qui..." readonly></textarea>
 </div>
     <script>
 
 let isTranslated = false;
 
 async function translateText() {
-    const input = document.getElementById('inputText').value;
+    const input = document.getElementById('inputText').value.trim();
     if (!input) return;
     
-    const lang = document.getElementById('targetLang').value;
+    const source = document.getElementById('sourceLang').value;
+    const target = document.getElementById('targetLang').value;
     const output = document.getElementById('outputText');
+    
     output.value = '⏳ Traducendo...';
     
     try {
-        // API gratuita e affidabile
+        // API gratuita affidabile per tutte le lingue
         const response = await fetch(
-            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=it|${lang}`
+            `https://libretranslate.de/translate?q=${encodeURIComponent(input)}&source=${source}&target=${target}&format=text`
         );
         const data = await response.json();
         
-        if (data.responseStatus === 200) {
-            output.value = data.responseData.translatedText;
-        } else {
-            output.value = '❌ Limite API raggiunto, riprova tra 1h';
-        }
+        output.value = data.translatedText;
         isTranslated = true;
     } catch (error) {
-        output.value = '❌ Errore connessione';
+        output.value = '❌ Errore. Prova con testo più corto.';
         console.error(error);
     }
 }
 
 function copyOutput() {
     const output = document.getElementById('outputText');
-    if (isTranslated && output.value && output.value !== '⏳ Traducendo...' && !output.value.includes('❌')) {
+    if (isTranslated && output.value && !output.value.startsWith('⏳') && !output.value.startsWith('❌')) {
         navigator.clipboard.writeText(output.value).then(() => {
             const btn = event.target;
             const original = btn.innerHTML;
@@ -267,7 +273,6 @@ function copyOutput() {
         });
     }
 }
-
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
         let pdfDocument = null;
