@@ -1,733 +1,465 @@
-<!DOCTYPE html> 
-<html lang="it"> 
-  <head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Pdf - traduttore</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-
- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-<style>
-      #pdfCanvas {  
-        height: 500px;
-        width: 355px;
-        border: 2px solid #333;
-
-
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizzatore PDF - FUNZIONANTE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; }
+        body { 
+            font-family: system-ui, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
         }
-      
-#prevPage{
-       background: violet;
-       color: white;
-       border: none;
-       padding: 8px 16px;
-       border-radius: 6px
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 20px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        .header { 
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; 
+            padding: 2rem; 
+            text-align: center;
+            font-size: 2.2rem; 
+            font-weight: 800;
+        }
+        .file-zone { 
+            padding: 3rem; 
+            border: 3px dashed #d1d5db; 
+            border-radius: 16px; 
+            text-align: center; 
+            margin: 2rem; 
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .file-zone:hover { 
+            border-color: #10b981; 
+            background: #ecfdf5;
+        }
+        .file-zone input { display: none; }
+        .file-label { 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            color: #374151;
+        }
+        .toolbar { 
+            display: flex; 
+            gap: 1rem; 
+            padding: 1.5rem 2rem; 
+            background: #f8fafc;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn { 
+            padding: 0.75rem 1.5rem; 
+            border: none; 
+            border-radius: 10px; 
+            font-weight: 700; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            transition: all 0.2s;
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-copy { 
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+            color: white !important;
+            padding: 1rem 2rem !important;
+            font-size: 1.1rem !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+        .btn-copy:hover:not(:disabled) { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 25px rgba(16,185,129,0.5);
+        }
+        .btn-nav { background: #6b7280; color: white; }
+        .btn-nav:hover:not(:disabled) { background: #4b5563; }
+        .page-info { 
+            padding: 0.75rem 1.5rem; 
+            background: #e5e7eb; 
+            border-radius: 10px; 
+            font-weight: 700;
+        }
+        .display { 
+            min-height: 600px; 
+            padding: 3rem; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 2rem;
+        }
+        canvas { 
+            max-width: 100%; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 12px;
+        }
+        .text-output { 
+            width: 100%; 
+            padding: 1.5rem; 
+            background: #f1f5f9; 
+            border: 2px solid #e2e8f0; 
+            border-radius: 12px; 
+            font-size: 15px; 
+            line-height: 1.6; 
+            white-space: pre-wrap; 
+            max-height: 400px; 
+            overflow-y: auto;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .placeholder { 
+            color: #9ca3af; 
+            font-size: 1.2rem; 
+            text-align: center; 
+            padding: 3rem;
+        }
+        .alert { 
+            position: fixed; 
+            bottom: 2rem; 
+            left: 50%; 
+            transform: translateX(-50%) translateY(100px); 
+            background: #10b981; 
+            color: white; 
+            padding: 1rem 2rem; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25); 
+            transition: all 0.3s; 
+            z-index: 9999;
+        }
+        .alert.show { transform: translateX(-50%) translateY(0); }
+        .copy-icon { width: 20px; height: 20px; fill: currentColor; }
+
+
+.noto-sans-jp-<uniquifier> {
+  font-family: "Noto Sans JP", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
 }
 
-  
-   
-
-#nextPage{
-       background: violet;
-       color: white;
-       border: none;
-       padding: 8px 16px;
-       border-radius: 6px
+.noto-sans-kr-<uniquifier> {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
 }
-</style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  </head>
-  <body> 
-    <div class="pdf-viewer"> 
-      <input type="file" id="fileInput" accept=".pdf"> 
-      <div class="controls"> 
-        <button id="prevPage">← Precedente</button> 
-        <span id="pageInfo">Pagina: - / -</span> 
-        <button id="nextPage">Successiva →</button> </div> 
-      <canvas id="pdfCanvas"></canvas> 
-    </div> 
 
-<!-- Language Selection -->
-   <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-     <div><label for="source-lang" class="block text-sm font-medium text-gray-700 mb-2">Lingua di origine</label> <select id="source-lang" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="auto">Rileva automaticamente</option> <option value="it">Italiano</option> <option value="en">Inglese</option> <option value="es">Spagnolo</option> <option value="fr">Francese</option> <option value="de">Tedesco</option> <option value="pt">Portoghese</option> <option value="ru">Russo</option> <option value="ja">Giapponese</option> <option value="ko">Coreano</option> <option value="zh">Cinese</option> <option value="ar">Arabo</option> <option value="hi">Hindi</option> </select>
-     </div>
-     <div><label for="target-lang" class="block text-sm font-medium text-gray-700 mb-2">Traduci in</label> <select id="target-lang" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="en">Inglese</option> <option value="it">Italiano</option> <option value="es">Spagnolo</option> <option value="fr">Francese</option> <option value="de">Tedesco</option> <option value="pt">Portoghese</option> <option value="ru">Russo</option> <option value="ja">Giapponese</option> <option value="ko">Coreano</option> <option value="zh">Cinese</option> <option value="ar">Arabo</option> <option value="hi">Hindi</option> </select>
-     </div>
+.noto-sans-sc-<uniquifier> {
+  font-family: "Noto Sans SC", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+ .container2 { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; margin-bottom: 30px; }
+textarea { 
+            width: 100%; height: 250px; margin: 15px 0; padding: 20px; 
+            font-size: 16px; font-family: inherit; border: 2px solid #e0e0e0; 
+            border-radius: 8px; resize: vertical; box-sizing: border-box; 
+            transition: border-color 0.3s; 
+        }
+        textarea:focus { border-color: #4285f4; outline: none; box-shadow: 0 0 0 3px rgba(66,133,244,0.1); }
+        #tradotto { background: #f8f9fa; border-color: #4285f4; }
+        .controls { 
+            display: flex; flex-wrap: wrap; gap: 15px; margin: 25px 0; align-items: center; 
+            justify-content: center; 
+        }
+        select { 
+            padding: 12px 16px; font-size: 16px; border: 2px solid #e0e0e0; 
+            border-radius: 8px; background: white; min-width: 140px; 
+        }
+        button { 
+            padding: 12px 24px; font-size: 16px; border: none; border-radius: 8px; 
+            cursor: pointer; font-weight: 500; transition: all 0.2s; 
+        }
+        .btn-traduci { background: #4285f4; color: white; }
+        .btn-traduci:hover { background: #3367d6; transform: translateY(-1px); }
+        .btn-copia { background: #34a853; color: white; }
+        .btn-copia:hover { background: #2d8e44; transform: translateY(-1px); }
+        .btn-svuota { background: #ea4335; color: white; }
+        .btn-svuota:hover { background: #c5221f; transform: translateY(-1px); }
+        .shortcut { font-size: 14px; color: #666; margin-left: 10px; font-style: italic; }
+        .status { text-align: center; padding: 10px; border-radius: 6px; margin: 10px 0; font-weight: 500; }
+        .loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">📄 Visualizzatore PDF PRO</h1>
+        
+        <div class="file-zone" onclick="document.getElementById('file').click()">
+            <input type="file" id="file" accept=".pdf">
+            <div class="file-label">🔽 Clicca qui o trascina un PDF</div>
+        </div>
+
+        <div class="toolbar">
+            <button class="btn btn-copy" id="copy">
+                <svg class="copy-icon" viewBox="0 0 24 24">
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                </svg>
+                COPIA TESTO
+            </button>
+            <button class="btn btn-nav" id="prev">◀️ PREC</button>
+            <span class="page-info" id="info">Carica PDF</span>
+            <button class="btn btn-nav" id="next">SUCC ➡️</button>
+        </div>
+
+        <div class="display" id="display">
+            <div class="placeholder">Carica un PDF per vedere magia...</div>
+        </div>         
     </div>
-   </div><!-- Editor and Translation Area -->
-   <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6"><!-- Editor Panel -->
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-     <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
-      <div class="flex items-center justify-between">
-       <h2 class="text-lg font-semibold text-gray-800">Editor</h2>
-       <div class="flex items-center space-x-2"><span id="char-count" class="text-sm text-gray-500">0 caratteri</span> <button id="clear-btn" class="px-3 py-1 text-sm bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"> Cancella </button>
-       </div>
-      </div>
-     </div>
-     <div class="p-6"><!-- Editor Toolbar -->
-      <div class="mb-3 flex items-center justify-between">
-       <div class="flex space-x-1 p-1 bg-gray-50 rounded-lg border border-gray-200"><button id="bold-btn" class="p-2 hover:bg-gray-200 rounded text-gray-700 transition-colors" title="Grassetto (Ctrl+B)">
-         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path d="M5 3a1 1 0 000 2h1v10H5a1 1 0 100 2h6a4 4 0 001.866-7.539A3.5 3.5 0 0011 3H5zm6 2a1.5 1.5 0 010 3H8V5h3zm0 5a2 2 0 010 4H8v-4h3z" />
-         </svg></button> <button id="italic-btn" class="p-2 hover:bg-gray-200 rounded text-gray-700 transition-colors" title="Corsivo (Ctrl+I)">
-         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path d="M8 3a1 1 0 000 2h1.5l-3 10H5a1 1 0 100 2h6a1 1 0 100-2h-1.5l3-10H14a1 1 0 100-2H8z" />
-         </svg></button>
-        <div class="border-l border-gray-300 mx-1"></div><button id="undo-btn" class="p-2 hover:bg-gray-200 rounded text-gray-700 transition-colors" title="Annulla (Ctrl+Z)">
-         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-         </svg></button> <button id="redo-btn" class="p-2 hover:bg-gray-200 rounded text-gray-700 transition-colors" title="Ripeti (Ctrl+Y)">
-         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2m18-10l-6-6m6 6l-6 6" />
-         </svg></button>
-       </div><button id="documents-btn" class="px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded-md hover:bg-purple-200 transition-colors flex items-center space-x-1">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg><span>Documenti</span> </button>
-      </div><textarea id="source-text" placeholder="Scrivi qui il tuo testo..." class="w-full h-80 p-4 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 leading-relaxed"></textarea> <!-- Editor Stats and Actions -->
-      <div class="mt-4 flex items-center justify-between">
-       <div class="flex items-center space-x-4"><button id="translate-btn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center space-x-2">
-         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-         </svg><span id="translate-btn-text">Traduci</span> </button> <button id="save-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2">
-         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-         </svg><span>Salva</span> </button>
-       </div>
-       <div class="flex items-center space-x-4 text-sm text-gray-500"><span id="word-count">0 parole</span> <span id="detected-lang"></span>
-       </div>
-      </div>
-     </div>
-    </div><!-- Translation Panel -->
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-     <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
-      <div class="flex items-center justify-between">
-       <h2 class="text-lg font-semibold text-gray-800">Traduzione</h2><button id="copy-btn" class="px-3 py-1 text-sm bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors flex items-center space-x-1">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg><span>Copia</span> </button>
-      </div>
-     </div>
-     <div class="p-6">
-      <div id="translation-area" class="w-full h-80 p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 leading-relaxed overflow-y-auto">
-       <div class="text-gray-400 text-center mt-32">
-        La traduzione apparirà qui...
-       </div>
-      </div>
-      <div class="mt-4 flex items-center justify-between">
-       <div class="text-sm text-gray-500"><span id="translation-info"></span>
-       </div><button id="swap-langs" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center space-x-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-        </svg><span>Inverti</span> </button>
-      </div>
-     </div>
+
+    <div class="alert" id="alert">✅ Testo copiato negli appunti!</div>
+<br>
+<br>
+<br>
+  <div class="container2">
+        <h1>🧠 Editor con Google Translate</h1>
+        
+        <textarea id="editor" placeholder="Scrivi o incolla qui il testo da tradurre... Usa Ctrl+Enter per tradurre velocemente!">Hello world! This is a test for the new Google Translate integration.</textarea>
+        
+        <div class="controls">
+            <select id="linguaA">
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="es">🇪🇸 Spagnolo</option>
+                <option value="fr">🇫🇷 Francese</option>
+                <option value="de">🇩🇪 Tedesco</option>
+                <option value="zh">🇨🇳 Cinese</option>
+                <option value="ja">🇯🇵 Giapponese</option>
+                <option value="ko">🇰🇷 Coreano</option>
+            </select>
+            
+            <button class="btn-traduci" onclick="traduciConGoogle()">🔄 Traduci</button>
+            <span class="shortcut">o Ctrl+Enter</span>
+            
+            <button class="btn-copia" onclick="copiaTradotto()">📋 Copia</button>
+            <button class="btn-svuota" onclick="svuotaTodo()">🗑️ Svuota</button>
+        </div>
+        
+        <h3>📄 Traduzione:</h3>
+        <textarea id="tradotto" placeholder="La traduzione Google apparirà qui..." readonly></textarea>
+        <div id="status"></div>
+        
+        <div id="google_translate_element" style="display:none;"></div>
     </div>
-   </div><!-- Documents Modal -->
-   <div id="documents-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-96 overflow-hidden">
-     <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-      <h3 class="text-lg font-semibold text-gray-800">Documenti Salvati</h3><button id="close-modal" class="text-gray-500 hover:text-gray-700">
-       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-       </svg></button>
-     </div>
-     <div class="p-6 overflow-y-auto max-h-80">
-      <div id="documents-list" class="space-y-3"><!-- Documents will be loaded here -->
-      </div>
-      <div id="no-documents" class="text-center text-gray-500 py-8 hidden">
-       <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-       </svg>
-       <p>Nessun documento salvato</p>
-       <p class="text-sm mt-1">I tuoi documenti salvati appariranno qui</p>
-      </div>
-     </div>
-    </div>
-   </div><!-- Toast Notification -->
-   <div id="toast" class="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
-    <div class="flex items-center space-x-2">
-     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-     </svg><span>Testo copiato negli appunti!</span>
-    </div>
-   </div>
-  </div>
+
     <script>
-      // Configurazione PDF.js 
-      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; let pdfDoc = null; 
-      let pageNum = 1; let pageRendering = false; let pageNumPending = null; 
-      const scale = 1.5; 
-      const canvas = document.getElementById('pdfCanvas'); const ctx = canvas.getContext('2d'); // Gestione caricamento file 
-      document.getElementById('fileInput').addEventListener('change', function(e) {
-        const file = e.target.files[0]; 
-        if (file.type !== 'application/pdf') { 
-          alert('Seleziona un file PDF valido'); 
-          return; 
-        } 
-        const fileReader = new FileReader();
-        fileReader.onload = function() { 
-          const typedarray = new Uint8Array(this.result); loadPDF(typedarray); 
-        }; fileReader.readAsArrayBuffer(file); }); 
-      function loadPDF(data) { pdfjsLib.getDocument(data).promise.then(function(pdf) {
-        pdfDoc = pdf; document.getElementById('pageInfo').textContent = `Pagina: ${pageNum} / ${pdf.numPages}`; renderPage(pageNum); 
-    } 
-                                                                      );}
-    function renderPage(num) { pageRendering = true; pdfDoc.getPage(num).then(function(page) { 
-      const viewport = page.getViewport({scale: scale}); canvas.height = viewport.height; canvas.width = viewport.width; 
-      const renderContext = { canvasContext: ctx, viewport: viewport };
-      const renderTask = page.render(renderContext); renderTask.promise.then(function() { pageRendering = false; if (pageNumPending !== null) { renderPage(pageNumPending); pageNumPending = null; }
-                                                                                        }); 
-    }); document.getElementById('pageInfo').textContent = `Pagina: ${num} / ${pdfDoc.numPages}`; 
-                             } function queueRenderPage(num) { 
-                               if (pageRendering) { pageNumPending = num; 
-                                                  } else { renderPage(num);
-                                                         } 
-   
-                             }
-      // Pagina precedente 
-      document.getElementById('prevPage').addEventListener('click', function() { 
-        if (pageNum <= 1) { 
-          return; 
-        } pageNum--; queueRenderPage(pageNum); 
-      }); 
-      // Pagina successiva 
-      document.getElementById('nextPage').addEventListener('click', function() {
-        if (pageNum >= pdfDoc.numPages) {
-          return; 
-        } pageNum++; queueRenderPage(pageNum); 
-      });
-      // Controlli da tastiera 
-      document.addEventListener('keydown', function(e) { 
-        if (!pdfDoc) return; switch(e.key) { 
-          case 'ArrowLeft': if (pageNum > 1) { 
-            pageNum--; queueRenderPage(pageNum);
-          } break; case 'ArrowRight': if (pageNum < pdfDoc.numPages) { pageNum++; queueRenderPage(pageNum); } break;
-        } 
-      });
-// ✅ ORA IL TUO CODICE EDITOR ORIGINALE (dal // Configuration in giù)
-        // Configuration
-        const defaultConfig = {
-            app_title: "Editor con Traduttore",
-            placeholder_text: "Scrivi qui il tuo testo..."
-        };
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        // Elements
-        const sourceText = document.getElementById('source-text');
-        const translationArea = document.getElementById('translation-area');
-        const translateBtn = document.getElementById('translate-btn');
-        const translateBtnText = document.getElementById('translate-btn-text');
-        const sourceLang = document.getElementById('source-lang');
-        const targetLang = document.getElementById('target-lang');
-        const charCount = document.getElementById('char-count');
-        const wordCount = document.getElementById('word-count');
-        const clearBtn = document.getElementById('clear-btn');
-        const copyBtn = document.getElementById('copy-btn');
-        const swapLangs = document.getElementById('swap-langs');
-        const detectedLang = document.getElementById('detected-lang');
-        const translationInfo = document.getElementById('translation-info');
-        const toast = document.getElementById('toast');
-        const saveBtn = document.getElementById('save-btn');
-        const boldBtn = document.getElementById('bold-btn');
-        const italicBtn = document.getElementById('italic-btn');
-        const undoBtn = document.getElementById('undo-btn');
-        const redoBtn = document.getElementById('redo-btn');
-        const documentsBtn = document.getElementById('documents-btn');
-        const documentsModal = document.getElementById('documents-modal');
-        const closeModal = document.getElementById('close-modal');
-        const documentsList = document.getElementById('documents-list');
-        const noDocuments = document.getElementById('no-documents');
+        let pdfDocument = null;
+        let currentPage = 1;
+        let totalPages = 0;
+        let extractedText = '';
 
-        // Editor state
-        let undoStack = [];
-        let redoStack = [];
-        let currentText = '';
-        let savedDocuments = JSON.parse(localStorage.getItem('editorDocuments') || '[]');
+        // ELEMENTI DOM
+        const fileInput = document.getElementById('file');
+        const display = document.getElementById('display');
+        const info = document.getElementById('info');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        const copyBtn = document.getElementById('copy');
+        const alert = document.getElementById('alert');
 
-        // Language names
-        const languageNames = {
-            'auto': 'Auto',
-            'it': 'Italiano',
-            'en': 'English',
-            'es': 'Español',
-            'fr': 'Français',
-            'de': 'Deutsch',
-            'pt': 'Português',
-            'ru': 'Русский',
-            'ja': '日本語',
-            'ko': '한국어',
-            'zh': '中文',
-            'ar': 'العربية',
-            'hi': 'हिन्दी'
-        };
+        function updateControls() {
+            const hasDoc = pdfDocument !== null;
+            prevBtn.disabled = !hasDoc || currentPage <= 1;
+            nextBtn.disabled = !hasDoc || currentPage >= totalPages;
+            copyBtn.disabled = !hasDoc || !extractedText;
+            info.textContent = hasDoc ? `Pagina ${currentPage} di ${totalPages}` : 'Carica PDF';
+        }
 
-        // Real translation function using Google Translate API
-        async function translateText(text, fromLang, toLang) {
+        async function renderPage(num) {
+            const page = await pdfDocument.getPage(num);
+            const viewport = page.getViewport({ scale: 1.5 });
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            // Estrai TESTO dalla pagina corrente
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items.map(item => item.str).join(' ');
+
+            display.innerHTML = '';
+            display.appendChild(canvas);
+
+            if (pageText.trim()) {
+                const textDiv = document.createElement('div');
+                textDiv.className = 'text-output';
+                textDiv.textContent = pageText;
+                display.appendChild(textDiv);
+            }
+
+            await page.render({ canvasContext: ctx, viewport }).promise;
+            currentPage = num;
+            updateControls();
+        }
+
+        async function extractAllText() {
+            extractedText = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const page = await pdfDocument.getPage(i);
+                const content = await page.getTextContent();
+                const text = content.items.map(item => item.str).join(' ');
+                extractedText += `
+--- PAGINA ${i} ---
+${text}
+`;
+            }
+        }
+
+        // CARICAMENTO PDF - SEMPLICE E STABILE
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
             try {
-                // Use Google Translate API via public endpoint
-                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang}&tl=${toLang}&dt=t&q=${encodeURIComponent(text)}`;
+                display.innerHTML = '<div class="placeholder">⏳ Caricando...</div>';
+                
+                const arrayBuffer = await file.arrayBuffer();
+                pdfDocument = await pdfjsLib.getDocument(arrayBuffer).promise;
+                
+                totalPages = pdfDocument.numPages;
+                currentPage = 1;
+                
+                await extractAllText();
+                await renderPage(1);
+                
+            } catch (error) {
+                console.error(error);
+                display.innerHTML = '<div class="placeholder" style="color: #ef4444;">❌ Errore: ' + error.message + '</div>';
+            }
+        });
 
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) renderPage(currentPage - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) renderPage(currentPage + 1);
+        });
+
+        copyBtn.addEventListener('click', async () => {
+            await navigator.clipboard.writeText(extractedText);
+            alert.classList.add('show');
+            setTimeout(() => alert.classList.remove('show'), 2000);
+        });
+
+        updateControls();
+
+// Inizializza Google Translate (invisibile)
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'it',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Mostra status
+        function mostraStatus(messaggio, tipo = 'neutral') {
+            const status = document.getElementById('status');
+            status.textContent = messaggio;
+            status.className = `status ${tipo}`;
+        }
+
+        // Traduzione principale con Google
+        async function traduciConGoogle() {
+            const editor = document.getElementById('editor');
+            const tradotto = document.getElementById('tradotto');
+            const lingua = document.getElementById('linguaA').value;
+            
+            const testo = editor.value.trim();
+            if (!testo) {
+                mostraStatus('Scrivi prima qualcosa da tradurre!', 'neutral');
+                return;
+            }
+            
+            mostraStatus('🔄 Traducendo con Google...', 'loading');
+            tradotto.value = 'Traducendo...';
+            
+            try {
+                // Usa Google Translate mobile (funziona senza API key)
+                const url = `https://translate.google.com/m?sl=auto&tl=${lingua}&q=${encodeURIComponent(testo)}&op=translate`;
                 const response = await fetch(url);
-                const data = await response.json();
-
-                if (data && data[0]) {
-                    let translatedText = '';
-                    data[0].forEach(item => {
-                        if (item[0]) {
-                            translatedText += item[0];
-                        }
-                    });
-
-                    // Detect source language if auto-detect was used
-                    const detectedLanguage = data[2] || fromLang;
-
-                    return {
-                        translatedText: translatedText.trim(),
-                        detectedLanguage: detectedLanguage
-                    };
+                const html = await response.text();
+                
+                // Parsa HTML per estrarre traduzione
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const risultato = doc.querySelector('.result-container');
+                
+                if (risultato && risultato.textContent.trim()) {
+                    tradotto.value = risultato.textContent.trim();
+                    mostraStatus('✅ Traduzione completata!', 'success');
+                } else {
+                    throw new Error('Risultato non trovato');
                 }
-
-                throw new Error('Risposta non valida dal servizio di traduzione');
-
             } catch (error) {
                 console.error('Errore traduzione:', error);
+                tradotto.value = 'Errore: Prova con Ctrl+Enter o controlla connessione';
+                mostraStatus('❌ Errore traduzione. Riprova!', 'loading');
+            }
+        }
 
-                // Fallback to MyMemory API
-                try {
-                    const fallbackUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`;
-                    const fallbackResponse = await fetch(fallbackUrl);
-                    const fallbackData = await fallbackResponse.json();
+        // Copia traduzione negli appunti
+        function copiaTradotto() {
+            const testo = document.getElementById('tradotto').value;
+            if (testo && testo !== 'Traducendo...' && !testo.includes('Errore')) {
+                navigator.clipboard.writeText(testo).then(() => {
+                    mostraStatus('📋 Copiato negli appunti!', 'success');
+                    setTimeout(() => mostraStatus(''), 2000);
+                }).catch(() => {
+                    alert('Copia manualmente il testo');
+                });
+            } else {
+                mostraStatus('Niente da copiare!', 'neutral');
+            }
+        }
 
-                    if (fallbackData.responseStatus === 200) {
-                        return {
-                            translatedText: fallbackData.responseData.translatedText,
-                            detectedLanguage: fromLang === 'auto' ? 'en' : fromLang
-                        };
-                    }
-                } catch (fallbackError) {
-                    console.error('Errore fallback:', fallbackError);
+        // Svuota tutto
+        function svuotaTodo() {
+            document.getElementById('editor').value = '';
+            document.getElementById('tradotto').value = '';
+            document.getElementById('status').textContent = '';
+            mostraStatus('🧹 Tutto svuotato!', 'success');
+            document.getElementById('editor').focus();
+        }
+
+        // Event listener per Ctrl+Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            const editor = document.getElementById('editor');
+            editor.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    traduciConGoogle();
                 }
-
-                throw new Error('Servizio di traduzione non disponibile');
-            }
-        }
-
-        // Update character and word count
-        function updateCounts() {
-            const text = sourceText.value;
-            const charCount_val = text.length;
-            const wordCount_val = text.trim() ? text.trim().split(/\s+/).length : 0;
-
-            charCount.textContent = `${charCount_val} caratteri`;
-            wordCount.textContent = `${wordCount_val} parole`;
-        }
-
-        // Editor history management
-        function saveToHistory() {
-            if (currentText !== sourceText.value) {
-                undoStack.push(currentText);
-                if (undoStack.length > 50) undoStack.shift(); // Limit history
-                redoStack = []; // Clear redo stack on new action
-                currentText = sourceText.value;
-            }
-        }
-
-        function undo() {
-            if (undoStack.length > 0) {
-                redoStack.push(sourceText.value);
-                const previousText = undoStack.pop();
-                sourceText.value = previousText;
-                currentText = previousText;
-                updateCounts();
-            }
-        }
-
-        function redo() {
-            if (redoStack.length > 0) {
-                undoStack.push(sourceText.value);
-                const nextText = redoStack.pop();
-                sourceText.value = nextText;
-                currentText = nextText;
-                updateCounts();
-            }
-        }
-
-        // Text formatting functions
-        function insertTextAtCursor(startTag, endTag = '') {
-            const start = sourceText.selectionStart;
-            const end = sourceText.selectionEnd;
-            const selectedText = sourceText.value.substring(start, end);
-            const beforeText = sourceText.value.substring(0, start);
-            const afterText = sourceText.value.substring(end);
-
-            saveToHistory();
-
-            const newText = beforeText + startTag + selectedText + endTag + afterText;
-            sourceText.value = newText;
-
-            // Set cursor position
-            const newCursorPos = start + startTag.length + selectedText.length + endTag.length;
-            sourceText.setSelectionRange(newCursorPos, newCursorPos);
-            sourceText.focus();
-
-            updateCounts();
-        }
-
-        function makeBold() {
-            insertTextAtCursor('**', '**');
-        }
-
-        function makeItalic() {
-            insertTextAtCursor('*', '*');
-        }
-
-        // Save document function
-        function saveDocument() {
-            const text = sourceText.value.trim();
-            if (!text) {
-                showToast('Nessun testo da salvare');
-                return;
-            }
-
-            const doc = {
-                id: Date.now(),
-                title: text.substring(0, 50) + (text.length > 50 ? '...' : ''),
-                content: text,
-                createdAt: new Date().toISOString(),
-                language: sourceLang.value
-            };
-
-            savedDocuments.unshift(doc);
-            if (savedDocuments.length > 20) savedDocuments.pop(); // Limit to 20 documents
-
-            localStorage.setItem('editorDocuments', JSON.stringify(savedDocuments));
-            showToast('Documento salvato con successo!');
-        }
-
-        // Show toast notification
-        function showToast(message) {
-            const toastSpan = toast.querySelector('span');
-            toastSpan.textContent = message;
-            toast.classList.remove('translate-y-full', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-full', 'opacity-0');
-                toast.classList.remove('translate-y-0', 'opacity-100');
-            }, 3000);
-        }
-
-        // Documents management
-        function showDocumentsModal() {
-            loadDocumentsList();
-            documentsModal.classList.remove('hidden');
-        }
-
-        function hideDocumentsModal() {
-            documentsModal.classList.add('hidden');
-        }
-
-        function loadDocumentsList() {
-            documentsList.innerHTML = '';
-
-            if (savedDocuments.length === 0) {
-                noDocuments.classList.remove('hidden');
-                return;
-            }
-
-            noDocuments.classList.add('hidden');
-
-            savedDocuments.forEach(doc => {
-                const docElement = document.createElement('div');
-                docElement.className = 'bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors';
-                docElement.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="text-sm font-medium text-gray-900 truncate">${doc.title}</h4>
-                            <p class="text-xs text-gray-500 mt-1">
-                                ${new Date(doc.createdAt).toLocaleDateString('it-IT')} • 
-                                ${languageNames[doc.language] || doc.language}
-                            </p>
-                        </div>
-                        <div class="flex items-center space-x-2 ml-4">
-                            <button onclick="loadDocument(${doc.id})" class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors">
-                                Carica
-                            </button>
-                            <button onclick="deleteDocument(${doc.id})" class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors">
-                                Elimina
-                            </button>
-                        </div>
-                    </div>
-                `;
-                documentsList.appendChild(docElement);
             });
-        }
-
-        function loadDocument(docId) {
-            const doc = savedDocuments.find(d => d.id === docId);
-            if (doc) {
-                saveToHistory();
-                sourceText.value = doc.content;
-                sourceLang.value = doc.language;
-                updateCounts();
-                hideDocumentsModal();
-                showToast('Documento caricato!');
-                sourceText.focus();
-            }
-        }
-
-        function deleteDocument(docId) {
-            savedDocuments = savedDocuments.filter(d => d.id !== docId);
-            localStorage.setItem('editorDocuments', JSON.stringify(savedDocuments));
-            loadDocumentsList();
-            showToast('Documento eliminato');
-        }
-
-        // Make functions global for onclick handlers
-        window.loadDocument = loadDocument;
-        window.deleteDocument = deleteDocument;
-
-        // Translate function
-        async function performTranslation() {
-            const text = sourceText.value.trim();
-            if (!text) {
-                translationArea.innerHTML = '<div class="text-gray-400 text-center mt-32">Inserisci del testo da tradurre...</div>';
-                return;
-            }
-
-            const fromLang = sourceLang.value;
-            const toLang = targetLang.value;
-
-            if (fromLang === toLang && fromLang !== 'auto') {
-                translationArea.innerHTML = '<div class="text-orange-500 text-center mt-32">⚠️ Le lingue di origine e destinazione sono uguali</div>';
-                return;
-            }
-
-            // Show loading state
-            translateBtn.disabled = true;
-            translateBtnText.textContent = 'Traduzione in corso';
-            translateBtnText.classList.add('loading-dots');
-            translationArea.innerHTML = '<div class="text-blue-500 text-center mt-32">🔄 Traduzione in corso...</div>';
-
-            try {
-                const result = await translateText(text, fromLang, toLang);
-
-                // Show translation
-                translationArea.innerHTML = `<div class="fade-in">${result.translatedText}</div>`;
-
-                // Update detected language info
-                if (fromLang === 'auto') {
-                    detectedLang.textContent = `Lingua rilevata: ${languageNames[result.detectedLanguage]}`;
-                } else {
-                    detectedLang.textContent = '';
-                }
-
-                translationInfo.textContent = `Tradotto da ${languageNames[result.detectedLanguage]} a ${languageNames[toLang]}`;
-
-            } catch (error) {
-                translationArea.innerHTML = '<div class="text-red-500 text-center mt-32">❌ Errore durante la traduzione</div>';
-                translationInfo.textContent = '';
-            } finally {
-                // Reset button state
-                translateBtn.disabled = false;
-                translateBtnText.textContent = 'Traduci';
-                translateBtnText.classList.remove('loading-dots');
-            }
-        }
-
-        // Copy translation to clipboard
-        async function copyTranslation() {
-            const translationText = translationArea.textContent.trim();
-            if (!translationText || translationText.includes('apparirà qui') || translationText.includes('Errore')) {
-                showToast('Nessuna traduzione da copiare');
-                return;
-            }
-
-            try {
-                await navigator.clipboard.writeText(translationText);
-                showToast('Testo copiato negli appunti!');
-            } catch (error) {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = translationText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showToast('Testo copiato negli appunti!');
-            }
-        }
-
-        // Swap languages
-        function swapLanguages() {
-            if (sourceLang.value === 'auto') {
-                showToast('Impossibile invertire con rilevamento automatico');
-                return;
-            }
-
-            const temp = sourceLang.value;
-            sourceLang.value = targetLang.value;
-            targetLang.value = temp;
-
-            // If there's translated text, move it to source
-            const translationText = translationArea.textContent.trim();
-            if (translationText && !translationText.includes('apparirà qui') && !translationText.includes('Errore')) {
-                sourceText.value = translationText;
-                updateCharCount();
-                translationArea.innerHTML = '<div class="text-gray-400 text-center mt-32">La traduzione apparirà qui...</div>';
-                detectedLang.textContent = '';
-                translationInfo.textContent = '';
-            }
-        }
-
-        // Clear text
-        function clearText() {
-            saveToHistory();
-            sourceText.value = '';
-            translationArea.innerHTML = '<div class="text-gray-400 text-center mt-32">La traduzione apparirà qui...</div>';
-            updateCounts();
-            detectedLang.textContent = '';
-            translationInfo.textContent = '';
-            sourceText.focus();
-        }
-
-        // Event listeners
-        sourceText.addEventListener('input', () => {
-            updateCounts();
-            saveToHistory();
+            
+            // Focus automatico
+            editor.focus();
         });
 
-        sourceText.addEventListener('keydown', (e) => {
-            if (e.ctrlKey) {
-                switch(e.key) {
-                    case 'Enter':
-                        e.preventDefault();
-                        performTranslation();
-                        break;
-                    case 'b':
-                        e.preventDefault();
-                        makeBold();
-                        break;
-                    case 'i':
-                        e.preventDefault();
-                        makeItalic();
-                        break;
-                    case 'z':
-                        e.preventDefault();
-                        undo();
-                        break;
-                    case 'y':
-                        e.preventDefault();
-                        redo();
-                        break;
-                    case 's':
-                        e.preventDefault();
-                        saveDocument();
-                        break;
-                }
+        // Auto-traduci al cambio lingua (opzionale)
+        document.getElementById('linguaA').addEventListener('change', function() {
+            if (document.getElementById('tradotto').value && !document.getElementById('tradotto').value.includes('Errore')) {
+                traduciConGoogle();
             }
         });
-
-        translateBtn.addEventListener('click', performTranslation);
-        clearBtn.addEventListener('click', clearText);
-        copyBtn.addEventListener('click', copyTranslation);
-        swapLangs.addEventListener('click', swapLanguages);
-        saveBtn.addEventListener('click', saveDocument);
-        boldBtn.addEventListener('click', makeBold);
-        italicBtn.addEventListener('click', makeItalic);
-        undoBtn.addEventListener('click', undo);
-        redoBtn.addEventListener('click', redo);
-        documentsBtn.addEventListener('click', showDocumentsModal);
-        closeModal.addEventListener('click', hideDocumentsModal);
-
-        // Close modal when clicking outside
-        documentsModal.addEventListener('click', (e) => {
-            if (e.target === documentsModal) {
-                hideDocumentsModal();
-            }
-        });
-
-        // Auto-translate on language change
-        sourceLang.addEventListener('change', () => {
-            if (sourceText.value.trim()) {
-                setTimeout(performTranslation, 300);
-            }
-        });
-
-        targetLang.addEventListener('change', () => {
-            if (sourceText.value.trim()) {
-                setTimeout(performTranslation, 300);
-            }
-        });
-
-        // Element SDK integration
-        async function onConfigChange(config) {
-            const appTitle = document.getElementById('app-title');
-            const placeholderText = config.placeholder_text || defaultConfig.placeholder_text;
-            const title = config.app_title || defaultConfig.app_title;
-
-            appTitle.textContent = title;
-            sourceText.placeholder = placeholderText;
-        }
-
-        function mapToCapabilities(config) {
-            return {
-                recolorables: [
-                    {
-                        get: () => config.primary_color || "#3b82f6",
-                        set: (value) => {
-                            config.primary_color = value;
-                            if (window.elementSdk) {
-                                window.elementSdk.setConfig({ primary_color: value });
-                            }
-                        }
-                    },
-                    {
-                        get: () => config.background_color || "#f8fafc",
-                        set: (value) => {
-                            config.background_color = value;
-                            if (window.elementSdk) {
-                                window.elementSdk.setConfig({ background_color: value });
-                            }
-                        }
-                    }
-                ],
-                borderables: [],
-                fontEditable: {
-                    get: () => config.font_family || "system-ui, -apple-system, sans-serif",
-                    set: (value) => {
-                        config.font_family = value;
-                        if (window.elementSdk) {
-                            window.elementSdk.setConfig({ font_family: value });
-                        }
-                    }
-                },
-                fontSizeable: {
-                    get: () => config.font_size || 16,
-                    set: (value) => {
-                        config.font_size = value;
-                        if (window.elementSdk) {
-                            window.elementSdk.setConfig({ font_size: value });
-                        }
-                    }
-                }
-            };
-        }
-
-        function mapToEditPanelValues(config) {
-            return new Map([
-                ["app_title", config.app_title || defaultConfig.app_title],
-                ["placeholder_text", config.placeholder_text || defaultConfig.placeholder_text]
-            ]);
-        }
-
-        // Initialize Element SDK
-        if (window.elementSdk) {
-            window.elementSdk.init({
-                defaultConfig,
-                onConfigChange,
-                mapToCapabilities,
-                mapToEditPanelValues
-            });
-        }
-
-        // Initialize
-        updateCounts();
-        currentText = sourceText.value;
-        sourceText.focus();
-
     </script>
-    
-  </body>
+</body>
 </html>
