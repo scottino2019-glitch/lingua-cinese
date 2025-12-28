@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
     <style>
         * { box-sizing: border-box; margin: 0; }
         body { 
@@ -163,37 +163,17 @@
   font-style: normal;
 }
  .container2 { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        h1 { color: #333; text-align: center; margin-bottom: 30px; }
-textarea { 
-            width: 100%; height: 250px; margin: 15px 0; padding: 20px; 
-            font-size: 16px; font-family: inherit; border: 2px solid #e0e0e0; 
-            border-radius: 8px; resize: vertical; box-sizing: border-box; 
-            transition: border-color 0.3s; 
-        }
-        textarea:focus { border-color: #4285f4; outline: none; box-shadow: 0 0 0 3px rgba(66,133,244,0.1); }
-        #tradotto { background: #f8f9fa; border-color: #4285f4; }
-        .controls { 
-            display: flex; flex-wrap: wrap; gap: 15px; margin: 25px 0; align-items: center; 
-            justify-content: center; 
-        }
-        select { 
-            padding: 12px 16px; font-size: 16px; border: 2px solid #e0e0e0; 
-            border-radius: 8px; background: white; min-width: 140px; 
-        }
-        button { 
-            padding: 12px 24px; font-size: 16px; border: none; border-radius: 8px; 
-            cursor: pointer; font-weight: 500; transition: all 0.2s; 
-        }
-        .btn-traduci { background: #4285f4; color: white; }
-        .btn-traduci:hover { background: #3367d6; transform: translateY(-1px); }
-        .btn-copia { background: #34a853; color: white; }
-        .btn-copia:hover { background: #2d8e44; transform: translateY(-1px); }
-        .btn-svuota { background: #ea4335; color: white; }
-        .btn-svuota:hover { background: #c5221f; transform: translateY(-1px); }
-        .shortcut { font-size: 14px; color: #666; margin-left: 10px; font-style: italic; }
-        .status { text-align: center; padding: 10px; border-radius: 6px; margin: 10px 0; font-weight: 500; }
-        .loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
-        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        textarea { width: 100%; height: 120px; padding: 15px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 16px; resize: vertical; box-sizing: border-box; }
+        textarea:focus { border-color: #007bff; outline: none; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        .btn { background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .btn:hover { background: #218838; transform: translateY(-1px); }
+        .btn-copy { background: #17a2b8; margin-left: 10px; padding: 12px 16px; font-size: 14px; }
+        .btn-copy:hover { background: #138496; }
+        .controls { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        #google_translate_element { margin: 20px 0; }
+        h1 { color: #333; text-align: center; margin-bottom: 10px; }
+        .output { background: #f8f9fa; }
+        @media (max-width: 600px) { .controls { flex-direction: column; } textarea { height: 100px; } }
     </style>
 </head>
 <body>
@@ -226,38 +206,62 @@ textarea {
 <br>
 <br>
 <br>
-  <div class="container2">
-        <h1>🧠 Editor con Google Translate</h1>
+   <div class="container2">
+        <h1>🗣️ Piccolo Traduttore</h1>
         
-        <textarea id="editor" placeholder="Scrivi o incolla qui il testo da tradurre... Usa Ctrl+Enter per tradurre velocemente!">Hello world! This is a test for the new Google Translate integration.</textarea>
+        <textarea id="inputText" placeholder="Scrivi qui il testo da tradurre... (es. Ciao mondo!)"></textarea>
         
         <div class="controls">
-            <select id="linguaA">
-                <option value="it">🇮🇹 Italiano</option>
-                <option value="en">🇺🇸 English</option>
-                <option value="es">🇪🇸 Spagnolo</option>
-                <option value="fr">🇫🇷 Francese</option>
-                <option value="de">🇩🇪 Tedesco</option>
-                <option value="zh">🇨🇳 Cinese</option>
-                <option value="ja">🇯🇵 Giapponese</option>
-                <option value="ko">🇰🇷 Coreano</option>
-            </select>
-            
-            <button class="btn-traduci" onclick="traduciConGoogle()">🔄 Traduci</button>
-            <span class="shortcut">o Ctrl+Enter</span>
-            
-            <button class="btn-copia" onclick="copiaTradotto()">📋 Copia</button>
-            <button class="btn-svuota" onclick="svuotaTodo()">🗑️ Svuota</button>
+            <button class="btn" onclick="translateText()">Traduci</button>
+            <button class="btn-copy" onclick="copyOutput()">📋 Copia</button>
         </div>
         
-        <h3>📄 Traduzione:</h3>
-        <textarea id="tradotto" placeholder="La traduzione Google apparirà qui..." readonly></textarea>
-        <div id="status"></div>
+        <textarea id="outputText" class="output" placeholder="La traduzione apparirà qui..." readonly></textarea>
         
-        <div id="google_translate_element" style="display:none;"></div>
+        <div id="google_translate_element"></div>
     </div>
 
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'it',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script>
+
+let isTranslated = false;
+        
+        function translateText() {
+            const input = document.getElementById('inputText').value;
+            if (!input) return;
+            
+            // Simula traduzione lato client (per demo) + integra con Google
+            const output = document.getElementById('outputText');
+            output.value = `Traduzione: ${input.replace(/ciao/gi, 'hello').replace(/mondo/gi, 'world')}... (usa il widget Google per traduzioni precise!)`;
+            isTranslated = true;
+            output.classList.add('output');
+        }
+        
+        function copyOutput() {
+            const output = document.getElementById('outputText');
+            if (isTranslated && output.value) {
+                navigator.clipboard.writeText(output.value).then(() => {
+                    const btn = event.target;
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '✅ Copiato!';
+                    btn.style.background = '#28a745';
+                    setTimeout(() => {
+                        btn.innerHTML = original;
+                        btn.style.background = '#17a2b8';
+                    }, 2000);
+                });
+            }
+        }
+
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
         let pdfDocument = null;
@@ -361,105 +365,7 @@ ${text}
 
         updateControls();
 
-// Inizializza Google Translate (invisibile)
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'it',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
 
-        // Mostra status
-        function mostraStatus(messaggio, tipo = 'neutral') {
-            const status = document.getElementById('status');
-            status.textContent = messaggio;
-            status.className = `status ${tipo}`;
-        }
-
-        // Traduzione principale con Google
-        async function traduciConGoogle() {
-            const editor = document.getElementById('editor');
-            const tradotto = document.getElementById('tradotto');
-            const lingua = document.getElementById('linguaA').value;
-            
-            const testo = editor.value.trim();
-            if (!testo) {
-                mostraStatus('Scrivi prima qualcosa da tradurre!', 'neutral');
-                return;
-            }
-            
-            mostraStatus('🔄 Traducendo con Google...', 'loading');
-            tradotto.value = 'Traducendo...';
-            
-            try {
-                // Usa Google Translate mobile (funziona senza API key)
-                const url = `https://translate.google.com/m?sl=auto&tl=${lingua}&q=${encodeURIComponent(testo)}&op=translate`;
-                const response = await fetch(url);
-                const html = await response.text();
-                
-                // Parsa HTML per estrarre traduzione
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const risultato = doc.querySelector('.result-container');
-                
-                if (risultato && risultato.textContent.trim()) {
-                    tradotto.value = risultato.textContent.trim();
-                    mostraStatus('✅ Traduzione completata!', 'success');
-                } else {
-                    throw new Error('Risultato non trovato');
-                }
-            } catch (error) {
-                console.error('Errore traduzione:', error);
-                tradotto.value = 'Errore: Prova con Ctrl+Enter o controlla connessione';
-                mostraStatus('❌ Errore traduzione. Riprova!', 'loading');
-            }
-        }
-
-        // Copia traduzione negli appunti
-        function copiaTradotto() {
-            const testo = document.getElementById('tradotto').value;
-            if (testo && testo !== 'Traducendo...' && !testo.includes('Errore')) {
-                navigator.clipboard.writeText(testo).then(() => {
-                    mostraStatus('📋 Copiato negli appunti!', 'success');
-                    setTimeout(() => mostraStatus(''), 2000);
-                }).catch(() => {
-                    alert('Copia manualmente il testo');
-                });
-            } else {
-                mostraStatus('Niente da copiare!', 'neutral');
-            }
-        }
-
-        // Svuota tutto
-        function svuotaTodo() {
-            document.getElementById('editor').value = '';
-            document.getElementById('tradotto').value = '';
-            document.getElementById('status').textContent = '';
-            mostraStatus('🧹 Tutto svuotato!', 'success');
-            document.getElementById('editor').focus();
-        }
-
-        // Event listener per Ctrl+Enter
-        document.addEventListener('DOMContentLoaded', function() {
-            const editor = document.getElementById('editor');
-            editor.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'Enter') {
-                    e.preventDefault();
-                    traduciConGoogle();
-                }
-            });
-            
-            // Focus automatico
-            editor.focus();
-        });
-
-        // Auto-traduci al cambio lingua (opzionale)
-        document.getElementById('linguaA').addEventListener('change', function() {
-            if (document.getElementById('tradotto').value && !document.getElementById('tradotto').value.includes('Errore')) {
-                traduciConGoogle();
-            }
-        });
     </script>
 </body>
 </html>
