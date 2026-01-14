@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="it">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classificatori Cinesi - Guida Completa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: auto;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2d3748;
+            line-height: 1.7;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            min-height: 100%;
+            padding: 60px 24px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 48px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 20px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .content {
+            padding: 48px 40px;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #764ba2;
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 17px;
+            margin-bottom: 16px;
+            color: #4a5568;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 28px;
+            border-radius: 16px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 24px;
+        }
+
+        .intro-box p {
+            margin-bottom: 12px;
+        }
+
+        .intro-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .classifier-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .classifier-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .classifier-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .chinese-char {
+            font-size: 48px;
+            font-weight: 700;
+            color: #667eea;
+            line-height: 1;
+        }
+
+        .classifier-info {
+            flex: 1;
+        }
+
+        .pinyin {
+            font-size: 20px;
+            font-weight: 600;
+            color: #764ba2;
+            margin-bottom: 4px;
+        }
+
+        .usage {
+            font-size: 15px;
+            color: #718096;
+            font-style: italic;
+        }
+
+        .examples {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .example {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .example:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .example-chinese {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+
+        .example-translation {
+            font-size: 15px;
+            color: #718096;
+        }
+
+        .rule-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 5px solid #f59e0b;
+            margin-bottom: 24px;
+        }
+
+        .rule-box h4 {
+            font-size: 19px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 12px;
+        }
+
+        .rule-box ul {
+            margin-left: 20px;
+        }
+
+        .rule-box li {
+            font-size: 16px;
+            color: #78350f;
+            margin-bottom: 8px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .category-item {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #c7d2fe;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #5b21b6;
+            margin-bottom: 12px;
+        }
+
+        .category-examples {
+            font-size: 15px;
+            color: #6b21a8;
+            line-height: 1.6;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #10b981;
+            margin-top: 24px;
+        }
+
+        .tip-box strong {
+            color: #065f46;
+            font-size: 17px;
+        }
+
+        .tip-box p {
+            color: #047857;
+            font-size: 15px;
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-wrapper {
+                padding: 32px 16px;
+            }
+
+            .header {
+                padding: 32px 24px;
+            }
+
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .header p {
+                font-size: 18px;
+            }
+
+            .content {
+                padding: 32px 24px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .classifier-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="main-wrapper">
+   <div class="container">
+    <div class="header">
+     <h1>I Classificatori Cinesi</h1>
+     <p>量词 (liàngcí) - Guida Completa</p>
+    </div>
+    <div class="content">
+     <div class="section">
+      <h2>📚 Introduzione</h2>
+      <div class="intro-box">
+       <p><strong>I classificatori (量词 - liàngcí)</strong> sono parole speciali che si usano in cinese quando si vuole contare o quantificare i sostantivi. Non esistono direttamente in italiano, ma sono fondamentali in cinese.</p>
+       <p><strong>Struttura base:</strong> Numero + Classificatore + Sostantivo</p>
+       <p><strong>Esempio:</strong> 一<strong>本</strong>书 (yī <strong>běn</strong> shū) - "un libro" (letteralmente: "uno + [classificatore per libri] + libro")</p>
+      </div>
+      <div class="rule-box">
+       <h4>⚡ Regole Fondamentali</h4>
+       <ul>
+        <li>I classificatori sono <strong>obbligatori</strong> quando si usa un numero con un sostantivo</li>
+        <li>Ogni categoria di oggetti ha il suo classificatore specifico</li>
+        <li>Non si può dire "三书" (tre libro), ma si deve dire "三本书" (tre [classificatore] libri)</li>
+        <li>Il classificatore dipende dalle caratteristiche fisiche o concettuali dell'oggetto</li>
+       </ul>
+      </div>
+     </div>
+     <div class="section">
+      <h2>🌟 Il Classificatore Universale: 个 (gè)</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         个
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          gè
+         </div>
+         <div class="usage">
+          Classificatore generico - usato per persone e oggetti generali
+         </div>
+        </div>
+       </div>
+       <p><strong>个 (gè)</strong> è il classificatore più comune e versatile. Quando non sei sicuro di quale classificatore usare, 个 è spesso accettabile.</p>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一个人 (yī gè rén)
+         </div>
+         <div class="example-translation">
+          una persona
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三个苹果 (sān gè píngguǒ)
+         </div>
+         <div class="example-translation">
+          tre mele
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两个问题 (liǎng gè wèntí)
+         </div>
+         <div class="example-translation">
+          due problemi
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>📖 Classificatori per Libri e Media</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         本
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          běn
+         </div>
+         <div class="usage">
+          Per libri, riviste, quaderni - oggetti rilegati
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一本书 (yī běn shū)
+         </div>
+         <div class="example-translation">
+          un libro
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          五本杂志 (wǔ běn zázhì)
+         </div>
+         <div class="example-translation">
+          cinque riviste
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两本词典 (liǎng běn cídiǎn)
+         </div>
+         <div class="example-translation">
+          due dizionari
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         张
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          zhāng
+         </div>
+         <div class="usage">
+          Per oggetti piatti - fogli, tavoli, letti, foto
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一张纸 (yī zhāng zhǐ)
+         </div>
+         <div class="example-translation">
+          un foglio di carta
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三张照片 (sān zhāng zhàopiàn)
+         </div>
+         <div class="example-translation">
+          tre fotografie
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          一张桌子 (yī zhāng zhuōzi)
+         </div>
+         <div class="example-translation">
+          un tavolo
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>🚗 Classificatori per Veicoli e Trasporti</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         辆
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          liàng
+         </div>
+         <div class="usage">
+          Per veicoli con ruote
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一辆车 (yī liàng chē)
+         </div>
+         <div class="example-translation">
+          un'automobile
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两辆自行车 (liǎng liàng zìxíngchē)
+         </div>
+         <div class="example-translation">
+          due biciclette
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三辆公共汽车 (sān liàng gōnggòng qìchē)
+         </div>
+         <div class="example-translation">
+          tre autobus
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>🍎 Classificatori per Oggetti Rotondi e Piccoli</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         颗
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          kē
+         </div>
+         <div class="usage">
+          Per oggetti piccoli e rotondi - perle, denti, semi
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一颗星星 (yī kē xīngxing)
+         </div>
+         <div class="example-translation">
+          una stella
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三颗珍珠 (sān kē zhēnzhū)
+         </div>
+         <div class="example-translation">
+          tre perle
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          一颗心 (yī kē xīn)
+         </div>
+         <div class="example-translation">
+          un cuore (figurativo)
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>🏠 Classificatori per Edifici e Luoghi</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         座
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          zuò
+         </div>
+         <div class="usage">
+          Per edifici, montagne, ponti, città
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一座山 (yī zuò shān)
+         </div>
+         <div class="example-translation">
+          una montagna
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两座桥 (liǎng zuò qiáo)
+         </div>
+         <div class="example-translation">
+          due ponti
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三座城市 (sān zuò chéngshì)
+         </div>
+         <div class="example-translation">
+          tre città
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         间
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          jiān
+         </div>
+         <div class="usage">
+          Per stanze, camere
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一间房间 (yī jiān fángjiān)
+         </div>
+         <div class="example-translation">
+          una stanza
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三间卧室 (sān jiān wòshì)
+         </div>
+         <div class="example-translation">
+          tre camere da letto
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>👔 Classificatori per Abbigliamento</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         件
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          jiàn
+         </div>
+         <div class="usage">
+          Per capi di abbigliamento (parte superiore)
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一件衬衫 (yī jiàn chènshān)
+         </div>
+         <div class="example-translation">
+          una camicia
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两件毛衣 (liǎng jiàn máoyī)
+         </div>
+         <div class="example-translation">
+          due maglioni
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          五件外套 (wǔ jiàn wàitào)
+         </div>
+         <div class="example-translation">
+          cinque giacche
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         条
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          tiáo
+         </div>
+         <div class="usage">
+          Per oggetti lunghi - pantaloni, strade, fiumi, pesci
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一条裤子 (yī tiáo kùzi)
+         </div>
+         <div class="example-translation">
+          un paio di pantaloni
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          一条河 (yī tiáo hé)
+         </div>
+         <div class="example-translation">
+          un fiume
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三条鱼 (sān tiáo yú)
+         </div>
+         <div class="example-translation">
+          tre pesci
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         双
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          shuāng
+         </div>
+         <div class="usage">
+          Per cose che vanno in coppia
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一双鞋 (yī shuāng xié)
+         </div>
+         <div class="example-translation">
+          un paio di scarpe
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两双筷子 (liǎng shuāng kuàizi)
+         </div>
+         <div class="example-translation">
+          due paia di bacchette
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三双手套 (sān shuāng shǒutào)
+         </div>
+         <div class="example-translation">
+          tre paia di guanti
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>🐕 Classificatori per Animali</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         只
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          zhī
+         </div>
+         <div class="usage">
+          Per animali piccoli, uccelli, alcuni oggetti
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一只猫 (yī zhī māo)
+         </div>
+         <div class="example-translation">
+          un gatto
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两只鸟 (liǎng zhī niǎo)
+         </div>
+         <div class="example-translation">
+          due uccelli
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三只狗 (sān zhī gǒu)
+         </div>
+         <div class="example-translation">
+          tre cani
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         匹
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          pǐ
+         </div>
+         <div class="usage">
+          Per animali grandi - cavalli, lupi
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一匹马 (yī pǐ mǎ)
+         </div>
+         <div class="example-translation">
+          un cavallo
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两匹狼 (liǎng pǐ láng)
+         </div>
+         <div class="example-translation">
+          due lupi
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>🌸 Classificatori per Fiori e Piante</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         朵
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          duǒ
+         </div>
+         <div class="usage">
+          Per fiori, nuvole
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一朵花 (yī duǒ huā)
+         </div>
+         <div class="example-translation">
+          un fiore
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三朵玫瑰 (sān duǒ méiguī)
+         </div>
+         <div class="example-translation">
+          tre rose
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          一朵云 (yī duǒ yún)
+         </div>
+         <div class="example-translation">
+          una nuvola
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         棵
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          kē
+         </div>
+         <div class="usage">
+          Per alberi e piante
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一棵树 (yī kē shù)
+         </div>
+         <div class="example-translation">
+          un albero
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两棵草 (liǎng kē cǎo)
+         </div>
+         <div class="example-translation">
+          due fili d'erba/piante
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>✋ Classificatori per Parti del Corpo</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         只
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          zhī
+         </div>
+         <div class="usage">
+          Per mani, occhi, orecchie (organi che vanno in coppia)
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一只手 (yī zhī shǒu)
+         </div>
+         <div class="example-translation">
+          una mano
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两只眼睛 (liǎng zhī yǎnjing)
+         </div>
+         <div class="example-translation">
+          due occhi
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>🍜 Classificatori per Cibo e Bevande</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         杯
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          bēi
+         </div>
+         <div class="usage">
+          Per tazze/bicchieri di bevande
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一杯茶 (yī bēi chá)
+         </div>
+         <div class="example-translation">
+          una tazza di tè
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两杯咖啡 (liǎng bēi kāfēi)
+         </div>
+         <div class="example-translation">
+          due tazze di caffè
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         碗
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          wǎn
+         </div>
+         <div class="usage">
+          Per ciotole di cibo
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一碗饭 (yī wǎn fàn)
+         </div>
+         <div class="example-translation">
+          una ciotola di riso
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两碗面 (liǎng wǎn miàn)
+         </div>
+         <div class="example-translation">
+          due ciotole di noodles
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         瓶
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          píng
+         </div>
+         <div class="usage">
+          Per bottiglie
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一瓶水 (yī píng shuǐ)
+         </div>
+         <div class="example-translation">
+          una bottiglia d'acqua
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三瓶啤酒 (sān píng píjiǔ)
+         </div>
+         <div class="example-translation">
+          tre bottiglie di birra
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>📝 Classificatori per Eventi e Astratti</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         次
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          cì
+         </div>
+         <div class="usage">
+          Per volte, occasioni
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一次机会 (yī cì jīhuì)
+         </div>
+         <div class="example-translation">
+          un'occasione
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两次考试 (liǎng cì kǎoshì)
+         </div>
+         <div class="example-translation">
+          due esami
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三次旅行 (sān cì lǚxíng)
+         </div>
+         <div class="example-translation">
+          tre viaggi
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         场
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          chǎng
+         </div>
+         <div class="usage">
+          Per eventi, spettacoli, partite
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一场电影 (yī chǎng diànyǐng)
+         </div>
+         <div class="example-translation">
+          un film (proiezione)
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          两场比赛 (liǎng chǎng bǐsài)
+         </div>
+         <div class="example-translation">
+          due partite
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>👥 Classificatori per Gruppi</h2>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         群
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          qún
+         </div>
+         <div class="usage">
+          Per gruppi di persone o animali
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一群人 (yī qún rén)
+         </div>
+         <div class="example-translation">
+          un gruppo di persone
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          一群孩子 (yī qún háizi)
+         </div>
+         <div class="example-translation">
+          un gruppo di bambini
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="classifier-card">
+       <div class="classifier-header">
+        <div class="chinese-char">
+         对
+        </div>
+        <div class="classifier-info">
+         <div class="pinyin">
+          duì
+         </div>
+         <div class="usage">
+          Per coppie di persone
+         </div>
+        </div>
+       </div>
+       <div class="examples">
+        <div class="example">
+         <div class="example-chinese">
+          一对夫妻 (yī duì fūqī)
+         </div>
+         <div class="example-translation">
+          una coppia sposata
+         </div>
+        </div>
+        <div class="example">
+         <div class="example-chinese">
+          三对情侣 (sān duì qínglǚ)
+         </div>
+         <div class="example-translation">
+          tre coppie di innamorati
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>💡 Categorie Principali</h2>
+      <div class="category-grid">
+       <div class="category-item">
+        <div class="category-title">
+         🔵 Forma
+        </div>
+        <div class="category-examples"><strong>张</strong> - piatti<br><strong>条</strong> - lunghi<br><strong>颗</strong> - rotondi<br><strong>根</strong> - cilindrici
+        </div>
+       </div>
+       <div class="category-item">
+        <div class="category-title">
+         🟣 Dimensione
+        </div>
+        <div class="category-examples"><strong>只</strong> - piccoli<br><strong>匹</strong> - grandi<br><strong>头</strong> - grossi animali<br><strong>座</strong> - grandi edifici
+        </div>
+       </div>
+       <div class="category-item">
+        <div class="category-title">
+         🟢 Contenitori
+        </div>
+        <div class="category-examples"><strong>杯</strong> - tazze<br><strong>碗</strong> - ciotole<br><strong>瓶</strong> - bottiglie<br><strong>包</strong> - pacchetti
+        </div>
+       </div>
+       <div class="category-item">
+        <div class="category-title">
+         🟡 Gruppi
+        </div>
+        <div class="category-examples"><strong>双</strong> - coppie<br><strong>对</strong> - paia di persone<br><strong>群</strong> - gruppi<br><strong>套</strong> - set completi
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2>🎯 Consigli per l'Apprendimento</h2>
+      <div class="tip-box"><strong>💡 Strategia 1: Impara per Categorie</strong>
+       <p>Raggruppa i classificatori per caratteristiche fisiche (forma, dimensione) piuttosto che cercare di memorizzarli singolarmente.</p>
+      </div>
+      <div class="tip-box"><strong>💡 Strategia 2: Usa 个 Quando Hai Dubbi</strong>
+       <p>Nei primi tempi, quando non sei sicuro, usa 个 (gè). È il classificatore più comune e accettato per molte situazioni generali.</p>
+      </div>
+      <div class="tip-box"><strong>💡 Strategia 3: Impara con i Vocaboli</strong>
+       <p>Quando impari un nuovo sostantivo, impara anche il suo classificatore. Pensa a "一本书" come un'unica unità, non come tre parole separate.</p>
+      </div>
+      <div class="tip-box"><strong>💡 Strategia 4: Osserva i Pattern</strong>
+       <p>Molti classificatori seguono logiche intuitive: 张 per cose piatte, 条 per cose lunghe, 只 per animali piccoli. Cerca di capire la logica dietro ogni classificatore.</p>
+      </div>
+      <div class="tip-box"><strong>💡 Strategia 5: Pratica con Numeri Diversi</strong>
+       <p>Non limitarti a "一" (uno). Prova a contare con "两" (due), "三" (tre), "几" (alcuni), "这" (questo), "那" (quello) per familiarizzare con l'uso dei classificatori in contesti diversi.</p>
+      </div>
+     </div>
+     <div class="section">
+      <h2>📌 Riepilogo Strutture</h2>
+      <div class="rule-box">
+       <h4>Strutture Comuni con i Classificatori:</h4>
+       <ul>
+        <li><strong>Numero + Classificatore + Sostantivo:</strong> 三本书 (tre libri)</li>
+        <li><strong>这/那 + Classificatore + Sostantivo:</strong> 这个人 (questa persona)</li>
+        <li><strong>几 + Classificatore + Sostantivo:</strong> 几个苹果 (alcune mele)</li>
+        <li><strong>每 + Classificatore + Sostantivo:</strong> 每个学生 (ogni studente)</li>
+        <li><strong>哪 + Classificatore + Sostantivo:</strong> 哪本书 (quale libro)</li>
+       </ul>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bdef785f694ee19',t:'MTc2ODQxMjkzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
