@@ -5,5 +5,12 @@
 "title":"Nuova sessione grammatica",
 "description":"Aggiunto grammatica lezione 11",
 "category":"grammatica"
+},
+{
+"id":2,
+"date":"2026-01-16",
+"title":"Nuova sessione app",
+"description":"Aggiornamento Flashcard",
+"category":"app"
 }
 ]
