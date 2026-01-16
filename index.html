@@ -347,71 +347,7 @@ border: none;
     }
   });
 
-  // Combinazione segreta: digita "admin" sulla tastiera
-  let secretCode = '';
-  const targetCode = 'admin';
   
-  // Notifica visiva (toast)
-  function showToast(message) {
-    const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.style.cssText = `
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 25px;
-      font-weight: 600;
-      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.5);
-      z-index: 10000;
-      animation: slideUp 0.3s ease;
-    `;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-      toast.style.animation = 'slideDown 0.3s ease';
-      setTimeout(() => toast.remove(), 300);
-    }, 2000);
-  }
-  
-  // Aggiungi animazioni
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes slideUp {
-      from { opacity: 0; transform: translate(-50%, 20px); }
-      to { opacity: 1; transform: translate(-50%, 0); }
-    }
-    @keyframes slideDown {
-      from { opacity: 1; transform: translate(-50%, 0); }
-      to { opacity: 0; transform: translate(-50%, 20px); }
-    }
-  `;
-  document.head.appendChild(style);
-  
-  // Ascolta i tasti premuti
-  document.addEventListener('keypress', (e) => {
-    secretCode += e.key.toLowerCase();
-    
-    // Mantieni solo gli ultimi 5 caratteri
-    if (secretCode.length > targetCode.length) {
-      secretCode = secretCode.slice(-targetCode.length);
-    }
-    
-    // Se la combinazione è corretta
-    if (secretCode === targetCode) {
-      showToast('🔓 Accesso Admin Autorizzato!');
-      setTimeout(() => {
-        window.open('timeline-admin.html', '_blank');
-      }, 500);
-      secretCode = ''; // Reset
-    }
-  });
-</script>
-<script>
-(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bed4e1a25e6ed5f',t:'MTc2ODU2MzI4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 
 
   </body>
