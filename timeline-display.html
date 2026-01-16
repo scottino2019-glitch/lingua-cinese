@@ -3,143 +3,293 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Timeline</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <title>Timeline Eventi</title>
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
-    * {
-      font-family: 'Outfit', sans-serif;
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
     }
-    .timeline-line {
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      width: 3px;
+      width: 4px;
       height: 100%;
-      background: linear-gradient(180deg, yellow 0%, red 100%);
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
     }
-    @media (max-width: 768px) {
-      .timeline-line {
-        left: 20px;
-      }
-    }
+
     .timeline-item {
-      animation: slideIn 0.5s ease-out forwards;
-      opacity: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+      position: relative;
     }
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      margin-left: auto;
     }
+
+    .timeline-content {
+      width: 45%;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
     .timeline-dot {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: #6366f1;
-      border: 3px solid #0f172a;
-      z-index: 10;
+      background: white;
+      border: 4px solid #667eea;
+      z-index: 1;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
     }
+
+    .event-date {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .event-title {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .event-description {
+      color: #666;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+
+    .category-milestone {
+      background: #ffeaa7;
+      color: #fdcb6e;
+    }
+
+    .category-personal {
+      background: #dfe6e9;
+      color: #636e72;
+    }
+
+    .category-celebration {
+      background: #fab1a0;
+      color: #e17055;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+      padding: 60px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .empty-state p {
+      margin-bottom: 15px;
+    }
+
     @media (max-width: 768px) {
-      .timeline-dot {
-        left: 20px;
+      .timeline::before {
+        left: 30px;
       }
+
+      .timeline-dot {
+        left: 30px;
+      }
+
+      .timeline-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 60px;
+      }
+
+      .timeline-content {
+        width: 100%;
+        margin-left: 0 !important;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .loading {
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+      padding: 40px;
+    }
+
+    .error {
+      text-align: center;
+      color: white;
+      background: rgba(231, 76, 60, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
- <body class="min-h-screen bg-slate-900">
-  <div id="app" class="min-h-screen p-6 md:p-8"><!-- Timeline Container -->
-   <div class="max-w-4xl mx-auto relative">
-    <div class="timeline-line"></div>
-    <div id="timeline-container" class="relative"><!-- Events will be rendered here -->
-    </div>
-   </div><!-- Empty State -->
-   <div id="empty-state" class="text-center py-16 hidden">
-    <div class="text-5xl mb-3">
-     📅
-    </div>
-    <p class="text-lg text-slate-400">Nessun evento da visualizzare</p>
+ <body>
+  <div class="container">
+   <h1>✨ La Mia Timeline ✨</h1>
+   <div id="loading" class="loading">
+    Caricamento eventi...
+   </div>
+   <div id="error" class="error" style="display: none;">
+    Errore nel caricamento degli eventi. Verifica che il file events.json esista.
+   </div>
+   <div id="timeline" class="timeline" style="display: none;"><!-- Gli eventi verranno inseriti qui -->
+   </div>
+   <div id="emptyState" class="empty-state" style="display: none;">
+    <p>📭 Nessun evento da visualizzare</p>
+    <p>Aggiungi eventi nel file events.json!</p>
    </div>
   </div>
   <script>
-    let timelineData = [];
+    async function loadEvents() {
+      const loadingEl = document.getElementById('loading');
+      const errorEl = document.getElementById('error');
+      const timelineEl = document.getElementById('timeline');
+      const emptyStateEl = document.getElementById('emptyState');
 
-    // Load data from localStorage
-    function loadData() {
-      const stored = localStorage.getItem('timeline_events');
-      if (stored) {
-        try {
-          timelineData = JSON.parse(stored);
-        } catch (e) {
-          timelineData = [];
+      try {
+        // Carica il file JSON
+        const response = await fetch('events.json');
+        
+        if (!response.ok) {
+          throw new Error('File non trovato');
         }
-      }
-      renderTimeline();
-    }
 
-    // Format date for display
-    function formatDate(dateStr) {
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
-    }
+        const events = await response.json();
+        
+        loadingEl.style.display = 'none';
 
-    // Render timeline
-    function renderTimeline() {
-      const container = document.getElementById('timeline-container');
-      const emptyState = document.getElementById('empty-state');
+        if (events.length === 0) {
+          emptyStateEl.style.display = 'block';
+          return;
+        }
 
-      if (timelineData.length === 0) {
-        container.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        return;
-      }
+        // Ordina gli eventi per data (dal più recente al più vecchio)
+        events.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-      emptyState.classList.add('hidden');
+        // Mostra la timeline
+        timelineEl.style.display = 'block';
 
-      // Sort by date descending
-      const sorted = [...timelineData].sort((a, b) => new Date(b.date) - new Date(a.date));
+        // Genera HTML per ogni evento
+        events.forEach(event => {
+          const item = document.createElement('div');
+          item.className = 'timeline-item';
+          
+          const formattedDate = new Date(event.date + 'T00:00:00').toLocaleDateString('it-IT', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
 
-      container.innerHTML = sorted.map((event, index) => {
-        const isLeft = index % 2 === 0;
-        return `
-          <div class="timeline-item relative mb-8 md:mb-12" style="animation-delay: ${index * 0.1}s">
-            <div class="timeline-dot top-6"></div>
-            <div class="md:w-5/12 ${isLeft ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} pl-12 md:pl-0">
-              <div class="bg-slate-800 rounded-2xl p-5 shadow-lg">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="text-3xl">${event.icon || '📅'}</span>
-                  <div>
-                    <h3 class="font-bold text-lg text-slate-50">${event.title}</h3>
-                    <p class="text-sm text-slate-400">${formatDate(event.date)}</p>
-                  </div>
-                </div>
-                ${event.description ? `<p class="text-slate-300 text-sm leading-relaxed">${event.description}</p>` : ''}
-              </div>
+          item.innerHTML = `
+            <div class="timeline-content">
+              <span class="event-date">${formattedDate}</span>
+              <h3 class="event-title">${escapeHtml(event.title)}</h3>
+              <p class="event-description">${escapeHtml(event.description)}</p>
+              <span class="category-badge category-${event.category}">${getCategoryLabel(event.category)}</span>
             </div>
-          </div>
-        `;
-      }).join('');
+            <div class="timeline-dot"></div>
+          `;
+          
+          timelineEl.appendChild(item);
+        });
+
+      } catch (error) {
+        console.error('Errore:', error);
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+      }
     }
 
-    // Auto-refresh every 5 seconds to catch updates from admin panel
-    setInterval(loadData, 5000);
+    function getCategoryLabel(category) {
+      const labels = {
+        'milestone': '🎯 Traguardo',
+        'personal': '👤 Personale',
+        'celebration': '🎉 Celebrazione'
+      };
+      return labels[category] || category;
+    }
 
-    // Initialize
-    loadData();
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Carica gli eventi quando la pagina è pronta
+    loadEvents();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bed2082d38c59e3',t:'MTc2ODU2MTQxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9beda0221467edc0',t:'MTc2ODU2NjY0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
