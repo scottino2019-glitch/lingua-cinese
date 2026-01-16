@@ -121,19 +121,34 @@
       text-transform: uppercase;
     }
 
-    .category-milestone {
+    .category-esercizi {
+      background: #a29bfe;
+      color: #6c5ce7;
+    }
+
+    .category-giochi {
       background: #ffeaa7;
       color: #fdcb6e;
     }
 
-    .category-personal {
-      background: #dfe6e9;
-      color: #636e72;
+    .category-video {
+      background: #ff7675;
+      color: #d63031;
     }
 
-    .category-celebration {
-      background: #fab1a0;
-      color: #e17055;
+    .category-vocabolario {
+      background: #55efc4;
+      color: #00b894;
+    }
+
+    .category-grammatica {
+      background: #74b9ff;
+      color: #0984e3;
+    }
+
+    .category-app {
+      background: #fd79a8;
+      color: #e84393;
     }
 
     .empty-state {
@@ -198,9 +213,9 @@
  </head>
  <body>
   <div class="container">
-   <h1>✨ La Mia Timeline ✨</h1>
+   <h1>📚 Aggiornamenti del Sito</h1>
    <div id="loading" class="loading">
-    Caricamento eventi...
+    Caricamento aggiornamenti...
    </div>
    <div id="error" class="error" style="display: none;">
     Errore nel caricamento degli eventi. Verifica che il file events.json esista.
@@ -208,8 +223,8 @@
    <div id="timeline" class="timeline" style="display: none;"><!-- Gli eventi verranno inseriti qui -->
    </div>
    <div id="emptyState" class="empty-state" style="display: none;">
-    <p>📭 Nessun evento da visualizzare</p>
-    <p>Aggiungi eventi nel file events.json!</p>
+    <p>📭 Nessun aggiornamento da visualizzare</p>
+    <p>Aggiungi aggiornamenti nel file events.json!</p>
    </div>
   </div>
   <script>
@@ -275,9 +290,12 @@
 
     function getCategoryLabel(category) {
       const labels = {
-        'milestone': '🎯 Traguardo',
-        'personal': '👤 Personale',
-        'celebration': '🎉 Celebrazione'
+        'esercizi': '📝 Esercizi',
+        'giochi': '🎮 Giochi',
+        'video': '🎬 Video',
+        'vocabolario': '📖 Vocabolario',
+        'grammatica': '✍️ Grammatica',
+        'app': '📱 App'
       };
       return labels[category] || category;
     }
@@ -291,5 +309,5 @@
     // Carica gli eventi quando la pagina è pronta
     loadEvents();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9beda0221467edc0',t:'MTc2ODU2NjY0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bede67e67f6ed5f',t:'MTc2ODU2OTUyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
