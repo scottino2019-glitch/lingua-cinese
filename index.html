@@ -47,212 +47,7 @@ border: none;
     border: none;
     cursor: pointer;
   }
-     /* ICONA CALENDARIO */
-    .calendar-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: none;
-      border-radius: 50%;
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-      z-index: 1001;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .calendar-toggle:hover {
-      transform: scale(1.1);
-    }
-
-    /* OVERLAY */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.3);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      z-index: 999;
-    }
-
-    .overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* DRAWER PRINCIPALE */
-    .calendar-drawer {
-      position: fixed;
-      bottom: -300px;
-      right: 20px;
-      width: 260px;
-      height: 300px;
-      background: white;
-      border-radius: 20px 20px 0 0;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.25);
-      transition: bottom 0.4s ease;
-      z-index: 1000;
-      overflow: hidden;
-    }
-
-    .calendar-drawer.open {
-      bottom: 90px;
-    }
-
-    /* CALENDARIO CARD - FLEX COMPLETO */
-    .calendar-card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
-    }
-
-    /* SEZIONE DATA - FISSA */
-    .current-date-display {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px 15px;
-      color: white;
-      text-align: center;
-      flex-shrink: 0;
-    }
-
-    .weekday-name {
-      font-size: 14px;
-      font-weight: 300;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 10px;
-      opacity: 0.9;
-    }
-
-    .current-day {
-      font-size: 36px;
-      font-weight: bold;
-      line-height: 1;
-      margin-bottom: 5px;
-    }
-
-    .current-month {
-      font-size: 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 3px;
-    }
-
-    .current-year {
-      font-size: 14px;
-      font-weight: 300;
-      opacity: 0.9;
-    }
-
-    /* SEZIONE EVENTI - SCROLL INDEPENDENTE */
-    .events-section {
-      flex: 1;
-      padding: 15px;
-      background: #f7fafc;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .event-item {
-      background: white;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      border-left: 3px solid #667eea;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      font-size: 12px;
-    }
-
-    .event-date {
-      font-weight: bold;
-      color: #667eea;
-      margin-bottom: 3px;
-    }
-
-    .event-description {
-      color: #4a5568;
-    }
-
-    .no-events {
-      color: #718096;
-      text-align: center;
-      padding: 20px 0;
-      font-size: 13px;
-    }
-
-    /* SCROLLBAR BELLA */
-    .events-section::-webkit-scrollbar {
-      width: 4px;
-    }
-    .events-section::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 2px;
-    }
-    .events-section::-webkit-scrollbar-thumb {
-      background: #667eea;
-      border-radius: 2px;
-    }
-@keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .timeline-item {
-      animation: fadeInUp 0.6s ease-out;
-      animation-fill-mode: both;
-    }
-    
-    .timeline-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #8b5cf6;
-      border: 4px solid white;
-      box-shadow: 0 0 0 3px #8b5cf6;
-      position: absolute;
-      left: -10px;
-      top: 24px;
-      z-index: 10;
-    }
-    
-    .timeline-line {
-      position: absolute;
-      left: 0;
-      top: 44px;
-      bottom: -24px;
-      width: 3px;
-      background: linear-gradient(to bottom, #8b5cf6, #ec4899);
-    }
-    
-    .event-image {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 0.75rem;
-    }
-.sticker-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-    .sticker { display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.3s; position: relative; }
-    .sticker:hover { transform: translateY(-5px); }
-    .emoji { margin-bottom: 8px; }
-    .text { font-weight: bold; text-align: center; color: #333; }
-.badge { box-shadow: 0 8px 25px rgba(0,0,0,0.3), inset 0 2px 6px rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.2); border: 4px solid rgba(255,215,0,0.6); }
-    .badge:hover { transform: translateY(-5px) rotate(5deg) scale(1.05) !important; }
-</style>
-
+   
   </head>
   <body class="min-h-screen bg-gradient-to-r from-yellow-500 to-red-500 text-slate-800">
   <!-- Header/Hero -->
@@ -439,29 +234,11 @@ border: none;
 <br>
       <hr>
       <br>
+  </br>
  
 
   
-      <!-- ICONA -->
-  <button class="calendar-toggle" id="calendarToggle">📅</button>
-
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay"></div>
-
-  <!-- CALENDARIO -->
-  <div class="calendar-drawer" id="calendarDrawer">
-    <div class="calendar-card">
-      <div class="current-date-display">
-        <div class="weekday-name" id="weekdayName"></div>
-        <div class="current-day" id="currentDay"></div>
-        <div class="current-month" id="currentMonth"></div>
-        <div class="current-year" id="currentYear"></div>
-      </div>
-      <div class="events-section">
-        <div id="eventsList"></div>
-      </div>
-    </div>
-  </div>
+     
 
       <iframe
         src="timeline-display.html"
@@ -470,8 +247,11 @@ border: none;
         frameborder="0"
         style="border: none;">
       </iframe>
+  
 
-
+<br>
+      <hr>
+      <br>
         
        
 
