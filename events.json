@@ -3,14 +3,14 @@
 "id":1,
 "date":"2026-01-16",
 "title":"Nuova sessione grammatica",
-"description":"Aggiunto grammatica lezione 11",
+"description":"Aggiunto grammatica lezione 11</a>",
 "category":"grammatica"
 },
 {
 "id":2,
 "date":"2026-01-16",
 "title":"Nuova sessione app",
-"description":"Aggiornamento Flashcard",
+"description":"<a href="https://scottino2019-glitch.github.io/lingua-cinese/flashcards.html">Aggiornamento Flashcard</a>",
 "category":"app"
 }
 ]
