@@ -1,393 +1,375 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
-<head>
+ <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flashcard Vocabolario Cinese</title>
+  <title>Flashcard Ideogrammi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;family=Quicksand:wght@500;700&amp;display=swap" rel="stylesheet">
   <style>
-    * {
+    body {
+      box-sizing: border-box;
+    }
+    
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      background: radial-gradient(circle at top left, #ff6b6b, #feca57);
-      min-height: 100vh;
-      color: #1a202c;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    header {
-      background: rgba(51, 51, 51, 0.95);
-      backdrop-filter: blur(10px);
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      width: 100%;
-      max-width: 1000px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    }
-
-    .logo-container {
-      width: 60px;
-      height: 60px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .logo-piece {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      animation: logoBuild 3s ease-out infinite;
-    }
-
-    .logo-piece-1 { clip-path: inset(0 50% 50% 0); animation-delay: 0s; }
-    .logo-piece-2 { clip-path: inset(0 0 50% 50%); animation-delay: 0.75s; }
-    .logo-piece-3 { clip-path: inset(50% 50% 0 0); animation-delay: 1.5s; }
-    .logo-piece-4 { clip-path: inset(50% 0 0 50%); animation-delay: 2.25s; }
-
-    @keyframes logoBuild {
-      0% { opacity: 0; transform: scale(0.3); }
-      30% { opacity: 1; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      margin: 0;
-    }
-
-    .container {
-      max-width: 1000px;
-      width: 100%;
-      flex: 1;
-    }
-
-    .add-form {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-    }
-
-    .add-form input {
-      flex: 1 1 150px;
-      min-width: 120px;
-      padding: 12px;
-      border-radius: 12px;
-      border: 2px solid #e2e8f0;
-      font-size: 1rem;
-      transition: border-color 0.2s;
-    }
-
-    .add-form input:focus {
-      outline: none;
-      border-color: #667eea;
-    }
-
-    .add-form button {
-      padding: 12px 24px;
-      border-radius: 12px;
-      border: none;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .add-form button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-    }
-
-    .flashcard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      padding: 20px 0;
-    }
-
-    .flashcard {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-      border-radius: 24px;
-      padding: 25px;
-      min-height: 260px;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      position: relative;
       overflow: hidden;
-      border: 4px solid #f6ad55;
     }
 
-    .flashcard:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    .flashcard.flipped {
-      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-      border-color: #10b981;
-    }
-
-    .card-content {
-      color: #1e293b;
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.4;
+    .flashcard-container {
       width: 100%;
-      transition: all 0.3s ease;
-    }
-
-    .flashcard.flipped .card-content {
-      color: white;
-      font-size: 1.8rem;
-    }
-
-    .card-top {
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 15px;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .card-wrapper {
+      perspective: 1000px;
+      width: 100%;
+      max-width: 500px;
+      height: 400px;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .card-front {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+      transform: rotateY(180deg);
+    }
+
+    .ideogram {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 8rem;
+      font-weight: 700;
+      color: #2d3436;
+      margin-bottom: 1rem;
     }
 
     .pinyin {
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-      opacity: 0.9;
-      font-style: italic;
+      font-size: 2rem;
+      color: #2d3436;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
     }
 
-    .hanzi {
-      font-size: 2.2rem;
-      font-weight: 900;
-      margin-bottom: 12px;
+    .explanation {
+      font-size: 1.5rem;
+      color: #2d3436;
+      text-align: center;
+      line-height: 1.6;
+      font-weight: 500;
     }
 
-    .card-image {
-      max-width: 85%;
-      max-height: 150px;
-      object-fit: contain;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .flip-hint {
+      font-size: 1rem;
+      color: #636e72;
+      margin-top: 1rem;
+      opacity: 0.7;
     }
 
-    .home-button {
-      margin-top: 30px;
-      padding: 12px 24px;
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 600;
-      display: inline-flex;
+    .controls {
+      display: flex;
+      gap: 2rem;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
     }
 
-    .home-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    .nav-button {
+      background: rgba(255, 255, 255, 0.95);
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 1.8rem;
+      color: #667eea;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      font-weight: 700;
+    }
+
+    .nav-button:hover {
+      transform: scale(1.1);
+      background: #ffffff;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .nav-button:active {
+      transform: scale(0.95);
+    }
+
+    .nav-button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: scale(1);
+    }
+
+    .counter {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      min-width: 120px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .loading {
+      color: #ffffff;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .error {
+      color: #ff6b6b;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      text-align: center;
+      max-width: 500px;
     }
 
     @media (max-width: 768px) {
-      .flashcard-grid {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 20px;
-      }
-
-      h1 {
+      .title {
         font-size: 1.8rem;
+        margin-bottom: 1.5rem;
       }
 
-      .add-form {
-        flex-direction: column;
+      .card-wrapper {
+        height: 350px;
+        max-width: 90%;
       }
 
-      .add-form input {
-        flex: 1;
+      .ideogram {
+        font-size: 5rem;
       }
 
-      .hanzi {
-        font-size: 1.9rem;
+      .pinyin {
+        font-size: 1.5rem;
+      }
+
+      .explanation {
+        font-size: 1.2rem;
+      }
+
+      .nav-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+
+      .counter {
+        font-size: 1.1rem;
+        padding: 0.6rem 1.5rem;
       }
     }
   </style>
-</head>
-<body>
-  <header>
-    <div class="logo-container">
-      <img src="https://images.unsplash.com/photo-1736607618767-b35f1230174d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxDYXJkJTIwY2luZXNlfGVufDB8fHx8MTc2NTQ3NzM3MHww&ixlib=rb-4.1.0&q=85" class="logo-piece logo-piece-1" alt="Logo">
-      <img src="https://images.unsplash.com/photo-1736607618767-b35f1230174d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxDYXJkJTIwY2luZXNlfGVufDB8fHx8MTc2NTQ3NzM3MHww&ixlib=rb-4.1.0&q=85" class="logo-piece logo-piece-2" alt="Logo">
-      <img src="https://images.unsplash.com/photo-1736607618767-b35f1230174d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxDYXJkJTIwY2luZXNlfGVufDB8fHx8MTc2NTQ3NzM3MHww&ixlib=rb-4.1.0&q=85" class="logo-piece logo-piece-3" alt="Logo">
-      <img src="https://images.unsplash.com/photo-1736607618767-b35f1230174d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxDYXJkJTIwY2luZXNlfGVufDB8fHx8MTc2NTQ3NzM3MHww&ixlib=rb-4.1.0&q=85" class="logo-piece logo-piece-4" alt="Logo">
-    </div>
-    <h1>Flashcard Vocabolario Cinese</h1>
-  </header>
-
-  <div class="container">
-    <div class="add-form">
-      <input id="pinyin-input" type="text" placeholder="Pinyin (es. pí jiǔ)">
-      <input id="hanzi-input" type="text" placeholder="Caratteri (es. 啤酒)">
-      <input id="trad-input" type="text" placeholder="Traduzione (es. birra)">
-      <input id="img-input" type="text" placeholder="URL immagine (opzionale)">
-      <button onclick="handleAddCard()">Aggiungi flashcard</button>
-    </div>
-
-    <div class="flashcard-grid" id="flashcard-grid">
-  <div class="flashcard" onclick="flipCard(this)"
-       data-hanzi="啤酒" data-pinyin="pí jiǔ" data-back="birra" data-img="img/beer.jpg">
-    <div class="card-content">
-      <div class="card-top">
-        <div class="pinyin">pí jiǔ</div>
-        <div class="hanzi">啤酒</div>
-      </div>
-      <img src="img/beer.jpg" alt="birra" class="card-image">
-    </div>
-  </div>
-
-  <div class="flashcard" onclick="flipCard(this)"
-       data-hanzi="你好" data-pinyin="nǐ hǎo" data-back="ciao">
-    <div class="card-content">
-      <div class="card-top">
-        <div class="pinyin">nǐ hǎo</div>
-        <div class="hanzi">你好</div>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
-
-  <a href="index.html" class="home-button">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-    </svg>
-    Home
-  </a>
-
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <main class="flashcard-container" role="main">
+   <h1 class="title">Flashcard Ideogrammi Giapponesi</h1>
+   <div id="content" class="loading">
+    Caricamento flashcard...
+   </div>
+  </main>
   <script>
-    const STORAGE_KEY = 'flashcards_personali_v2';
+    let flashcards = [];
+    let currentIndex = 0;
+    let isFlipped = false;
 
-    function renderFront(cardElement) {
-      const content = cardElement.querySelector('.card-content');
-      const hanzi = cardElement.dataset.hanzi || '';
-      const pinyin = cardElement.dataset.pinyin || '';
-      const imgSrc = cardElement.dataset.img || '';
-
-      if (imgSrc || pinyin || hanzi) {
-        content.innerHTML = `
-          <div class="card-top">
-            ${pinyin ? `<div class="pinyin">${pinyin}</div>` : ''}
-            ${hanzi ? `<div class="hanzi">${hanzi}</div>` : ''}
+    async function loadFlashcards() {
+      try {
+        const response = await fetch('flashcards.json');
+        if (!response.ok) {
+          throw new Error(`Impossibile caricare le flashcard (${response.status})`);
+        }
+        flashcards = await response.json();
+        
+        if (!Array.isArray(flashcards) || flashcards.length === 0) {
+          throw new Error('Nessuna flashcard trovata nel file JSON');
+        }
+        
+        renderFlashcards();
+      } catch (error) {
+        document.getElementById('content').innerHTML = `
+          <div class="error">
+            <strong>⚠️ Errore nel caricamento</strong><br><br>
+            ${error.message}<br><br>
+            Assicurati che il file <code>flashcards.json</code> esista nella stessa cartella.
           </div>
-          ${imgSrc ? `<img src="${imgSrc}" alt="${hanzi || pinyin}" class="card-image">` : ''}
         `;
-      } else {
-        content.textContent = hanzi;
       }
     }
 
-    function flipCard(cardElement) {
-      const content = cardElement.querySelector('.card-content');
-      const isFlipped = cardElement.classList.contains('flipped');
-
-      cardElement.classList.toggle('flipped');
-
-      if (isFlipped) {
-        renderFront(cardElement);
-      } else {
-        const back = cardElement.dataset.back || 'Traduzione non disponibile';
-        content.innerHTML = `<div style="font-size: 2rem; font-weight: 700; padding: 20px; line-height: 1.3;">${back}</div>`;
-      }
-    }
-
-    function addNewCard(pinyin, hanzi, traduzione, imgUrl) {
-      const grid = document.getElementById('flashcard-grid');
-      const newCard = document.createElement('div');
-      newCard.className = 'flashcard';
-      newCard.setAttribute('data-hanzi', hanzi);
-      newCard.setAttribute('data-pinyin', pinyin);
-      newCard.setAttribute('data-back', traduzione);
-      if (imgUrl) newCard.setAttribute('data-img', imgUrl);
+    function renderFlashcards() {
+      const content = document.getElementById('content');
       
-      newCard.addEventListener('click', function() { flipCard(this); });
+      content.innerHTML = `
+        <div class="card-wrapper">
+          <div class="card" id="card">
+            <div class="card-face card-front">
+              <div class="ideogram" id="ideogram">${flashcards[currentIndex].ideogramma}</div>
+              <div class="flip-hint">Clicca per girare</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="pinyin" id="pinyin">${flashcards[currentIndex].pinyin}</div>
+              <div class="explanation" id="explanation">${flashcards[currentIndex].spiegazione}</div>
+            </div>
+          </div>
+        </div>
 
-      const content = document.createElement('div');
-      content.className = 'card-content';
-      newCard.appendChild(content);
-      renderFront(newCard);
-      grid.appendChild(newCard);
+        <div class="controls">
+          <button class="nav-button" id="prevBtn" aria-label="Precedente">←</button>
+          <div class="counter" id="counter">${currentIndex + 1} di ${flashcards.length}</div>
+          <button class="nav-button" id="nextBtn" aria-label="Successiva">→</button>
+        </div>
+      `;
+
+      // Event listeners
+      const card = document.getElementById('card');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      card.addEventListener('click', flipCard);
+      prevBtn.addEventListener('click', previousCard);
+      nextBtn.addEventListener('click', nextCard);
+
+      // Keyboard navigation
+      document.addEventListener('keydown', handleKeyboard);
+
+      updateButtons();
     }
 
-    function loadFromStorage() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return;
-        const cards = JSON.parse(raw);
-        if (!Array.isArray(cards)) return;
-
-        cards.forEach(card => {
-          addNewCard(card.pinyin, card.hanzi, card.traduzione, card.imgUrl);
-        });
-      } catch (e) {
-        console.error('Errore lettura localStorage:', e);
+    function handleKeyboard(e) {
+      if (e.key === 'ArrowLeft') {
+        previousCard();
+      } else if (e.key === 'ArrowRight') {
+        nextCard();
+      } else if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        flipCard();
       }
     }
 
-    function saveToStorage(cardObj) {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        const cards = raw ? JSON.parse(raw) : [];
-        cards.push(cardObj);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
-      } catch (e) {
-        console.error('Errore salvataggio localStorage:', e);
+    function flipCard() {
+      const card = document.getElementById('card');
+      isFlipped = !isFlipped;
+      card.classList.toggle('flipped');
+    }
+
+    function previousCard() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        resetCard();
+        updateCard();
       }
     }
 
-    function handleAddCard() {
-      const pinyinInput = document.getElementById('pinyin-input');
-      const hanziInput = document.getElementById('hanzi-input');
-      const tradInput = document.getElementById('trad-input');
-      const imgInput = document.getElementById('img-input');
-
-      const pinyin = pinyinInput.value.trim();
-      const hanzi = hanziInput.value.trim();
-      const traduzione = tradInput.value.trim();
-      const imgUrl = imgInput.value.trim();
-
-      if (!hanzi || !traduzione) {
-        alert('Compila almeno i caratteri汉字 e la traduzione.');
-        hanziInput.focus();
-        return;
+    function nextCard() {
+      if (currentIndex < flashcards.length - 1) {
+        currentIndex++;
+        resetCard();
+        updateCard();
       }
-
-      const cardObj = { pinyin, hanzi, traduzione, imgUrl };
-      addNewCard(pinyin, hanzi, traduzione, imgUrl);
-      saveToStorage(cardObj);
-
-      pinyinInput.value = hanziInput.value = tradInput.value = imgInput.value = '';
-      hanziInput.focus();
     }
 
-    window.addEventListener('DOMContentLoaded', loadFromStorage);
+    function resetCard() {
+      const card = document.getElementById('card');
+      if (isFlipped) {
+        card.classList.remove('flipped');
+        isFlipped = false;
+      }
+    }
+
+    function updateCard() {
+      document.getElementById('ideogram').textContent = flashcards[currentIndex].ideogramma;
+      document.getElementById('pinyin').textContent = flashcards[currentIndex].pinyin;
+      document.getElementById('explanation').textContent = flashcards[currentIndex].spiegazione;
+      document.getElementById('counter').textContent = `${currentIndex + 1} di ${flashcards.length}`;
+      updateButtons();
+    }
+
+    function updateButtons() {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      if (prevBtn && nextBtn) {
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === flashcards.length - 1;
+      }
+    }
+
+    // Load flashcards when page loads
+    window.addEventListener('DOMContentLoaded', loadFlashcards);
   </script>
-</body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bee4426b49fed5f',t:'MTc2ODU3MzM1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
