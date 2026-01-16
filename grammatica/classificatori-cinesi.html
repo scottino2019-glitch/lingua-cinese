@@ -1,106 +1,521 @@
-<!doctype html>
-<html lang="it">
- <head>
+<!DOCTYPE html>
+<html>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Classificatori Cinesi - Guida Completa</title>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <title>Il Mio Sito</title>
   <style>
-        body {
-            box-sizing: border-box;
-        }
+
+  </style>
+</head>
+<body>
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8">
+    <title>Guida Grammaticale Cinese in Modal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+      /* ========== RESET ========== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, white 0%, yellow 0%, red 100% );}
+
+.main-header {
+  width: 100%;
+  text-align: center;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, yellow 0%, red 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.3);
+  margin-bottom: 2rem;
+}
+
+.main-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 2rem;
+}
+
+.trigger-card {
+  flex: 1 1 350px; /* Base 350px, cresce ma non oltre max-width */
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.7);
+  color: #0f172a;
+  text-align: left;
+}
+
+.trigger-card {
+  max-width: 420px;
+  width: 100%;  /* Larghezza piena */
+}    
+
+   .trigger-card h1 {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+
+      .trigger-card p {
+        font-size: 15px;
+        color: #64748b;
+        margin-bottom: 20px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 18px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        color: #ffffff;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        box-shadow: 0 12px 30px rgba(37, 99, 235, 0.6);
+        transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 40px rgba(37, 99, 235, 0.7);
+        opacity: 0.95;
+      }
+
+      /* ========== MODAL OVERLAY ========== */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 50;
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* ========== MODAL CARD ========== */
+      .modal-card {
+        width: auto;
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        max-height: 90vh;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
 
-        html, body {
-            height: 100%;
-            overflow: auto;
-        }
+      .modal-header-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+        color: #e5e7eb;
+      }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #2d3748;
-            line-height: 1.7;
-        }
+      .modal-header-bar span {
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
 
-        .main-wrapper {
-            width: 100%;
-            min-height: 100%;
-            padding: 60px 24px;
-        }
+      .modal-close-btn {
+        border: none;
+        background: transparent;
+        color: #e5e7eb;
+        font-size: 20px;
+        cursor: pointer;
+        line-height: 1;
+        padding: 4px 8px;
+        border-radius: 999px;
+        transition: background 0.12s ease;
+      }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
+      .modal-close-btn:hover {
+        background: rgba(15, 23, 42, 0.55);
+      }
 
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 48px 40px;
-            text-align: center;
-            color: white;
-        }
+      .modal-scroll {
+  overflow: auto;
+  padding: 32px 32px 36px;
+  background: #ffffff !important;  /* Bianco fisso */
+  min-height: 400px;
+}
+      /* ========== STILI INTERNI DELLA GUIDA (TUOI) ========== */
+      html, body {
+        height: 100%;
+        overflow: auto;
+      }
 
-        .header h1 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+      body.guida-body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        color: #1e293b;
+        line-height: 1.7;
+      }
+.main-wrapper {
+  width: 350px;
+  height: auto;
+  padding: 0 !important;  /* Niente padding extra */
+}
+.container {
+  width: 350px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 0;  /* Bordi solo se vuoi */
+  box-shadow: none;  /* Niente ombra interna */
+  overflow: hidden;
+}
+      
+      .header {
+        background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+        padding: 48px 40px;
+        text-align: center;
+        color: white;
+      }
 
-        .header p {
-            font-size: 20px;
-            opacity: 0.95;
-            font-weight: 400;
-        }
+      .header h1 {
+        font-size: 44px;
+        font-weight: 800;
+        margin-bottom: 12px;
+        letter-spacing: -0.5px;
+      }
 
-        .content {
-            padding: 48px 40px;
-        }
+      .header p {
+        font-size: 18px;
+        opacity: 0.9;
+      }
 
-        .section {
-            margin-bottom: 48px;
-        }
+      .content {
+        padding: 48px 40px;
+      }
 
-        .section:last-child {
-            margin-bottom: 0;
-        }
+      .section {
+        margin-bottom: 56px;
+      }
 
-        h2 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 32px;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid #e2e8f0;
-        }
+      .section:last-child {
+        margin-bottom: 0;
+      }
 
-        h3 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 24px;
-            font-weight: 600;
-            color: #764ba2;
-            margin-top: 32px;
-            margin-bottom: 16px;
-        }
+      h2 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 32px;
+        padding-bottom: 12px;
+        border-bottom: 3px solid #e2e8f0;
+      }
 
-        p {
-            font-size: 17px;
-            margin-bottom: 16px;
-            color: #4a5568;
-        }
+      h3 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1e40af;
+        margin: 32px 0 20px 0;
+      }
+
+      p {
+        font-size: 17px;
+        margin-bottom: 16px;
+        color: #334155;
+        line-height: 1.8;
+      }
+
+      strong {
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .simple-rule {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        padding: 28px;
+        border-radius: 12px;
+        border-left: 5px solid #1e40af;
+        margin: 24px 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e3a8a;
+      }
+
+      .character-box {
+        background: white;
+        border: 3px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 32px;
+        margin: 28px 0;
+      }
+
+      .char-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f1f5f9;
+      }
+
+      .big-char {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-size: 72px;
+        font-weight: 700;
+        color: #1e40af;
+        line-height: 1;
+      }
+
+      .char-info h3 {
+        margin: 0 0 8px 0;
+        font-size: 28px;
+        color: #0f172a;
+      }
+
+      .char-meaning {
+        font-size: 18px;
+        color: #64748b;
+        font-weight: 600;
+      }
+
+      .when-to-use {
+        background: #fef3c7;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border-left: 4px solid #f59e0b;
+      }
+
+      .when-to-use h4 {
+        font-size: 18px;
+        color: #92400e;
+        margin: 0 0 12px 0;
+        font-weight: 700;
+      }
+
+      .when-to-use p {
+        font-size: 16px;
+        color: #78350f;
+        margin-bottom: 8px;
+      }
+
+      .when-to-use p:last-child {
+        margin-bottom: 0;
+      }
+
+      .example-box {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 16px 0;
+        border: 2px solid #e2e8f0;
+      }
+
+      .ex {
+        padding: 16px;
+        margin-bottom: 12px;
+        background: white;
+        border-radius: 8px;
+        border-left: 3px solid #1e40af;
+      }
+
+      .ex:last-child {
+        margin-bottom: 0;
+      }
+
+      .ex-cn {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 6px;
+      }
+
+      .ex-py {
+        font-size: 15px;
+        color: #64748b;
+        font-style: italic;
+        margin-bottom: 6px;
+      }
+
+      .ex-it {
+        font-size: 16px;
+        color: #475569;
+      }
+
+      .vs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 28px 0;
+      }
+
+      .vs-card {
+        background: #f0fdf4;
+        padding: 24px;
+        border-radius: 12px;
+        border: 3px solid #22c55e;
+      }
+
+      .vs-card.wrong {
+        background: #fef2f2;
+        border-color: #ef4444;
+      }
+
+      .vs-card h4 {
+        margin: 0 0 16px 0;
+        font-size: 19px;
+        color: #15803d;
+      }
+
+      .vs-card.wrong h4 {
+        color: #991b1b;
+      }
+
+      .vs-card p {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #166534;
+      }
+
+      .vs-card.wrong p {
+        color: #7f1d1d;
+      }
+
+      .key-point {
+        background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+        padding: 24px;
+        border-radius: 12px;
+        border-left: 5px solid #ea580c;
+        margin: 24px 0;
+      }
+
+      .key-point strong {
+        display: block;
+        font-size: 19px;
+        color: #9a3412;
+        margin-bottom: 10px;
+      }
+
+      .key-point p {
+        font-size: 16px;
+        color: #7c2d12;
+        margin-bottom: 8px;
+      }
+
+      .formula {
+        background: #1e293b;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: 'Noto Sans SC', monospace;
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+        margin: 20px 0;
+        letter-spacing: 2px;
+      }
+
+      .warning {
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        padding: 24px;
+        border-radius: 12px;
+        border-left: 5px solid #dc2626;
+        margin: 24px 0;
+      }
+
+      .warning strong {
+        display: block;
+        font-size: 19px;
+        color: #991b1b;
+        margin-bottom: 10px;
+      }
+
+      .warning p {
+        font-size: 16px;
+        color: #7f1d1d;
+        margin-bottom: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 28px 0;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      }
+
+      th {
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        color: white;
+        padding: 16px;
+        text-align: left;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      td {
+        padding: 16px;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 15px;
+        color: #334155;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      tr:nth-child(even) {
+        background: #f8fafc;
+      }
+        .pinyin { font-weight: bold; color: #e74c3c; font-size: 1.1em; }
+        .note { background-color: #f9f9f9; padding: 15px; border-left: 5px solid #f39c12; margin-top: 15px; }
+        .chinese { font-size: 1.2em; font-weight: bold; }
+        .highlight { background-color: #d6eaf8; }
 
         .intro-box {
             background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
@@ -151,12 +566,7 @@
             flex: 1;
         }
 
-        .pinyin {
-            font-size: 20px;
-            font-weight: 600;
-            color: #764ba2;
-            margin-bottom: 4px;
-        }
+        
 
         .usage {
             font-size: 15px;
@@ -265,47 +675,1003 @@
             margin-bottom: 0;
         }
 
-        @media (max-width: 768px) {
-            .main-wrapper {
-                padding: 32px 16px;
-            }
 
-            .header {
-                padding: 32px 24px;
-            }
-
-            .header h1 {
-                font-size: 36px;
-            }
-
-            .header p {
-                font-size: 18px;
-            }
-
-            .content {
-                padding: 32px 24px;
-            }
-
-            h2 {
-                font-size: 28px;
-            }
-
-            .category-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .classifier-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+      @media (max-width: 768px) {
+        .modal-card {
+          border-radius: 16px;
         }
+
+        .modal-scroll {
+          padding: 20px 16px 24px;
+        }
+
+        .main-wrapper {
+          padding: 32px 16px;
+        }
+
+        .header {
+          padding: 36px 24px;
+        }
+
+        .header h1 {
+          font-size: 32px;
+        }
+
+        .content {
+          padding: 36px 24px;
+        }
+
+        h2 {
+          font-size: 26px;
+        }
+
+        .vs-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .char-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+
     </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body>
-  <div class="main-wrapper">
+  </head>
+  <body>
+<header class="main-header">
+    <h1>Lezione 11</h1>
+  </header>
+  <div class="cards-container">
+    <!-- CARD ESTERNA -->
+    <!-- CARD 1 - Grammatica Cinese -->
+  <div class="trigger-card">
+    <h1>Grammatica</h1>
+    <p>多少 vs 几 • 还是 vs 或者</p>
+    <button id="open-modal-1" class="btn-primary">Apri guida</button>
+  </div>
+
+  <!-- CARD 2 - Placeholder Secondo Contenuto -->
+  <div class="trigger-card">
+    <h1>多少</h1>
+    <p> 🔢 Spiegazione del Termine 多少 (<span class="pinyin">Duōshao</span>)</p>
+    <button id="open-modal-2" class="btn-primary">Apri secondo modal</button>
+  </div>
+<!-- CARD 3 - Grammatica Cinese -->
+  <div class="trigger-card">
+    <h1>Classificatori</h1>
+    <p>位和盒</p>
+    <button id="open-modal-3" class="btn-primary">Apri guida</button>
+  </div>
+<!-- Card 4 -->
+ <div class="trigger-card">
+  <h1>Classificatori 2</h1>
+  <p>I classificatori più importanti</p>
+  <button id="open-modal-4" class="btn-primary">Apri guida</button>
+</div> 
+<div class="trigger-card">
+  <h1>Lezione 11</h1>
+  <p>吧</p>
+  <button id="open-modal-5" class="btn-primary">Apri guida</button>
+</div>
+<div class="trigger-card">
+  <h1>Lezione 11</h1>
+  <p>二vs两</p>
+  <button id="open-modal-6" class="btn-primary">Apri guida</button>
+</div>
+</div>
+
+ <!-- MODAL -->
+    <!-- MODAL 1 - Grammatica Cinese -->
+  <div id="grammar-modal" class="modal-overlay">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header-bar">
+        <span>Guida Grammaticale Cinese</span>
+        <button class="modal-close-btn" id="close-modal-1" aria-label="Chiudi">×</button>
+      </div>
+      <div class="modal-scroll">
+          <!-- TUA GUIDA ORIGINALE DENTRO LA CARD -->
+          <div class="main-wrapper">
+            <div class="container">
+              <header class="header">
+                <h1 id="main-title">Grammatica Cinese Chiara</h1>
+                <p>Spiegazioni semplici e dirette • Senza confusione</p>
+              </header>
+              <main class="content">
+                <!-- SEZIONE 多少 vs 几 -->
+                <section class="section">
+                  <h2>🔢 多少 vs 几 - "Quanto/Quanti"</h2>
+                  <div class="simple-rule">
+                    <strong>REGOLA SEMPLICE:</strong><br>
+                    几 = quando puoi contare sulle dita (1-10 circa)<br>
+                    多少 = quando NON puoi contare sulle dita, o per PREZZI
+                  </div>
+
+                  <!-- 几 -->
+                  <div class="character-box">
+                    <div class="char-header">
+                      <div class="big-char">几</div>
+                      <div class="char-info">
+                        <h3>jǐ</h3>
+                        <div class="char-meaning">Per quantità piccole (1-10)</div>
+                      </div>
+                    </div>
+
+                    <div class="formula">几 + CLASSIFICATORE + NOME</div>
+
+                    <div class="when-to-use">
+                      <h4>Quando usare 几:</h4>
+                      <p>✓ "Quante persone al ristorante?" → max 10</p>
+                      <p>✓ "Quanti caffè ordini?" → max 3-4</p>
+                      <p>✓ "Quanti figli hai?" → max 4-5</p>
+                      <p>✓ SEMPRE con un classificatore (个, 本, 位, 杯...)</p>
+                    </div>
+
+                    <h3>Esempi:</h3>
+                    <div class="example-box">
+                      <div class="ex">
+                        <div class="ex-cn">几位？</div>
+                        <div class="ex-py">Jǐ wèi?</div>
+                        <div class="ex-it">Quante persone? (al ristorante)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你有几个孩子？</div>
+                        <div class="ex-py">Nǐ yǒu jǐ gè háizi?</div>
+                        <div class="ex-it">Quanti figli hai? (aspetto 1-4)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你要几杯咖啡？</div>
+                        <div class="ex-py">Nǐ yào jǐ bēi kāfēi?</div>
+                        <div class="ex-it">Quante tazze di caffè vuoi? (1-3 probabilmente)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">现在几点？</div>
+                        <div class="ex-py">Xiànzài jǐ diǎn?</div>
+                        <div class="ex-it">Che ore sono? (sempre 几 per l'ora)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你有几本书？</div>
+                        <div class="ex-py">Nǐ yǒu jǐ běn shū?</div>
+                        <div class="ex-it">Quanti libri hai? (mi aspetto pochi)</div>
+                      </div>
+                    </div>
+
+                    <div class="key-point">
+                      <strong>💡 Trucco per ricordare:</strong>
+                      <p>Se puoi contare la risposta sulle dita → usa 几</p>
+                    </div>
+                  </div>
+
+                  <!-- 多少 -->
+                  <div class="character-box">
+                    <div class="char-header">
+                      <div class="big-char">多少</div>
+                      <div class="char-info">
+                        <h3>duōshao</h3>
+                        <div class="char-meaning">Per numeri grandi e TUTTI i prezzi</div>
+                      </div>
+                    </div>
+
+                    <div class="formula">多少 + NOME (senza classificatore)</div>
+
+                    <div class="when-to-use">
+                      <h4>Quando usare 多少:</h4>
+                      <p>✓ SEMPRE per prezzi: "Quanto costa?" → 多少钱</p>
+                      <p>✓ Grandi quantità: "Abitanti di Pechino?" → milioni</p>
+                      <p>✓ "Quanti libri possiedi?" → potrebbero essere 100+</p>
+                      <p>✓ Di solito SENZA classificatore</p>
+                    </div>
+
+                    <h3>Esempi:</h3>
+                    <div class="example-box">
+                      <div class="ex">
+                        <div class="ex-cn">多少钱？</div>
+                        <div class="ex-py">Duōshao qián?</div>
+                        <div class="ex-it">Quanto costa? (SEMPRE 多少 per i prezzi!)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">这本书多少钱？</div>
+                        <div class="ex-py">Zhè běn shū duōshao qián?</div>
+                        <div class="ex-it">Quanto costa questo libro?</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">中国有多少人？</div>
+                        <div class="ex-py">Zhōngguó yǒu duōshao rén?</div>
+                        <div class="ex-it">Quante persone ci sono in Cina? (più di 1 miliardo)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你有多少书？</div>
+                        <div class="ex-py">Nǐ yǒu duōshao shū?</div>
+                        <div class="ex-it">Quanti libri hai? (potrebbero essere centinaia)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你的工资是多少？</div>
+                        <div class="ex-py">Nǐ de gōngzī shì duōshao?</div>
+                        <div class="ex-it">Quanto guadagni? (stipendio)</div>
+                      </div>
+                    </div>
+
+                    <div class="warning">
+                      <strong>⚠️ ERRORE COMUNE:</strong>
+                      <p>NON dire: 这个几钱？❌</p>
+                      <p>DEVI dire: 这个多少钱？✓</p>
+                      <p>Per i prezzi usa SEMPRE 多少, mai 几!</p>
+                    </div>
+                  </div>
+
+                  <h3>Confronto diretto:</h3>
+                  <div class="vs-grid">
+                    <div class="vs-card">
+                      <h4>你有几本书？</h4>
+                      <p><strong>jǐ běn shū</strong></p>
+                      <p>= "Quanti libri hai?"</p>
+                      <p>→ Sto parlando con un amico, probabilmente ne ha 3-4</p>
+                    </div>
+                    <div class="vs-card">
+                      <h4>你有多少书？</h4>
+                      <p><strong>duōshao shū</strong></p>
+                      <p>= "Quanti libri hai?"</p>
+                      <p>→ Sto parlando con un professore, potrebbe averne centinaia</p>
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Situazione</th>
+                        <th>Usa...</th>
+                        <th>Perché</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Chiedere il prezzo</td>
+                        <td><strong>多少钱</strong></td>
+                        <td>Sempre 多少 per i prezzi</td>
+                      </tr>
+                      <tr>
+                        <td>Prenotare al ristorante</td>
+                        <td><strong>几位</strong></td>
+                        <td>Gruppi piccoli (1-10)</td>
+                      </tr>
+                      <tr>
+                        <td>Età bambino</td>
+                        <td><strong>几岁</strong></td>
+                        <td>Bambini: 1-12 anni</td>
+                      </tr>
+                      <tr>
+                        <td>Età adulto</td>
+                        <td><strong>多大/多少岁</strong></td>
+                        <td>Numeri più alti (20-100)</td>
+                      </tr>
+                      <tr>
+                        <td>Ordinare bevande</td>
+                        <td><strong>几杯</strong></td>
+                        <td>Ordini piccoli (1-5)</td>
+                      </tr>
+                      <tr>
+                        <td>Popolazione città</td>
+                        <td><strong>多少人</strong></td>
+                        <td>Migliaia o milioni</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="key-point">
+                    <strong>🎯 Come decidere tra 几 e 多少:</strong>
+                    <p><strong>Passo 1:</strong> Stai chiedendo un prezzo? → Usa 多少钱 (sempre!)</p>
+                    <p><strong>Passo 2:</strong> Puoi contare la risposta su una mano? → Usa 几</p>
+                    <p><strong>Passo 3:</strong> La risposta potrebbe essere oltre 20? → Usa 多少</p>
+                  </div>
+                </section>
+
+                <!-- SEZIONE 还是 vs 或者 -->
+                <section class="section">
+                  <h2>❓ 还是 vs 或者 - "O/Oppure"</h2>
+                  <div class="simple-rule">
+                    <strong>REGOLA SEMPLICISSIMA:</strong><br>
+                    还是 = nelle DOMANDE (con ?)<br>
+                    或者 = nelle AFFERMAZIONI (con .)
+                  </div>
+
+                  <div class="warning">
+                    <strong>⚠️ ATTENZIONE:</strong>
+                    <p>Questo è l'errore #1 degli studenti di cinese!</p>
+                    <p>还是 e 或者 NON sono MAI intercambiabili</p>
+                  </div>
+
+                  <!-- 还是 -->
+                  <div class="character-box">
+                    <div class="char-header">
+                      <div class="big-char">还是</div>
+                      <div class="char-info">
+                        <h3>háishi</h3>
+                        <div class="char-meaning">SOLO nelle domande</div>
+                      </div>
+                    </div>
+
+                    <div class="formula">A 还是 B ？</div>
+
+                    <div class="when-to-use">
+                      <h4>Quando usare 还是:</h4>
+                      <p>✓ Stai facendo una DOMANDA</p>
+                      <p>✓ Chiedi a qualcuno di SCEGLIERE</p>
+                      <p>✓ La frase finisce con ?</p>
+                      <p>✗ MAI in affermazioni</p>
+                    </div>
+
+                    <h3>Esempi:</h3>
+                    <div class="example-box">
+                      <div class="ex">
+                        <div class="ex-cn">你喝茶还是咖啡？</div>
+                        <div class="ex-py">Nǐ hē chá háishi kāfēi?</div>
+                        <div class="ex-it">Bevi tè o caffè? (devi scegliere)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你去还是不去？</div>
+                        <div class="ex-py">Nǐ qù háishi bú qù?</div>
+                        <div class="ex-it">Vai o non vai?</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">这是你的还是他的？</div>
+                        <div class="ex-py">Zhè shì nǐ de háishi tā de?</div>
+                        <div class="ex-it">Questo è tuo o suo?</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你要大的还是小的？</div>
+                        <div class="ex-py">Nǐ yào dà de háishi xiǎo de?</div>
+                        <div class="ex-it">Vuoi quello grande o piccolo?</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">今天还是明天？</div>
+                        <div class="ex-py">Jīntiān háishi míngtiān?</div>
+                        <div class="ex-it">Oggi o domani?</div>
+                      </div>
+                    </div>
+
+                    <div class="key-point">
+                      <strong>💡 Trucco:</strong>
+                      <p>Vedi il punto interrogativo ? → usa 还是</p>
+                      <p>Stai chiedendo "quale dei due?" → usa 还是</p>
+                    </div>
+                  </div>
+
+                  <!-- 或者 -->
+                  <div class="character-box">
+                    <div class="char-header">
+                      <div class="big-char">或者</div>
+                      <div class="char-info">
+                        <h3>huòzhě</h3>
+                        <div class="char-meaning">SOLO nelle affermazioni</div>
+                      </div>
+                    </div>
+
+                    <div class="formula">A 或者 B 。</div>
+
+                    <div class="when-to-use">
+                      <h4>Quando usare 或者:</h4>
+                      <p>✓ Stai facendo un'AFFERMAZIONE</p>
+                      <p>✓ Elenchi delle OPZIONI possibili</p>
+                      <p>✓ La frase finisce con .</p>
+                      <p>✗ MAI in domande</p>
+                    </div>
+
+                    <h3>Esempi:</h3>
+                    <div class="example-box">
+                      <div class="ex">
+                        <div class="ex-cn">我喝茶或者咖啡。</div>
+                        <div class="ex-py">Wǒ hē chá huòzhě kāfēi.</div>
+                        <div class="ex-it">Bevo tè o caffè. (entrambi vanno bene)</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你可以打电话或者发邮件。</div>
+                        <div class="ex-py">Nǐ kěyǐ dǎ diànhuà huòzhě fā yóujiàn.</div>
+                        <div class="ex-it">Puoi chiamare o mandare un'email.</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">周末我去北京或者上海。</div>
+                        <div class="ex-py">Zhōumò wǒ qù Běijīng huòzhě Shànghǎi.</div>
+                        <div class="ex-it">Nel weekend vado a Pechino o Shanghai.</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">晚上我看书或者看电影。</div>
+                        <div class="ex-py">Wǎnshang wǒ kàn shū huòzhě kàn diànyǐng.</div>
+                        <div class="ex-it">La sera leggo o guardo un film.</div>
+                      </div>
+                      <div class="ex">
+                        <div class="ex-cn">你可以买一个或者两个。</div>
+                        <div class="ex-py">Nǐ kěyǐ mǎi yí gè huòzhě liǎng gè.</div>
+                        <div class="ex-it">Puoi comprarne uno o due.</div>
+                      </div>
+                    </div>
+
+                    <div class="key-point">
+                      <strong>💡 Trucco:</strong>
+                      <p>Vedi il punto . → usa 或者</p>
+                      <p>Stai dicendo "ci sono queste opzioni" → usa 或者</p>
+                    </div>
+                  </div>
+
+                  <h3>Confronto diretto - stessa frase!</h3>
+                  <div class="vs-grid">
+                    <div class="vs-card">
+                      <h4>✓ DOMANDA</h4>
+                      <p><strong>你喝茶还是咖啡？</strong></p>
+                      <p>Nǐ hē chá háishi kāfēi?</p>
+                      <p>"Bevi tè o caffè?"</p>
+                      <p>→ Ti chiedo di scegliere</p>
+                    </div>
+                    <div class="vs-card">
+                      <h4>✓ AFFERMAZIONE</h4>
+                      <p><strong>我喝茶或者咖啡。</strong></p>
+                      <p>Wǒ hē chá huòzhě kāfēi.</p>
+                      <p>"Bevo tè o caffè."</p>
+                      <p>→ Dico che vanno bene entrambi</p>
+                    </div>
+                  </div>
+
+                  <div class="vs-grid">
+                    <div class="vs-card wrong">
+                      <h4>✗ SBAGLIATO!</h4>
+                      <p><strong>你喝茶或者咖啡？</strong> ❌</p>
+                      <p>NON usare 或者 nelle domande!</p>
+                      <p>Errore gravissimo!</p>
+                    </div>
+                    <div class="vs-card wrong">
+                      <h4>✗ SBAGLIATO!</h4>
+                      <p><strong>我喝茶还是咖啡。</strong> ❌</p>
+                      <p>NON usare 还是 nelle affermazioni!</p>
+                      <p>Non ha senso in cinese!</p>
+                    </div>
+                  </div>
+
+                  <h3>Altri esempi chiari:</h3>
+                  <div class="example-box">
+                    <h4 style="margin: 0 0 16px 0;">❓ Domande (还是):</h4>
+                    <div class="ex">
+                      <div class="ex-cn">你要大的还是小的？</div>
+                      <div class="ex-it">Vuoi quello grande o piccolo?</div>
+                    </div>
+                    <div class="ex">
+                      <div class="ex-cn">今天还是明天？</div>
+                      <div class="ex-it">Oggi o domani?</div>
+                    </div>
+                    <div class="ex">
+                      <div class="ex-cn">你开车还是坐地铁？</div>
+                      <div class="ex-it">Guidi o prendi la metro?</div>
+                    </div>
+                  </div>
+
+                  <div class="example-box">
+                    <h4 style="margin: 0 0 16px 0;">💬 Affermazioni (或者):</h4>
+                    <div class="ex">
+                      <div class="ex-cn">今天或者明天都可以。</div>
+                      <div class="ex-it">Oggi o domani vanno bene entrambi.</div>
+                    </div>
+                    <div class="ex">
+                      <div class="ex-cn">我可以开车或者坐地铁。</div>
+                      <div class="ex-it">Posso guidare o prendere la metro.</div>
+                    </div>
+                    <div class="ex">
+                      <div class="ex-cn">你可以来或者不来。</div>
+                      <div class="ex-it">Puoi venire o non venire.</div>
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>还是</th>
+                        <th>或者</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Tipo frase</strong></td>
+                        <td>Solo DOMANDE (?)</td>
+                        <td>Solo AFFERMAZIONI (.)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Funzione</strong></td>
+                        <td>Chiedere di scegliere</td>
+                        <td>Elencare opzioni</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Esempio</strong></td>
+                        <td>你去还是不去？</td>
+                        <td>我去或者不去。</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Intercambiabili?</strong></td>
+                        <td colspan="2" style="text-align: center;"><strong>MAI!</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="key-point">
+                    <strong>🎯 Regola d'oro finale:</strong>
+                    <p><strong>Punto interrogativo (？)</strong> → 还是</p>
+                    <p><strong>Punto fermo (.)</strong> → 或者</p>
+                    <p>Funziona nel 99% dei casi!</p>
+                  </div>
+                </section>
+
+                <!-- RIEPILOGO -->
+                <section class="section">
+                  <h2>✅ Riepilogo Finale</h2>
+                  <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 32px; border-radius: 16px; border: 3px solid #0284c7;">
+                    <h3 style="margin-top: 0; color: #0c4a6e;">Le 4 regole da ricordare:</h3>
+                    <p style="font-size: 18px; font-weight: 700; color: #0c4a6e;">1️⃣ 几 + classificatore = numeri piccoli (1-10)</p>
+                    <p style="font-size: 16px; color: #075985; margin-bottom: 20px;">Esempio: 几个人？几本书？</p>
+                    <p style="font-size: 18px; font-weight: 700; color: #0c4a6e;">2️⃣ 多少 (senza classificatore) = numeri grandi + TUTTI i prezzi</p>
+                    <p style="font-size: 16px; color: #075985; margin-bottom: 20px;">Esempio: 多少钱？多少人？</p>
+                    <p style="font-size: 18px; font-weight: 700; color: #0c4a6e;">3️⃣ 还是 = SOLO domande (?)</p>
+                    <p style="font-size: 16px; color: #075985; margin-bottom: 20px;">Esempio: 你喝茶还是咖啡？</p>
+                    <p style="font-size: 18px; font-weight: 700; color: #0c4a6e; margin-bottom: 8px;">4️⃣ 或者 = SOLO affermazioni (.)</p>
+                    <p style="font-size: 16px; color: #075985; margin-bottom: 0;">Esempio: 我喝茶或者咖啡。</p>
+                  </div>
+                </section>
+              </main>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- MODAL 2 - Secondo Contenuto -->
+  <div id="second-modal" class="modal-overlay">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header-bar">
+        <span>多少</span>
+        <button class="modal-close-btn" id="close-modal-2" aria-label="Chiudi">×</button>
+      </div>
+      <div class="modal-scroll">
+        <!-- Incolla qui il tuo secondo contenuto -->
+        <div class="placeholder-content">
+          <h2>多少</h2>
+          
+        <p>Il termine <strong>多少 (<span class="pinyin">duōshao</span>)</strong> è una delle parole interrogative fondamentali in cinese, usata per chiedere la quantità o il numero.</p>
+
+        <h2>Origine del Termine</h2>
+        <ul>
+            <li><strong>多 (<span class="pinyin">duō</span>)</strong>: Significa <strong>"molto"</strong> o <strong>"numeroso"</strong>.</li>
+            <li><strong>少 (<span class="pinyin">shǎo</span>)</strong>: Significa <strong>"poco"</strong> o <strong>"scarso"</strong>.</li>
+        </ul>
+        <p>Insieme, formano la domanda: <strong>"quanto?"</strong> (letteralmente: "molto o poco?").</p>
+
+        <h2>Uso Principale di 多少 (<span class="pinyin">Duōshao</span>)</h2>
+
+        <p>Si usa per chiedere la quantità quando ci si aspetta una risposta che sia generalmente <strong>superiore a 10</strong>.</p>
+
+        <h3>Struttura Base</h3>
+        <p><code>Soggetto + Verbo + 多少 + (Classificatore) + Nome</code></p>
+        <div class="note">
+            <strong>Nota Importante:</strong> Dopo 多少 (<span class="pinyin">duōshao</span>) il <strong>Classificatore</strong> (o misura) è spesso <strong>omesso</strong> nel linguaggio parlato, anche se la sua inclusione è grammaticalmente corretta.
+        </div>
+
+        <h3>Esempi d'Uso</h3>
+
+        <h4>1. Chiedere il Prezzo</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Esempio in Cinese</th>
+                    <th>Pinyin</th>
+                    <th>Traduzione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="chinese">这个苹果<strong>多少</strong>钱?</td>
+                    <td class="pinyin">Zhège píngguǒ duōshao qián?</td>
+                    <td>Quanto costa questa mela?</td>
+                </tr>
+                <tr>
+                    <td class="chinese">一共<strong>多少</strong>钱?</td>
+                    <td class="pinyin">Yígòng duōshao qián?</td>
+                    <td>Quanto fa in totale?</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>2. Chiedere un Numero (Quantità grande)</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Esempio in Cinese</th>
+                    <th>Pinyin</th>
+                    <th>Traduzione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="chinese">你们班有<strong>多少</strong>学生?</td>
+                    <td class="pinyin">Nǐmen bān yǒu duōshao xuésheng?</td>
+                    <td>Quanti studenti ci sono nella vostra classe?</td>
+                </tr>
+                <tr>
+                    <td class="chinese">这个城市有<strong>多少</strong>人口?</td>
+                    <td class="pinyin">Zhège chéngshì yǒu duōshao rénkǒu?</td>
+                    <td>Quanti abitanti ha questa città?</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>3. Chiedere l'Età (Formale / Adulti)</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Esempio in Cinese</th>
+                    <th>Pinyin</th>
+                    <th>Traduzione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="chinese">您今年<strong>多少</strong>岁了?</td>
+                    <td class="pinyin">Nín jīnnián duōshao suì le?</td>
+                    <td>Quanti anni ha (Lei - formale) quest'anno?</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h2>🆚 Confronto: 多少 (<span class="pinyin">Duōshao</span>) vs. 几 (<span class="pinyin">Jǐ</span>)</h2>
+
+        <p>L'altro classificatore interrogativo è <strong>几 (<span class="pinyin">Jǐ</span>)</strong>. La distinzione tra i due si basa sulla quantità che ci si aspetta come risposta:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Termine</th>
+                    <th>Quantità Attesa</th>
+                    <th>Struttura</th>
+                    <th>Esempio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="chinese highlight"><strong>几 (<span class="pinyin">jǐ</span>)</strong></td>
+                    <td><strong>10 o meno</strong></td>
+                    <td><strong>几 + Classificatore + Nome</strong></td>
+                    <td>你有<strong>几</strong>个苹果? (Hai <em>poche</em> mele?)</td>
+                </tr>
+                <tr>
+                    <td class="chinese highlight"><strong>多少 (<span class="pinyin">duōshao</span>)</strong></td>
+                    <td><strong>Più di 10</strong></td>
+                    <td><strong>多少 (+ Classificatore) + Nome</strong></td>
+                    <td>你有<strong>多少</strong>苹果? (Quante mele hai?)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div id="third-modal" class="modal-overlay">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header-bar">
+        <span>量词</span>
+        <button class="modal-close-btn" id="close-modal-3" aria-label="Chiudi">×</button>
+      </div>
+      <div class="modal-scroll">
+        <!-- Incolla qui il tuo secondo contenuto -->
+        <div class="placeholder-content">
+ <main class="content">
+     <section class="section"> 
+<h2>📦 Classificatori - 盒 e 位</h2>
+      <div class="simple-rule"><strong>COSA SONO I CLASSIFICATORI?</strong><br>
+        In cinese NON puoi dire "tre persone" direttamente.<br>
+        Devi usare: numero + CLASSIFICATORE + nome<br>
+        Esempio: 三个人 (tre + PEZZO + persona)
+      </div><!-- 盒 -->
+      <div class="character-box">
+       <div class="char-header">
+        <div class="big-char">
+         盒
+        </div>
+        <div class="char-info">
+         <h3>hé</h3>
+         <div class="char-meaning">
+          Per SCATOLE e CONFEZIONI
+         </div>
+        </div>
+       </div>
+       <div class="formula">
+        NUMERO + 盒 + NOME
+       </div>
+       <div class="when-to-use">
+        <h4>Quando usare 盒:</h4>
+        <p>✓ Scatole di cioccolatini</p>
+        <p>✓ Confezioni di sigarette</p>
+        <p>✓ Pacchetti di fazzoletti</p>
+        <p>✓ Scatole di medicinali</p>
+        <p>✓ Qualsiasi cosa venduta IN SCATOLA/CONFEZIONE</p>
+       </div>
+       <h3>Esempi pratici:</h3>
+       <div class="example-box">
+        <div class="ex">
+         <div class="ex-cn">
+          一盒巧克力
+         </div>
+         <div class="ex-py">
+          yì hé qiǎokèlì
+         </div>
+         <div class="ex-it">
+          Una scatola di cioccolatini
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两盒烟
+         </div>
+         <div class="ex-py">
+          liǎng hé yān
+         </div>
+         <div class="ex-it">
+          Due pacchetti di sigarette
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          三盒纸巾
+         </div>
+         <div class="ex-py">
+          sān hé zhǐjīn
+         </div>
+         <div class="ex-it">
+          Tre pacchetti di fazzoletti
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          买一盒药
+         </div>
+         <div class="ex-py">
+          mǎi yì hé yào
+         </div>
+         <div class="ex-it">
+          Comprare una scatola di medicine
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          这盒饼干多少钱？
+         </div>
+         <div class="ex-py">
+          Zhè hé bǐnggān duōshao qián?
+         </div>
+         <div class="ex-it">
+          Quanto costa questa scatola di biscotti?
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          我要两盒口香糖
+         </div>
+         <div class="ex-py">
+          Wǒ yào liǎng hé kǒuxiāngtáng
+         </div>
+         <div class="ex-it">
+          Voglio due confezioni di chewing gum
+         </div>
+        </div>
+       </div>
+       <div class="key-point"><strong>💡 Trucco per ricordare:</strong>
+        <p>盒 si pronuncia come "box" in inglese!</p>
+        <p>Se la cosa è DENTRO UNA SCATOLA → usa 盒</p>
+       </div>
+       <div class="warning"><strong>⚠️ ATTENZIONE:</strong>
+        <p>NON usare 盒 per oggetti singoli sciolti!</p>
+        <p>❌ 一盒苹果 (una mela) → usa 个</p>
+        <p>✓ 一盒苹果 (una cassetta di mele) → OK se sono in una confezione</p>
+       </div>
+      </div>       
+ <!-- 位 -->
+
+      <div class="character-box">
+       <div class="char-header">
+        <div class="big-char">
+         位
+        </div>
+        <div class="char-info">
+         <h3>wèi</h3>
+         <div class="char-meaning">
+          Per PERSONE (formale e cortese)
+         </div>
+        </div>
+       </div>
+       <div class="formula">
+        NUMERO + 位 + (persona/ospite/cliente)
+       </div>
+       <div class="when-to-use">
+        <h4>Quando usare 位:</h4>
+        <p>✓ Al ristorante: "Quanti siete?"</p>
+        <p>✓ In hotel: "Due ospiti"</p>
+        <p>✓ Negozi: "Quanti clienti?"</p>
+        <p>✓ Contesti FORMALI e RISPETTOSI</p>
+        <p>✗ NON usarlo con amici o famiglia (usa 个)</p>
+       </div>
+       <h3>Esempi pratici:</h3>
+       <div class="example-box">
+        <div class="ex">
+         <div class="ex-cn">
+          几位？
+         </div>
+         <div class="ex-py">
+          Jǐ wèi?
+         </div>
+         <div class="ex-it">
+          Quanti siete? (al ristorante - SUPER COMUNE)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两位
+         </div>
+         <div class="ex-py">
+          Liǎng wèi
+         </div>
+         <div class="ex-it">
+          Due persone (risposta formale)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          这位是我的老师
+         </div>
+         <div class="ex-py">
+          Zhè wèi shì wǒ de lǎoshī
+         </div>
+         <div class="ex-it">
+          Questa persona è il mio insegnante (rispettoso)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          那位客人
+         </div>
+         <div class="ex-py">
+          Nà wèi kèrén
+         </div>
+         <div class="ex-it">
+          Quell'ospite/cliente
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          三位先生
+         </div>
+         <div class="ex-py">
+          Sān wèi xiānsheng
+         </div>
+         <div class="ex-it">
+          Tre signori
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          欢迎各位！
+         </div>
+         <div class="ex-py">
+          Huānyíng gè wèi!
+         </div>
+         <div class="ex-it">
+          Benvenuti a tutti! (formale)
+         </div>
+        </div>
+       </div>
+       <div class="key-point"><strong>💡 Quando usare 位 vs 个:</strong>
+        <p><strong>位</strong> = persone in contesti formali (ristoranti, hotel, lavoro)</p>
+        <p><strong>个</strong> = persone in contesti informali (amici, famiglia)</p>
+       </div>
+       <h3>Confronto 位 vs 个:</h3>
+       <div class="vs-grid">
+        <div class="vs-card">
+         <h4>✓ FORMALE (位)</h4>
+         <p><strong>几位客人？</strong></p>
+         <p>Jǐ wèi kèrén?</p>
+         <p>"Quanti ospiti?"</p>
+         <p>→ Contesto professionale</p>
+        </div>
+        <div class="vs-card">
+         <h4>✓ INFORMALE (个)</h4>
+         <p><strong>几个人？</strong></p>
+         <p>Jǐ gè rén?</p>
+         <p>"Quante persone?"</p>
+         <p>→ Tra amici</p>
+        </div>
+       </div>
+       <div class="example-box">
+        <h4 style="margin: 0 0 16px 0;">🍽️ Dialogo al ristorante (SUPER UTILE!):</h4>
+        <div class="ex">
+         <div class="ex-cn">
+          服务员：几位？
+         </div>
+         <div class="ex-py">
+          Fúwùyuán: Jǐ wèi?
+         </div>
+         <div class="ex-it">
+          Cameriere: Quanti siete?
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          你：四位。
+         </div>
+         <div class="ex-py">
+          Nǐ: Sì wèi.
+         </div>
+         <div class="ex-it">
+          Tu: Quattro persone.
+         </div>
+        </div>
+       </div>
+      </div>
+      <table>
+       <thead>
+        <tr>
+         <th>Classificatore</th>
+         <th>Per cosa</th>
+         <th>Esempi</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td><strong>盒 (hé)</strong></td>
+         <td>Scatole, confezioni, pacchetti</td>
+         <td>一盒巧克力, 两盒烟, 三盒纸巾</td>
+        </tr>
+        <tr>
+         <td><strong>位 (wèi)</strong></td>
+         <td>Persone (formale/cortese)</td>
+         <td>几位？两位客人，这位老师</td>
+        </tr>
+        <tr>
+         <td><strong>个 (gè)</strong></td>
+         <td>Generico - tutto il resto!</td>
+         <td>三个人, 一个苹果, 两个问题</td>
+        </tr>
+       </tbody>
+      </table>
+      <div class="key-point"><strong>🎯 Riassunto classificatori:</strong>
+       <p>盒 = cose in SCATOLA/CONFEZIONE</p>
+       <p>位 = PERSONE in modo FORMALE</p>
+       <p>个 = TUTTO IL RESTO (classificatore universale)</p>
+      </div>
+     </section><!-- RIEPILOGO -->
+     <section class="section">
+      <h2>✅ Riepilogo Finale</h2>
+      <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 32px; border-radius: 16px; border: 3px solid #0284c7;">
+       <h3 style="margin-top: 0; color: #0c4a6e;">Le 4 regole da ricordare:</h3>
+       <p style="font-size: 18px; font-weight: 700; color: #0c4a6e;">1️⃣ 几 + classificatore = numeri piccoli (1-10)</p>
+       <p style="font-size: 16px; color: #075985; margin-bottom: 20px;">Esempio: 几个人？几本书？</p>
+       <p style="font-size: 18px; font-weight: 700; color: #0c4a6e;">2️⃣ 多少 (senza classificatore) = numeri grandi + TUTTI i prezzi</p>
+       <p style="font-size: 16px; color: #075985; margin-bottom: 20px;">Esempio: 多少钱？多少人？</p>
+       <p style="font-size: 18px; font-weight: 700; color: #0c4a6e;">3️⃣ 还是 = SOLO domande (?)</p>
+       <p style="font-size: 16px; color: #075985; margin-bottom: 20px;">Esempio: 你喝茶还是咖啡？</p>
+       <p style="font-size: 18px; font-weight: 700; color: #0c4a6e; margin-bottom: 8px;">4️⃣ 或者 = SOLO affermazioni (.)</p>
+       <p style="font-size: 16px; color: #075985; margin-bottom: 0;">Esempio: 我喝茶或者咖啡。</p>
+      </div>
+     </section>
+    </main>
+   </div>
+  </div>
+</div>
+</div>
+<div id="fourth-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header-bar">
+        <span>量词</span>
+        <button class="modal-close-btn" id="close-modal-4" aria-label="Chiudi">×</button>
+      </div>
+      <div class="modal-scroll">
+        <!-- Incolla qui il tuo secondo contenuto -->
+        <div class="placeholder-content">
+      <div class="main-wrapper">
    <div class="container">
     <div class="header">
      <h1 id="main-title">I Classificatori Cinesi</h1>
@@ -1455,53 +2821,825 @@
     </div>
    </div>
   </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div id="fifth-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header-bar">
+        <span>吧</span>
+        <button class="modal-close-btn" id="close-modal-5" aria-label="Chiudi">×</button>
+      </div>
+      <div class="modal-scroll">
+        <!-- Incolla qui il tuo secondo contenuto -->
+        <div class="placeholder-content">
+ <section class="section">
+      <h2>💬 吧 - La Particella Magica</h2>
+      <div class="simple-rule"><strong>COSA FA 吧?</strong><br>
+        吧 rende la frase più MORBIDA, GENTILE, come un "dai", "su", "forse"<br>
+        Si mette SEMPRE alla FINE della frase
+      </div>
+      <div class="character-box">
+       <div class="char-header">
+        <div class="big-char">
+         吧
+        </div>
+        <div class="char-info">
+         <h3>ba</h3>
+         <div class="char-meaning">
+          Rende tutto più gentile e morbido
+         </div>
+        </div>
+       </div>
+       <div class="formula">
+        FRASE + 吧
+       </div>
+       <div class="when-to-use">
+        <h4>A cosa serve 吧:</h4>
+        <p>✓ Fare SUGGERIMENTI gentili ("dai, facciamolo")</p>
+        <p>✓ Dare COMANDI morbidi (non aggressivi)</p>
+        <p>✓ Esprimere SUPPOSIZIONI ("credo che", "forse")</p>
+        <p>✓ Rendere tutto più AMICHEVOLE</p>
+       </div>
+       <h3>1️⃣ SUGGERIMENTI (più comune!):</h3>
+       <div class="example-box">
+        <div class="ex">
+         <div class="ex-cn">
+          我们走吧！
+         </div>
+         <div class="ex-py">
+          Wǒmen zǒu ba!
+         </div>
+         <div class="ex-it">
+          Andiamo! (dai, andiamo)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          吃饭吧！
+         </div>
+         <div class="ex-py">
+          Chīfàn ba!
+         </div>
+         <div class="ex-it">
+          Mangiamo! (su, mangiamo)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          喝点水吧。
+         </div>
+         <div class="ex-py">
+          Hē diǎn shuǐ ba.
+         </div>
+         <div class="ex-it">
+          Bevi un po' d'acqua. (dai, bevi)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          我们看电影吧！
+         </div>
+         <div class="ex-py">
+          Wǒmen kàn diànyǐng ba!
+         </div>
+         <div class="ex-it">
+          Guardiamo un film! (che ne dici?)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          休息一下吧。
+         </div>
+         <div class="ex-py">
+          Xiūxi yíxià ba.
+         </div>
+         <div class="ex-it">
+          Riposiamo un po'. (facciamo una pausa)
+         </div>
+        </div>
+       </div>
+       <h3>2️⃣ COMANDI GENTILI:</h3>
+       <div class="example-box">
+        <div class="ex">
+         <div class="ex-cn">
+          坐吧。
+         </div>
+         <div class="ex-py">
+          Zuò ba.
+         </div>
+         <div class="ex-it">
+          Siediti. (prego, siediti - gentile)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          别哭吧。
+         </div>
+         <div class="ex-py">
+          Bié kū ba.
+         </div>
+         <div class="ex-it">
+          Non piangere. (su, non piangere - affettuoso)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          快点吧！
+         </div>
+         <div class="ex-py">
+          Kuài diǎn ba!
+         </div>
+         <div class="ex-it">
+          Sbrigati! (dai, sbrigati - meno aggressivo)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          别担心吧。
+         </div>
+         <div class="ex-py">
+          Bié dānxīn ba.
+         </div>
+         <div class="ex-it">
+          Non preoccuparti. (su, non ti preoccupare)
+         </div>
+        </div>
+       </div>
+       <h3>3️⃣ SUPPOSIZIONI ("credo", "forse"):</h3>
+       <div class="example-box">
+        <div class="ex">
+         <div class="ex-cn">
+          他不来吧。
+         </div>
+         <div class="ex-py">
+          Tā bù lái ba.
+         </div>
+         <div class="ex-it">
+          Penso che lui non venga. (probabilmente non viene)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          应该是这样吧。
+         </div>
+         <div class="ex-py">
+          Yīnggāi shì zhèyàng ba.
+         </div>
+         <div class="ex-it">
+          Dovrebbe essere così, credo.
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          你累了吧？
+         </div>
+         <div class="ex-py">
+          Nǐ lèi le ba?
+         </div>
+         <div class="ex-it">
+          Sei stanco, vero? (immagino tu sia stanco)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          可能下雨吧。
+         </div>
+         <div class="ex-py">
+          Kěnéng xià yǔ ba.
+         </div>
+         <div class="ex-it">
+          Forse pioverà. (credo che pioverà)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          大概十点吧。
+         </div>
+         <div class="ex-py">
+          Dàgài shí diǎn ba.
+         </div>
+         <div class="ex-it">
+          Verso le dieci, credo.
+         </div>
+        </div>
+       </div>
+       <h3>Confronto CON vs SENZA 吧:</h3>
+       <div class="vs-grid">
+        <div class="vs-card wrong">
+         <h4>SENZA 吧 (secco/diretto)</h4>
+         <p><strong>我们走！</strong></p>
+         <p>Wǒmen zǒu!</p>
+         <p>"Andiamo!"</p>
+         <p>→ Suona come un ORDINE</p>
+        </div>
+        <div class="vs-card">
+         <h4>CON 吧 (gentile)</h4>
+         <p><strong>我们走吧！</strong></p>
+         <p>Wǒmen zǒu ba!</p>
+         <p>"Andiamo!"</p>
+         <p>→ Suona come un INVITO amichevole</p>
+        </div>
+       </div>
+       <div class="vs-grid">
+        <div class="vs-card wrong">
+         <h4>SENZA 吧 (affermazione)</h4>
+         <p><strong>他不来。</strong></p>
+         <p>Tā bù lái.</p>
+         <p>"Lui non viene."</p>
+         <p>→ Sono SICURO, è un fatto</p>
+        </div>
+        <div class="vs-card">
+         <h4>CON 吧 (supposizione)</h4>
+         <p><strong>他不来吧。</strong></p>
+         <p>Tā bù lái ba.</p>
+         <p>"Lui non viene."</p>
+         <p>→ È la mia SUPPOSIZIONE</p>
+        </div>
+       </div>
+       <div class="key-point"><strong>💡 Trucco per ricordare:</strong>
+        <p>吧 è come dire "dai", "su", "forse" in italiano</p>
+        <p>Rende TUTTO più amichevole e meno aggressivo</p>
+        <p>Usalo quando vuoi essere GENTILE!</p>
+       </div>
+       <div class="warning"><strong>⚠️ ATTENZIONE - Dove mettere 吧:</strong>
+        <p>✓ 我们走吧 (giusto - alla fine)</p>
+        <p>❌ 我们吧走 (sbagliato - nel mezzo)</p>
+        <p>吧 va SEMPRE alla FINE della frase!</p>
+       </div>
+       <div class="example-box">
+        <h4 style="margin: 0 0 16px 0;">🗣️ Frasi utilissime con 吧:</h4>
+        <div class="ex">
+         <div class="ex-cn">
+          算了吧。
+         </div>
+         <div class="ex-py">
+          Suàn le ba.
+         </div>
+         <div class="ex-it">
+          Lascia perdere. (dai, lascia stare)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          好吧。
+         </div>
+         <div class="ex-py">
+          Hǎo ba.
+         </div>
+         <div class="ex-it">
+          Va bene. (ok, d'accordo - con un po' di esitazione)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          行吧。
+         </div>
+         <div class="ex-py">
+          Xíng ba.
+         </div>
+         <div class="ex-it">
+          Ok. (va bene, ci sto)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          随便吧。
+         </div>
+         <div class="ex-py">
+          Suíbiàn ba.
+         </div>
+         <div class="ex-it">
+          Come vuoi. (fai come ti pare)
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="sixth-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header-bar">
+        <span>二 vs 两</span>
+        <button class="modal-close-btn" id="close-modal-6" aria-label="Chiudi">×</button>
+      </div>
+      <div class="modal-scroll">
+        <!-- Incolla qui il tuo secondo contenuto -->
+        <div class="placeholder-content">
+<section class="section">
+      <h2>2️⃣ 二 vs 两 - Entrambi significano "DUE"</h2>
+      <div class="simple-rule"><strong>REGOLA SUPER SEMPLICE:</strong><br>
+        二 (èr) = solo per CONTARE (1, 2, 3...)<br>
+        两 (liǎng) = quando dici "DUE [cose]" con classificatore
+      </div>
+      <div class="warning"><strong>⚠️ ATTENZIONE:</strong>
+       <p>Questo è uno degli errori più comuni!</p>
+       <p>Non puoi usarli a caso - c'è una regola PRECISA</p>
+      </div><!-- 二 -->
+      <div class="character-box">
+       <div class="char-header">
+        <div class="big-char">
+         二
+        </div>
+        <div class="char-info">
+         <h3>èr</h3>
+         <div class="char-meaning">
+          Solo per CONTARE e NUMERI
+         </div>
+        </div>
+       </div>
+       <div class="when-to-use">
+        <h4>Quando usare 二:</h4>
+        <p>✓ Numeri di telefono: 138-1234-5678</p>
+        <p>✓ Indirizzi: 第二路 (Seconda Strada)</p>
+        <p>✓ Date: 二月 (febbraio)</p>
+        <p>✓ Contare: 一、二、三、四...</p>
+        <p>✓ Numeri ordinali: 第二 (secondo)</p>
+        <p>✓ Matematica: 二加二 (2+2)</p>
+        <p>✗ MAI prima di un classificatore!</p>
+       </div>
+       <h3>Esempi con 二:</h3>
+       <div class="example-box">
+        <div class="ex">
+         <div class="ex-cn">
+          一、二、三、四...
+         </div>
+         <div class="ex-py">
+          Yī, èr, sān, sì...
+         </div>
+         <div class="ex-it">
+          Uno, due, tre, quattro... (contare)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          我的号码是138-5678-9012
+         </div>
+         <div class="ex-py">
+          Wǒ de hàomǎ shì yāo sān bā - wǔ liù qī bā - jiǔ líng yāo èr
+         </div>
+         <div class="ex-it">
+          Il mio numero è 138-5678-9012 (si usa 二)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          二月
+         </div>
+         <div class="ex-py">
+          èryuè
+         </div>
+         <div class="ex-it">
+          Febbraio (mese numero 2)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          第二
+         </div>
+         <div class="ex-py">
+          dì èr
+         </div>
+         <div class="ex-it">
+          Il secondo (posizione ordinale)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          二十
+         </div>
+         <div class="ex-py">
+          èrshí
+         </div>
+         <div class="ex-it">
+          Venti (20 - sempre 二)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          二百
+         </div>
+         <div class="ex-py">
+          èrbǎi
+         </div>
+         <div class="ex-it">
+          Duecento (200 - sempre 二)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          二零二四年
+         </div>
+         <div class="ex-py">
+          èr líng èr sì nián
+         </div>
+         <div class="ex-it">
+          Anno 2024 (si legge cifra per cifra)
+         </div>
+        </div>
+       </div>
+       <div class="key-point"><strong>💡 Trucco per 二:</strong>
+        <p>Se stai solo DICENDO IL NUMERO "2" → usa 二</p>
+        <p>Telefoni, indirizzi, date, contare → sempre 二</p>
+       </div>
+      </div><!-- 两 -->
+      <div class="character-box">
+       <div class="char-header">
+        <div class="big-char">
+         两
+        </div>
+        <div class="char-info">
+         <h3>liǎng</h3>
+         <div class="char-meaning">
+          Per dire "DUE [cose]"
+         </div>
+        </div>
+       </div>
+       <div class="formula">
+        两 + CLASSIFICATORE + NOME
+       </div>
+       <div class="when-to-use">
+        <h4>Quando usare 两:</h4>
+        <p>✓ SEMPRE prima di classificatori: 两个、两本、两位...</p>
+        <p>✓ "Due persone": 两个人</p>
+        <p>✓ "Due libri": 两本书</p>
+        <p>✓ "Due tazze": 两杯</p>
+        <p>✓ Unità di misura: 两公斤 (2 kg)</p>
+        <p>✗ MAI per contare o numeri puri!</p>
+       </div>
+       <h3>Esempi con 两:</h3>
+       <div class="example-box">
+        <div class="ex">
+         <div class="ex-cn">
+          两个人
+         </div>
+         <div class="ex-py">
+          liǎng gè rén
+         </div>
+         <div class="ex-it">
+          Due persone
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两本书
+         </div>
+         <div class="ex-py">
+          liǎng běn shū
+         </div>
+         <div class="ex-it">
+          Due libri
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两杯咖啡
+         </div>
+         <div class="ex-py">
+          liǎng bēi kāfēi
+         </div>
+         <div class="ex-it">
+          Due tazze di caffè
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两位
+         </div>
+         <div class="ex-py">
+          liǎng wèi
+         </div>
+         <div class="ex-it">
+          Due persone (formale - al ristorante)
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两盒巧克力
+         </div>
+         <div class="ex-py">
+          liǎng hé qiǎokèlì
+         </div>
+         <div class="ex-it">
+          Due scatole di cioccolatini
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两公斤
+         </div>
+         <div class="ex-py">
+          liǎng gōngjīn
+         </div>
+         <div class="ex-it">
+          Due chilogrammi
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两天
+         </div>
+         <div class="ex-py">
+          liǎng tiān
+         </div>
+         <div class="ex-it">
+          Due giorni
+         </div>
+        </div>
+        <div class="ex">
+         <div class="ex-cn">
+          两年
+         </div>
+         <div class="ex-py">
+          liǎng nián
+         </div>
+         <div class="ex-it">
+          Due anni
+         </div>
+        </div>
+       </div>
+       <div class="key-point"><strong>💡 Trucco per 两:</strong>
+        <p>Se dopo "due" c'è un CLASSIFICATORE o unità → usa 两</p>
+        <p>Stai dicendo "due COSE/PERSONE/OGGETTI" → usa 两</p>
+       </div>
+       <div class="warning"><strong>⚠️ ERRORI COMUNI:</strong>
+        <p>❌ 二个人 (SBAGLIATO!)</p>
+        <p>✓ 两个人 (GIUSTO)</p>
+        <p><br></p>
+        <p>❌ 二本书 (SBAGLIATO!)</p>
+        <p>✓ 两本书 (GIUSTO)</p>
+       </div>
+      </div>
+      <h3>Confronto diretto - Casi speciali:</h3>
+      <table>
+       <thead>
+        <tr>
+         <th>Situazione</th>
+         <th>Usa 二</th>
+         <th>Usa 两</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td><strong>Con classificatori</strong></td>
+         <td>❌ MAI</td>
+         <td>✓ 两个、两本、两位</td>
+        </tr>
+        <tr>
+         <td><strong>Numero 20</strong></td>
+         <td>✓ 二十 (sempre!)</td>
+         <td>❌ NON 两十</td>
+        </tr>
+        <tr>
+         <td><strong>Numero 200</strong></td>
+         <td>✓ 二百 (sempre!)</td>
+         <td>❌ NON 两百</td>
+        </tr>
+        <tr>
+         <td><strong>Numero 2000</strong></td>
+         <td>❌</td>
+         <td>✓ 两千 (eccezione!)</td>
+        </tr>
+        <tr>
+         <td><strong>Numero 20.000</strong></td>
+         <td>❌</td>
+         <td>✓ 两万 (eccezione!)</td>
+        </tr>
+        <tr>
+         <td><strong>Febbraio</strong></td>
+         <td>✓ 二月</td>
+         <td>❌</td>
+        </tr>
+        <tr>
+         <td><strong>Due giorni</strong></td>
+         <td>❌</td>
+         <td>✓ 两天</td>
+        </tr>
+        <tr>
+         <td><strong>Secondo posto</strong></td>
+         <td>✓ 第二</td>
+         <td>❌</td>
+        </tr>
+        <tr>
+         <td><strong>Numeri di telefono</strong></td>
+         <td>✓ sempre 二</td>
+         <td>❌</td>
+        </tr>
+       </tbody>
+      </table>
+      <h3>Numeri grandi - Attenzione alle eccezioni!</h3>
+      <div class="example-box">
+       <div class="ex">
+        <div class="ex-cn">
+         二十 (20)
+        </div>
+        <div class="ex-py">
+         èrshí
+        </div>
+        <div class="ex-it">
+         Venti → usa 二
+        </div>
+       </div>
+       <div class="ex">
+        <div class="ex-cn">
+         二百 (200)
+        </div>
+        <div class="ex-py">
+         èrbǎi
+        </div>
+        <div class="ex-it">
+         Duecento → usa 二
+        </div>
+       </div>
+       <div class="ex">
+        <div class="ex-cn">
+         两千 (2000) ⚠️
+        </div>
+        <div class="ex-py">
+         liǎngqiān
+        </div>
+        <div class="ex-it">
+         Duemila → usa 两 (eccezione!)
+        </div>
+       </div>
+       <div class="ex">
+        <div class="ex-cn">
+         两万 (20,000) ⚠️
+        </div>
+        <div class="ex-py">
+         liǎngwàn
+        </div>
+        <div class="ex-it">
+         Ventimila → usa 两 (eccezione!)
+        </div>
+       </div>
+       <div class="ex">
+        <div class="ex-cn">
+         二十二 (22)
+        </div>
+        <div class="ex-py">
+         èrshí'èr
+        </div>
+        <div class="ex-it">
+         Ventidue → entrambi 二
+        </div>
+       </div>
+       <div class="ex">
+        <div class="ex-cn">
+         两百二十 (220)
+        </div>
+        <div class="ex-py">
+         liǎngbǎi èrshí
+        </div>
+        <div class="ex-it">
+         Duecentoventi → mix!
+        </div>
+       </div>
+      </div>
+      <div class="vs-grid">
+       <div class="vs-card wrong">
+        <h4>❌ SBAGLIATI</h4>
+        <p><strong>二个人</strong> ✗</p>
+        <p><strong>二本书</strong> ✗</p>
+        <p><strong>二杯咖啡</strong> ✗</p>
+        <p><strong>两十</strong> ✗</p>
+        <p><strong>两月</strong> ✗</p>
+       </div>
+       <div class="vs-card">
+        <h4>✓ GIUSTI</h4>
+        <p><strong>两个人</strong> ✓</p>
+        <p><strong>两本书</strong> ✓</p>
+        <p><strong>两杯咖啡</strong> ✓</p>
+        <p><strong>二十</strong> ✓</p>
+        <p><strong>二月</strong> ✓</p>
+       </div>
+      </div>
+      <div class="key-point"><strong>🎯 Regola d'oro finale:</strong>
+       <p><strong>Vedi un CLASSIFICATORE dopo il "2"?</strong> → usa 两</p>
+       <p><strong>È solo il NUMERO "2"?</strong> → usa 二</p>
+       <p><strong>Eccezioni:</strong> 千 (mille) e 万 (10.000) usano 两</p>
+       <p><strong>20, 200:</strong> sempre 二十, 二百</p>
+      </div>
+      <div class="example-box">
+       <h4 style="margin: 0 0 16px 0;">🎓 Test rapido - Scegli giusto:</h4>
+       <div class="ex">
+        <div class="ex-cn">
+         我有___个朋友 → 两
+        </div>
+        <div class="ex-it">
+         Ho due amici (c'è il classificatore 个)
+        </div>
+       </div>
+       <div class="ex">
+        <div class="ex-cn">
+         ___月 → 二
+        </div>
+        <div class="ex-it">
+         Febbraio (è un numero puro)
+        </div>
+       </div>
+       <div class="ex">
+        <div class="ex-cn">
+         ___百 → 二
+        </div>
+        <div class="ex-it">
+         Duecento (百 non è un classificatore)
+        </div>
+       </div>
+       <div class="ex">
+        <div class="ex-cn">
+         ___天 → 两
+        </div>
+        <div class="ex-it">
+         Due giorni (天 funziona come classificatore)
+        </div>
+       </div>
+      </div>
+     </section>
+</div>
+</div>
+</div>
+</div>
+</div>
+  <!-- JS per entrambi i modal -->
   <script>
-        const defaultConfig = {
-            main_title: "I Classificatori Cinesi",
-            subtitle: "量词 (liàngcí) - Guida Completa",
-            background_gradient_start: "#667eea",
-            background_gradient_end: "#764ba2",
-            primary_color: "#667eea",
-            secondary_color: "#764ba2"
-        };
+    // Modal 1
+    document.getElementById('open-modal-1').addEventListener('click', () => {
+      document.getElementById('grammar-modal').classList.add('active');
+    });
+    document.getElementById('close-modal-1').addEventListener('click', () => {
+      document.getElementById('grammar-modal').classList.remove('active');
+    });
 
-        async function onConfigChange(config) {
-            const mainTitle = document.getElementById('main-title');
-            const subtitle = document.getElementById('subtitle');
-            
-            if (mainTitle) {
-                mainTitle.textContent = config.main_title || defaultConfig.main_title;
-            }
-            
-            if (subtitle) {
-                subtitle.textContent = config.subtitle || defaultConfig.subtitle;
-            }
-        }
+    // Modal 2
+    document.getElementById('open-modal-2').addEventListener('click', () => {
+      document.getElementById('second-modal').classList.add('active');
+    });
+    document.getElementById('close-modal-2').addEventListener('click', () => {
+      document.getElementById('second-modal').classList.remove('active');
+    });
 
-        function mapToCapabilities(config) {
-            return {
-                recolorables: [],
-                borderables: [],
-                fontEditable: undefined,
-                fontSizeable: undefined
-            };
-        }
+// Modal 3
+    document.getElementById('open-modal-3').addEventListener('click', () => {
+      document.getElementById('third-modal').classList.add('active');
+    });
+    document.getElementById('close-modal-3').addEventListener('click', () => {
+      document.getElementById('third-modal').classList.remove('active');
+    });
+// Modal 4
+    document.getElementById('open-modal-4').addEventListener('click', () => {
+      document.getElementById('fourth-modal').classList.add('active');
+    });
+    document.getElementById('close-modal-4').addEventListener('click', () => {
+      document.getElementById('fourth-modal').classList.remove('active');
+    });
+// Modal 5
+    document.getElementById('open-modal-5').addEventListener('click', () => {
+      document.getElementById('fifth-modal').classList.add('active');
+    });
+    document.getElementById('close-modal-5').addEventListener('click', () => {
+      document.getElementById('fifth-modal').classList.remove('active');
+    });
+// Modal 6
+    document.getElementById('open-modal-6').addEventListener('click', () => {
+      document.getElementById('sixth-modal').classList.add('active');
+    });
+    document.getElementById('close-modal-6').addEventListener('click', () => {
+      document.getElementById('sixth-modal').classList.remove('active');
+    });
 
-        function mapToEditPanelValues(config) {
-            return new Map([
-                ["main_title", config.main_title || defaultConfig.main_title],
-                ["subtitle", config.subtitle || defaultConfig.subtitle]
-            ]);
-        }
+    // Chiudi cliccando overlay (entrambi)
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    });
 
-        if (window.elementSdk) {
-            window.elementSdk.init({
-                defaultConfig,
-                onConfigChange,
-                mapToCapabilities,
-                mapToEditPanelValues
-            });
-        }
-    </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9be05ecf919bedbc',t:'MTc2ODQyNzY1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    // ESC chiude entrambi
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+      }
+    });
+
+
+  </script>
+
+    
+  </body>
+</html>
+
+
+  <script>
+console.log('Ciao da JavaScript!');
+  </script>
+</body>
 </html>
