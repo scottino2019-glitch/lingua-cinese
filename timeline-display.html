@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Timeline Eventi</title>
+  <title>Timeline Eventi - Cinese</title>
   <style>
     * {
       margin: 0;
@@ -151,6 +151,25 @@
       color: #e84393;
     }
 
+    .event-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .event-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
     .empty-state {
       text-align: center;
       color: white;
@@ -206,24 +225,25 @@
       margin: 20px 0;
     }
   </style>
-  
-  
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body>
   <div class="container">
-   <h1>📚 Aggiornamenti del Sito</h1>
+   <h1>📚 Timeline Eventi Cinese</h1>
    <div id="loading" class="loading">
-    Caricamento aggiornamenti...
+    ⏳ Caricamento eventi...
    </div>
-   <div id="error" class="error" style="display: none;">
-    Errore nel caricamento degli eventi. Verifica che il file events.json esista.
+   <div id="error" class="error" style="display:none;">
+    ❌ Errore nel caricamento. Verifica che il file events.json sia presente.
    </div>
-   <div id="timeline" class="timeline" style="display: none;"><!-- Gli eventi verranno inseriti qui -->
+   <div id="emptyState" class="empty-state" style="display:none;">
+    <p>📭 Nessun evento presente</p>
+    <p>Aggiungi eventi nel file events.json</p>
    </div>
-   <div id="emptyState" class="empty-state" style="display: none;">
-    <p>📭 Nessun aggiornamento da visualizzare</p>
-    <p>Aggiungi aggiornamenti nel file events.json!</p>
-   </div>
+   <div id="timeline" class="timeline" style="display:none;"></div>
   </div>
   <script>
     async function loadEvents() {
@@ -235,13 +255,13 @@
       try {
         // Carica il file JSON
         const response = await fetch('events.json');
-        
+
         if (!response.ok) {
           throw new Error('File non trovato');
         }
 
         const events = await response.json();
-        
+
         loadingEl.style.display = 'none';
 
         if (events.length === 0) {
@@ -259,12 +279,14 @@
         events.forEach(event => {
           const item = document.createElement('div');
           item.className = 'timeline-item';
-          
+
           const formattedDate = new Date(event.date + 'T00:00:00').toLocaleDateString('it-IT', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
           });
+
+          const linkButton = event.link ? `<a href="${escapeHtml(event.link)}" target="_blank" rel="noopener noreferrer" class="event-link">🔗 Approfondisci</a>` : '';
 
           item.innerHTML = `
             <div class="timeline-content">
@@ -272,10 +294,11 @@
               <h3 class="event-title">${escapeHtml(event.title)}</h3>
               <p class="event-description">${escapeHtml(event.description)}</p>
               <span class="category-badge category-${event.category}">${getCategoryLabel(event.category)}</span>
+              ${linkButton}
             </div>
             <div class="timeline-dot"></div>
           `;
-          
+
           timelineEl.appendChild(item);
         });
 
@@ -307,5 +330,5 @@
     // Carica gli eventi quando la pagina è pronta
     loadEvents();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bede67e67f6ed5f',t:'MTc2ODU2OTUyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bef9d3b6101ed5f',t:'MTc2ODU4NzQ5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
