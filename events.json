@@ -3,9 +3,9 @@
 "id":1,
 "date":"2026-01-16",
 "title":"Nuova sessione grammatica",
-"description":"Aggiunto grammatica lezione 11</a>",
+"description":"Aggiunto grammatica lezione 11",
 "category":"grammatica",
-"link":"https://scottino2019-glitch.github.io/lingua-cinese/grammatica/classificatori-cinesi.html/1"
+"link":"https://scottino2019-glitch.github.io/lingua-cinese/grammatica/classificatori-cinesi.html"
 },
 {
 "id":2,
@@ -13,6 +13,6 @@
 "title":"Nuova sessione app",
 "description":"Aggiornamento Flashcard",
 "category":"app",
-"link":"https://scottino2019-glitch.github.io/lingua-cinese/flashcards.html/2"
+"link":"https://scottino2019-glitch.github.io/lingua-cinese/flashcards.html"
 }
 ]
