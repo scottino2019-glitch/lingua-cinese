@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="it" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acchiappa i Caratteri Cinesi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-chinese {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    
+    .font-game {
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    @keyframes fall {
+      from {
+        top: -10%;
+      }
+      to {
+        top: 110%;
+      }
+    }
+    
+    @keyframes explode {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes pulse-neon {
+      0%, 100% {
+        box-shadow: 0 0 30px rgba(255, 64, 129, 0.6),
+                    inset 0 0 20px rgba(255, 64, 129, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 50px rgba(255, 64, 129, 0.9),
+                    inset 0 0 30px rgba(255, 64, 129, 0.5);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes glow-text {
+      0%, 100% {
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.8),
+                     0 0 20px rgba(0, 255, 255, 0.6),
+                     0 0 30px rgba(0, 255, 255, 0.4);
+      }
+      50% {
+        text-shadow: 0 0 20px rgba(0, 255, 255, 1),
+                     0 0 30px rgba(0, 255, 255, 0.8),
+                     0 0 40px rgba(0, 255, 255, 0.6);
+      }
+    }
+    
+    .falling-char {
+      position: absolute;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.1s;
+      pointer-events: auto;
+    }
+    
+    .falling-char:hover {
+      transform: scale(1.2);
+    }
+    
+    .explode-effect {
+      animation: explode 0.4s ease-out forwards;
+      pointer-events: none;
+    }
+    
+    .pulse-neon {
+      animation: pulse-neon 1.5s ease-in-out infinite;
+    }
+    
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .glow-text {
+      animation: glow-text 2s ease-in-out infinite;
+    }
+    
+    .basket {
+      transition: left 0.15s ease-out;
+      pointer-events: none;
+    }
+    
+    .game-canvas {
+      position: relative;
+      overflow: hidden;
+      touch-action: none;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-game">
+  <div id="app" class="h-full overflow-auto"><!-- Menu Screen -->
+   <main id="menu-screen" class="min-h-full flex flex-col items-center justify-center p-6">
+    <div class="text-center max-w-2xl w-full"><!-- Logo -->
+     <div class="mb-8 float-anim">
+      <div class="text-8xl mb-4">
+       🐉
+      </div>
+      <h1 id="game-title" class="text-5xl font-bold mb-4 glow-text"></h1>
+      <p id="game-subtitle" class="text-xl opacity-80">Muovi il cesto e acchiappa i caratteri cinesi!</p>
+     </div><!-- High Scores -->
+     <div id="high-scores" class="grid grid-cols-3 gap-4 mb-10 max-w-md mx-auto">
+      <div class="rounded-2xl p-5 pulse-neon" id="score-box-1">
+       <div class="text-3xl font-bold mb-1" id="best-score">
+        0
+       </div>
+       <div class="text-sm opacity-70">
+        Record
+       </div>
+      </div>
+      <div class="rounded-2xl p-5" id="score-box-2">
+       <div class="text-3xl font-bold mb-1" id="total-games">
+        0
+       </div>
+       <div class="text-sm opacity-70">
+        Partite
+       </div>
+      </div>
+      <div class="rounded-2xl p-5" id="score-box-3">
+       <div class="text-3xl font-bold mb-1" id="total-chars">
+        0
+       </div>
+       <div class="text-sm opacity-70">
+        Caratteri
+       </div>
+      </div>
+     </div><!-- Instructions -->
+     <div class="rounded-3xl p-6 mb-8 max-w-lg mx-auto" id="instructions-box">
+      <p id="instructions-text" class="text-lg leading-relaxed"></p>
+     </div><!-- Difficulty Selection -->
+     <div class="mb-8">
+      <p class="text-sm opacity-70 mb-4 uppercase tracking-wider">Scegli Difficoltà:</p>
+      <div class="flex justify-center gap-4"><button class="difficulty-btn px-8 py-4 rounded-2xl font-bold text-lg transition-all" data-difficulty="easy"> 😊 Facile </button> <button class="difficulty-btn px-8 py-4 rounded-2xl font-bold text-lg transition-all" data-difficulty="hard"> 🔥 Difficile </button>
+      </div>
+     </div><!-- Play Button --> <button id="play-button" class="px-12 py-6 rounded-3xl font-bold text-2xl pulse-neon transform transition-all hover:scale-105"> <span id="play-button-text"></span> ▶ </button>
+    </div>
+   </main><!-- Game Screen -->
+   <section id="game-screen" class="min-h-full flex flex-col hidden"><!-- Game Header -->
+    <header class="flex items-center justify-between p-4" id="game-header"><button id="pause-button" class="px-4 py-2 rounded-xl font-semibold"> ⏸ Pausa </button>
+     <div class="flex items-center gap-6">
+      <div class="text-center">
+       <div class="text-sm opacity-70">
+        Punteggio
+       </div>
+       <div id="current-score" class="text-2xl font-bold">
+        0
+       </div>
+      </div>
+      <div class="text-center">
+       <div class="text-sm opacity-70">
+        Vite
+       </div>
+       <div id="lives-display" class="text-2xl">
+        ❤️❤️❤️
+       </div>
+      </div>
+      <div class="text-center">
+       <div class="text-sm opacity-70">
+        Livello
+       </div>
+       <div id="level-display" class="text-2xl font-bold">
+        1
+       </div>
+      </div>
+     </div>
+    </header><!-- Target Word Display -->
+    <div class="text-center py-6" id="target-section">
+     <p class="text-sm opacity-70 mb-2">TROVA:</p>
+     <div class="inline-block rounded-2xl px-8 py-4" id="target-box"><span id="target-word" class="text-5xl font-chinese font-bold"></span>
+      <div id="target-meaning" class="text-lg mt-2 opacity-80"></div>
+     </div>
+    </div><!-- Game Canvas -->
+    <div class="flex-1 game-canvas" id="game-canvas"><!-- Falling characters will be added here dynamically --> <!-- Basket -->
+     <div id="basket" class="basket absolute bottom-5 w-24 h-24 flex items-center justify-center text-6xl">
+      🧺
+     </div>
+    </div>
+   </section><!-- Pause Screen -->
+   <section id="pause-screen" class="min-h-full flex flex-col items-center justify-center p-6 hidden">
+    <div class="text-center max-w-md">
+     <div class="text-7xl mb-6">
+      ⏸️
+     </div>
+     <h2 class="text-4xl font-bold mb-8">Pausa</h2>
+     <div class="space-y-4"><button id="resume-button" class="w-full px-8 py-4 rounded-2xl font-bold text-xl"> ▶ Riprendi </button> <button id="quit-button" class="w-full px-8 py-4 rounded-2xl font-bold text-xl"> 🏠 Menu </button>
+     </div>
+    </div>
+   </section><!-- Game Over Screen -->
+   <section id="gameover-screen" class="min-h-full flex flex-col items-center justify-center p-6 hidden">
+    <div class="text-center max-w-md">
+     <div class="text-8xl mb-6" id="gameover-emoji">
+      💥
+     </div>
+     <h2 class="text-5xl font-bold mb-4" id="gameover-title">Game Over!</h2><!-- Final Stats -->
+     <div class="rounded-3xl p-8 mb-8" id="final-stats-box">
+      <div class="grid grid-cols-2 gap-6 mb-6">
+       <div>
+        <div class="text-4xl font-bold mb-2" id="final-score">
+         0
+        </div>
+        <div class="text-sm opacity-70">
+         Punteggio
+        </div>
+       </div>
+       <div>
+        <div class="text-4xl font-bold mb-2" id="final-level">
+         0
+        </div>
+        <div class="text-sm opacity-70">
+         Livello
+        </div>
+       </div>
+      </div>
+      <div class="border-t pt-4" id="stats-border">
+       <div class="text-3xl font-bold mb-2" id="words-caught-display">
+        0
+       </div>
+       <div class="text-sm opacity-70">
+        Caratteri catturati
+       </div>
+      </div>
+      <div id="new-record-badge" class="mt-6 px-6 py-3 rounded-full font-bold inline-block hidden">
+       🏆 NUOVO RECORD! 🏆
+      </div>
+     </div><!-- Action Buttons -->
+     <div class="space-y-4"><button id="play-again-button" class="w-full px-8 py-5 rounded-2xl font-bold text-xl pulse-neon"> 🔄 Gioca Ancora </button> <button id="menu-button" class="w-full px-8 py-5 rounded-2xl font-bold text-xl"> 🏠 Menu Principale </button>
+     </div>
+    </div>
+   </section>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      game_title: 'Acchiappa i Caratteri',
+      play_button: 'Gioca Ora',
+      instructions: 'Muovi il cesto con il mouse o toccando lo schermo. Cattura solo i caratteri che corrispondono alla parola mostrata sopra. Evita quelli sbagliati!',
+      background_color: '#0a0e27',
+      surface_color: '#1a1f3a',
+      text_color: '#00ffff',
+      primary_action_color: '#ff4081',
+      secondary_action_color: '#7c4dff'
+    };
+
+    // Chinese vocabulary data
+    const vocabulary = {
+      numbers: [
+        { char: '一', pinyin: 'yī', meaning: 'Uno' },
+        { char: '二', pinyin: 'èr', meaning: 'Due' },
+        { char: '三', pinyin: 'sān', meaning: 'Tre' },
+        { char: '四', pinyin: 'sì', meaning: 'Quattro' },
+        { char: '五', pinyin: 'wǔ', meaning: 'Cinque' },
+        { char: '六', pinyin: 'liù', meaning: 'Sei' },
+        { char: '七', pinyin: 'qī', meaning: 'Sette' },
+        { char: '八', pinyin: 'bā', meaning: 'Otto' },
+        { char: '九', pinyin: 'jiǔ', meaning: 'Nove' },
+        { char: '十', pinyin: 'shí', meaning: 'Dieci' }
+      ],
+      colors: [
+        { char: '红', pinyin: 'hóng', meaning: 'Rosso' },
+        { char: '蓝', pinyin: 'lán', meaning: 'Blu' },
+        { char: '绿', pinyin: 'lǜ', meaning: 'Verde' },
+        { char: '黄', pinyin: 'huáng', meaning: 'Giallo' },
+        { char: '白', pinyin: 'bái', meaning: 'Bianco' },
+        { char: '黑', pinyin: 'hēi', meaning: 'Nero' }
+      ],
+      animals: [
+        { char: '�����', pinyin: 'gǒu', meaning: 'Cane' },
+        { char: '猫', pinyin: 'māo', meaning: 'Gatto' },
+        { char: '鸟', pinyin: 'niǎo', meaning: 'Uccello' },
+        { char: '鱼', pinyin: 'yú', meaning: 'Pesce' },
+        { char: '马', pinyin: 'mǎ', meaning: 'Cavallo' },
+        { char: '牛', pinyin: 'niú', meaning: 'Mucca' }
+      ]
+    };
+
+    // Combine all vocabulary
+    const allWords = [...vocabulary.numbers, ...vocabulary.colors, ...vocabulary.animals];
+
+    // Game state
+    let currentScreen = 'menu';
+    let difficulty = 'easy';
+    let score = 0;
+    let level = 1;
+    let lives = 3;
+    let wordsCaught = 0;
+    let targetWord = null;
+    let gameLoop = null;
+    let spawnInterval = null;
+    let basketX = 50;
+    let fallingChars = [];
+    let bestScore = 0;
+    let isPaused = false;
+
+    // DOM Elements
+    const screens = {
+      menu: document.getElementById('menu-screen'),
+      game: document.getElementById('game-screen'),
+      pause: document.getElementById('pause-screen'),
+      gameover: document.getElementById('gameover-screen')
+    };
+
+    // Initialize with default config
+    applyConfig(defaultConfig);
+
+    // Apply configuration to UI
+    function applyConfig(config) {
+      const bg = config.background_color || defaultConfig.background_color;
+      const surface = config.surface_color || defaultConfig.surface_color;
+      const text = config.text_color || defaultConfig.text_color;
+      const primary = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondary = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+      // Background
+      document.body.style.backgroundColor = bg;
+      document.body.style.color = text;
+      document.getElementById('app').style.backgroundColor = bg;
+
+      // Title and text
+      document.getElementById('game-title').textContent = config.game_title || defaultConfig.game_title;
+      document.getElementById('play-button-text').textContent = config.play_button || defaultConfig.play_button;
+      document.getElementById('instructions-text').textContent = config.instructions || defaultConfig.instructions;
+
+      // Score boxes
+      document.getElementById('score-box-1').style.backgroundColor = surface;
+      document.getElementById('score-box-1').style.borderColor = primary;
+      document.getElementById('score-box-2').style.backgroundColor = surface;
+      document.getElementById('score-box-3').style.backgroundColor = surface;
+
+      // Instructions box
+      document.getElementById('instructions-box').style.backgroundColor = surface;
+
+      // Difficulty buttons
+      document.querySelectorAll('.difficulty-btn').forEach(btn => {
+        if (btn.dataset.difficulty === difficulty) {
+          btn.style.backgroundColor = primary;
+          btn.style.color = '#fff';
+        } else {
+          btn.style.backgroundColor = surface;
+          btn.style.color = text;
+        }
+      });
+
+      // Play button
+      document.getElementById('play-button').style.backgroundColor = primary;
+      document.getElementById('play-button').style.color = '#fff';
+
+      // Game header
+      document.getElementById('game-header').style.backgroundColor = surface;
+      document.getElementById('pause-button').style.backgroundColor = primary;
+      document.getElementById('pause-button').style.color = '#fff';
+
+      // Target box
+      document.getElementById('target-box').style.backgroundColor = surface;
+      document.getElementById('target-box').style.borderColor = primary;
+      document.getElementById('target-box').style.border = `3px solid ${primary}`;
+
+      // Pause screen buttons
+      document.getElementById('resume-button').style.backgroundColor = primary;
+      document.getElementById('resume-button').style.color = '#fff';
+      document.getElementById('quit-button').style.backgroundColor = surface;
+      document.getElementById('quit-button').style.color = text;
+
+      // Game over screen
+      document.getElementById('final-stats-box').style.backgroundColor = surface;
+      document.getElementById('stats-border').style.borderColor = primary;
+      document.getElementById('new-record-badge').style.backgroundColor = primary;
+      document.getElementById('new-record-badge').style.color = '#fff';
+      document.getElementById('play-again-button').style.backgroundColor = primary;
+      document.getElementById('play-again-button').style.color = '#fff';
+      document.getElementById('menu-button').style.backgroundColor = surface;
+      document.getElementById('menu-button').style.color = text;
+    }
+
+    // Update statistics display
+    function updateStats() {
+      const storedBest = localStorage.getItem('bestScore') || 0;
+      const storedGames = localStorage.getItem('totalGames') || 0;
+      const storedChars = localStorage.getItem('totalChars') || 0;
+
+      bestScore = parseInt(storedBest);
+      
+      document.getElementById('best-score').textContent = storedBest;
+      document.getElementById('total-games').textContent = storedGames;
+      document.getElementById('total-chars').textContent = storedChars;
+    }
+
+    // Save game result
+    function saveGameResult() {
+      const storedBest = parseInt(localStorage.getItem('bestScore') || 0);
+      const storedGames = parseInt(localStorage.getItem('totalGames') || 0);
+      const storedChars = parseInt(localStorage.getItem('totalChars') || 0);
+
+      if (score > storedBest) {
+        localStorage.setItem('bestScore', score);
+        bestScore = score;
+      }
+      
+      localStorage.setItem('totalGames', storedGames + 1);
+      localStorage.setItem('totalChars', storedChars + wordsCaught);
+      
+      updateStats();
+    }
+
+    // Show screen
+    function showScreen(screenName) {
+      Object.values(screens).forEach(s => s.classList.add('hidden'));
+      screens[screenName].classList.remove('hidden');
+      currentScreen = screenName;
+      applyConfig(defaultConfig);
+    }
+
+    // Shuffle array
+    function shuffle(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // Start game
+    function startGame() {
+      score = 0;
+      level = 1;
+      lives = 3;
+      wordsCaught = 0;
+      fallingChars = [];
+      isPaused = false;
+      
+      selectNewTarget();
+      updateGameUI();
+      showScreen('game');
+      
+      startGameLoop();
+    }
+
+    // Select new target word
+    function selectNewTarget() {
+      targetWord = allWords[Math.floor(Math.random() * allWords.length)];
+      document.getElementById('target-word').textContent = targetWord.char;
+      document.getElementById('target-meaning').textContent = targetWord.meaning;
+      
+      // Remove all falling characters when target changes
+      fallingChars.forEach(char => {
+        if (char.element && char.element.parentNode) {
+          char.element.remove();
+        }
+      });
+      fallingChars = [];
+    }
+
+    // Update game UI
+    function updateGameUI() {
+      document.getElementById('current-score').textContent = score;
+      document.getElementById('level-display').textContent = level;
+      
+      const hearts = '❤️'.repeat(lives) + '🖤'.repeat(Math.max(0, 3 - lives));
+      document.getElementById('lives-display').textContent = hearts;
+    }
+
+    // Start game loop
+    function startGameLoop() {
+      const canvas = document.getElementById('game-canvas');
+      
+      // Spawn characters
+      const spawnRate = difficulty === 'easy' ? 1500 : 1000;
+      spawnInterval = setInterval(() => {
+        if (!isPaused) {
+          spawnCharacter();
+        }
+      }, spawnRate);
+
+      // Game loop for falling characters and collision detection
+      gameLoop = setInterval(() => {
+        if (!isPaused) {
+          updateFallingChars();
+        }
+      }, 30);
+    }
+
+    // Spawn a falling character
+    function spawnCharacter() {
+      const canvas = document.getElementById('game-canvas');
+      const canvasWidth = canvas.offsetWidth;
+      
+      // 40% chance to spawn target word, 60% chance to spawn wrong word
+      const isTarget = Math.random() < 0.4;
+      let word;
+      
+      if (isTarget) {
+        word = targetWord;
+      } else {
+        const otherWords = allWords.filter(w => w.char !== targetWord.char);
+        word = otherWords[Math.floor(Math.random() * otherWords.length)];
+      }
+      
+      const charElement = document.createElement('div');
+      charElement.className = 'falling-char font-chinese text-5xl font-bold';
+      charElement.textContent = word.char;
+      
+      const startX = Math.random() * (canvasWidth - 80) + 40;
+      const startY = -60;
+      
+      charElement.style.left = startX + 'px';
+      charElement.style.top = startY + 'px';
+      
+      const config = defaultConfig;
+      
+      if (isTarget) {
+        charElement.style.color = config.primary_action_color || defaultConfig.primary_action_color;
+      } else {
+        charElement.style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
+      }
+      
+      charElement.dataset.word = word.char;
+      charElement.dataset.isTarget = isTarget;
+      
+      charElement.addEventListener('click', () => handleCharClick(charElement, isTarget));
+      
+      canvas.appendChild(charElement);
+      fallingChars.push({
+        element: charElement,
+        isTarget: isTarget,
+        x: startX,
+        y: startY,
+        speed: difficulty === 'easy' ? 2 : 3.5,
+        caught: false
+      });
+    }
+
+    // Handle character click
+    function handleCharClick(element, isTarget) {
+      if (isPaused) return;
+      
+      element.classList.add('explode-effect');
+      
+      if (isTarget) {
+        score += 10 * level;
+        wordsCaught++;
+        
+        // Change target word after each correct catch
+        selectNewTarget();
+        
+        if (wordsCaught % 10 === 0) {
+          level++;
+        }
+        
+        // Positive feedback
+        const feedback = document.createElement('div');
+        feedback.textContent = '+' + (10 * level);
+        feedback.style.position = 'absolute';
+        feedback.style.left = element.style.left;
+        feedback.style.top = element.offsetTop + 'px';
+        feedback.style.color = defaultConfig.primary_action_color;
+        feedback.style.fontSize = '2rem';
+        feedback.style.fontWeight = 'bold';
+        feedback.className = 'explode-effect';
+        document.getElementById('game-canvas').appendChild(feedback);
+        
+        setTimeout(() => feedback.remove(), 400);
+      } else {
+        lives--;
+        
+        // Negative feedback for wrong character
+        const feedback = document.createElement('div');
+        feedback.textContent = '✖ SBAGLIATO!';
+        feedback.style.position = 'absolute';
+        feedback.style.left = element.style.left;
+        feedback.style.top = element.offsetTop + 'px';
+        feedback.style.color = defaultConfig.secondary_action_color;
+        feedback.style.fontSize = '1.5rem';
+        feedback.style.fontWeight = 'bold';
+        feedback.className = 'explode-effect';
+        document.getElementById('game-canvas').appendChild(feedback);
+        
+        setTimeout(() => feedback.remove(), 400);
+        
+        if (lives <= 0) {
+          endGame();
+        }
+      }
+      
+      updateGameUI();
+      
+      setTimeout(() => {
+        element.remove();
+        fallingChars = fallingChars.filter(c => c.element !== element);
+      }, 400);
+    }
+
+    // Update falling characters and check collisions
+    function updateFallingChars() {
+      const basket = document.getElementById('basket');
+      const basketRect = basket.getBoundingClientRect();
+      const canvas = document.getElementById('game-canvas');
+      const canvasHeight = canvas.offsetHeight;
+      
+      fallingChars = fallingChars.filter(char => {
+        if (char.caught) return false;
+        
+        // Move character down
+        char.y += char.speed;
+        char.element.style.top = char.y + 'px';
+        
+        // Get character position
+        const charRect = char.element.getBoundingClientRect();
+        
+        // Check collision with basket
+        const isColliding = 
+          charRect.bottom >= basketRect.top &&
+          charRect.top <= basketRect.bottom &&
+          charRect.right >= basketRect.left &&
+          charRect.left <= basketRect.right;
+        
+        if (isColliding) {
+          char.caught = true;
+          handleCharClick(char.element, char.isTarget);
+          return false;
+        }
+        
+        // Check if character fell past the bottom
+        if (char.y > canvasHeight) {
+          // Character missed
+          if (char.isTarget) {
+            lives--;
+            if (lives <= 0) {
+              endGame();
+            }
+            updateGameUI();
+          }
+          
+          char.element.remove();
+          return false;
+        }
+        
+        return true;
+      });
+    }
+
+    // End game
+    function endGame() {
+      clearInterval(gameLoop);
+      clearInterval(spawnInterval);
+      
+      fallingChars.forEach(char => char.element.remove());
+      fallingChars = [];
+      
+      document.getElementById('final-score').textContent = score;
+      document.getElementById('final-level').textContent = level;
+      document.getElementById('words-caught-display').textContent = wordsCaught;
+      
+      if (score > bestScore) {
+        document.getElementById('new-record-badge').classList.remove('hidden');
+        document.getElementById('gameover-emoji').textContent = '🏆';
+        document.getElementById('gameover-title').textContent = 'Nuovo Record!';
+      } else {
+        document.getElementById('new-record-badge').classList.add('hidden');
+        document.getElementById('gameover-emoji').textContent = '💥';
+        document.getElementById('gameover-title').textContent = 'Game Over!';
+      }
+      
+      saveGameResult();
+      showScreen('gameover');
+    }
+
+    // Pause game
+    function pauseGame() {
+      isPaused = true;
+      showScreen('pause');
+    }
+
+    // Resume game
+    function resumeGame() {
+      isPaused = false;
+      showScreen('game');
+    }
+
+    // Mouse and touch controls
+    function setupControls() {
+      const canvas = document.getElementById('game-canvas');
+      const basket = document.getElementById('basket');
+      
+      function moveBasket(clientX) {
+        const canvasRect = canvas.getBoundingClientRect();
+        const basketWidth = basket.offsetWidth;
+        let x = clientX - canvasRect.left - basketWidth / 2;
+        
+        x = Math.max(0, Math.min(x, canvasRect.width - basketWidth));
+        basket.style.left = x + 'px';
+      }
+      
+      canvas.addEventListener('mousemove', (e) => {
+        if (!isPaused && currentScreen === 'game') {
+          moveBasket(e.clientX);
+        }
+      });
+      
+      canvas.addEventListener('touchmove', (e) => {
+        if (!isPaused && currentScreen === 'game') {
+          e.preventDefault();
+          moveBasket(e.touches[0].clientX);
+        }
+      });
+    }
+
+    // Event Listeners
+    document.querySelectorAll('.difficulty-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        difficulty = btn.dataset.difficulty;
+        applyConfig(defaultConfig);
+      });
+    });
+
+    document.getElementById('play-button').addEventListener('click', startGame);
+    document.getElementById('pause-button').addEventListener('click', pauseGame);
+    document.getElementById('resume-button').addEventListener('click', resumeGame);
+    document.getElementById('quit-button').addEventListener('click', () => {
+      clearInterval(gameLoop);
+      clearInterval(spawnInterval);
+      fallingChars.forEach(char => char.element.remove());
+      fallingChars = [];
+      showScreen('menu');
+    });
+    document.getElementById('play-again-button').addEventListener('click', startGame);
+    document.getElementById('menu-button').addEventListener('click', () => showScreen('menu'));
+
+    // Initial setup
+    setupControls();
+    applyConfig(defaultConfig);
+    updateStats();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bf69182b7845274',t:'MTc2ODY2MDQxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
