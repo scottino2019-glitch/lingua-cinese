@@ -1,15 +1,15 @@
 [
 {
 "id":1,
-"date":"2026-01-17",
-"title":"Nuova sessione giochi",
-"description":"Nuovo Gioco",
-"category":"giochi",
-"link":"https://scottino2019-glitch.github.io/lingua-cinese/giochi/acchiappa-caratteri.html"
+"date":"2026-01-19",
+"title":"Nuova sessione grammatica",
+"description":"Nuove regole",
+"category":"grammatica",
+"link":"https://scottino2019-glitch.github.io/lingua-cinese/grammatica/classificatori-cinesi.html"
 },
 {
 "id":2,
-"date":"2026-01-19",
+"date":"2026-01-21",
 "title":"Nuova sessione grammatica",
 "description":"Nuove regole",
 "category":"grammatica",
