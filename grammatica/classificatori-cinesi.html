@@ -664,7 +664,21 @@ body {
             margin-top: 8px;
             margin-bottom: 0;
         }
-
+.box {
+            background-color: white;
+            padding: 20px;
+            border-left: 5px solid #2980b9;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        code {
+            background-color: #e8f4fd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
 
       @media (max-width: 768px) {
         .modal-card {
@@ -784,6 +798,11 @@ body {
   <h1>Lezione 11</h1>
   <p>二vs两</p>
   <button id="open-modal-6" class="btn-primary">Apri guida</button>
+</div>
+<div class="trigger-card">
+  <h1>La Struttura Interrogativa Complessa</h1>
+  <p>Grammatica Cinese: "Domanda nella Domanda"</p>
+  <button id="open-modal-7" class="btn-primary">Apri guida</button>
 </div>
 </div>
 
@@ -3595,6 +3614,99 @@ body {
 </div>
 </div>
 </div>
+<div id="seventh-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header-bar">
+        <span>Domanda</span>
+        <button class="modal-close-btn" id="close-modal-7" aria-label="Chiudi">×</button>
+      </div>
+      <div class="modal-scroll">
+        <!-- Incolla qui il tuo secondo contenuto -->
+        <div class="placeholder-content">
+<div class="box">
+    <h2>1. La Regola d'Oro</h2>
+    <p>Quando inseriamo una domanda (chi, dove, quando) all'interno di una domanda principale (es: "Tu sai...?"), la frase segue questa logica:</p>
+    <ul>
+        <li>La <strong>domanda interna</strong> mantiene l'ordine delle parole di una frase normale.</li>
+        <li>Se la domanda principale richiede una risposta Sì/No, si aggiunge <code>吗 (ma)</code> alla fine.</li>
+    </ul>
+</div>
+
+<div class="box">
+    <h2>2. Esempio con "Dove" (哪儿 - nǎr)</h2>
+    <p>Analizziamo la tua frase d'esempio:</p>
+    <p class="chinese">你知道我们的图书馆在哪儿吗？</p>
+    <p class="pinyin">Nǐ zhīdào wǒmen de túshūguǎn zài nǎr ma?</p>
+    <p><strong>Analisi:</strong> La domanda è "Lo sai?". Il contenuto è "Dov'è la biblioteca?". Il <code>吗</code> finale serve per chiedere conferma al verbo <em>sapere</em>.</p>
+</div>
+
+<div class="box">
+    <h2>3. Esempi con "Chi" (谁 - shéi)</h2>
+    <p>In cinese <code>谁</code> non si sposta all'inizio della frase, rimane nel posto del soggetto o dell'oggetto.</p>
+    
+    <table>
+        <tr>
+            <th>Tipo</th>
+            <th>Frase Cinese</th>
+            <th>Traduzione</th>
+        </tr>
+        <tr>
+            <td>Diretta</td>
+            <td><span class="chinese">他是谁？</span></td>
+            <td>Chi è lui?</td>
+        </tr>
+        <tr>
+            <td><strong>Complessa</strong></td>
+            <td><span class="chinese">你知道<strong>他是谁</strong>吗？</span></td>
+            <td><strong>Sai chi è lui?</strong></td>
+        </tr>
+    </table>
+</div>
+
+<div class="box">
+    <h2>4. Esempi con "Quando" (什么时候 - shénme shíhou)</h2>
+    <p>Anche per il tempo, la struttura rimane fissa all'interno della cornice principale.</p>
+    
+    <table>
+        <tr>
+            <th>Tipo</th>
+            <th>Frase Cinese</th>
+            <th>Traduzione</th>
+        </tr>
+        <tr>
+            <td>Diretta</td>
+            <td><span class="chinese">你什么时候走？</span></td>
+            <td>Quando parti?</td>
+        </tr>
+        <tr>
+            <td><strong>Complessa</strong></td>
+            <td><span class="chinese">你能告诉我你<strong>什么时候走</strong>吗？</span></td>
+            <td><strong>Puoi dirmi quando parti?</strong></td>
+        </tr>
+    </table>
+</div>
+
+<div class="box">
+    <h2>5. Quando NON usare "吗" (ma)</h2>
+    <p>Se la domanda principale usa la forma <span class="highlight">Verbo-不-Verbo</span> (es: <em>sapere-non-sapere</em>), la particella <code>吗</code> scompare perché la domanda è già "caricata" nel verbo principale.</p>
+    <ul>
+        <li><span class="chinese">你<strong>知不知道</strong>他是谁？</span> <br> <span class="pinyin">(Nǐ zhī bù zhīdào tā shì shéi?)</span> <br> "Sai o non sai chi è lui?" (Corretto)</li>
+        <li><span class="chinese">你<strong>知不知道</strong>他是谁<del>吗</del>？</span> (Errato: troppi elementi interrogativi)</li>
+    </ul>
+</div>
+
+<div class="box" style="border-left: 5px solid #27ae60;">
+    <h2>Riassunto Rapido</h2>
+    <p><strong>Formula:</strong> Soggetto + Verbo (sapere/dire/capire) + [Frase Interrogativa] + 吗 ?</p>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
   <!-- JS per entrambi i modal -->
   <script>
     // Modal 1
@@ -3640,6 +3752,13 @@ body {
     });
     document.getElementById('close-modal-6').addEventListener('click', () => {
       document.getElementById('sixth-modal').classList.remove('active');
+    });
+// Modal 6
+    document.getElementById('open-modal-7').addEventListener('click', () => {
+      document.getElementById('seventh-modal').classList.add('active');
+    });
+    document.getElementById('close-modal-7').addEventListener('click', () => {
+      document.getElementById('seventh-modal').classList.remove('active');
     });
 
     // Chiudi cliccando overlay (entrambi)
