@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi Dialoghi Cinesi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, yellow 0%, red 100%);
+            min-height: 100vh;
+        }
+
+        .chinese-font {
+            font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+        }
+
+        .modal-overlay {
+            backdrop-filter: blur(8px);
+            background-color: rgba(15, 23, 42, 0.85);
+            transition: opacity 0.3s ease;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c7d2fe;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-6 space-y-8">
+
+    <div class="text-center mb-4 text-white">
+        <h1 class="text-4xl font-extrabold mb-2">Impara il Cinese</h1>
+        <p class="text-indigo-100 italic">Dalla descrizione alla conversazione</p>
+    </div>
+
+    <!-- Container delle Card -->
+    <div class="flex flex-col md:flex-row gap-8 w-full max-w-4xl justify-center items-center">
+        
+        <!-- CARD LIVELLO 1 -->
+        <div onclick="openModal('modal-base')" class="group bg-white rounded-3xl p-8 w-full max-w-sm cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl shadow-xl border-b-8 border-green-500">
+            <span class="text-7xl block text-center mb-6 group-hover:scale-110 transition-transform">🗺️</span>
+            <h2 class="text-2xl font-extrabold text-gray-800 text-center">Dialoghi Base</h2>
+            <p class="text-green-600 font-bold text-center mt-2 uppercase text-xs tracking-widest">Esercizi 1 - 3</p>
+            <p class="text-gray-500 text-center mt-4 text-sm">Direzioni, Ristorante e Shopping.</p>
+        </div>
+
+        <!-- CARD LIVELLO 2 -->
+        <div onclick="openModal('modal-advanced')" class="group bg-white rounded-3xl p-8 w-full max-w-sm cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl shadow-xl border-b-8 border-indigo-500">
+            <span class="text-7xl block text-center mb-6 group-hover:scale-110 transition-transform">🎭</span>
+            <h2 class="text-2xl font-extrabold text-gray-800 text-center">Dialoghi Avanzati</h2>
+            <p class="text-indigo-600 font-bold text-center mt-2 uppercase text-xs tracking-widest">Esercizi 4 - 6</p>
+            <p class="text-gray-500 text-center mt-4 text-sm">Hotel, Classificatori e Avverbi.</p>
+        </div>
+
+    </div>
+
+    <!-- MODAL LIVELLO 1 -->
+    <div id="modal-base" class="modal-overlay fixed inset-0 z-50 hidden flex items-center justify-center p-4" onclick="closeModal('modal-base')">
+        <div class="bg-slate-50 w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col" onclick="event.stopPropagation()">
+            <div class="bg-green-600 p-6 text-white flex justify-between items-center">
+                <h3 class="text-xl font-bold">Esercizi Livello 1: Situazioni Quotidiane</h3>
+                <button onclick="closeModal('modal-base')" class="text-3xl font-light hover:rotate-90 transition-transform">&times;</button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-8">
+                <!-- EX 1 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <h4 class="text-green-700 font-bold mb-3 uppercase text-xs">Esercizio 1: Chiedere la direzione</h4>
+                    <div class="chinese-font text-lg bg-green-50 p-4 rounded-xl border-l-4 border-green-400 mb-4">
+                        小明想去火车站，他问一个路人火车站怎么走。
+                    </div>
+                    <textarea class="w-full p-3 border rounded-xl mb-4 focus:ring-2 focus:ring-green-500 outline-none" rows="3" placeholder="Scrivi il tuo dialogo..."></textarea>
+                    <button onclick="toggleSolution(this)" class="text-sm font-semibold text-green-700 hover:underline">Mostra Soluzione Esempio</button>
+                    <div class="hidden mt-4 p-4 bg-gray-100 rounded-xl text-sm italic space-y-1">
+                        <p><strong>小明:</strong> 请问，火车站怎么走？</p>
+                        <p><strong>路人:</strong> 你往前走，到第二个路口左转。</p>
+                    </div>
+                </div>
+
+                <!-- EX 2 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <h4 class="text-green-700 font-bold mb-3 uppercase text-xs">Esercizio 2: Al Ristorante</h4>
+                    <div class="chinese-font text-lg bg-green-50 p-4 rounded-xl border-l-4 border-green-400 mb-4">
+                        李华和他的朋友去餐厅吃饭。服务员来点菜。
+                    </div>
+                    <textarea class="w-full p-3 border rounded-xl mb-4 focus:ring-2 focus:ring-green-500 outline-none" rows="3" placeholder="Scrivi il tuo dialogo..."></textarea>
+                    <button onclick="toggleSolution(this)" class="text-sm font-semibold text-green-700 hover:underline">Mostra Soluzione Esempio</button>
+                    <div class="hidden mt-4 p-4 bg-gray-100 rounded-xl text-sm italic space-y-1">
+                        <p><strong>服务员:</strong> 你们想吃点什么？</p>
+                        <p><strong>李华:</strong> 我要一个麻婆豆腐和两份米饭。</p>
+                    </div>
+                </div>
+
+                <!-- EX 3 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <h4 class="text-green-700 font-bold mb-3 uppercase text-xs">Esercizio 3: Comprare vestiti</h4>
+                    <div class="chinese-font text-lg bg-green-50 p-4 rounded-xl border-l-4 border-green-400 mb-4">
+                        玛丽想买一件新衣服，她在商店里和店员交流。
+                    </div>
+                    <textarea class="w-full p-3 border rounded-xl mb-4 focus:ring-2 focus:ring-green-500 outline-none" rows="3" placeholder="Scrivi il tuo dialogo..."></textarea>
+                    <button onclick="toggleSolution(this)" class="text-sm font-semibold text-green-700 hover:underline">Mostra Soluzione Esempio</button>
+                    <div class="hidden mt-4 p-4 bg-gray-100 rounded-xl text-sm italic space-y-1">
+                        <p><strong>玛丽:</strong> 我可以试一下这件衣服吗？</p>
+                        <p><strong>店员:</strong> 当然可以，试衣间在那边。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LIVELLO 2 -->
+    <div id="modal-advanced" class="modal-overlay fixed inset-0 z-50 hidden flex items-center justify-center p-4" onclick="closeModal('modal-advanced')">
+        <div class="bg-slate-50 w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col" onclick="event.stopPropagation()">
+            <div class="bg-indigo-600 p-6 text-white flex justify-between items-center">
+                <h3 class="text-xl font-bold">Esercizi Livello 2: Grammatica Avanzata</h3>
+                <button onclick="closeModal('modal-advanced')" class="text-3xl font-light hover:rotate-90 transition-transform">&times;</button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-8">
+                <!-- EX 4 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <h4 class="text-indigo-700 font-bold mb-3 uppercase text-xs">Esercizio 4: Prenotazione (怎么 / Modali)</h4>
+                    <div class="chinese-font text-lg bg-indigo-50 p-4 rounded-xl border-l-4 border-indigo-400 mb-4">
+                        大卫到宾馆了，但是前台找不到他的预订。他问前台怎么回事。
+                    </div>
+                    <textarea class="w-full p-3 border rounded-xl mb-4 focus:ring-2 focus:ring-indigo-500 outline-none" rows="3" placeholder="Scrivi il tuo dialogo..."></textarea>
+                    <button onclick="toggleSolution(this)" class="text-sm font-semibold text-indigo-700 hover:underline">Mostra Soluzione Esempio</button>
+                    <div class="hidden mt-4 p-4 bg-gray-100 rounded-xl text-sm italic space-y-1">
+                        <p><strong>大卫:</strong> 怎么找不到我的名字？我一定要今天入住。</p>
+                        <p><strong>前台:</strong> 别担心，我可以为您查一下。</p>
+                    </div>
+                </div>
+
+                <!-- EX 5 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <h4 class="text-indigo-700 font-bold mb-3 uppercase text-xs">Esercizio 5: Al Mercato (Classificatori)</h4>
+                    <div class="chinese-font text-lg bg-indigo-50 p-4 rounded-xl border-l-4 border-indigo-400 mb-4">
+                        张太太在水果店想买一些苹果和两斤香蕉。
+                    </div>
+                    <textarea class="w-full p-3 border rounded-xl mb-4 focus:ring-2 focus:ring-indigo-500 outline-none" rows="3" placeholder="Scrivi il tuo dialogo..."></textarea>
+                    <button onclick="toggleSolution(this)" class="text-sm font-semibold text-indigo-700 hover:underline">Mostra Soluzione Esempio</button>
+                    <div class="hidden mt-4 p-4 bg-gray-100 rounded-xl text-sm italic space-y-1">
+                        <p><strong>张太太:</strong> 这些苹果怎么卖？我要买五个。</p>
+                        <p><strong>店员:</strong> 五个十块。您还要两斤香蕉吗？</p>
+                    </div>
+                </div>
+
+                <!-- EX 6 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <h4 class="text-indigo-700 font-bold mb-3 uppercase text-xs">Esercizio 6: Amico in ritardo (Avverbi)</h4>
+                    <div class="chinese-font text-lg bg-indigo-50 p-4 rounded-xl border-l-4 border-indigo-400 mb-4">
+                        王明已经等了半个小时了，李华还没来。王明给李华打电话。
+                    </div>
+                    <textarea class="w-full p-3 border rounded-xl mb-4 focus:ring-2 focus:ring-indigo-500 outline-none" rows="3" placeholder="Scrivi il tuo dialogo..."></textarea>
+                    <button onclick="toggleSolution(this)" class="text-sm font-semibold text-indigo-700 hover:underline">Mostra Soluzione Esempio</button>
+                    <div class="hidden mt-4 p-4 bg-gray-100 rounded-xl text-sm italic space-y-1">
+                        <p><strong>王明:</strong> 你怎么还没到？我已经等了你很久了！</p>
+                        <p><strong>李华:</strong> 对不起，我正在路上，马上就到。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Disabilita scroll pagina
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Riabilita scroll pagina
+        }
+
+        function toggleSolution(btn) {
+            const solution = btn.nextElementSibling;
+            const isHidden = solution.classList.contains('hidden');
+            
+            if (isHidden) {
+                solution.classList.remove('hidden');
+                btn.textContent = "Nascondi Soluzione";
+            } else {
+                solution.classList.add('hidden');
+                btn.textContent = "Mostra Soluzione Esempio";
+            }
+        }
+
+        // Chiude i modal premendo il tasto ESC
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal('modal-base');
+                closeModal('modal-advanced');
+            }
+        });
+    </script>
+</body>
+</html>
+
