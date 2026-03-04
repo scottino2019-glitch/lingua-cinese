@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi di cinese sui verbi modali</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Stili personalizzati per migliorare la leggibilità e l'estetica */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .chinese-char {
+            /* Font specifici per i caratteri cinesi */
+            font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+            font-size: 1.8em; /* Rende i caratteri più grandi e leggibili */
+            line-height: 1.6;
+        }
+        .blank {
+            color: #ef4444; /* red-500 */
+            font-weight: bold;
+            text-decoration: underline; /* Sottolinea per evidenziare il "vuoto" */
+            margin: 0 5px; /* Spazio intorno al blank */
+        }
+        /* Assicura che i placeholder in cinese abbiano il font corretto */
+        input::placeholder {
+            font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-lg shadow-xl max-w-2xl w-full">
+        <h1 class="text-4xl font-extrabold text-center mb-6 text-indigo-800">Esercizi di cinese sui verbi modali</h1>
+        <p class="text-gray-700 mb-8 text-center text-lg">
+            Completa le frasi inserendo il verbo modale cinese corretto (es. 会, 要, 应该).
+            Fai attenzione al contesto!
+        </p>
+
+        <div id="quiz-container">
+            <div id="question-container" class="mb-6 bg-indigo-50 p-6 rounded-md border border-indigo-200">
+                <p id="question-number" class="text-sm text-indigo-600 mb-3 font-medium tracking-wide">Domanda 1/X</p>
+                <p id="question-text" class="chinese-char text-gray-900 mb-4 leading-relaxed"></p>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <input type="text" id="answer-input" class="flex-grow p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg placeholder-gray-500" placeholder="Scrivi qui la tua risposta (es. 会)">
+                    <button id="check-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-md transition duration-300 transform hover:scale-105">Controlla</button>
+                </div>
+            </div>
+
+            <div id="feedback-container" class="mb-6 p-4 rounded-md text-center hidden">
+                <p id="feedback-text" class="text-xl font-bold mb-2"></p>
+                <p id="correct-answer-info" class="text-gray-700 text-md leading-relaxed"></p>
+            </div>
+
+            <div class="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
+                <button id="next-button" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md transition duration-300 transform hover:scale-105 hidden">Prossima Domanda</button>
+                <p id="score-display" class="text-xl font-bold text-indigo-800">Punteggio: 0</p>
+            </div>
+        </div>
+
+        <div id="quiz-end-screen" class="hidden text-center mt-8 p-6 bg-white rounded-lg">
+            <h2 class="text-4xl font-bold text-indigo-700 mb-4">Quiz Completato!</h2>
+            <p class="text-xl text-gray-800 mb-6">Il tuo punteggio finale è: <span id="final-score" class="font-bold text-green-700 text-2xl"></span></p>
+            <button id="restart-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-md transition duration-300 transform hover:scale-105">Ricomincia</button>
+        </div>
+    </div>
+
+    <script>
+        // Array di domande, ciascuna con frase, risposta corretta, pinyin e traduzione
+        const questions = [
+            {
+                id: 1,
+                sentence: "我 ___ 说汉语。",
+                answer: "会",
+                pinyin: "huì",
+                translation: "sapere come (fare qualcosa, abilità acquisita)",
+                correctSentence: "我会说汉语。"
+            },
+            {
+                id: 2,
+                sentence: "你 ___ 吃辣的吗？",
+                answer: "想",
+                pinyin: "xiǎng",
+                translation: "volere, desiderare",
+                correctSentence: "你想吃辣的吗？"
+            },
+            {
+                id: 3,
+                sentence: "我明天 ___ 去北京。",
+                answer: "要",
+                pinyin: "yào",
+                translation: "volere, avere intenzione di, stare per",
+                correctSentence: "我明天要去北京。"
+            },
+            {
+                id: 4,
+                sentence: "你 ___ 多休息。",
+                answer: "应该",
+                pinyin: "yīnggāi",
+                translation: "dover (moralmente), sarebbe bene",
+                correctSentence: "你应该多休息。"
+            },
+            {
+                id: 5,
+                sentence: "这个房间很安静，你 ___ 在这里学习。",
+                answer: "可以",
+                pinyin: "kěyǐ",
+                translation: "potere, essere permesso",
+                correctSentence: "这个房间很安静，你可以在这里学习。"
+            },
+            {
+                id: 6,
+                sentence: "你 ___ 听老师的话。",
+                answer: "必须",
+                pinyin: "bìxū",
+                translation: "dover (imperativo), essere obbligato",
+                correctSentence: "你必须听老师的话。"
+            },
+            {
+                id: 7,
+                sentence: "他 ___ 跑步，但是今天不舒服。",
+                answer: "能",
+                pinyin: "néng",
+                translation: "potere (fisicamente), essere capace",
+                correctSentence: "他能跑步，但是今天不舒服。"
+            },
+            {
+                id: 8,
+                sentence: "我 ___ 帮你拿行李吗？",
+                answer: "可以",
+                pinyin: "kěyǐ",
+                translation: "potere, essere permesso",
+                correctSentence: "我可以帮你拿行李吗？"
+            },
+            {
+                id: 9,
+                sentence: "他们 ___ 参加这个会议。",
+                answer: "应该",
+                pinyin: "yīnggāi",
+                translation: "dover (moralmente), sarebbe bene",
+                correctSentence: "他们应该参加这个会议。"
+            },
+            {
+                id: 10,
+                sentence: "小孩子 ___ 晚上九点睡觉。",
+                answer: "要", 
+                pinyin: "yào",
+                translation: "dover (regola/necessità)",
+                correctSentence: "小孩子要晚上九点睡觉。"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // Recupero degli elementi HTML
+        const questionNumberElem = document.getElementById('question-number');
+        const questionTextElem = document.getElementById('question-text');
+        const answerInput = document.getElementById('answer-input');
+        const checkButton = document.getElementById('check-button');
+        const nextButton = document.getElementById('next-button');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const feedbackText = document.getElementById('feedback-text');
+        const correctAnswerInfo = document.getElementById('correct-answer-info');
+        const scoreDisplay = document.getElementById('score-display');
+        const quizContainer = document.getElementById('quiz-container');
+        const quizEndScreen = document.getElementById('quiz-end-screen');
+        const finalScore = document.getElementById('final-score');
+        const restartButton = document.getElementById('restart-button');
+
+        // Funzione per visualizzare la domanda corrente
+        function displayQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const q = questions[currentQuestionIndex];
+                questionNumberElem.textContent = `Domanda ${currentQuestionIndex + 1}/${questions.length}`;
+                
+                // Sostituisce "___" con uno span per stilizzare il blank
+                questionTextElem.innerHTML = q.sentence.replace('___', '<span class="blank">___</span>');
+                answerInput.value = ''; // Pulisce l'input
+                feedbackContainer.classList.add('hidden'); // Nasconde il feedback
+                nextButton.classList.add('hidden'); // Nasconde il pulsante "Prossima Domanda"
+                checkButton.classList.remove('hidden'); // Mostra il pulsante "Controlla"
+                answerInput.disabled = false; // Abilita l'input
+                answerInput.focus(); // Mette il focus sull'input per una migliore UX
+            } else {
+                endQuiz(); // Se le domande sono finite, termina il quiz
+            }
+        }
+
+        // Funzione per controllare la risposta dell'utente
+        function checkAnswer() {
+            const userAnswer = answerInput.value.trim(); // Ottiene la risposta, rimuovendo spazi bianchi
+            const q = questions[currentQuestionIndex];
+            
+            feedbackContainer.classList.remove('hidden'); // Mostra il container del feedback
+            checkButton.classList.add('hidden'); // Nasconde il pulsante "Controlla"
+            nextButton.classList.remove('hidden'); // Mostra il pulsante "Prossima Domanda"
+            answerInput.disabled = true; // Disabilita l'input dopo aver controllato
+
+            if (userAnswer.toLowerCase() === q.answer.toLowerCase()) { // Confronto case-insensitive
+                score++; // Incrementa il punteggio
+                feedbackContainer.classList.remove('bg-red-100');
+                feedbackContainer.classList.add('bg-green-100'); // Sfondo verde per risposta corretta
+                feedbackText.textContent = 'Corretto!';
+                feedbackText.classList.remove('text-red-700');
+                feedbackText.classList.add('text-green-700');
+                correctAnswerInfo.innerHTML = `La frase corretta è: <span class="chinese-char font-semibold">${q.correctSentence}</span>`;
+            } else {
+                feedbackContainer.classList.remove('bg-green-100');
+                feedbackContainer.classList.add('bg-red-100'); // Sfondo rosso per risposta sbagliata
+                feedbackText.textContent = 'Sbagliato.';
+                feedbackText.classList.remove('text-green-700');
+                feedbackText.classList.add('text-red-700');
+                correctAnswerInfo.innerHTML = `La risposta corretta era: <span class="chinese-char font-semibold">${q.answer}</span> (${q.pinyin} - ${q.translation}).<br>La frase corretta è: <span class="chinese-char font-semibold">${q.correctSentence}</span>`;
+            }
+            scoreDisplay.textContent = `Punteggio: ${score}`; // Aggiorna il punteggio visualizzato
+        }
+
+        // Funzione per passare alla prossima domanda
+        function nextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        // Funzione per terminare il quiz
+        function endQuiz() {
+            quizContainer.classList.add('hidden'); // Nasconde il container del quiz
+            quizEndScreen.classList.remove('hidden'); // Mostra la schermata finale
+            finalScore.textContent = `${score} / ${questions.length}`; // Mostra il punteggio finale
+        }
+
+        // Funzione per ricominciare il quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreDisplay.textContent = `Punteggio: ${score}`;
+            quizContainer.classList.remove('hidden');
+            quizEndScreen.classList.add('hidden');
+            displayQuestion(); // Inizia con la prima domanda
+        }
+
+        // Event Listeners per i pulsanti e l'input
+        checkButton.addEventListener('click', checkAnswer);
+        nextButton.addEventListener('click', nextQuestion);
+        restartButton.addEventListener('click', restartQuiz);
+        answerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (!checkButton.classList.contains('hidden')) { // Se il pulsante "Controlla" è visibile
+                    checkAnswer();
+                } else if (!nextButton.classList.contains('hidden')) { // Se il pulsante "Prossima Domanda" è visibile
+                    nextQuestion();
+                }
+            }
+        });
+
+        // Avvio del quiz al caricamento della pagina
+        displayQuestion();
+    </script>
+</body>
+</html>
