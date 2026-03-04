@@ -7,23 +7,20 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Stili personalizzati per migliorare la leggibilità e l'estetica */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .chinese-char {
-            /* Font specifici per i caratteri cinesi */
             font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-            font-size: 1.8em; /* Rende i caratteri più grandi e leggibili */
+            font-size: 1.8em; 
             line-height: 1.6;
         }
         .blank {
-            color: #ef4444; /* red-500 */
+            color: #ef4444; 
             font-weight: bold;
-            text-decoration: underline; /* Sottolinea per evidenziare il "vuoto" */
-            margin: 0 5px; /* Spazio intorno al blank */
+            text-decoration: underline; 
+            margin: 0 5px; 
         }
-        /* Assicura che i placeholder in cinese abbiano il font corretto */
         input::placeholder {
             font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
         }
@@ -31,18 +28,17 @@
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
     <div class="bg-white p-8 rounded-lg shadow-xl max-w-2xl w-full">
-        <h1 class="text-4xl font-extrabold text-center mb-6 text-indigo-800">Esercizi di cinese sui verbi modali</h1>
+        <h1 class="text-4xl font-extrabold text-center mb-6 text-indigo-800">Esercizi sui verbi modali</h1>
         <p class="text-gray-700 mb-8 text-center text-lg">
-            Completa le frasi inserendo il verbo modale cinese corretto (es. 会, 要, 应该).
-            Fai attenzione al contesto!
+            Completa le frasi inserendo il verbo modale cinese corretto.
         </p>
 
         <div id="quiz-container">
             <div id="question-container" class="mb-6 bg-indigo-50 p-6 rounded-md border border-indigo-200">
-                <p id="question-number" class="text-sm text-indigo-600 mb-3 font-medium tracking-wide">Domanda 1/X</p>
+                <p id="question-number" class="text-sm text-indigo-600 mb-3 font-medium tracking-wide">Caricamento...</p>
                 <p id="question-text" class="chinese-char text-gray-900 mb-4 leading-relaxed"></p>
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                    <input type="text" id="answer-input" class="flex-grow p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg placeholder-gray-500" placeholder="Scrivi qui la tua risposta (es. 会)">
+                    <input type="text" id="answer-input" class="flex-grow p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg" placeholder="Scrivi qui (es. 会)">
                     <button id="check-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-md transition duration-300 transform hover:scale-105">Controlla</button>
                 </div>
             </div>
@@ -66,174 +62,32 @@
     </div>
 
     <script>
-        // Array di domande, ciascuna con frase, risposta corretta, pinyin e traduzione
         const questions = [
-            {
-                id: 1,
-                sentence: "我 ___ 说汉语。",
-                answer: "会",
-                pinyin: "huì",
-                translation: "sapere come (fare qualcosa, abilità acquisita)",
-                correctSentence: "我会说汉语。"
-            },
-            {
-                id: 2,
-                sentence: "你 ___ 吃辣的吗？",
-                answer: "想",
-                pinyin: "xiǎng",
-                translation: "volere, desiderare",
-                correctSentence: "你想吃辣的吗？"
-            },
-            {
-                id: 3,
-                sentence: "我明天 ___ 去北京。",
-                answer: "要",
-                pinyin: "yào",
-                translation: "volere, avere intenzione di, stare per",
-                correctSentence: "我明天要去北京。"
-            },
-            {
-                id: 4,
-                sentence: "你 ___ 多休息。",
-                answer: "应该",
-                pinyin: "yīnggāi",
-                translation: "dover (moralmente), sarebbe bene",
-                correctSentence: "你应该多休息。"
-            },
-            {
-                id: 5,
-                sentence: "这个房间很安静，你 ___ 在这里学习。",
-                answer: "可以",
-                pinyin: "kěyǐ",
-                translation: "potere, essere permesso",
-                correctSentence: "这个房间很安静，你可以在这里学习。"
-            },
-            {
-                id: 6,
-                sentence: "你 ___ 听老师的话。",
-                answer: "必须",
-                pinyin: "bìxū",
-                translation: "dover (imperativo), essere obbligato",
-                correctSentence: "你必须听老师的话。"
-            },
-            {
-                id: 7,
-                sentence: "他 ___ 跑步，但是今天不舒服。",
-                answer: "能",
-                pinyin: "néng",
-                translation: "potere (fisicamente), essere capace",
-                correctSentence: "他能跑步，但是今天不舒服。"
-            },
-            {
-                id: 8,
-                sentence: "我 ___ 帮你拿行李吗？",
-                answer: "可以",
-                pinyin: "kěyǐ",
-                translation: "potere, essere permesso",
-                correctSentence: "我可以帮你拿行李吗？"
-            },
-            {
-                id: 9,
-                sentence: "他们 ___ 参加这个会议。",
-                answer: "应该",
-                pinyin: "yīnggāi",
-                translation: "dover (moralmente), sarebbe bene",
-                correctSentence: "他们应该参加这个会议。"
-            },
-            {
-                id: 10,
-                sentence: "小孩子 ___ 晚上九点睡觉。",
-                answer: "要", 
-                pinyin: "yào",
-                translation: "dover (regola/necessità)",
-                correctSentence: "小孩子要晚上九点睡觉。"
-            },
-           {
-                id: 11,
-        sentence: "这里的菜太贵了，我们 ___ 去别的地方吃。",
-        answer: "可以",
-        pinyin: "kěyǐ",
-        translation: "potere, avere la possibilità (scelta tra alternative)",
-        correctSentence: "这里的菜太贵了，我们可以去别的地方吃。"
-    },
-    {
-        id: 12,
-        sentence: "我还没学过，所以不 ___ 开车。",
-        answer: "会",
-        pinyin: "huì",
-        translation: "sapere come (abilità non ancora acquisita)",
-        correctSentence: "我还没学过，所以不会开车。"
-    },
-    {
-        id: 13,
-        sentence: "医生说我 ___ 喝酒。",
-        answer: "不能",
-        pinyin: "bù néng",
-        translation: "non potere (divieto medico o fisico)",
-        correctSentence: "医生说我不能喝酒。"
-    },
-    {
-        id: 14,
-        sentence: "如果你感冒了，___ 去看医生。",
-        answer: "得",
-        pinyin: "děi",
-        translation: "dovere (colloquiale, necessità oggettiva)",
-        correctSentence: "如果你感冒了，得去看医生。"
-    },
-    {
-        id: 15,
-        sentence: "外面太冷了，我情愿 ___ 在家里打游戏。",
-        answer: "想",
-        pinyin: "xiǎng",
-        translation: "volere, desiderare (preferenza soggettiva)",
-        correctSentence: "外面太冷了，我想在家里打游戏。"
-    },
-    {
-        id: 16,
-        sentence: "明天有考试，你 ___ 复习一下。",
-        answer: "应当",
-        pinyin: "yīngdāng",
-        translation: "dovresti (sinonimo formale di 应该)",
-        correctSentence: "明天有考试，你应当复习一下。"
-    },
-    {
-        id: 17,
-        sentence: "他感冒好了，现在 ___ 打篮球了。",
-        answer: "能",
-        pinyin: "néng",
-        translation: "potere (ripristino di una capacità fisica)",
-        correctSentence: "他感冒好了，现在能打篮球了。"
-    },
-    {
-        id: 18,
-        sentence: "这里的公车很准时，你不需要 ___ 担心。",
-        answer: "用",
-        pinyin: "yòng",
-        translation: "aver bisogno di (spesso usato al negativo 不用)",
-        correctSentence: "这里的公车很准时，你不用担心。"
-    },
-    {
-        id: 19,
-        sentence: "图书馆里 ___ 大声说话。",
-        answer: "不可以",
-        pinyin: "bù kěyǐ",
-        translation: "non potere (divieto di comportamento)",
-        correctSentence: "图书馆里不可以大声说话。"
-    },
-    {
-        id: 20,
-        sentence: "天黑了，我们快 ___ 回家了。",
-        answer: "要",
-        pinyin: "yào",
-        translation: "stare per (imminenza di un'azione)",
-        correctSentence: "天黑了，我们快要回家了。"
-    }
+            { id: 1, sentence: "我 ___ 说汉语。", answer: "会", pinyin: "huì", translation: "sapere come (abilità acquisita)", correctSentence: "我会说汉语。" },
+            { id: 2, sentence: "你 ___ 吃辣的吗？", answer: "想", pinyin: "xiǎng", translation: "volere, desiderare", correctSentence: "你想吃辣的吗？" },
+            { id: 3, sentence: "我明天 ___ 去北京。", answer: "要", pinyin: "yào", translation: "volere, avere intenzione di", correctSentence: "我明天要去北京。" },
+            { id: 4, sentence: "你 ___ 多休息。", answer: "应该", pinyin: "yīnggāi", translation: "dovere (consiglio)", correctSentence: "你应该多休息。" },
+            { id: 5, sentence: "这个房间很安静，你 ___ 在这里学习。", answer: "可以", pinyin: "kěyǐ", translation: "potere, essere permesso", correctSentence: "这个房间很安静，你可以在这里学习。" },
+            { id: 6, sentence: "你 ___ 听老师的话。", answer: "必须", pinyin: "bìxū", translation: "dovere (obbligo)", correctSentence: "你必须听老师的话。" },
+            { id: 7, sentence: "他 ___ 跑步，但是今天不舒服。", answer: "能", pinyin: "néng", translation: "potere (capacità fisica)", correctSentence: "他能跑步，但是今天不舒服。" },
+            { id: 8, sentence: "我 ___ 帮你拿行李吗？", answer: "可以", pinyin: "kěyǐ", translation: "potere (permesso/richiesta)", correctSentence: "我可以帮你拿行李吗？" },
+            { id: 9, sentence: "他们 ___ 参加这个会议。", answer: "应该", pinyin: "yīnggāi", translation: "dovere (morale/opportunità)", correctSentence: "他们应该参加这个会议。" },
+            { id: 10, sentence: "小孩子 ___ 晚上九点睡觉。", answer: "要", pinyin: "yào", translation: "dovere (necessità)", correctSentence: "小孩子要晚上九点睡觉。" },
+            { id: 11, sentence: "这里的菜太贵了，我们 ___ 去别的地方吃。", answer: "可以", pinyin: "kěyǐ", translation: "potere (opzione)", correctSentence: "这里的菜太贵了，我们可以去别的地方吃。" },
+            { id: 12, sentence: "我还没学过，所以不 ___ 开车。", answer: "会", pinyin: "huì", translation: "sapere come (non ancora imparato)", correctSentence: "我还没学过，所以不会开车。" },
+            { id: 13, sentence: "医生说我 ___ 喝酒。", answer: "不能", pinyin: "bù néng", translation: "non potere (divieto fisico/medico)", correctSentence: "医生说我不能喝酒。" },
+            { id: 14, sentence: "如果你感冒了，___ 去看医生。", answer: "得", pinyin: "děi", translation: "dovere (necessità oggettiva)", correctSentence: "如果你感冒了，得去看医生。" },
+            { id: 15, sentence: "外面太冷了，我情愿 ___ 在家里打游戏。", answer: "想", pinyin: "xiǎng", translation: "volere (desiderio)", correctSentence: "外面太冷了，我想在家里打游戏。" },
+            { id: 16, sentence: "明天有考试，你 ___ 复习一下。", answer: "应当", pinyin: "yīngdāng", translation: "dovresti (formale)", correctSentence: "明天有考试，你应当复习一下。" },
+            { id: 17, sentence: "他感冒好了，现在 ___ 打篮球了。", answer: "能", pinyin: "néng", translation: "potere (capacità ripristinata)", correctSentence: "他感冒好了，现在能打篮球了。" },
+            { id: 18, sentence: "这里的公车很准时，你不需要 ___ 担心。", answer: "用", pinyin: "yòng", translation: "aver bisogno di (negativo: 不用)", correctSentence: "这里的公车很准时，你不用担心。" },
+            { id: 19, sentence: "图书馆里 ___ 大声说话。", answer: "不可以", pinyin: "bù kěyǐ", translation: "non potere (permesso negato)", correctSentence: "图书馆里不可以大声说话。" },
+            { id: 20, sentence: "天黑了，我们快 ___ 回家了。", answer: "要", pinyin: "yào", translation: "stare per (imminenza)", correctSentence: "天黑了， we 快要回家了。" }
         ];
 
         let currentQuestionIndex = 0;
         let score = 0;
 
-        // Recupero degli elementi HTML
         const questionNumberElem = document.getElementById('question-number');
         const questionTextElem = document.getElementById('question-text');
         const answerInput = document.getElementById('answer-input');
@@ -248,93 +102,80 @@
         const finalScore = document.getElementById('final-score');
         const restartButton = document.getElementById('restart-button');
 
-        // Funzione per visualizzare la domanda corrente
         function displayQuestion() {
             if (currentQuestionIndex < questions.length) {
                 const q = questions[currentQuestionIndex];
-                questionNumberElem.textContent = `Domanda ${currentQuestionIndex + 1}/${questions.length}`;
+                // Aggiornamento dinamico del numero domanda basato sulla lunghezza dell'array
+                questionNumberElem.textContent = `Domanda ${currentQuestionIndex + 1} / ${questions.length}`;
                 
-                // Sostituisce "___" con uno span per stilizzare il blank
                 questionTextElem.innerHTML = q.sentence.replace('___', '<span class="blank">___</span>');
-                answerInput.value = ''; // Pulisce l'input
-                feedbackContainer.classList.add('hidden'); // Nasconde il feedback
-                nextButton.classList.add('hidden'); // Nasconde il pulsante "Prossima Domanda"
-                checkButton.classList.remove('hidden'); // Mostra il pulsante "Controlla"
-                answerInput.disabled = false; // Abilita l'input
-                answerInput.focus(); // Mette il focus sull'input per una migliore UX
+                answerInput.value = '';
+                feedbackContainer.classList.add('hidden');
+                nextButton.classList.add('hidden');
+                checkButton.classList.remove('hidden');
+                answerInput.disabled = false;
+                answerInput.focus();
             } else {
-                endQuiz(); // Se le domande sono finite, termina il quiz
+                endQuiz();
             }
         }
 
-        // Funzione per controllare la risposta dell'utente
         function checkAnswer() {
-            const userAnswer = answerInput.value.trim(); // Ottiene la risposta, rimuovendo spazi bianchi
+            const userAnswer = answerInput.value.trim();
             const q = questions[currentQuestionIndex];
             
-            feedbackContainer.classList.remove('hidden'); // Mostra il container del feedback
-            checkButton.classList.add('hidden'); // Nasconde il pulsante "Controlla"
-            nextButton.classList.remove('hidden'); // Mostra il pulsante "Prossima Domanda"
-            answerInput.disabled = true; // Disabilita l'input dopo aver controllato
+            feedbackContainer.classList.remove('hidden');
+            checkButton.classList.add('hidden');
+            nextButton.classList.remove('hidden');
+            answerInput.disabled = true;
 
-            if (userAnswer.toLowerCase() === q.answer.toLowerCase()) { // Confronto case-insensitive
-                score++; // Incrementa il punteggio
-                feedbackContainer.classList.remove('bg-red-100');
-                feedbackContainer.classList.add('bg-green-100'); // Sfondo verde per risposta corretta
-                feedbackText.textContent = 'Corretto!';
-                feedbackText.classList.remove('text-red-700');
-                feedbackText.classList.add('text-green-700');
-                correctAnswerInfo.innerHTML = `La frase corretta è: <span class="chinese-char font-semibold">${q.correctSentence}</span>`;
+            if (userAnswer === q.answer) {
+                score++;
+                feedbackContainer.className = "mb-6 p-4 rounded-md text-center bg-green-100";
+                feedbackText.textContent = 'Corretto! 太棒了！';
+                feedbackText.className = "text-xl font-bold mb-2 text-green-700";
+                correctAnswerInfo.innerHTML = `Frase: <span class="chinese-char font-semibold">${q.correctSentence}</span>`;
             } else {
-                feedbackContainer.classList.remove('bg-green-100');
-                feedbackContainer.classList.add('bg-red-100'); // Sfondo rosso per risposta sbagliata
-                feedbackText.textContent = 'Sbagliato.';
-                feedbackText.classList.remove('text-green-700');
-                feedbackText.classList.add('text-red-700');
-                correctAnswerInfo.innerHTML = `La risposta corretta era: <span class="chinese-char font-semibold">${q.answer}</span> (${q.pinyin} - ${q.translation}).<br>La frase corretta è: <span class="chinese-char font-semibold">${q.correctSentence}</span>`;
+                feedbackContainer.className = "mb-6 p-4 rounded-md text-center bg-red-100";
+                feedbackText.textContent = 'Sbagliato. 加油！';
+                feedbackText.className = "text-xl font-bold mb-2 text-red-700";
+                correctAnswerInfo.innerHTML = `Risposta corretta: <span class="chinese-char font-semibold">${q.answer}</span> (${q.pinyin})<br>Frase: <span class="chinese-char font-semibold">${q.correctSentence}</span>`;
             }
-            scoreDisplay.textContent = `Punteggio: ${score}`; // Aggiorna il punteggio visualizzato
+            scoreDisplay.textContent = `Punteggio: ${score}`;
         }
 
-        // Funzione per passare alla prossima domanda
         function nextQuestion() {
             currentQuestionIndex++;
             displayQuestion();
         }
 
-        // Funzione per terminare il quiz
         function endQuiz() {
-            quizContainer.classList.add('hidden'); // Nasconde il container del quiz
-            quizEndScreen.classList.remove('hidden'); // Mostra la schermata finale
-            finalScore.textContent = `${score} / ${questions.length}`; // Mostra il punteggio finale
+            quizContainer.classList.add('hidden');
+            quizEndScreen.classList.remove('hidden');
+            finalScore.textContent = `${score} / ${questions.length}`;
         }
 
-        // Funzione per ricominciare il quiz
         function restartQuiz() {
             currentQuestionIndex = 0;
             score = 0;
             scoreDisplay.textContent = `Punteggio: ${score}`;
             quizContainer.classList.remove('hidden');
             quizEndScreen.classList.add('hidden');
-            displayQuestion(); // Inizia con la prima domanda
+            displayQuestion();
         }
 
-        // Event Listeners per i pulsanti e l'input
         checkButton.addEventListener('click', checkAnswer);
         nextButton.addEventListener('click', nextQuestion);
         restartButton.addEventListener('click', restartQuiz);
-        answerInput.addEventListener('keypress', function(e) {
+        answerInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                if (!checkButton.classList.contains('hidden')) { // Se il pulsante "Controlla" è visibile
-                    checkAnswer();
-                } else if (!nextButton.classList.contains('hidden')) { // Se il pulsante "Prossima Domanda" è visibile
-                    nextQuestion();
-                }
+                if (!checkButton.classList.contains('hidden')) checkAnswer();
+                else if (!nextButton.classList.contains('hidden')) nextQuestion();
             }
         });
 
-        // Avvio del quiz al caricamento della pagina
         displayQuestion();
     </script>
 </body>
 </html>
+
