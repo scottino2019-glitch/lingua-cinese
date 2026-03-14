@@ -1,27 +1,24 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video esercizi</title>
-  <style>
-
-  </style>
-</head>
-<body>
-<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz & Video Multi-Domanda</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Esercizi - Quiz & Video</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; color: #1c1e21; }
+        /* Stili Generali */
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 30px; color: #1c1e21; }
         .container { display: flex; gap: 20px; max-width: 1200px; margin: 0 auto; }
         .main-col { flex: 3; }
         .side-col { flex: 1; background: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); height: fit-content; }
         
-        video { width: 100%; border-radius: 12px; background: #000; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        /* Titolo Principale */
+        .page-title { text-align: center; color: #1877f2; margin-bottom: 20px; }
         
+        /* Video e Player */
+        video { width: 100%; border-radius: 12px; background: #000; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        #current-title { margin-top: 15px; color: #333; }
+
+        /* Quiz Box */
         #quiz-box { background: #fff; margin-top: 20px; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; text-align: center; }
         #question-text { font-size: 1.2rem; color: #050505; margin-bottom: 15px; }
         input { width: 80%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none; }
@@ -30,6 +27,7 @@
         .btn { padding: 12px 25px; cursor: pointer; border: none; border-radius: 8px; background: #28a745; color: white; font-weight: bold; font-size: 1rem; transition: 0.2s; }
         .btn:hover { background: #218838; }
         
+        /* Playlist */
         .vid-link { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; border-radius: 6px; }
         .vid-link:hover { background: #f2f2f2; color: #1877f2; }
         .active-vid { background: #e7f3ff; color: #1877f2; font-weight: bold; }
@@ -39,10 +37,12 @@
 </head>
 <body>
 
+<h1 class="page-title">Piattaforma Video Esercizi</h1>
+
 <div class="container">
     <div class="main-col">
         <video id="player" controls src=""></video>
-        <h2 id="current-title">Scegli una lezione dalla playlist</h2>
+        <h2 id="current-title">Scegli una lezione dalla playlist a destra</h2>
         
         <div id="quiz-box">
             <div id="quiz-content">
@@ -58,17 +58,19 @@
 
     <div class="side-col">
         <h3 style="margin-top:0;">Lezioni Disponibili</h3>
-<a href="video2.html"><button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95">
-    <span class="mr-2">⬅️</span>Clicca qui
-</button></a>
-<br>
+        <a href="video2.html" style="text-decoration: none;">
+            <button class="btn" style="background: linear-gradient(to r, #ff4b2b, #ff416c); width: 100%; margin-bottom: 15px;">
+                ⬅️ Torna Indietro
+            </button>
+        </a>
         <div id="playlist"></div>
     </div>
 </div>
 
 <script>
 // CONFIGURAZIONE DATI
-const lezioni = [
+
+        const lezioni = [
     { 
         title: "Giorni della settimana", 
         path: "video/XRecorder_20251116_01.mp4", 
@@ -84,25 +86,25 @@ const lezioni = [
         path: "video/paesi.mp4", 
         questions: [
             { q: "Come si dice 'America'?", a: "美国" },
-            { q: "Che vuol dire  '法国'?", a: "Francia" }
-            { q: "Come si dice  'Inghilterra'?", a: "英国" }
-            { q: "Che vuol dire  '韩国'?", a: "Sud Corea" }
-            { q: "Come si dice  'Giappone'?", a: “日本" }
+            { q: "Che vuol dire '法国'?", a: "Francia" }, // Aggiunta virgola
+            { q: "Come si dice 'Inghilterra'?", a: "英国" }, // Aggiunta virgola
+            { q: "Che vuol dire '韩国'?", a: "Sud Corea" }, // Aggiunta virgola
+            { q: "Come si dice 'Giappone'?", a: "日本" }  // Sistemate virgolette
         ] 
     },
     {
         title: "Famiglia",
         path: "video/famiglia.mp4",
-        questione: [
-             { q: "Come si dice 'Papà'?", a: "爸爸" },
+        questions: [ // Corretto da "questione" a "questions"
+            { q: "Come si dice 'Papà'?", a: "爸爸" },
             { q: "Come si dice 'Figlio'?", a: "儿子" },
-             { q: "Che vuol dire '奴儿'?", a: "figlia" },
-             
-]
-}
+            { q: "Che vuol dire '女儿'?", a: "figlia" } // Sistemato anche il carattere cinese di nǚ'ér
+        ]
+    }
 ];
 
-// GESTORE DEL QUIZ
+
+// GESTORE DEL QUIZ (Logica interna)
 const quizManager = {
     data: [],
     index: 0,
@@ -132,17 +134,13 @@ const quizManager = {
         if (userAns === correctAns) {
             feedback.innerText = "Bravissimo! ✅";
             feedback.style.color = "#28a745";
-            
             this.index++;
-            
             if (this.index < this.data.length) {
-                // Passa alla prossima domanda dopo 1.5 secondi
                 setTimeout(() => this.render(), 1500);
             } else {
-                // Quiz finito
                 setTimeout(() => {
                     document.getElementById('quiz-content').style.display = 'none';
-                    feedback.innerText = "Complimenti! Hai completato tutte le domande di questa lezione! 🎉";
+                    feedback.innerText = "Complimenti! Hai completato tutte le domande! 🎉";
                 }, 1000);
             }
         } else {
@@ -157,15 +155,12 @@ function loadLezione(idx, element) {
     const l = lezioni[idx];
     const player = document.getElementById('player');
     
-    // Cambia video e titolo
     player.src = l.path;
     document.getElementById('current-title').innerText = l.title;
     
-    // Evidenzia video selezionato nella lista
     document.querySelectorAll('.vid-link').forEach(el => el.classList.remove('active-vid'));
     element.classList.add('active-vid');
     
-    // Carica il quiz relativo
     quizManager.setup(l.questions);
     player.play();
 }
@@ -180,15 +175,10 @@ lezioni.forEach((lez, i) => {
     plContainer.appendChild(div);
 });
 
-// Permetti l'invio della risposta con il tasto ENTER
+// Tasto Invio per rispondere
 document.getElementById('answer-input').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') quizManager.check();
 });
 </script>
-</body>
-</html>
-  <script>
-
-  </script>
 </body>
 </html>
