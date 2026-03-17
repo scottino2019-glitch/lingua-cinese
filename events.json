@@ -1,18 +1,18 @@
 [
-{
-"id": 1,
-"date": "2026-03-17",
-"title": "Nuova sessione pdf",
-"description": "Classificatori",
-"category": "pdf",
-"link": "https://scottino2019-glitch.github.io/lingua-cinese/cinese-pdf.html"
-},
-{
-"id": 2,
-"date": "2026-03-10",
-"title": "Nuova sessione vocabolario",
-"description": "FlashCards",
-"category": "flashcards",
-"link": "https://scottino2019-glitch.github.io/lingua-cinese/flashcards.html"
-}
+  {
+    "id": 1,
+    "date": "2026-03-17",
+    "title": "Nuova sessione pdf",
+    "description": "Classificatori",
+    "category": "pdf",
+    "link": "https://scottino2019-glitch.github.io/lingua-cinese/cinese-pdf.html"
+  },
+  {
+    "id": 2,
+    "date": "2026-03-10",
+    "title": "Nuova sessione vocabolario",
+    "description": "FlashCards",
+    "category": "flashcards",
+    "link": "https://scottino2019-glitch.github.io/lingua-cinese/flashcards.html"
+  }
 ]
