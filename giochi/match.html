@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Chinese Match</title>
+    <style>
+        :root {
+            --primary: #ff4757;
+            --secondary: #2ed573;
+            --accent: #1e90ff;
+            --bg: #1e272e;
+            --card-bg: #ffffff;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background-color: var(--bg); 
+            color: white;
+            text-align: center;
+            margin: 0; padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header { margin-bottom: 20px; }
+        .stats { font-size: 1.1rem; color: #ffa502; margin-bottom: 10px; }
+
+        /* Obiettivi Pinyin */
+        #target-container { 
+            display: flex; justify-content: center; gap: 15px; 
+            margin-bottom: 25px; min-height: 70px;
+        }
+
+        .pinyin-box {
+            background: #485460;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            border: 3px solid #d2dae2;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .pinyin-box.done { 
+            background: var(--secondary); 
+            border-color: white;
+            transform: scale(0.9);
+            box-shadow: 0 0 15px rgba(46, 213, 115, 0.5);
+        }
+
+        /* Griglia migliorata */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 90px); /* 4 Colonne */
+            gap: 12px; 
+            justify-content: center; 
+            margin: 0 auto; 
+        }
+
+        .card {
+            width: 90px; height: 90px;
+            background: var(--card-bg);
+            color: #2f3542;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #0fbcf9;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .card:active { transform: translateY(4px); box-shadow: none; }
+        
+        .card.wrong { background: var(--primary); color: white; animation: shake 0.3s; }
+        .card.hint { background: #ffeaa7; border: 3px solid #fdcb6e; }
+        .card.correct { visibility: hidden; opacity: 0; transition: 0.3s; }
+
+        /* Pulsanti */
+        .controls { margin-top: 30px; }
+        button {
+            padding: 10px 20px; font-size: 1rem; cursor: pointer;
+            border-radius: 8px; border: none; background: #808e9b; color: white;
+            transition: 0.3s;
+        }
+        button:hover { background: #d2dae2; color: #1e272e; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🇨🇳 Match Master</h1>
+        <div class="stats">Livello: <span id="level-val">1</span> | Punti: <span id="score-val">0</span></div>
+    </div>
+
+    <div id="target-container"></div>
+    <div id="grid" class="grid"></div>
+
+    <div class="controls">
+        <button onclick="getHint()">💡 Suggerimento (-5 punti)</button>
+    </div>
+
+    <script>
+        const vocab = [
+            { p: "mǎ", h: "马" }, { p: "rén", h: "人" }, { p: "shān", h: "山" },
+            { p: "huǒ", h: "火" }, { p: "mù", h: "木" }, { p: "shuǐ", h: "水" },
+            { p: "niǎo", h: "鸟" }, { p: "kǒu", h: "口" }, { p: "yuè", h: "月" },
+            { p: "rì", h: "日" }, { p: "mén", h: "门" }, { p: "tián", h: "田" },
+            { p: "nǚ", h: "女" }, { p: "zǐ", h: "子" }, { p: "shǒu", h: "手" },
+            { p: "xīn", h: "心" }
+        ];
+
+        let currentTargets = [];
+        let score = 0;
+        let level = 1;
+
+        // Funzione per generare suoni senza file esterni
+        function playTone(freq, type, duration) {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + duration);
+        }
+
+        function initGame() {
+            const targetContainer = document.getElementById('target-container');
+            const grid = document.getElementById('grid');
+            targetContainer.innerHTML = '';
+            grid.innerHTML = '';
+
+            let pool = [...vocab].sort(() => 0.5 - Math.random());
+            currentTargets = pool.slice(0, 3);
+            
+            currentTargets.forEach(obj => {
+                const box = document.createElement('div');
+                box.className = 'pinyin-box';
+                box.id = `target-${obj.h}`;
+                box.innerText = obj.p;
+                targetContainer.appendChild(box);
+            });
+
+            // Usiamo 12 carte totali per la griglia
+            let gridItems = pool.slice(0, 12).sort(() => 0.5 - Math.random());
+            gridItems.forEach(obj => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.id = `card-${obj.h}`;
+                card.innerText = obj.h;
+                card.onclick = () => checkMatch(obj, card);
+                grid.appendChild(card);
+            });
+        }
+
+        function checkMatch(obj, card) {
+            const targetBox = document.getElementById(`target-${obj.h}`);
+
+            if (targetBox && !targetBox.classList.contains('done')) {
+                // CORRETTO
+                score += 10;
+                playTone(523.25, 'sine', 0.3); // Suono C5 (Ding)
+                targetBox.classList.add('done');
+                card.classList.add('correct');
+                
+                if (document.querySelectorAll('.pinyin-box.done').length === 3) {
+                    level++;
+                    document.getElementById('level-val').innerText = level;
+                    setTimeout(() => {
+                        playTone(659.25, 'sine', 0.5); // Suono Vittoria
+                        initGame();
+                    }, 600);
+                }
+            } else {
+                // SBAGLIATO
+                score = Math.max(0, score - 2);
+                playTone(150, 'sawtooth', 0.2); // Suono Buzz
+                card.classList.add('wrong');
+                setTimeout(() => card.classList.remove('wrong'), 300);
+            }
+            document.getElementById('score-val').innerText = score;
+        }
+
+        function getHint() {
+            // Trova il primo target non ancora indovinato
+            const missing = currentTargets.find(t => !document.getElementById(`target-${t.h}`).classList.contains('done'));
+            if (missing) {
+                const card = document.getElementById(`card-${missing.h}`);
+                if (card) {
+                    score = Math.max(0, score - 5);
+                    document.getElementById('score-val').innerText = score;
+                    card.classList.add('hint');
+                    setTimeout(() => card.classList.remove('hint'), 1000);
+                }
+            }
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
