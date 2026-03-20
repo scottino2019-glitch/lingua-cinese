@@ -1,6 +1,14 @@
 [
 {
 "id": 1,
+"date": "2026-03-20",
+"title": "Nuovo esercizio",
+"description": "Esercizi vari",
+"category": "esercizi",
+"link": "https://esercizi-lingua-cinese.vercel.app/"
+},
+{
+"id": 2,
 "date": "2026-03-18",
 "title": "Nuovo gioco",
 "description": "Match",
@@ -8,9 +16,9 @@
 "link": "https://scottino2019-glitch.github.io/lingua-cinese/giochi/match.html"
 },
 {
-"id": 2,
+"id": 3,
 "date": "2026-03-17",
-"title": "Nuova sessione pdf",
+"title": "Nuovo pdf",
 "description": "Classificatori",
 "category": "pdf",
 "link": "https://scottino2019-glitch.github.io/lingua-cinese/cinese-pdf.html"
