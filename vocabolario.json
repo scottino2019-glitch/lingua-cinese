@@ -1,0 +1,30 @@
+[
+  {
+    "chinese": "什么",
+    "pinyin": "shén me",
+    "translation": "cosa",
+    "category": "Interrogativi",
+    "spiegazione": ["那是什么？ (Nà shì shén me?) Che cos'è quello?"]
+  },
+  {
+    "chinese": "学",
+    "pinyin": "xué",
+    "translation": "studiare",
+    "category": "Verbi",
+    "spiegazione": ["我学中文。 (Wǒ xué Zhōngwén) Studio cinese."]
+  },
+  {
+    "chinese": "学校",
+    "pinyin": "xuéxiào",
+    "translation": "scuola",
+    "category": "Sostantivi",
+    "spiegazione": ["我去学校。 (Wǒ qù xuéxiào) Vado a scuola."]
+  },
+  {
+    "chinese": "吗",
+    "pinyin": "ma",
+    "translation": "particella interrogativa",
+    "category": "Grammatica",
+    "spiegazione": ["Trasforma una frase in domanda."]
+  }
+]
