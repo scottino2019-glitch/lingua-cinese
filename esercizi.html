@@ -3,84 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinese - Lezioni</title>
-<script src="https://cdn.tailwindcss.com"></script>
+    <title>Cinese - Aula Esercizi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=Short+Stack&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --colore-banco: #d2b48c; /* Tan/Legno */
+            --colore-carta: #fdf5e6; /* Old Lace / Crema */
+            --verde-lavagna: #1e392a;
+            --riga-quaderno: #f08080;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            /* Sfondo che ricorda un banco di legno */
+            background-color: var(--colore-banco);
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Short Stack', cursive;
             margin: 0;
-            padding: 0;
-            background-color: #f7f7f7;
+            padding-bottom: 80px;
         }
+
         header {
-            background-color: #e74c3c;
-            color: white;
-            padding: 20px;
+            background-color: var(--verde-lavagna);
+            color: #f1c40f;
+            padding: 40px 20px;
             text-align: center;
+            border-bottom: 12px solid #5d4037;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
-        h1 { margin: 0; }
+
+        header h1 {
+            font-family: 'Zhi Mang Xing', cursive;
+            font-size: 4rem;
+            margin: 0;
+            text-shadow: 2px 2px 0px #000;
+        }
+
         .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1200px;
-            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 50px auto;
             padding: 20px;
         }
+
         .card {
-            width: 250px;
-            height: 150px;
-            margin: 15px;
-            border-radius: 10px;
-            color: white;
+            background: var(--colore-carta);
+            /* Effetto quaderno con riga rossa laterale */
+            border-left: 20px solid transparent;
+            border-image: linear-gradient(to right, #eee 80%, var(--riga-quaderno) 85%, #eee 90%) 1;
+            
+            min-height: 180px;
+            padding: 20px;
+            text-decoration: none;
+            color: #444;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 1.2em;
-            text-decoration: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.1);
+            border-radius: 4px;
         }
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-        /* Colori sezioni */
-        .esercizi { background-color: #c0392b; }
-        .esercizi2 { background-color: #d35400; }
-        .esercizi3 { background-color: #c0392b; }
-        .esercizi4 { background-color: #d35400; }
-        .esercizi5 { background-color: #c0392b; }
-        .esercizi6 { background-color: #d35400; }
-        .esercizi7 { background-color: #c0392b; }
-        .esercizi8 { background-color: #d35400; }
-        .esercizi9 { background-color: #c0392b; }
-    </style>
 
+        /* Ombreggiatura per far sembrare il foglio sollevato */
+        .card:hover {
+            transform: scale(1.03) rotate(-1deg);
+            box-shadow: 15px 15px 25px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        /* Simbolo del timbro "Bravo" in stile cinese */
+        .card::after {
+            content: "合格"; /* Hege = Superato/Idoneo */
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+            font-size: 0.7rem;
+            padding: 2px 5px;
+            border-radius: 3px;
+            transform: rotate(15deg);
+            opacity: 0.4;
+            font-weight: bold;
+        }
+
+        .card-emoji {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+        }
+
+        .card-text {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        /* Pulsante Home a forma di gomma per cancellare */
+        .home-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e74c3c;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 0px #c0392b;
+            transition: all 0.1s;
+        }
+
+        .home-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0px #c0392b;
+        }
+
+    </style>
 </head>
 <body>
 
 <header>
-    <h1>🀄国</h1>
-    <p>Esercizi</p>
+    <h1>练习题</h1>
+    <p class="text-xl font-mono uppercase tracking-widest">Quaderno degli Esercizi</p>
 </header>
 
 <div class="container">
-    <a href="esercizi/esercizi_cinese.html" class="card esercizi">🎯 Esercizi</a>
-    <a href="esercizi/traduzione.html" class="card esercizi2">🎯 Traduzione</a>
- <a href="esercizi/scelta_multipla.html" class="card esercizi3">🎯 Scelta Multipla</a>
-<a href="esercizi/quiz_pinyin.html" class="card esercizi4">🎯 Abbinamento pinyin</a>
-    <a href="esercizi/esercizi-grammatica.html" class="card esercizi5">🎯 Esercizi di grammatica</a>
-<a href="esercizi/esercizi2.html" class="card esercizi6">🎯 Quiz</a>
-<a href="esercizi/modali.html" class="card esercizi7">🎯 Modali</a>
-<a href="esercizi/dialoghi.html" class="card esercizi8">🗯️ Dialoghi</a>
-<a href="https://esercizi-lingua-cinese.vercel.app/" class="card esercizi9">🎯 Vari</a>
+    <a href="esercizi/esercizi_cinese.html" class="card">
+        <span class="card-emoji">🎯</span>
+        <span class="card-text">Esercizi Generali</span>
+    </a>
+    <a href="esercizi/traduzione.html" class="card">
+        <span class="card-emoji">📖</span>
+        <span class="card-text">Traduzione</span>
+    </a>
+    <a href="esercizi/scelta_multipla.html" class="card">
+        <span class="card-emoji">✏️</span>
+        <span class="card-text">Scelta Multipla</span>
+    </a>
+    <a href="esercizi/quiz_pinyin.html" class="card">
+        <span class="card-emoji">🔡</span>
+        <span class="card-text">Pinyin Quiz</span>
+    </a>
+    <a href="esercizi/esercizi-grammatica.html" class="card">
+        <span class="card-emoji">📏</span>
+        <span class="card-text">Grammatica</span>
+    </a>
+    <a href="esercizi/esercizi2.html" class="card">
+        <span class="card-emoji">💡</span>
+        <span class="card-text">Quiz Rapido</span>
+    </a>
+    <a href="esercizi/modali.html" class="card">
+        <span class="card-emoji">⚙️</span>
+        <span class="card-text">Verbi Modali</span>
+    </a>
+    <a href="esercizi/dialoghi.html" class="card">
+        <span class="card-emoji">🗯️</span>
+        <span class="card-text">Dialoghi</span>
+    </a>
+    <a href="https://esercizi-lingua-cinese.vercel.app/" class="card" style="background: #e1f5fe;">
+        <span class="card-emoji">🚀</span>
+        <span class="card-text">Risorse Esterne</span>
+    </a>
 </div>
-<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95">
-  <a href="index.html">  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-</svg></a>
-</button>
+
+<a href="index.html" class="home-btn">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+    </svg>
+    <span>Esci dall'aula</span>
+</a>
 
 </body>
 </html>
