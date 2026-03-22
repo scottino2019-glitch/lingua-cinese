@@ -119,23 +119,31 @@
 
     function renderizza(lista) {
     const container = document.getElementById('vocabContainer');
-    container.innerHTML = lista.map(item => `
-        <div class="vocab-card">
+    container.innerHTML = ""; // Pulizia di sicurezza
+
+    lista.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'vocab-card';
+        
+        // Creiamo la sezione audio separatamente per sicurezza
+        const spiegazioniHTML = item.spiegazione.map(s => `<div class="example-item">${s}</div>`).join('');
+
+        card.innerHTML = `
             <div class="category-badge">${item.category}</div>
             
-            <div class="audio-trigger" onclick="parla('${item.chinese}')" title="Clicca per ascoltare la pronuncia">
+            <div class="audio-trigger" onclick="parla('${item.chinese.replace(/'/g, "\\'")}')">
                 <div class="chinese-char">${item.chinese}</div>
-                <div class="audio-icon">🔊 <span style="font-size: 10px; vertical-align: middle;">Ascolta</span></div>
+                <div class="audio-icon">🔊 <span style="font-size: 12px;">Ascolta</span></div>
             </div>
 
             <div class="pinyin">${item.pinyin}</div>
             <div class="translation">${item.translation}</div>
-            <div class="examples">
-                ${item.spiegazione.map(s => `<div class="example-item">${s}</div>`).join('')}
-            </div>
-        </div>
-    `).join('');
+            <div class="examples">${spiegazioniHTML}</div>
+        `;
+        container.appendChild(card);
+    });
 }
+
 
 
     window.onload = inizializza;
