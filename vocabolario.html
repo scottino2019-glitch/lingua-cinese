@@ -72,7 +72,6 @@
 
     <div id="vocabContainer" class="vocab-grid"></div>
 </div>
-
 <script>
     let dati = [];
     let categoriaCorrente = "Tutte";
@@ -83,14 +82,14 @@
             dati = await res.json();
             creaBottoniCategoria();
             applicaFiltri();
-        } catch (e) { console.error("Errore:", e); }
+        } catch (e) { 
+            console.error("Errore nel caricamento del JSON:", e); 
+        }
     }
 
     function creaBottoniCategoria() {
         const container = document.getElementById('categoryContainer');
-        // Estrae categorie uniche dal JSON
         const categorie = ["Tutte", ...new Set(dati.map(item => item.category))];
-        
         container.innerHTML = categorie.map(cat => `
             <button class="cat-btn ${cat === 'Tutte' ? 'active' : ''}" onclick="setCategoria('${cat}', this)">${cat}</button>
         `).join('');
@@ -105,7 +104,6 @@
 
     function applicaFiltri() {
         const ricerca = document.getElementById('searchInput').value.toLowerCase();
-        
         const filtrati = dati.filter(item => {
             const matchCategoria = (categoriaCorrente === "Tutte" || item.category === categoriaCorrente);
             const matchRicerca = item.chinese.includes(ricerca) || 
@@ -113,40 +111,50 @@
                                  item.translation.toLowerCase().includes(ricerca);
             return matchCategoria && matchRicerca;
         });
-
         renderizza(filtrati);
     }
 
     function renderizza(lista) {
-    const container = document.getElementById('vocabContainer');
-    container.innerHTML = ""; // Pulizia di sicurezza
+        const container = document.getElementById('vocabContainer');
+        container.innerHTML = ""; 
 
-    lista.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'vocab-card';
+        lista.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'vocab-card';
+            const spiegazioniHTML = item.spiegazione.map(s => `<div class="example-item">${s}</div>`).join('');
+
+            card.innerHTML = `
+                <div class="category-badge">${item.category}</div>
+                <div class="audio-trigger" onclick="parla('${item.chinese.replace(/'/g, "\\'")}')">
+                    <div class="chinese-char">${item.chinese}</div>
+                    <div class="audio-icon">🔊 <span style="font-size: 12px;">Ascolta</span></div>
+                </div>
+                <div class="pinyin">${item.pinyin}</div>
+                <div class="translation">${item.translation}</div>
+                <div class="examples">${spiegazioniHTML}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // --- QUESTA È LA FUNZIONE CHE MANCAVA! ---
+    function parla(testo) {
+        // Ferma eventuali riproduzioni in corso
+        window.speechSynthesis.cancel();
+
+        // Pulisce il testo da parentesi cinesi o latine
+        let testoPulito = testo.split('（')[0].split('(')[0].trim();
         
-        // Creiamo la sezione audio separatamente per sicurezza
-        const spiegazioniHTML = item.spiegazione.map(s => `<div class="example-item">${s}</div>`).join('');
-
-        card.innerHTML = `
-            <div class="category-badge">${item.category}</div>
-            
-            <div class="audio-trigger" onclick="parla('${item.chinese.replace(/'/g, "\\'")}')">
-                <div class="chinese-char">${item.chinese}</div>
-                <div class="audio-icon">🔊 <span style="font-size: 12px;">Ascolta</span></div>
-            </div>
-
-            <div class="pinyin">${item.pinyin}</div>
-            <div class="translation">${item.translation}</div>
-            <div class="examples">${spiegazioniHTML}</div>
-        `;
-        container.appendChild(card);
-    });
-}
-
-
+        const messaggio = new SpeechSynthesisUtterance(testoPulito);
+        messaggio.lang = 'zh-CN'; // Lingua Cinese
+        messaggio.rate = 0.8;      // Velocità
+        
+        window.speechSynthesis.speak(messaggio);
+    }
 
     window.onload = inizializza;
 </script>
+
+
 </body>
 </html>
