@@ -61,15 +61,15 @@
     "spiegazione": ["Letteralmente: 'Vederci di nuovo'."]
   },
 {
-    "chinese": "谁？",
-    "pinyin": "shéi?",
+    "chinese": "谁",
+    "pinyin": "shéi",
     "translation": "Chi?",
     "category": "Grammatica",
     "spiegazione": ["他是谁？ (Tā shì shéi?) Chi è lui?"]
   },
 {
-    "chinese": "哪儿？",
-    "pinyin": "nǎr?",
+    "chinese": "哪儿",
+    "pinyin": "nǎr",
     "translation": "Dove?",
     "category": "Grammatica",
     "spiegazione": ["你去哪儿？ (nǐ qù nǎr?) Dove vai?"]
