@@ -3,7 +3,7 @@
     "chinese": "什么",
     "pinyin": "shén me",
     "translation": "cosa",
-    "category": "Interrogativi",
+    "category": "Avverbi",
     "spiegazione": ["那是什么？ (Nà shì shén me?) Che cos'è quello?"]
   },
   {
@@ -105,6 +105,31 @@
     "🧠 CURIOSITÀ: Indica l'essere umano in generale, senza distinzione di genere.",
     "⚠️ ESEMPIO: 中国人 (Zhōngguórén) - Persona cinese (Cinese)."
   ]
-}
+},
+  {
+    "chinese": "中文",
+    "pinyin": "zhōngwén",
+    "translation": "Lingua Cinese (Generale)",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "📚 DEFINIZIONE: Il termine più generale per indicare la lingua e la scrittura cinese.",
+      "🖋️ SCRITTURA: Si usa spesso per riferirsi ai testi scritti o alla materia scolastica.",
+      "💬 ESEMPIO 1: 你会说中文吗？ (Nǐ huì shuō Zhōngwén ma?) - Sai parlare cinese?",
+      "📖 ESEMPIO 2: 这是一本中文书 (Zhè shì yī běn Zhōngwén shū) - Questo è un libro in cinese."
+    ]
+  },
+  {
+    "chinese": "普通话",
+    "pinyin": "pǔtōnghuà",
+    "translation": "Mandarino Standard",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "🗣️ DEFINIZIONE: Letteralmente 'Lingua Comune'. È il mandarino ufficiale.",
+      "🇨🇳 AMBITO: La lingua standard usata nei media, nelle scuole e negli uffici in Cina.",
+      "📻 USO: Si usa per distinguere la lingua standard dai dialetti regionali (es. Cantonese).",
+      "⚠️ ESEMPIO: 请说普通话 (Qǐng shuō Pǔtōnghuà) - Per favore, parla in mandarino."
+    ]
+  }
+
 ]
 
