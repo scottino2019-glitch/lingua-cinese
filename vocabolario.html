@@ -30,6 +30,33 @@
         .example-item { margin-bottom: 5px; }
 
         @media (max-width: 600px) { .vocab-grid { grid-template-columns: 1fr; } }
+/* Stile per l'area cliccabile dell'audio */
+.audio-trigger {
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.audio-trigger:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.audio-icon {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+/* Effetto alla pressione (per mobile) */
+.audio-trigger:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.2);
+}
+
     </style>
 </head>
 <body>
@@ -95,14 +122,12 @@
     container.innerHTML = lista.map(item => `
         <div class="vocab-card">
             <div class="category-badge">${item.category}</div>
-            <div class="chinese-char" 
-                 onclick="parla('${item.chinese}')" 
-                 style="cursor: pointer; transition: transform 0.1s;"
-                 onmousedown="this.style.transform='scale(0.9)'"
-                 onmouseup="this.style.transform='scale(1)'"
-                 title="Clicca per ascoltare">
-                 ${item.chinese}
+            
+            <div class="audio-trigger" onclick="parla('${item.chinese}')" title="Clicca per ascoltare la pronuncia">
+                <div class="chinese-char">${item.chinese}</div>
+                <div class="audio-icon">🔊 <span style="font-size: 10px; vertical-align: middle;">Ascolta</span></div>
             </div>
+
             <div class="pinyin">${item.pinyin}</div>
             <div class="translation">${item.translation}</div>
             <div class="examples">
@@ -112,16 +137,6 @@
     `).join('');
 }
 
-// Ecco la funzione che attiva la voce
-function parla(testo) {
-    // Rimuoviamo eventuali parentesi o pinyin se presenti nel campo chinese
-    const pulito = testo.split('(')[0].trim(); 
-    
-    const messaggio = new SpeechSynthesisUtterance(pulito);
-    messaggio.lang = 'zh-CN'; // Imposta la lingua su Cinese Mandarino
-    messaggio.rate = 0.8;      // Velocità leggermente ridotta per capire meglio
-    window.speechSynthesis.speak(messaggio);
-}
 
     window.onload = inizializza;
 </script>
