@@ -4,8 +4,31 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cinese</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          'titolo': ['"Playfair Display"', 'serif'],
+          'calligrafico': ['"Ma Shan Zheng"', 'cursive'],
+        }
+      }
+    }
+  }
+</script>
+
+
   <meta name="description" content="Grammatica,Caratteri,Esercizi,Vocabolario della Lingua Cinese" />
+
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+
+
+
+
+
   <style>
     #modalIframe {
       display: none;
@@ -43,19 +66,47 @@
 </head>
 <body class="min-h-screen bg-gradient-to-r from-yellow-500 to-red-500 text-slate-800">
   <!-- Header -->
-  <header class="bg-gradient-to-r from-red-600 to-yellow-600 text-white">
-    <div class="mx-auto max-w-7xl px-4 py-12 sm:py-16">
-      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">🇨🇳 Lingua Cinese</h1>
-      <p class="mt-2 text-white/90 text-lg">Ideogrammi, grammatica, esercizi, radicali, giochi, vocabolario e risorse</p>
+    
+<header class="relative z-20 bg-gradient-to-r from-red-700 to-red-600 text-white border-b-4 border-yellow-500 shadow-lg">
+  <div class="mx-auto max-w-7xl px-6 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-4">
+      <div class="bg-yellow-500 text-red-700 font-bold text-2xl w-12 h-12 flex items-center justify-center rounded-full shadow-inner border border-white/20">
+        中
+      </div>
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-titolo font-bold tracking-tight">Lingua Cinese</h1>
+        <p class="text-xs text-yellow-200 font-medium tracking-widest uppercase">Grammatica • Ideogrammi • Risorse</p>
+      </div>
     </div>
-  </header>
+    <div class="hidden md:block text-right border-l border-white/20 pl-6">
+      <span class="text-lg font-serif italic text-yellow-400">Apprendimento Interattivo</span>
+    </div>
+  </div>
+</header>
+
+<main class="relative mx-auto max-w-7xl px-4 py-10 sm:py-12">
+  
+  <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0 opacity-10">
+    <span class="text-[20rem] sm:text-[40rem] font-calligrafico text-white leading-none transform -rotate-12 select-none">
+      中文
+    </span>
+  </div>
+
+  <div class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+   
+
+
+
+
+
 
   <!-- Grid Cards -->
   <main class="mx-auto max-w-7xl px-4 py-10 sm:py-12">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <!-- Cultura -->
-      <a href="cultura.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition-all duration-300">
-        <div class="aspect-[4/3] bg-slate-100 overflow-hidden">
+      <a href="cultura.html" class="group block bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-sm ring-1 ring-white/20 hover:shadow-2xl hover:bg-white/95 transition-all duration-500 transform hover:-translate-y-2">
+      <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+        <div class="absolute inset-0 bg-red-900/10 group-hover:bg-transparent transition-colors duration-300"></div>
           <img src="img/cultura.jpg" alt="Cultura cinese" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
         </div>
         <div class="p-6">
