@@ -64,14 +64,14 @@
     "chinese": "谁",
     "pinyin": "shéi",
     "translation": "Chi?",
-    "category": "Grammatica",
+    "category": "Avverbi",
     "spiegazione": ["他是谁？ (Tā shì shéi?) Chi è lui?"]
   },
  {
     "chinese": "哪儿",
     "pinyin": "nǎr",
     "translation": "Dove?",
-    "category": "Grammatica",
+    "category": "Avverbi",
     "spiegazione": ["你去哪儿？ (nǐ qù nǎr?) Dove vai?"]
   }
 ]
