@@ -3,125 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinese - Lezioni</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Cinese - Lezioni di Grammatica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --rosso-imperiale: #bc241a;
+            --oro-antico: #d4af37;
+            --carta: #fdf5e6;
+        }
+
         body {
             font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--carta);
+            color: #2c3e50;
             margin: 0;
-            padding: 0;
-            background-color: #f7f7f7;
         }
+
+        /* Header con stile a "Lanterna" o Tempio */
         header {
-            background-color: #e74c3c;
-            color: white;
-            padding: 20px;
+            background-color: var(--rosso-imperiale);
+            color: var(--oro-antico);
+            padding: 40px 20px;
             text-align: center;
+            border-bottom: 5px solid var(--oro-antico);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        h1 { margin: 0; }
-        .container {
+
+        .chinese-title {
+            font-family: 'Ma Shan+Zheng', cursive;
+            font-size: 4rem;
+            margin: 0;
+        }
+
+        /* Barra di ricerca stilizzata */
+        .search-container {
+            max-width: 500px;
+            margin: -25px auto 30px;
+        }
+
+        .search-box {
+            background: white;
+            border: 3px solid var(--oro-antico);
+            border-radius: 50px;
+            padding: 10px 20px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
+
+        /* Layout a Griglia "Pergamena" */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
         .card {
-            width: 250px;
-            height: 150px;
-            margin: 15px;
-            border-radius: 10px;
-            color: white;
+            background: white;
+            border-left: 10px solid var(--rosso-imperiale);
+            padding: 20px;
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0px var(--oro-antico);
+            min-height: 100px;
+        }
+
+        .card:hover {
+            transform: translate(-5px, -5px);
+            box-shadow: 10px 10px 0px var(--rosso-imperiale);
+        }
+
+        .card::after {
+            content: "🧧";
+            position: absolute;
+            right: 15px;
+            bottom: 10px;
+            opacity: 0.2;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--rosso-imperiale);
+        }
+
+        /* Pulsante Home */
+        .home-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--rosso-imperiale);
+            color: var(--oro-antico);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2em;
-            text-decoration: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid var(--oro-antico);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-        /* Colori sezioni */
-        .lezioni { background-color: #c0392b; }
-        .lezioni2 { background-color: #d35400; }
-        .lezioni3 { background-color: #c0392b; }
-        .lezioni4 { background-color: #d35400; }
-        .lezioni5 { background-color: #c0392b; }
-        .lezioni6 { background-color: #d35400; }
-        .lezioni7 { background-color: #c0392b; }
-        .lezioni8 { background-color: #d35400; }
-        .lezioni9 { background-color: #c0392b; }
-        .lezioni10 { background-color: #d35400; }
-       .lezioni11 { background-color: #c0392b; }
-       .lezioni12 { background-color: #d35400; }
-       .lezioni13 { background-color: #c0392b; }
-       .lezioni14 { background-color: #d35400; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🀄国</h1>
-    <p>Grammatica</p>
+    <div class="chinese-title">中文</div>
+    <h1 class="text-2xl font-bold uppercase tracking-widest">Grammatica Cinese</h1>
+    <p class="italic">Percorso di apprendimento dei caratteri e delle regole</p>
 </header>
 
-  <div class="component-wrapper">
-    
-            <div style="max-width: 600px; margin: 0 auto;">
-              <div style="display: flex; align-items: center; padding: 0.75rem 1rem; background: yellow; border: 2px solid red; box-shadow: 0 0 20px #8b5cf6; border-radius: 0.5rem;">
-                <span style="font-size: 0.9rem; margin-right: 1rem;">🔍</span>
-  <input type="text" id="searchInput" placeholder="Cerca regola..." onkeyup="filterLinks()" style="flex: 1; background: transparent; border: none; outline: none; color: black; font-size: 0.9rem; font-family: 'Space Grotesk', sans-serif;">
-</div>
-</div>
+<div class="search-container">
+    <div class="search-box">
+        <span class="mr-2">🔍</span>
+        <input type="text" id="searchInput" placeholder="Cerca una regola grammaticale..." onkeyup="filterLinks()" class="w-full outline-none">
+    </div>
 </div>
 
 <div class="container" id="linkContainer">
-    <a href="grammatica/grammatica_cinese.html" class="card lezioni">📔Grammatica</a>
-    <a href="grammatica/avverbi.html" class="card lezioni2">⏰Avverbi di tempo </a>
-<a href="grammatica/shi.html" class="card lezioni3">是-shí-verbo essere </a>
-<a href="grammatica/grammatica-cinese2.html" class="card lezioni4">📔Grammatica 2 </a>
-<a href="grammatica/particella_ba.html" class="card lezioni5">吧-ba-particella modale</a>
-<a href="grammatica/risposte.html" class="card lezioni6">📝 Regole sulle risposte</a>
-<a href="grammatica/bushibu.html" class="card lezioni7">🖋️ 不是不 e verbo+不+verbo</a>
-<a href="grammatica/zamen_women.html" class="card lezioni8">我们-咱们</a>
-<a href="grammatica/cinese-interattivo.html" class="card lezioni9">✍️ Lezioni complete</a>
-<a href="grammatica/lezione 10.html" class="card lezioni10">✍️ Lezione 10</a>
-<a href="grammatica/grammatica4.html" class="card lezioni11">✍️ Predicato Verbale e altre regole</a>
-    
-<a href="grammatica/duo_shao.html" class="card lezioni12">🀄 多少</a>
-<a href="grammatica/classificatori-cinesi.html" class="card lezioni13">Lezione 11</a>
-<a href="grammatica/lezione12.html" class="card lezioni14">Lezione 12</a>
-
-
+    <a href="grammatica/grammatica_cinese.html" class="card">
+        <span class="card-title">📔 Grammatica Base</span>
+    </a>
+    <a href="grammatica/avverbi.html" class="card">
+        <span class="card-title">⏰ Avverbi di Tempo</span>
+    </a>
+    <a href="grammatica/shi.html" class="card">
+        <span class="card-title">是 (shì) Verbo Essere</span>
+    </a>
+    <a href="grammatica/grammatica-cinese2.html" class="card">
+        <span class="card-title">📔 Grammatica Avanzata</span>
+    </a>
+    <a href="grammatica/particella_ba.html" class="card">
+        <span class="card-title">吧 (ba) Particella Modale</span>
+    </a>
+    <a href="grammatica/risposte.html" class="card">
+        <span class="card-title">📝 Regole sulle Risposte</span>
+    </a>
+    <a href="grammatica/bushibu.html" class="card">
+        <span class="card-title">🖋️ Struttura 不是不</span>
+    </a>
+    <a href="grammatica/zamen_women.html" class="card">
+        <span class="card-title">我们 vs 咱们</span>
+    </a>
+    <a href="grammatica/cinese-interattivo.html" class="card">
+        <span class="card-title">✍️ Lezioni Complete</span>
+    </a>
+    <a href="grammatica/lezione 10.html" class="card">
+        <span class="card-title">✍️ Unità 10</span>
+    </a>
+    <a href="grammatica/grammatica4.html" class="card">
+        <span class="card-title">✍️ Predicato Verbale</span>
+    </a>
+    <a href="grammatica/duo_shao.html" class="card">
+        <span class="card-title">🀄 Quanto? 多少</span>
+    </a>
+    <a href="grammatica/classificatori-cinesi.html" class="card">
+        <span class="card-title">📚 Lezione 11</span>
+    </a>
+    <a href="grammatica/lezione12.html" class="card">
+        <span class="card-title">✍️ Unità 12</span>
+    </a>
 </div>
-<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95">
-  <a href="index.html">  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-</svg></a>
-</button>
+
+<a href="index.html" class="home-btn">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+    </svg>
+</a>
 
 <script>
 function filterLinks() {
-  const input = document.getElementById('searchInput').value.toLowerCase();
-  const container = document.getElementById('linkContainer');
-  const links = container.getElementsByTagName('a');
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const container = document.getElementById('linkContainer');
+    const links = container.getElementsByTagName('a');
 
-  for (let i = 0; i < links.length; i++) {
-    const linkText = links[i].textContent.toLowerCase();
-    if (linkText.includes(input)) {
-      links[i].style.display = '';
-    } else {
-      links[i].style.display = 'none';
+    for (let i = 0; i < links.length; i++) {
+        const text = links[i].textContent.toLowerCase();
+        links[i].style.display = text.includes(input) ? 'flex' : 'none';
     }
-  }
 }
 </script>
-
 
 </body>
 </html>
