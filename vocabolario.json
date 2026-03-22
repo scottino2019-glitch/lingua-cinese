@@ -73,6 +73,40 @@
     "translation": "Dove?",
     "category": "Avverbi",
     "spiegazione": ["你去哪儿？ (nǐ qù nǎr?) Dove vai?"]
-  }
+  },
+{
+  "chinese": "也",
+  "pinyin": "yě",
+  "translation": "anche",
+  "category": "Avverbi",
+  "spiegazione": [
+    "⚠️ REGOLA: Va sempre prima del verbo.",
+    "Esempio: 我也学中文 (Wǒ yě xué Zhōngwén) - Anche io studio cinese."
+  ]
+},
+{
+  "chinese": "不",
+  "pinyin": "bù",
+  "translation": "non (negazione)",
+  "category": "Avverbi",
+  "spiegazione": [
+    "Si usa per negare i verbi al presente e al futuro.",
+    "Esempio: 我不去 (Wǒ bù qù) - Io non vado."
+  ]
+},
+{
+  "chinese": "人",
+  "pinyin": "rén",
+  "translation": "persona / uomo",
+  "category": "Sostantivi",
+  "spiegazione": [
+    "👤 ORIGINE: Un pittogramma che raffigura una persona di profilo che cammina.",
+    "🏮 RADICALE: Quando si trova a sinistra in altri caratteri, si stringe e diventa 亻 (dàn rén páng).",
+    "🧠 CURIOSITÀ: Indica l'essere umano in generale, senza distinzione di genere.",
+    "⚠️ ESEMPIO: 中国人 (Zhōngguórén) - Persona cinese (Cinese)."
+  ]
+}
+
+
 ]
 
