@@ -91,19 +91,37 @@
     }
 
     function renderizza(lista) {
-        const container = document.getElementById('vocabContainer');
-        container.innerHTML = lista.map(item => `
-            <div class="vocab-card">
-                <div class="category-badge">${item.category}</div>
-                <div class="chinese-char">${item.chinese}</div>
-                <div class="pinyin">${item.pinyin}</div>
-                <div class="translation">${item.translation}</div>
-                <div class="examples">
-                    ${item.spiegazione.map(s => `<div class="example-item">${s}</div>`).join('')}
-                </div>
+    const container = document.getElementById('vocabContainer');
+    container.innerHTML = lista.map(item => `
+        <div class="vocab-card">
+            <div class="category-badge">${item.category}</div>
+            <div class="chinese-char" 
+                 onclick="parla('${item.chinese}')" 
+                 style="cursor: pointer; transition: transform 0.1s;"
+                 onmousedown="this.style.transform='scale(0.9)'"
+                 onmouseup="this.style.transform='scale(1)'"
+                 title="Clicca per ascoltare">
+                 ${item.chinese}
             </div>
-        `).join('');
-    }
+            <div class="pinyin">${item.pinyin}</div>
+            <div class="translation">${item.translation}</div>
+            <div class="examples">
+                ${item.spiegazione.map(s => `<div class="example-item">${s}</div>`).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+// Ecco la funzione che attiva la voce
+function parla(testo) {
+    // Rimuoviamo eventuali parentesi o pinyin se presenti nel campo chinese
+    const pulito = testo.split('(')[0].trim(); 
+    
+    const messaggio = new SpeechSynthesisUtterance(pulito);
+    messaggio.lang = 'zh-CN'; // Imposta la lingua su Cinese Mandarino
+    messaggio.rate = 0.8;      // Velocità leggermente ridotta per capire meglio
+    window.speechSynthesis.speak(messaggio);
+}
 
     window.onload = inizializza;
 </script>
