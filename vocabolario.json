@@ -38,6 +38,27 @@
     "🧠 CURIOSITÀ: In antichità indicava l'acqua corrente dei fiumi, non quella ferma dei pozzi.",
     "⚠️ ESEMPIO: 我喝水 (Wǒ hē shuǐ) - Io bevo acqua."
   ]
-}
-
+},
+  {
+    "chinese": "你好",
+    "pinyin": "nǐ hǎo",
+    "translation": "Ciao",
+    "category": "Saluti",
+    "spiegazione": ["Si usa per salutare chiunque."]
+  },
+  {
+    "chinese": "谢谢",
+    "pinyin": "xièxie",
+    "translation": "Grazie",
+    "category": "Cortesia",
+    "spiegazione": []
+  },
+  {
+    "chinese": "再见",
+    "pinyin": "zàijiàn",
+    "translation": "Arrivederci",
+    "category": "Saluti",
+    "spiegazione": ["Letteralmente: 'Vederci di nuovo'."]
+  }
 ]
+
