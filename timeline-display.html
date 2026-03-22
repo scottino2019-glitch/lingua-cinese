@@ -13,7 +13,8 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      /* Sfondo trasparente per far vedere la filigrana del sito principale */
+      background: transparent;
       min-height: 100vh;
       padding: 40px 20px;
     }
@@ -25,10 +26,10 @@
 
     h1 {
       text-align: center;
-      color: white;
+      color: #b91c1c; /* Rosso scuro */
       font-size: 2.5rem;
       margin-bottom: 50px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
 
     .timeline {
@@ -43,7 +44,7 @@
       transform: translateX(-50%);
       width: 4px;
       height: 100%;
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(185, 28, 28, 0.2); /* Linea rossa tenue */
       border-radius: 2px;
     }
 
@@ -64,14 +65,15 @@
       background: white;
       padding: 25px;
       border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       position: relative;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 5px solid #b91c1c; /* Tocco orientale */
     }
 
     .timeline-content:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 15px 40px rgba(185, 28, 28, 0.2);
     }
 
     .timeline-dot {
@@ -82,14 +84,14 @@
       height: 20px;
       border-radius: 50%;
       background: white;
-      border: 4px solid #667eea;
+      border: 4px solid #b91c1c; /* Rosso invece di blu */
       z-index: 1;
-      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+      box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.1);
     }
 
     .event-date {
       display: inline-block;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
       color: white;
       padding: 8px 16px;
       border-radius: 20px;
@@ -121,112 +123,53 @@
       text-transform: uppercase;
     }
 
-    .category-esercizi {
-      background: #a29bfe;
-      color: #6c5ce7;
-    }
-
-    .category-giochi {
-      background: #ffeaa7;
-      color: #fdcb6e;
-    }
-
-    .category-video {
-      background: #ff7675;
-      color: #d63031;
-    }
-
-    .category-vocabolario {
-      background: #55efc4;
-      color: #00b894;
-    }
-
-    .category-grammatica {
-      background: #74b9ff;
-      color: #0984e3;
-    }
-
-    .category-app {
-      background: #fd79a8;
-      color: #e84393;
-    }
-    .category-pdf {
-      background: #fab1a0;
-      color: #e17055;
-}
-
-    .category-flashcards {
-      background: #81ecec;
-      color: #00cec9;
-}
-     .category-generale {
-       background: #dfe6e9; 
-       color: #2d3436;      
-    }
-
-
+    /* Tutte le tue categorie originali con colori armonizzati */
+    .category-esercizi { background: #fee2e2; color: #b91c1c; }
+    .category-giochi { background: #fef9c3; color: #a16207; }
+    .category-video { background: #ff7675; color: #ffffff; }
+    .category-vocabolario { background: #dcfce7; color: #15803d; }
+    .category-grammatica { background: #74b9ff; color: #ffffff; }
+    .category-app { background: #fd79a8; color: #ffffff; }
+    .category-pdf { background: #fab1a0; color: #ffffff; }
+    .category-flashcards { background: #81ecec; color: #008b8b; }
+    .category-generale { background: #dfe6e9; color: #2d3436; }
 
     .event-link {
       display: inline-block;
       margin-top: 15px;
       padding: 10px 20px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
       color: white;
       text-decoration: none;
       border-radius: 25px;
       font-size: 0.9rem;
       font-weight: 600;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.2);
     }
 
     .event-link:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 6px 20px rgba(185, 28, 28, 0.3);
     }
 
+    /* Classi speciali per stati caricamento/errore */
     .empty-state {
       text-align: center;
-      color: white;
+      color: #b91c1c;
       font-size: 1.2rem;
       padding: 60px 20px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.8);
       border-radius: 15px;
       backdrop-filter: blur(10px);
+      border: 2px dashed #b91c1c;
     }
 
-    .empty-state p {
-      margin-bottom: 15px;
-    }
-
-    @media (max-width: 768px) {
-      .timeline::before {
-        left: 30px;
-      }
-
-      .timeline-dot {
-        left: 30px;
-      }
-
-      .timeline-item {
-        flex-direction: column;
-        align-items: flex-start;
-        padding-left: 60px;
-      }
-
-      .timeline-content {
-        width: 100%;
-        margin-left: 0 !important;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-    }
+    .empty-state p { margin-bottom: 15px; }
 
     .loading {
       text-align: center;
-      color: white;
+      color: #b91c1c;
       font-size: 1.2rem;
       padding: 40px;
     }
@@ -234,12 +177,28 @@
     .error {
       text-align: center;
       color: white;
-      background: rgba(231, 76, 60, 0.3);
+      background: #b91c1c;
       padding: 20px;
       border-radius: 10px;
       margin: 20px 0;
     }
+
+    @media (max-width: 768px) {
+      .timeline::before { left: 30px; }
+      .timeline-dot { left: 30px; }
+      .timeline-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 60px;
+      }
+      .timeline-content {
+        width: 100%;
+        margin-left: 0 !important;
+      }
+      h1 { font-size: 2rem; }
+    }
   </style>
+
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
