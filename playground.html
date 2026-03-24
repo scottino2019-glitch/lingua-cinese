@@ -24,6 +24,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
         }
 
         .container { max-width: 1200px; width: 100%; }
@@ -31,15 +32,15 @@
         header {
             text-align: center;
             margin-bottom: 50px;
-            animation: fadeInDown 0.8s ease-out;
+            animation: fadeInDown 1s ease-out;
         }
 
         h1 {
             font-family: 'Ma Shan Zheng', cursive;
             color: var(--red-main);
-            font-size: clamp(2.5rem, 7vw, 4rem);
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 0px #fff;
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0px rgba(255,255,255,0.8);
         }
 
         .subtitle {
@@ -47,10 +48,12 @@
             font-size: 1.1rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            display: inline-block;
+            border-bottom: 2px solid var(--red-main);
+            padding-bottom: 5px;
         }
 
-        /* Griglia Desktop */
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -58,56 +61,78 @@
             width: 100%;
         }
 
+        /* --- CARD CON ANIMAZIONI --- */
         .game-card {
             background: linear-gradient(135deg, var(--card-bg) 0%, #f7e8c3 100%);
             border: 3px solid #d4a373;
             border-radius: 20px;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 5px 5px 0px rgba(93, 64, 55, 0.15);
-            animation: fadeInUp 0.5s ease-out backwards;
+            box-shadow: 6px 6px 0px rgba(93, 64, 55, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        /* Effetto Luccichio (Shimmer) al passaggio */
+        .game-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
         }
 
         .game-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-12px) scale(1.02);
             background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
             border-color: var(--red-main);
-            box-shadow: 8px 8px 0px rgba(185, 28, 28, 0.2);
+            box-shadow: 12px 12px 0px rgba(185, 28, 28, 0.2);
         }
 
+        /* Icona con Bounce e Spin */
         .game-icon {
-            font-size: 3.5rem;
-            margin-bottom: 12px;
-            transition: transform 0.3s ease;
+            font-size: 4rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: bounce 2s infinite ease-in-out;
         }
 
         .game-card:hover .game-icon {
-            transform: scale(1.2) rotate(5deg);
+            animation: spin 0.6s ease-in-out;
         }
 
         .game-title {
             color: var(--red-main);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .game-description {
             color: #5d4037;
             font-size: 0.95rem;
-            line-height: 1.4;
+            line-height: 1.5;
             font-weight: 600;
         }
 
         footer {
             margin-top: 60px;
             text-align: center;
-            padding-bottom: 40px;
+            padding-bottom: 50px;
+            animation: fadeIn 1.5s ease;
         }
 
         .btn-home {
@@ -116,22 +141,60 @@
             gap: 12px;
             background: var(--red-main);
             color: #fff;
-            padding: 14px 35px;
-            border-radius: 12px;
+            padding: 16px 40px;
+            border-radius: 15px;
             font-weight: 700;
             text-decoration: none;
             border: 3px solid var(--gold-accent);
             transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(185, 28, 28, 0.3);
         }
 
         .btn-home:hover {
+            transform: scale(1.1) rotate(-2deg);
             background: #8e1414;
-            transform: scale(1.05);
         }
 
-        /* Animazioni */
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- KEYFRAMES DEFINITIONS --- */
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Delay per le card per l'effetto entrata a cascata */
+        .game-card:nth-child(1) { animation-delay: 0.1s; }
+        .game-card:nth-child(2) { animation-delay: 0.15s; }
+        .game-card:nth-child(3) { animation-delay: 0.2s; }
+        .game-card:nth-child(4) { animation-delay: 0.25s; }
+        .game-card:nth-child(5) { animation-delay: 0.3s; }
+        .game-card:nth-child(6) { animation-delay: 0.35s; }
+        .game-card:nth-child(7) { animation-delay: 0.4s; }
+        .game-card:nth-child(8) { animation-delay: 0.45s; }
+        .game-card:nth-child(9) { animation-delay: 0.5s; }
+        .game-card:nth-child(10) { animation-delay: 0.55s; }
+        .game-card:nth-child(11) { animation-delay: 0.6s; }
+        .game-card:nth-child(12) { animation-delay: 0.65s; }
+        .game-card:nth-child(13) { animation-delay: 0.7s; }
 
         @media (max-width: 600px) {
             .games-grid { grid-template-columns: 1fr; }
@@ -142,84 +205,84 @@
 
     <div class="container">
         <header>
-            <h1>中文游戏 Center</h1>
-            <p class="subtitle">Impara divertendoti! 🏮</p>
+            <h1>🎮 中文游戏 Center 🀄</h1>
+            <p class="subtitle">Impara il cinese divertendoti!</p>
         </header>
 
         <div class="games-grid">
-            <a href="giochi/componi.html" class="game-card" style="animation-delay: 0.1s">
+            <a href="giochi/componi.html" class="game-card">
                 <span class="game-icon">🧩</span>
                 <h2 class="game-title">Componi</h2>
                 <p class="game-description">Costruisci parole e frasi incastrando i caratteri nel modo giusto.</p>
             </a>
 
-            <a href="giochi/caccia.html" class="game-card" style="animation-delay: 0.15s">
+            <a href="giochi/caccia.html" class="game-card">
                 <span class="game-icon">🎯</span>
                 <h2 class="game-title">Caccia</h2>
                 <p class="game-description">Trova e cattura i caratteri cinesi nascosti nella griglia.</p>
             </a>
 
-            <a href="giochi/memorychinese.html" class="game-card" style="animation-delay: 0.2s">
+            <a href="giochi/memorychinese.html" class="game-card">
                 <span class="game-icon">🃏</span>
                 <h2 class="game-title">Memory 1</h2>
                 <p class="game-description">Allena la memoria visiva abbinando caratteri e significati.</p>
             </a>
 
-            <a href="giochi/memorychinese2.html" class="game-card" style="animation-delay: 0.25s">
+            <a href="giochi/memorychinese2.html" class="game-card">
                 <span class="game-icon">💭</span>
                 <h2 class="game-title">Memory 2</h2>
                 <p class="game-description">Nuovi livelli e sfide avanzate per la tua memoria cinese.</p>
             </a>
 
-            <a href="giochi/evoluzione.html" class="game-card" style="animation-delay: 0.3s">
+            <a href="giochi/evoluzione.html" class="game-card">
                 <span class="game-icon">📈</span>
                 <h2 class="game-title">Evoluzione</h2>
                 <p class="game-description">Scopri la storia e la trasformazione dei pittogrammi antichi.</p>
             </a>
 
-            <a href="giochi/crucipuzzle.html" class="game-card" style="animation-delay: 0.35s">
+            <a href="giochi/crucipuzzle.html" class="game-card">
                 <span class="game-icon">🔍</span>
                 <h2 class="game-title">Crucipuzzle</h2>
                 <p class="game-description">Cerca le parole cinesi nascoste tra decine di caratteri.</p>
             </a>
 
-            <a href="giochi/crucipuzzle 2.html" class="game-card" style="animation-delay: 0.4s">
+            <a href="giochi/crucipuzzle 2.html" class="game-card">
                 <span class="game-icon">🔎</span>
                 <h2 class="game-title">Crucipuzzle 2</h2>
                 <p class="game-description">Griglie più grandi e parole più difficili per i veri esperti.</p>
             </a>
 
-            <a href="giochi/giochi_vari.html" class="game-card" style="animation-delay: 0.45s">
+            <a href="giochi/giochi_vari.html" class="game-card">
                 <span class="game-icon">🎲</span>
                 <h2 class="game-title">Giochi Vari</h2>
                 <p class="game-description">Una raccolta di mini-giochi veloci per ripassare divertendosi.</p>
             </a>
 
-            <a href="giochi/quiz.html" class="game-card" style="animation-delay: 0.5s">
+            <a href="giochi/quiz.html" class="game-card">
                 <span class="game-icon">🧠</span>
                 <h2 class="game-title">Quiz Classic</h2>
                 <p class="game-description">Metti alla prova la tua preparazione generale sulla lingua.</p>
             </a>
 
-            <a href="giochi/abbonamento.html" class="game-card" style="animation-delay: 0.55s">
+            <a href="giochi/abbonamento.html" class="game-card">
                 <span class="game-icon">🤝</span>
                 <h2 class="game-title">Abbinamento</h2>
                 <p class="game-description">Collega velocemente i caratteri alle parole corrispondenti.</p>
             </a>
 
-            <a href="giochi/quiz2.html" class="game-card" style="animation-delay: 0.6s">
+            <a href="giochi/quiz2.html" class="game-card">
                 <span class="game-icon">🎓</span>
                 <h2 class="game-title">Quiz Pro</h2>
                 <p class="game-description">Sfida te stesso con domande sulla cultura e grammatica.</p>
             </a>
 
-            <a href="giochi/acchiappa-caratteri.html" class="game-card" style="animation-delay: 0.65s">
+            <a href="giochi/acchiappa-caratteri.html" class="game-card">
                 <span class="game-icon">🈵</span>
                 <h2 class="game-title">Acchiappa Hanzi</h2>
                 <p class="game-description">Usa il cesto per raccogliere i caratteri che cadono!</p>
             </a>
 
-            <a href="giochi/match.html" class="game-card" style="animation-delay: 0.7s">
+            <a href="giochi/match.html" class="game-card">
                 <span class="game-icon">🀄</span>
                 <h2 class="game-title">Match</h2>
                 <p class="game-description">Trova le coppie identiche nel minor tempo possibile.</p>
@@ -230,8 +293,8 @@
             <a href="index.html" class="btn-home">
                🏠 Torna alla Home
             </a>
-            <p style="margin-top: 25px; color: #8d6e63; font-weight: bold; font-size: 0.9rem;">
-                © 2026 Sala Giochi Orientale
+            <p style="margin-top: 25px; color: #8d6e63; font-weight: bold;">
+                ✨ Buon divertimento! ✨
             </p>
         </footer>
     </div>
