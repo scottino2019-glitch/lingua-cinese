@@ -1,226 +1,240 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giochi Interattivi di Cinese</title>
-<style>
-:root { --color-bg-1: rgba(59, 130, 246, 0.08); --color-bg-2: rgba(245, 158, 11, 0.08); --color-bg-3: rgba(34, 197, 94, 0.08); --color-bg-4: rgba(239, 68, 68, 0.08); --color-bg-5: rgba(147, 51, 234, 0.08); --color-bg-6: rgba(249, 115, 22, 0.08); --color-bg-7: rgba(236, 72, 153, 0.08); --color-bg-8: rgba(6, 182, 212, 0.08); --color-cream-50: rgba(252, 252, 249, 1); --color-teal-500: rgba(33, 128, 141, 1); --color-teal-600: rgba(29, 116, 128, 1); --color-slate-900: rgba(19, 52, 59, 1); --color-slate-500: rgba(98, 108, 113, 1); --color-cream-100: rgba(255, 255, 253, 1); --color-brown-600-rgb: 94, 82, 64; }
+    <title>Giochi di Cinese 🀄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red-main: #b91c1c;
+            --gold-accent: #d4af37;
+            --bg-color: #f3e5ab; 
+            --card-bg: #fff9e6;
+        }
 
-@media (prefers-color-scheme: dark) {
-  :root { --color-bg-1: rgba(29, 78, 216, 0.15); --color-bg-2: rgba(180, 83, 9, 0.15); --color-bg-3: rgba(21, 128, 61, 0.15); --color-bg-4: rgba(185, 28, 28, 0.15); --color-bg-5: rgba(107, 33, 168, 0.15); --color-bg-6: rgba(194, 65, 12, 0.15); --color-bg-7: rgba(190, 24, 93, 0.15); --color-bg-8: rgba(8, 145, 178, 0.15); --color-cream-50: rgba(31, 33, 33, 1); --color-cream-100: rgba(38, 40, 40, 1); --color-slate-900: rgba(245, 245, 245, 1); --color-slate-500: rgba(167, 169, 169, 1); --color-teal-500: rgba(50, 184, 198, 1); --color-teal-600: rgba(45, 166, 178, 1); }
-}
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-* { box-sizing: border-box; margin: 0px; padding: 0px; }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color);
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-body { 
-    /* Aggiungiamo i font delle emoji prima degli altri per sicurezza */
-    font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
-    background: linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 50%, rgb(240, 147, 251) 100%); 
-    min-height: 100vh; 
-    padding: 20px; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-}
+        .container { max-width: 1200px; width: 100%; }
 
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
 
-.container { max-width: 1200px; width: 100%; }
+        h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            color: var(--red-main);
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0px #fff;
+        }
 
-header { text-align: center; margin-bottom: 40px; animation: 1s ease 0s 1 normal none running fadeInDown; }
+        .subtitle {
+            color: #5d4037;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-h1 { color: white; font-size: 3rem; text-shadow: rgba(0, 0, 0, 0.3) 2px 2px 4px; margin-bottom: 10px; letter-spacing: 2px; }
+        /* Griglia Desktop */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
 
-.subtitle { color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; font-weight: 300; }
+        .game-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #f7e8c3 100%);
+            border: 3px solid #d4a373;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 5px 5px 0px rgba(93, 64, 55, 0.15);
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
 
-.games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 40px; }
+        .game-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: var(--red-main);
+            box-shadow: 8px 8px 0px rgba(185, 28, 28, 0.2);
+        }
 
-.game-card { background: white; border-radius: 16px; padding: 28px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 16px; position: relative; overflow: hidden; animation: 0.8s ease 0s 1 normal backwards running fadeInUp; }
+        .game-icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
 
-.game-card:nth-child(1) { animation-delay: 0.1s; background: linear-gradient(135deg, var(--color-bg-1) 0%, white 100%); }
+        .game-card:hover .game-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
 
-.game-card:nth-child(2) { animation-delay: 0.2s; background: linear-gradient(135deg, var(--color-bg-2) 0%, white 100%); }
+        .game-title {
+            color: var(--red-main);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
 
-.game-card:nth-child(3) { animation-delay: 0.3s; background: linear-gradient(135deg, var(--color-bg-3) 0%, white 100%); }
+        .game-description {
+            color: #5d4037;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            font-weight: 600;
+        }
 
-.game-card:nth-child(4) { animation-delay: 0.4s; background: linear-gradient(135deg, var(--color-bg-4) 0%, white 100%); }
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            padding-bottom: 40px;
+        }
 
-.game-card:nth-child(5) { animation-delay: 0.5s; background: linear-gradient(135deg, var(--color-bg-5) 0%, white 100%); }
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--red-main);
+            color: #fff;
+            padding: 14px 35px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 3px solid var(--gold-accent);
+            transition: all 0.3s;
+        }
 
-.game-card:nth-child(6) { animation-delay: 0.6s; background: linear-gradient(135deg, var(--color-bg-6) 0%, white 100%); }
+        .btn-home:hover {
+            background: #8e1414;
+            transform: scale(1.05);
+        }
 
-.game-card:nth-child(7) { animation-delay: 0.7s; background: linear-gradient(135deg, var(--color-bg-7) 0%, white 100%); }
+        /* Animazioni */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-.game-card:nth-child(8) { animation-delay: 0.8s; background: linear-gradient(135deg, var(--color-bg-8) 0%, white 100%); }
-
-.game-card:nth-child(9) { animation-delay: 0.9s; background: linear-gradient(135deg, var(--color-bg-8) 0%, white 100%); }
-
-.game-card:nth-child(10) { animation-delay: 0.10s; background: linear-gradient(135deg, var(--color-bg-8) 0%, white 100%); }
-
-
-.game-card:nth-child(11) { animation-delay: 0.11s; background: linear-gradient(135deg, var(--color-bg-8) 0%, white 100%); }
-
-.game-card:nth-child(12) { animation-delay: 0.12s; background: linear-gradient(135deg, var(--color-bg-8) 0%, white 100%); }
-
-.game-card:nth-child(13) { animation-delay: 0.13s; background: linear-gradient(135deg, var(--color-bg-8) 0%, white 100%); }
-
-.game-card::before { content: ""; position: absolute; top: 0px; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); transition: left 0.5s; }
-
-.game-card:hover::before { left: 100%; }
-
-.game-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 24px; }
-
-.game-icon { font-size: 3.5rem; margin-bottom: 16px; display: block; animation: 2s ease 0s infinite normal none running bounce; }
-
-.game-card:hover .game-icon { animation: 0.6s ease 0s 1 normal none running spin; }
-
-.game-title { color: var(--color-slate-900); font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; }
-
-.game-description { color: var(--color-slate-500); font-size: 0.95rem; line-height: 1.5; }
-
-footer { text-align: center; color: white; font-size: 0.9rem; margin-top: 40px; animation: 1.5s ease 0s 1 normal none running fadeIn; }
-
-@keyframes fadeInDown { 
-  0% { opacity: 0; transform: translateY(-30px); }
-  100% { opacity: 1; transform: translateY(0px); }
-}
-
-@keyframes fadeInUp { 
-  0% { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0px); }
-}
-
-@keyframes fadeIn { 
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes bounce { 
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes spin { 
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@media (max-width: 768px) {
-  h1 { font-size: 2rem; }
-  .subtitle { font-size: 1rem; }
-  .games-grid { grid-template-columns: 1fr; gap: 16px; }
-  .game-card { padding: 24px; }
-}
-</style>
-    
+        @media (max-width: 600px) {
+            .games-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
+
     <div class="container">
         <header>
-            <h1>🎮 Giochi Interattivi di Cinese 🀄</h1>
-            <p class="subtitle">Impara il cinese divertendoti con i nostri giochi educativi!</p>
+            <h1>中文游戏 Center</h1>
+            <p class="subtitle">Impara divertendoti! 🏮</p>
         </header>
 
         <div class="games-grid">
-            <a href="giochi/componi.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/componi.html" class="game-card" style="animation-delay: 0.1s">
                 <span class="game-icon">🧩</span>
                 <h2 class="game-title">Componi</h2>
-                <p class="game-description">Costruisci parole e frasi in cinese componendo i caratteri nel modo giusto</p>
+                <p class="game-description">Costruisci parole e frasi incastrando i caratteri nel modo giusto.</p>
             </a>
 
-            <a href="giochi/caccia.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/caccia.html" class="game-card" style="animation-delay: 0.15s">
                 <span class="game-icon">🎯</span>
                 <h2 class="game-title">Caccia</h2>
-                <p class="game-description">Trova e cattura i caratteri cinesi nascosti in questa caccia al tesoro linguistica</p>
+                <p class="game-description">Trova e cattura i caratteri cinesi nascosti nella griglia.</p>
             </a>
 
-            <a href="giochi/memorychinese.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/memorychinese.html" class="game-card" style="animation-delay: 0.2s">
                 <span class="game-icon">🃏</span>
-                <h2 class="game-title">Memory Chinese</h2>
-                <p class="game-description">Allena la memoria abbinando caratteri cinesi e i loro significati</p>
+                <h2 class="game-title">Memory 1</h2>
+                <p class="game-description">Allena la memoria visiva abbinando caratteri e significati.</p>
             </a>
 
-            <a href="giochi/memorychinese2.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/memorychinese2.html" class="game-card" style="animation-delay: 0.25s">
                 <span class="game-icon">💭</span>
-                <h2 class="game-title">Memory Chinese 2</h2>
-                <p class="game-description">Versione avanzata del gioco di memoria con nuove sfide e livelli</p>
+                <h2 class="game-title">Memory 2</h2>
+                <p class="game-description">Nuovi livelli e sfide avanzate per la tua memoria cinese.</p>
             </a>
 
-            <a href="giochi/evoluzione.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/evoluzione.html" class="game-card" style="animation-delay: 0.3s">
                 <span class="game-icon">📈</span>
                 <h2 class="game-title">Evoluzione</h2>
-                <p class="game-description">Scopri l'evoluzione dei caratteri cinesi attraverso la storia</p>
+                <p class="game-description">Scopri la storia e la trasformazione dei pittogrammi antichi.</p>
             </a>
 
-            <a href="giochi/crucipuzzle.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/crucipuzzle.html" class="game-card" style="animation-delay: 0.35s">
                 <span class="game-icon">🔍</span>
                 <h2 class="game-title">Crucipuzzle</h2>
-                <p class="game-description">Cerca e trova le parole cinesi nascoste nella griglia di caratteri</p>
+                <p class="game-description">Cerca le parole cinesi nascoste tra decine di caratteri.</p>
             </a>
 
-            <a href="giochi/crucipuzzle 2.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/crucipuzzle 2.html" class="game-card" style="animation-delay: 0.4s">
                 <span class="game-icon">🔎</span>
                 <h2 class="game-title">Crucipuzzle 2</h2>
-                <p class="game-description">Nuove sfide con parole più complesse e griglie più grandi</p>
+                <p class="game-description">Griglie più grandi e parole più difficili per i veri esperti.</p>
             </a>
 
-            <a href="giochi/giochi_vari.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/giochi_vari.html" class="game-card" style="animation-delay: 0.45s">
                 <span class="game-icon">🎲</span>
                 <h2 class="game-title">Giochi Vari</h2>
-                <p class="game-description">Una collezione di mini-giochi e attività varie per praticare il cinese</p>
+                <p class="game-description">Una raccolta di mini-giochi veloci per ripassare divertendosi.</p>
             </a>
 
-            <a href="giochi/quiz.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/quiz.html" class="game-card" style="animation-delay: 0.5s">
                 <span class="game-icon">🧠</span>
-                <h2 class="game-title">Quiz</h2>
-                <p class="game-description">Quiz per mettere alla prova la conoscenza del cinese</p>
+                <h2 class="game-title">Quiz Classic</h2>
+                <p class="game-description">Metti alla prova la tua preparazione generale sulla lingua.</p>
             </a>
 
-       <a href="giochi/abbonamento.html" class="game-card" style="text-decoration: none;">
-                <span class="game-icon">💭</span>
+            <a href="giochi/abbonamento.html" class="game-card" style="animation-delay: 0.55s">
+                <span class="game-icon">🤝</span>
                 <h2 class="game-title">Abbinamento</h2>
-                <p class="game-description">Abbinamento di parole casuale</p>
+                <p class="game-description">Collega velocemente i caratteri alle parole corrispondenti.</p>
             </a>
 
-<a href="giochi/quiz2.html" class="game-card" style="text-decoration: none;">
-                <span class="game-icon">🧠</span>
-                <h2 class="game-title">Quiz</h2>
-                <p class="game-description">Un nuovo Quiz per mettere alla prova la conoscenza del cinese</p>
+            <a href="giochi/quiz2.html" class="game-card" style="animation-delay: 0.6s">
+                <span class="game-icon">🎓</span>
+                <h2 class="game-title">Quiz Pro</h2>
+                <p class="game-description">Sfida te stesso con domande sulla cultura e grammatica.</p>
             </a>
-<a href="giochi/acchiappa-caratteri.html" class="game-card" style="text-decoration: none;">
+
+            <a href="giochi/acchiappa-caratteri.html" class="game-card" style="animation-delay: 0.65s">
                 <span class="game-icon">🈵</span>
-                <h2 class="game-title">Acchiappa il carattere</h2>
-                <p class="game-description">Cerca di acchiappare più caratteri possibili con il tuo cesto</p>
+                <h2 class="game-title">Acchiappa Hanzi</h2>
+                <p class="game-description">Usa il cesto per raccogliere i caratteri che cadono!</p>
             </a>
 
-       <a href="giochi/match.html" class="game-card" style="text-decoration: none;">
+            <a href="giochi/match.html" class="game-card" style="animation-delay: 0.7s">
                 <span class="game-icon">🀄</span>
                 <h2 class="game-title">Match</h2>
-                <p class="game-description">Abbinamento di parole casuale</p>
+                <p class="game-description">Trova le coppie identiche nel minor tempo possibile.</p>
             </a>
         </div>
 
         <footer>
-            
-            <p>✨ Buon divertimento con l'apprendimento del cinese! ✨</p>
-            <p style="margin-top: 8px; opacity: 0.8;">Clicca su qualsiasi gioco per iniziare</p>
-            
-<button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95">
-  <a href="index.html">  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-</svg>Home</a>
-</button>
+            <a href="index.html" class="btn-home">
+               🏠 Torna alla Home
+            </a>
+            <p style="margin-top: 25px; color: #8d6e63; font-weight: bold; font-size: 0.9rem;">
+                © 2026 Sala Giochi Orientale
+            </p>
         </footer>
     </div>
 
-
 </body>
 </html>
-
-
-
-
-
-
-
