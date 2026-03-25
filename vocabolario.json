@@ -129,7 +129,39 @@
       "📻 USO: Si usa per distinguere la lingua standard dai dialetti regionali (es. Cantonese).",
       "⚠️ ESEMPIO: 请说普通话 (Qǐng shuō Pǔtōnghuà) - Per favore, parla in mandarino."
     ]
+  },
+    {
+    "chinese": "大",
+    "pinyin": "dà",
+    "translation": "Grande",
+    "category": "Aggettivi",
+    "spiegazione": [
+      "🗣️ DEFINIZIONE: Rappresenta un uomo adulto con le braccia tese.",
+      "⚠️ ESEMPIO: 大道 (Dà dào) - Strada principale.",
+      "⚠️ ESEMPIO: 大海 (Dà hăi) - Mare, oceano"
+    ]
+  },
+  {
+    "chinese": "女",
+    "pinyin": "nŭ",
+    "translation": "Donna",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "🗣️ DEFINIZIONE: Rappresenta una donna che camnina da sinistra verso destra.",
+      "⚠️ ESEMPIO: 女王 (nŭ wáng) - Regina",
+      "⚠️ ESEMPIO: 女儿 (nŭ er) - Figlia"
+    ]
+  },
+    {
+    "chinese": "女",
+    "pinyin": "Zĭ",
+    "translation": "Bambino",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "🗣️ DEFINIZIONE: Rappresenta un bambino con le braccia aperte e i piedi fasciati.",
+      "⚠️ ESEMPIO: 子女 (zĭ nŭ) - Bambini",
+      "⚠️ ESEMPIO: 败子 (bài zĭ) - Figliol Prodigo"
+    ]
   }
-
 ]
 
