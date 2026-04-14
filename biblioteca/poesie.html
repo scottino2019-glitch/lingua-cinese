@@ -41,13 +41,16 @@
         .page.--left { box-shadow: inset -10px 0 20px rgba(0,0,0,0.05); border-right: 1px solid #d4cbb8; }
         .page.--right { box-shadow: inset 10px 0 20px rgba(0,0,0,0.05); border-left: 1px solid #d4cbb8; }
         
-     .cover { 
-    background-image: url('cover.png') !important;
-    background-color: transparent !important;
-    background-size: cover !important; 
-    background-position: center !important; 
-    display: block; 
+.cover { 
+    background-image: url('cover.png'); /* <-- Modificato qui */
+    background-size: cover; 
+    background-position: center; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
 }
+
         
         .page-number { position: absolute; bottom: 20px; font-size: 12px; color: #8b7e6a; } 
         .page.--left .page-number { left: 20px; } 
