@@ -68,6 +68,30 @@
             line-height: 1.4;
             color: #5a4a3a; 
         } 
+        /* --- REGOLE SALVAVITA PER LE PAGINE GENERATE DALL'APP --- */
+
+/* 1. Rimpicciolisce la poesia cinese (forza text-3xl invece di text-4xl) */
+.page .font-ma-shan {
+    font-size: 1.875rem !important; 
+    line-height: 1.6 !important;
+}
+
+/* 2. Rimpicciolisce la traduzione italiana (forza text-xl invece di text-2xl) */
+.page .font-nanum {
+    font-size: 1.25rem !important; 
+    line-height: 1.4 !important;
+}
+
+/* 3. Riduce lo spazio sotto i titoli cinesi (h1) e italiani (h3) */
+.page h1.font-zhi-mang,
+.page h3 {
+    margin-bottom: 0.5rem !important; /* Sostituisce mb-4 con mb-2 per recuperare altezza */
+}
+
+/* 4. Scala il titolo della traduzione italiana se l'app lo fa troppo grande */
+.page h3.text-2xl {
+    font-size: 1.25rem !important; 
+}
     </style>
 </head>
 <body> 
