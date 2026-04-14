@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="it">
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Libro Cinese-Italiano - Interattivo</title> 
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@100..900&family=Single+Day&family=Nanum+Brush+Script&family=Zhi+Mang+Xing&display=swap" rel="stylesheet"> 
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script> 
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <style> 
+        body { 
+            background-color: #f5f0e6; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            font-family: 'Noto Sans SC', sans-serif; 
+        } 
+        .font-zhi-mang { font-family: 'Zhi Mang Xing', cursive; } 
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; } 
+        .font-long-cang { font-family: 'Long Cang', cursive; } 
+        .font-ma-shan { font-family: 'Ma Shan Zheng', cursive; } 
+        .font-single-day { font-family: 'Single Day', cursive; } 
+        .font-nanum { font-family: 'Nanum Brush Script', cursive; }
+        
+        .book-container { box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        
+        .page { 
+            background-color: #fdfaf6; 
+            padding: 40px; 
+            border: 1px solid #e0d8c8; 
+            box-sizing: border-box; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+        }
+        
+        .page.--left { box-shadow: inset -10px 0 20px rgba(0,0,0,0.05); border-right: 1px solid #d4cbb8; }
+        .page.--right { box-shadow: inset 10px 0 20px rgba(0,0,0,0.05); border-left: 1px solid #d4cbb8; }
+        
+        .cover { 
+            background-color: #2c3e50;
+            background-image: url('/img/cover.png');
+            background-size: cover; 
+            background-position: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        .page-number { position: absolute; bottom: 20px; font-size: 12px; color: #8b7e6a; } 
+        .page.--left .page-number { left: 20px; } 
+        .page.--right .page-number { right: 20px; }
+        
+        ruby rt { font-family: 'Long Cang', cursive; color: #8b7e6a; font-size: 0.5em; }
+        
+        .author-note { 
+            border-left: 3px solid #d4c8a8; 
+            background: rgba(255,252,245,0.8); 
+            padding: 10px; 
+            margin-bottom: 15px; 
+            font-family: 'Long Cang', cursive; 
+            font-size: 1rem; 
+            line-height: 1.4;
+            color: #5a4a3a; 
+        } 
+    </style>
+</head>
+<body> 
+    <div id="book" class="book-container"> 
+        
+        <!-- COPERTINA -->
+        <div class="page cover"> 
+            <!-- Testo rimosso per lasciare solo l'immagine di background -->
+        </div> 
+
+        <!-- PAGINA 3 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>赋得古原草送别<rt>fù dé gǔ yuán cǎo sòng bié</rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>离离原上草<rt>lí lí yuán shàng cǎo</rt></ruby></div>
+                    <div><ruby>一岁一枯荣<rt>yī suì yī kū róng</rt></ruby></div>
+                    <div><ruby>野火烧不尽<rt>yě huǒ shāo bù jìn</rt></ruby></div>
+                    <div><ruby>春风吹又生<rt>chūn fēng chuī yòu shēng</rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>白居易<rt>bái jū yì</rt></ruby></div> 
+            </div> 
+            <div class="page-number">3</div> 
+        </div> 
+
+        <!-- PAGINA 4 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="author-note">"I campi sono ricoperti di erba verde rigogliosa, che secca ogni anno. Dopo l'appassimento tornerà ad essere rigoglioso. gli incendi non possono spegnersi e ritorna pieno di vita quando soffia la brezza primaverile."</div> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2">Addio all'erba antica</h3> 
+                    <div class="font-nanum text-xl leading-snug"> 
+                        <p class="mb-1">Lasciando l'erba originaria,</p>
+                        <p class="mb-1">Un anno e uno prospero.</p>
+                        <p class="mb-1">Il fuoco brucia senza fine,</p>
+                        <p class="mb-1">La brezza primaverile soffia e fa nascere di nuovo.</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="page-number">4</div> 
+        </div> 
+
+        <!-- PAGINA 5 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>赠刘景文<rt>zèng liú jing wén</rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>荷尽已无擎雨盖,<rt>hé jìn yí wú qíng уй gài</rt></ruby></div>
+                    <div><ruby>菊残犹有傲霜枝。<rt>jú cán you you ào shuãng zhi</rt></ruby></div>
+                    <div><ruby>一年好景君须记,<rt>yì nián hǎo jǐng jūn xū ji</rt></ruby></div>
+                    <div><ruby>最是橙黄橘绿时。<rt>zui shì chéng huáng jú เน้ shí</rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>苏轼<rt>sũ shì</rt></ruby></div> 
+            </div> 
+            <div class="page-number">5</div> 
+        </div> 
+
+        <!-- PAGINA 6 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="author-note">"Il loto è appassito e anche le foglie di loto tenute su come ombrelli sono appassite. Lo zenzero è sparito; i crisantemi sono in rovina, ma i loro alti rami e le foglie crescono ancora nella stagione fredda. Il vento è ancora pieno di vita. La migliore vista dell'anno per te, assicurati di ricordare che questo è il momento in cui le arance sono dorate e i mandarini all'inizio dell'inverno. La stagione verde!"</div> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2"></h3> 
+                    <div class="font-nanum text-xl leading-snug"> </div> 
+                </div> 
+            </div> 
+            <div class="page-number">6</div> 
+        </div> 
+
+        <!-- PAGINA 7 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>赠刘景文<rt></rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>荷尽已无擎雨盖,<rt></rt></ruby></div>
+                    <div><ruby>菊残犹有傲霜枝。<rt></rt></ruby></div>
+                    <div><ruby>一年好景君须记,<rt></rt></ruby></div>
+                    <div><ruby>最是橙黄橘绿时。<rt></rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>苏轼<rt></rt></ruby></div> 
+            </div> 
+            <div class="page-number">7</div> 
+        </div> 
+
+        <!-- PAGINA 8 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2">Presentato a Liu Jingwen</h3> 
+                    <div class="font-nanum text-xl leading-snug"> 
+                        <p class="mb-1">Il carico è sparito e non è rimasta più la copertura antipioggia,</p>
+                        <p class="mb-1">Ci sono ancora orgogliosi rami di brina tra i crisantemi.</p>
+                        <p class="mb-1">Devi ricordare un buon anno,</p>
+                        <p class="mb-1">È il momento più arancione-giallo-arancio-verde.</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="page-number">8</div> 
+        </div> 
+
+        <!-- PAGINA 9 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>画<rt>huà</rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>远看山有色,<rt>yuăn kàn shān you sè</rt></ruby></div>
+                    <div><ruby>近听水无声。<rt>jìn tīng shui wú shēng</rt></ruby></div>
+                    <div><ruby>春去花还在，<rt>chũn qù hua hái zài</rt></ruby></div>
+                    <div><ruby>人来鸟不惊。<rt>rén lái nião bù jing</rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>佚名<rt>yì míng</rt></ruby></div> 
+            </div> 
+            <div class="page-number">9</div> 
+        </div> 
+
+        <!-- PAGINA 10 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="author-note">"Le montagne nel dipinto hanno colori vivaci da lontano, ma quando ti avvicini non puoi più sentire il rumore dell'acqua; dopo la primavera, i fiori nel dipinto sono ancora in piena fioritura e quando arriva la gente, anche gli uccelli non vengono disturbati."</div> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2">pittura</h3> 
+                    <div class="font-nanum text-xl leading-snug"> 
+                        <p class="mb-1">Da lontano le montagne sembrano colorate,</p>
+                        <p class="mb-1">Non c'è alcun rumore proveniente dall'acqua da vicino.</p>
+                        <p class="mb-1">La primavera è passata e i fiori sono ancora lì,</p>
+                        <p class="mb-1">Gli uccelli non si sorprendono quando arrivano le persone.</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="page-number">10</div> 
+        </div> 
+
+        <!-- PAGINA 11 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>浪淘沙<rt>làng táo shã</rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>九曲黄河万里沙,<rt>jiŭ qũ huáng hé wàn I sha</rt></ruby></div>
+                    <div><ruby>浪淘风 自天涯。<rt>làng táo fêng bo zì tiān yá</rt></ruby></div>
+                    <div><ruby>如今直上银河去,<rt>rú jin zhí shàng yín hé qù </rt></ruby></div>
+                    <div><ruby>同到牵牛织女家。<rt>tóng dào qiãn niú zhi nů jiā</rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>刘禹锡<rt>liú yй xī</rt></ruby></div> 
+            </div> 
+            <div class="page-number">11</div> 
+        </div> 
+
+        <!-- PAGINA 12 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="author-note">"Il tortuoso fiume Giallo trasporta molti sedimenti e onde ondulate. Rotola, come dall'orizzonte. Ora puoi semplicemente seguire il fiume Giallo per raggiungere la Via Lattea, portami con te nella casa del Mandriano e della Ragazza Tessitrice ospite."</div> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2">Langtaosha</h3> 
+                    <div class="font-nanum text-xl leading-snug"> 
+                        <p class="mb-1">Nove anse del Fiume Giallo e migliaia di chilometri di sabbia,</p>
+                        <p class="mb-1">Le onde vengono dalla fine del mondo.</p>
+                        <p class="mb-1">Ora vai dritto verso la Via Lattea,</p>
+                        <p class="mb-1">Sono andato a casa di Morning Glory e Weaver Girl.</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="page-number">12</div> 
+        </div> 
+
+        <!-- PAGINA 13 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>古朗月行(节选)<rt>gũ lăng yuè xíng</rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>小时不识月,<rt>xião shí bù shí yuè</rt></ruby></div>
+                    <div><ruby>呼作白玉盘。<rt>hu zuò bái yù pán</rt></ruby></div>
+                    <div><ruby>又疑瑶台镜,<rt>yòu yí yáo tái jìng</rt></ruby></div>
+                    <div><ruby>飞在青云端。<rt>fêi zài qing yún duăn</rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>李白<rt>lĩ bái</rt></ruby></div> 
+            </div> 
+            <div class="page-number">13</div> 
+        </div> 
+
+        <!-- PAGINA 14 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="author-note">"Quando ero bambino non conoscevo la luna e la chiamavo bianca un piatto di giada. Sospettavo anche che provenisse dal Palazzo Immortale. Lo specchio utilizzato dagli dei vola alto nel cielo."</div> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2">Gulang Yue Xing (estratto)</h3> 
+                    <div class="font-nanum text-xl leading-snug"> 
+                        <p class="mb-1">Non conosco la luna quando sono giovane,</p>
+                        <p class="mb-1">Chiamatelo piatto di giada bianca.</p>
+                        <p class="mb-1">Dubitavo anche dello specchio Yao Tai.</p>
+                        <p class="mb-1">Volare tra le nuvole blu.</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="page-number">14</div> 
+        </div> 
+
+        <!-- PAGINA 15 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>相思<rt>xiãng ST</rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>红豆生南国，<rt>hóng dòu shêng nán guó</rt></ruby></div>
+                    <div><ruby>春来发几枝。<rt>chũn lái fā از zhi</rt></ruby></div>
+                    <div><ruby>愿君多采擷,<rt>yuàn jūn duo căi xié</rt></ruby></div>
+                    <div><ruby>此物最相思。<rt>cĩ wù zuì xiãng sĩ</rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>王维<rt>wáng wéi</rt></ruby></div> 
+            </div> 
+            <div class="page-number">15</div> 
+        </div> 
+
+        <!-- PAGINA 16 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="author-note">"L'albero del fagiolo rosso cresce nel sud e arriva in primavera. Quanti nuovi rami cresceranno? Spero che ne sceglierai di più, scegli dei fagioli rossi, perché sono la migliore fonte di sostentamento, il mal d'amore delle persone."</div> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2">mal d'amore</h3> 
+                    <div class="font-nanum text-xl leading-snug"> 
+                        <p class="mb-1">I fagioli rossi crescono nei paesi del sud,</p>
+                        <p class="mb-1">Quando arriva la primavera, manda fuori alcuni rami.</p>
+                        <p class="mb-1">Spero che tu possa sceglierne di più,</p>
+                        <p class="mb-1">Questa cosa è la più malata d'amore.</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="page-number">16</div> 
+        </div> 
+
+        <!-- PAGINA 17 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>墨梅<rt>mò méi</rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>我家洗砚池头树,<rt>wo jiā xĩ yàn chí tóu shù</rt></ruby></div>
+                    <div><ruby>朵朵花开淡墨痕。<rt>duo duo hua kāi dàn mò hén</rt></ruby></div>
+                    <div><ruby>不要人夸好颜色,<rt>bú yào rén kuā hăo yán sè</rt></ruby></div>
+                    <div><ruby>只留清气满乾坤。<rt>zhř liú qing qì măn qián kūn</rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>王冕<rt>wáng miăn</rt></ruby></div> 
+            </div> 
+            <div class="page-number">17</div> 
+        </div> 
+
+        <!-- PAGINA 18 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="author-note">"C'è un susino accanto al laghetto per lavare le pietre da inchiostro a casa mia. I fiori di susino in fiore sono macchiati di deboli segni di inchiostro. Nessuno ha bisogno di lodarlo, il colore è bellissimo, voglio solo che la sua fragranza permea il mondo."</div> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2">Mo Mei</h3> 
+                    <div class="font-nanum text-xl leading-snug"> 
+                        <p class="mb-1">L'albero in riva allo stagno dove lavo la mia pietra da calamaio,</p>
+                        <p class="mb-1">I fiori sbocciano con deboli segni di inchiostro.</p>
+                        <p class="mb-1">Non permettere a nessuno di lodare il colore,</p>
+                        <p class="mb-1">Resta solo l’energia pura per riempire l’universo.</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="page-number">18</div> 
+        </div> 
+
+        <!-- PAGINA 19 -->
+        <div class="page --left"> 
+            <div class="flex flex-col items-center w-full h-full"> 
+                <h1 class="font-zhi-mang text-3xl mb-4"> <ruby>石灰吟<rt>shí hui yín</rt></ruby> </h1> 
+                <div class="font-ma-shan text-3xl leading-relaxed text-center my-auto"> 
+                    <div><ruby>千锤万凿出深山,<rt>qiãn chuí wàn záo chu shen shãn</rt></ruby></div>
+                    <div><ruby>烈火焚烧若等闲。<rt>liè huo fén shão ruò děng xián</rt></ruby></div>
+                    <div><ruby>粉骨碎身全不怕,<rt>fěn gũ suì shẽn quán bú pà</rt></ruby></div>
+                    <div><ruby>要留清白在人间。<rt>yào liú qing bái zài rén jiān</rt></ruby></div> 
+                </div> 
+                <div class="mt-auto font-zhi-mang text-xl text-gray-500"><ruby>]于谦<rt>yú giãn</rt></ruby></div> 
+            </div> 
+            <div class="page-number">19</div> 
+        </div> 
+
+        <!-- PAGINA 20 -->
+        <div class="page --right"> 
+            <div class="flex flex-col h-full"> 
+                <div class="author-note">"Il calcare deve essere martellato migliaia di volte prima di poter essere estratto dalle montagne. Vieni allo scoperto, considera l'incendio del fuoco violento come una cosa normale. Anche se viene fatto a pezzi, non ha paura, vuole solo mantenere la sua innocenza nel mondo umano."</div> 
+                <div class="text-center my-auto"> 
+                    <h2 class="text-red-600 text-xs uppercase tracking-widest mb-2 font-single-day">Traduzione Italiana</h2> 
+                    <h3 class="text-xl font-bold mb-2">Gemito di lime</h3> 
+                    <div class="font-nanum text-xl leading-snug"> 
+                        <p class="mb-1">Migliaia di martelli scavarono le montagne,</p>
+                        <p class="mb-1">Il fuoco arde come se fosse inattivo.</p>
+                        <p class="mb-1">Non aver paura di essere frantumato in pezzi,</p>
+                        <p class="mb-1">Per rimanere innocente in questo mondo.</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="page-number">20</div> 
+        </div> 
+
+    </div>
+
+    <script> 
+        window.onload = () => { 
+            const pageFlip = new St.PageFlip(document.getElementById('book'), { 
+                width: 400, 
+                height: 550, 
+                size: "fixed", 
+                showCover: true, 
+                maxShadowOpacity: 0.5, 
+                showPageCorners: true 
+            }); 
+            pageFlip.loadFromHTML(document.querySelectorAll('.page')); 
+        }; 
+    </script>
+</body>
+</html>
