@@ -6,5 +6,13 @@
   "description": "Nuova sessione",
   "category": "generale",
   "link":  ""  
+},
+{
+  "id": 2,
+  "date": "2026-04-14",
+  "title": "Vocabolario tematico",
+  "description": "Nuovi vocaboli",
+  "category": "vocabolario",
+  "link":  "https://scottino2019-glitch.github.io/lingua-cinese/vocabolario.html"  
 }
 ]
