@@ -189,7 +189,36 @@
     "spiegazione": [
       "🥟 DEFINIZIONE: Ravioli con ripieno di carne o verdure avvolti nella pasta."
     ]
+  },
+  {
+    "chinese": "包子",
+    "pinyin": "bāo zi",
+    "translation": "Baozi / Panino ripieno al vapore",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "🥟 DEFINIZIONE: Panini cotti al vapore fatti con pasta lievitata e contenenti un ripieno (carne, verdure o dolce)."
+    ]
+  },
+  {
+    "chinese": "面包",
+    "pinyin": "miàn bāo",
+    "translation": "Pane",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "🍞 DEFINIZIONE: Termine generico per indicare il pane di tipo occidentale o da forno."
+    ]
+  },
+  {
+    "chinese": "馒头",
+    "pinyin": "mán tou",
+    "translation": "Mantou / Panino al vapore (senza ripieno)",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "⚪ DEFINIZIONE: Pane cotto al vapore tipico della Cina settentrionale, fatto con pasta lievitata ma senza alcun ripieno all'interno."
+    ]
   }
 ]
+
+
 
 
