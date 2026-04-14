@@ -42,10 +42,8 @@
         .page.--right { box-shadow: inset 10px 0 20px rgba(0,0,0,0.05); border-left: 1px solid #d4cbb8; }
         
 .cover { 
-    width: 100px;
-    height: 200px;
-    background-image: url('cover.png'); /* <-- Modificato qui */
-    background-size: cover; 
+    
+    
     background-position: center; 
     display: flex; 
     flex-direction: column; 
@@ -76,9 +74,10 @@
     <div id="book" class="book-container"> 
         
         <!-- COPERTINA -->
-        <div class="page cover"> 
-            <!-- Testo rimosso per lasciare solo l'immagine di background -->
-        </div> 
+       <!-- COPERTINA -->
+<div class="page cover" style="padding: 0;"> 
+    <img src="cover.png" alt="Copertina Libro" style="width: 100%; height: 100%; object-fit: cover;">
+</div> 
 
         <!-- PAGINA 3 -->
         <div class="page --left"> 
