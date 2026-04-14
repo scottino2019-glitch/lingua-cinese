@@ -1,26 +1,10 @@
 [
   {
   "id": 1,
-  "date": "2026-03-25",
-  "title": "Vocabolario Tematico",
-  "description": "Nuovi Vocaboli",
-  "category": "vocabolario",
-  "link":  "https://scottino2019-glitch.github.io/lingua-cinese/vocabolario.html"  
-},
-{
-  "id": 2,
-  "date": "2026-03-24",
-  "title": "Nuovi layout",
-  "description": "Giochi, Utility...",
-  "category": "generale",
+  "date": "2026-04-14",
+  "title": "Libreria Cinese",
+  "description": "Nuova sessione",
+  "category": "altro",
   "link":  ""  
-},
-{
-  "id": 3,
-  "date": "2026-03-20",
-  "title": "Nuovo esercizio",
-  "description": "Esercizi vari",
-  "category": "esercizi",
-  "link":    "https://esercizi-lingua-cinese.vercel.app/"
 }
 ]
