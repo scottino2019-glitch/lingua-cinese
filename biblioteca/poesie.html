@@ -42,13 +42,13 @@
         .page.--right { box-shadow: inset 10px 0 20px rgba(0,0,0,0.05); border-left: 1px solid #d4cbb8; }
         
 .cover { 
-    
-    
-    background-position: center; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
+    background-image: url('cover.png') !important;
+    background-size: 100% 100% !important; /* Forza l'immagine a toccare tutti e 4 i lati senza tagliare nulla */
+    background-position: center !important; 
+    background-repeat: no-repeat !important;
+    padding: 0 !important; /* FONDAMENTALE: rimuove i 40px di spazio bianco della classe .page */
+    border: none !important; /* Rimuove il bordino per avere una copertina pulita */
+    display: block; 
 }
 
         
@@ -73,10 +73,8 @@
 <body> 
     <div id="book" class="book-container"> 
         
-        <!-- COPERTINA -->
-       <!-- COPERTINA -->
-<div class="page cover" style="padding: 0;"> 
-    <img src="cover.png" alt="Copertina Libro" style="width: 100%; height: 100%; object-fit: fill">
+     <!-- COPERTINA -->
+<div class="page cover"></div> 
 </div> 
 
         <!-- PAGINA 3 -->
