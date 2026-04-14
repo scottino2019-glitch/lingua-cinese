@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Antico Archivio | Biblioteca Vintage</title>
+    
+    <!-- Google Fonts per un look classico -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIABILI DI SISTEMA --- */
+        :root {
+            --bg-color: #1a1818;
+            --text-main: #e8dcc4;
+            --gold: #d4af37;
+            --gold-dim: #aa8c2c;
+            
+            /* Colori dei libri */
+            --book-red: #5c1616;
+            --book-green: #143b26;
+            --book-blue: #16243c;
+            --book-brown: #4a2f1d;
+            
+            --font-title: 'Cinzel', serif;
+            --font-body: 'Cormorant Garamond', serif;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at center, #2a2525 0%, #1a1818 100%);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            border-bottom: 2px solid var(--gold-dim);
+            margin-bottom: 3rem;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        h1 {
+            font-family: var(--font-title);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--gold);
+            letter-spacing: 4px;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-main);
+            opacity: 0.8;
+        }
+
+        /* --- LAYOUT LIBRERIA (GRID) --- */
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            padding: 0 4rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            perspective: 1000px; /* Necessario per l'effetto 3D al passaggio del mouse */
+        }
+
+        /* --- STILE DELLE CARD / LIBRI --- */
+        .book-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2 / 3; /* Proporzione classica di un libro */
+            border-radius: 4px 12px 12px 4px; /* Lato destro più arrotondato */
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+            box-shadow: 
+                inset 6px 0 15px rgba(0,0,0,0.6), /* Ombra della rilegatura interna */
+                inset -2px 0 5px rgba(255,255,255,0.1), /* Luce sul bordo destro */
+                8px 8px 15px rgba(0,0,0,0.5); /* Ombra esterna */
+        }
+
+        /* Effetto scanalatura della rilegatura (Hinge) */
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 12px;
+            width: 8px;
+            background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.4) 100%);
+            z-index: 2;
+        }
+
+        /* Effetto Pagine Bianche laterali (Visibili leggermente in 3D) */
+        .book-card::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            bottom: 2px;
+            right: -4px;
+            width: 4px;
+            background-color: #d1c8b4;
+            border-radius: 0 4px 4px 0;
+            transform: translateZ(-1px);
+            box-shadow: inset 1px 0 3px rgba(0,0,0,0.3);
+        }
+
+        /* Colori Specifici dei Libri */
+        .book-card.red { background-color: var(--book-red); }
+        .book-card.green { background-color: var(--book-green); }
+        .book-card.blue { background-color: var(--book-blue); }
+        .book-card.brown { background-color: var(--book-brown); }
+
+        /* Contenuto del libro (Testi e decorazioni) */
+        .book-content {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 2px;
+            padding: 1.5rem 1rem;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>'); /* Texture carta/pelle leggera */
+        }
+
+        .book-title {
+            font-family: var(--font-title);
+            font-size: 1.2rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .book-author {
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .ornament {
+            width: 40px;
+            height: 2px;
+            background-color: var(--gold-dim);
+            margin: 1rem auto;
+            border: none;
+            position: relative;
+        }
+
+        .ornament::before {
+            content: '♦';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold-dim);
+            font-size: 14px;
+        }
+
+        .book-year {
+            font-family: var(--font-title);
+            font-size: 0.8rem;
+            color: var(--gold-dim);
+            margin-top: auto;
+        }
+
+        /* --- HOVER EFFECTS --- */
+        .book-card:hover {
+            transform: translateY(-15px) rotateY(-5deg) rotateX(2deg) scale(1.02);
+            box-shadow: 
+                inset 6px 0 15px rgba(0,0,0,0.6),
+                20px 20px 30px rgba(0,0,0,0.7);
+            z-index: 10;
+        }
+
+        .book-card:hover .book-content {
+            border-color: rgba(212, 175, 55, 0.8);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            .library-grid {
+                padding: 0 2rem 4rem;
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 2rem;
+            }
+            .book-title { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Biblioteca Cinese</h1>
+        <p>Raccolta di libri con traduzione</p>
+    </header>
+
+    <main class="library-grid">
+        <!-- Libro 1 -->
+        <a href="/biblioteca/poesie.html" class="book-card red">
+            <div class="book-content">
+                <div>
+                    <h2 class="book-title">传统诗歌</h2>
+                    <hr class="ornament">
+                    <p class="book-author">Poesie tradizionali</p>
+                </div>
+                <p class="book-year">2000</p>
+            </div>
+        </a>
+</main>
+
+</body>
+</html>
