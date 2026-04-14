@@ -394,6 +394,13 @@
 
     </div>
 
+            <!-- ... qui c'è la tua ultima pagina (Pagina 20) ... -->
+        
+    </div> <!-- 🔴 QUESTO CHIUDE IL LIBRO (div id="book"). L'audio deve stare DOPO questa riga -->
+
+    <!-- 🟢 IL TAG AUDIO DEVE STARE QUI FUORI -->
+    <audio id="page-flip-sound" src="page-flip.mp3" preload="auto"></audio>
+
     <script> 
         window.onload = () => { 
             const pageFlip = new St.PageFlip(document.getElementById('book'), { 
@@ -404,8 +411,23 @@
                 maxShadowOpacity: 0.5, 
                 showPageCorners: true 
             }); 
+            
             pageFlip.loadFromHTML(document.querySelectorAll('.page')); 
+
+            // --- SUONO DELLA PAGINA ---
+            const flipSound = document.getElementById('page-flip-sound');
+            
+            // Il controllo di sicurezza evita che il libro si rompa se manca l'audio
+            if (flipSound) {
+                pageFlip.on('flip', (e) => {
+                    flipSound.currentTime = 0;
+                    flipSound.play().catch(error => {
+                        console.log("Audio bloccato dal browser");
+                    });
+                });
+            }
         }; 
     </script>
 </body>
 </html>
+
