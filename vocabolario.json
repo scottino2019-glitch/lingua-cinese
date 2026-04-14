@@ -162,6 +162,34 @@
       "💬 ESEMPIO: 子女 (zĭ nŭ) - Bambini",
       "💬 ESEMPIO: 败子 (bài zĭ) - Figliol Prodigo"
     ]
+  },
+  {
+    "chinese": "米饭",
+    "pinyin": "mǐ fàn",
+    "translation": "Riso (cotto)",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "🍚 DEFINIZIONE: Uno dei cibi fondamentali per il popolo cinese, preparato cuocendo il riso con acqua."
+    ]
+  },
+  {
+    "chinese": "面条",
+    "pinyin": "miàn tiáo",
+    "translation": "Spaghetti / Noodles",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "🍜 DEFINIZIONE: Uno dei cibi fondamentali per il popolo cinese, lunghe strisce di cibo fatte di farina."
+    ]
+  },
+  {
+    "chinese": "饺子",
+    "pinyin": "jiǎo zi",
+    "translation": "Ravioli cinesi / Dumplings",
+    "category": "Sostantivi",
+    "spiegazione": [
+      "🥟 DEFINIZIONE: Ravioli con ripieno di carne o verdure avvolti nella pasta."
+    ]
   }
 ]
+
 
