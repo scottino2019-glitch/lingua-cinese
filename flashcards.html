@@ -28,11 +28,28 @@
       padding: 2rem; position: relative;
     }
 
+    .header-section {
+      display: flex; flex-direction: column; 
+      align-items: center; margin-bottom: 2rem;
+    }
+
     .title {
       font-size: 2.5rem; font-weight: 700; color: white;
-      margin-bottom: 2rem; text-align: center;
+      margin-bottom: 1rem; text-align: center;
       text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
+
+    /* Stile per il menu a tendina dei gruppi */
+    .group-select {
+      padding: 0.8rem 1.5rem; font-size: 1.1rem;
+      font-family: 'Quicksand', sans-serif; font-weight: 700;
+      color: #2d3436; background: rgba(255, 255, 255, 0.95);
+      border: none; border-radius: 30px; cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      outline: none; text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .group-select:hover { transform: scale(1.05); }
 
     .card-wrapper {
       perspective: 1000px; width: 100%;
@@ -77,7 +94,6 @@
       line-height: 1.4; font-weight: 500;
     }
 
-    /* Pulsante Audio */
     .audio-btn {
       background: #667eea; color: white; border: none;
       padding: 10px 20px; border-radius: 50px;
@@ -112,21 +128,25 @@
  <body>
 
   <main class="flashcard-container">
-   <h1 class="title">Flashcard Cinese</h1>
+   <div class="header-section">
+     <h1 class="title">Flashcard Cinese</h1>
+     <select id="group-select" class="group-select" style="display: none;"></select>
+   </div>
    <div id="content">Caricamento...</div>
   </main>
 
   <script>
-    let flashcards = [];
+    let allData = {};       // Conterrà tutto il JSON raggruppato
+    let flashcards = [];    // Conterrà solo le carte del gruppo selezionato
     let currentIndex = 0;
     let isFlipped = false;
 
     // Funzione per parlare
     function speak(text, lang) {
-      window.speechSynthesis.cancel(); // Ferma letture precedenti
+      window.speechSynthesis.cancel();
       const msg = new SpeechSynthesisUtterance(text);
       msg.lang = lang;
-      msg.rate = 0.8; // Velocità naturale
+      msg.rate = 0.8;
       window.speechSynthesis.speak(msg);
     }
 
@@ -134,19 +154,51 @@
       try {
         const response = await fetch('flashcards.json');
         if (!response.ok) throw new Error(`Errore: ${response.status}`);
-        flashcards = await response.json();
+        
+        allData = await response.json();
+        const groupSelect = document.getElementById('group-select');
+        
+        // Popola il menu a tendina con le chiavi del JSON
+        for (const groupName in allData) {
+          const option = document.createElement('option');
+          option.value = groupName;
+          option.textContent = groupName;
+          groupSelect.appendChild(option);
+        }
+
+        // Mostra il selettore e imposta il primo gruppo come attivo
+        groupSelect.style.display = 'block';
+        const initialGroup = Object.keys(allData)[0];
+        flashcards = allData[initialGroup];
+
+        // Event listener per quando l'utente cambia gruppo
+        groupSelect.addEventListener('change', (e) => {
+          const selectedGroup = e.target.value;
+          flashcards = allData[selectedGroup];
+          currentIndex = 0;   // Resetta l'indice per il nuovo gruppo
+          isFlipped = false;
+          renderFlashcards();
+        });
+
         renderFlashcards();
+
       } catch (error) {
         document.getElementById('content').innerHTML = `
           <div class="error">
             <strong>⚠️ Errore</strong><br>${error.message}<br>
-            Controlla il file flashcards.json
+            Controlla che il file flashcards.json sia formattato correttamente.
           </div>`;
       }
     }
 
     function renderFlashcards() {
       const content = document.getElementById('content');
+      
+      if (!flashcards || flashcards.length === 0) {
+        content.innerHTML = `<div class="error">Nessuna flashcard presente in questo gruppo.</div>`;
+        return;
+      }
+
       content.innerHTML = `
         <div class="card-wrapper">
           <div class="card" id="card">
@@ -164,28 +216,34 @@
         </div>
 
         <div class="controls">
-          <button class="nav-button" id="prevBtn">←</button>
+          <button class="nav-button" id="prevBtn" title="Precedente">←</button>
           <div class="counter" id="counter">${currentIndex + 1} / ${flashcards.length}</div>
-          <button class="nav-button" id="nextBtn">→</button>
+          <button class="nav-button" id="nextBtn" title="Successiva">→</button>
         </div>
       `;
 
-      // Eventi
+      // Gestione del click per ruotare la carta
       document.getElementById('card').onclick = (e) => {
-        // Gira solo se NON clicchi il tasto audio
         if (!e.target.classList.contains('audio-btn')) {
           isFlipped = !isFlipped;
           document.getElementById('card').classList.toggle('flipped');
         }
       };
 
+      // Gestione audio
       document.getElementById('btn-audio-zh').onclick = () => speak(flashcards[currentIndex].ideogramma, 'zh-CN');
       document.getElementById('btn-audio-it').onclick = () => speak(flashcards[currentIndex].spiegazione, 'it-IT');
       
-      document.getElementById('prevBtn').onclick = previousCard;
-      document.getElementById('nextBtn').onclick = nextCard;
+      // Gestione navigazione
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      prevBtn.onclick = previousCard;
+      nextBtn.onclick = nextCard;
 
-      updateButtons();
+      // Disabilita i bottoni quando siamo agli estremi
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === flashcards.length - 1;
     }
 
     function previousCard() {
@@ -202,11 +260,6 @@
         isFlipped = false;
         renderFlashcards();
       }
-    }
-
-    function updateButtons() {
-      document.getElementById('prevBtn').disabled = currentIndex === 0;
-      document.getElementById('nextBtn').disabled = currentIndex === flashcards.length - 1;
     }
 
     window.addEventListener('DOMContentLoaded', loadFlashcards);
