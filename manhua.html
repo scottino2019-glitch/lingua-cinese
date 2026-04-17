@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manhua Chinese Chat</title>
+    <style>
+        :root {
+            --wa-teal: #008069;
+            --wa-bg: #efeae2;
+            --wa-bubble-in: #ffffff;
+            --wa-bubble-out: #d9fdd3;
+            --text-main: #111b21;
+            --text-muted: #667781;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #d1d7db;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            max-height: 800px;
+            background-color: var(--wa-bg);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        @media (min-width: 450px) {
+            .app-container {
+                height: 90vh;
+                border-radius: 12px;
+            }
+        }
+
+        .header {
+            background-color: #d32f2f; /* Rosso cinese al posto del verde WhatsApp */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            overflow: hidden;
+        }
+
+        .chat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-selector {
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        
+        .chat-selector option {
+            color: var(--text-main);
+        }
+
+        .status {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .chat-window {
+            flex-grow: 1;
+            padding: 20px 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+            background-size: cover;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .message.received {
+            background-color: var(--wa-bubble-in);
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .message.sent {
+            background-color: var(--wa-bubble-out);
+            align-self: flex-end;
+            border-top-right-radius: 0;
+        }
+
+        .text-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .chinese-text {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* Stile per il Pinyin */
+        .pinyin-text {
+            font-size: 0.75rem;
+            color: #d32f2f;
+            margin-top: -2px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .tts-btn {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: #d32f2f;
+            opacity: 0.7;
+            padding: 2px;
+        }
+
+        .tts-btn:hover { opacity: 1; }
+
+        .italian-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+            filter: blur(4px);
+            cursor: pointer;
+            user-select: none;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .italian-text.revealed {
+            filter: blur(0);
+            opacity: 1;
+        }
+
+        .voice-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+            padding: 5px 0;
+        }
+
+        .play-btn {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            padding-left: 3px;
+        }
+
+        .play-btn.playing { padding-left: 0; }
+
+        .waveform {
+            flex-grow: 1;
+            height: 4px;
+            background-color: #ccc;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waveform .progress {
+            width: 0%;
+            height: 100%;
+            background-color: #d32f2f;
+        }
+
+        .audio-duration {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .modal-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); display: none;
+            justify-content: center; align-items: center;
+            z-index: 100; padding: 20px; opacity: 0; transition: opacity 0.3s;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content {
+            background: white; width: 100%; max-height: 80%;
+            border-radius: 12px; padding: 20px; position: relative;
+            overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(20px); transition: transform 0.3s;
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .close-btn {
+            position: absolute; top: 15px; right: 15px; background: #f0f2f5;
+            border: none; width: 30px; height: 30px; border-radius: 50%;
+            font-size: 1.2rem; cursor: pointer; color: var(--text-muted);
+        }
+        .modal-title { font-size: 1.2rem; color: #d32f2f; margin-bottom: 15px; border-bottom: 1px solid #e9edef; padding-bottom: 10px;}
+        .grammar-rule { margin-bottom: 15px; padding: 10px; background-color: #f0f2f5; border-left: 4px solid #d32f2f; border-radius: 0 8px 8px 0; }
+        .grammar-rule h4 { margin-bottom: 5px; font-size: 0.95rem; }
+        .grammar-rule p { font-size: 0.85rem; color: var(--text-muted); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header class="header">
+        <div class="header-left">
+            <div class="avatar" id="avatar-icon">🏮</div>
+            <div class="chat-info">
+                <select id="chatSelector" class="chat-selector" onchange="loadChat(this.value)"></select>
+                <span class="status">Tocca per cambiare Manhua ▼</span>
+            </div>
+        </div>
+        <button class="menu-btn" onclick="openModal()">⋮</button>
+    </header>
+
+    <main class="chat-window" id="chatWindow"></main>
+
+    <div class="modal-overlay" id="grammarModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">✕</button>
+            <h2 class="modal-title" id="modalTitle">Note Grammaticali</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // DATABASE CINESE CON PINYIN
+    const webtoonData = {
+        "chat1": {
+            title: "Romance Manhua (恋爱漫)",
+            avatar: "🌸",
+            messages: [
+                { type: "received", zh: "你真漂亮！", py: "Nǐ zhēn piàoliang!", it: "Sei davvero bellissima!" },
+                { type: "sent", zh: "哪有，是因为化了妆。", py: "Nǎ yǒu, shì yīnwèi huà le zhuāng.", it: "Ma no, è perché mi sono truccata." },
+                { type: "received", zh: "别骗人了~", py: "Bié piàn rén le~", it: "Non mentire~" }
+            ],
+            grammar: [
+                { title: "真 (zhēn) - Davvero", desc: "Si usa per enfatizzare un aggettivo. Struttura: Soggetto + 真 + Aggettivo." },
+                { title: "哪有 (nǎ yǒu)", desc: "Letteralmente 'dove c'è?', ma si usa comunemente per rispondere con modestia a un complimento (Ma no / Ti pare)." },
+                { title: "别...了 (bié...le)", desc: "Struttura per gli imperativi negativi: 'Non fare (qualcosa)'. Es: 别骗人了 (Non mentire)." }
+            ]
+        },
+        "chat2": {
+            title: "Drama: Al Ristorante",
+            avatar: "🥟",
+            messages: [
+                { type: "received", zh: "我来买单吧。", py: "Wǒ lái mǎidān ba.", it: "Pago io il conto." },
+                { type: "sent", zh: "谢谢，那我不客气了！", py: "Xièxiè, nà wǒ bù kèqì le!", it: "Grazie, allora non faccio complimenti (mangio volentieri)!" }
+            ],
+            grammar: [
+                { title: "买单 (mǎidān) - Pagare", desc: "Espressione usatissima nei ristoranti per chiedere il conto o offrirsi di pagare." },
+                { title: "吧 (ba) - Suggerimento", desc: "Particella finale che addolcisce la frase e la trasforma in un suggerimento o un'offerta ('Lascia che paghi io')." },
+                { title: "不客气 (bù kèqì)", desc: "Significa 'prego', ma usato prima di un'azione significa 'Non faccio complimenti / Ne approfitto felicemente'." }
+            ]
+        },
+        "chat3": {
+            title: "Messaggio Vocale (语音)",
+            avatar: "📱",
+            messages: [
+                { type: "received", msgType: "audio", zh: "周末你有空吗？", py: "Zhōumò nǐ yǒu kòng ma?", it: "Hai tempo questo weekend?", duration: "0:02", audioUrl: "demo" },
+                { type: "sent", zh: "有空，怎么了？", py: "Yǒu kòng, zěnme le?", it: "Sì, ho tempo. Che succede?" }
+            ],
+            grammar: [
+                { title: "吗 (ma) - Domande", desc: "Particella interrogativa posta alla fine di una frase affermativa per farla diventare una domanda chiusa (Sì/No)." },
+                { title: "有空 (yǒu kòng)", desc: "Significa 'avere tempo libero'." },
+                { title: "怎么了 (zěnme le)", desc: "Espressione idiomatica utilissima: 'Cosa c'è? / Che succede? / Come mai?'." }
+            ]
+        },
+        "chat4": {
+            title: "Risveglio (醒来)",
+            avatar: "🥱",
+            messages: [
+                { type: "received", zh: "好困啊...", py: "Hǎo kùn a...", it: "Che sonno..." },
+                { type: "received", zh: "浑身疼...", py: "Húnshēn téng...", it: "Mi fa male tutto il corpo..." },
+                { type: "received", zh: "哎？", py: "Āi?", it: "Eh? (Aspetta un attimo...)" }
+            ],
+            grammar: [
+                { 
+                    title: "好 (hǎo) - Molto / Così", 
+                    desc: "In questi contesti esclamativi, '好' non significa 'bene', ma viene usato al posto di 很 (molto) per enfatizzare. Es: 好困 (Così stanco/Che sonno)." 
+                },
+                { 
+                    title: "啊 (a) - Particella esclamativa", 
+                    desc: "Si mette a fine frase per dare un tono più emotivo o sospirato. In '好困啊', sottolinea la stanchezza." 
+                },
+                { 
+                    title: "浑身 (húnshēn) - Tutto il corpo", 
+                    desc: "Si usa spesso insieme a 疼 (téng, fare male) o 酸痛 (indolenzito) quando ci si sveglia malconci o dopo un allenamento." 
+                }
+            ]
+        },
+"chat5": {
+    title: "Appuntamento? (约会)",
+    avatar: "🎡",
+    messages: [
+        { type: "received", zh: "意外是指徐婷一起去约会吗?", py: "Yìwài shì zhǐ Xú Tíng yìqǐ qù yuēhuì ma?", it: "Per 'imprevisto' intendi andare a un appuntamento insieme a Xu Ting?" },
+        { type: "sent", zh: "不是!", py: "Bú shì!", it: "No!" },
+        { type: "received", zh: "烛天老师! 你说好的要陪人家约会了啦!", py: "Zhútiān lǎoshī! Nǐ shuō hǎo de yào péi rénjiā yuēhuì le la!", it: "Maestro Zhùtiān! Avevi promesso che mi avresti accompagnata a un appuntamento!" },
+        { type: "received", zh: "烛天老师, 我们去欢乐谷好不好哇?", py: "Zhútiān lǎoshī, wǒmen qù Huānlègǔ hǎo bù hǎo wa?", it: "Maestro Zhùtiān, andiamo a Happy Valley, va bene?" },
+        { type: "received", zh: "我们去玩那个空中大秋千!", py: "Wǒmen qù wán nàge kōngzhōng dà qiūqiān!", it: "Andiamo a provare quella grande altalena sospesa in aria!" },
+        { type: "received", zh: "玩一百次啊啊!", py: "Wán yì bǎi cì a a!", it: "Facciamolo cento volte, aaaah!" }
+    ],
+    grammar: [
+        { title: "是指...吗?", desc: "Struttura usata per chiedere chiarimento: 'intendi dire...?'." },
+        { title: "说好的", desc: "Espressione colloquiale molto comune che significa 'quello che avevi promesso' o 'non avevamo detto che...?'. " },
+        { title: "人家", desc: "Pronome colloquiale, spesso vezzeggiativo o civettuolo, usato per riferirsi a sé stessi in modo tenero." },
+        { title: "好不好哇?", desc: "Forma molto colloquiale e dolce per fare una proposta: 'va bene?', 'daiiii?'. " }
+    ]
+}
+    };
+
+    const chatSelector = document.getElementById('chatSelector');
+    const chatWindow = document.getElementById('chatWindow');
+    const avatarIcon = document.getElementById('avatar-icon');
+    const modalOverlay = document.getElementById('grammarModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+
+    // Lettura TTS in Cinese
+    function speakChinese(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN'; // Mandarino semplificato
+            utterance.rate = 0.85;
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Il tuo browser non supporta la lettura audio.");
+        }
+    }
+
+    // Riproduzione Audio Finto per il Cinese
+    function playVoiceNote(btn, text, audioUrl, durationStr) {
+        const progress = btn.nextElementSibling.querySelector('.progress');
+        if(audioUrl === "demo") {
+            speakChinese(text);
+            btn.innerHTML = '⏸';
+            btn.classList.add('playing');
+            const seconds = parseInt(durationStr.split(':')[1]) * 1000;
+            progress.style.transition = `width ${seconds}ms linear`;
+            progress.style.width = '100%';
+            
+            setTimeout(() => {
+                btn.innerHTML = '▶';
+                btn.classList.remove('playing');
+                progress.style.transition = 'none';
+                progress.style.width = '0%';
+            }, seconds + 500);
+        }
+    }
+
+    function toggleTranslation(element) {
+        element.classList.toggle('revealed');
+    }
+
+    function init() {
+        for (const [key, data] of Object.entries(webtoonData)) {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = data.title;
+            chatSelector.appendChild(option);
+        }
+        loadChat("chat1");
+    }
+
+    function loadChat(chatId) {
+        const data = webtoonData[chatId];
+        avatarIcon.textContent = data.avatar;
+        chatWindow.innerHTML = "";
+        
+        data.messages.forEach((msg, index) => {
+            setTimeout(() => {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `message ${msg.type}`;
+                
+                if(msg.msgType === "audio") {
+                    msgDiv.innerHTML = `
+                        <div class="voice-note">
+                            <button class="play-btn" onclick="playVoiceNote(this, '${msg.zh}', '${msg.audioUrl}', '${msg.duration}')">▶</button>
+                            <div class="waveform"><div class="progress"></div></div>
+                            <span class="audio-duration">${msg.duration}</span>
+                        </div>
+                        <div class="pinyin-text">${msg.py}</div>
+                        <div class="italian-text" onclick="toggleTranslation(this)" title="Tocca per tradurre">${msg.it}</div>
+                    `;
+                } else {
+                    msgDiv.innerHTML = `
+                        <div class="text-content">
+                            <span class="chinese-text">${msg.zh}</span>
+                            <button class="tts-btn" onclick="speakChinese('${msg.zh}')" title="Ascolta pronuncia">🔊</button>
+                        </div>
+                        <div class="pinyin-text">${msg.py}</div>
+                        <div class="italian-text" onclick="toggleTranslation(this)" title="Tocca per tradurre">${msg.it}</div>
+                    `;
+                }
+
+                chatWindow.appendChild(msgDiv);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }, index * 300);
+        });
+    }
+
+    function openModal() {
+        const data = webtoonData[chatSelector.value];
+        modalTitle.textContent = `Grammatica: ${data.title}`;
+        modalBody.innerHTML = "";
+        data.grammar.forEach(rule => {
+            const ruleDiv = document.createElement('div');
+            ruleDiv.className = "grammar-rule";
+            ruleDiv.innerHTML = `<h4>📌 ${rule.title}</h4><p>${rule.desc}</p>`;
+            modalBody.appendChild(ruleDiv);
+        });
+        modalOverlay.classList.add('active');
+    }
+
+    function closeModal() { modalOverlay.classList.remove('active'); }
+    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+
+    init();
+</script>
+
+</body>
+</html>
