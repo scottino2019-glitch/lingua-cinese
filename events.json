@@ -1,6 +1,14 @@
 [
-  {
+   {
   "id": 1,
+  "date": "2026-04-16",
+  "title": "Manhua",
+  "description": "Nuova sessione",
+  "category": "generale",
+  "link":  ""  
+},
+  {
+  "id": 2,
   "date": "2026-04-14",
   "title": "Libreria Cinese",
   "description": "Nuova sessione",
@@ -8,7 +16,7 @@
   "link":  ""  
 },
 {
-  "id": 2,
+  "id": 3,
   "date": "2026-04-14",
   "title": "Vocabolario tematico",
   "description": "Nuovi vocaboli",
