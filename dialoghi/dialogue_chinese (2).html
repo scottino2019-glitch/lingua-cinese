@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat realistica tra due amici, scherzano tra loro e poi  decidono di andare al cinema </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { 
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+          background-color: #e5ddd5; 
+          margin: 0; 
+          padding: 20px;
+          min-height: 100vh;
+          background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+          background-repeat: repeat;
+        }
+        .whatsapp-container {
+          max-width: 500px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .bubble {
+          max-width: 85%;
+          padding: 8px 12px;
+          border-radius: 8px;
+          position: relative;
+          font-size: 14.5px;
+          line-height: 1.4;
+          box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+        }
+        .bubble-left {
+          align-self: flex-start;
+          background-color: #ffffff;
+          border-top-left-radius: 0;
+        }
+        .bubble-right {
+          align-self: flex-end;
+          background-color: #dcf8c6;
+          border-top-right-radius: 0;
+        }
+        .speaker-name {
+          font-size: 11px;
+          font-weight: 700;
+          margin-bottom: 2px;
+          color: #075e54;
+        }
+        .pronunciation {
+          font-size: 11px;
+          color: #555;
+          font-style: italic;
+          margin-top: 2px;
+        }
+        .translation {
+          font-size: 12px;
+          color: #666;
+          border-top: 1px solid rgba(0,0,0,0.05);
+          margin-top: 4px;
+          padding-top: 4px;
+        }
+        .header-wa {
+          background-color: #075e54;
+          color: white;
+          padding: 10px 16px;
+          border-radius: 8px 8px 0 0;
+          margin-bottom: 0px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .mode-tabs {
+          background-color: #075e54;
+          display: flex;
+          padding: 0 16px 8px;
+          border-radius: 0 0 8px 8px;
+          margin-bottom: 12px;
+          gap: 10px;
+        }
+        .mode-tab {
+          font-size: 12px;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.6);
+          padding: 4px 8px;
+          cursor: pointer;
+          border-bottom: 2px solid transparent;
+        }
+        .mode-tab.active {
+          color: white;
+          border-bottom-color: white;
+        }
+        .vocab-section {
+          background: white;
+          margin-top: 30px;
+          padding: 20px;
+          border-radius: 12px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .audio-btn {
+          cursor: pointer;
+          background: none;
+          border: none;
+          padding: 0;
+          margin-left: 8px;
+          vertical-align: middle;
+          color: #3b82f6;
+        }
+        .audio-btn:hover {
+          color: #2563eb;
+        }
+        .hidden { display: none; }
+        .quiz-card {
+          background: white;
+          border-radius: 12px;
+          padding: 24px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+          text-align: center;
+        }
+        .option-btn {
+          width: 100%;
+          padding: 12px;
+          margin-top: 10px;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          background: #f8f9fa;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .option-btn:hover { background: #e9ecef; }
+    </style>
+</head>
+<body>
+    <div class="whatsapp-container">
+        <div class="header-wa">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: #128c7e; display: flex; align-items: center; justify-content: center; font-weight: bold;">AI</div>
+          <div>
+            <div style="font-weight: 700; font-size: 16px;">Polyglot: Chinese</div>
+            <div style="font-size: 11px; opacity: 0.8;">Offline Mode</div>
+          </div>
+        </div>
+        <div class="mode-tabs">
+          <div id="tab-chat" class="mode-tab active" onclick="setMode('chat')">Chat</div>
+          <div id="tab-quiz" class="mode-tab" onclick="setMode('quiz')">Quiz</div>
+        </div>
+
+        <div id="chat-view">
+          
+              <div class="bubble bubble-left">
+                  <div class="speaker-name">小明</div>
+                  <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                    <div style="color: #000; font-weight: 500;">嘿，你还在床上吗？你懒得像头猪。</div>
+                    <button class="audio-btn" onclick="speak(`嘿，你还在床上吗？你懒得像头猪。`)">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </div>
+                  <div class="pronunciation">Hēi, nǐ hái zài chuángshàng ma? Nǐ lǎn dé xiàng tóu zhū.</div>
+                  <div class="translation">Ehi, sei ancora a letto? Sei pigro come un maiale.</div>
+              </div>
+          
+              <div class="bubble bubble-right">
+                  <div class="speaker-name">小刚</div>
+                  <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                    <div style="color: #000; font-weight: 500;">我已经在健身房了！不像你，只知道吃和睡。</div>
+                    <button class="audio-btn" onclick="speak(`我已经在健身房了！不像你，只知道吃和睡。`)">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </div>
+                  <div class="pronunciation">Wǒ yǐjīng zài jiànshēnfáng le! Bù xiàng nǐ, zhǐ zhīdào chī hé shuì.</div>
+                  <div class="translation">Sono già in palestra! Non come te, che sai solo mangiare e dormire.</div>
+              </div>
+          
+              <div class="bubble bubble-left">
+                  <div class="speaker-name">小明</div>
+                  <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                    <div style="color: #000; font-weight: 500;">哈哈，行，你赢了。晚点想去看电影吗？</div>
+                    <button class="audio-btn" onclick="speak(`哈哈，行，你赢了。晚点想去看电影吗？`)">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </div>
+                  <div class="pronunciation">Hāhā, xíng, nǐ yíngle. Wǎndiǎn xiǎng qù kàn diànyǐng ma?</div>
+                  <div class="translation">Ahah, okay, hai vinto tu. Ti va di andare al cinema più tardi?</div>
+              </div>
+          
+              <div class="bubble bubble-right">
+                  <div class="speaker-name">小刚</div>
+                  <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                    <div style="color: #000; font-weight: 500;">好啊，听说有个新动作片很棒。我们今晚去吧！</div>
+                    <button class="audio-btn" onclick="speak(`好啊，听说有个新动作片很棒。我们今晚去吧！`)">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </div>
+                  <div class="pronunciation">Hǎo a, tīngshuō yǒu gè xīn dòngzuòpiàn hěn bàng. Wǒmen jīnwǎn qù ba!</div>
+                  <div class="translation">Certo, ho sentito che c'è un nuovo film d'azione fantastico. Andiamoci stasera!</div>
+              </div>
+          
+          
+          <div class="vocab-section">
+            <h2 style="font-weight: 700; margin-bottom: 15px; color: #075e54;">Vocabulary Table</h2>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+              <thead style="background: #f0f2f5;">
+                <tr>
+                  <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Chinese</th>
+                  <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Pronunciation</th>
+                  <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Italian</th>
+                  <th style="padding: 8px; text-align: center; border-bottom: 2px solid #ddd;">Audio</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 8px; font-weight: 600;">懒</td>
+                    <td style="padding: 8px; color: #555; font-style: italic;">lǎn</td>
+                    <td style="padding: 8px; color: #555;">Pigro</td>
+                    <td style="padding: 8px; text-align: center;">
+                      <button class="audio-btn" onclick="speak(`懒`)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      </button>
+                    </td>
+                  </tr>
+                
+                  <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 8px; font-weight: 600;">健身房</td>
+                    <td style="padding: 8px; color: #555; font-style: italic;">jiànshēnfáng</td>
+                    <td style="padding: 8px; color: #555;">Palestra</td>
+                    <td style="padding: 8px; text-align: center;">
+                      <button class="audio-btn" onclick="speak(`健身房`)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      </button>
+                    </td>
+                  </tr>
+                
+                  <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 8px; font-weight: 600;">赢</td>
+                    <td style="padding: 8px; color: #555; font-style: italic;">yíng</td>
+                    <td style="padding: 8px; color: #555;">Vincere</td>
+                    <td style="padding: 8px; text-align: center;">
+                      <button class="audio-btn" onclick="speak(`赢`)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      </button>
+                    </td>
+                  </tr>
+                
+                  <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 8px; font-weight: 600;">看电影</td>
+                    <td style="padding: 8px; color: #555; font-style: italic;">kàn diànyǐng</td>
+                    <td style="padding: 8px; color: #555;">Guardare un film</td>
+                    <td style="padding: 8px; text-align: center;">
+                      <button class="audio-btn" onclick="speak(`看电影`)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      </button>
+                    </td>
+                  </tr>
+                
+                  <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 8px; font-weight: 600;">动作片</td>
+                    <td style="padding: 8px; color: #555; font-style: italic;">dòngzuòpiàn</td>
+                    <td style="padding: 8px; color: #555;">Film d'azione</td>
+                    <td style="padding: 8px; text-align: center;">
+                      <button class="audio-btn" onclick="speak(`动作片`)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      </button>
+                    </td>
+                  </tr>
+                
+                  <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 8px; font-weight: 600;">今晚</td>
+                    <td style="padding: 8px; color: #555; font-style: italic;">jīnwǎn</td>
+                    <td style="padding: 8px; color: #555;">Stasera</td>
+                    <td style="padding: 8px; text-align: center;">
+                      <button class="audio-btn" onclick="speak(`今晚`)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      </button>
+                    </td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="quiz-view" class="hidden">
+           <div class="quiz-card">
+              <div id="quiz-question-area">
+                <p id="quiz-prompt" style="font-size: 10px; font-weight: bold; color: #666; text-transform: uppercase;">Traduzione:</p>
+                <h3 id="quiz-question-text" style="font-size: 20px; font-weight: 700; margin-bottom: 20px;">-</h3>
+                <div id="quiz-options"></div>
+              </div>
+              <div id="quiz-feedback-area" class="hidden">
+                <div id="feedback-icon" style="margin-bottom: 15px;"></div>
+                <h3 id="feedback-title" style="font-size: 24px; font-weight: 800; margin-bottom: 10px;">-</h3>
+                <p id="feedback-text" style="font-size: 14px; margin-bottom: 20px;">-</p>
+                <button onclick="nextQuestion()" style="background: #3b82f6; color: white; padding: 10px 24px; border-radius: 24px; font-weight: bold; border: none; cursor: pointer;">Prossimo</button>
+              </div>
+           </div>
+        </div>
+    </div>
+
+    <script>
+      const entries = [{"speaker":"小明","text":"嘿，你还在床上吗？你懒得像头猪。","translation":"Ehi, sei ancora a letto? Sei pigro come un maiale.","pronunciation":"Hēi, nǐ hái zài chuángshàng ma? Nǐ lǎn dé xiàng tóu zhū.","side":"left","id":"w4l6c6mss"},{"speaker":"小刚","text":"我已经在健身房了！不像你，只知道吃和睡。","translation":"Sono già in palestra! Non come te, che sai solo mangiare e dormire.","pronunciation":"Wǒ yǐjīng zài jiànshēnfáng le! Bù xiàng nǐ, zhǐ zhīdào chī hé shuì.","side":"right","id":"phna8p650"},{"speaker":"小明","text":"哈哈，行，你赢了。晚点想去看电影吗？","translation":"Ahah, okay, hai vinto tu. Ti va di andare al cinema più tardi?","pronunciation":"Hāhā, xíng, nǐ yíngle. Wǎndiǎn xiǎng qù kàn diànyǐng ma?","side":"left","id":"2o9ucpqf2"},{"speaker":"小刚","text":"好啊，听说有个新动作片很棒。我们今晚去吧！","translation":"Certo, ho sentito che c'è un nuovo film d'azione fantastico. Andiamoci stasera!","pronunciation":"Hǎo a, tīngshuō yǒu gè xīn dòngzuòpiàn hěn bàng. Wǒmen jīnwǎn qù ba!","side":"right","id":"akqlcevzl"}];
+      let currentIndex = 0;
+      let score = 0;
+
+      function speak(text) {
+        if (!window.speechSynthesis) return;
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "zh";
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(speech);
+      }
+
+      function setMode(mode) {
+        document.getElementById('chat-view').classList.toggle('hidden', mode !== 'chat');
+        document.getElementById('quiz-view').classList.toggle('hidden', mode !== 'quiz');
+        document.getElementById('tab-chat').classList.toggle('active', mode === 'chat');
+        document.getElementById('tab-quiz').classList.toggle('active', mode === 'quiz');
+        if (mode === 'quiz') startQuiz();
+      }
+
+      function startQuiz() {
+        currentIndex = 0;
+        score = 0;
+        showQuestion();
+      }
+
+      function showQuestion() {
+        const question = entries[currentIndex];
+        document.getElementById('quiz-question-text').innerText = '"' + question.translation + '"';
+        document.getElementById('quiz-feedback-area').classList.add('hidden');
+        document.getElementById('quiz-question-area').classList.remove('hidden');
+        
+        const optionsArea = document.getElementById('quiz-options');
+        optionsArea.innerHTML = '';
+        
+        const options = [question.text];
+        while(options.length < 3 && entries.length > 1) {
+          const randIdx = Math.floor(Math.random() * entries.length);
+          const randText = entries[randIdx].text;
+          if(!options.includes(randText)) options.push(randText);
+        }
+        options.sort(() => Math.random() - 0.5);
+        
+        options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-btn';
+          btn.innerText = opt;
+          btn.onclick = () => checkAnswer(opt);
+          optionsArea.appendChild(btn);
+        });
+      }
+
+      function checkAnswer(answer) {
+        const correct = entries[currentIndex].text;
+        const isCorrect = answer === correct;
+        if(isCorrect) score++;
+        
+        document.getElementById('quiz-question-area').classList.add('hidden');
+        document.getElementById('quiz-feedback-area').classList.remove('hidden');
+        
+        const title = document.getElementById('feedback-title');
+        const text = document.getElementById('feedback-text');
+        const icon = document.getElementById('feedback-icon');
+        
+        if(isCorrect) {
+          title.innerText = 'CORRETTO!';
+          title.style.color = '#10b981';
+          text.innerText = 'Ottimo lavoro.';
+          icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        } else {
+          title.innerText = 'SBAGLIATO';
+          title.style.color = '#f43f5e';
+          text.innerHTML = 'La risposta era: <b style="color: black">' + correct + '</b>';
+          icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+        }
+      }
+
+      function nextQuestion() {
+        currentIndex = (currentIndex + 1) % entries.length;
+        showQuestion();
+      }
+    </script>
+</body>
+</html>
