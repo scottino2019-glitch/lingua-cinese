@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cinese: Storie</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Container delle mini-card con SCROLL ORIZZONTALE */
+    .card-nav {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      background: #181825;
+      border-bottom: 2px solid #313244;
+      
+      /* Modifiche chiave per lo scroll */
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Scorrimento fluido su iOS */
+      
+      /* Nasconde la scrollbar ma mantiene lo scroll */
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .card-nav::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    /* Stile base delle mini card */
+    .mini-card {
+      /* Impedisce alle card di restringersi o schiacciarsi */
+      flex: 0 0 auto; 
+      
+      width: 85px;
+      height: 85px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: #313244;
+      border: 2px solid transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .mini-card .icon {
+      font-size: 26px;
+      margin-bottom: 6px;
+      transition: transform 0.2s;
+    }
+
+    .mini-card:active .icon {
+      transform: scale(0.9);
+    }
+
+    .mini-card .title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* --- COLORI TEMATICI --- */
+    .card-study { border-color: #89b4fa; color: #89b4fa; }
+    .card-study.active { background: #89b4fa; color: #11111b; box-shadow: 0 8px 15px rgba(137, 180, 250, 0.3); }
+
+    .card-fight { border-color: #f38ba8; color: #f38ba8; }
+    .card-fight.active { background: #f38ba8; color: #11111b; box-shadow: 0 8px 15px rgba(243, 139, 168, 0.3); }
+
+    .card-gym { border-color: #a6e3a1; color: #a6e3a1; }
+    .card-gym.active { background: #a6e3a1; color: #11111b; box-shadow: 0 8px 15px rgba(166, 227, 161, 0.3); }
+
+    .card-travel { border-color: #f9e2af; color: #f9e2af; }
+    .card-travel.active { background: #f9e2af; color: #11111b; box-shadow: 0 8px 15px rgba(249, 226, 175, 0.3); }
+
+    .card-food { border-color: #fab387; color: #fab387; }
+    .card-food.active { background: #fab387; color: #11111b; box-shadow: 0 8px 15px rgba(250, 179, 135, 0.3); }
+
+
+    /* Area degli Iframe */
+    .frame-wrapper {
+      flex: 1;
+      position: relative;
+      background: #1e1e2e;
+    }
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(10px);
+    }
+
+    iframe.visible {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="card-nav" id="tabs"></nav>
+  <div class="frame-wrapper" id="frames"></div>
+
+  <script>
+    const dialogues = [
+      { label: "Libreria", icon: "📚", colorClass: "card-study", src: "dialoghi/dialogue_chinese.html" },
+      { label: "La Sfida", icon: "⚔️", colorClass: "card-fight", src: "dialoghi/dialogue_chinese-1.html" },
+      { label: "Palestra", icon: "🏋️", colorClass: "card-gym", src: "dialoghi/dialogue_chinese-2.html" },
+      // Esempi aggiuntivi per far funzionare lo scroll
+      { label: "Viaggio", icon: "✈️", colorClass: "card-travel", src: "dialoghi/viaggio.html" },
+      { label: "Ristorante", icon: "🍜", colorClass: "card-food", src: "dialoghi/food.html" },
+      { label: "Lavoro", icon: "💼", colorClass: "card-study", src: "dialoghi/lavoro.html" }
+    ];
+
+    const nav = document.getElementById('tabs');
+    const frames = document.getElementById('frames');
+
+    dialogues.forEach((d, index) => {
+      // 1. Creazione Mini Card
+      const card = document.createElement('div');
+      card.className = `mini-card ${d.colorClass}`;
+      if (index === 0) card.classList.add('active');
+      
+      card.innerHTML = `
+        <div class="icon">${d.icon}</div>
+        <div class="title">${d.label}</div>
+      `;
+      
+      card.addEventListener('click', () => {
+        switchTab(index);
+        // Centra la card cliccata nello schermo
+        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+      nav.appendChild(card);
+
+      // 2. Creazione Iframe
+      const iframe = document.createElement('iframe');
+      iframe.src = d.src;
+      if (index === 0) iframe.classList.add('visible');
+      frames.appendChild(iframe);
+    });
+
+    function switchTab(selectedIndex) {
+      const cards = nav.querySelectorAll('.mini-card');
+      cards.forEach((card, i) => card.classList.toggle('active', i === selectedIndex));
+
+      const allFrames = frames.querySelectorAll('iframe');
+      allFrames.forEach((frame, i) => frame.classList.toggle('visible', i === selectedIndex));
+    }
+  </script>
+
+</body>
+</html>
