@@ -46,18 +46,17 @@
       
       flex-wrap: nowrap;
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch; /* Scorrimento fluido su mobile */
-      scrollbar-width: none; /* Nasconde scrollbar su Firefox */
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; 
     }
 
     .card-nav::-webkit-scrollbar {
-      display: none; /* Nasconde scrollbar su Chrome/Safari */
+      display: none; 
     }
 
     /* Stile base delle mini card */
     .mini-card {
-      flex: 0 0 auto; /* Importante per non farle stringere */
-      
+      flex: 0 0 auto; 
       width: 85px;
       height: 85px;
       border-radius: 20px;
@@ -94,7 +93,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* --- COLORI TEMATICI --- */
+    /* --- COLORI TEMATICI (Originali + Nuovi) --- */
     .card-study { border-color: #89b4fa; color: #89b4fa; }
     .card-study.active { background: #89b4fa; color: #11111b; box-shadow: 0 8px 15px rgba(137, 180, 250, 0.3); }
 
@@ -104,14 +103,35 @@
     .card-gym { border-color: #a6e3a1; color: #a6e3a1; }
     .card-gym.active { background: #a6e3a1; color: #11111b; box-shadow: 0 8px 15px rgba(166, 227, 161, 0.3); }
 
-    .card-travel { border-color: #f9e2af; color: #f9e2af; }
-    .card-travel.active { background: #f9e2af; color: #11111b; box-shadow: 0 8px 15px rgba(249, 226, 175, 0.3); }
+    /* NUOVI COLORI */
+    /* Scuola (Verde Acqua) */
+    .card-school { border-color: #94e2d5; color: #94e2d5; }
+    .card-school.active { background: #94e2d5; color: #11111b; box-shadow: 0 8px 15px rgba(148, 226, 213, 0.3); }
 
-    .card-food { border-color: #fab387; color: #fab387; }
-    .card-food.active { background: #fab387; color: #11111b; box-shadow: 0 8px 15px rgba(250, 179, 135, 0.3); }
+       /* Scuola (Verde Acqua) */
+    .card-school2 { border-color: #94e2d5; color: #94e2d5; }
+    .card-school2.active { background: #94e2d5; color: #11111b; box-shadow: 0 8px 15px rgba(148, 226, 213, 0.3); }
 
-    .card-work { border-color: #cba6f7; color: #cba6f7; }
-    .card-work.active { background: #cba6f7; color: #11111b; box-shadow: 0 8px 15px rgba(203, 166, 247, 0.3); }
+    
+    /* Hotel (Lavanda) */
+    .card-hotel { border-color: #b4befe; color: #b4befe; }
+    .card-hotel.active { background: #b4befe; color: #11111b; box-shadow: 0 8px 15px rgba(180, 190, 254, 0.3); }
+
+    /* Bar (Rosso Mattone/Pesca scuro) */
+    .card-bar { border-color: #eba0ac; color: #eba0ac; }
+    .card-bar.active { background: #eba0ac; color: #11111b; box-shadow: 0 8px 15px rgba(235, 160, 172, 0.3); }
+
+    /* Telefono (Azzurro Cielo) */
+    .card-phone { border-color: #89dceb; color: #89dceb; }
+    .card-phone.active { background: #89dceb; color: #11111b; box-shadow: 0 8px 15px rgba(137, 220, 235, 0.3); }
+
+    /* Incontro (Rosa Fenicottero) */
+    .card-meeting { border-color: #f2cdcd; color: #f2cdcd; }
+    .card-meeting.active { background: #f2cdcd; color: #11111b; box-shadow: 0 8px 15px rgba(242, 205, 205, 0.3); }
+
+    /* Shopping (Rosa/Fucsia chiaro) */
+    .card-shop { border-color: #f5c2e7; color: #f5c2e7; }
+    .card-shop.active { background: #f5c2e7; color: #11111b; box-shadow: 0 8px 15px rgba(245, 194, 231, 0.3); }
 
 
     /* Area degli Iframe */
@@ -142,37 +162,36 @@
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="app-header">
     <div class="header-icon">💬</div>
     <h1>Cinese Storie</h1>
   </header>
 
-  <!-- NAVIGAZIONE CARD -->
   <nav class="card-nav" id="tabs"></nav>
-  
-  <!-- CONTENITORE IFRAME -->
   <div class="frame-wrapper" id="frames"></div>
 
   <script>
-    // Array con le tue chat originali + i placeholder per testare lo scroll
     const dialogues = [
+      // Le tue 3 chat originali
       { label: "Libreria", icon: "📚", colorClass: "card-study", src: "dialoghi/libreria.html" },
       { label: "La Sfida", icon: "⚔️", colorClass: "card-fight", src: "dialoghi/la-sfida.html" },
       { label: "Palestra", icon: "🏋️", colorClass: "card-gym", src: "dialoghi/palestra.html" },
       
-      // Placeholder per testare lo scorrimento
-      { label: "Viaggio", icon: "✈️", colorClass: "card-travel", src: "dialoghi/viaggio.html" },
-      { label: "Cena", icon: "🍜", colorClass: "card-food", src: "dialoghi/cena.html" },
-      { label: "Lavoro", icon: "💼", colorClass: "card-work", src: "dialoghi/lavoro.html" },
-      { label: "Shopping", icon: "🛍️", colorClass: "card-study", src: "dialoghi/shopping.html" }
+      // Le NUOVE card richieste (ricorda di cambiare i nomi dei file 'src' quando li crei!)
+      { label: "Scuola",   icon: "🏫", colorClass: "card-school",  src: "dialoggi/scuola.html" },
+      { label: "Scuola2",   icon: "🏫", colorClass: "card-school2",  src: "dialoggi/scuola2.html" },
+      { label: "Hotel",    icon: "🏨", colorClass: "card-hotel",   src: "dialoghi/hotel.html" },
+      { label: "Bar",      icon: "☕", colorClass: "card-bar",     src: "dialoghi/bar.html" },
+      { label: "Telefono", icon: "📱", colorClass: "card-phone",   src: "dialoghi/telefono.html" },
+      { label: "Incontro", icon: "🤝", colorClass: "card-meeting", src: "dialoghi/incontro.html" },
+      { label: "Shopping", icon: "🛍️", colorClass: "card-shop",    src: "dialoghi/shopping.html" }
     ];
 
     const nav = document.getElementById('tabs');
     const frames = document.getElementById('frames');
 
     dialogues.forEach((d, index) => {
-      // 1. Creazione Mini Card
+      // Creazione Mini Card
       const card = document.createElement('div');
       card.className = `mini-card ${d.colorClass}`;
       if (index === 0) card.classList.add('active');
@@ -184,12 +203,11 @@
       
       card.addEventListener('click', () => {
         switchTab(index);
-        // Scorre automaticamente la card al centro se non è visibile
         card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       });
       nav.appendChild(card);
 
-      // 2. Creazione Iframe
+      // Creazione Iframe
       const iframe = document.createElement('iframe');
       iframe.src = d.src;
       if (index === 0) iframe.classList.add('visible');
