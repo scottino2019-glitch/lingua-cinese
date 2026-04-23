@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>primo giorno di scuola presentazione del prof e dei alunni, rispondono uno alla volta dicendo il nome e la nazionalità </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { 
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+          background-color: #e5ddd5; 
+          margin: 0; 
+          padding: 20px;
+          background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+          background-repeat: repeat;
+        }
+        .whatsapp-container {
+          max-width: 500px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .bubble {
+          max-width: 85%;
+          padding: 8px 12px;
+          border-radius: 8px;
+          position: relative;
+          font-size: 14.5px;
+          line-height: 1.4;
+          box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+        }
+        .bubble-left {
+          align-self: flex-start;
+          background-color: #ffffff;
+          border-top-left-radius: 0;
+        }
+        .bubble-right {
+          align-self: flex-end;
+          background-color: #dcf8c6;
+          border-top-right-radius: 0;
+        }
+        .speaker-name {
+          font-size: 11px;
+          font-weight: 700;
+          margin-bottom: 2px;
+          color: #075e54;
+        }
+        .pronunciation {
+          font-size: 11px;
+          color: #555;
+          font-style: italic;
+          margin-top: 2px;
+        }
+        .translation {
+          font-size: 12px;
+          color: #666;
+          border-top: 1px solid rgba(0,0,0,0.05);
+          margin-top: 4px;
+          padding-top: 4px;
+        }
+        .header-wa {
+          background-color: #075e54;
+          color: white;
+          padding: 10px 16px;
+          border-radius: 8px 8px 0 0;
+          margin-bottom: 12px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .vocab-section {
+          background: white;
+          margin-top: 30px;
+          padding: 20px;
+          border-radius: 12px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .audio-btn {
+          cursor: pointer;
+          background: none;
+          border: none;
+          padding: 0;
+          margin-left: 8px;
+          vertical-align: middle;
+          color: #3b82f6;
+        }
+        .audio-btn:hover {
+          color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="whatsapp-container">
+        <div class="header-wa">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: #128c7e; display: flex; align-items: center; justify-content: center; font-weight: bold;">AI</div>
+          <div>
+            <div style="font-weight: 700; font-size: 16px;">Polyglot: Chinese</div>
+            <div style="font-size: 11px; opacity: 0.8;">Online - Topic: primo giorno di scuola presentazione del prof e dei alunni, rispondono uno alla volta dicendo il nome e la nazionalità </div>
+          </div>
+        </div>
+
+        
+            <div class="bubble bubble-left">
+                <div class="speaker-name">林老师</div>
+                <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                  <div style="color: #000; font-weight: 500;">同学们好！我是林老师。请大家一个一个地自我介绍。</div>
+                  <button class="audio-btn" onclick="speak(`同学们好！我是林老师。请大家一个一个地自我介绍。`)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  </button>
+                </div>
+                <div class="pronunciation">Tóngxuémen hǎo! Wǒ shì Lín lǎoshī. Qǐng dàjiā yī gè yī gè de zìwǒ jièshào.</div>
+                <div class="translation">Buongiorno studenti! Sono l'insegnante Lin. Per favore, presentatevi uno alla volta.</div>
+            </div>
+        
+            <div class="bubble bubble-right">
+                <div class="speaker-name">马可</div>
+                <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                  <div style="color: #000; font-weight: 500;">老师好，我叫马可，我是意大利人。</div>
+                  <button class="audio-btn" onclick="speak(`老师好，我叫马可，我是意大利人。`)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  </button>
+                </div>
+                <div class="pronunciation">Lǎoshī hǎo, wǒ jiào Mǎkě, wǒ shì Yìdàlì rén.</div>
+                <div class="translation">Buongiorno professore, mi chiamo Marco e sono italiano.</div>
+            </div>
+        
+            <div class="bubble bubble-right">
+                <div class="speaker-name">由美</div>
+                <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                  <div style="color: #000; font-weight: 500;">大家好，我叫由美，我是日本人。认识你们很高兴。</div>
+                  <button class="audio-btn" onclick="speak(`大家好，我叫由美，我是日本人。认识你们很高兴。`)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  </button>
+                </div>
+                <div class="pronunciation">Dàjiā hǎo, wǒ jiào Yóuměi, wǒ shì Rìběn rén. Rènshí nǐmen hěn gāoxìng.</div>
+                <div class="translation">Ciao a tutti, mi chiamo Yuki e sono giapponese. Piacere di conoscervi.</div>
+            </div>
+        
+            <div class="bubble bubble-left">
+                <div class="speaker-name">林老师</div>
+                <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                  <div style="color: #000; font-weight: 500;">欢迎你们！现在我们开始第一课。</div>
+                  <button class="audio-btn" onclick="speak(`欢迎你们！现在我们开始第一课。`)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  </button>
+                </div>
+                <div class="pronunciation">Huānyíng nǐmen! Xiànzài wǒmen kāishǐ dì yī kè.</div>
+                <div class="translation">Benvenuti! Ora iniziamo la prima lezione.</div>
+            </div>
+        
+        
+        <div class="vocab-section">
+          <h2 style="font-weight: 700; margin-bottom: 15px; color: #075e54;">Vocabulary Table</h2>
+          <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+            <thead style="background: #f0f2f5;">
+              <tr>
+                <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Chinese</th>
+                <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Pronunciation</th>
+                <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Italian</th>
+                <th style="padding: 8px; text-align: center; border-bottom: 2px solid #ddd;">Audio</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 8px; font-weight: 600;">老师</td>
+                  <td style="padding: 8px; color: #555; font-style: italic;">lǎoshī</td>
+                  <td style="padding: 8px; color: #555;">Insegnante / Professore</td>
+                  <td style="padding: 8px; text-align: center;">
+                    <button class="audio-btn" onclick="speak(`老师`)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </td>
+                </tr>
+              
+                <tr style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 8px; font-weight: 600;">自我介绍</td>
+                  <td style="padding: 8px; color: #555; font-style: italic;">zìwǒ jièshào</td>
+                  <td style="padding: 8px; color: #555;">Presentarsi</td>
+                  <td style="padding: 8px; text-align: center;">
+                    <button class="audio-btn" onclick="speak(`自我介绍`)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </td>
+                </tr>
+              
+                <tr style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 8px; font-weight: 600;">意大利人</td>
+                  <td style="padding: 8px; color: #555; font-style: italic;">Yìdàlì rén</td>
+                  <td style="padding: 8px; color: #555;">Italiano (persona)</td>
+                  <td style="padding: 8px; text-align: center;">
+                    <button class="audio-btn" onclick="speak(`意大利人`)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </td>
+                </tr>
+              
+                <tr style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 8px; font-weight: 600;">日本人</td>
+                  <td style="padding: 8px; color: #555; font-style: italic;">Rìběn rén</td>
+                  <td style="padding: 8px; color: #555;">Giapponese (persona)</td>
+                  <td style="padding: 8px; text-align: center;">
+                    <button class="audio-btn" onclick="speak(`日本人`)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </td>
+                </tr>
+              
+                <tr style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 8px; font-weight: 600;">认识</td>
+                  <td style="padding: 8px; color: #555; font-style: italic;">rènshí</td>
+                  <td style="padding: 8px; color: #555;">Conoscere</td>
+                  <td style="padding: 8px; text-align: center;">
+                    <button class="audio-btn" onclick="speak(`认识`)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </td>
+                </tr>
+              
+                <tr style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 8px; font-weight: 600;">欢迎</td>
+                  <td style="padding: 8px; color: #555; font-style: italic;">huānyíng</td>
+                  <td style="padding: 8px; color: #555;">Benvenuto</td>
+                  <td style="padding: 8px; text-align: center;">
+                    <button class="audio-btn" onclick="speak(`欢迎`)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </td>
+                </tr>
+              
+                <tr style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 8px; font-weight: 600;">第一课</td>
+                  <td style="padding: 8px; color: #555; font-style: italic;">dì yī kè</td>
+                  <td style="padding: 8px; color: #555;">Prima lezione</td>
+                  <td style="padding: 8px; text-align: center;">
+                    <button class="audio-btn" onclick="speak(`第一课`)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+    <script>
+      function speak(text) {
+        if (!window.speechSynthesis) {
+          alert("Spiacenti, il tuo browser non supporta la sintesi vocale.");
+          return;
+        }
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "zh";
+        window.speechSynthesis.cancel(); // Stop any current speech
+        window.speechSynthesis.speak(speech);
+      }
+    </script>
+</body>
+</html>
