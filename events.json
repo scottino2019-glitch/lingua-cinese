@@ -1,26 +1,10 @@
 [
    {
   "id": 1,
-  "date": "2026-04-16",
-  "title": "Manhua",
-  "description": "Nuova sessione",
+  "date": "2026-04-23",
+  "title": "dialoghi",
+  "description": "piccoli dialoghi",
   "category": "generale",
-  "link":  ""  
-},
-  {
-  "id": 2,
-  "date": "2026-04-14",
-  "title": "Libreria Cinese",
-  "description": "Nuova sessione",
-  "category": "generale",
-  "link":  ""  
-},
-{
-  "id": 3,
-  "date": "2026-04-14",
-  "title": "Vocabolario tematico",
-  "description": "Nuovi vocaboli",
-  "category": "vocabolario",
-  "link":  "https://scottino2019-glitch.github.io/lingua-cinese/vocabolario.html"  
+  "link":  "https://scottino2019-glitch.github.io/lingua-cinese/whatsapp.html"  
 }
 ]
