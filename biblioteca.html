@@ -3,71 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图书馆 | Biblioteca Cinese</title>
-    
-    <!-- Google Fonts: Cinzel (Titoli occidentali), Cormorant (Testi), Noto Serif SC (Caratteri Cinesi Eleganti) -->
+    <title>图书馆 | Biblioteca Cinese 3D</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
-
+    
     <style>
         /* --- VARIABILI DI SISTEMA --- */
         :root {
-            /* Colori di Sfondo - Tema Carta di Riso (Chiaro) */
             --bg-color: #f5eedc;
             --bg-gradient-center: #fffdf7;
-            
-            /* Testi Generali (Scuri per il contrasto sul chiaro) */
-            --text-main: #2b2626; 
-            --title-color: #7a1f1f; /* Rosso timbro per il titolo */
-            
-            /* Colori dei Libri (Rimangono scuri ed eleganti) */
-            --book-text: #f4e4bc; 
-            --book-gold: #e6b325; 
+            --text-main: #2b2626;
+            --title-color: #7a1f1f;
+            --book-text: #f4e4bc;
+            --book-gold: #e6b325;
             --book-gold-dim: #b8860b;
-            
-            /* Palette Cinese per le copertine */
-            --book-red: #8b0000;    /* Rosso Cina */
-            --book-green: #2e5037;  /* Verde Giada */
-            --book-blue: #1b3644;   /* Blu Inchiostro */
-            --book-brown: #5c4033;  /* Marrone Bambù */
-            
-            /* Tipografia */
+            --book-red: #8b0000;
+            --book-green: #2e5037;
+            --book-blue: #1b3644;
+            --book-brown: #5c4033;
             --font-chinese: 'Noto Serif SC', 'KaiTi', serif;
             --font-title: 'Cinzel', var(--font-chinese);
             --font-body: 'Cormorant Garamond', var(--font-chinese);
         }
 
         /* --- RESET & BASE --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at center, var(--bg-gradient-center) 0%, var(--bg-color) 100%);
             color: var(--text-main);
             font-family: var(--font-body);
             min-height: 100vh;
-            line-height: 1.6;
-            position: relative;
             overflow-x: hidden;
         }
 
-        /* --- IDEOGRAMMA DI SFONDO (书 - Libro) --- */
+        /* --- IDEOGRAMMA DI SFONDO --- */
         body::before {
             content: '书';
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             font-family: var(--font-chinese);
             font-size: 75vh;
             font-weight: 900;
-            color: #b33939; /* Colore tipico dei timbri cinesi (Sigilli) */
-            opacity: 0.12; /* Ora è ben visibile ma non copre i testi */
+            color: #b33939;
+            opacity: 0.12;
             z-index: -1;
             pointer-events: none;
         }
@@ -77,10 +60,7 @@
             text-align: center;
             padding: 4rem 2rem 2rem;
             margin-bottom: 3rem;
-            position: relative;
         }
-
-        /* Linea decorativa sotto l'header */
         header::after {
             content: '';
             display: block;
@@ -90,257 +70,304 @@
             margin: 2rem auto 0;
             opacity: 0.5;
         }
-
         h1 {
             font-family: var(--font-title);
             font-size: clamp(2.5rem, 6vw, 4.5rem);
             color: var(--title-color);
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
         }
+        .cn-title { font-size: 1.2em; line-height: 1; }
+        .it-title { font-size: 0.4em; letter-spacing: 6px; text-transform: uppercase; color: var(--text-main); }
+        header p { font-size: 1.4rem; font-style: italic; opacity: 0.8; margin-top: 1rem; }
 
-        .cn-title {
-            font-size: 1.2em;
-            line-height: 1;
-            color: var(--title-color);
-        }
-
-        .it-title {
-            font-size: 0.4em;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            color: var(--text-main);
-        }
-
-        header p {
-            font-size: 1.4rem;
-            font-style: italic;
-            color: var(--text-main);
-            opacity: 0.8;
-            margin-top: 1rem;
-        }
-
-        /* --- LAYOUT LIBRERIA (GRID) --- */
+        /* --- LAYOUT LIBRERIA --- */
         .library-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 3rem;
-            padding: 0 4rem 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 280px));
+            gap: 4rem 3rem;
+            justify-content: center;
+            padding: 0 2rem 5rem;
             max-width: 1200px;
             margin: 0 auto;
-            perspective: 1000px;
         }
 
-        /* --- STILE DELLE CARD / LIBRI --- */
-        .book-card {
-            position: relative;
+        /* --- STRUTTURA LIBRO 3D --- */
+        .book-container {
+            perspective: 1200px;
             width: 100%;
             aspect-ratio: 2 / 3;
+            cursor: pointer;
+        }
+
+        .book-wrap {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Facce del libro */
+        .book-front, .book-back, .book-spine {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            backface-visibility: hidden; /* Nasconde il retro quando ruota */
+        }
+
+        .book-front {
             border-radius: 4px 12px 12px 4px;
-            padding: 2rem 1.5rem;
+            transform: translateZ(15px); /* Sposta avanti di metà spessore */
+            box-shadow: inset 6px 0 15px rgba(0,0,0,0.5), 8px 8px 15px rgba(0,0,0,0.3);
+        }
+
+        .book-back {
+            border-radius: 12px 4px 4px 12px;
+            transform: rotateY(180deg) translateZ(15px); /* Girato e spostato indietro */
+            box-shadow: inset -6px 0 15px rgba(0,0,0,0.5), -8px 8px 15px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            cursor: pointer;
-            text-decoration: none;
+            padding: 2rem;
             color: var(--book-text);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-            transform-style: preserve-3d;
-            box-shadow: 
-                inset 6px 0 15px rgba(0,0,0,0.5), 
-                inset -2px 0 5px rgba(255,255,255,0.1), 
-                8px 8px 15px rgba(0,0,0,0.2); /* Ombra più leggera sul fondo chiaro */
         }
 
-        /* Effetto scanalatura della rilegatura */
-        .book-card::before {
+        .book-spine {
+            width: 30px; /* Spessore del libro */
+            left: -15px; /* Centrato sull'asse di rotazione */
+            transform: rotateY(-90deg);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* --- EFFETTI DI ROTAZIONE --- */
+        .book-wrap.rotate {
+            transform: rotateY(25deg) scale(1.02);
+        }
+        
+        .book-wrap.flip {
+            transform: rotateY(180deg) scale(1.05);
+        }
+
+        /* --- DECORAZIONI COPERTINA --- */
+        .book-front::before, .book-back::before {
             content: '';
             position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 12px;
-            width: 8px;
-            background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(255,255,255,0.15) 50%, rgba(0,0,0,0.4) 100%);
+            top: 0; bottom: 0; width: 8px;
             z-index: 2;
         }
+        .book-front::before {
+            left: 12px;
+            background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(255,255,255,0.15) 50%, rgba(0,0,0,0.4) 100%);
+        }
+        .book-back::before {
+            right: 12px;
+            background: linear-gradient(to left, rgba(0,0,0,0.4) 0%, rgba(255,255,255,0.15) 50%, rgba(0,0,0,0.4) 100%);
+        }
 
-        /* Effetto Pagine Bianche laterali */
-        .book-card::after {
+        /* Pagine bianche laterali */
+        .book-front::after {
             content: '';
             position: absolute;
-            top: 2px;
-            bottom: 2px;
-            right: -4px;
-            width: 4px;
+            top: 2px; bottom: 2px; right: -4px; width: 4px;
             background-color: #fffaf0;
             border-radius: 0 4px 4px 0;
             transform: translateZ(-1px);
-            box-shadow: inset 1px 0 3px rgba(0,0,0,0.3);
         }
 
-        /* Colori Specifici dei Libri */
-        .book-card.red { background-color: var(--book-red); }
-        .book-card.green { background-color: var(--book-green); }
-        .book-card.blue { background-color: var(--book-blue); }
-        .book-card.brown { background-color: var(--book-brown); }
-
-        /* Contenuto del libro (Testi e decorazioni) */
         .book-content {
             border: 1px solid rgba(230, 179, 37, 0.5);
             border-radius: 2px;
             padding: 1.5rem 1rem;
             height: 100%;
-            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.08"/></svg>');
+            text-align: center;
         }
 
-        .book-title {
-            font-family: var(--font-title);
-            font-size: 1.3rem;
-            color: var(--book-gold);
-            text-transform: uppercase;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
+        /* --- COLORI LIBRI --- */
+        .red .book-front, .red .book-back, .red .book-spine { background-color: var(--book-red); }
+        .green .book-front, .green .book-back, .green .book-spine { background-color: var(--book-green); }
+        .blue .book-front, .blue .book-back, .blue .book-spine { background-color: var(--book-blue); }
+        .brown .book-front, .brown .book-back, .brown .book-spine { background-color: var(--book-brown); }
+
+        /* --- TIPOGRAFIA INTERNA --- */
+        .book-title { font-family: var(--font-title); font-size: 1.3rem; color: var(--book-gold); text-transform: uppercase; margin-bottom: 1rem; }
+        .book-title.cn { font-size: 1.6rem; font-weight: 600; text-transform: none; }
+        .book-author { font-size: 1.1rem; font-style: italic; color: var(--book-text); }
         
-        .book-title.cn {
-            font-size: 1.6rem;
-            font-weight: 600;
-            text-transform: none;
-        }
-
-        .book-author {
-            font-size: 1.1rem;
-            font-style: italic;
-            opacity: 0.95;
-        }
-
         .ornament {
-            width: 40px;
-            height: 1px;
-            background-color: var(--book-gold-dim);
-            margin: 1.2rem auto;
-            border: none;
-            position: relative;
+            width: 40px; height: 1px; background-color: var(--book-gold-dim);
+            margin: 1.2rem auto; border: none; position: relative;
         }
-
         .ornament::before {
-            content: '❖';
-            position: absolute;
-            top: -11px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--book-gold-dim);
-            font-size: 14px;
+            content: '❖'; position: absolute; top: -11px; left: 50%;
+            transform: translateX(-50%); color: var(--book-gold-dim); font-size: 14px;
         }
+        .book-year { font-family: var(--font-title); font-size: 0.9rem; color: var(--book-gold-dim); margin-top: auto; }
 
-        .book-year {
-            font-family: var(--font-title);
-            font-size: 0.9rem;
-            color: var(--book-gold-dim);
+        /* --- STILI RETRO (BACK COVER) --- */
+        .back-title { color: var(--book-gold); margin-bottom: 1rem; font-family: var(--font-title); border-bottom: 1px solid var(--book-gold-dim); padding-bottom: 0.5rem; }
+        .back-desc { font-size: 1rem; line-height: 1.4; margin-bottom: 1.5rem; }
+        .read-btn {
             margin-top: auto;
-            letter-spacing: 1px;
+            padding: 10px 0;
+            text-align: center;
+            background-color: var(--book-gold);
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background 0.3s;
         }
+        .read-btn:hover { background-color: #fff; }
 
-        /* --- HOVER EFFECTS --- */
-        .book-card:hover {
-            transform: translateY(-15px) rotateY(-5deg) rotateX(2deg) scale(1.02);
-            box-shadow: 
-                inset 6px 0 15px rgba(0,0,0,0.6),
-                15px 20px 25px rgba(0,0,0,0.3);
-            z-index: 10;
-        }
-
-        .book-card:hover .book-content {
-            border-color: rgba(230, 179, 37, 0.9);
-            background-color: rgba(255,255,255, 0.05);
-        }
-
-        /* --- RESPONSIVE --- */
         @media (max-width: 600px) {
-            .library-grid {
-                padding: 0 2rem 4rem;
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-                gap: 2rem;
-            }
-            .book-title { font-size: 1.1rem; }
-            .book-title.cn { font-size: 1.3rem; }
-            
-            body::before {
-                font-size: 50vh;
-            }
+            .library-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+            body::before { font-size: 50vh; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>
-            <span class="cn-title">图书馆</span>
-            <span class="it-title">Biblioteca Cinese</span>
-        </h1>
-        <p>Raccolta di libri con traduzione</p>
-    </header>
+<header>
+    <h1>
+        <span class="cn-title">图书馆</span>
+        <span class="it-title">Biblioteca Cinese</span>
+    </h1>
+    <p>Raccolta di libri con traduzione</p>
+</header>
 
-    <main class="library-grid">
-        <!-- Libro 1: Rosso Imperiale -->
-        <a href="biblioteca/poesie.html" class="book-card red">
-            <div class="book-content">
-                <div>
-                    <h2 class="book-title cn">传统诗歌</h2>
-                    <hr class="ornament">
-                    <p class="book-author">Poesie tradizionali</p>
+<main class="library-grid">
+    
+    <!-- Libro 1: Rosso Imperiale -->
+    <div class="book-container red">
+        <div class="book-wrap">
+            <!-- Fronte -->
+            <div class="book-front">
+                <div class="book-content">
+                    <div>
+                        <h2 class="book-title cn">传统诗歌</h2>
+                        <hr class="ornament">
+                        <p class="book-author">Poesie tradizionali</p>
+                    </div>
+                    <p class="book-year">2000</p>
                 </div>
-                <p class="book-year">2000</p>
             </div>
-        </a>
-        
-        <!-- Libro 2: Verde Giada -->
-        <a href="#" class="book-card green">
-            <div class="book-content">
-                <div>
-                    <h2 class="book-title">Il Principe</h2>
-                    <hr class="ornament">
-                    <p class="book-author">Niccolò Machiavelli</p>
-                </div>
-                <p class="book-year">1532</p>
+            <!-- Dorso -->
+            <div class="book-spine"></div>
+            <!-- Retro -->
+            <div class="book-back">
+                <h3 class="back-title">Sinossi</h3>
+                <p class="back-desc">Una magnifica raccolta delle più famose poesie cinesi di epoca Tang, con testo a fronte e spiegazione dei caratteri.</p>
+                <a href="biblioteca/poesie.html" class="read-btn">Apri Libro</a>
             </div>
-        </a>
-        
-        <!-- Libro 3: Blu Inchiostro -->
-        <a href="#" class="book-card blue">
-            <div class="book-content">
-                <div>
-                    <h2 class="book-title cn">论语</h2>
-                    <hr class="ornament">
-                    <p class="book-author">Confucio</p>
-                </div>
-                <p class="book-year">500 a.C.</p>
-            </div>
-        </a>
+        </div>
+    </div>
 
-        <!-- Libro 4: Marrone Bambù -->
-        <a href="#" class="book-card brown">
-            <div class="book-content">
-                <div>
-                    <h2 class="book-title cn">孙子兵法</h2>
-                    <hr class="ornament">
-                    <p class="book-author">Sun Tzu</p>
+    <!-- Libro 2: Verde Giada -->
+    <div class="book-container green">
+        <div class="book-wrap">
+            <div class="book-front">
+                <div class="book-content">
+                    <div>
+                        <h2 class="book-title">Il Principe</h2>
+                        <hr class="ornament">
+                        <p class="book-author">Niccolò Machiavelli</p>
+                    </div>
+                    <p class="book-year">1532</p>
                 </div>
-                <p class="book-year">V Secolo a.C.</p>
             </div>
-        </a>
-    </main>
+            <div class="book-spine"></div>
+            <div class="book-back">
+                <h3 class="back-title">Sinossi</h3>
+                <p class="back-desc">Il trattato di dottrina politica più famoso in Italia, tradotto in cinese per lo studio della lingua.</p>
+                <a href="#" class="read-btn">Apri Libro</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libro 3: Blu Inchiostro -->
+    <div class="book-container blue">
+        <div class="book-wrap">
+            <div class="book-front">
+                <div class="book-content">
+                    <div>
+                        <h2 class="book-title cn">论语</h2>
+                        <hr class="ornament">
+                        <p class="book-author">Confucio</p>
+                    </div>
+                    <p class="book-year">500 a.C.</p>
+                </div>
+            </div>
+            <div class="book-spine"></div>
+            <div class="book-back">
+                <h3 class="back-title">Sinossi</h3>
+                <p class="back-desc">I Dialoghi di Confucio. Testo fondamentale per comprendere il pensiero e la filosofia orientale.</p>
+                <a href="#" class="read-btn">Apri Libro</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libro 4: Marrone Bambù -->
+    <div class="book-container brown">
+        <div class="book-wrap">
+            <div class="book-front">
+                <div class="book-content">
+                    <div>
+                        <h2 class="book-title cn">孙子兵法</h2>
+                        <hr class="ornament">
+                        <p class="book-author">Sun Tzu</p>
+                    </div>
+                    <p class="book-year">V Secolo a.C.</p>
+                </div>
+            </div>
+            <div class="book-spine"></div>
+            <div class="book-back">
+                <h3 class="back-title">Sinossi</h3>
+                <p class="back-desc">L'Arte della Guerra. Il più antico manuale strategico della storia militare mondiale.</p>
+                <a href="#" class="read-btn">Apri Libro</a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    // Seleziona tutti i contenitori dei libri
+    const books = document.querySelectorAll('.book-container');
+
+    books.forEach(container => {
+        const wrap = container.querySelector('.book-wrap');
+
+        // Effetto Hover: sbircia la copertina
+        container.addEventListener('mouseenter', () => {
+            if (!wrap.classList.contains('flip')) {
+                wrap.classList.add('rotate');
+            }
+        });
+
+        // Togli Hover
+        container.addEventListener('mouseleave', () => {
+            wrap.classList.remove('rotate');
+        });
+
+        // Click per girare il libro
+        container.addEventListener('click', (e) => {
+            // Evita che il libro si chiuda se l'utente clicca sul pulsante "Apri Libro"
+            if (e.target.closest('a')) return;
+
+            wrap.classList.toggle('flip');
+            
+            // Se girato, rimuove l'effetto hover base
+            if (wrap.classList.contains('flip')) {
+                wrap.classList.remove('rotate');
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
