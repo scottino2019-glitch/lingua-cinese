@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lettura Cinese - Il Mandriano e la Tessitrice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Crimson+Text:400,700,900,400italic,700italic,900italic|Playfair+Display:400,700,900,400italic,700italic,900italic|Rock+Salt:400);
+
+        *, :before, :after { box-sizing: border-box; }
+
+        body {
+            background-color: #1d1f20;
+            color: #e5e5e5;
+            font: 16px/1.25 'Crimson Text', sans-serif;
+            margin: 0;
+        }
+
+        #wrapper {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 80em;
+        }
+
+        #container {
+            float: left;
+            padding: 1em;
+            width: 100%;
+        }
+
+        /*** OPEN BOOK ***/
+        .open-book {
+            background: #fff;
+            box-shadow: rgba(0,0,0,0.5) 0 1em 3em;
+            color: #000;
+            padding: 2em;
+        }
+
+        .open-book * { position: relative; }
+
+        .open-book *::-moz-selection { background: rgba(222,255,0,0.75); }
+        .open-book *::selection { background: rgba(222,255,0,0.75); }
+
+        .open-book header { padding-bottom: 1em; }
+        .open-book header *, .open-book footer * {
+            font: 700 1em/1.25 'Playfair Display', sans-serif;
+            letter-spacing: 0.125em;
+            margin: 0;
+        }
+
+        .open-book header * { font-size: 0.75em; text-transform: uppercase; }
+        .open-book footer { padding-top: 1em; }
+        
+        .open-book footer #page-numbers {
+            display: none;
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .open-book footer #page-numbers > li:last-child { text-align: right; }
+
+        .open-book .chapter-title {
+            font: 700 7vw/1.25 'Playfair Display', sans-serif;
+            letter-spacing: 0.125em;
+            margin: 0 0 1em 0;
+            padding: 1em 0;
+            position: relative;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .open-book article { line-height: 1.5; }
+        .open-book article *:not(.chapter-title):not(hr):not(dl) {
+            margin: 0 auto;
+            max-width: 32em; /* Leggermente allargato per accomodare meglio il testo cinese inline-block */
+        }
+
+        /* Modifica per permettere ai tuoi <span> di non sovrascrivere l'indentazione */
+        .open-book article p { text-indent: 2em; margin-bottom: 1em;}
+
+        .open-book .chapter-title + div:first-of-type { text-indent: 0; }
+        
+        @media only screen and ( min-width: 50em ) {
+            .open-book {
+                margin: 1em;
+                position: relative;
+            }
+
+            .open-book:before {
+                background-color: #8B4513;
+                border-radius: 0.25em;
+                bottom: -1em;
+                content: '';
+                left: -1em;
+                position: absolute;
+                right: -1em;
+                top: -1em;
+                z-index: -1;
+            }
+
+            .open-book:after {
+                background: linear-gradient(to right, transparent 0%,rgba(0,0,0,0.2) 46%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.5) 51%,rgba(0,0,0,0.2) 52%,transparent 100%);
+                bottom: -1em;
+                content: '';
+                left: 50%;
+                position: absolute;
+                top: -1em;
+                transform: translate(-50%,0);
+                width: 4em;
+                z-index: 1;
+            }
+
+            .open-book > * {
+                column-count: 2;
+                column-gap: 6em;
+                position: relative;
+                z-index: 1;
+            }
+
+            .open-book header:before, .open-book header:after,
+            .open-book footer:before, .open-book footer:after {
+                background: #fff;
+                border-radius: 25%;
+                content: '';
+                height: 2em;
+                position: absolute;
+                z-index: -1;
+                width: calc(50% + 2em);
+            }
+
+            .open-book header:before, .open-book footer:before, .open-book footer:after { border-top-left-radius: 0; }
+            .open-book header:after, .open-book footer:before, .open-book footer:after { border-top-right-radius: 0; }
+            .open-book header:before, .open-book header:after, .open-book footer:after { border-bottom-right-radius: 0; }
+            .open-book header:before, .open-book header:after, .open-book footer:before { border-bottom-left-radius: 0; }
+
+            .open-book header:before, .open-book header:after { top: -2.65em; }
+            .open-book header:before, .open-book footer:before { right: 50%; }
+            .open-book header:before { transform: rotate(-2deg); }
+            .open-book header:after, .open-book footer:after { left: 50%; }
+            .open-book header:after { transform: rotate(2deg); }
+            .open-book footer:before, .open-book footer:after { bottom: -2.65em; }
+            .open-book footer:before { transform: rotate(2deg); }
+            .open-book footer:after { transform: rotate(-2deg); }
+
+            .open-book header > *:last-child, .open-book footer > *:last-child { text-align: right; }
+            .open-book footer #page-numbers { display: block; }
+            .open-book .chapter-title { font-size: 3em; }
+            .open-book article p { text-indent: 3em; }
+        }
+
+        /* Menu */
+        .menu-toggle {
+            position: fixed;
+            top: 2em;
+            left: 2em;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu-toggle .bar {
+            width: 30px;
+            height: 3px;
+            background-color: #e5e5e5;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+        .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        .vertical-menu {
+            position: fixed;
+            top: 4.5em;
+            left: 2em;
+            background-color: #1d1f20;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.25em;
+            box-shadow: rgba(0,0,0,0.5) 0 1em 3em;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s ease-in-out;
+            z-index: 999;
+        }
+
+        .vertical-menu.open { max-height: 400px; }
+        .vertical-menu ul { list-style: none; margin: 0; padding: 0; }
+        .vertical-menu li { border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .vertical-menu li:last-child { border-bottom: none; }
+        
+        .vertical-menu a {
+            display: block;
+            padding: 1em 2em;
+            color: #e5e5e5;
+            text-decoration: none;
+            font-family: 'Playfair Display', sans-serif;
+            font-size: 1.1em;
+            transition: background 0.2s;
+        }
+
+        .vertical-menu a:hover, .vertical-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* Pinyin (Ruby) e Interattività */
+        ruby { 
+            ruby-align: center; 
+            margin-right: 2px; 
+            cursor: pointer;
+            padding: 0 2px;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        /* Effetto hover per evidenziare la parola che si sta leggendo */
+        ruby:hover {
+            background-color: rgba(79, 70, 229, 0.1); /* indigo-100 */
+            color: #4f46e5; /* indigo-600 */
+        }
+        
+        rt { 
+            font-size: 0.65em; 
+            color: #6B7280; 
+            padding-bottom: 2px; 
+            transition: color 0.2s;
+        }
+        
+        ruby:hover rt {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu Toggle -->
+    <div class="menu-toggle" id="menu-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <nav class="vertical-menu" id="vertical-menu">
+        <ul>
+            <li><a href="https://scottino2019-glitch.github.io/lingua-cinese/libri/libriaudio.html" class="active">Capitolo 1</a></li>
+            <li><a href="capitolo2.html">Capitolo 2</a></li>
+            <li><a href="capitolo3.html">Capitolo 3</a></li>
+        </ul>
+    </nav>
+
+    <div id="wrapper">
+        <div id="container">
+            <section class="open-book">
+                <header>
+                    <h1>第三章</h1>
+                    <div class="max-w-3xl mx-auto bg-white p-4 rounded-xl shadow-lg mt-4 text-center">
+                        <!-- Audio Player UI -->
+                        <audio id="audio-lettura" src="storia3.mp3"></audio>
+                        
+                        <div class="flex justify-center gap-4">
+                            <button id="btn-ascolta" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300">
+                                ▶ Ascolta
+                            </button>
+                            <button id="btn-rallenta" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-full transition duration-300" title="Cambia velocità">
+                                🐢 1.0x
+                            </button>
+                        </div>
+                    </div>
+                </header>
+                
+                <article>
+                    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-900 chapter-title">
+                        <ruby>孙<rt>Sūn</rt></ruby><ruby>悟<rt>Wù</rt></ruby><ruby>空<rt>kōng</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>传<rt>Chuán</rt></ruby><ruby>说<rt>shuō<rt></ruby>
+                    </h1>
+                    
+                    <!-- Testo in Cinese con Pinyin (Ruby) -->
+                    <div class="testo-cinese text-xl leading-loose mb-10 text-gray-800">
+                        <p>
+<ruby>从前<rt>Cóngqián</rt></ruby>，<ruby>在<rt>zài</rt></ruby> <ruby>花果<rt>Huāguǒ</rt></ruby> <ruby>山<rt>Shān</rt></ruby> <ruby>上<rt>shàng</rt></ruby> <ruby>有<rt>yǒu</rt></ruby> <ruby>一<rt>yí</rt></ruby> <ruby>块<rt>kuài</rt></ruby> <ruby>仙石<rt>xiānshí</rt></ruby>。
+<ruby>一<rt>Yì</rt></ruby> <ruby>天<rt>tiān</rt></ruby>，<ruby>仙石<rt>xiānshí</rt></ruby> <ruby>裂开<rt>lièkāi</rt></ruby>，<ruby>生出<rt>shēngchū</rt></ruby> <ruby>了<rt>le</rt></ruby> <ruby>一<rt>yì</rt></ruby> <ruby>只<rt>zhī</rt></ruby> <ruby>石猴<rt>shíhóu</rt></ruby>。
+<ruby>这<rt>Zhè</rt></ruby> <ruby>只<rt>zhī</rt></ruby> <ruby>猴子<rt>hóuzi</rt></ruby> <ruby>非常<rt>fēicháng</rt></ruby> <ruby>聪明<rt>cōngmíng</rt></ruby> <ruby>勇敢<rt>yǒnggǎn</rt></ruby>，<ruby>成为<rt>chéngwéi</rt></ruby> <ruby>了<rt>le</rt></ruby> “<ruby>美<rt>Měi</rt></ruby> <ruby>猴王<rt>Hóuwáng</rt></ruby>”。
+<ruby>为了<rt>Wèile</rt></ruby> <ruby>长生<rt>chángshēng</rt></ruby> <ruby>不老<rt>bùlǎo</rt></ruby>，<ruby>他<rt>tā</rt></ruby> <ruby>向<rt>xiàng</rt></ruby> <ruby>菩提<rt>Pútí</rt></ruby> <ruby>祖师<rt>Zǔshī</rt></ruby> <ruby>学习<rt>xuéxí</rt></ruby> <ruby>了<rt>le</rt></ruby> <ruby>七十二<rt>qīshí'èr</rt></ruby> <ruby>变<rt>biàn</rt></ruby> <ruby>和<rt>hé</rt></ruby> <ruby>筋斗云<rt>jīndǒuyún</rt></ruby>。
+<ruby>经过<rt>Jīngguò</rt></ruby> <ruby>八十一<rt>bāshíyī</rt></ruby> <ruby>难<rt>nàn</rt></ruby>，<ruby>孙<rt>Sūn</rt></ruby> <ruby>悟空<rt>Wùkōng</rt></ruby> <ruby>保护<rt>bǎohù</rt></ruby> <ruby>唐僧<rt>Tángsēng</rt></ruby> <ruby>终于<rt>zhōngyú</rt></ruby> <ruby>到达了<rt>dàodále</rt></ruby> <ruby>天竺<rt>Tiānzhú</rt></ruby>。
+<ruby>他们<rt>Tāmen</rt></ruby> <ruby>见到了<rt>jiàndàole</rt></ruby> <ruby>如来<rt>Rúlái</rt></ruby> <ruby>佛祖<rt>Fózǔ</rt></ruby>，<ruby>取得了<rt>qǔdéle</rt></ruby> <ruby>真经<rt>zhēnjīng</rt></ruby>。
+<ruby>因为<rt>Yīnwèi</rt></ruby> <ruby>保护<rt>bǎohù</rt></ruby> <ruby>唐僧<rt>Tángsēng</rt></ruby> <ruby>有功<rt>yǒugōng</rt></ruby>，<ruby>孙<rt>Sūn</rt></ruby> <ruby>悟空<rt>Wùkōng</rt></ruby> <ruby>被<rt>bèi</rt></ruby> <ruby>封为<rt>fēngwéi</rt></ruby> “<ruby>斗战<rt>Dòuzhàn</rt></ruby> <ruby>胜佛<rt>Shèngfó</rt></ruby>”。
+<ruby>他<rt>Tā</rt></ruby> <ruby>头上<rt>tóushàng</rt></ruby> <ruby>的<rt>de</rt></ruby> <ruby>紧箍咒<rt>jǐngūzhòu</rt></ruby> <ruby>也<rt>yě</rt></ruby> <ruby>自动<rt>zìdòng</rt></ruby> <ruby>消失<rt>xiāoshī</rt></ruby> <ruby>了<rt>le</rt></ruby>，<ruby>他<rt>tā</rt></ruby> <ruby>获得了<rt>huòdéle</rt></ruby> <ruby>真正<rt>zhēnzhèng</rt></ruby> <ruby>的<rt>de</rt></ruby> <ruby>自由<rt>zìyóu</rt></ruby> <ruby>和<rt>hé</rt></ruby> <ruby>智慧<rt>zhìhuì</rt></ruby>。
+</p>
+                    </div>
+
+                    <!-- Traduzione Italiana -->
+                    <div class="traduzione-italiana mt-8 pt-6 border-t border-gray-200 text-gray-600 text-base">
+                        <h3 class="font-bold mb-2 text-indigo-900 font-sans uppercase tracking-wider text-sm">Traduzione in Italiano</h3>
+                        <p class="mb-2">Molto tempo fa, sulla Montagna dei Fiori e dei Frutti, c'era una pietra magica. Un giorno, la pietra si spaccò e ne nacque una scimmia di pietra. Questa scimmia era molto intelligente e coraggiosa, e divenne il "Bello Re Scimmia". Per ottenere l'immortalità, imparò dal Maestro Puti le settantadue trasformazioni e la nuvola d'oro (per volare).</p>
+                        <p>Dopo aver superato ottantuno avversità, Sun Wukong, proteggendo il monaco Tang, arrivò finalmente in India (Tianzhu). Incontrarono il Buddha Tathagata e ottennero i sacri sutra. Per i suoi meriti nel proteggere il monaco, Sun Wukong fu nominato "Buddha Vittorioso in Battaglia". Il cerchio magico sulla sua testa (che serviva a controllarlo) svanì automaticamente: egli ottenne la vera libertà e la saggezza.</p>
+                    </div>
+                </article>
+
+                <footer>
+                    <ol id="page-numbers">
+                        <li>1</li>
+                        <li>2</li>
+                    </ol>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+    <!-- Logica JavaScript Vanilla -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // --- Logica Menu Hamburger ---
+            const menuToggle = document.getElementById("menu-toggle");
+            const verticalMenu = document.getElementById("vertical-menu");
+
+            menuToggle.addEventListener("click", () => {
+                menuToggle.classList.toggle("is-active");
+                verticalMenu.classList.toggle("open");
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!menuToggle.contains(e.target) && !verticalMenu.contains(e.target)) {
+                    menuToggle.classList.remove("is-active");
+                    verticalMenu.classList.remove("open");
+                }
+            });
+
+            // --- Logica Audio Player ---
+            const btnAscolta = document.getElementById("btn-ascolta");
+            const btnRallenta = document.getElementById("btn-rallenta");
+            const audio = document.getElementById("audio-lettura");
+
+            btnAscolta.addEventListener("click", () => {
+                if (audio.paused) {
+                    audio.play();
+                    btnAscolta.innerHTML = "⏸ Pausa";
+                } else {
+                    audio.pause();
+                    btnAscolta.innerHTML = "▶ Ascolta";
+                }
+            });
+
+            const speeds = [1.0, 0.75, 0.5];
+            let speedIndex = 0;
+
+            btnRallenta.addEventListener("click", () => {
+                speedIndex = (speedIndex + 1) % speeds.length;
+                let currentSpeed = speeds[speedIndex];
+                
+                audio.playbackRate = currentSpeed;
+                
+                let icon = "🐢";
+                if(currentSpeed === 0.75) icon = "🐌";
+                if(currentSpeed === 0.5) icon = "🦥";
+
+                btnRallenta.innerHTML = `${icon} ${currentSpeed}x`;
+            });
+
+            audio.addEventListener("ended", () => {
+                btnAscolta.innerHTML = "▶ Ascolta";
+            });
+        });
+    </script>
+</body>
+</html>
