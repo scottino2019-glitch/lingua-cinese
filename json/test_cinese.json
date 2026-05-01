@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "text": "你好",
+    "pinyin": "nǐ hǎo",
+    "translation": "Ciao",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 2,
+    "text": "学习",
+    "pinyin": "xuéxí",
+    "translation": "Studiare",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 3,
+    "text": "勇敢",
+    "pinyin": "yǒnggǎn",
+    "translation": "Coraggioso",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 4,
+    "text": "木兰",
+    "pinyin": "Mùlán",
+    "translation": "Mulan",
+    "lang": "zh-CN"
+  }
+]
