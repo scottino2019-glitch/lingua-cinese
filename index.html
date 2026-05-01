@@ -393,8 +393,8 @@
     </div>
 
 <!-- Un contatore molto discreto usando Tailwind CSS -->
-<div class="fixed bottom-2 right-2 text-xs text-black-400 bg-white/50 px-2 py-1 rounded-full shadow-sm backdrop-blur-sm">
-  Visite: <span id="visualizzazioni-sito" class="font-semibold text-black-600">...</span>
+<div class="text-sm text-black-500 bg-gray-100 px-3 py-1 rounded-md inline-block">
+  Visite totali: <span id="contatore-visite" class="font-bold text-blue-600">...</span>
 </div>
     <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
       <p>© 2026 Lingua Cinese - Tutti i diritti riservati.</p>
@@ -445,15 +445,14 @@ if (updateTime > sevenDaysAgo) {
       if (e.key === 'Escape') closeModal();
     });
 
-  // 1. Definisci il nome del tuo 
-fetch('https://api.counterapi.dev/v1/scottino2019_glitch/lingua_cinese/up')
+  // Chiamata all'API (no-store previene i problemi di cache)
+  fetch('https://api.counterapi.dev/v1/scottino2019_glitch/lingua_cinese/up', { cache: 'no-store' })
     .then(response => response.json())
     .then(data => {
-      // Aggiorna l'HTML inserendo il numero finale ricevuto dall'API
+      // Inserisce il dato esatto usando l'ID "contatore-visite"
       document.getElementById('contatore-visite').innerText = data.count;
     })
     .catch(error => {
-      // Se c'è un errore di connessione, mostra ND
       console.error('Errore nel caricamento delle visite:', error);
       document.getElementById('contatore-visite').innerText = 'N/D';
     });
