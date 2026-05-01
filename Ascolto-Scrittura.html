@@ -1,0 +1,3852 @@
+
+
+
+<!DOCTYPE html><html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="cid:css-c14a7241-74d7-44a4-9986-ac45026d6b2b@mhtml.blink" /><link rel="stylesheet" type="text/css" href="cid:css-fef1a618-3199-43ab-91a0-0872f081afad@mhtml.blink" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App di Ascolto e Scrittura</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100">
+
+    <div class="w-full max-w-2xl mx-auto">
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Ascolta e Scrivi</h1>
+            <p class="text-gray-600">Allena il tuo orecchio e la tua ortografia</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="glass-card manga-style p-6 md:p-8 bg-white">
+
+            <!-- Settings & Progress -->
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm font-semibold text-gray-500">Lingua:</span>
+                    <select id="languageSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2"><option data-lang="as_IN" data-name="assamese India">assamese India (as_IN) -- DEFAULT</option><option data-lang="bg_BG" data-name="bulgaro Bulgaria">bulgaro Bulgaria (bg_BG)</option><option data-lang="bn_BD" data-name="bengalese Bangladesh">bengalese Bangladesh (bn_BD)</option><option data-lang="bn_IN" data-name="bengalese India">bengalese India (bn_IN)</option><option data-lang="brx_IN" data-name="bodo India">bodo India (brx_IN)</option><option data-lang="bs_BA_#Cyrl" data-name="bosniaco Bosnia ed Erzegovina">bosniaco Bosnia ed Erzegovina (bs_BA_#Cyrl)</option><option data-lang="bs_BA_#Latn" data-name="bosniaco Bosnia ed Erzegovina">bosniaco Bosnia ed Erzegovina (bs_BA_#Latn)</option><option data-lang="ca_ES" data-name="catalano Spagna">catalano Spagna (ca_ES)</option><option data-lang="cs_CZ" data-name="ceco Cechia">ceco Cechia (cs_CZ)</option><option data-lang="cy_GB" data-name="gallese Regno Unito">gallese Regno Unito (cy_GB)</option><option data-lang="da_DK" data-name="danese Danimarca">danese Danimarca (da_DK)</option><option data-lang="de_DE" data-name="tedesco Germania">tedesco Germania (de_DE)</option><option data-lang="el_GR" data-name="greco Grecia">greco Grecia (el_GR)</option><option data-lang="en_AU" data-name="inglese Australia">inglese Australia (en_AU)</option><option data-lang="en_GB" data-name="inglese Regno Unito">inglese Regno Unito (en_GB)</option><option data-lang="en_IN" data-name="inglese India">inglese India (en_IN)</option><option data-lang="en_NG" data-name="inglese Nigeria">inglese Nigeria (en_NG)</option><option data-lang="en_US" data-name="inglese Stati Uniti">inglese Stati Uniti (en_US)</option><option data-lang="es_ES" data-name="spagnolo Spagna">spagnolo Spagna (es_ES)</option><option data-lang="es_US" data-name="spagnolo Stati Uniti">spagnolo Stati Uniti (es_US)</option><option data-lang="et_EE" data-name="estone Estonia">estone Estonia (et_EE)</option><option data-lang="fi_FI" data-name="finlandese Finlandia">finlandese Finlandia (fi_FI)</option><option data-lang="fil_PH" data-name="filippino Filippine">filippino Filippine (fil_PH)</option><option data-lang="fr_CA" data-name="francese Canada">francese Canada (fr_CA)</option><option data-lang="fr_FR" data-name="francese Francia">francese Francia (fr_FR)</option><option data-lang="gu_IN" data-name="gujarati India">gujarati India (gu_IN)</option><option data-lang="iw_IL" data-name="ebraico Israele">ebraico Israele (iw_IL)</option><option data-lang="hi_IN" data-name="hindi India">hindi India (hi_IN)</option><option data-lang="hr_HR" data-name="croato Croazia">croato Croazia (hr_HR)</option><option data-lang="hu_HU" data-name="ungherese Ungheria">ungherese Ungheria (hu_HU)</option><option data-lang="in_ID" data-name="indonesiano Indonesia">indonesiano Indonesia (in_ID)</option><option data-lang="is_IS" data-name="islandese Islanda">islandese Islanda (is_IS)</option><option data-lang="it_IT" data-name="italiano Italia">italiano Italia (it_IT)</option><option data-lang="ja_JP" data-name="giapponese Giappone">giapponese Giappone (ja_JP)</option><option data-lang="jv_ID" data-name="giavanese Indonesia">giavanese Indonesia (jv_ID)</option><option data-lang="km_KH" data-name="khmer Cambogia">khmer Cambogia (km_KH)</option><option data-lang="kn_IN" data-name="kannada India">kannada India (kn_IN)</option><option data-lang="ko_KR" data-name="coreano Corea del Sud">coreano Corea del Sud (ko_KR)</option><option data-lang="kok_IN" data-name="konkani India">konkani India (kok_IN)</option><option data-lang="ks_IN" data-name="kashmiri India">kashmiri India (ks_IN)</option><option data-lang="lt_LT" data-name="lituano Lituania">lituano Lituania (lt_LT)</option><option data-lang="lv_LV" data-name="lettone Lettonia">lettone Lettonia (lv_LV)</option><option data-lang="ml_IN" data-name="malayalam India">malayalam India (ml_IN)</option><option data-lang="mr_IN" data-name="marathi India">marathi India (mr_IN)</option><option data-lang="ms_MY" data-name="malese Malaysia">malese Malaysia (ms_MY)</option><option data-lang="nb_NO" data-name="norvegese bokmål Norvegia">norvegese bokmål Norvegia (nb_NO)</option><option data-lang="ne_NP" data-name="nepalese Nepal">nepalese Nepal (ne_NP)</option><option data-lang="nl_BE" data-name="olandese Belgio">olandese Belgio (nl_BE)</option><option data-lang="nl_NL" data-name="olandese Paesi Bassi">olandese Paesi Bassi (nl_NL)</option><option data-lang="or_IN" data-name="odia India">odia India (or_IN)</option><option data-lang="pa_IN_#Guru" data-name="punjabi India">punjabi India (pa_IN_#Guru)</option><option data-lang="pl_PL" data-name="polacco Polonia">polacco Polonia (pl_PL)</option><option data-lang="pt_BR" data-name="portoghese Brasile">portoghese Brasile (pt_BR)</option><option data-lang="pt_PT" data-name="portoghese Portogallo">portoghese Portogallo (pt_PT)</option><option data-lang="ro_RO" data-name="rumeno Romania">rumeno Romania (ro_RO)</option><option data-lang="ru_RU" data-name="russo Russia">russo Russia (ru_RU)</option><option data-lang="si_LK" data-name="singalese Sri Lanka">singalese Sri Lanka (si_LK)</option><option data-lang="sk_SK" data-name="slovacco Slovacchia">slovacco Slovacchia (sk_SK)</option><option data-lang="sl_SI" data-name="sloveno Slovenia">sloveno Slovenia (sl_SI)</option><option data-lang="sq_AL" data-name="albanese Albania">albanese Albania (sq_AL)</option><option data-lang="sr_RS_#Cyrl" data-name="serbo Serbia">serbo Serbia (sr_RS_#Cyrl)</option><option data-lang="sr_RS_#Latn" data-name="serbo Serbia">serbo Serbia (sr_RS_#Latn)</option><option data-lang="sv_SE" data-name="svedese Svezia">svedese Svezia (sv_SE)</option><option data-lang="sw_KE" data-name="swahili Kenya">swahili Kenya (sw_KE)</option><option data-lang="ta_IN" data-name="tamil India">tamil India (ta_IN)</option><option data-lang="te_IN" data-name="telugu India">telugu India (te_IN)</option><option data-lang="th_TH" data-name="thai Thailandia">thai Thailandia (th_TH)</option><option data-lang="tr_TR" data-name="turco Turchia">turco Turchia (tr_TR)</option><option data-lang="uk_UA" data-name="ucraino Ucraina">ucraino Ucraina (uk_UA)</option><option data-lang="ur_IN" data-name="urdu India">urdu India (ur_IN)</option><option data-lang="ur_PK" data-name="urdu Pakistan">urdu Pakistan (ur_PK)</option><option data-lang="vi_VN" data-name="vietnamita Vietnam">vietnamita Vietnam (vi_VN)</option><option data-lang="yue_HK_#Hant" data-name="cantonese Hong Kong">cantonese Hong Kong (yue_HK_#Hant)</option><option data-lang="zh_CN_#Hans" data-name="cinese Cina">cinese Cina (zh_CN_#Hans)</option><option data-lang="zh_HK_#Hans" data-name="cinese Hong Kong">cinese Hong Kong (zh_HK_#Hans)</option><option data-lang="zh_MO_#Hans" data-name="cinese Macao">cinese Macao (zh_MO_#Hans)</option><option data-lang="zh_SG_#Hans" data-name="cinese Singapore">cinese Singapore (zh_SG_#Hans)</option><option data-lang="zh_HK_#Hant" data-name="cinese Hong Kong">cinese Hong Kong (zh_HK_#Hant)</option><option data-lang="zh_MO_#Hant" data-name="cinese Macao">cinese Macao (zh_MO_#Hant)</option><option data-lang="zh_TW_#Hant" data-name="cinese Taiwan">cinese Taiwan (zh_TW_#Hant)</option></select>
+                </div>
+                <div class="text-right">
+                    <span class="text-sm font-semibold text-gray-500">Esercizio <span id="currentCount">1</span>/<span id="totalCount">0</span></span>
+                    <div class="w-24 bg-gray-200 rounded-full h-2 mt-1">
+                        <div id="progressBar" class="bg-blue-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenuto Esercizio -->
+            <div id="exerciseArea" class="flex flex-col items-center justify-center space-y-6 py-4">
+
+                <button id="playBtn" class="manga-button w-24 h-24 rounded-full bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center text-3xl">
+                    <i class="fas fa-play"></i>
+                </button>
+                <p class="text-sm text-gray-500">Clicca per ascoltare (puoi ripetere quante volte vuoi)</p>
+
+                <div class="w-full mt-6">
+                    <label for="answerInput" class="block text-sm font-medium text-gray-700 mb-2">Cosa hai sentito?</label>
+                    <input type="text" id="answerInput" class="w-full manga-style p-4 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Scrivi qui la parola o frase..." autocomplete="off">
+                </div>
+
+                <button id="checkBtn" class="w-full manga-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg text-lg">
+                    Controlla <i class="fas fa-check ml-2"></i>
+                </button>
+
+            </div>
+
+            <!-- Risultato -->
+            <div id="resultArea" class="hidden flex-col items-center justify-center py-4 feedback-animation">
+                <div id="resultIcon" class="text-6xl mb-4"></div>
+                <h2 id="resultTitle" class="text-2xl font-bold mb-2"></h2>
+
+                <div class="bg-gray-50 rounded-lg p-4 w-full mb-6 text-center">
+                    <p class="text-sm text-gray-500 mb-1">Risposta corretta:</p>
+                    <p id="correctAnswer" class="text-xl font-bold text-gray-800"></p>
+                    <p id="translation" class="text-md text-gray-600 mt-2 italic"></p>
+                </div>
+
+                <button id="nextBtn" class="w-full manga-button bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg text-lg">
+                    Prossimo <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Fine Lezione -->
+            <div id="endArea" class="hidden flex-col items-center justify-center py-8 feedback-animation">
+                <div class="text-6xl mb-4 text-yellow-400">🏆</div>
+                <h2 class="text-3xl font-bold mb-4">Ottimo Lavoro!</h2>
+                <p class="text-gray-600 mb-8 text-center">Hai completato tutti gli esercizi di questa sessione.</p>
+                <button id="restartBtn" class="manga-button bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-8 rounded-lg text-lg">
+                    Ricomincia <i class="fas fa-redo ml-2"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modale Caricamento File -->
+    <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="glass-card manga-style p-8 bg-white max-w-md w-full mx-4">
+            <h2 class="text-2xl font-bold mb-4 text-center">Carica Dati (JSON)</h2>
+            <p class="text-sm text-gray-600 mb-6 text-center">Seleziona un file JSON con le parole e le frasi per iniziare l'esercizio.</p>
+
+            <div class="flex items-center justify-center w-full">
+                <label for="jsonUpload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Clicca per caricare</span> o trascina il file</p>
+                    </div>
+                    <input id="jsonUpload" type="file" class="hidden" accept=".json">
+                </label>
+            </div>
+
+            <div class="mt-4 text-center">
+                <button id="loadDefaultBtn" class="text-blue-500 hover:underline text-sm font-semibold">
+                    Oppure usa i dati di prova (Cinese/Italiano)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+</body></html>
+------MultipartBoundary--9yIIapHVHSnDNAPlEWQtjZfxFEgkX1IwaC7nsk3nA7----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css
+
+@charset "utf-8";
+
+.fa { font-family: var(--fa-style-family,"Font Awesome 6 Free"); font-weight: var(--fa-style,900); }
+
+.fa, .fa-brands, .fa-duotone, .fa-light, .fa-regular, .fa-solid, .fa-thin, .fab, .fad, .fal, .far, .fas, .fat { -webkit-font-smoothing: antialiased; display: var(--fa-display,inline-block); font-style: normal; font-variant: normal; line-height: 1; text-rendering: auto; }
+
+.fa-1x { font-size: 1em; }
+
+.fa-2x { font-size: 2em; }
+
+.fa-3x { font-size: 3em; }
+
+.fa-4x { font-size: 4em; }
+
+.fa-5x { font-size: 5em; }
+
+.fa-6x { font-size: 6em; }
+
+.fa-7x { font-size: 7em; }
+
+.fa-8x { font-size: 8em; }
+
+.fa-9x { font-size: 9em; }
+
+.fa-10x { font-size: 10em; }
+
+.fa-2xs { font-size: 0.625em; line-height: 0.1em; vertical-align: 0.225em; }
+
+.fa-xs { font-size: 0.75em; line-height: 0.08333em; vertical-align: 0.125em; }
+
+.fa-sm { font-size: 0.875em; line-height: 0.07143em; vertical-align: 0.05357em; }
+
+.fa-lg { font-size: 1.25em; line-height: 0.05em; vertical-align: -0.075em; }
+
+.fa-xl { font-size: 1.5em; line-height: 0.04167em; vertical-align: -0.125em; }
+
+.fa-2xl { font-size: 2em; line-height: 0.03125em; vertical-align: -0.1875em; }
+
+.fa-fw { text-align: center; width: 1.25em; }
+
+.fa-ul { list-style-type: none; margin-left: var(--fa-li-margin,2.5em); padding-left: 0px; }
+
+.fa-ul > li { position: relative; }
+
+.fa-li { left: calc(var(--fa-li-width, 2em)*-1); position: absolute; text-align: center; width: var(--fa-li-width,2em); line-height: inherit; }
+
+.fa-border { border-radius: var(--fa-border-radius,.1em); border: var(--fa-border-width,.08em) var(--fa-border-style,solid) var(--fa-border-color,#eee); padding: var(--fa-border-padding,.2em .25em .15em); }
+
+.fa-pull-left { float: left; margin-right: var(--fa-pull-margin,.3em); }
+
+.fa-pull-right { float: right; margin-left: var(--fa-pull-margin,.3em); }
+
+.fa-beat { animation-name: fa-beat; animation-delay: var(--fa-animation-delay,0); animation-direction: var(--fa-animation-direction,normal); animation-duration: var(--fa-animation-duration,1s); animation-iteration-count: var(--fa-animation-iteration-count,infinite); animation-timing-function: var(--fa-animation-timing,ease-in-out); }
+
+.fa-bounce { animation-name: fa-bounce; animation-delay: var(--fa-animation-delay,0); animation-direction: var(--fa-animation-direction,normal); animation-duration: var(--fa-animation-duration,1s); animation-iteration-count: var(--fa-animation-iteration-count,infinite); animation-timing-function: var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1)); }
+
+.fa-fade { animation-name: fa-fade; animation-iteration-count: var(--fa-animation-iteration-count,infinite); animation-timing-function: var(--fa-animation-timing,cubic-bezier(.4,0,.6,1)); }
+
+.fa-beat-fade, .fa-fade { animation-delay: var(--fa-animation-delay,0); animation-direction: var(--fa-animation-direction,normal); animation-duration: var(--fa-animation-duration,1s); }
+
+.fa-beat-fade { animation-name: fa-beat-fade; animation-iteration-count: var(--fa-animation-iteration-count,infinite); animation-timing-function: var(--fa-animation-timing,cubic-bezier(.4,0,.6,1)); }
+
+.fa-flip { animation-name: fa-flip; animation-delay: var(--fa-animation-delay,0); animation-direction: var(--fa-animation-direction,normal); animation-duration: var(--fa-animation-duration,1s); animation-iteration-count: var(--fa-animation-iteration-count,infinite); animation-timing-function: var(--fa-animation-timing,ease-in-out); }
+
+.fa-shake { animation-name: fa-shake; animation-duration: var(--fa-animation-duration,1s); animation-iteration-count: var(--fa-animation-iteration-count,infinite); animation-timing-function: var(--fa-animation-timing,linear); }
+
+.fa-shake, .fa-spin { animation-delay: var(--fa-animation-delay,0); animation-direction: var(--fa-animation-direction,normal); }
+
+.fa-spin { animation-name: fa-spin; animation-duration: var(--fa-animation-duration,2s); animation-iteration-count: var(--fa-animation-iteration-count,infinite); animation-timing-function: var(--fa-animation-timing,linear); }
+
+.fa-spin-reverse { --fa-animation-direction: reverse; }
+
+.fa-pulse, .fa-spin-pulse { animation-name: fa-spin; animation-direction: var(--fa-animation-direction,normal); animation-duration: var(--fa-animation-duration,1s); animation-iteration-count: var(--fa-animation-iteration-count,infinite); animation-timing-function: var(--fa-animation-timing,steps(8)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fa-beat, .fa-beat-fade, .fa-bounce, .fa-fade, .fa-flip, .fa-pulse, .fa-shake, .fa-spin, .fa-spin-pulse { animation-delay: -1ms; animation-duration: 1ms; animation-iteration-count: 1; transition-delay: 0s; transition-duration: 0s; }
+}
+
+@-webkit-keyframes fa-beat { 
+  0%, 90% { transform: scale(1); }
+  45% { transform: scale(var(--fa-beat-scale,1.25)); }
+}
+
+@keyframes fa-beat { 
+  0%, 90% { transform: scale(1); }
+  45% { transform: scale(var(--fa-beat-scale,1.25)); }
+}
+
+@-webkit-keyframes fa-bounce { 
+  0% { transform: scale(1) translateY(0px); }
+  10% { transform: scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0); }
+  30% { transform: scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em)); }
+  50% { transform: scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0); }
+  57% { transform: scale(1) translateY(var(--fa-bounce-rebound,-.125em)); }
+  64% { transform: scale(1) translateY(0px); }
+  100% { transform: scale(1) translateY(0px); }
+}
+
+@keyframes fa-bounce { 
+  0% { transform: scale(1) translateY(0px); }
+  10% { transform: scale(var(--fa-bounce-start-scale-x,1.1),var(--fa-bounce-start-scale-y,.9)) translateY(0); }
+  30% { transform: scale(var(--fa-bounce-jump-scale-x,.9),var(--fa-bounce-jump-scale-y,1.1)) translateY(var(--fa-bounce-height,-.5em)); }
+  50% { transform: scale(var(--fa-bounce-land-scale-x,1.05),var(--fa-bounce-land-scale-y,.95)) translateY(0); }
+  57% { transform: scale(1) translateY(var(--fa-bounce-rebound,-.125em)); }
+  64% { transform: scale(1) translateY(0px); }
+  100% { transform: scale(1) translateY(0px); }
+}
+
+@-webkit-keyframes fa-fade { 
+  50% { opacity: var(--fa-fade-opacity,.4); }
+}
+
+@keyframes fa-fade { 
+  50% { opacity: var(--fa-fade-opacity,.4); }
+}
+
+@-webkit-keyframes fa-beat-fade { 
+  0%, 100% { opacity: var(--fa-beat-fade-opacity,.4); transform: scale(1); }
+  50% { opacity: 1; transform: scale(var(--fa-beat-fade-scale,1.125)); }
+}
+
+@keyframes fa-beat-fade { 
+  0%, 100% { opacity: var(--fa-beat-fade-opacity,.4); transform: scale(1); }
+  50% { opacity: 1; transform: scale(var(--fa-beat-fade-scale,1.125)); }
+}
+
+@-webkit-keyframes fa-flip { 
+  50% { transform: rotate3d(var(--fa-flip-x,0),var(--fa-flip-y,1),var(--fa-flip-z,0),var(--fa-flip-angle,-180deg)); }
+}
+
+@keyframes fa-flip { 
+  50% { transform: rotate3d(var(--fa-flip-x,0),var(--fa-flip-y,1),var(--fa-flip-z,0),var(--fa-flip-angle,-180deg)); }
+}
+
+@-webkit-keyframes fa-shake { 
+  0% { transform: rotate(-15deg); }
+  4% { transform: rotate(15deg); }
+  8%, 24% { transform: rotate(-18deg); }
+  12%, 28% { transform: rotate(18deg); }
+  16% { transform: rotate(-22deg); }
+  20% { transform: rotate(22deg); }
+  32% { transform: rotate(-12deg); }
+  36% { transform: rotate(12deg); }
+  40%, 100% { transform: rotate(0deg); }
+}
+
+@keyframes fa-shake { 
+  0% { transform: rotate(-15deg); }
+  4% { transform: rotate(15deg); }
+  8%, 24% { transform: rotate(-18deg); }
+  12%, 28% { transform: rotate(18deg); }
+  16% { transform: rotate(-22deg); }
+  20% { transform: rotate(22deg); }
+  32% { transform: rotate(-12deg); }
+  36% { transform: rotate(12deg); }
+  40%, 100% { transform: rotate(0deg); }
+}
+
+@-webkit-keyframes fa-spin { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(1turn); }
+}
+
+@keyframes fa-spin { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(1turn); }
+}
+
+.fa-rotate-90 { transform: rotate(90deg); }
+
+.fa-rotate-180 { transform: rotate(180deg); }
+
+.fa-rotate-270 { transform: rotate(270deg); }
+
+.fa-flip-horizontal { transform: scaleX(-1); }
+
+.fa-flip-vertical { transform: scaleY(-1); }
+
+.fa-flip-both, .fa-flip-horizontal.fa-flip-vertical { transform: scale(-1); }
+
+.fa-rotate-by { transform: rotate(var(--fa-rotate-angle,none)); }
+
+.fa-stack { display: inline-block; height: 2em; line-height: 2em; position: relative; vertical-align: middle; width: 2.5em; }
+
+.fa-stack-1x, .fa-stack-2x { left: 0px; position: absolute; text-align: center; width: 100%; z-index: var(--fa-stack-z-index,auto); }
+
+.fa-stack-1x { line-height: inherit; }
+
+.fa-stack-2x { font-size: 2em; }
+
+.fa-inverse { color: var(--fa-inverse,#fff); }
+
+.fa-0::before { content: "0"; }
+
+.fa-1::before { content: "1"; }
+
+.fa-2::before { content: "2"; }
+
+.fa-3::before { content: "3"; }
+
+.fa-4::before { content: "4"; }
+
+.fa-5::before { content: "5"; }
+
+.fa-6::before { content: "6"; }
+
+.fa-7::before { content: "7"; }
+
+.fa-8::before { content: "8"; }
+
+.fa-9::before { content: "9"; }
+
+.fa-a::before { content: "A"; }
+
+.fa-address-book::before, .fa-contact-book::before { content: ""; }
+
+.fa-address-card::before, .fa-contact-card::before, .fa-vcard::before { content: ""; }
+
+.fa-align-center::before { content: ""; }
+
+.fa-align-justify::before { content: ""; }
+
+.fa-align-left::before { content: ""; }
+
+.fa-align-right::before { content: ""; }
+
+.fa-anchor::before { content: ""; }
+
+.fa-angle-down::before { content: ""; }
+
+.fa-angle-left::before { content: ""; }
+
+.fa-angle-right::before { content: ""; }
+
+.fa-angle-up::before { content: ""; }
+
+.fa-angle-double-down::before, .fa-angles-down::before { content: ""; }
+
+.fa-angle-double-left::before, .fa-angles-left::before { content: ""; }
+
+.fa-angle-double-right::before, .fa-angles-right::before { content: ""; }
+
+.fa-angle-double-up::before, .fa-angles-up::before { content: ""; }
+
+.fa-ankh::before { content: ""; }
+
+.fa-apple-alt::before, .fa-apple-whole::before { content: ""; }
+
+.fa-archway::before { content: ""; }
+
+.fa-arrow-down::before { content: ""; }
+
+.fa-arrow-down-1-9::before, .fa-sort-numeric-asc::before, .fa-sort-numeric-down::before { content: ""; }
+
+.fa-arrow-down-9-1::before, .fa-sort-numeric-desc::before, .fa-sort-numeric-down-alt::before { content: ""; }
+
+.fa-arrow-down-a-z::before, .fa-sort-alpha-asc::before, .fa-sort-alpha-down::before { content: ""; }
+
+.fa-arrow-down-long::before, .fa-long-arrow-down::before { content: ""; }
+
+.fa-arrow-down-short-wide::before, .fa-sort-amount-desc::before, .fa-sort-amount-down-alt::before { content: ""; }
+
+.fa-arrow-down-wide-short::before, .fa-sort-amount-asc::before, .fa-sort-amount-down::before { content: ""; }
+
+.fa-arrow-down-z-a::before, .fa-sort-alpha-desc::before, .fa-sort-alpha-down-alt::before { content: ""; }
+
+.fa-arrow-left::before { content: ""; }
+
+.fa-arrow-left-long::before, .fa-long-arrow-left::before { content: ""; }
+
+.fa-arrow-pointer::before, .fa-mouse-pointer::before { content: ""; }
+
+.fa-arrow-right::before { content: ""; }
+
+.fa-arrow-right-arrow-left::before, .fa-exchange::before { content: ""; }
+
+.fa-arrow-right-from-bracket::before, .fa-sign-out::before { content: ""; }
+
+.fa-arrow-right-long::before, .fa-long-arrow-right::before { content: ""; }
+
+.fa-arrow-right-to-bracket::before, .fa-sign-in::before { content: ""; }
+
+.fa-arrow-left-rotate::before, .fa-arrow-rotate-back::before, .fa-arrow-rotate-backward::before, .fa-arrow-rotate-left::before, .fa-undo::before { content: ""; }
+
+.fa-arrow-right-rotate::before, .fa-arrow-rotate-forward::before, .fa-arrow-rotate-right::before, .fa-redo::before { content: ""; }
+
+.fa-arrow-trend-down::before { content: ""; }
+
+.fa-arrow-trend-up::before { content: ""; }
+
+.fa-arrow-turn-down::before, .fa-level-down::before { content: ""; }
+
+.fa-arrow-turn-up::before, .fa-level-up::before { content: ""; }
+
+.fa-arrow-up::before { content: ""; }
+
+.fa-arrow-up-1-9::before, .fa-sort-numeric-up::before { content: ""; }
+
+.fa-arrow-up-9-1::before, .fa-sort-numeric-up-alt::before { content: ""; }
+
+.fa-arrow-up-a-z::before, .fa-sort-alpha-up::before { content: ""; }
+
+.fa-arrow-up-from-bracket::before { content: ""; }
+
+.fa-arrow-up-long::before, .fa-long-arrow-up::before { content: ""; }
+
+.fa-arrow-up-right-from-square::before, .fa-external-link::before { content: ""; }
+
+.fa-arrow-up-short-wide::before, .fa-sort-amount-up-alt::before { content: ""; }
+
+.fa-arrow-up-wide-short::before, .fa-sort-amount-up::before { content: ""; }
+
+.fa-arrow-up-z-a::before, .fa-sort-alpha-up-alt::before { content: ""; }
+
+.fa-arrows-h::before, .fa-arrows-left-right::before { content: ""; }
+
+.fa-arrows-rotate::before, .fa-refresh::before, .fa-sync::before { content: ""; }
+
+.fa-arrows-up-down::before, .fa-arrows-v::before { content: ""; }
+
+.fa-arrows-up-down-left-right::before, .fa-arrows::before { content: ""; }
+
+.fa-asterisk::before { content: "*"; }
+
+.fa-at::before { content: "@"; }
+
+.fa-atom::before { content: ""; }
+
+.fa-audio-description::before { content: ""; }
+
+.fa-austral-sign::before { content: ""; }
+
+.fa-award::before { content: ""; }
+
+.fa-b::before { content: "B"; }
+
+.fa-baby::before { content: ""; }
+
+.fa-baby-carriage::before, .fa-carriage-baby::before { content: ""; }
+
+.fa-backward::before { content: ""; }
+
+.fa-backward-fast::before, .fa-fast-backward::before { content: ""; }
+
+.fa-backward-step::before, .fa-step-backward::before { content: ""; }
+
+.fa-bacon::before { content: ""; }
+
+.fa-bacteria::before { content: ""; }
+
+.fa-bacterium::before { content: ""; }
+
+.fa-bag-shopping::before, .fa-shopping-bag::before { content: ""; }
+
+.fa-bahai::before { content: ""; }
+
+.fa-baht-sign::before { content: ""; }
+
+.fa-ban::before, .fa-cancel::before { content: ""; }
+
+.fa-ban-smoking::before, .fa-smoking-ban::before { content: ""; }
+
+.fa-band-aid::before, .fa-bandage::before { content: ""; }
+
+.fa-barcode::before { content: ""; }
+
+.fa-bars::before, .fa-navicon::before { content: ""; }
+
+.fa-bars-progress::before, .fa-tasks-alt::before { content: ""; }
+
+.fa-bars-staggered::before, .fa-reorder::before, .fa-stream::before { content: ""; }
+
+.fa-baseball-ball::before, .fa-baseball::before { content: ""; }
+
+.fa-baseball-bat-ball::before { content: ""; }
+
+.fa-basket-shopping::before, .fa-shopping-basket::before { content: ""; }
+
+.fa-basketball-ball::before, .fa-basketball::before { content: ""; }
+
+.fa-bath::before, .fa-bathtub::before { content: ""; }
+
+.fa-battery-0::before, .fa-battery-empty::before { content: ""; }
+
+.fa-battery-5::before, .fa-battery-full::before, .fa-battery::before { content: ""; }
+
+.fa-battery-3::before, .fa-battery-half::before { content: ""; }
+
+.fa-battery-2::before, .fa-battery-quarter::before { content: ""; }
+
+.fa-battery-4::before, .fa-battery-three-quarters::before { content: ""; }
+
+.fa-bed::before { content: ""; }
+
+.fa-bed-pulse::before, .fa-procedures::before { content: ""; }
+
+.fa-beer-mug-empty::before, .fa-beer::before { content: ""; }
+
+.fa-bell::before { content: ""; }
+
+.fa-bell-concierge::before, .fa-concierge-bell::before { content: ""; }
+
+.fa-bell-slash::before { content: ""; }
+
+.fa-bezier-curve::before { content: ""; }
+
+.fa-bicycle::before { content: ""; }
+
+.fa-binoculars::before { content: ""; }
+
+.fa-biohazard::before { content: ""; }
+
+.fa-bitcoin-sign::before { content: ""; }
+
+.fa-blender::before { content: ""; }
+
+.fa-blender-phone::before { content: ""; }
+
+.fa-blog::before { content: ""; }
+
+.fa-bold::before { content: ""; }
+
+.fa-bolt::before, .fa-zap::before { content: ""; }
+
+.fa-bolt-lightning::before { content: ""; }
+
+.fa-bomb::before { content: ""; }
+
+.fa-bone::before { content: ""; }
+
+.fa-bong::before { content: ""; }
+
+.fa-book::before { content: ""; }
+
+.fa-atlas::before, .fa-book-atlas::before { content: ""; }
+
+.fa-bible::before, .fa-book-bible::before { content: ""; }
+
+.fa-book-journal-whills::before, .fa-journal-whills::before { content: ""; }
+
+.fa-book-medical::before { content: ""; }
+
+.fa-book-open::before { content: ""; }
+
+.fa-book-open-reader::before, .fa-book-reader::before { content: ""; }
+
+.fa-book-quran::before, .fa-quran::before { content: ""; }
+
+.fa-book-dead::before, .fa-book-skull::before { content: ""; }
+
+.fa-bookmark::before { content: ""; }
+
+.fa-border-all::before { content: ""; }
+
+.fa-border-none::before { content: ""; }
+
+.fa-border-style::before, .fa-border-top-left::before { content: ""; }
+
+.fa-bowling-ball::before { content: ""; }
+
+.fa-box::before { content: ""; }
+
+.fa-archive::before, .fa-box-archive::before { content: ""; }
+
+.fa-box-open::before { content: ""; }
+
+.fa-box-tissue::before { content: ""; }
+
+.fa-boxes-alt::before, .fa-boxes-stacked::before, .fa-boxes::before { content: ""; }
+
+.fa-braille::before { content: ""; }
+
+.fa-brain::before { content: ""; }
+
+.fa-brazilian-real-sign::before { content: ""; }
+
+.fa-bread-slice::before { content: ""; }
+
+.fa-briefcase::before { content: ""; }
+
+.fa-briefcase-medical::before { content: ""; }
+
+.fa-broom::before { content: ""; }
+
+.fa-broom-ball::before, .fa-quidditch-broom-ball::before, .fa-quidditch::before { content: ""; }
+
+.fa-brush::before { content: ""; }
+
+.fa-bug::before { content: ""; }
+
+.fa-bug-slash::before { content: ""; }
+
+.fa-building::before { content: ""; }
+
+.fa-bank::before, .fa-building-columns::before, .fa-institution::before, .fa-museum::before, .fa-university::before { content: ""; }
+
+.fa-bullhorn::before { content: ""; }
+
+.fa-bullseye::before { content: ""; }
+
+.fa-burger::before, .fa-hamburger::before { content: ""; }
+
+.fa-bus::before { content: ""; }
+
+.fa-bus-alt::before, .fa-bus-simple::before { content: ""; }
+
+.fa-briefcase-clock::before, .fa-business-time::before { content: ""; }
+
+.fa-c::before { content: "C"; }
+
+.fa-birthday-cake::before, .fa-cake-candles::before, .fa-cake::before { content: ""; }
+
+.fa-calculator::before { content: ""; }
+
+.fa-calendar::before { content: ""; }
+
+.fa-calendar-check::before { content: ""; }
+
+.fa-calendar-day::before { content: ""; }
+
+.fa-calendar-alt::before, .fa-calendar-days::before { content: ""; }
+
+.fa-calendar-minus::before { content: ""; }
+
+.fa-calendar-plus::before { content: ""; }
+
+.fa-calendar-week::before { content: ""; }
+
+.fa-calendar-times::before, .fa-calendar-xmark::before { content: ""; }
+
+.fa-camera-alt::before, .fa-camera::before { content: ""; }
+
+.fa-camera-retro::before { content: ""; }
+
+.fa-camera-rotate::before { content: ""; }
+
+.fa-campground::before { content: ""; }
+
+.fa-candy-cane::before { content: ""; }
+
+.fa-cannabis::before { content: ""; }
+
+.fa-capsules::before { content: ""; }
+
+.fa-automobile::before, .fa-car::before { content: ""; }
+
+.fa-battery-car::before, .fa-car-battery::before { content: ""; }
+
+.fa-car-crash::before { content: ""; }
+
+.fa-car-alt::before, .fa-car-rear::before { content: ""; }
+
+.fa-car-side::before { content: ""; }
+
+.fa-caravan::before { content: ""; }
+
+.fa-caret-down::before { content: ""; }
+
+.fa-caret-left::before { content: ""; }
+
+.fa-caret-right::before { content: ""; }
+
+.fa-caret-up::before { content: ""; }
+
+.fa-carrot::before { content: ""; }
+
+.fa-cart-arrow-down::before { content: ""; }
+
+.fa-cart-flatbed::before, .fa-dolly-flatbed::before { content: ""; }
+
+.fa-cart-flatbed-suitcase::before, .fa-luggage-cart::before { content: ""; }
+
+.fa-cart-plus::before { content: ""; }
+
+.fa-cart-shopping::before, .fa-shopping-cart::before { content: ""; }
+
+.fa-cash-register::before { content: ""; }
+
+.fa-cat::before { content: ""; }
+
+.fa-cedi-sign::before { content: ""; }
+
+.fa-cent-sign::before { content: ""; }
+
+.fa-certificate::before { content: ""; }
+
+.fa-chair::before { content: ""; }
+
+.fa-blackboard::before, .fa-chalkboard::before { content: ""; }
+
+.fa-chalkboard-teacher::before, .fa-chalkboard-user::before { content: ""; }
+
+.fa-champagne-glasses::before, .fa-glass-cheers::before { content: ""; }
+
+.fa-charging-station::before { content: ""; }
+
+.fa-area-chart::before, .fa-chart-area::before { content: ""; }
+
+.fa-bar-chart::before, .fa-chart-bar::before { content: ""; }
+
+.fa-chart-column::before { content: ""; }
+
+.fa-chart-gantt::before { content: ""; }
+
+.fa-chart-line::before, .fa-line-chart::before { content: ""; }
+
+.fa-chart-pie::before, .fa-pie-chart::before { content: ""; }
+
+.fa-check::before { content: ""; }
+
+.fa-check-double::before { content: ""; }
+
+.fa-check-to-slot::before, .fa-vote-yea::before { content: ""; }
+
+.fa-cheese::before { content: ""; }
+
+.fa-chess::before { content: ""; }
+
+.fa-chess-bishop::before { content: ""; }
+
+.fa-chess-board::before { content: ""; }
+
+.fa-chess-king::before { content: ""; }
+
+.fa-chess-knight::before { content: ""; }
+
+.fa-chess-pawn::before { content: ""; }
+
+.fa-chess-queen::before { content: ""; }
+
+.fa-chess-rook::before { content: ""; }
+
+.fa-chevron-down::before { content: ""; }
+
+.fa-chevron-left::before { content: ""; }
+
+.fa-chevron-right::before { content: ""; }
+
+.fa-chevron-up::before { content: ""; }
+
+.fa-child::before { content: ""; }
+
+.fa-church::before { content: ""; }
+
+.fa-circle::before { content: ""; }
+
+.fa-arrow-circle-down::before, .fa-circle-arrow-down::before { content: ""; }
+
+.fa-arrow-circle-left::before, .fa-circle-arrow-left::before { content: ""; }
+
+.fa-arrow-circle-right::before, .fa-circle-arrow-right::before { content: ""; }
+
+.fa-arrow-circle-up::before, .fa-circle-arrow-up::before { content: ""; }
+
+.fa-check-circle::before, .fa-circle-check::before { content: ""; }
+
+.fa-chevron-circle-down::before, .fa-circle-chevron-down::before { content: ""; }
+
+.fa-chevron-circle-left::before, .fa-circle-chevron-left::before { content: ""; }
+
+.fa-chevron-circle-right::before, .fa-circle-chevron-right::before { content: ""; }
+
+.fa-chevron-circle-up::before, .fa-circle-chevron-up::before { content: ""; }
+
+.fa-circle-dollar-to-slot::before, .fa-donate::before { content: ""; }
+
+.fa-circle-dot::before, .fa-dot-circle::before { content: ""; }
+
+.fa-arrow-alt-circle-down::before, .fa-circle-down::before { content: ""; }
+
+.fa-circle-exclamation::before, .fa-exclamation-circle::before { content: ""; }
+
+.fa-circle-h::before, .fa-hospital-symbol::before { content: ""; }
+
+.fa-adjust::before, .fa-circle-half-stroke::before { content: ""; }
+
+.fa-circle-info::before, .fa-info-circle::before { content: ""; }
+
+.fa-arrow-alt-circle-left::before, .fa-circle-left::before { content: ""; }
+
+.fa-circle-minus::before, .fa-minus-circle::before { content: ""; }
+
+.fa-circle-notch::before { content: ""; }
+
+.fa-circle-pause::before, .fa-pause-circle::before { content: ""; }
+
+.fa-circle-play::before, .fa-play-circle::before { content: ""; }
+
+.fa-circle-plus::before, .fa-plus-circle::before { content: ""; }
+
+.fa-circle-question::before, .fa-question-circle::before { content: ""; }
+
+.fa-circle-radiation::before, .fa-radiation-alt::before { content: ""; }
+
+.fa-arrow-alt-circle-right::before, .fa-circle-right::before { content: ""; }
+
+.fa-circle-stop::before, .fa-stop-circle::before { content: ""; }
+
+.fa-arrow-alt-circle-up::before, .fa-circle-up::before { content: ""; }
+
+.fa-circle-user::before, .fa-user-circle::before { content: ""; }
+
+.fa-circle-xmark::before, .fa-times-circle::before, .fa-xmark-circle::before { content: ""; }
+
+.fa-city::before { content: ""; }
+
+.fa-clapperboard::before { content: ""; }
+
+.fa-clipboard::before { content: ""; }
+
+.fa-clipboard-check::before { content: ""; }
+
+.fa-clipboard-list::before { content: ""; }
+
+.fa-clock-four::before, .fa-clock::before { content: ""; }
+
+.fa-clock-rotate-left::before, .fa-history::before { content: ""; }
+
+.fa-clone::before { content: ""; }
+
+.fa-closed-captioning::before { content: ""; }
+
+.fa-cloud::before { content: ""; }
+
+.fa-cloud-arrow-down::before, .fa-cloud-download-alt::before, .fa-cloud-download::before { content: ""; }
+
+.fa-cloud-arrow-up::before, .fa-cloud-upload-alt::before, .fa-cloud-upload::before { content: ""; }
+
+.fa-cloud-meatball::before { content: ""; }
+
+.fa-cloud-moon::before { content: ""; }
+
+.fa-cloud-moon-rain::before { content: ""; }
+
+.fa-cloud-rain::before { content: ""; }
+
+.fa-cloud-showers-heavy::before { content: ""; }
+
+.fa-cloud-sun::before { content: ""; }
+
+.fa-cloud-sun-rain::before { content: ""; }
+
+.fa-clover::before { content: ""; }
+
+.fa-code::before { content: ""; }
+
+.fa-code-branch::before { content: ""; }
+
+.fa-code-commit::before { content: ""; }
+
+.fa-code-compare::before { content: ""; }
+
+.fa-code-fork::before { content: ""; }
+
+.fa-code-merge::before { content: ""; }
+
+.fa-code-pull-request::before { content: ""; }
+
+.fa-coins::before { content: ""; }
+
+.fa-colon-sign::before { content: ""; }
+
+.fa-comment::before { content: ""; }
+
+.fa-comment-dollar::before { content: ""; }
+
+.fa-comment-dots::before, .fa-commenting::before { content: ""; }
+
+.fa-comment-medical::before { content: ""; }
+
+.fa-comment-slash::before { content: ""; }
+
+.fa-comment-sms::before, .fa-sms::before { content: ""; }
+
+.fa-comments::before { content: ""; }
+
+.fa-comments-dollar::before { content: ""; }
+
+.fa-compact-disc::before { content: ""; }
+
+.fa-compass::before { content: ""; }
+
+.fa-compass-drafting::before, .fa-drafting-compass::before { content: ""; }
+
+.fa-compress::before { content: ""; }
+
+.fa-computer-mouse::before, .fa-mouse::before { content: ""; }
+
+.fa-cookie::before { content: ""; }
+
+.fa-cookie-bite::before { content: ""; }
+
+.fa-copy::before { content: ""; }
+
+.fa-copyright::before { content: ""; }
+
+.fa-couch::before { content: ""; }
+
+.fa-credit-card-alt::before, .fa-credit-card::before { content: ""; }
+
+.fa-crop::before { content: ""; }
+
+.fa-crop-alt::before, .fa-crop-simple::before { content: ""; }
+
+.fa-cross::before { content: ""; }
+
+.fa-crosshairs::before { content: ""; }
+
+.fa-crow::before { content: ""; }
+
+.fa-crown::before { content: ""; }
+
+.fa-crutch::before { content: ""; }
+
+.fa-cruzeiro-sign::before { content: ""; }
+
+.fa-cube::before { content: ""; }
+
+.fa-cubes::before { content: ""; }
+
+.fa-d::before { content: "D"; }
+
+.fa-database::before { content: ""; }
+
+.fa-backspace::before, .fa-delete-left::before { content: ""; }
+
+.fa-democrat::before { content: ""; }
+
+.fa-desktop-alt::before, .fa-desktop::before { content: ""; }
+
+.fa-dharmachakra::before { content: ""; }
+
+.fa-diagram-next::before { content: ""; }
+
+.fa-diagram-predecessor::before { content: ""; }
+
+.fa-diagram-project::before, .fa-project-diagram::before { content: ""; }
+
+.fa-diagram-successor::before { content: ""; }
+
+.fa-diamond::before { content: ""; }
+
+.fa-diamond-turn-right::before, .fa-directions::before { content: ""; }
+
+.fa-dice::before { content: ""; }
+
+.fa-dice-d20::before { content: ""; }
+
+.fa-dice-d6::before { content: ""; }
+
+.fa-dice-five::before { content: ""; }
+
+.fa-dice-four::before { content: ""; }
+
+.fa-dice-one::before { content: ""; }
+
+.fa-dice-six::before { content: ""; }
+
+.fa-dice-three::before { content: ""; }
+
+.fa-dice-two::before { content: ""; }
+
+.fa-disease::before { content: ""; }
+
+.fa-divide::before { content: ""; }
+
+.fa-dna::before { content: ""; }
+
+.fa-dog::before { content: ""; }
+
+.fa-dollar-sign::before, .fa-dollar::before, .fa-usd::before { content: "$"; }
+
+.fa-dolly-box::before, .fa-dolly::before { content: ""; }
+
+.fa-dong-sign::before { content: ""; }
+
+.fa-door-closed::before { content: ""; }
+
+.fa-door-open::before { content: ""; }
+
+.fa-dove::before { content: ""; }
+
+.fa-compress-alt::before, .fa-down-left-and-up-right-to-center::before { content: ""; }
+
+.fa-down-long::before, .fa-long-arrow-alt-down::before { content: ""; }
+
+.fa-download::before { content: ""; }
+
+.fa-dragon::before { content: ""; }
+
+.fa-draw-polygon::before { content: ""; }
+
+.fa-droplet::before, .fa-tint::before { content: ""; }
+
+.fa-droplet-slash::before, .fa-tint-slash::before { content: ""; }
+
+.fa-drum::before { content: ""; }
+
+.fa-drum-steelpan::before { content: ""; }
+
+.fa-drumstick-bite::before { content: ""; }
+
+.fa-dumbbell::before { content: ""; }
+
+.fa-dumpster::before { content: ""; }
+
+.fa-dumpster-fire::before { content: ""; }
+
+.fa-dungeon::before { content: ""; }
+
+.fa-e::before { content: "E"; }
+
+.fa-deaf::before, .fa-deafness::before, .fa-ear-deaf::before, .fa-hard-of-hearing::before { content: ""; }
+
+.fa-assistive-listening-systems::before, .fa-ear-listen::before { content: ""; }
+
+.fa-earth-africa::before, .fa-globe-africa::before { content: ""; }
+
+.fa-earth-america::before, .fa-earth-americas::before, .fa-earth::before, .fa-globe-americas::before { content: ""; }
+
+.fa-earth-asia::before, .fa-globe-asia::before { content: ""; }
+
+.fa-earth-europe::before, .fa-globe-europe::before { content: ""; }
+
+.fa-earth-oceania::before, .fa-globe-oceania::before { content: ""; }
+
+.fa-egg::before { content: ""; }
+
+.fa-eject::before { content: ""; }
+
+.fa-elevator::before { content: ""; }
+
+.fa-ellipsis-h::before, .fa-ellipsis::before { content: ""; }
+
+.fa-ellipsis-v::before, .fa-ellipsis-vertical::before { content: ""; }
+
+.fa-envelope::before { content: ""; }
+
+.fa-envelope-open::before { content: ""; }
+
+.fa-envelope-open-text::before { content: ""; }
+
+.fa-envelopes-bulk::before, .fa-mail-bulk::before { content: ""; }
+
+.fa-equals::before { content: "="; }
+
+.fa-eraser::before { content: ""; }
+
+.fa-ethernet::before { content: ""; }
+
+.fa-eur::before, .fa-euro-sign::before, .fa-euro::before { content: ""; }
+
+.fa-exclamation::before { content: "!"; }
+
+.fa-expand::before { content: ""; }
+
+.fa-eye::before { content: ""; }
+
+.fa-eye-dropper-empty::before, .fa-eye-dropper::before, .fa-eyedropper::before { content: ""; }
+
+.fa-eye-low-vision::before, .fa-low-vision::before { content: ""; }
+
+.fa-eye-slash::before { content: ""; }
+
+.fa-f::before { content: "F"; }
+
+.fa-angry::before, .fa-face-angry::before { content: ""; }
+
+.fa-dizzy::before, .fa-face-dizzy::before { content: ""; }
+
+.fa-face-flushed::before, .fa-flushed::before { content: ""; }
+
+.fa-face-frown::before, .fa-frown::before { content: ""; }
+
+.fa-face-frown-open::before, .fa-frown-open::before { content: ""; }
+
+.fa-face-grimace::before, .fa-grimace::before { content: ""; }
+
+.fa-face-grin::before, .fa-grin::before { content: ""; }
+
+.fa-face-grin-beam::before, .fa-grin-beam::before { content: ""; }
+
+.fa-face-grin-beam-sweat::before, .fa-grin-beam-sweat::before { content: ""; }
+
+.fa-face-grin-hearts::before, .fa-grin-hearts::before { content: ""; }
+
+.fa-face-grin-squint::before, .fa-grin-squint::before { content: ""; }
+
+.fa-face-grin-squint-tears::before, .fa-grin-squint-tears::before { content: ""; }
+
+.fa-face-grin-stars::before, .fa-grin-stars::before { content: ""; }
+
+.fa-face-grin-tears::before, .fa-grin-tears::before { content: ""; }
+
+.fa-face-grin-tongue::before, .fa-grin-tongue::before { content: ""; }
+
+.fa-face-grin-tongue-squint::before, .fa-grin-tongue-squint::before { content: ""; }
+
+.fa-face-grin-tongue-wink::before, .fa-grin-tongue-wink::before { content: ""; }
+
+.fa-face-grin-wide::before, .fa-grin-alt::before { content: ""; }
+
+.fa-face-grin-wink::before, .fa-grin-wink::before { content: ""; }
+
+.fa-face-kiss::before, .fa-kiss::before { content: ""; }
+
+.fa-face-kiss-beam::before, .fa-kiss-beam::before { content: ""; }
+
+.fa-face-kiss-wink-heart::before, .fa-kiss-wink-heart::before { content: ""; }
+
+.fa-face-laugh::before, .fa-laugh::before { content: ""; }
+
+.fa-face-laugh-beam::before, .fa-laugh-beam::before { content: ""; }
+
+.fa-face-laugh-squint::before, .fa-laugh-squint::before { content: ""; }
+
+.fa-face-laugh-wink::before, .fa-laugh-wink::before { content: ""; }
+
+.fa-face-meh::before, .fa-meh::before { content: ""; }
+
+.fa-face-meh-blank::before, .fa-meh-blank::before { content: ""; }
+
+.fa-face-rolling-eyes::before, .fa-meh-rolling-eyes::before { content: ""; }
+
+.fa-face-sad-cry::before, .fa-sad-cry::before { content: ""; }
+
+.fa-face-sad-tear::before, .fa-sad-tear::before { content: ""; }
+
+.fa-face-smile::before, .fa-smile::before { content: ""; }
+
+.fa-face-smile-beam::before, .fa-smile-beam::before { content: ""; }
+
+.fa-face-smile-wink::before, .fa-smile-wink::before { content: ""; }
+
+.fa-face-surprise::before, .fa-surprise::before { content: ""; }
+
+.fa-face-tired::before, .fa-tired::before { content: ""; }
+
+.fa-fan::before { content: ""; }
+
+.fa-faucet::before { content: ""; }
+
+.fa-fax::before { content: ""; }
+
+.fa-feather::before { content: ""; }
+
+.fa-feather-alt::before, .fa-feather-pointed::before { content: ""; }
+
+.fa-file::before { content: ""; }
+
+.fa-file-arrow-down::before, .fa-file-download::before { content: ""; }
+
+.fa-file-arrow-up::before, .fa-file-upload::before { content: ""; }
+
+.fa-file-audio::before { content: ""; }
+
+.fa-file-code::before { content: ""; }
+
+.fa-file-contract::before { content: ""; }
+
+.fa-file-csv::before { content: ""; }
+
+.fa-file-excel::before { content: ""; }
+
+.fa-arrow-right-from-file::before, .fa-file-export::before { content: ""; }
+
+.fa-file-image::before { content: ""; }
+
+.fa-arrow-right-to-file::before, .fa-file-import::before { content: ""; }
+
+.fa-file-invoice::before { content: ""; }
+
+.fa-file-invoice-dollar::before { content: ""; }
+
+.fa-file-alt::before, .fa-file-lines::before, .fa-file-text::before { content: ""; }
+
+.fa-file-medical::before { content: ""; }
+
+.fa-file-pdf::before { content: ""; }
+
+.fa-file-powerpoint::before { content: ""; }
+
+.fa-file-prescription::before { content: ""; }
+
+.fa-file-signature::before { content: ""; }
+
+.fa-file-video::before { content: ""; }
+
+.fa-file-medical-alt::before, .fa-file-waveform::before { content: ""; }
+
+.fa-file-word::before { content: ""; }
+
+.fa-file-archive::before, .fa-file-zipper::before { content: ""; }
+
+.fa-fill::before { content: ""; }
+
+.fa-fill-drip::before { content: ""; }
+
+.fa-film::before { content: ""; }
+
+.fa-filter::before { content: ""; }
+
+.fa-filter-circle-dollar::before, .fa-funnel-dollar::before { content: ""; }
+
+.fa-filter-circle-xmark::before { content: ""; }
+
+.fa-fingerprint::before { content: ""; }
+
+.fa-fire::before { content: ""; }
+
+.fa-fire-extinguisher::before { content: ""; }
+
+.fa-fire-alt::before, .fa-fire-flame-curved::before { content: ""; }
+
+.fa-burn::before, .fa-fire-flame-simple::before { content: ""; }
+
+.fa-fish::before { content: ""; }
+
+.fa-flag::before { content: ""; }
+
+.fa-flag-checkered::before { content: ""; }
+
+.fa-flag-usa::before { content: ""; }
+
+.fa-flask::before { content: ""; }
+
+.fa-floppy-disk::before, .fa-save::before { content: ""; }
+
+.fa-florin-sign::before { content: ""; }
+
+.fa-folder::before { content: ""; }
+
+.fa-folder-minus::before { content: ""; }
+
+.fa-folder-open::before { content: ""; }
+
+.fa-folder-plus::before { content: ""; }
+
+.fa-folder-tree::before { content: ""; }
+
+.fa-font::before { content: ""; }
+
+.fa-football-ball::before, .fa-football::before { content: ""; }
+
+.fa-forward::before { content: ""; }
+
+.fa-fast-forward::before, .fa-forward-fast::before { content: ""; }
+
+.fa-forward-step::before, .fa-step-forward::before { content: ""; }
+
+.fa-franc-sign::before { content: ""; }
+
+.fa-frog::before { content: ""; }
+
+.fa-futbol-ball::before, .fa-futbol::before, .fa-soccer-ball::before { content: ""; }
+
+.fa-g::before { content: "G"; }
+
+.fa-gamepad::before { content: ""; }
+
+.fa-gas-pump::before { content: ""; }
+
+.fa-dashboard::before, .fa-gauge-med::before, .fa-gauge::before, .fa-tachometer-alt-average::before { content: ""; }
+
+.fa-gauge-high::before, .fa-tachometer-alt-fast::before, .fa-tachometer-alt::before { content: ""; }
+
+.fa-gauge-simple-med::before, .fa-gauge-simple::before, .fa-tachometer-average::before { content: ""; }
+
+.fa-gauge-simple-high::before, .fa-tachometer-fast::before, .fa-tachometer::before { content: ""; }
+
+.fa-gavel::before, .fa-legal::before { content: ""; }
+
+.fa-cog::before, .fa-gear::before { content: ""; }
+
+.fa-cogs::before, .fa-gears::before { content: ""; }
+
+.fa-gem::before { content: ""; }
+
+.fa-genderless::before { content: ""; }
+
+.fa-ghost::before { content: ""; }
+
+.fa-gift::before { content: ""; }
+
+.fa-gifts::before { content: ""; }
+
+.fa-glasses::before { content: ""; }
+
+.fa-globe::before { content: ""; }
+
+.fa-golf-ball-tee::before, .fa-golf-ball::before { content: ""; }
+
+.fa-gopuram::before { content: ""; }
+
+.fa-graduation-cap::before, .fa-mortar-board::before { content: ""; }
+
+.fa-greater-than::before { content: ">"; }
+
+.fa-greater-than-equal::before { content: ""; }
+
+.fa-grip-horizontal::before, .fa-grip::before { content: ""; }
+
+.fa-grip-lines::before { content: ""; }
+
+.fa-grip-lines-vertical::before { content: ""; }
+
+.fa-grip-vertical::before { content: ""; }
+
+.fa-guarani-sign::before { content: ""; }
+
+.fa-guitar::before { content: ""; }
+
+.fa-gun::before { content: ""; }
+
+.fa-h::before { content: "H"; }
+
+.fa-hammer::before { content: ""; }
+
+.fa-hamsa::before { content: ""; }
+
+.fa-hand-paper::before, .fa-hand::before { content: ""; }
+
+.fa-hand-back-fist::before, .fa-hand-rock::before { content: ""; }
+
+.fa-allergies::before, .fa-hand-dots::before { content: ""; }
+
+.fa-fist-raised::before, .fa-hand-fist::before { content: ""; }
+
+.fa-hand-holding::before { content: ""; }
+
+.fa-hand-holding-dollar::before, .fa-hand-holding-usd::before { content: ""; }
+
+.fa-hand-holding-droplet::before, .fa-hand-holding-water::before { content: ""; }
+
+.fa-hand-holding-heart::before { content: ""; }
+
+.fa-hand-holding-medical::before { content: ""; }
+
+.fa-hand-lizard::before { content: ""; }
+
+.fa-hand-middle-finger::before { content: ""; }
+
+.fa-hand-peace::before { content: ""; }
+
+.fa-hand-point-down::before { content: ""; }
+
+.fa-hand-point-left::before { content: ""; }
+
+.fa-hand-point-right::before { content: ""; }
+
+.fa-hand-point-up::before { content: ""; }
+
+.fa-hand-pointer::before { content: ""; }
+
+.fa-hand-scissors::before { content: ""; }
+
+.fa-hand-sparkles::before { content: ""; }
+
+.fa-hand-spock::before { content: ""; }
+
+.fa-hands::before, .fa-sign-language::before, .fa-signing::before { content: ""; }
+
+.fa-american-sign-language-interpreting::before, .fa-asl-interpreting::before, .fa-hands-american-sign-language-interpreting::before, .fa-hands-asl-interpreting::before { content: ""; }
+
+.fa-hands-bubbles::before, .fa-hands-wash::before { content: ""; }
+
+.fa-hands-clapping::before { content: ""; }
+
+.fa-hands-holding::before { content: ""; }
+
+.fa-hands-praying::before, .fa-praying-hands::before { content: ""; }
+
+.fa-handshake::before { content: ""; }
+
+.fa-hands-helping::before, .fa-handshake-angle::before { content: ""; }
+
+.fa-handshake-alt-slash::before, .fa-handshake-simple-slash::before { content: ""; }
+
+.fa-handshake-slash::before { content: ""; }
+
+.fa-hanukiah::before { content: ""; }
+
+.fa-hard-drive::before, .fa-hdd::before { content: ""; }
+
+.fa-hashtag::before { content: "#"; }
+
+.fa-hat-cowboy::before { content: ""; }
+
+.fa-hat-cowboy-side::before { content: ""; }
+
+.fa-hat-wizard::before { content: ""; }
+
+.fa-head-side-cough::before { content: ""; }
+
+.fa-head-side-cough-slash::before { content: ""; }
+
+.fa-head-side-mask::before { content: ""; }
+
+.fa-head-side-virus::before { content: ""; }
+
+.fa-header::before, .fa-heading::before { content: ""; }
+
+.fa-headphones::before { content: ""; }
+
+.fa-headphones-alt::before, .fa-headphones-simple::before { content: ""; }
+
+.fa-headset::before { content: ""; }
+
+.fa-heart::before { content: ""; }
+
+.fa-heart-broken::before, .fa-heart-crack::before { content: ""; }
+
+.fa-heart-pulse::before, .fa-heartbeat::before { content: ""; }
+
+.fa-helicopter::before { content: ""; }
+
+.fa-hard-hat::before, .fa-hat-hard::before, .fa-helmet-safety::before { content: ""; }
+
+.fa-highlighter::before { content: ""; }
+
+.fa-hippo::before { content: ""; }
+
+.fa-hockey-puck::before { content: ""; }
+
+.fa-holly-berry::before { content: ""; }
+
+.fa-horse::before { content: ""; }
+
+.fa-horse-head::before { content: ""; }
+
+.fa-hospital-alt::before, .fa-hospital-wide::before, .fa-hospital::before { content: ""; }
+
+.fa-hospital-user::before { content: ""; }
+
+.fa-hot-tub-person::before, .fa-hot-tub::before { content: ""; }
+
+.fa-hotdog::before { content: ""; }
+
+.fa-hotel::before { content: ""; }
+
+.fa-hourglass-2::before, .fa-hourglass-half::before, .fa-hourglass::before { content: ""; }
+
+.fa-hourglass-empty::before { content: ""; }
+
+.fa-hourglass-3::before, .fa-hourglass-end::before { content: ""; }
+
+.fa-hourglass-1::before, .fa-hourglass-start::before { content: ""; }
+
+.fa-home-alt::before, .fa-home-lg-alt::before, .fa-home::before, .fa-house::before { content: ""; }
+
+.fa-home-lg::before, .fa-house-chimney::before { content: ""; }
+
+.fa-house-chimney-crack::before, .fa-house-damage::before { content: ""; }
+
+.fa-clinic-medical::before, .fa-house-chimney-medical::before { content: ""; }
+
+.fa-house-chimney-user::before { content: ""; }
+
+.fa-house-chimney-window::before { content: ""; }
+
+.fa-house-crack::before { content: ""; }
+
+.fa-house-laptop::before, .fa-laptop-house::before { content: ""; }
+
+.fa-house-medical::before { content: ""; }
+
+.fa-home-user::before, .fa-house-user::before { content: ""; }
+
+.fa-hryvnia-sign::before, .fa-hryvnia::before { content: ""; }
+
+.fa-i::before { content: "I"; }
+
+.fa-i-cursor::before { content: ""; }
+
+.fa-ice-cream::before { content: ""; }
+
+.fa-icicles::before { content: ""; }
+
+.fa-heart-music-camera-bolt::before, .fa-icons::before { content: ""; }
+
+.fa-id-badge::before { content: ""; }
+
+.fa-drivers-license::before, .fa-id-card::before { content: ""; }
+
+.fa-id-card-alt::before, .fa-id-card-clip::before { content: ""; }
+
+.fa-igloo::before { content: ""; }
+
+.fa-image::before { content: ""; }
+
+.fa-image-portrait::before, .fa-portrait::before { content: ""; }
+
+.fa-images::before { content: ""; }
+
+.fa-inbox::before { content: ""; }
+
+.fa-indent::before { content: ""; }
+
+.fa-indian-rupee-sign::before, .fa-indian-rupee::before, .fa-inr::before { content: ""; }
+
+.fa-industry::before { content: ""; }
+
+.fa-infinity::before { content: ""; }
+
+.fa-info::before { content: ""; }
+
+.fa-italic::before { content: ""; }
+
+.fa-j::before { content: "J"; }
+
+.fa-jedi::before { content: ""; }
+
+.fa-fighter-jet::before, .fa-jet-fighter::before { content: ""; }
+
+.fa-joint::before { content: ""; }
+
+.fa-k::before { content: "K"; }
+
+.fa-kaaba::before { content: ""; }
+
+.fa-key::before { content: ""; }
+
+.fa-keyboard::before { content: ""; }
+
+.fa-khanda::before { content: ""; }
+
+.fa-kip-sign::before { content: ""; }
+
+.fa-first-aid::before, .fa-kit-medical::before { content: ""; }
+
+.fa-kiwi-bird::before { content: ""; }
+
+.fa-l::before { content: "L"; }
+
+.fa-landmark::before { content: ""; }
+
+.fa-language::before { content: ""; }
+
+.fa-laptop::before { content: ""; }
+
+.fa-laptop-code::before { content: ""; }
+
+.fa-laptop-medical::before { content: ""; }
+
+.fa-lari-sign::before { content: ""; }
+
+.fa-layer-group::before { content: ""; }
+
+.fa-leaf::before { content: ""; }
+
+.fa-left-long::before, .fa-long-arrow-alt-left::before { content: ""; }
+
+.fa-arrows-alt-h::before, .fa-left-right::before { content: ""; }
+
+.fa-lemon::before { content: ""; }
+
+.fa-less-than::before { content: "<"; }
+
+.fa-less-than-equal::before { content: ""; }
+
+.fa-life-ring::before { content: ""; }
+
+.fa-lightbulb::before { content: ""; }
+
+.fa-chain::before, .fa-link::before { content: ""; }
+
+.fa-chain-broken::before, .fa-chain-slash::before, .fa-link-slash::before, .fa-unlink::before { content: ""; }
+
+.fa-lira-sign::before { content: ""; }
+
+.fa-list-squares::before, .fa-list::before { content: ""; }
+
+.fa-list-check::before, .fa-tasks::before { content: ""; }
+
+.fa-list-1-2::before, .fa-list-numeric::before, .fa-list-ol::before { content: ""; }
+
+.fa-list-dots::before, .fa-list-ul::before { content: ""; }
+
+.fa-litecoin-sign::before { content: ""; }
+
+.fa-location-arrow::before { content: ""; }
+
+.fa-location-crosshairs::before, .fa-location::before { content: ""; }
+
+.fa-location-dot::before, .fa-map-marker-alt::before { content: ""; }
+
+.fa-location-pin::before, .fa-map-marker::before { content: ""; }
+
+.fa-lock::before { content: ""; }
+
+.fa-lock-open::before { content: ""; }
+
+.fa-lungs::before { content: ""; }
+
+.fa-lungs-virus::before { content: ""; }
+
+.fa-m::before { content: "M"; }
+
+.fa-magnet::before { content: ""; }
+
+.fa-magnifying-glass::before, .fa-search::before { content: ""; }
+
+.fa-magnifying-glass-dollar::before, .fa-search-dollar::before { content: ""; }
+
+.fa-magnifying-glass-location::before, .fa-search-location::before { content: ""; }
+
+.fa-magnifying-glass-minus::before, .fa-search-minus::before { content: ""; }
+
+.fa-magnifying-glass-plus::before, .fa-search-plus::before { content: ""; }
+
+.fa-manat-sign::before { content: ""; }
+
+.fa-map::before { content: ""; }
+
+.fa-map-location::before, .fa-map-marked::before { content: ""; }
+
+.fa-map-location-dot::before, .fa-map-marked-alt::before { content: ""; }
+
+.fa-map-pin::before { content: ""; }
+
+.fa-marker::before { content: ""; }
+
+.fa-mars::before { content: ""; }
+
+.fa-mars-and-venus::before { content: ""; }
+
+.fa-mars-double::before { content: ""; }
+
+.fa-mars-stroke::before { content: ""; }
+
+.fa-mars-stroke-h::before, .fa-mars-stroke-right::before { content: ""; }
+
+.fa-mars-stroke-up::before, .fa-mars-stroke-v::before { content: ""; }
+
+.fa-glass-martini-alt::before, .fa-martini-glass::before { content: ""; }
+
+.fa-cocktail::before, .fa-martini-glass-citrus::before { content: ""; }
+
+.fa-glass-martini::before, .fa-martini-glass-empty::before { content: ""; }
+
+.fa-mask::before { content: ""; }
+
+.fa-mask-face::before { content: ""; }
+
+.fa-masks-theater::before, .fa-theater-masks::before { content: ""; }
+
+.fa-expand-arrows-alt::before, .fa-maximize::before { content: ""; }
+
+.fa-medal::before { content: ""; }
+
+.fa-memory::before { content: ""; }
+
+.fa-menorah::before { content: ""; }
+
+.fa-mercury::before { content: ""; }
+
+.fa-comment-alt::before, .fa-message::before { content: ""; }
+
+.fa-meteor::before { content: ""; }
+
+.fa-microchip::before { content: ""; }
+
+.fa-microphone::before { content: ""; }
+
+.fa-microphone-alt::before, .fa-microphone-lines::before { content: ""; }
+
+.fa-microphone-alt-slash::before, .fa-microphone-lines-slash::before { content: ""; }
+
+.fa-microphone-slash::before { content: ""; }
+
+.fa-microscope::before { content: ""; }
+
+.fa-mill-sign::before { content: ""; }
+
+.fa-compress-arrows-alt::before, .fa-minimize::before { content: ""; }
+
+.fa-minus::before, .fa-subtract::before { content: ""; }
+
+.fa-mitten::before { content: ""; }
+
+.fa-mobile-android::before, .fa-mobile-phone::before, .fa-mobile::before { content: ""; }
+
+.fa-mobile-button::before { content: ""; }
+
+.fa-mobile-alt::before, .fa-mobile-screen-button::before { content: ""; }
+
+.fa-money-bill::before { content: ""; }
+
+.fa-money-bill-1::before, .fa-money-bill-alt::before { content: ""; }
+
+.fa-money-bill-1-wave::before, .fa-money-bill-wave-alt::before { content: ""; }
+
+.fa-money-bill-wave::before { content: ""; }
+
+.fa-money-check::before { content: ""; }
+
+.fa-money-check-alt::before, .fa-money-check-dollar::before { content: ""; }
+
+.fa-monument::before { content: ""; }
+
+.fa-moon::before { content: ""; }
+
+.fa-mortar-pestle::before { content: ""; }
+
+.fa-mosque::before { content: ""; }
+
+.fa-motorcycle::before { content: ""; }
+
+.fa-mountain::before { content: ""; }
+
+.fa-mug-hot::before { content: ""; }
+
+.fa-coffee::before, .fa-mug-saucer::before { content: ""; }
+
+.fa-music::before { content: ""; }
+
+.fa-n::before { content: "N"; }
+
+.fa-naira-sign::before { content: ""; }
+
+.fa-network-wired::before { content: ""; }
+
+.fa-neuter::before { content: ""; }
+
+.fa-newspaper::before { content: ""; }
+
+.fa-not-equal::before { content: ""; }
+
+.fa-note-sticky::before, .fa-sticky-note::before { content: ""; }
+
+.fa-notes-medical::before { content: ""; }
+
+.fa-o::before { content: "O"; }
+
+.fa-object-group::before { content: ""; }
+
+.fa-object-ungroup::before { content: ""; }
+
+.fa-oil-can::before { content: ""; }
+
+.fa-om::before { content: ""; }
+
+.fa-otter::before { content: ""; }
+
+.fa-dedent::before, .fa-outdent::before { content: ""; }
+
+.fa-p::before { content: "P"; }
+
+.fa-pager::before { content: ""; }
+
+.fa-paint-roller::before { content: ""; }
+
+.fa-paint-brush::before, .fa-paintbrush::before { content: ""; }
+
+.fa-palette::before { content: ""; }
+
+.fa-pallet::before { content: ""; }
+
+.fa-panorama::before { content: ""; }
+
+.fa-paper-plane::before { content: ""; }
+
+.fa-paperclip::before { content: ""; }
+
+.fa-parachute-box::before { content: ""; }
+
+.fa-paragraph::before { content: ""; }
+
+.fa-passport::before { content: ""; }
+
+.fa-file-clipboard::before, .fa-paste::before { content: ""; }
+
+.fa-pause::before { content: ""; }
+
+.fa-paw::before { content: ""; }
+
+.fa-peace::before { content: ""; }
+
+.fa-pen::before { content: ""; }
+
+.fa-pen-alt::before, .fa-pen-clip::before { content: ""; }
+
+.fa-pen-fancy::before { content: ""; }
+
+.fa-pen-nib::before { content: ""; }
+
+.fa-pen-ruler::before, .fa-pencil-ruler::before { content: ""; }
+
+.fa-edit::before, .fa-pen-to-square::before { content: ""; }
+
+.fa-pencil-alt::before, .fa-pencil::before { content: ""; }
+
+.fa-people-arrows-left-right::before, .fa-people-arrows::before { content: ""; }
+
+.fa-people-carry-box::before, .fa-people-carry::before { content: ""; }
+
+.fa-pepper-hot::before { content: ""; }
+
+.fa-percent::before, .fa-percentage::before { content: "%"; }
+
+.fa-male::before, .fa-person::before { content: ""; }
+
+.fa-biking::before, .fa-person-biking::before { content: ""; }
+
+.fa-person-booth::before { content: ""; }
+
+.fa-diagnoses::before, .fa-person-dots-from-line::before { content: ""; }
+
+.fa-female::before, .fa-person-dress::before { content: ""; }
+
+.fa-hiking::before, .fa-person-hiking::before { content: ""; }
+
+.fa-person-praying::before, .fa-pray::before { content: ""; }
+
+.fa-person-running::before, .fa-running::before { content: ""; }
+
+.fa-person-skating::before, .fa-skating::before { content: ""; }
+
+.fa-person-skiing::before, .fa-skiing::before { content: ""; }
+
+.fa-person-skiing-nordic::before, .fa-skiing-nordic::before { content: ""; }
+
+.fa-person-snowboarding::before, .fa-snowboarding::before { content: ""; }
+
+.fa-person-swimming::before, .fa-swimmer::before { content: ""; }
+
+.fa-person-walking::before, .fa-walking::before { content: ""; }
+
+.fa-blind::before, .fa-person-walking-with-cane::before { content: ""; }
+
+.fa-peseta-sign::before { content: ""; }
+
+.fa-peso-sign::before { content: ""; }
+
+.fa-phone::before { content: ""; }
+
+.fa-phone-alt::before, .fa-phone-flip::before { content: ""; }
+
+.fa-phone-slash::before { content: ""; }
+
+.fa-phone-volume::before, .fa-volume-control-phone::before { content: ""; }
+
+.fa-photo-film::before, .fa-photo-video::before { content: ""; }
+
+.fa-piggy-bank::before { content: ""; }
+
+.fa-pills::before { content: ""; }
+
+.fa-pizza-slice::before { content: ""; }
+
+.fa-place-of-worship::before { content: ""; }
+
+.fa-plane::before { content: ""; }
+
+.fa-plane-arrival::before { content: ""; }
+
+.fa-plane-departure::before { content: ""; }
+
+.fa-plane-slash::before { content: ""; }
+
+.fa-play::before { content: ""; }
+
+.fa-plug::before { content: ""; }
+
+.fa-add::before, .fa-plus::before { content: "+"; }
+
+.fa-plus-minus::before { content: ""; }
+
+.fa-podcast::before { content: ""; }
+
+.fa-poo::before { content: ""; }
+
+.fa-poo-bolt::before, .fa-poo-storm::before { content: ""; }
+
+.fa-poop::before { content: ""; }
+
+.fa-power-off::before { content: ""; }
+
+.fa-prescription::before { content: ""; }
+
+.fa-prescription-bottle::before { content: ""; }
+
+.fa-prescription-bottle-alt::before, .fa-prescription-bottle-medical::before { content: ""; }
+
+.fa-print::before { content: ""; }
+
+.fa-pump-medical::before { content: ""; }
+
+.fa-pump-soap::before { content: ""; }
+
+.fa-puzzle-piece::before { content: ""; }
+
+.fa-q::before { content: "Q"; }
+
+.fa-qrcode::before { content: ""; }
+
+.fa-question::before { content: "?"; }
+
+.fa-quote-left-alt::before, .fa-quote-left::before { content: ""; }
+
+.fa-quote-right-alt::before, .fa-quote-right::before { content: ""; }
+
+.fa-r::before { content: "R"; }
+
+.fa-radiation::before { content: ""; }
+
+.fa-rainbow::before { content: ""; }
+
+.fa-receipt::before { content: ""; }
+
+.fa-record-vinyl::before { content: ""; }
+
+.fa-ad::before, .fa-rectangle-ad::before { content: ""; }
+
+.fa-list-alt::before, .fa-rectangle-list::before { content: ""; }
+
+.fa-rectangle-times::before, .fa-rectangle-xmark::before, .fa-times-rectangle::before, .fa-window-close::before { content: ""; }
+
+.fa-recycle::before { content: ""; }
+
+.fa-registered::before { content: ""; }
+
+.fa-repeat::before { content: ""; }
+
+.fa-mail-reply::before, .fa-reply::before { content: ""; }
+
+.fa-mail-reply-all::before, .fa-reply-all::before { content: ""; }
+
+.fa-republican::before { content: ""; }
+
+.fa-restroom::before { content: ""; }
+
+.fa-retweet::before { content: ""; }
+
+.fa-ribbon::before { content: ""; }
+
+.fa-right-from-bracket::before, .fa-sign-out-alt::before { content: ""; }
+
+.fa-exchange-alt::before, .fa-right-left::before { content: ""; }
+
+.fa-long-arrow-alt-right::before, .fa-right-long::before { content: ""; }
+
+.fa-right-to-bracket::before, .fa-sign-in-alt::before { content: ""; }
+
+.fa-ring::before { content: ""; }
+
+.fa-road::before { content: ""; }
+
+.fa-robot::before { content: ""; }
+
+.fa-rocket::before { content: ""; }
+
+.fa-rotate::before, .fa-sync-alt::before { content: ""; }
+
+.fa-rotate-back::before, .fa-rotate-backward::before, .fa-rotate-left::before, .fa-undo-alt::before { content: ""; }
+
+.fa-redo-alt::before, .fa-rotate-forward::before, .fa-rotate-right::before { content: ""; }
+
+.fa-route::before { content: ""; }
+
+.fa-feed::before, .fa-rss::before { content: ""; }
+
+.fa-rouble::before, .fa-rub::before, .fa-ruble-sign::before, .fa-ruble::before { content: ""; }
+
+.fa-ruler::before { content: ""; }
+
+.fa-ruler-combined::before { content: ""; }
+
+.fa-ruler-horizontal::before { content: ""; }
+
+.fa-ruler-vertical::before { content: ""; }
+
+.fa-rupee-sign::before, .fa-rupee::before { content: ""; }
+
+.fa-rupiah-sign::before { content: ""; }
+
+.fa-s::before { content: "S"; }
+
+.fa-sailboat::before { content: ""; }
+
+.fa-satellite::before { content: ""; }
+
+.fa-satellite-dish::before { content: ""; }
+
+.fa-balance-scale::before, .fa-scale-balanced::before { content: ""; }
+
+.fa-balance-scale-left::before, .fa-scale-unbalanced::before { content: ""; }
+
+.fa-balance-scale-right::before, .fa-scale-unbalanced-flip::before { content: ""; }
+
+.fa-school::before { content: ""; }
+
+.fa-cut::before, .fa-scissors::before { content: ""; }
+
+.fa-screwdriver::before { content: ""; }
+
+.fa-screwdriver-wrench::before, .fa-tools::before { content: ""; }
+
+.fa-scroll::before { content: ""; }
+
+.fa-scroll-torah::before, .fa-torah::before { content: ""; }
+
+.fa-sd-card::before { content: ""; }
+
+.fa-section::before { content: ""; }
+
+.fa-seedling::before, .fa-sprout::before { content: ""; }
+
+.fa-server::before { content: ""; }
+
+.fa-shapes::before, .fa-triangle-circle-square::before { content: ""; }
+
+.fa-arrow-turn-right::before, .fa-mail-forward::before, .fa-share::before { content: ""; }
+
+.fa-share-from-square::before, .fa-share-square::before { content: ""; }
+
+.fa-share-alt::before, .fa-share-nodes::before { content: ""; }
+
+.fa-ils::before, .fa-shekel-sign::before, .fa-shekel::before, .fa-sheqel-sign::before, .fa-sheqel::before { content: ""; }
+
+.fa-shield::before { content: ""; }
+
+.fa-shield-alt::before, .fa-shield-blank::before { content: ""; }
+
+.fa-shield-virus::before { content: ""; }
+
+.fa-ship::before { content: ""; }
+
+.fa-shirt::before, .fa-t-shirt::before, .fa-tshirt::before { content: ""; }
+
+.fa-shoe-prints::before { content: ""; }
+
+.fa-shop::before, .fa-store-alt::before { content: ""; }
+
+.fa-shop-slash::before, .fa-store-alt-slash::before { content: ""; }
+
+.fa-shower::before { content: ""; }
+
+.fa-shrimp::before { content: ""; }
+
+.fa-random::before, .fa-shuffle::before { content: ""; }
+
+.fa-shuttle-space::before, .fa-space-shuttle::before { content: ""; }
+
+.fa-sign-hanging::before, .fa-sign::before { content: ""; }
+
+.fa-signal-5::before, .fa-signal-perfect::before, .fa-signal::before { content: ""; }
+
+.fa-signature::before { content: ""; }
+
+.fa-map-signs::before, .fa-signs-post::before { content: ""; }
+
+.fa-sim-card::before { content: ""; }
+
+.fa-sink::before { content: ""; }
+
+.fa-sitemap::before { content: ""; }
+
+.fa-skull::before { content: ""; }
+
+.fa-skull-crossbones::before { content: ""; }
+
+.fa-slash::before { content: ""; }
+
+.fa-sleigh::before { content: ""; }
+
+.fa-sliders-h::before, .fa-sliders::before { content: ""; }
+
+.fa-smog::before { content: ""; }
+
+.fa-smoking::before { content: ""; }
+
+.fa-snowflake::before { content: ""; }
+
+.fa-snowman::before { content: ""; }
+
+.fa-snowplow::before { content: ""; }
+
+.fa-soap::before { content: ""; }
+
+.fa-socks::before { content: ""; }
+
+.fa-solar-panel::before { content: ""; }
+
+.fa-sort::before, .fa-unsorted::before { content: ""; }
+
+.fa-sort-desc::before, .fa-sort-down::before { content: ""; }
+
+.fa-sort-asc::before, .fa-sort-up::before { content: ""; }
+
+.fa-spa::before { content: ""; }
+
+.fa-pastafarianism::before, .fa-spaghetti-monster-flying::before { content: ""; }
+
+.fa-spell-check::before { content: ""; }
+
+.fa-spider::before { content: ""; }
+
+.fa-spinner::before { content: ""; }
+
+.fa-splotch::before { content: ""; }
+
+.fa-spoon::before, .fa-utensil-spoon::before { content: ""; }
+
+.fa-spray-can::before { content: ""; }
+
+.fa-air-freshener::before, .fa-spray-can-sparkles::before { content: ""; }
+
+.fa-square::before { content: ""; }
+
+.fa-external-link-square::before, .fa-square-arrow-up-right::before { content: ""; }
+
+.fa-caret-square-down::before, .fa-square-caret-down::before { content: ""; }
+
+.fa-caret-square-left::before, .fa-square-caret-left::before { content: ""; }
+
+.fa-caret-square-right::before, .fa-square-caret-right::before { content: ""; }
+
+.fa-caret-square-up::before, .fa-square-caret-up::before { content: ""; }
+
+.fa-check-square::before, .fa-square-check::before { content: ""; }
+
+.fa-envelope-square::before, .fa-square-envelope::before { content: ""; }
+
+.fa-square-full::before { content: ""; }
+
+.fa-h-square::before, .fa-square-h::before { content: ""; }
+
+.fa-minus-square::before, .fa-square-minus::before { content: ""; }
+
+.fa-parking::before, .fa-square-parking::before { content: ""; }
+
+.fa-pen-square::before, .fa-pencil-square::before, .fa-square-pen::before { content: ""; }
+
+.fa-phone-square::before, .fa-square-phone::before { content: ""; }
+
+.fa-phone-square-alt::before, .fa-square-phone-flip::before { content: ""; }
+
+.fa-plus-square::before, .fa-square-plus::before { content: ""; }
+
+.fa-poll-h::before, .fa-square-poll-horizontal::before { content: ""; }
+
+.fa-poll::before, .fa-square-poll-vertical::before { content: ""; }
+
+.fa-square-root-alt::before, .fa-square-root-variable::before { content: ""; }
+
+.fa-rss-square::before, .fa-square-rss::before { content: ""; }
+
+.fa-share-alt-square::before, .fa-square-share-nodes::before { content: ""; }
+
+.fa-external-link-square-alt::before, .fa-square-up-right::before { content: ""; }
+
+.fa-square-xmark::before, .fa-times-square::before, .fa-xmark-square::before { content: ""; }
+
+.fa-stairs::before { content: ""; }
+
+.fa-stamp::before { content: ""; }
+
+.fa-star::before { content: ""; }
+
+.fa-star-and-crescent::before { content: ""; }
+
+.fa-star-half::before { content: ""; }
+
+.fa-star-half-alt::before, .fa-star-half-stroke::before { content: ""; }
+
+.fa-star-of-david::before { content: ""; }
+
+.fa-star-of-life::before { content: ""; }
+
+.fa-gbp::before, .fa-pound-sign::before, .fa-sterling-sign::before { content: ""; }
+
+.fa-stethoscope::before { content: ""; }
+
+.fa-stop::before { content: ""; }
+
+.fa-stopwatch::before { content: ""; }
+
+.fa-stopwatch-20::before { content: ""; }
+
+.fa-store::before { content: ""; }
+
+.fa-store-slash::before { content: ""; }
+
+.fa-street-view::before { content: ""; }
+
+.fa-strikethrough::before { content: ""; }
+
+.fa-stroopwafel::before { content: ""; }
+
+.fa-subscript::before { content: ""; }
+
+.fa-suitcase::before { content: ""; }
+
+.fa-medkit::before, .fa-suitcase-medical::before { content: ""; }
+
+.fa-suitcase-rolling::before { content: ""; }
+
+.fa-sun::before { content: ""; }
+
+.fa-superscript::before { content: ""; }
+
+.fa-swatchbook::before { content: ""; }
+
+.fa-synagogue::before { content: ""; }
+
+.fa-syringe::before { content: ""; }
+
+.fa-t::before { content: "T"; }
+
+.fa-table::before { content: ""; }
+
+.fa-table-cells::before, .fa-th::before { content: ""; }
+
+.fa-table-cells-large::before, .fa-th-large::before { content: ""; }
+
+.fa-columns::before, .fa-table-columns::before { content: ""; }
+
+.fa-table-list::before, .fa-th-list::before { content: ""; }
+
+.fa-ping-pong-paddle-ball::before, .fa-table-tennis-paddle-ball::before, .fa-table-tennis::before { content: ""; }
+
+.fa-tablet-android::before, .fa-tablet::before { content: ""; }
+
+.fa-tablet-button::before { content: ""; }
+
+.fa-tablet-alt::before, .fa-tablet-screen-button::before { content: ""; }
+
+.fa-tablets::before { content: ""; }
+
+.fa-digital-tachograph::before, .fa-tachograph-digital::before { content: ""; }
+
+.fa-tag::before { content: ""; }
+
+.fa-tags::before { content: ""; }
+
+.fa-tape::before { content: ""; }
+
+.fa-cab::before, .fa-taxi::before { content: ""; }
+
+.fa-teeth::before { content: ""; }
+
+.fa-teeth-open::before { content: ""; }
+
+.fa-temperature-0::before, .fa-temperature-empty::before, .fa-thermometer-0::before, .fa-thermometer-empty::before { content: ""; }
+
+.fa-temperature-4::before, .fa-temperature-full::before, .fa-thermometer-4::before, .fa-thermometer-full::before { content: ""; }
+
+.fa-temperature-2::before, .fa-temperature-half::before, .fa-thermometer-2::before, .fa-thermometer-half::before { content: ""; }
+
+.fa-temperature-high::before { content: ""; }
+
+.fa-temperature-low::before { content: ""; }
+
+.fa-temperature-1::before, .fa-temperature-quarter::before, .fa-thermometer-1::before, .fa-thermometer-quarter::before { content: ""; }
+
+.fa-temperature-3::before, .fa-temperature-three-quarters::before, .fa-thermometer-3::before, .fa-thermometer-three-quarters::before { content: ""; }
+
+.fa-tenge-sign::before, .fa-tenge::before { content: ""; }
+
+.fa-terminal::before { content: ""; }
+
+.fa-text-height::before { content: ""; }
+
+.fa-remove-format::before, .fa-text-slash::before { content: ""; }
+
+.fa-text-width::before { content: ""; }
+
+.fa-thermometer::before { content: ""; }
+
+.fa-thumbs-down::before { content: ""; }
+
+.fa-thumbs-up::before { content: ""; }
+
+.fa-thumb-tack::before, .fa-thumbtack::before { content: ""; }
+
+.fa-ticket::before { content: ""; }
+
+.fa-ticket-alt::before, .fa-ticket-simple::before { content: ""; }
+
+.fa-timeline::before { content: ""; }
+
+.fa-toggle-off::before { content: ""; }
+
+.fa-toggle-on::before { content: ""; }
+
+.fa-toilet::before { content: ""; }
+
+.fa-toilet-paper::before { content: ""; }
+
+.fa-toilet-paper-slash::before { content: ""; }
+
+.fa-toolbox::before { content: ""; }
+
+.fa-tooth::before { content: ""; }
+
+.fa-torii-gate::before { content: ""; }
+
+.fa-broadcast-tower::before, .fa-tower-broadcast::before { content: ""; }
+
+.fa-tractor::before { content: ""; }
+
+.fa-trademark::before { content: ""; }
+
+.fa-traffic-light::before { content: ""; }
+
+.fa-trailer::before { content: ""; }
+
+.fa-train::before { content: ""; }
+
+.fa-subway::before, .fa-train-subway::before { content: ""; }
+
+.fa-train-tram::before, .fa-tram::before { content: ""; }
+
+.fa-transgender-alt::before, .fa-transgender::before { content: ""; }
+
+.fa-trash::before { content: ""; }
+
+.fa-trash-arrow-up::before, .fa-trash-restore::before { content: ""; }
+
+.fa-trash-alt::before, .fa-trash-can::before { content: ""; }
+
+.fa-trash-can-arrow-up::before, .fa-trash-restore-alt::before { content: ""; }
+
+.fa-tree::before { content: ""; }
+
+.fa-exclamation-triangle::before, .fa-triangle-exclamation::before, .fa-warning::before { content: ""; }
+
+.fa-trophy::before { content: ""; }
+
+.fa-truck::before { content: ""; }
+
+.fa-shipping-fast::before, .fa-truck-fast::before { content: ""; }
+
+.fa-ambulance::before, .fa-truck-medical::before { content: ""; }
+
+.fa-truck-monster::before { content: ""; }
+
+.fa-truck-moving::before { content: ""; }
+
+.fa-truck-pickup::before { content: ""; }
+
+.fa-truck-loading::before, .fa-truck-ramp-box::before { content: ""; }
+
+.fa-teletype::before, .fa-tty::before { content: ""; }
+
+.fa-try::before, .fa-turkish-lira-sign::before, .fa-turkish-lira::before { content: ""; }
+
+.fa-level-down-alt::before, .fa-turn-down::before { content: ""; }
+
+.fa-level-up-alt::before, .fa-turn-up::before { content: ""; }
+
+.fa-television::before, .fa-tv-alt::before, .fa-tv::before { content: ""; }
+
+.fa-u::before { content: "U"; }
+
+.fa-umbrella::before { content: ""; }
+
+.fa-umbrella-beach::before { content: ""; }
+
+.fa-underline::before { content: ""; }
+
+.fa-universal-access::before { content: ""; }
+
+.fa-unlock::before { content: ""; }
+
+.fa-unlock-alt::before, .fa-unlock-keyhole::before { content: ""; }
+
+.fa-arrows-alt-v::before, .fa-up-down::before { content: ""; }
+
+.fa-arrows-alt::before, .fa-up-down-left-right::before { content: ""; }
+
+.fa-long-arrow-alt-up::before, .fa-up-long::before { content: ""; }
+
+.fa-expand-alt::before, .fa-up-right-and-down-left-from-center::before { content: ""; }
+
+.fa-external-link-alt::before, .fa-up-right-from-square::before { content: ""; }
+
+.fa-upload::before { content: ""; }
+
+.fa-user::before { content: ""; }
+
+.fa-user-astronaut::before { content: ""; }
+
+.fa-user-check::before { content: ""; }
+
+.fa-user-clock::before { content: ""; }
+
+.fa-user-doctor::before, .fa-user-md::before { content: ""; }
+
+.fa-user-cog::before, .fa-user-gear::before { content: ""; }
+
+.fa-user-graduate::before { content: ""; }
+
+.fa-user-friends::before, .fa-user-group::before { content: ""; }
+
+.fa-user-injured::before { content: ""; }
+
+.fa-user-alt::before, .fa-user-large::before { content: ""; }
+
+.fa-user-alt-slash::before, .fa-user-large-slash::before { content: ""; }
+
+.fa-user-lock::before { content: ""; }
+
+.fa-user-minus::before { content: ""; }
+
+.fa-user-ninja::before { content: ""; }
+
+.fa-user-nurse::before { content: ""; }
+
+.fa-user-edit::before, .fa-user-pen::before { content: ""; }
+
+.fa-user-plus::before { content: ""; }
+
+.fa-user-secret::before { content: ""; }
+
+.fa-user-shield::before { content: ""; }
+
+.fa-user-slash::before { content: ""; }
+
+.fa-user-tag::before { content: ""; }
+
+.fa-user-tie::before { content: ""; }
+
+.fa-user-times::before, .fa-user-xmark::before { content: ""; }
+
+.fa-users::before { content: ""; }
+
+.fa-users-cog::before, .fa-users-gear::before { content: ""; }
+
+.fa-users-slash::before { content: ""; }
+
+.fa-cutlery::before, .fa-utensils::before { content: ""; }
+
+.fa-v::before { content: "V"; }
+
+.fa-shuttle-van::before, .fa-van-shuttle::before { content: ""; }
+
+.fa-vault::before { content: ""; }
+
+.fa-vector-square::before { content: ""; }
+
+.fa-venus::before { content: ""; }
+
+.fa-venus-double::before { content: ""; }
+
+.fa-venus-mars::before { content: ""; }
+
+.fa-vest::before { content: ""; }
+
+.fa-vest-patches::before { content: ""; }
+
+.fa-vial::before { content: ""; }
+
+.fa-vials::before { content: ""; }
+
+.fa-video-camera::before, .fa-video::before { content: ""; }
+
+.fa-video-slash::before { content: ""; }
+
+.fa-vihara::before { content: ""; }
+
+.fa-virus::before { content: ""; }
+
+.fa-virus-covid::before { content: ""; }
+
+.fa-virus-covid-slash::before { content: ""; }
+
+.fa-virus-slash::before { content: ""; }
+
+.fa-viruses::before { content: ""; }
+
+.fa-voicemail::before { content: ""; }
+
+.fa-volleyball-ball::before, .fa-volleyball::before { content: ""; }
+
+.fa-volume-high::before, .fa-volume-up::before { content: ""; }
+
+.fa-volume-down::before, .fa-volume-low::before { content: ""; }
+
+.fa-volume-off::before { content: ""; }
+
+.fa-volume-mute::before, .fa-volume-times::before, .fa-volume-xmark::before { content: ""; }
+
+.fa-vr-cardboard::before { content: ""; }
+
+.fa-w::before { content: "W"; }
+
+.fa-wallet::before { content: ""; }
+
+.fa-magic::before, .fa-wand-magic::before { content: ""; }
+
+.fa-magic-wand-sparkles::before, .fa-wand-magic-sparkles::before { content: ""; }
+
+.fa-wand-sparkles::before { content: ""; }
+
+.fa-warehouse::before { content: ""; }
+
+.fa-water::before { content: ""; }
+
+.fa-ladder-water::before, .fa-swimming-pool::before, .fa-water-ladder::before { content: ""; }
+
+.fa-wave-square::before { content: ""; }
+
+.fa-weight-hanging::before { content: ""; }
+
+.fa-weight-scale::before, .fa-weight::before { content: ""; }
+
+.fa-wheelchair::before { content: ""; }
+
+.fa-glass-whiskey::before, .fa-whiskey-glass::before { content: ""; }
+
+.fa-wifi-3::before, .fa-wifi-strong::before, .fa-wifi::before { content: ""; }
+
+.fa-wind::before { content: ""; }
+
+.fa-window-maximize::before { content: ""; }
+
+.fa-window-minimize::before { content: ""; }
+
+.fa-window-restore::before { content: ""; }
+
+.fa-wine-bottle::before { content: ""; }
+
+.fa-wine-glass::before { content: ""; }
+
+.fa-wine-glass-alt::before, .fa-wine-glass-empty::before { content: ""; }
+
+.fa-krw::before, .fa-won-sign::before, .fa-won::before { content: ""; }
+
+.fa-wrench::before { content: ""; }
+
+.fa-x::before { content: "X"; }
+
+.fa-x-ray::before { content: ""; }
+
+.fa-close::before, .fa-multiply::before, .fa-remove::before, .fa-times::before, .fa-xmark::before { content: ""; }
+
+.fa-y::before { content: "Y"; }
+
+.fa-cny::before, .fa-jpy::before, .fa-rmb::before, .fa-yen-sign::before, .fa-yen::before { content: ""; }
+
+.fa-yin-yang::before { content: ""; }
+
+.fa-z::before { content: "Z"; }
+
+.fa-sr-only, .fa-sr-only-focusable:not(:focus), .sr-only, .sr-only-focusable:not(:focus) { position: absolute; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px; }
+
+:host, :root { --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands"; }
+
+@font-face { font-family: "Font Awesome 6 Brands"; font-style: normal; font-weight: 400; font-display: block; src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype"); }
+
+.fa-brands, .fab { font-family: "Font Awesome 6 Brands"; font-weight: 400; }
+
+.fa-42-group::before, .fa-innosoft::before { content: ""; }
+
+.fa-500px::before { content: ""; }
+
+.fa-accessible-icon::before { content: ""; }
+
+.fa-accusoft::before { content: ""; }
+
+.fa-adn::before { content: ""; }
+
+.fa-adversal::before { content: ""; }
+
+.fa-affiliatetheme::before { content: ""; }
+
+.fa-airbnb::before { content: ""; }
+
+.fa-algolia::before { content: ""; }
+
+.fa-alipay::before { content: ""; }
+
+.fa-amazon::before { content: ""; }
+
+.fa-amazon-pay::before { content: ""; }
+
+.fa-amilia::before { content: ""; }
+
+.fa-android::before { content: ""; }
+
+.fa-angellist::before { content: ""; }
+
+.fa-angrycreative::before { content: ""; }
+
+.fa-angular::before { content: ""; }
+
+.fa-app-store::before { content: ""; }
+
+.fa-app-store-ios::before { content: ""; }
+
+.fa-apper::before { content: ""; }
+
+.fa-apple::before { content: ""; }
+
+.fa-apple-pay::before { content: ""; }
+
+.fa-artstation::before { content: ""; }
+
+.fa-asymmetrik::before { content: ""; }
+
+.fa-atlassian::before { content: ""; }
+
+.fa-audible::before { content: ""; }
+
+.fa-autoprefixer::before { content: ""; }
+
+.fa-avianex::before { content: ""; }
+
+.fa-aviato::before { content: ""; }
+
+.fa-aws::before { content: ""; }
+
+.fa-bandcamp::before { content: ""; }
+
+.fa-battle-net::before { content: ""; }
+
+.fa-behance::before { content: ""; }
+
+.fa-behance-square::before { content: ""; }
+
+.fa-bilibili::before { content: ""; }
+
+.fa-bimobject::before { content: ""; }
+
+.fa-bitbucket::before { content: ""; }
+
+.fa-bitcoin::before { content: ""; }
+
+.fa-bity::before { content: ""; }
+
+.fa-black-tie::before { content: ""; }
+
+.fa-blackberry::before { content: ""; }
+
+.fa-blogger::before { content: ""; }
+
+.fa-blogger-b::before { content: ""; }
+
+.fa-bluetooth::before { content: ""; }
+
+.fa-bluetooth-b::before { content: ""; }
+
+.fa-bootstrap::before { content: ""; }
+
+.fa-bots::before { content: ""; }
+
+.fa-btc::before { content: ""; }
+
+.fa-buffer::before { content: ""; }
+
+.fa-buromobelexperte::before { content: ""; }
+
+.fa-buy-n-large::before { content: ""; }
+
+.fa-buysellads::before { content: ""; }
+
+.fa-canadian-maple-leaf::before { content: ""; }
+
+.fa-cc-amazon-pay::before { content: ""; }
+
+.fa-cc-amex::before { content: ""; }
+
+.fa-cc-apple-pay::before { content: ""; }
+
+.fa-cc-diners-club::before { content: ""; }
+
+.fa-cc-discover::before { content: ""; }
+
+.fa-cc-jcb::before { content: ""; }
+
+.fa-cc-mastercard::before { content: ""; }
+
+.fa-cc-paypal::before { content: ""; }
+
+.fa-cc-stripe::before { content: ""; }
+
+.fa-cc-visa::before { content: ""; }
+
+.fa-centercode::before { content: ""; }
+
+.fa-centos::before { content: ""; }
+
+.fa-chrome::before { content: ""; }
+
+.fa-chromecast::before { content: ""; }
+
+.fa-cloudflare::before { content: ""; }
+
+.fa-cloudscale::before { content: ""; }
+
+.fa-cloudsmith::before { content: ""; }
+
+.fa-cloudversify::before { content: ""; }
+
+.fa-cmplid::before { content: ""; }
+
+.fa-codepen::before { content: ""; }
+
+.fa-codiepie::before { content: ""; }
+
+.fa-confluence::before { content: ""; }
+
+.fa-connectdevelop::before { content: ""; }
+
+.fa-contao::before { content: ""; }
+
+.fa-cotton-bureau::before { content: ""; }
+
+.fa-cpanel::before { content: ""; }
+
+.fa-creative-commons::before { content: ""; }
+
+.fa-creative-commons-by::before { content: ""; }
+
+.fa-creative-commons-nc::before { content: ""; }
+
+.fa-creative-commons-nc-eu::before { content: ""; }
+
+.fa-creative-commons-nc-jp::before { content: ""; }
+
+.fa-creative-commons-nd::before { content: ""; }
+
+.fa-creative-commons-pd::before { content: ""; }
+
+.fa-creative-commons-pd-alt::before { content: ""; }
+
+.fa-creative-commons-remix::before { content: ""; }
+
+.fa-creative-commons-sa::before { content: ""; }
+
+.fa-creative-commons-sampling::before { content: ""; }
+
+.fa-creative-commons-sampling-plus::before { content: ""; }
+
+.fa-creative-commons-share::before { content: ""; }
+
+.fa-creative-commons-zero::before { content: ""; }
+
+.fa-critical-role::before { content: ""; }
+
+.fa-css3::before { content: ""; }
+
+.fa-css3-alt::before { content: ""; }
+
+.fa-cuttlefish::before { content: ""; }
+
+.fa-d-and-d::before { content: ""; }
+
+.fa-d-and-d-beyond::before { content: ""; }
+
+.fa-dailymotion::before { content: ""; }
+
+.fa-dashcube::before { content: ""; }
+
+.fa-deezer::before { content: ""; }
+
+.fa-delicious::before { content: ""; }
+
+.fa-deploydog::before { content: ""; }
+
+.fa-deskpro::before { content: ""; }
+
+.fa-dev::before { content: ""; }
+
+.fa-deviantart::before { content: ""; }
+
+.fa-dhl::before { content: ""; }
+
+.fa-diaspora::before { content: ""; }
+
+.fa-digg::before { content: ""; }
+
+.fa-digital-ocean::before { content: ""; }
+
+.fa-discord::before { content: ""; }
+
+.fa-discourse::before { content: ""; }
+
+.fa-dochub::before { content: ""; }
+
+.fa-docker::before { content: ""; }
+
+.fa-draft2digital::before { content: ""; }
+
+.fa-dribbble::before { content: ""; }
+
+.fa-dribbble-square::before { content: ""; }
+
+.fa-dropbox::before { content: ""; }
+
+.fa-drupal::before { content: ""; }
+
+.fa-dyalog::before { content: ""; }
+
+.fa-earlybirds::before { content: ""; }
+
+.fa-ebay::before { content: ""; }
+
+.fa-edge::before { content: ""; }
+
+.fa-edge-legacy::before { content: ""; }
+
+.fa-elementor::before { content: ""; }
+
+.fa-ello::before { content: ""; }
+
+.fa-ember::before { content: ""; }
+
+.fa-empire::before { content: ""; }
+
+.fa-envira::before { content: ""; }
+
+.fa-erlang::before { content: ""; }
+
+.fa-ethereum::before { content: ""; }
+
+.fa-etsy::before { content: ""; }
+
+.fa-evernote::before { content: ""; }
+
+.fa-expeditedssl::before { content: ""; }
+
+.fa-facebook::before { content: ""; }
+
+.fa-facebook-f::before { content: ""; }
+
+.fa-facebook-messenger::before { content: ""; }
+
+.fa-facebook-square::before { content: ""; }
+
+.fa-fantasy-flight-games::before { content: ""; }
+
+.fa-fedex::before { content: ""; }
+
+.fa-fedora::before { content: ""; }
+
+.fa-figma::before { content: ""; }
+
+.fa-firefox::before { content: ""; }
+
+.fa-firefox-browser::before { content: ""; }
+
+.fa-first-order::before { content: ""; }
+
+.fa-first-order-alt::before { content: ""; }
+
+.fa-firstdraft::before { content: ""; }
+
+.fa-flickr::before { content: ""; }
+
+.fa-flipboard::before { content: ""; }
+
+.fa-fly::before { content: ""; }
+
+.fa-font-awesome-flag::before, .fa-font-awesome-logo-full::before, .fa-font-awesome::before { content: ""; }
+
+.fa-fonticons::before { content: ""; }
+
+.fa-fonticons-fi::before { content: ""; }
+
+.fa-fort-awesome::before { content: ""; }
+
+.fa-fort-awesome-alt::before { content: ""; }
+
+.fa-forumbee::before { content: ""; }
+
+.fa-foursquare::before { content: ""; }
+
+.fa-free-code-camp::before { content: ""; }
+
+.fa-freebsd::before { content: ""; }
+
+.fa-fulcrum::before { content: ""; }
+
+.fa-galactic-republic::before { content: ""; }
+
+.fa-galactic-senate::before { content: ""; }
+
+.fa-get-pocket::before { content: ""; }
+
+.fa-gg::before { content: ""; }
+
+.fa-gg-circle::before { content: ""; }
+
+.fa-git::before { content: ""; }
+
+.fa-git-alt::before { content: ""; }
+
+.fa-git-square::before { content: ""; }
+
+.fa-github::before { content: ""; }
+
+.fa-github-alt::before { content: ""; }
+
+.fa-github-square::before { content: ""; }
+
+.fa-gitkraken::before { content: ""; }
+
+.fa-gitlab::before { content: ""; }
+
+.fa-gitter::before { content: ""; }
+
+.fa-glide::before { content: ""; }
+
+.fa-glide-g::before { content: ""; }
+
+.fa-gofore::before { content: ""; }
+
+.fa-golang::before { content: ""; }
+
+.fa-goodreads::before { content: ""; }
+
+.fa-goodreads-g::before { content: ""; }
+
+.fa-google::before { content: ""; }
+
+.fa-google-drive::before { content: ""; }
+
+.fa-google-pay::before { content: ""; }
+
+.fa-google-play::before { content: ""; }
+
+.fa-google-plus::before { content: ""; }
+
+.fa-google-plus-g::before { content: ""; }
+
+.fa-google-plus-square::before { content: ""; }
+
+.fa-google-wallet::before { content: ""; }
+
+.fa-gratipay::before { content: ""; }
+
+.fa-grav::before { content: ""; }
+
+.fa-gripfire::before { content: ""; }
+
+.fa-grunt::before { content: ""; }
+
+.fa-guilded::before { content: ""; }
+
+.fa-gulp::before { content: ""; }
+
+.fa-hacker-news::before { content: ""; }
+
+.fa-hacker-news-square::before { content: ""; }
+
+.fa-hackerrank::before { content: ""; }
+
+.fa-hashnode::before { content: ""; }
+
+.fa-hips::before { content: ""; }
+
+.fa-hire-a-helper::before { content: ""; }
+
+.fa-hive::before { content: ""; }
+
+.fa-hooli::before { content: ""; }
+
+.fa-hornbill::before { content: ""; }
+
+.fa-hotjar::before { content: ""; }
+
+.fa-houzz::before { content: ""; }
+
+.fa-html5::before { content: ""; }
+
+.fa-hubspot::before { content: ""; }
+
+.fa-ideal::before { content: ""; }
+
+.fa-imdb::before { content: ""; }
+
+.fa-instagram::before { content: ""; }
+
+.fa-instagram-square::before { content: ""; }
+
+.fa-instalod::before { content: ""; }
+
+.fa-intercom::before { content: ""; }
+
+.fa-internet-explorer::before { content: ""; }
+
+.fa-invision::before { content: ""; }
+
+.fa-ioxhost::before { content: ""; }
+
+.fa-itch-io::before { content: ""; }
+
+.fa-itunes::before { content: ""; }
+
+.fa-itunes-note::before { content: ""; }
+
+.fa-java::before { content: ""; }
+
+.fa-jedi-order::before { content: ""; }
+
+.fa-jenkins::before { content: ""; }
+
+.fa-jira::before { content: ""; }
+
+.fa-joget::before { content: ""; }
+
+.fa-joomla::before { content: ""; }
+
+.fa-js::before { content: ""; }
+
+.fa-js-square::before { content: ""; }
+
+.fa-jsfiddle::before { content: ""; }
+
+.fa-kaggle::before { content: ""; }
+
+.fa-keybase::before { content: ""; }
+
+.fa-keycdn::before { content: ""; }
+
+.fa-kickstarter::before { content: ""; }
+
+.fa-kickstarter-k::before { content: ""; }
+
+.fa-korvue::before { content: ""; }
+
+.fa-laravel::before { content: ""; }
+
+.fa-lastfm::before { content: ""; }
+
+.fa-lastfm-square::before { content: ""; }
+
+.fa-leanpub::before { content: ""; }
+
+.fa-less::before { content: ""; }
+
+.fa-line::before { content: ""; }
+
+.fa-linkedin::before { content: ""; }
+
+.fa-linkedin-in::before { content: ""; }
+
+.fa-linode::before { content: ""; }
+
+.fa-linux::before { content: ""; }
+
+.fa-lyft::before { content: ""; }
+
+.fa-magento::before { content: ""; }
+
+.fa-mailchimp::before { content: ""; }
+
+.fa-mandalorian::before { content: ""; }
+
+.fa-markdown::before { content: ""; }
+
+.fa-mastodon::before { content: ""; }
+
+.fa-maxcdn::before { content: ""; }
+
+.fa-mdb::before { content: ""; }
+
+.fa-medapps::before { content: ""; }
+
+.fa-medium-m::before, .fa-medium::before { content: ""; }
+
+.fa-medrt::before { content: ""; }
+
+.fa-meetup::before { content: ""; }
+
+.fa-megaport::before { content: ""; }
+
+.fa-mendeley::before { content: ""; }
+
+.fa-microblog::before { content: ""; }
+
+.fa-microsoft::before { content: ""; }
+
+.fa-mix::before { content: ""; }
+
+.fa-mixcloud::before { content: ""; }
+
+.fa-mixer::before { content: ""; }
+
+.fa-mizuni::before { content: ""; }
+
+.fa-modx::before { content: ""; }
+
+.fa-monero::before { content: ""; }
+
+.fa-napster::before { content: ""; }
+
+.fa-neos::before { content: ""; }
+
+.fa-nimblr::before { content: ""; }
+
+.fa-node::before { content: ""; }
+
+.fa-node-js::before { content: ""; }
+
+.fa-npm::before { content: ""; }
+
+.fa-ns8::before { content: ""; }
+
+.fa-nutritionix::before { content: ""; }
+
+.fa-octopus-deploy::before { content: ""; }
+
+.fa-odnoklassniki::before { content: ""; }
+
+.fa-odnoklassniki-square::before { content: ""; }
+
+.fa-old-republic::before { content: ""; }
+
+.fa-opencart::before { content: ""; }
+
+.fa-openid::before { content: ""; }
+
+.fa-opera::before { content: ""; }
+
+.fa-optin-monster::before { content: ""; }
+
+.fa-orcid::before { content: ""; }
+
+.fa-osi::before { content: ""; }
+
+.fa-padlet::before { content: ""; }
+
+.fa-page4::before { content: ""; }
+
+.fa-pagelines::before { content: ""; }
+
+.fa-palfed::before { content: ""; }
+
+.fa-patreon::before { content: ""; }
+
+.fa-paypal::before { content: ""; }
+
+.fa-perbyte::before { content: ""; }
+
+.fa-periscope::before { content: ""; }
+
+.fa-phabricator::before { content: ""; }
+
+.fa-phoenix-framework::before { content: ""; }
+
+.fa-phoenix-squadron::before { content: ""; }
+
+.fa-php::before { content: ""; }
+
+.fa-pied-piper::before { content: ""; }
+
+.fa-pied-piper-alt::before { content: ""; }
+
+.fa-pied-piper-hat::before { content: ""; }
+
+.fa-pied-piper-pp::before { content: ""; }
+
+.fa-pied-piper-square::before { content: ""; }
+
+.fa-pinterest::before { content: ""; }
+
+.fa-pinterest-p::before { content: ""; }
+
+.fa-pinterest-square::before { content: ""; }
+
+.fa-pix::before { content: ""; }
+
+.fa-playstation::before { content: ""; }
+
+.fa-product-hunt::before { content: ""; }
+
+.fa-pushed::before { content: ""; }
+
+.fa-python::before { content: ""; }
+
+.fa-qq::before { content: ""; }
+
+.fa-quinscape::before { content: ""; }
+
+.fa-quora::before { content: ""; }
+
+.fa-r-project::before { content: ""; }
+
+.fa-raspberry-pi::before { content: ""; }
+
+.fa-ravelry::before { content: ""; }
+
+.fa-react::before { content: ""; }
+
+.fa-reacteurope::before { content: ""; }
+
+.fa-readme::before { content: ""; }
+
+.fa-rebel::before { content: ""; }
+
+.fa-red-river::before { content: ""; }
+
+.fa-reddit::before { content: ""; }
+
+.fa-reddit-alien::before { content: ""; }
+
+.fa-reddit-square::before { content: ""; }
+
+.fa-redhat::before { content: ""; }
+
+.fa-renren::before { content: ""; }
+
+.fa-replyd::before { content: ""; }
+
+.fa-researchgate::before { content: ""; }
+
+.fa-resolving::before { content: ""; }
+
+.fa-rev::before { content: ""; }
+
+.fa-rocketchat::before { content: ""; }
+
+.fa-rockrms::before { content: ""; }
+
+.fa-rust::before { content: ""; }
+
+.fa-safari::before { content: ""; }
+
+.fa-salesforce::before { content: ""; }
+
+.fa-sass::before { content: ""; }
+
+.fa-schlix::before { content: ""; }
+
+.fa-scribd::before { content: ""; }
+
+.fa-searchengin::before { content: ""; }
+
+.fa-sellcast::before { content: ""; }
+
+.fa-sellsy::before { content: ""; }
+
+.fa-servicestack::before { content: ""; }
+
+.fa-shirtsinbulk::before { content: ""; }
+
+.fa-shopify::before { content: ""; }
+
+.fa-shopware::before { content: ""; }
+
+.fa-simplybuilt::before { content: ""; }
+
+.fa-sistrix::before { content: ""; }
+
+.fa-sith::before { content: ""; }
+
+.fa-sitrox::before { content: ""; }
+
+.fa-sketch::before { content: ""; }
+
+.fa-skyatlas::before { content: ""; }
+
+.fa-skype::before { content: ""; }
+
+.fa-slack-hash::before, .fa-slack::before { content: ""; }
+
+.fa-slideshare::before { content: ""; }
+
+.fa-snapchat-ghost::before, .fa-snapchat::before { content: ""; }
+
+.fa-snapchat-square::before { content: ""; }
+
+.fa-soundcloud::before { content: ""; }
+
+.fa-sourcetree::before { content: ""; }
+
+.fa-speakap::before { content: ""; }
+
+.fa-speaker-deck::before { content: ""; }
+
+.fa-spotify::before { content: ""; }
+
+.fa-square-font-awesome::before { content: ""; }
+
+.fa-font-awesome-alt::before, .fa-square-font-awesome-stroke::before { content: ""; }
+
+.fa-squarespace::before { content: ""; }
+
+.fa-stack-exchange::before { content: ""; }
+
+.fa-stack-overflow::before { content: ""; }
+
+.fa-stackpath::before { content: ""; }
+
+.fa-staylinked::before { content: ""; }
+
+.fa-steam::before { content: ""; }
+
+.fa-steam-square::before { content: ""; }
+
+.fa-steam-symbol::before { content: ""; }
+
+.fa-sticker-mule::before { content: ""; }
+
+.fa-strava::before { content: ""; }
+
+.fa-stripe::before { content: ""; }
+
+.fa-stripe-s::before { content: ""; }
+
+.fa-studiovinari::before { content: ""; }
+
+.fa-stumbleupon::before { content: ""; }
+
+.fa-stumbleupon-circle::before { content: ""; }
+
+.fa-superpowers::before { content: ""; }
+
+.fa-supple::before { content: ""; }
+
+.fa-suse::before { content: ""; }
+
+.fa-swift::before { content: ""; }
+
+.fa-symfony::before { content: ""; }
+
+.fa-teamspeak::before { content: ""; }
+
+.fa-telegram-plane::before, .fa-telegram::before { content: ""; }
+
+.fa-tencent-weibo::before { content: ""; }
+
+.fa-the-red-yeti::before { content: ""; }
+
+.fa-themeco::before { content: ""; }
+
+.fa-themeisle::before { content: ""; }
+
+.fa-think-peaks::before { content: ""; }
+
+.fa-tiktok::before { content: ""; }
+
+.fa-trade-federation::before { content: ""; }
+
+.fa-trello::before { content: ""; }
+
+.fa-tumblr::before { content: ""; }
+
+.fa-tumblr-square::before { content: ""; }
+
+.fa-twitch::before { content: ""; }
+
+.fa-twitter::before { content: ""; }
+
+.fa-twitter-square::before { content: ""; }
+
+.fa-typo3::before { content: ""; }
+
+.fa-uber::before { content: ""; }
+
+.fa-ubuntu::before { content: ""; }
+
+.fa-uikit::before { content: ""; }
+
+.fa-umbraco::before { content: ""; }
+
+.fa-uncharted::before { content: ""; }
+
+.fa-uniregistry::before { content: ""; }
+
+.fa-unity::before { content: ""; }
+
+.fa-unsplash::before { content: ""; }
+
+.fa-untappd::before { content: ""; }
+
+.fa-ups::before { content: ""; }
+
+.fa-usb::before { content: ""; }
+
+.fa-usps::before { content: ""; }
+
+.fa-ussunnah::before { content: ""; }
+
+.fa-vaadin::before { content: ""; }
+
+.fa-viacoin::before { content: ""; }
+
+.fa-viadeo::before { content: ""; }
+
+.fa-viadeo-square::before { content: ""; }
+
+.fa-viber::before { content: ""; }
+
+.fa-vimeo::before { content: ""; }
+
+.fa-vimeo-square::before { content: ""; }
+
+.fa-vimeo-v::before { content: ""; }
+
+.fa-vine::before { content: ""; }
+
+.fa-vk::before { content: ""; }
+
+.fa-vnv::before { content: ""; }
+
+.fa-vuejs::before { content: ""; }
+
+.fa-watchman-monitoring::before { content: ""; }
+
+.fa-waze::before { content: ""; }
+
+.fa-weebly::before { content: ""; }
+
+.fa-weibo::before { content: ""; }
+
+.fa-weixin::before { content: ""; }
+
+.fa-whatsapp::before { content: ""; }
+
+.fa-whatsapp-square::before { content: ""; }
+
+.fa-whmcs::before { content: ""; }
+
+.fa-wikipedia-w::before { content: ""; }
+
+.fa-windows::before { content: ""; }
+
+.fa-wirsindhandwerk::before, .fa-wsh::before { content: ""; }
+
+.fa-wix::before { content: ""; }
+
+.fa-wizards-of-the-coast::before { content: ""; }
+
+.fa-wodu::before { content: ""; }
+
+.fa-wolf-pack-battalion::before { content: ""; }
+
+.fa-wordpress::before { content: ""; }
+
+.fa-wordpress-simple::before { content: ""; }
+
+.fa-wpbeginner::before { content: ""; }
+
+.fa-wpexplorer::before { content: ""; }
+
+.fa-wpforms::before { content: ""; }
+
+.fa-wpressr::before { content: ""; }
+
+.fa-xbox::before { content: ""; }
+
+.fa-xing::before { content: ""; }
+
+.fa-xing-square::before { content: ""; }
+
+.fa-y-combinator::before { content: ""; }
+
+.fa-yahoo::before { content: ""; }
+
+.fa-yammer::before { content: ""; }
+
+.fa-yandex::before { content: ""; }
+
+.fa-yandex-international::before { content: ""; }
+
+.fa-yarn::before { content: ""; }
+
+.fa-yelp::before { content: ""; }
+
+.fa-yoast::before { content: ""; }
+
+.fa-youtube::before { content: ""; }
+
+.fa-youtube-square::before { content: ""; }
+
+.fa-zhihu::before { content: ""; }
+
+:host, :root { --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free"; }
+
+@font-face { font-family: "Font Awesome 6 Free"; font-style: normal; font-weight: 400; font-display: block; src: url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.ttf") format("truetype"); }
+
+.fa-regular, .far { font-family: "Font Awesome 6 Free"; font-weight: 400; }
+
+:host, :root { --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free"; }
+
+@font-face { font-family: "Font Awesome 6 Free"; font-style: normal; font-weight: 900; font-display: block; src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype"); }
+
+.fa-solid, .fas { font-family: "Font Awesome 6 Free"; font-weight: 900; }
+
+@font-face { font-family: "Font Awesome 5 Brands"; font-display: block; font-weight: 400; src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype"); }
+
+@font-face { font-family: "Font Awesome 5 Free"; font-display: block; font-weight: 900; src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype"); }
+
+@font-face { font-family: "Font Awesome 5 Free"; font-display: block; font-weight: 400; src: url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.ttf") format("truetype"); }
+
+@font-face { font-family: FontAwesome; font-display: block; src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype"); }
+
+@font-face { font-family: FontAwesome; font-display: block; src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype"); }
+
+@font-face { font-family: FontAwesome; font-display: block; src: url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.ttf") format("truetype"); unicode-range: U+F003, U+F006, U+F014, U+F016-F017, U+F01A-F01B, U+F01D, U+F022, U+F03E, U+F044, U+F046, U+F05C-F05D, U+F06E, U+F070, U+F087-F088, U+F08A, U+F094, U+F096-F097, U+F09D, U+F0A0, U+F0A2, U+F0A4-F0A7, U+F0C5, U+F0C7, U+F0E5-F0E6, U+F0EB, U+F0F6-F0F8, U+F10C, U+F114-F115, U+F118-F11A, U+F11C-F11D, U+F133, U+F147, U+F14E, U+F150-F152, U+F185-F186, U+F18E, U+F190-F192, U+F196, U+F1C1-F1C9, U+F1D9, U+F1DB, U+F1E3, U+F1EA, U+F1F7, U+F1F9, U+F20A, U+F247-F248, U+F24A, U+F24D, U+F255-F25B, U+F25D, U+F271-F274, U+F278, U+F27B, U+F28C, U+F28E, U+F29C, U+F2B5, U+F2B7, U+F2BA, U+F2BC, U+F2BE, U+F2C0-F2C1, U+F2C3, U+F2D0, U+F2D2, U+F2D4, U+F2DC; }
+
+@font-face { font-family: FontAwesome; font-display: block; src: url("../webfonts/fa-v4compatibility.woff2") format("woff2"), url("../webfonts/fa-v4compatibility.ttf") format("truetype"); unicode-range: U+F041, U+F047, U+F065-F066, U+F07D-F07E, U+F080, U+F08B, U+F08E, U+F090, U+F09A, U+F0AC, U+F0AE, U+F0B2, U+F0D0, U+F0D6, U+F0E4, U+F0EC, U+F10A-F10B, U+F123, U+F13E, U+F148-F149, U+F14C, U+F156, U+F15E, U+F160-F161, U+F163, U+F175-F178, U+F195, U+F1F8, U+F219, U+F250, U+F252, U+F27A; }
+------MultipartBoundary--9yIIapHVHSnDNAPlEWQtjZfxFEgkX1IwaC7nsk3nA7----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: cid:css-fef1a618-3199-43ab-91a0-0872f081afad@mhtml.blink
+
+@charset "utf-8";
+
+*, ::before, ::after { --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb(59 130 246 / 0.5); --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; --tw-contain-size: ; --tw-contain-layout: ; --tw-contain-paint: ; --tw-contain-style: ; }
+
+::backdrop { --tw-border-spacing-x: 0; --tw-border-spacing-y: 0; --tw-translate-x: 0; --tw-translate-y: 0; --tw-rotate: 0; --tw-skew-x: 0; --tw-skew-y: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-pan-x: ; --tw-pan-y: ; --tw-pinch-zoom: ; --tw-scroll-snap-strictness: proximity; --tw-gradient-from-position: ; --tw-gradient-via-position: ; --tw-gradient-to-position: ; --tw-ordinal: ; --tw-slashed-zero: ; --tw-numeric-figure: ; --tw-numeric-spacing: ; --tw-numeric-fraction: ; --tw-ring-inset: ; --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb(59 130 246 / 0.5); --tw-ring-offset-shadow: 0 0 #0000; --tw-ring-shadow: 0 0 #0000; --tw-shadow: 0 0 #0000; --tw-shadow-colored: 0 0 #0000; --tw-blur: ; --tw-brightness: ; --tw-contrast: ; --tw-grayscale: ; --tw-hue-rotate: ; --tw-invert: ; --tw-saturate: ; --tw-sepia: ; --tw-drop-shadow: ; --tw-backdrop-blur: ; --tw-backdrop-brightness: ; --tw-backdrop-contrast: ; --tw-backdrop-grayscale: ; --tw-backdrop-hue-rotate: ; --tw-backdrop-invert: ; --tw-backdrop-opacity: ; --tw-backdrop-saturate: ; --tw-backdrop-sepia: ; --tw-contain-size: ; --tw-contain-layout: ; --tw-contain-paint: ; --tw-contain-style: ; }
+
+*, ::after, ::before { box-sizing: border-box; border-width: 0px; border-style: solid; border-color: rgb(229, 231, 235); }
+
+::after, ::before { --tw-content: ''; }
+
+:host, html { line-height: 1.5; text-size-adjust: 100%; tab-size: 4; font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; font-feature-settings: normal; font-variation-settings: normal; -webkit-tap-highlight-color: transparent; }
+
+body { margin: 0px; line-height: inherit; }
+
+hr { height: 0px; color: inherit; border-top-width: 1px; }
+
+abbr:where([title]) { text-decoration: underline dotted; }
+
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+
+a { color: inherit; text-decoration: inherit; }
+
+b, strong { font-weight: bolder; }
+
+code, kbd, pre, samp { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-feature-settings: normal; font-variation-settings: normal; font-size: 1em; }
+
+small { font-size: 80%; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+
+sub { bottom: -0.25em; }
+
+sup { top: -0.5em; }
+
+table { text-indent: 0px; border-color: inherit; border-collapse: collapse; }
+
+button, input, optgroup, select, textarea { font-family: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 100%; font-weight: inherit; line-height: inherit; letter-spacing: inherit; color: inherit; margin: 0px; padding: 0px; }
+
+button, select { text-transform: none; }
+
+button, input:where([type="button"]), input:where([type="reset"]), input:where([type="submit"]) { appearance: button; background-color: transparent; background-image: none; }
+
+progress { vertical-align: baseline; }
+
+::-webkit-inner-spin-button, ::-webkit-outer-spin-button { height: auto; }
+
+[type="search"] { appearance: textfield; outline-offset: -2px; }
+
+::-webkit-search-decoration { appearance: none; }
+
+::-webkit-file-upload-button { appearance: button; font: inherit; }
+
+summary { display: list-item; }
+
+blockquote, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, p, pre { margin: 0px; }
+
+fieldset { margin: 0px; padding: 0px; }
+
+legend { padding: 0px; }
+
+menu, ol, ul { list-style: none; margin: 0px; padding: 0px; }
+
+dialog { padding: 0px; }
+
+textarea { resize: vertical; }
+
+input::placeholder, textarea::placeholder { opacity: 1; color: rgb(156, 163, 175); }
+
+[role="button"], button { cursor: pointer; }
+
+:disabled { cursor: default; }
+
+audio, canvas, embed, iframe, img, object, svg, video { display: block; vertical-align: middle; }
+
+img, video { max-width: 100%; height: auto; }
+
+[hidden]:where(:not([hidden="until-found"])) { display: none; }
+
+.fixed { position: fixed; }
+
+.inset-0 { inset: 0px; }
+
+.z-50 { z-index: 50; }
+
+.mx-4 { margin-left: 1rem; margin-right: 1rem; }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.mb-1 { margin-bottom: 0.25rem; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+
+.mb-4 { margin-bottom: 1rem; }
+
+.mb-6 { margin-bottom: 1.5rem; }
+
+.mb-8 { margin-bottom: 2rem; }
+
+.ml-2 { margin-left: 0.5rem; }
+
+.mt-1 { margin-top: 0.25rem; }
+
+.mt-2 { margin-top: 0.5rem; }
+
+.mt-4 { margin-top: 1rem; }
+
+.mt-6 { margin-top: 1.5rem; }
+
+.block { display: block; }
+
+.flex { display: flex; }
+
+.hidden { display: none; }
+
+.h-2 { height: 0.5rem; }
+
+.h-24 { height: 6rem; }
+
+.h-32 { height: 8rem; }
+
+.min-h-screen { min-height: 100vh; }
+
+.w-24 { width: 6rem; }
+
+.w-full { width: 100%; }
+
+.max-w-2xl { max-width: 42rem; }
+
+.max-w-md { max-width: 28rem; }
+
+.cursor-pointer { cursor: pointer; }
+
+.flex-col { flex-direction: column; }
+
+.items-center { align-items: center; }
+
+.justify-center { justify-content: center; }
+
+.justify-between { justify-content: space-between; }
+
+.space-x-2 > :not([hidden]) ~ :not([hidden]) { --tw-space-x-reverse: 0; margin-right: calc(0.5rem * var(--tw-space-x-reverse)); margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse))); }
+
+.space-y-6 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse))); margin-bottom: calc(1.5rem * var(--tw-space-y-reverse)); }
+
+.rounded-full { border-radius: 9999px; }
+
+.rounded-lg { border-radius: 0.5rem; }
+
+.border { border-width: 1px; }
+
+.border-2 { border-width: 2px; }
+
+.border-b { border-bottom-width: 1px; }
+
+.border-dashed { border-style: dashed; }
+
+.border-gray-300 { --tw-border-opacity: 1; border-color: rgb(209 213 219 / var(--tw-border-opacity, 1)); }
+
+.bg-black { --tw-bg-opacity: 1; background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1)); }
+
+.bg-blue-500 { --tw-bg-opacity: 1; background-color: rgb(59 130 246 / var(--tw-bg-opacity, 1)); }
+
+.bg-gray-200 { --tw-bg-opacity: 1; background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1)); }
+
+.bg-gray-50 { --tw-bg-opacity: 1; background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1)); }
+
+.bg-green-500 { --tw-bg-opacity: 1; background-color: rgb(34 197 94 / var(--tw-bg-opacity, 1)); }
+
+.bg-purple-500 { --tw-bg-opacity: 1; background-color: rgb(168 85 247 / var(--tw-bg-opacity, 1)); }
+
+.bg-white { --tw-bg-opacity: 1; background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1)); }
+
+.bg-opacity-50 { --tw-bg-opacity: 0.5; }
+
+.bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+
+.from-blue-100 { --tw-gradient-from: #dbeafe var(--tw-gradient-from-position); --tw-gradient-to: rgb(219 234 254 / 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+
+.to-purple-100 { --tw-gradient-to: #f3e8ff var(--tw-gradient-to-position); }
+
+.p-2 { padding: 0.5rem; }
+
+.p-4 { padding: 1rem; }
+
+.p-6 { padding: 1.5rem; }
+
+.p-8 { padding: 2rem; }
+
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+
+.px-8 { padding-left: 2rem; padding-right: 2rem; }
+
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+
+.pb-4 { padding-bottom: 1rem; }
+
+.pb-6 { padding-bottom: 1.5rem; }
+
+.pt-5 { padding-top: 1.25rem; }
+
+.text-center { text-align: center; }
+
+.text-right { text-align: right; }
+
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+
+.text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+
+.text-6xl { font-size: 3.75rem; line-height: 1; }
+
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+
+.font-bold { font-weight: 700; }
+
+.font-medium { font-weight: 500; }
+
+.font-semibold { font-weight: 600; }
+
+.italic { font-style: italic; }
+
+.text-blue-500 { --tw-text-opacity: 1; color: rgb(59 130 246 / var(--tw-text-opacity, 1)); }
+
+.text-gray-400 { --tw-text-opacity: 1; color: rgb(156 163 175 / var(--tw-text-opacity, 1)); }
+
+.text-gray-500 { --tw-text-opacity: 1; color: rgb(107 114 128 / var(--tw-text-opacity, 1)); }
+
+.text-gray-600 { --tw-text-opacity: 1; color: rgb(75 85 99 / var(--tw-text-opacity, 1)); }
+
+.text-gray-700 { --tw-text-opacity: 1; color: rgb(55 65 81 / var(--tw-text-opacity, 1)); }
+
+.text-gray-800 { --tw-text-opacity: 1; color: rgb(31 41 55 / var(--tw-text-opacity, 1)); }
+
+.text-gray-900 { --tw-text-opacity: 1; color: rgb(17 24 39 / var(--tw-text-opacity, 1)); }
+
+.text-white { --tw-text-opacity: 1; color: rgb(255 255 255 / var(--tw-text-opacity, 1)); }
+
+.text-yellow-400 { --tw-text-opacity: 1; color: rgb(250 204 21 / var(--tw-text-opacity, 1)); }
+
+.hover\:bg-blue-600:hover { --tw-bg-opacity: 1; background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1)); }
+
+.hover\:bg-gray-100:hover { --tw-bg-opacity: 1; background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1)); }
+
+.hover\:bg-green-600:hover { --tw-bg-opacity: 1; background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1)); }
+
+.hover\:bg-purple-600:hover { --tw-bg-opacity: 1; background-color: rgb(147 51 234 / var(--tw-bg-opacity, 1)); }
+
+.hover\:underline:hover { text-decoration-line: underline; }
+
+.focus\:border-blue-500:focus { --tw-border-opacity: 1; border-color: rgb(59 130 246 / var(--tw-border-opacity, 1)); }
+
+.focus\:outline-none:focus { outline: transparent solid 2px; outline-offset: 2px; }
+
+.focus\:ring-2:focus { --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color); --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color); box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000); }
+
+.focus\:ring-blue-500:focus { --tw-ring-opacity: 1; --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1)); }
+
+@media (min-width: 768px) {
+  .md\:p-8 { padding: 2rem; }
+}
+------MultipartBoundary--9yIIapHVHSnDNAPlEWQtjZfxFEgkX1IwaC7nsk3nA7----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap
+
+@charset "utf-8";
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 400; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 400; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIMeaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 400; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIOuaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 400; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIO-aBTMnFcQIG.woff2") format("woff2"); unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 400; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofINeaBTMnFcQ.woff2") format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 600; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 600; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIMeaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 600; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIOuaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 600; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIO-aBTMnFcQIG.woff2") format("woff2"); unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 600; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofINeaBTMnFcQ.woff2") format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 700; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 700; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIMeaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 700; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIOuaBTMnFcQIG.woff2") format("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 700; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIO-aBTMnFcQIG.woff2") format("woff2"); unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Nunito; font-style: normal; font-weight: 700; font-display: swap; src: url("https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofINeaBTMnFcQ.woff2") format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+------MultipartBoundary--9yIIapHVHSnDNAPlEWQtjZfxFEgkX1IwaC7nsk3nA7----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: cid:css-c14a7241-74d7-44a4-9986-ac45026d6b2b@mhtml.blink
+
+@charset "utf-8";
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+body { font-family: Nunito, sans-serif; background-color: rgb(243, 244, 246); margin: 0px; padding: 20px; }
+
+.glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 30px; }
+
+.manga-style { border: 3px solid rgb(31, 41, 55); border-radius: 16px; box-shadow: rgb(31, 41, 55) 6px 6px 0px; transition: transform 0.2s, box-shadow 0.2s; }
+
+.manga-button { border: 2px solid rgb(31, 41, 55); box-shadow: rgb(31, 41, 55) 3px 3px 0px; transition: 0.2s; }
+
+.manga-button:active { transform: translate(3px, 3px); box-shadow: rgb(31, 41, 55) 0px 0px 0px; }
+
+.feedback-animation { animation: 0.3s ease-out 0s 1 normal none running popIn; }
+
+@keyframes popIn { 
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+------MultipartBoundary--9yIIapHVHSnDNAPlEWQtjZfxFEgkX1IwaC7nsk3nA7------
