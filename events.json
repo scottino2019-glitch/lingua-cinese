@@ -1,10 +1,10 @@
 [
    {
   "id": 1,
-  "date": "2026-04-28",
-  "title": "Libri",
-  "description": "racconti con audio",
-  "category": "generale",
-  "link":  ""  
+  "date": "2026-04-30",
+  "title": "Esercizi",
+  "description": "Ascolto e scrittura",
+  "category": "esercizi",
+  "link":  "https://scottino2019-glitch.github.io/lingua-cinese/ascolto/audio.html"  
 }
 ]
