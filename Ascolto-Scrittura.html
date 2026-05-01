@@ -351,12 +351,28 @@
 
         document.getElementById('restartBtn').addEventListener('click', startExercise);
         document.getElementById('openMenuBtn').addEventListener('click', () => menuModal.classList.remove('hidden'));
-
-        // Modifica questo fetch per il tuo Vercel quando hai i file JSON pronti
-        document.getElementById('lessonSelect').addEventListener('change', (e) => {
-            if(e.target.value && predefinedLessons[e.target.value]) {
-                loadExerciseData(predefinedLessons[e.target.value]);
+ document.getElementById('lessonSelect').addEventListener('change', (e) => {
+            const selectedFile = e.target.value; 
+            
+            if(selectedFile) {
+                // Imposta il percorso (es: cartella "json" dove hai i tuoi file)
+                const url = `/json/${selectedFile}`; 
+                
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File JSON non trovato sul server");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        loadExerciseData(data);
+                    })
+                    .catch(error => {
+                        alert("Errore nel caricamento: " + error.message);
+                    });
             }
+        
         });
 
         document.getElementById('jsonUpload').addEventListener('change', (e) => {
