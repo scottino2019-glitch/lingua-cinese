@@ -392,6 +392,10 @@
       </div>
     </div>
 
+<!-- Un contatore molto discreto usando Tailwind CSS -->
+<div class="fixed bottom-2 right-2 text-xs text-gray-400 bg-white/50 px-2 py-1 rounded-full shadow-sm backdrop-blur-sm">
+  Visite: <span id="contatore-visite" class="font-semibold text-gray-600">...</span>
+</div>
     <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
       <p>© 2026 Lingua Cinese - Tutti i diritti riservati.</p>
       <div class="flex gap-6">
@@ -441,6 +445,26 @@ if (updateTime > sevenDaysAgo) {
       if (e.key === 'Escape') closeModal();
     });
 
+  // 1. Definisci il nome del tuo progetto e della pagina (usa nomi inventati da te senza spazi)
+  const mioSito = "https://scottino2019-glitch.github.io/lingua-cinese/";
+  const nomePagina = "homepage";
+  
+  // 2. Questo è l'indirizzo del "quaderno remoto" (l'API)
+  // Nota la parte "/up" alla fine: dice al server di aumentare il numero di 1
+  const indirizzoApi = `https://api.counterapi.dev/v1/${mioSito}/${nomePagina}/up`;
+
+  // 3. Facciamo la chiamata al server con fetch()
+  fetch(indirizzoApi)
+    .then(risposta => risposta.json()) // Trasformiamo la risposta in dati leggibili
+    .then(dati => {
+      // 4. Prendiamo il numero restituito (dati.count) e lo mettiamo nell'HTML
+      document.getElementById('contatore-visite').innerText = dati.count;
+    })
+    .catch(errore => {
+      // Se qualcosa va storto, mostriamo "errore" invece del numero
+      console.error("Errore nel contatore:", errore);
+      document.getElementById('contatore-visite').innerText = "errore";
+    });
   
   </script>
 </body>
