@@ -3,209 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Multilingua - Modalità Bilanciata</title>
+    <title>App Ascolto - Versione Definitiva</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap');
-        
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #f3f4f6;
-            margin: 0;
-            padding: 20px;
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .manga-style {
-            border: 3px solid #1f2937;
-            border-radius: 16px;
-            box-shadow: 6px 6px 0px #1f2937;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .manga-button {
-            border: 2px solid #1f2937;
-            box-shadow: 3px 3px 0px #1f2937;
-            transition: all 0.1s;
-        }
-
-        .manga-button:active:not(:disabled) {
-            transform: translate(3px, 3px);
-            box-shadow: 0px 0px 0px #1f2937;
-        }
-        
-        .manga-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            box-shadow: 1px 1px 0px #1f2937;
-            transform: translate(2px, 2px);
-        }
-
-        .feedback-animation {
-            animation: popIn 0.3s ease-out;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        body { font-family: 'Nunito', sans-serif; background-color: #f3f4f6; margin: 0; padding: 10px; }
+        .manga-style { border: 3px solid #1f2937; border-radius: 16px; box-shadow: 4px 4px 0px #1f2937; }
+        .manga-button { border: 2px solid #1f2937; box-shadow: 2px 2px 0px #1f2937; transition: all 0.1s; }
+        .manga-button:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 0px 0px 0px #1f2937; }
+        .manga-button:disabled { opacity: 0.6; cursor: not-allowed; }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
+<body class="min-h-screen flex flex-col items-center justify-center bg-purple-100">
 
-    <div class="w-full max-w-2xl mx-auto relative">
+    <div class="w-full max-w-xl mx-auto manga-style bg-white p-5">
         
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-black text-gray-800 mb-2 uppercase tracking-wide">Ascolto Attivo <i class="fas fa-headphones text-purple-600"></i></h1>
-            <p class="text-gray-600 font-bold">Massimo 3 ascolti per parola. Nessuna fretta!</p>
+        <div class="text-center mb-4">
+            <h1 class="text-2xl font-black text-gray-800 uppercase">Ascolto Attivo</h1>
         </div>
 
-        <!-- Main Card -->
-        <div class="glass-card manga-style p-6 md:p-8 bg-white relative">
-            
-            <button id="openMenuBtn" class="absolute top-4 right-4 manga-button bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-2 px-4 rounded-lg text-sm">
-                <i class="fas fa-folder-open mr-2"></i> Lezioni
-            </button>
-
-            <!-- Status Bar -->
-            <div class="flex justify-between items-center mb-6 border-b-2 border-gray-200 pb-4 mt-8">
-                <div class="flex items-center space-x-3">
-                    <div class="manga-style bg-purple-500 text-white px-4 py-2 font-bold flex items-center rounded-lg">
-                        <i class="fas fa-star mr-2 text-yellow-300"></i> Punti: <span id="scoreDisplay" class="ml-2">0</span>
-                    </div>
-                </div>
-                <div class="text-right w-1/2 pl-4">
-                    <span class="text-sm font-black text-gray-500 uppercase tracking-widest">Esercizio <span id="currentCount">0</span>/<span id="totalCount">0</span></span>
-                    <div class="w-full bg-gray-200 rounded-full h-3 mt-1 border border-gray-300">
-                        <div id="progressBar" class="bg-purple-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Voci Nascoste -->
-            <select id="languageSelect" class="hidden"></select>
-
-            <!-- Contenuto Esercizio -->
-            <div id="exerciseArea" class="hidden flex-col items-center justify-center space-y-6 py-4">
-                
-                <div class="relative">
-                    <button id="playBtn" class="manga-button w-24 h-24 rounded-full bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center text-4xl disabled:bg-gray-400">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                    <div id="listenBadge" class="absolute -top-2 -right-2 bg-pink-500 text-white font-black rounded-full w-8 h-8 flex items-center justify-center border-2 border-white shadow-sm">3</div>
-                </div>
-                <p id="listenText" class="text-sm font-bold text-gray-500 uppercase tracking-wider">Ascolti rimasti</p>
-                
-                <div class="w-full mt-6">
-                    <input type="text" id="answerInput" class="w-full manga-style p-4 text-xl font-bold text-center focus:outline-none focus:ring-4 focus:ring-purple-300" placeholder="Cosa hai sentito?" autocomplete="off">
-                </div>
-
-                <button id="checkBtn" class="w-full manga-button bg-green-500 hover:bg-green-600 text-white font-black py-4 px-4 rounded-lg text-lg uppercase tracking-widest">
-                    Controlla <i class="fas fa-check ml-2"></i>
-                </button>
-
-            </div>
-
-            <!-- Risultato -->
-            <div id="resultArea" class="hidden flex-col items-center justify-center py-4 feedback-animation">
-                <div id="resultIcon" class="text-6xl mb-2"></div>
-                <h2 id="resultTitle" class="text-2xl font-black uppercase mb-4 tracking-widest"></h2>
-                
-                <div class="bg-gray-50 rounded-xl p-6 w-full mb-6 text-center border-2 border-gray-200">
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Soluzione</p>
-                    <p id="correctAnswer" class="text-3xl font-black text-gray-800 mb-2"></p>
-                    
-                    <p id="pinyinDisplay" class="text-lg font-bold text-indigo-600 mb-2 bg-indigo-50 py-1 px-3 inline-block rounded border border-indigo-200"></p>
-                    <p id="translation" class="text-md text-gray-600 mt-2 font-semibold italic"></p>
-                </div>
-
-                <button id="nextBtn" class="w-full manga-button bg-blue-500 hover:bg-blue-600 text-white font-black py-4 px-4 rounded-lg text-lg uppercase">
-                    Continua <i class="fas fa-arrow-right ml-2"></i>
-                </button>
-            </div>
-
-            <!-- Fine Lezione -->
-            <div id="endArea" class="hidden flex-col items-center justify-center py-8 feedback-animation">
-                <div class="text-7xl mb-4 text-yellow-400">🏆</div>
-                <h2 class="text-3xl font-black uppercase mb-2">Lezione Completata!</h2>
-                <div class="bg-gray-100 rounded-xl p-6 w-full text-center mb-8 mt-4 border-2 border-gray-200">
-                    <p class="text-sm font-bold uppercase text-gray-500 mb-1">Risposte Corrette</p>
-                    <p class="text-5xl font-black text-purple-600"><span id="scoreVal">0</span> <span class="text-2xl text-gray-400">/ <span id="scoreTotal">0</span></span></p>
-                </div>
-                <button id="restartBtn" class="manga-button bg-pink-500 hover:bg-pink-600 text-white font-black py-4 px-8 rounded-lg text-lg uppercase w-full">
-                    Fai un altro tentativo <i class="fas fa-redo ml-2"></i>
-                </button>
-            </div>
-
+        <!-- SELEZIONE VOCE MANUALE (Risolve il problema Android) -->
+        <div class="mb-4 bg-blue-50 p-3 rounded-lg border-2 border-blue-200">
+            <label class="text-xs font-bold text-blue-800 uppercase block mb-1"><i class="fas fa-volume-up"></i> 1. Scegli la voce del tuo telefono</label>
+            <select id="languageSelect" class="w-full p-2 border border-blue-300 rounded font-bold text-sm bg-white"></select>
         </div>
-    </div>
 
-    <!-- Modale Caricamento -->
-    <div id="menuModal" class="fixed inset-0 bg-gray-900 bg-opacity-70 flex items-center justify-center z-50">
-        <div class="glass-card manga-style p-8 bg-white max-w-md w-full mx-4">
-            <h2 class="text-2xl font-black mb-6 text-center text-gray-800 uppercase">Seleziona Lezione</h2>
+        <!-- CARICAMENTO DATI -->
+        <div class="mb-6 bg-yellow-50 p-3 rounded-lg border-2 border-yellow-200" id="setupArea">
+            <label class="text-xs font-bold text-yellow-800 uppercase block mb-2"><i class="fas fa-file-code"></i> 2. Carica i Dati (JSON)</label>
             
-            <select id="lessonSelect" class="w-full manga-style p-3 bg-gray-50 text-gray-800 font-bold mb-6 focus:outline-none">
-                <option value="" disabled selected>-- Scegli i Dati --</option>
-                <option value="json/test_cinese.json">🇨🇳 Test Cinese (Mulan)</option>
-                <option value="test_coreano.json">🇰🇷 Test Coreano</option>
+            <!-- Opzione A: Fetch da Vercel -->
+                    <!-- SELEZIONE LEZIONE (Per gli studenti) -->
+        <div class="mb-6 bg-yellow-50 p-4 rounded-lg border-2 border-yellow-300" id="setupArea">
+            <label class="text-sm font-black text-yellow-800 uppercase block mb-3"><i class="fas fa-book-open"></i> 2. Scegli la Lezione</label>
+            
+            <select id="lessonSelect" class="w-full p-3 border-2 border-yellow-400 rounded-lg font-bold text-gray-800 bg-white mb-4 manga-style focus:outline-none focus:ring-4 focus:ring-yellow-200">
+                <option value="" disabled selected>-- Seleziona un argomento --</option>
+                <option value="json/test_cinese.json">🇨🇳 Test Cinese (Vocabolario)</option>
+                <option value="mulan.json">🇨🇳 Storia di Mulan</option>
+                <option value="test_coreano.json">🇰🇷 Test Coreano (Basi)</option>
             </select>
-
-            <div class="text-center font-bold text-sm text-gray-400 mb-4 border-b pb-4">OPPURE CARICA FILE</div>
-
-            <input id="jsonUpload" type="file" class="w-full text-sm font-bold text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200 manga-style p-2" accept=".json" />
+            
+            <button id="startLessonBtn" class="w-full manga-button bg-yellow-400 hover:bg-yellow-500 text-black font-black py-3 rounded-lg text-lg uppercase transition-colors hidden">
+                Inizia Esercizio <i class="fas fa-play ml-2"></i>
+            </button>
         </div>
+            
+            <!-- Opzione B: Upload dal telefono (Funziona sempre) -->
+            <input id="jsonUpload" type="file" class="w-full text-xs font-bold text-gray-600 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-yellow-400 file:text-black manga-style p-1" accept=".json" />
+        </div>
+
+        <!-- STATUS BAR -->
+        <div class="flex justify-between items-center mb-4 border-b-2 border-gray-200 pb-2">
+            <div class="font-bold text-purple-600">Punti: <span id="scoreDisplay">0</span></div>
+            <div class="font-bold text-gray-500 text-sm">Parola <span id="currentCount">0</span>/<span id="totalCount">0</span></div>
+        </div>
+
+        <!-- AREA ESERCIZIO -->
+        <div id="exerciseArea" class="hidden flex-col items-center space-y-4 py-2">
+            <button id="playBtn" class="manga-button w-20 h-20 rounded-full bg-blue-500 text-white text-3xl">
+                <i class="fas fa-play"></i>
+            </button>
+            <div class="text-xs font-bold text-gray-500">Ascolti rimasti: <span id="listenBadge" class="text-pink-500 text-lg">3</span></div>
+            
+            <input type="text" id="answerInput" class="w-full manga-style p-3 text-lg font-bold text-center" placeholder="Scrivi in pinyin o caratteri..." autocomplete="off">
+            <button id="checkBtn" class="w-full manga-button bg-green-500 text-white font-black py-3 rounded-lg text-lg uppercase">Controlla</button>
+        </div>
+
+        <!-- AREA RISULTATO -->
+        <div id="resultArea" class="hidden flex-col items-center text-center space-y-3 py-2">
+            <div id="resultIcon" class="text-5xl"></div>
+            <h2 id="resultTitle" class="text-xl font-black uppercase"></h2>
+            
+            <div class="bg-gray-100 p-4 w-full rounded border border-gray-200">
+                <p id="correctAnswer" class="text-3xl font-black text-gray-800 mb-1"></p>
+                <p id="pinyinDisplay" class="text-md font-bold text-indigo-600 bg-indigo-50 inline-block px-2 rounded"></p>
+                <p id="translation" class="text-sm text-gray-600 mt-1 italic"></p>
+            </div>
+            <button id="nextBtn" class="w-full manga-button bg-blue-500 text-white font-black py-3 rounded-lg uppercase">Avanti</button>
+        </div>
+
+        <!-- AREA FINE -->
+        <div id="endArea" class="hidden flex-col items-center text-center space-y-4 py-4">
+            <div class="text-6xl">🏆</div>
+            <h2 class="text-2xl font-black uppercase">Finito!</h2>
+            <button id="restartBtn" class="w-full manga-button bg-pink-500 text-white font-black py-3 rounded-lg uppercase">Ricomincia</button>
+        </div>
+
     </div>
 
     <script>
-        const predefinedLessons = {
-            "test_cinese.json": [
-                { id: 1, text: "勇敢", pinyin: "yǒnggǎn", translation: "Coraggioso", lang: "zh-CN" },
-                { id: 2, text: "国家", pinyin: "guójiā", translation: "Nazione/Paese", lang: "zh-CN" },
-                { id: 3, text: "打仗", pinyin: "dǎzhàng", translation: "Fare la guerra", lang: "zh-CN" }
-            ],
-            "test_coreano.json": [
-                { id: 1, text: "안녕하세요", pinyin: "annyeonghaseyo", translation: "Ciao", lang: "ko-KR" },
-                { id: 2, text: "감사합니다", pinyin: "gamsahamnida", translation: "Grazie", lang: "ko-KR" }
-            ]
-        };
-
         let exerciseData = [];
         let currentIndex = 0;
         let score = 0;
         let listensLeft = 3; 
-        
         let voices = [];
         let synth = window.speechSynthesis;
 
-        const playBtn = document.getElementById('playBtn');
-        const checkBtn = document.getElementById('checkBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const answerInput = document.getElementById('answerInput');
-        const listenBadge = document.getElementById('listenBadge');
-        const pinyinDisplay = document.getElementById('pinyinDisplay');
-        
-        const exerciseArea = document.getElementById('exerciseArea');
-        const resultArea = document.getElementById('resultArea');
-        const endArea = document.getElementById('endArea');
-        const menuModal = document.getElementById('menuModal');
-        
+        // Inizializza Voci
         function populateVoiceList() {
             voices = synth.getVoices();
             const languageSelect = document.getElementById('languageSelect');
             languageSelect.innerHTML = '';
             voices.forEach(voice => {
                 const option = document.createElement('option');
-                option.textContent = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
                 option.setAttribute('data-lang', voice.lang);
                 option.setAttribute('data-name', voice.name);
                 languageSelect.appendChild(option);
@@ -216,32 +119,81 @@
             speechSynthesis.onvoiceschanged = populateVoiceList;
         }
 
-        function autoSelectVoice(targetLang) {
-            if (!targetLang) return;
-            const select = document.getElementById('languageSelect');
-            const baseLang = targetLang.split('-')[0].toLowerCase();
-            let bestIdx = 0;
-            let exact = false;
-            for (let i = 0; i < select.options.length; i++) {
-                const optLang = select.options[i].getAttribute('data-lang');
-                if (optLang) {
-                    if (optLang.toLowerCase() === targetLang.toLowerCase()) { bestIdx = i; exact = true; break; }
-                    if (!exact && optLang.toLowerCase().startsWith(baseLang)) bestIdx = i;
-                }
+        // CARICAMENTO DA URL VERCEL/GITHUB        // Gestione Menù a Tendina
+        const lessonSelect = document.getElementById('lessonSelect');
+        const startLessonBtn = document.getElementById('startLessonBtn');
+        let selectedLessonUrl = "";
+
+        lessonSelect.addEventListener('change', (e) => {
+            selectedLessonUrl = e.target.value;
+            if(selectedLessonUrl) {
+                startLessonBtn.classList.remove('hidden'); // Mostra il bottone "Inizia"
             }
-            select.selectedIndex = bestIdx;
-        }
+        });
+
+        // Quando lo studente clicca "Inizia Esercizio"
+        startLessonBtn.addEventListener('click', () => {
+            startLessonBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Caricamento...';
+            
+            // Il percorso su Vercel (se hai messo i JSON nella cartella /json/)
+            const url = `/json/${selectedLessonUrl}`;
+            
+            fetch(url)
+                .then(res => {
+                    if(!res.ok) throw new Error("Errore " + res.status + ": File non trovato sul server.");
+                    return res.json();
+                })
+                .then(data => {
+                    loadExerciseData(data);
+                })
+                .catch(err => {
+                    startLessonBtn.innerHTML = 'Inizia Esercizio <i class="fas fa-play ml-2"></i>';
+                    alert("Impossibile caricare la lezione. Assicurati di aver caricato il file " + selectedLessonUrl + " nella cartella /json/ su GitHub/Vercel.");
+                });
+        });
+        
+                    return res.json();
+                })
+                .then(data => {
+                    document.getElementById('loadUrlBtn').textContent = "Carica URL";
+                    loadExerciseData(data);
+                })
+                .catch(err => {
+                    document.getElementById('loadUrlBtn').textContent = "Carica URL";
+                    alert("Impossibile caricare il JSON:\
+" + err.message);
+                });
+        });
+
+        // CARICAMENTO MANUALE DAL TELEFONO (Funziona 100%)
+        document.getElementById('jsonUpload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    try { loadExerciseData(JSON.parse(evt.target.result)); } 
+                    catch (error) { alert("Il file non è un JSON valido!"); }
+                };
+                reader.readAsText(file);
+            }
+        });
 
         function loadExerciseData(data) {
             if (data && data.length > 0) {
                 exerciseData = data;
                 document.getElementById('totalCount').textContent = data.length;
-                document.getElementById('scoreTotal').textContent = data.length;
-                menuModal.classList.add('hidden');
+                document.getElementById('setupArea').classList.add('hidden'); // Nasconde menu caricamento
                 
-                if(data[0].lang) autoSelectVoice(data[0].lang);
-                score = 0;
-                document.getElementById('scoreDisplay').textContent = score;
+                // Cerca di selezionare la lingua in automatico
+                if(data[0].lang) {
+                    const select = document.getElementById('languageSelect');
+                    for (let i = 0; i < select.options.length; i++) {
+                        if (select.options[i].getAttribute('data-lang').includes(data[0].lang.split('-')[0])) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
                 startExercise();
             }
         }
@@ -254,63 +206,60 @@
         }
 
         function nextRound() {
-            showExerciseArea();
-            document.getElementById('currentCount').textContent = currentIndex + 1;
-            document.getElementById('progressBar').style.width = `${((currentIndex) / exerciseData.length) * 100}%`;
+            document.getElementById('exerciseArea').classList.remove('hidden');
+            document.getElementById('resultArea').classList.add('hidden');
+            document.getElementById('endArea').classList.add('hidden');
             
-            answerInput.value = '';
-            answerInput.focus();
+            document.getElementById('currentCount').textContent = currentIndex + 1;
+            document.getElementById('answerInput').value = '';
             
             listensLeft = 3; 
-            playBtn.disabled = false;
-            listenBadge.textContent = listensLeft;
-            listenBadge.classList.replace('bg-gray-500', 'bg-pink-500');
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('listenBadge').textContent = listensLeft;
         }
 
-        function playAudio() {
+        document.getElementById('playBtn').addEventListener('click', () => {
             if(listensLeft > 0 && !synth.speaking) {
                 const currentItem = exerciseData[currentIndex];
                 const utterThis = new SpeechSynthesisUtterance(currentItem.text);
+                
+                // FORZATURA LINGUA
+                utterThis.lang = currentItem.lang;
+
                 const select = document.getElementById('languageSelect');
                 if(select.selectedOptions.length > 0) {
                     const voiceName = select.selectedOptions[0].getAttribute('data-name');
-                    utterThis.voice = voices.find(v => v.name === voiceName);
+                    const selectedVoice = voices.find(v => v.name === voiceName);
+                    if(selectedVoice) utterThis.voice = selectedVoice;
                 }
                 
                 utterThis.rate = 0.9; 
                 synth.speak(utterThis);
                 
                 listensLeft--;
-                listenBadge.textContent = listensLeft;
-                
-                if(listensLeft === 0) {
-                    playBtn.disabled = true;
-                    listenBadge.classList.replace('bg-pink-500', 'bg-gray-500');
-                }
+                document.getElementById('listenBadge').textContent = listensLeft;
+                if(listensLeft === 0) document.getElementById('playBtn').disabled = true;
             }
-        }
+        });
 
-        function checkAnswer() {
+        document.getElementById('checkBtn').addEventListener('click', () => {
             const currentItem = exerciseData[currentIndex];
-            const userAnswer = answerInput.value.trim().toLowerCase();
-            const cleanExpected = currentItem.text.toLowerCase().replace(/[.,!?。，！？、]/g, '');
-            const cleanUser = userAnswer.replace(/[.,!?。，！？、]/g, '');
+            const userAnswer = document.getElementById('answerInput').value.trim().toLowerCase();
+            
+            // Accetta sia il pinyin che i caratteri cinesi!
+            const cleanExpectedChar = currentItem.text.toLowerCase().replace(/[.,!?。，！？、 ]/g, '');
+            const cleanExpectedPinyin = (currentItem.pinyin || '').toLowerCase().replace(/[.,!?。，！？、 ]/g, '');
+            const cleanUser = userAnswer.replace(/[.,!?。，！？、 ]/g, '');
 
-            const isCorrect = (cleanUser === cleanExpected);
+            const isCorrect = (cleanUser === cleanExpectedChar) || (cleanUser !== '' && cleanExpectedPinyin !== '' && cleanUser === cleanExpectedPinyin);
 
-            exerciseArea.classList.add('hidden');
-            resultArea.classList.remove('hidden');
+            document.getElementById('exerciseArea').classList.add('hidden');
+            document.getElementById('resultArea').classList.remove('hidden');
 
             document.getElementById('correctAnswer').textContent = currentItem.text;
+            document.getElementById('pinyinDisplay').textContent = currentItem.pinyin || '';
             document.getElementById('translation').textContent = currentItem.translation || '';
             
-            if(currentItem.pinyin) {
-                pinyinDisplay.textContent = currentItem.pinyin;
-                pinyinDisplay.classList.remove('hidden');
-            } else {
-                pinyinDisplay.classList.add('hidden');
-            }
-
             const icon = document.getElementById('resultIcon');
             const title = document.getElementById('resultTitle');
 
@@ -319,72 +268,27 @@
                 document.getElementById('scoreDisplay').textContent = score;
                 icon.textContent = '🎉';
                 title.textContent = 'Corretto!';
-                title.className = 'text-2xl font-black uppercase mb-4 tracking-widest text-green-500';
+                title.className = 'text-xl font-black uppercase text-green-500';
             } else {
                 icon.textContent = '📝';
                 title.textContent = 'Quasi...';
-                title.className = 'text-2xl font-black uppercase mb-4 tracking-widest text-blue-500';
+                title.className = 'text-xl font-black uppercase text-blue-500';
             }
-        }
+        });
 
-        function showExerciseArea() {
-            resultArea.classList.add('hidden');
-            endArea.classList.add('hidden');
-            exerciseArea.classList.remove('hidden');
-        }
-
-        playBtn.addEventListener('click', playAudio);
-        checkBtn.addEventListener('click', checkAnswer);
-        answerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkAnswer(); });
-        
-        nextBtn.addEventListener('click', () => {
+        document.getElementById('nextBtn').addEventListener('click', () => {
             currentIndex++;
             if (currentIndex < exerciseData.length) {
                 nextRound();
             } else {
-                document.getElementById('progressBar').style.width = '100%';
-                resultArea.classList.add('hidden');
-                document.getElementById('scoreVal').textContent = score;
-                endArea.classList.remove('hidden');
+                document.getElementById('resultArea').classList.add('hidden');
+                document.getElementById('endArea').classList.remove('hidden');
             }
         });
 
-        document.getElementById('restartBtn').addEventListener('click', startExercise);
-        document.getElementById('openMenuBtn').addEventListener('click', () => menuModal.classList.remove('hidden'));
- document.getElementById('lessonSelect').addEventListener('change', (e) => {
-            const selectedFile = e.target.value; 
-            
-            if(selectedFile) {
-                // Imposta il percorso (es: cartella "json" dove hai i tuoi file)
-                const url = `/json/${selectedFile}`; 
-                
-                fetch(url)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("File JSON non trovato sul server");
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        loadExerciseData(data);
-                    })
-                    .catch(error => {
-                        alert("Errore nel caricamento: " + error.message);
-                    });
-            }
-        
-        });
-
-        document.getElementById('jsonUpload').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    try { loadExerciseData(JSON.parse(evt.target.result)); } 
-                    catch (error) { alert("Errore JSON"); }
-                };
-                reader.readAsText(file);
-            }
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            document.getElementById('setupArea').classList.remove('hidden');
+            document.getElementById('endArea').classList.add('hidden');
         });
     </script>
 </body>
