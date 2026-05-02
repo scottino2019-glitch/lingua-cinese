@@ -15,16 +15,45 @@
   },
   {
     "id": 3,
-    "text": "勇敢",
-    "pinyin": "yǒnggǎn",
-    "translation": "Coraggioso",
+    "text": "是",
+    "pinyin": "shì",
+    "translation": "Sì",
     "lang": "zh-CN"
   },
   {
     "id": 4,
-    "text": "木兰",
-    "pinyin": "Mùlán",
-    "translation": "Mulan",
+    "text": "不",
+    "pinyin": "bù",
+    "translation": "No",
     "lang": "zh-CN"
-  }
+  },
+  {
+    "id": 5,
+    "text": "谢谢",
+    "pinyin": "xièxie",
+    "translation": "Grazie",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 6,
+    "text": "再见",
+    "pinyin": "zàijiàn",
+    "translation": "Arrivederci",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 7,
+    "text": "我",
+    "pinyin": "wǒ",
+    "translation": "io",
+    "lang": "zh-CN"
+   },
+   {
+    "id": 8,
+    "text": "他",
+    "pinyin": "tā",
+    "translation": "lui",
+    "lang": "zh-CN"
+   },
+  
 ]
