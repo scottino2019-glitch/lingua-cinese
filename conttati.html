@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulo di Contatto - Stile Cinese</title>
+    <style>
+        :root {
+            --china-red: #c8102e;
+            --gold: #f4c20d;
+            --rice-paper: #fdf6e3;
+            --ink-black: #2b2b2b;
+        }
+
+        body {
+            background-color: #eaddcf;
+            background-image: radial-gradient(#d3c5b3 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .contact-card {
+            background-color: var(--rice-paper);
+            border: 4px solid var(--china-red);
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: "囍"; 
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            color: rgba(200, 16, 46, 0.08);
+            font-size: 150px;
+            font-family: "Kaiti", "STKaiti", serif;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--china-red);
+            margin-top: 0;
+            font-size: 24px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: var(--ink-black);
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+
+        .cn-label {
+            color: var(--china-red);
+            font-size: 13px;
+            margin-left: 5px;
+            font-family: "Kaiti", "STKaiti", serif;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--china-red);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Stile del link trasformato in bottone */
+        .submit-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background-color: var(--china-red);
+            color: var(--gold);
+            padding: 14px 20px;
+            width: 100%;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #a30c25;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contact-card">
+        <div class="content">
+            <h2>Contattami <span style="font-family: 'Kaiti', serif;">联系我</span></h2>
+            
+            <!-- FormSubmit invierà la mail in background in modo invisibile -->
+<form action="https://formsubmit.co/u4477452714@gmail.com" method="POST">
+    
+    <!-- Parametri nascosti per evitare che l'utente esca dal tuo sito -->
+    <!-- _captcha su false disabilita il captcha (ma puoi toglierlo se ricevi spam) -->
+    <input type="hidden" name="_captcha" value="false">
+    <!-- _next rimanda l'utente alla tua pagina o mostra un messaggio di ringraziamento (metti qui il tuo link) -->
+    <input type="hidden" name="_next" value="https://tuosito.com/grazie.html">
+    <!-- _subject personalizza l'oggetto della mail che ricevi -->
+    <input type="hidden" name="_subject" value="Nuovo messaggio dal tuo sito web!">
+
+    <div class="form-group">
+        <label for="name">Nome <span class="cn-label">姓名</span></label>
+        <!-- L'attributo name="" è fondamentale qui, è quello che arriverà nella tua mail -->
+        <input type="text" id="name" name="Nome dell'utente" required placeholder="Il tuo nome">
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email <span class="cn-label">电子邮件</span></label>
+        <input type="email" id="email" name="Email" required placeholder="La tua email">
+    </div>
+
+    <div class="form-group">
+        <label for="message">Messaggio <span class="cn-label">信息</span></label>
+        <textarea id="message" name="Testo del messaggio" required placeholder="Scrivi qui il tuo messaggio..."></textarea>
+    </div>
+
+    <!-- Il pulsante torna ad essere un normale pulsante submit nativo -->
+    <button type="submit" class="submit-btn" style="width:100%; border:none; padding:14px; background-color:#c8102e; color:#f4c20d; font-size:18px; font-weight:bold; cursor:pointer; border-radius:4px;">Invia / 发送</button>
+</form>
+</div>
+</div>
+    
+</body>
+</html>
