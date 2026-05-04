@@ -334,29 +334,41 @@
 
         <!-- RETRO COPERTINA -->
         <div class="page back-cover">
-            <h2>Fine</h2>
+            <h2>Fine</h2><br>
+            <h2>书的结尾 (Shū de jiéwěi)</h2>
+            
         </div>
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+     <!-- AUDIO -->
+    <audio id="page-flip-sound" src="page-flip.mp3" preload="auto"></audio>
 
+    <!-- SCRIPT FINALE -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const pageFlip = new St.PageFlip(document.getElementById('flipbook'), {
-                width: 400, 
-                height: 550, 
+        window.onload = () => {
+            const pageFlip = new St.PageFlip(document.getElementById('book'), {
+                width: 400,
+                height: 550,
                 size: "fixed",
-                minWidth: 300,
-                maxWidth: 500,
-                minHeight: 400,
-                maxHeight: 650,
-                showCover: true, 
-                mobileScrollSupport: false,
-                maxShadowOpacity: 0.5 
+                showCover: true,
+                maxShadowOpacity: 0.5,
+                showPageCorners: true
             });
+            
             pageFlip.loadFromHTML(document.querySelectorAll('.page'));
-        });
+
+            // Gestione del suono
+            const flipSound = document.getElementById('page-flip-sound');
+            if (flipSound) {
+                pageFlip.on('flip', (e) => {
+                    flipSound.currentTime = 0;
+                    flipSound.play().catch(error => {
+                        console.log("Audio bloccato al primo sfoglio");
+                    });
+                });
+            }
+        };
     </script>
 </body>
 </html>
