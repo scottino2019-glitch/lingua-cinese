@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Leggenda di Nüwa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Lora', serif;
+        }
+
+        .book-container {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background-color: #fdfaf6;
+        }
+
+        .page {
+            background-color: #fdfaf6;
+            padding: 25px 35px; /* Margini ridotti per più spazio vitale */
+            box-sizing: border-box;
+            border: 1px solid #e0d8c8;
+            overflow: hidden; /* ASSOLUTAMENTE NESSUN SCROLL */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .page.--left { border-right: 1px solid #d4cbb8; box-shadow: inset -10px 0 20px rgba(0,0,0,0.05); }
+        .page.--right { border-left: 1px solid #d4cbb8; box-shadow: inset 10px 0 20px rgba(0,0,0,0.05); }
+
+        .cover {
+            background: #fdfaf6; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; position: relative;
+        }
+
+        .cover-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.8; }
+        .cover-content { position: relative; z-index: 2; background: rgba(253, 250, 246, 0.9); padding: 25px 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .cover h1 { font-family: 'Noto Sans SC', sans-serif; font-size: 38px; margin-bottom: 5px; color: #8b0000; }
+        .cover h2 { font-size: 22px; font-weight: normal; margin-top: 0; color: #333; }
+
+        .back-cover { background: linear-gradient(135deg, #8b0000, #5c0000); color: white; display: flex; justify-content: center; align-items: center; }
+        .back-cover h2 { font-size: 24px; font-weight: normal; font-style: italic; opacity: 0.8; color: white; }
+
+        /* CINESE E PINYIN PIU' PICCOLI E OTTIMIZZATI */
+        .chinese-content {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 25px; /* Ridotto da 20px per evitare tagli */
+            line-height: 2.6; 
+            text-align: justify;
+        }
+        .chinese-content p { margin: 0; }
+
+        ruby { margin-right: 2px; ruby-align: center; }
+        rt {
+            font-family: Arial, sans-serif;
+            font-size: 14px; /* Ridotto leggermente per far spazio */
+            color: #666;
+            transform: translateY(-2px);
+        }
+
+        .italian-content { font-size: 15px; line-height: 1.6; color: #333; text-align: justify; }
+        .italian-content p { margin: 0; }
+
+        .page-number { position: absolute; bottom: 15px; font-size: 12px; color: #888; }
+        .page.--left .page-number { left: 20px; }
+        .page.--right .page-number { right: 20px; }
+
+        .section-title { text-align: center; font-size: 24px; font-family: 'Noto Sans SC', sans-serif; color: #8b0000; margin-bottom: 20px; }
+        .reflection { background-color: #f5f0e6; padding: 15px; border-left: 4px solid #8b0000; font-size: 13px; line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <div class="book-container" id="flipbook">
+        <div class="page cover">
+            <img src="henri.png" alt="Copertina" class="cover-img">
+            <div class="cover-content">
+                <h1>人日节</h1>
+                <h2>La Festa del<br>Giorno dell'Uomo</h2>
+            </div>
+        </div>
+
+
+        <div class="page">
+            <div class="section-title">人日节</div>
+            <div class="chinese-content">
+                <p><ruby>人<rt>rén</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>节<rt>jié</rt></ruby>，<ruby>现<rt>xiàn</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>比<rt>bǐ</rt></ruby><ruby>较<rt>jiào</rt></ruby><ruby>陌<rt>mò</rt></ruby><ruby>生<rt>shēng</rt></ruby>，<ruby>但<rt>dàn</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>古<rt>gǔ</rt></ruby><ruby>代<rt>dài</rt></ruby>，<ruby>它<rt>tā</rt></ruby><ruby>可<rt>kě</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>非<rt>fēi</rt></ruby><ruby>常<rt>cháng</rt></ruby><ruby>重<rt>zhòng</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>节<rt>jié</rt></ruby><ruby>日<rt>rì</rt></ruby>。<ruby>在<rt>zài</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>节<rt>jié</rt></ruby>，<ruby>即<rt>jí</rt></ruby><ruby>农<rt>nóng</rt></ruby><ruby>历<rt>lì</rt></ruby><ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>七<rt>qī</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>天<rt>tiān</rt></ruby>，<ruby>几<rt>jī</rt></ruby><ruby>乎<rt>hū</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>户<rt>hù</rt></ruby><ruby>户<rt>hù</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>会<rt>huì</rt></ruby><ruby>举<rt>jǔ</rt></ruby><ruby>行<rt>xíng</rt></ruby><ruby>丰<rt>fēng</rt></ruby><ruby>富<rt>fù</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>彩<rt>cǎi</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>庆<rt>qìng</rt></ruby><ruby>祝<rt>zhù</rt></ruby><ruby>活<rt>huó</rt></ruby><ruby>动<rt>dòng</rt></ruby>，<ruby>既<rt>jì</rt></ruby><ruby>热<rt>rè</rt></ruby><ruby>闹<rt>nào</rt></ruby><ruby>又<rt>yòu</rt></ruby><ruby>隆<rt>lóng</rt></ruby><ruby>重<rt>zhòng</rt></ruby>。</p>
+            </div>
+            <div class="page-number">1</div>
+        </div>
+
+        <div class="page">
+            <h3 style="text-align: center; margin-top:0; margin-bottom: 20px; color:#8b0000;">La Festa del Giorno dell'Uomo</h3>
+            <div class="italian-content">
+                <p>Al giorno d'oggi la Festa del Giorno dell'Uomo risulta piuttosto sconosciuta a molte persone, ma nell'antichità era una festività molto importante. Durante questa giornata, che cade il settimo giorno del primo mese del calendario lunare, quasi tutte le famiglie organizzavano celebrazioni ricche e colorate, vivaci e solenni al tempo stesso.</p>
+            </div>
+            <div class="page-number">2</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>那<rt>nà</rt></ruby><ruby>么<rt>me</rt></ruby>，<ruby>人<rt>rén</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>节<rt>jié</rt></ruby><ruby>到<rt>dào</rt></ruby><ruby>底<rt>dǐ</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>什<rt>shén</rt></ruby><ruby>么<rt>me</rt></ruby><ruby>样<rt>yàng</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>节<rt>jié</rt></ruby><ruby>日<rt>rì</rt></ruby>？<ruby>古<rt>gǔ</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>为<rt>wèi</rt></ruby><ruby>什<rt>shén</rt></ruby><ruby>么<rt>me</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>它<rt>tā</rt></ruby><ruby>如<rt>rú</rt></ruby><ruby>此<rt>cǐ</rt></ruby><ruby>重<rt>zhòng</rt></ruby><ruby>视<rt>shì</rt></ruby><ruby>呢<rt>ne</rt></ruby>？<ruby>这<rt>zhè</rt></ruby><ruby>得<rt>děi</rt></ruby><ruby>从<rt>cóng</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>节<rt>jié</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>来<rt>lái</rt></ruby><ruby>历<rt>lì</rt></ruby><ruby>说<rt>shuō</rt></ruby><ruby>起<rt>qǐ</rt></ruby>......</p>
+            </div>
+            <div class="page-number">3</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Ma allora, che tipo di festività è esattamente il Giorno dell'Uomo? Perché gli antichi le davano così tanta importanza? Dobbiamo partire dalle sue origini...</p>
+            </div>
+            <div class="page-number">4</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>传<rt>chuán</rt></ruby><ruby>说<rt>shuō</rt></ruby>，<ruby>盘<rt>pán</rt></ruby><ruby>古<rt>gǔ</rt></ruby><ruby>开<rt>kāi</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>辟<rt>pì</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>以<rt>yǐ</rt></ruby><ruby>后<rt>hòu</rt></ruby>，<ruby>世<rt>shì</rt></ruby><ruby>界<rt>jiè</rt></ruby><ruby>从<rt>cóng</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>片<rt>piàn</rt></ruby><ruby>混<rt>hùn</rt></ruby><ruby>沌<rt>dùn</rt></ruby><ruby>变<rt>biàn</rt></ruby><ruby>得<rt>děi</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>蓝<rt>lán</rt></ruby><ruby>云<rt>yún</rt></ruby><ruby>白<rt>bái</rt></ruby>、<ruby>山<rt>shān</rt></ruby><ruby>青<rt>qīng</rt></ruby><ruby>水<rt>shuǐ</rt></ruby><ruby>绿<rt>lǜ</rt></ruby>、<ruby>草<rt>cǎo</rt></ruby><ruby>木<rt>mù</rt></ruby><ruby>葱<rt>cōng</rt></ruby><ruby>茏<rt>lóng</rt></ruby>......<ruby>到<rt>dào</rt></ruby><ruby>处<rt>chù</rt></ruby><ruby>充<rt>chōng</rt></ruby><ruby>满<rt>mǎn</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>生<rt>shēng</rt></ruby><ruby>机<rt>jī</rt></ruby>。</p>
+            </div>
+            <div class="page-number">5</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>La leggenda narra che, dopo che Pangu creò il mondo separando il cielo e la terra, il mondo passò dall'essere un caos totale ad avere il cielo azzurro e le nuvole bianche, montagne verdi e acque limpide, una vegetazione rigogliosa... c'era vitalità ovunque.</p>
+            </div>
+            <div class="page-number">6</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>后<rt>hòu</rt></ruby><ruby>来<rt>lái</rt></ruby>，<ruby>天<rt>tiān</rt></ruby><ruby>神<rt>shén</rt></ruby><ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>来<rt>lái</rt></ruby><ruby>到<rt>dào</rt></ruby><ruby>世<rt>shì</rt></ruby>间。<ruby>她<rt>tā</rt></ruby><ruby>见<rt>jiàn</rt></ruby><ruby>大<rt>dà</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>水<rt>shuǐ</rt></ruby><ruby>草<rt>cǎo</rt></ruby><ruby>丰<rt>fēng</rt></ruby><ruby>盈<rt>yíng</rt></ruby>，<ruby>但<rt>dàn</rt></ruby><ruby>却<rt>què</rt></ruby><ruby>缺<rt>quē</rt></ruby><ruby>少<rt>shǎo</rt></ruby><ruby>活<rt>huó</rt></ruby><ruby>力<rt>lì</rt></ruby>，<ruby>便<rt>biàn</rt></ruby><ruby>决<rt>jué</rt></ruby><ruby>定<rt>dìng</rt></ruby><ruby>再<rt>zài</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>些<rt>xiē</rt></ruby><ruby>生<rt>shēng</rt></ruby><ruby>灵<rt>líng</rt></ruby>。</p>
+            </div>
+            <div class="page-number">7</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>In seguito, la dea Nüwa scese nel mondo dei mortali. Vide che la terra era ricca di acqua e vegetazione, ma mancava di creature viventi, così decise di crearne alcune.</p>
+            </div>
+            <div class="page-number">8</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>于<rt>yú</rt></ruby><ruby>是<rt>shì</rt></ruby>，<ruby>她<rt>tā</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>鸡<rt>jī</rt></ruby>，<ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>二<rt>èr</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>狗<rt>gǒu</rt></ruby>，<ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>三<rt>sān</rt></ruby><ruby>又<rt>yòu</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>猪<rt>zhū</rt></ruby>，<ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>四<rt>sì</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>羊<rt>yáng</rt></ruby>，<ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>五<rt>wǔ</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>牛<rt>niú</rt></ruby>，<ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>六<rt>liù</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>马<rt>mǎ</rt></ruby>。</p>
+            </div>
+            <div class="page-number">9</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Perciò, il primo giorno del primo mese lunare creò i polli, il secondo giorno creò i cani, il terzo giorno creò i maiali, il quarto giorno le pecore, il quinto giorno i buoi e il sesto giorno i cavalli.</p>
+            </div>
+            <div class="page-number">10</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>就<rt>jiù</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>样<rt>yàng</rt></ruby>，<ruby>天<rt>tiān</rt></ruby><ruby>地<rt>dì</rt></ruby>间<ruby>开<rt>kāi</rt></ruby>始<ruby>鸡<rt>jī</rt></ruby><ruby>鸣<rt>míng</rt></ruby><ruby>狗<rt>gǒu</rt></ruby><ruby>吠<rt>fèi</rt></ruby>，<ruby>牛<rt>niú</rt></ruby><ruby>马<rt>mǎ</rt></ruby><ruby>奔<rt>bēn</rt></ruby><ruby>腾<rt>téng</rt></ruby>，<ruby>变<rt>biàn</rt></ruby><ruby>得<rt>děi</rt></ruby><ruby>生<rt>shēng</rt></ruby><ruby>机<rt>jī</rt></ruby><ruby>勃<rt>bó</rt></ruby><ruby>勃<rt>bó</rt></ruby><ruby>了<rt>le</rt></ruby>。<ruby>不<rt>bù</rt></ruby><ruby>过<rt>guò</rt></ruby>，<ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>却<rt>què</rt></ruby><ruby>并<rt>bìng</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>满<rt>mǎn</rt></ruby><ruby>意<rt>yì</rt></ruby>，<ruby>她<rt>tā</rt></ruby><ruby>觉<rt>jué</rt></ruby><ruby>得<rt>děi</rt></ruby><ruby>世<rt>shì</rt></ruby>间<ruby>虽<rt>suī</rt></ruby><ruby>然<rt>rán</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>物<rt>wù</rt></ruby><ruby>种<rt>zhǒng</rt></ruby>，<ruby>但<rt>dàn</rt></ruby><ruby>却<rt>què</rt></ruby><ruby>缺<rt>quē</rt></ruby><ruby>少<rt>shǎo</rt></ruby><ruby>像<rt>xiàng</rt></ruby><ruby>她<rt>tā</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>样<rt>yàng</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>生<rt>shēng</rt></ruby><ruby>命<rt>mìng</rt></ruby>，<ruby>便<rt>biàn</rt></ruby><ruby>决<rt>jué</rt></ruby><ruby>定<rt>dìng</rt></ruby><ruby>根<rt>gēn</rt></ruby><ruby>据<rt>jū</rt></ruby><ruby>自<rt>zì</rt></ruby><ruby>己<rt>jǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>相<rt>xiàng</rt></ruby><ruby>貌<rt>mào</rt></ruby>，<ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>出<rt>chū</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>种<rt>zhǒng</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>灵<rt>líng</rt></ruby><ruby>魂<rt>hún</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>生<rt>shēng</rt></ruby><ruby>物<rt>wù</rt></ruby>。</p>
+            </div>
+            <div class="page-number">11</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>In questo modo, tra cielo e terra iniziarono a sentirsi galli cantare e cani abbaiare, buoi e cavalli galoppare, e il mondo divenne pieno di vita. Tuttavia, Nüwa non era soddisfatta. Sentiva che sebbene ci fossero molte specie nel mondo, mancava una forma di vita simile a lei, così decise di creare un essere dotato di anima basandosi sul proprio aspetto.</p>
+            </div>
+            <div class="page-number">12</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>于<rt>yú</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>七<rt>qī</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>天<rt>tiān</rt></ruby>，<ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>从<rt>cóng</rt></ruby><ruby>池<rt>chí</rt></ruby><ruby>塘<rt>táng</rt></ruby><ruby>边<rt>biān</rt></ruby><ruby>挖<rt>wā</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>些<rt>xiē</rt></ruby><ruby>土<rt>tǔ</rt></ruby>，<ruby>和<rt>huó</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>水<rt>shuǐ</rt></ruby>，<ruby>照<rt>zhào</rt></ruby><ruby>着<rt>zhe</rt></ruby><ruby>自<rt>zì</rt></ruby><ruby>己<rt>jǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>影<rt>yǐng</rt></ruby><ruby>子<rt>zi</rt></ruby><ruby>捏<rt>niē</rt></ruby><ruby>出<rt>chū</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>小<rt>xiǎo</rt></ruby><ruby>小<rt>xiǎo</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>东<rt>dōng</rt></ruby><ruby>西<rt>xī</rt></ruby>，<ruby>他<rt>tā</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>模<rt>mó</rt></ruby><ruby>样<rt>yàng</rt></ruby><ruby>和<rt>huó</rt></ruby><ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>差<rt>chà</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>多<rt>duō</rt></ruby>。<ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>将<rt>jiāng</rt></ruby><ruby>他<rt>tā</rt></ruby><ruby>放<rt>fàng</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>上<rt>shàng</rt></ruby>，<ruby>他<rt>tā</rt></ruby><ruby>居<rt>jū</rt></ruby><ruby>然<rt>rán</rt></ruby><ruby>活<rt>huó</rt></ruby><ruby>了<rt>le</rt></ruby>！</p>
+            </div>
+            <div class="page-number">13</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Così, il settimo giorno del primo mese lunare, Nüwa prese del fango vicino a uno stagno, lo mescolò con l'acqua, e guardando il proprio riflesso modellò una piccola creatura, il cui aspetto era molto simile al suo. Nüwa lo appoggiò a terra e questo prese vita!</p>
+            </div>
+            <div class="page-number">14</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>见<rt>jiàn</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>满<rt>mǎn</rt></ruby><ruby>心<rt>xīn</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>喜<rt>xǐ</rt></ruby>，<ruby>又<rt>yòu</rt></ruby><ruby>捏<rt>niē</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>许<rt>xǔ</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>种<rt>zhǒng</rt></ruby><ruby>小<rt>xiǎo</rt></ruby><ruby>东<rt>dōng</rt></ruby><ruby>西<rt>xī</rt></ruby>，<ruby>并<rt>bìng</rt></ruby><ruby>给<rt>gěi</rt></ruby><ruby>他<rt>tā</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>取<rt>qǔ</rt></ruby><ruby>名<rt>míng</rt></ruby><ruby>叫<rt>jiào</rt></ruby><ruby>作<rt>zuò</rt></ruby>“<ruby>人<rt>rén</rt></ruby>”。<ruby>这<rt>zhè</rt></ruby><ruby>些<rt>xiē</rt></ruby>“<ruby>人<rt>rén</rt></ruby>”<ruby>来<rt>lái</rt></ruby><ruby>到<rt>dào</rt></ruby><ruby>美<rt>měi</rt></ruby>丽<ruby>的<rt>de</rt></ruby><ruby>世<rt>shì</rt></ruby><ruby>界<rt>jiè</rt></ruby><ruby>里<rt>lǐ</rt></ruby>，<ruby>都<rt>dōu</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby><ruby>极<rt>jí</rt></ruby><ruby>了<rt>le</rt></ruby>，<ruby>围<rt>wéi</rt></ruby><ruby>着<rt>zhe</rt></ruby><ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>停<rt>tíng</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>呼<rt>hū</rt></ruby><ruby>雀<rt>què</rt></ruby><ruby>跃<rt>yuè</rt></ruby>。</p>
+            </div>
+            <div class="page-number">15</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Nüwa fu colma di gioia nel vederlo, così modellò molti altri di questi piccoli esseri, e diede loro il nome di "umani". Questi "umani", arrivati in questo bellissimo mondo, erano tutti estremamente felici, e circondarono Nüwa esultando e saltando di gioia senza sosta.</p>
+            </div>
+            <div class="page-number">16</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>看<rt>kàn</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>心<rt>xīn</rt></ruby><ruby>里<rt>lǐ</rt></ruby><ruby>热<rt>rè</rt></ruby><ruby>乎<rt>hū</rt></ruby><ruby>乎<rt>hū</rt></ruby><ruby>的<rt>de</rt></ruby>。<ruby>她<rt>tā</rt></ruby><ruby>想<rt>xiǎng</rt></ruby><ruby>把<rt>bǎ</rt></ruby><ruby>世<rt>shì</rt></ruby><ruby>界<rt>jiè</rt></ruby><ruby>变<rt>biàn</rt></ruby><ruby>得<rt>děi</rt></ruby><ruby>热<rt>rè</rt></ruby><ruby>热<rt>rè</rt></ruby><ruby>闹<rt>nào</rt></ruby><ruby>闹<rt>nào</rt></ruby>，<ruby>便<rt>biàn</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>停<rt>tíng</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>工<rt>gōng</rt></ruby><ruby>作<rt>zuò</rt></ruby><ruby>起<rt>qǐ</rt></ruby><ruby>来<rt>lái</rt></ruby>。<ruby>但<rt>dàn</rt></ruby><ruby>世<rt>shì</rt></ruby><ruby>界<rt>jiè</rt></ruby><ruby>太<rt>tài</rt></ruby><ruby>大<rt>dà</rt></ruby><ruby>了<rt>le</rt></ruby>，<ruby>她<rt>tā</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>双<rt>shuāng</rt></ruby><ruby>手<rt>shǒu</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>捏<rt>niē</rt></ruby><ruby>得<rt>děi</rt></ruby><ruby>麻<rt>má</rt></ruby><ruby>木<rt>mù</rt></ruby><ruby>了<rt>le</rt></ruby>，<ruby>大<rt>dà</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>仍<rt>réng</rt></ruby><ruby>然<rt>rán</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>少<rt>shǎo</rt></ruby>。<ruby>这<rt>zhè</rt></ruby><ruby>该<rt>gāi</rt></ruby><ruby>怎<rt>zěn</rt></ruby><ruby>么<rt>me</rt></ruby><ruby>办<rt>bàn</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</p>
+            </div>
+            <div class="page-number">17</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Nüwa provò un gran calore al cuore. Voleva rendere il mondo molto vivace e affollato, così iniziò a lavorare ininterrottamente. Ma il mondo era troppo grande, e sebbene le si fossero intorpidite le mani a forza di modellare, le persone sulla terra erano ancora pochissime. Come poteva fare?</p>
+            </div>
+            <div class="page-number">18</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>于<rt>yú</rt></ruby><ruby>是<rt>shì</rt></ruby>，<ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>从<rt>cóng</rt></ruby><ruby>崖<rt>yá</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>扯<rt>chě</rt></ruby><ruby>下<rt>xià</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>根<rt>gēn</rt></ruby><ruby>藤<rt>téng</rt></ruby><ruby>条<rt>tiáo</rt></ruby>，<ruby>蘸<rt>zhàn</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>浑<rt>hún</rt></ruby><ruby>黄<rt>huáng</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>泥<rt>ní</rt></ruby><ruby>浆<rt>jiāng</rt></ruby>，<ruby>用<rt>yòng</rt></ruby><ruby>力<rt>lì</rt></ruby><ruby>向<rt>xiàng</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>甩<rt>shuǎi</rt></ruby><ruby>去<rt>qù</rt></ruby>。<ruby>那<rt>nà</rt></ruby><ruby>些<rt>xiē</rt></ruby><ruby>泥<rt>ní</rt></ruby><ruby>浆<rt>jiāng</rt></ruby><ruby>掉<rt>diào</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>上<rt>shàng</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>变<rt>biàn</rt></ruby><ruby>成<rt>chéng</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>小<rt>xiǎo</rt></ruby><ruby>人<rt>rén</rt></ruby>。<ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby><ruby>极<rt>jí</rt></ruby><ruby>了<rt>le</rt></ruby>，<ruby>不<rt>bù</rt></ruby><ruby>停<rt>tíng</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>挥<rt>huī</rt></ruby><ruby>舞<rt>wǔ</rt></ruby><ruby>着<rt>zhe</rt></ruby><ruby>藤<rt>téng</rt></ruby><ruby>蔓<rt>màn</rt></ruby>，<ruby>就<rt>jiù</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>样<rt>yàng</rt></ruby>，<ruby>大<rt>dà</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>越<rt>yuè</rt></ruby><ruby>来<rt>lái</rt></ruby><ruby>越<rt>yuè</rt></ruby><ruby>多<rt>duō</rt></ruby>。</p>
+            </div>
+            <div class="page-number">19</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Così, Nüwa staccò una liana da una scogliera, la immerse nel fango giallo e la scosse con forza verso il suolo. Le gocce di fango che cadevano a terra si trasformarono anch'esse, una dopo l'altra, in piccole persone. Nüwa era felicissima e continuò ad agitare la liana; in questo modo, ci furono sempre più persone sulla terra.</p>
+            </div>
+            <div class="page-number">20</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>后<rt>hòu</rt></ruby><ruby>来<rt>lái</rt></ruby>，<ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>把<rt>bǎ</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>部<rt>bù</rt></ruby><ruby>分<rt>fèn</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>变<rt>biàn</rt></ruby><ruby>成<rt>chéng</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>男<rt>nán</rt></ruby><ruby>人<rt>rén</rt></ruby>，<ruby>又<rt>yòu</rt></ruby><ruby>把<rt>bǎ</rt></ruby><ruby>另<rt>lìng</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>部<rt>bù</rt></ruby><ruby>分<rt>fèn</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>变<rt>biàn</rt></ruby><ruby>成<rt>chéng</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>女<rt>nǚ</rt></ruby><ruby>人<rt>rén</rt></ruby>。<ruby>她<rt>tā</rt></ruby><ruby>让<rt>ràng</rt></ruby><ruby>男<rt>nán</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>和<rt>huó</rt></ruby><ruby>女<rt>nǚ</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>结<rt>jié</rt></ruby><ruby>成<rt>chéng</rt></ruby><ruby>夫<rt>fū</rt></ruby><ruby>妻<rt>qī</rt></ruby>，<ruby>繁<rt>fán</rt></ruby><ruby>衍<rt>yǎn</rt></ruby><ruby>后<rt>hòu</rt></ruby><ruby>代<rt>dài</rt></ruby>。<ruby>人<rt>rén</rt></ruby><ruby>类<rt>lèi</rt></ruby><ruby>就<rt>jiù</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>样<rt>yàng</rt></ruby><ruby>生<rt>shēng</rt></ruby><ruby>儿<rt>ér</rt></ruby><ruby>育<rt>yù</rt></ruby><ruby>女<rt>nǚ</rt></ruby>，<ruby>一<rt>yí</rt></ruby><ruby>代<rt>dài</rt></ruby><ruby>代<rt>dài</rt></ruby><ruby>延<rt>yán</rt></ruby><ruby>续<rt>xù</rt></ruby><ruby>下<rt>xià</rt></ruby><ruby>来<rt>lái</rt></ruby><ruby>了<rt>le</rt></ruby>。</p>
+            </div>
+            <div class="page-number">21</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>In seguito, Nüwa trasformò una parte delle persone in uomini, e un'altra parte in donne. Fece sì che gli uomini e le donne si unissero in matrimonio, per procreare e generare discendenza. L'umanità ha così dato alla luce figli e figlie, perpetuandosi di generazione in generazione.</p>
+            </div>
+            <div class="page-number">22</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>为<rt>wèi</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>表<rt>biǎo</rt></ruby><ruby>达<rt>dá</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>感<rt>gǎn</rt></ruby><ruby>激<rt>jī</rt></ruby>，<ruby>古<rt>gǔ</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>便<rt>biàn</rt></ruby><ruby>把<rt>bǎ</rt></ruby><ruby>女<rt>nǚ</rt></ruby><ruby>娲<rt>wā</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>造<rt>zào</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>类<rt>lèi</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>天<rt>tiān</rt></ruby>，<ruby>即<rt>jí</rt></ruby><ruby>农<rt>nóng</rt></ruby><ruby>历<rt>lì</rt></ruby><ruby>正<rt>zhēng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>初<rt>chū</rt></ruby><ruby>七<rt>qī</rt></ruby><ruby>定<rt>dìng</rt></ruby><ruby>为<rt>wèi</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>日<rt>rì</rt></ruby>。<ruby>这<rt>zhè</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>天<rt>tiān</rt></ruby>，<ruby>往<rt>wǎng</rt></ruby><ruby>往<rt>wǎng</rt></ruby><ruby>被<rt>bèi</rt></ruby><ruby>看<rt>kàn</rt></ruby><ruby>作<rt>zuò</rt></ruby><ruby>关<rt>guān</rt></ruby><ruby>系<rt>xì</rt></ruby><ruby>到<rt>dào</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>安<rt>ān</rt></ruby><ruby>危<rt>wēi</rt></ruby><ruby>祸<rt>huò</rt></ruby><ruby>福<rt>fú</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>重<rt>zhòng</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>子<rt>zi</rt></ruby>。</p>
+            </div>
+            <div class="page-number">23</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Per esprimere la propria gratitudine verso Nüwa, gli antichi stabilirono che il giorno in cui Nüwa aveva creato l'umanità, cioè il settimo giorno del primo mese lunare, fosse il Giorno dell'Uomo. Questa giornata era considerata un momento importante, legato al destino delle persone.</p>
+            </div>
+            <div class="page-number">24</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>因<rt>yīn</rt></ruby><ruby>此<rt>cǐ</rt></ruby>，<ruby>每<rt>měi</rt></ruby><ruby>到<rt>dào</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>日<rt>rì</rt></ruby>，<ruby>古<rt>gǔ</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>便<rt>biàn</rt></ruby><ruby>吃<rt>chī</rt></ruby><ruby>用<rt>yòng</rt></ruby><ruby>七<rt>qī</rt></ruby><ruby>种<rt>zhǒng</rt></ruby><ruby>菜<rt>cài</rt></ruby><ruby>做<rt>zuò</rt></ruby><ruby>成<rt>chéng</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>羹<rt>gēng</rt></ruby>，<ruby>即<rt>jí</rt></ruby>“<ruby>七<rt>qī</rt></ruby><ruby>宝<rt>bǎo</rt></ruby><ruby>羹<rt>gēng</rt></ruby>”，<ruby>以<rt>yǐ</rt></ruby><ruby>祈<rt>qí</rt></ruby><ruby>福<rt>fú</rt></ruby><ruby>纳<rt>nà</rt></ruby><ruby>祥<rt>xiáng</rt></ruby>，<ruby>表<rt>biǎo</rt></ruby><ruby>达<rt>dá</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>身<rt>shēn</rt></ruby><ruby>体<rt>tǐ</rt></ruby><ruby>康<rt>kāng</rt></ruby><ruby>健<rt>jiàn</rt></ruby>、<ruby>一<rt>yí</rt></ruby><ruby>生<rt>shēng</rt></ruby><ruby>顺<rt>shùn</rt></ruby><ruby>遂<rt>suì</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>祝<rt>zhù</rt></ruby><ruby>福<rt>fú</rt></ruby>。</p>
+            </div>
+            <div class="page-number">25</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Perciò, ogni Giorno dell'Uomo, gli antichi mangiavano una zuppa preparata con sette tipi di verdure, chiamata "Zuppa dei Sette Tesori", per pregare per la buona sorte e augurare salute.</p>
+            </div>
+            <div class="page-number">26</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="chinese-content">
+                <p><ruby>而<rt>ér</rt></ruby><ruby>且<rt>qiě</rt></ruby>，<ruby>古<rt>gǔ</rt></ruby><ruby>代<rt>dài</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>女<rt>nǚ</rt></ruby><ruby>子<rt>zi</rt></ruby><ruby>还<rt>hái</rt></ruby><ruby>用<rt>yòng</rt></ruby><ruby>彩<rt>cǎi</rt></ruby><ruby>纸<rt>zhǐ</rt></ruby>、<ruby>软<rt>ruǎn</rt></ruby><ruby>金<rt>jīn</rt></ruby><ruby>银<rt>yín</rt></ruby><ruby>等<rt>děng</rt></ruby><ruby>材<rt>cái</rt></ruby><ruby>料<rt>liào</rt></ruby><ruby>制<rt>zhì</rt></ruby><ruby>成<rt>chéng</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>种<rt>zhǒng</rt></ruby><ruby>叫<rt>jiào</rt></ruby>“<ruby>华<rt>huá</rt></ruby><ruby>胜<rt>shèng</rt></ruby>”<ruby>的<rt>de</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>形<rt>xíng</rt></ruby><ruby>饰<rt>shì</rt></ruby><ruby>品<rt>pǐn</rt></ruby>，<ruby>戴<rt>dài</rt></ruby><ruby>于<rt>yú</rt></ruby><ruby>头<rt>tóu</rt></ruby><ruby>上<rt>shàng</rt></ruby>，<ruby>来<rt>lái</rt></ruby><ruby>表<rt>biǎo</rt></ruby><ruby>达<rt>dá</rt></ruby><ruby>吉<rt>jí</rt></ruby><ruby>祥<rt>xiáng</rt></ruby>之<ruby>意<rt>yì</rt></ruby>。<ruby>在<rt>zài</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>些<rt>xiē</rt></ruby><ruby>地<rt>dì</rt></ruby><ruby>方<rt>fāng</rt></ruby>，<ruby>人<rt>rén</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>还<rt>hái</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>吃<rt>chī</rt></ruby><ruby>面<rt>miàn</rt></ruby><ruby>条<rt>tiáo</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>习<rt>xí</rt></ruby><ruby>俗<rt>sú</rt></ruby>，<ruby>以<rt>yǐ</rt></ruby><ruby>此<rt>cǐ</rt></ruby><ruby>表<rt>biǎo</rt></ruby><ruby>达<rt>dá</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>长<rt>cháng</rt></ruby><ruby>寿<rt>shòu</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>美<rt>měi</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>期<rt>qī</rt></ruby><ruby>盼<rt>pàn</rt></ruby>。</p>
+            </div>
+            <div class="page-number">27</div>
+        </div>
+
+        <div class="page">
+            
+            <div class="italian-content">
+                <p>Inoltre, le donne nell'antichità usavano carta colorata e fili d'oro per creare un ornamento a forma umana chiamato "Huasheng", da indossare sulla testa come simbolo di buon auspicio. In alcuni luoghi c'era anche l'usanza di mangiare i noodles, per esprimere il desiderio di una lunga vita.</p>
+            </div>
+            <div class="page-number">28</div>
+        </div>
+
+        <div class="page">
+            <div class="chinese-content">
+                <div class="reflection">
+                    <strong>回味思考 >></strong><br><br>
+                    <ruby>人<rt>rén</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>节<rt>jié</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>古<rt>gǔ</rt></ruby><ruby>老<rt>lǎo</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>节<rt>jié</rt></ruby><ruby>日<rt>rì</rt></ruby>，<ruby>源<rt>yuán</rt></ruby><ruby>自<rt>zì</rt></ruby><ruby>古<rt>gǔ</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>自<rt>zì</rt></ruby><ruby>身<rt>shēn</rt></ruby><ruby>起<rt>qǐ</rt></ruby><ruby>源<rt>yuán</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>追<rt>zhuī</rt></ruby><ruby>溯<rt>sù</rt></ruby><ruby>和<rt>huó</rt></ruby><ruby>想<rt>xiǎng</rt></ruby><ruby>象<rt>xiàng</rt></ruby>，<ruby>关<rt>guān</rt></ruby><ruby>于<rt>yú</rt></ruby><ruby>这<rt>zhè</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>节<rt>jié</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>传<rt>chuán</rt></ruby><ruby>说<rt>shuō</rt></ruby>与<ruby>习<rt>xí</rt></ruby><ruby>俗<rt>sú</rt></ruby>，<ruby>充<rt>chōng</rt></ruby><ruby>分<rt>fèn</rt></ruby><ruby>表<rt>biǎo</rt></ruby><ruby>现<rt>xiàn</rt></ruby><ruby>出<rt>chū</rt></ruby><ruby>古<rt>gǔ</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>生<rt>shēng</rt></ruby><ruby>命<rt>mìng</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>重<rt>zhòng</rt></ruby><ruby>视<rt>shì</rt></ruby><ruby>和<rt>huó</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>自<rt>zì</rt></ruby><ruby>然<rt>rán</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>敬<rt>jìng</rt></ruby><ruby>畏<rt>wèi</rt></ruby>，<ruby>充<rt>chōng</rt></ruby><ruby>满<rt>mǎn</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>浪<rt>làng</rt></ruby><ruby>漫<rt>màn</rt></ruby><ruby>主<rt>zhǔ</rt></ruby><ruby>义<rt>yì</rt></ruby><ruby>色<rt>sè</rt></ruby><ruby>彩<rt>cǎi</rt></ruby>。
+                </div>
+            </div>
+            <div class="page-number">29</div>
+        </div>
+
+        <div class="page">
+            <div class="italian-content">
+                <div class="reflection">
+                    <strong>Spunto di riflessione:</strong><br><br>
+                    L'antica festività del Giorno dell'Uomo ha origine dalla ricerca e dall'immaginazione degli antichi riguardo alle proprie origini. Le leggende e le usanze legate a questa festa dimostrano pienamente l'importanza che gli antichi davano alla vita e il loro timore reverenziale verso la natura, con una sfumatura di grande romanticismo.
+                </div>
+            </div>
+            <div class="page-number">30</div>
+        </div>
+
+
+        <div class="page back-cover">
+            <h2>Fine</h2><br>
+            <h2>书的结尾 (Shū de jiéwěi)</h2>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageFlip = new St.PageFlip(document.getElementById('flipbook'), {
+                width: 400, height: 550, size: "fixed",
+                minWidth: 300, maxWidth: 500, minHeight: 400, maxHeight: 650,
+                showCover: true, mobileScrollSupport: false, maxShadowOpacity: 0.5 
+            });
+            pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+        });
+    </script>
+</body>
+</html>
