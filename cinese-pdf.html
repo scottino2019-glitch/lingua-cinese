@@ -562,39 +562,6 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
         }
-
-    <!-- SCRIPT INIETTORE DEL PANDA -->
-    
-        (function() {
-            // 1. Crea l'iframe
-            const iframe = document.createElement('iframe');
-            iframe.src = 'URL_DELLA_TUA_APP'; // <-- Metti qui il link della tua app
-            
-            // 2. Stili iniziali (Iframe CHIUSO: 80x80px)
-            iframe.style.cssText = `
-                position: fixed; bottom: 20px; right: 20px;
-                width: 80px; height: 80px; z-index: 999999;
-                border: none; background: transparent;
-                transition: width 0.3s ease, height 0.3s ease;
-            `;
-            iframe.setAttribute('allowtransparency', 'true');
-            document.body.appendChild(iframe);
-
-            // 3. Ascolta i messaggi dalla tua app
-            window.addEventListener('message', (event) => {
-                if (event.data === 'open-panda') {
-                    // Allarga l'iframe a 400px quando si apre la chat
-                    iframe.style.width = '400px';
-                    iframe.style.height = '600px';
-                } 
-                if (event.data === 'close-panda') {
-                    // Rimpicciolisce l'iframe a 80px quando si chiude
-                    iframe.style.width = '80px';
-                    iframe.style.height = '80px';
-                }
-            });
-        })();
-    
     </script>
 </body>
 </html>
