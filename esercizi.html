@@ -109,7 +109,7 @@
         .home-btn {
             position: fixed;
             bottom: 30px;
-            right: 30px;
+            right: 99px;
             background: #e74c3c;
             color: white;
             padding: 15px 30px;
@@ -184,6 +184,30 @@
     </svg>
     <span>Esci dall'aula</span>
 </a>
-
+<!-- Assistente Roji -->
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 999999; transition: all 0.2s ease-out;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
+<script>
+  window.addEventListener('message', function(event) {
+    // Gestione ridimensionamento automatico quando si apre/chiude la chat
+    if (event.data && event.data.type === 'roji-toggle') {
+      const container = document.getElementById('roji-container');
+      if (event.data.isOpen) {
+        container.style.width = '350px';
+        container.style.height = '550px';
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+      }
+    }
+  });
+</script>
 </body>
 </html>
