@@ -298,8 +298,41 @@
            </div>
         </div>
     </div>
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
 
-    <script>
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
       const entries = [{"speaker":"Mark","text":"嘿，今天你想喝什么？","translation":"Ehi, cosa vuoi bere oggi?","pronunciation":"Hēi, jīntiān nǐ xiǎng hē shénme?","side":"left","id":"k7no0sa1r"},{"speaker":"Sofia","text":"我要一杯啤酒，再来点小吃吧。","translation":"Vorrei una birra e magari qualche stuzzichino.","pronunciation":"Wǒ yào yī bēi píjiǔ, zàilái diǎn xiǎochī ba.","side":"right","id":"i6h1vpbnx"},{"speaker":"Mark","text":"好主意！我们要一份薯片和花生。","translation":"Buona idea! Prendiamo una porzione di patatine e arachidi.","pronunciation":"Hǎo zhǔyì! Wǒmen yào yī fèn shǔpiàn hé huāshēng.","side":"left","id":"o382pce8l"},{"speaker":"Sofia","text":"太棒了！服务员，点单！","translation":"Fantastico! Cameriere, ordiniamo!","pronunciation":"Tài bàngle! Fúwùyuán, diǎndān!","side":"right","id":"s68cnpxb5"}];
       let currentIndex = 0;
       let score = 0;
