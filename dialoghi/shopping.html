@@ -312,7 +312,41 @@
         </div>
     </div>
 
-    <script>
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
+
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
       const entries = [{"speaker":"丽华","text":"你看这件红色的连衣裙！非常适合明天的派对。","translation":"Guarda questo vestito rosso! È perfetto per la festa di domani.","pronunciation":"Nǐ kàn zhè jiàn hóngsè de liányīqún! Fēicháng shìhé míngtiān de pàiduì.","side":"left","id":"a26xkrgx4"},{"speaker":"小梅","text":"确实很漂亮，但你觉得蓝色会不会更适合你？","translation":"È davvero bello, ma pensi che il blu ti stia meglio?","pronunciation":"Quèshí hěn piàoliang, dàn nǐ juéde lánsè huì bù huì gèng shìhé nǐ?","side":"right","id":"w0xnoqkbs"},{"speaker":"丽华","text":"也许吧，但红色更喜庆。我该配什么鞋子呢？","translation":"Forse, ma il rosso è più festoso. Che scarpe dovrei abbinarci?","pronunciation":"Yěxǔ ba, dàn hóngsè gèng xǐqìng. Wǒ gāi pèi shénme xiézi ne?","side":"left","id":"ejmtvd5an"},{"speaker":"小梅","text":"这双金色的高跟鞋怎么样？和裙子很搭。","translation":"Che ne dici di queste scarpe col tacco dorate? Si abbinano bene al vestito.","pronunciation":"Zhè shuāng jīnsè de gāogēnxié zěnmeyàng? Hé qúnzi hěn dā.","side":"right","id":"e9kioozm6"},{"speaker":"丽华","text":"好主意，我们去试一下吧！","translation":"Ottima idea, andiamo a provarli!","pronunciation":"Hǎo zhǔyì, wǒmen qù shì yīxià ba!","side":"left","id":"4y5bqmjut"}];
       let currentIndex = 0;
       let score = 0;
