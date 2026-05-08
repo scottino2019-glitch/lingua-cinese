@@ -466,7 +466,7 @@ window.addEventListener('message', function(event) {
 // Bell
 
 const bell = document.getElementById('bell-swing');
-const UPDATE_DATE = '2026-05-4'; // ← Data RECENTE = attiva tutto!
+const UPDATE_DATE = '2026-05-8'; // ← Data RECENTE = attiva tutto!
 const updateTime = new Date(UPDATE_DATE).getTime();
 const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
 
@@ -475,7 +475,7 @@ if (updateTime > sevenDaysAgo) {
   bell.innerHTML = '🔔<span class="badge">●</span>';
   bell.style.animationPlayState = 'running';
   bell.onclick = function() {
-    alert('Nuovo libro nella biblioteca');
+    alert('Da oggi c'è Roji ad aiutare, presto in tutte le pagine del sito!');
   };
   console.log('🔔 ATTIVA: swing + click OK');
 } else {
