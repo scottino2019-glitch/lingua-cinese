@@ -101,8 +101,7 @@
     </div>
    </div>
   </div>
-<!-- Assistente Roji -->
-<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 999999; transition: all 0.2s ease-out;">
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 85px; height: 85px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
   <iframe 
     id="roji-iframe"
     src="https://roji-tawny.vercel.app/" 
@@ -113,16 +112,24 @@
 </div>
   <script>
 // Roji
-  window.addEventListener('message', function(event) {
-    // Gestione ridimensionamento automatico quando si apre/chiude la chat
+   window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
     if (event.data && event.data.type === 'roji-toggle') {
-      const container = document.getElementById('roji-container');
       if (event.data.isOpen) {
         container.style.width = '350px';
         container.style.height = '550px';
+        // Su mobile lo rendiamo un po' più grande
+        if (window.innerWidth < 500) {
+          container.style.width = '90%';
+          container.style.height = '80%';
+          container.style.right = '5%';
+        }
       } else {
-        container.style.width = '80px';
-        container.style.height = '80px';
+        container.style.width = '85px';
+        container.style.height = '85px';
+        container.style.right = '20px';
       }
     }
   });
