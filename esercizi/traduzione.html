@@ -119,7 +119,41 @@
         </div>
     </div>
 
-    <script>
+   <div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
+
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
         const quizData = [{"id":1,"text":"Truduci","type":"chinese-translation","chinese":"她吃苹果。","pinyin":"Tā chī píngguǒ.","translation":"Lei mangia mele","direction":"it-to-cn"},{"id":2,"text":"Traduci","type":"chinese-translation","chinese":"他叫李明。","pinyin":"Tā jiào lǐ míng.","translation":"Lui si chiama Li Ming","direction":"it-to-cn"},{"id":3,"text":"Traduci","type":"chinese-translation","chinese":"这是我的家","pinyin":"Zhè shì wǒ de jiā","translation":"Questa è la mia casa","direction":"cn-to-it"},{"id":4,"text":"Traduci","type":"chinese-translation","chinese":"我爱你。","pinyin":"Wǒ ài nǐ.","translation":"Ti amo","direction":"it-to-cn"},
 {"id":5,"text":"Traduci","type":"chinese-translation","chinese":"你好吗？","pinyin":"Nǐ hǎo ma?","translation":"Come stai?","direction":"cn-to-it"},
 {"id":6,"text":"Traduci","type":"chinese-translation","chinese":"我是学生。","pinyin":"Wǒ shì xuéshēng.","translation":"Sono uno studente","direction":"it-to-cn"},{"id":7,"text":"Traduci","type":"chinese-translation","chinese":"今天很热。","pinyin":"Jīntiān hěn rè.","translation":"Oggi fa molto caldo","direction":"cn-to-it"},
