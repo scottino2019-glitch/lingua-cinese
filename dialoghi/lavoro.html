@@ -311,8 +311,41 @@
            </div>
         </div>
     </div>
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
 
-    <script>
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
       const entries = [{"speaker":"张经理","text":"大家好，我们今天讨论一下新产品的市场营销计划。","translation":"Buongiorno a tutti, oggi discutiamo il piano di marketing per il nuovo prodotto.","pronunciation":"Dàjiā hǎo, wǒmen jīntiān tǎolùn yīxià xīn chǎnpǐn de shìchǎng yíngxiāo jìhuà.","side":"left","id":"pshkf7cgt"},{"speaker":"李总监","text":"我建议重点放在社交媒体推广，以吸引年轻客户。","translation":"Suggerisco di concentrarsi sulla promozione sui social media per attirare i clienti giovani.","pronunciation":"Wǒ jiànyì zhòngdiǎn fàng zài shèjiāo méitǐ tuīguǎng, yǐ xīyǐn niánqīng kèhù.","side":"right","id":"8nohztrtx"},{"speaker":"张经理","text":"这个主意不错。那我们的预算分配情况如何？","translation":"È un'ottima idea. Qual è la situazione della distribuzione del budget?","pronunciation":"Zhège zhǔyì bùcuò. Nà wǒmen de yùsuàn fēnpèi qíngkuàng rúhé?","side":"left","id":"gpe0s4ak9"},{"speaker":"李总监","text":"我们计划将百分之四十的预算用于在线广告。","translation":"Abbiamo in programma di destinare il quaranta percento del budget alla pubblicità online.","pronunciation":"Wǒmen jìhuà jiāng bǎifēn zhī sìshí de yùsuàn yòng yú zàixiàn guǎnggào.","side":"right","id":"1dspff9ck"},{"speaker":"张经理","text":"好的，请在周五前提交一份详细的项目报告。","translation":"Bene, per favore inviate un rapporto dettagliato sul progetto entro venerdì.","pronunciation":"Hǎo de, qǐng zài zhōuwǔ qián tíjiāo yī fèn xiángxì de xiàngmù bàogào.","side":"left","id":"onuaymxrp"}];
       let currentIndex = 0;
       let score = 0;
