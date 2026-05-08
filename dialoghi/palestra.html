@@ -299,8 +299,41 @@
            </div>
         </div>
     </div>
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
 
-    <script>
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
       const entries = [{"speaker":"小明","text":"嘿，你还在床上吗？你懒得像头猪。","translation":"Ehi, sei ancora a letto? Sei pigro come un maiale.","pronunciation":"Hēi, nǐ hái zài chuángshàng ma? Nǐ lǎn dé xiàng tóu zhū.","side":"left","id":"w4l6c6mss"},{"speaker":"小刚","text":"我已经在健身房了！不像你，只知道吃和睡。","translation":"Sono già in palestra! Non come te, che sai solo mangiare e dormire.","pronunciation":"Wǒ yǐjīng zài jiànshēnfáng le! Bù xiàng nǐ, zhǐ zhīdào chī hé shuì.","side":"right","id":"phna8p650"},{"speaker":"小明","text":"哈哈，行，你赢了。晚点想去看电影吗？","translation":"Ahah, okay, hai vinto tu. Ti va di andare al cinema più tardi?","pronunciation":"Hāhā, xíng, nǐ yíngle. Wǎndiǎn xiǎng qù kàn diànyǐng ma?","side":"left","id":"2o9ucpqf2"},{"speaker":"小刚","text":"好啊，听说有个新动作片很棒。我们今晚去吧！","translation":"Certo, ho sentito che c'è un nuovo film d'azione fantastico. Andiamoci stasera!","pronunciation":"Hǎo a, tīngshuō yǒu gè xīn dòngzuòpiàn hěn bàng. Wǒmen jīnwǎn qù ba!","side":"right","id":"akqlcevzl"}];
       let currentIndex = 0;
       let score = 0;
