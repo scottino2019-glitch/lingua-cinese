@@ -299,8 +299,41 @@
            </div>
         </div>
     </div>
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
 
-    <script>
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
       const entries = [{"speaker":"王长老","text":"就凭你这点实力，也敢向我挑战？","translation":"Pensi di potermi sfidare solo con questa forza?","pronunciation":"Jiù píng nǐ zhè diǎn shílì, yě gǎn xiàng wǒ tiǎozhàn?","side":"right","id":"9h0nfirhn"},{"speaker":"林枫","text":"胜负未定，你别高兴得太早。","translation":"L'esito non è ancora deciso, non rallegrarti troppo presto.","pronunciation":"Shèngfù wèidìng, nǐ bié gāoxìng de tài zǎo.","side":"left","id":"iaeq4s678"},{"speaker":"王长老","text":"哼，真是不知天高地厚的小子！","translation":"Hmph, davvero un ragazzino che non conosce l'immensità del cielo e della terra!","pronunciation":"Hēng, zhēnshi bùzhī tiāngāodìhòu de xiǎozi!","side":"right","id":"yysdngsf5"},{"speaker":"林枫","text":"今天我就让你看看，我真正的实力！","translation":"Oggi ti mostrerò la mia vera forza!","pronunciation":"Jīntiān wǒ jiù ràng nǐ kànkan, wǒ zhēnzhèng de shílì!","side":"left","id":"s5i0sbbyk"}];
       let currentIndex = 0;
       let score = 0;
