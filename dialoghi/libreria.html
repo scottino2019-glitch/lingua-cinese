@@ -323,7 +323,41 @@
         </div>
     </div>
 
-    <script>
+   <div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
+
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
       const entries = [{"speaker":"顾客","text":"你好，请问你们有韩语学习书吗？","translation":"Buongiorno, scusi, avete libri per imparare il coreano?","pronunciation":"Nǐ hǎo, qǐngwèn nǐmen yǒu Hányǔ xuéxí shū ma?","side":"left","id":"8dmxh7ahu"},{"speaker":"店员","text":"有的。请问您想要什么程度的？","translation":"Sì. Di che livello lo desidera?","pronunciation":"Yǒu de. Qǐngwèn nín xiǎng yào shénme chéngdù de?","side":"right","id":"8fcgc5jqh"},{"speaker":"顾客","text":"我想要初级的，而且必须附带一张CD。","translation":"Ne vorrei uno per principianti, e deve includere un CD.","pronunciation":"Wǒ xiǎng yào chūjí de, érqiě bìxū fùdài yī zhāng CD.","side":"left","id":"r4b01s3kq"},{"speaker":"店员","text":"没问题，这本《标准韩语》附带CD，非常适合初学者。","translation":"Nessun problema, questo 'Coreano Standard' include un CD ed è perfetto per i principianti.","pronunciation":"Méi wèntí, zhè běn 'Biāozhǔn Hányǔ' fùdài CD, fēicháng shìhé chū xué zhě.","side":"right","id":"4zb435q2y"},{"speaker":"顾客","text":"太好了，这本书多少钱？","translation":"Ottimo, quanto costa questo libro?","pronunciation":"Tài hǎole, zhè běn shū duōshǎo qián?","side":"left","id":"pkc7z7ylr"}];
       let currentIndex = 0;
       let score = 0;
