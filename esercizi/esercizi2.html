@@ -118,8 +118,41 @@
             </button>
         </div>
     </div>
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
 
-    <script>
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
         const quizData = [{"id":1,"text":"我 ______ 是老师，我是学生。","type":"fill","correct":["不"]},{"id":3,"text":"昨天他 ______ 去学校。","type":"fill","correct":["没有"]},{"id":4,"text":"______ 是我的电脑，______ 是你的电脑。","type":"fill","correct":["这","那"]},{"id":5,"text":"我现在 ______ 想喝咖啡。","type":"fill","correct":["不"]},{"id":6,"text":"______ 个人是谁？我不认识他。","type":"fill","correct":["那"]},{"id":7,"text":"Questa non è la mia borsa. (Usa: 这+ 不是)","type":"chinese-translation","chinese":"这不是我的包","pinyin":"Zhè bùshì wǒ de bāo","translation":"Questa non è la mia borsa","direction":"it-to-cn"},{"id":9,"text":"Lui non ha fratelli. (Usa: 没有)","type":"chinese-translation","chinese":"他没有兄弟","pinyin":"Tā méiyǒu xiōngdì","translation":"Lui non ha fratelli.","direction":"cn-to-it"},{"id":10,"text":"Quella è la tua macchina? (Usa: 那+ 吗)","type":"chinese-translation","chinese":"那是你的车吗?","pinyin":"Nà shì nǐ de chē ma?","translation":"Quella è la tua macchina?","direction":"cn-to-it"},{"id":11,"text":"Io non vado a mangiare oggi. (Usa: 不)","type":"chinese-translation","chinese":"我今天不去吃饭","pinyin":"Wǒ jīntiān bù qù chīfàn","translation":"Oggi non mangerò.","direction":"cn-to-it"},{"id":13,"text":"Non è vero che ti piace il tè?(Usa: 不是不)","type":"chinese-translation","chinese":"你不是不真的喜欢喝茶？","pinyin":"Nǐ bùshì zhēn de xǐhuān hē chá ma?","translation":"Non è vero che ti piace il tè?","direction":"cn-to-it"}];
         let currentQuestion = 0;
         let userAnswers = [];
