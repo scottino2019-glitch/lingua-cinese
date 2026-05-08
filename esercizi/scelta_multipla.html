@@ -119,7 +119,41 @@
         </div>
     </div>
 
-    <script>
+   <div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; width: 80px; height: 80px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="no"
+    allowtransparency="true">
+  </iframe>
+</div>
+
+<script>
+  window.addEventListener('message', function(event) {
+    const container = document.getElementById('roji-container');
+    if (!container) return;
+
+    if (event.data && event.data.type === 'roji-toggle') {
+      if (event.data.isOpen) {
+        // Dimensioni per PC e Mobile
+        if (window.innerWidth < 500) {
+          container.style.width = '100%';
+          container.style.height = '100%';
+          container.style.bottom = '0';
+          container.style.right = '0';
+        } else {
+          container.style.width = '380px';
+          container.style.height = '600px';
+        }
+      } else {
+        container.style.width = '80px';
+        container.style.height = '80px';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+      }
+    }
+  });
         const quizData = [{"id":1,"text":"Completa la frase scegliendo la parola giusta你___什么名字？(nǐ ___ shénme míngzì?)","type":"multiple","options":{"A":"叫","B":"学","C":"好","D":"班"},"correct":"A"},{"id":2,"text":"Qual è la traduzione corretta per “老师”?","type":"multiple","options":{"A":"Maestro","B":"Insegnante","C":"Studente","D":"Amico"},"correct":"B"},{"id":3,"text":"Scegli l' animale che appare nella frase\"我有一只猫\" (wǒ yǒu yī zhī māo)","type":"multiple","options":{"A":"Cane","B":"Gallo","C":"Uccello","D":"Gatto"},"correct":"D"},{"id":4,"text":"Quale frase significa “Io sono uno studente”?","type":"multiple","options":{"A":"我是老师","B":"我是学生","C":"我是医生","D":"我是意大利人"},"correct":"B"},{"id":5,"text":"Traduci in italiano: 我是学生。","type":"open","correct":["Io sono studente."]},
 {"id":6,"text":"Quale parola completa la frase 我___中国人。(wǒ ___ zhōngguó rén.)","type":"multiple","options":{"A":"是","B":"有","C":"在","D":"去"},"correct":"A"},
 {"id":7,"text":"Scegli la traduzione corretta per “谢谢”。","type":"multiple","options":{"A":"Ciao","B":"Grazie","C":"Per favore","D":"Scusa"},"correct":"B"},
