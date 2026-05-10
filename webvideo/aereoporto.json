@@ -1,0 +1,101 @@
+[
+    {
+        "speaker": "地勤人员 (Addetto)",
+        "characters": [
+            { "h": "早", "p": "zǎo" },
+            { "h": "上", "p": "shang" },
+            { "h": "好", "p": "hǎo" },
+            { "h": "，", "p": "" },
+            { "h": "请", "p": "qǐng" },
+            { "h": "出", "p": "chū" },
+            { "h": "示", "p": "shì" },
+            { "h": "您", "p": "nín" },
+            { "h": "的", "p": "de" },
+            { "h": "护", "p": "hù" },
+            { "h": "照", "p": "zhào" },
+            { "h": "和", "p": "hé" },
+            { "h": "机", "p": "jī" },
+            { "h": "票", "p": "piào" },
+            { "h": "。", "p": "" }
+        ],
+        "italian": "Buongiorno, per favore mi mostri il suo passaporto e il biglietto."
+    },
+    {
+        "speaker": "乘客 (Passeggero)",
+        "characters": [
+            { "h": "好", "p": "hǎo" },
+            { "h": "的", "p": "de" },
+            { "h": "，", "p": "" },
+            { "h": "给", "p": "gěi" },
+            { "h": "你", "p": "nǐ" },
+            { "h": "。", "p": "" }
+        ],
+        "italian": "Va bene, eccoli."
+    },
+    {
+        "speaker": "地勤人员 (Addetto)",
+        "characters": [
+            { "h": "您", "p": "nín" },
+            { "h": "有", "p": "yǒu" },
+            { "h": "行", "p": "xíng" },
+            { "h": "李", "p": "li" },
+            { "h": "要", "p": "yào" },
+            { "h": "托", "p": "tuō" },
+            { "h": "运", "p": "yùn" },
+            { "h": "吗", "p": "ma" },
+            { "h": "？", "p": "" }
+        ],
+        "italian": "Ha dei bagagli da imbarcare?"
+    },
+    {
+        "speaker": "乘客 (Passeggero)",
+        "characters": [
+            { "h": "有", "p": "yǒu" },
+            { "h": "的", "p": "de" },
+            { "h": "，", "p": "" },
+            { "h": "只", "p": "zhǐ" },
+            { "h": "有", "p": "yǒu" },
+            { "h": "这", "p": "zhè" },
+            { "h": "一", "p": "yī" },
+            { "h": "个", "p": "gè" },
+            { "h": "行", "p": "xíng" },
+            { "h": "李", "p": "lǐ" },
+            { "h": "箱", "p": "xiāng" },
+            { "h": "。", "p": "" }
+        ],
+        "italian": "Sì, solo questa valigia."
+    },
+    {
+        "speaker": "地勤人员 (Addetto)",
+        "characters": [
+            { "h": "好", "p": "hǎo" },
+            { "h": "的", "p": "de" },
+            { "h": "，", "p": "" },
+            { "h": "您", "p": "nín" },
+            { "h": "的", "p": "de" },
+            { "h": "座", "p": "zuò" },
+            { "h": "位", "p": "wèi" },
+            { "h": "是", "p": "shì" },
+            { "h": "12", "p": "" },
+            { "h": "A", "p": "" },
+            { "h": "。", "p": "" },
+            { "h": "祝", "p": "zhù" },
+            { "h": "您", "p": "nín" },
+            { "h": "飞", "p": "fēi" },
+            { "h": "行", "p": "xíng" },
+            { "h": "愉", "p": "yú" },
+            { "h": "快", "p": "kuài" },
+            { "h": "。", "p": "" }
+        ],
+        "italian": "Va bene, il suo posto è il 12A. Le auguro un buon volo."
+    },
+    {
+        "speaker": "乘客 (Passeggero)",
+        "characters": [
+            { "h": "谢", "p": "xiè" },
+            { "h": "谢", "p": "xiè" },
+            { "h": "！", "p": "" }
+        ],
+        "italian": "Grazie!"
+    }
+]
