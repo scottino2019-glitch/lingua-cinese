@@ -1,0 +1,78 @@
+[
+    {
+        "speaker": "Li Hua",
+        "characters": [
+            { "h": "嗨", "p": "hāi" },
+            { "h": "，", "p": "" },
+            { "h": "李", "p": "lǐ" },
+            { "h": "华", "p": "huá" },
+            { "h": "！", "p": "" },
+            { "h": "真", "p": "zhēn" },
+            { "h": "巧", "p": "qiǎo" },
+            { "h": "啊", "p": "a" },
+            { "h": "！", "p": "" }
+        ],
+        "italian": "Ehi, Li Hua! Che coincidenza!"
+    },
+    {
+        "speaker": "Wang Wei",
+        "characters": [
+            { "h": "哦", "p": "ó" },
+            { "h": "，", "p": "" },
+            { "h": "王", "p": "wáng" },
+            { "h": "伟", "p": "wěi" },
+            { "h": "！", "p": "" },
+            { "h": "好", "p": "hǎo" },
+            { "h": "久", "p": "jiǔ" },
+            { "h": "不", "p": "bú" },
+            { "h": "见", "p": "jiàn" },
+            { "h": "，", "p": "" },
+            { "h": "你", "p": "nǐ" },
+            { "h": "好", "p": "hǎo" },
+            { "h": "吗", "p": "ma" },
+            { "h": "？", "p": "" }
+        ],
+        "italian": "Oh, Wang Wei! Quanto tempo, come stai?"
+    },
+    {
+        "speaker": "Li Hua",
+        "characters": [
+            { "h": "我", "p": "wǒ" },
+            { "h": "挺", "p": "tǐng" },
+            { "h": "好", "p": "hǎo" },
+            { "h": "的", "p": "de" },
+            { "h": "。", "p": "" },
+            { "h": "既", "p": "jì" },
+            { "h": "然", "p": "rán" },
+            { "h": "遇", "p": "yù" },
+            { "h": "到", "p": "dào" },
+            { "h": "了", "p": "le" },
+            { "h": "，", "p": "" },
+            { "h": "去", "p": "qù" },
+            { "h": "酒", "p": "jiǔ" },
+            { "h": "吧", "p": "bā" },
+            { "h": "喝", "p": "hē" },
+            { "h": "一", "p": "yì" },
+            { "h": "杯", "p": "bēi" },
+            { "h": "吗", "p": "ma" },
+            { "h": "？", "p": "" }
+        ],
+        "italian": "Sto bene. Visto che ci siamo incontrati, ti va di andare al bar a bere qualcosa?"
+    },
+    {
+        "speaker": "Wang Wei",
+        "characters": [
+            { "h": "好", "p": "hǎo" },
+            { "h": "主", "p": "zhǔ" },
+            { "h": "意", "p": "yì" },
+            { "h": "，", "p": "" },
+            { "h": "那", "p": "nà" },
+            { "h": "我", "p": "wǒ" },
+            { "h": "们", "p": "men" },
+            { "h": "走", "p": "zǒu" },
+            { "h": "吧", "p": "ba" },
+            { "h": "！", "p": "" }
+        ],
+        "italian": "Ottima idea, allora andiamo!"
+    }
+]
