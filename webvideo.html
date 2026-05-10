@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indice Lezioni di Cinese</title>
+    <style>
+        /* Stili Base e Variabili Webtoon */
+        :root {
+            --bg-color: #f0fdf4; 
+            --primary: #00dc64;  
+            --accent: #facc15; /* Giallo per variare i colori delle card */
+            --accent-2: #38bdf8; /* Azzurro */
+            --text-dark: #111827;
+            --border-color: #111827;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 900px; /* Più largo per accogliere la griglia */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Intestazione */
+        .header {
+            text-align: center;
+            background-color: var(--primary);
+            border: 4px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 6px 6px 0px var(--border-color);
+            padding: 24px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Griglia delle Card */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        /* Stile Card Episodio */
+        .episode-card {
+            background-color: var(--card-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 6px 6px 0px var(--border-color);
+            overflow: hidden;
+            text-decoration: none; /* Rimuove la sottolineatura del link */
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        /* Effetto Hover (quando passi sopra col mouse) */
+        .episode-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0px var(--border-color);
+        }
+
+        /* Copertina della Card */
+        .card-cover {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border-bottom: 4px solid var(--border-color);
+        }
+
+        .cover-1 { background-color: var(--primary); }
+        .cover-2 { background-color: var(--accent); }
+        .cover-3 { background-color: var(--accent-2); }
+
+        /* Contenuto Testuale della Card */
+        .card-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .badge {
+            align-self: flex-start;
+            background-color: var(--border-color);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 900;
+        }
+
+        .card-desc {
+            margin: 0;
+            font-size: 1rem;
+            color: #4b5563;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="header">
+            <h1>Impara il Cinese</h1>
+            <p>Seleziona un episodio per iniziare</p>
+        </header>
+
+        <main class="grid-container" id="episodes-grid">
+            
+            <!-- Episodio 1 -->
+            <a href="presentazioni.html" class="episode-card">
+                <div class="card-cover cover-1">👋</div>
+                <div class="card-content">
+                    <span class="badge">Episodio 1</span>
+                    <h2 class="card-title">Presentazioni</h2>
+                    <p class="card-desc">Impara a salutare e a presentarti in cinese.</p>
+                </div>
+            </a>
+
+            <!-- Episodio 2 (Aeroporto) -->
+            <!-- NOTA: Il link href punta al file HTML che contiene il player e i sottotitoli -->
+            <a href="webvideo/aereoporto.html" class="episode-card">
+                <div class="card-cover cover-2">✈️</div>
+                <div class="card-content">
+                    <span class="badge">Episodio 2</span>
+                    <h2 class="card-title">In Aeroporto</h2>
+                    <p class="card-desc">Dialogo al banco check-in, bagagli e biglietti.</p>
+                </div>
+            </a>
+
+            <!-- Episodio 3 (Esempio) -->
+            <a href="ristorante.html" class="episode-card">
+                <div class="card-cover cover-3">🍜</div>
+                <div class="card-content">
+                    <span class="badge">Episodio 3</span>
+                    <h2 class="card-title">Al Ristorante</h2>
+                    <p class="card-desc">Come ordinare il cibo e chiedere il conto.</p>
+                </div>
+            </a>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
