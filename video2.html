@@ -3,276 +3,437 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Vocabolario</title>
-
+    <title>Video Vocabolario - Cinese</title>
+    <!-- Tailwind CSS V4 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-          body {
-    font-family: Arial, sans-serif;
-    background-color: #b22222;
-    color: #fff8dc;
-    padding: 20px;
-}
-.card {
-width: 300px; 
-border: 1px solid #eee; 
-border-radius: 12px; 
-padding: 18px; 
-margin: 30px auto; 
-box-shadow: 0 2px 8px rgba(0,0,0,0.09); text-align: center;
-color: black;
-background-color: white;
-}
-img {
-width:100%;
- border-radius: 8px;
-}
-button {
-padding: 8px 18px; 
-border: none; 
-background: #1877f2; 
-color: #fff;
- border-radius: 6px;
- cursor: pointer;
-}
-h3 {
-margin: 14px 0 8px;
-}
-#modal1, #modal2, #modal3, #modal4, #modal5, #modal6, #modal7, #modal8, #modal9, #modal10 {
-display:none; 
-position:fixed;
- z-index:1000; 
-left:0; top:0; 
-width:100vw; 
-height:100vh; background:rgba(0,0,0,0.7); 
-align-items:center; justify-content:center;
-}
-
- 
-
+        /* Nasconde la scrollbar mantenendo la funzionalità (opzionale per un look più pulito) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body>
-<section class="bg-gradient-to-r from-yellow-600 to-red-800 text-white py-20 shadow-2xl transition-all">
-  <div class="max-w-4xl mx-auto px-4 text-center">
-    <h1 class="text-5xl font-bold mb-6">Video</h1>
-    <p class="text-xl mb-8 opacity-90">Vocabolario</p>
+<body class="bg-amber-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-red-800 via-red-700 to-yellow-600 text-white py-16 shadow-lg relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div> <!-- Overlay leggero -->
+        <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 tracking-tight drop-shadow-md">
+                Video <span class="text-yellow-300">Vocabolario</span>
+            </h1>
+            <p class="text-lg md:text-xl font-medium opacity-95 max-w-2xl mx-auto">
+                Esplora le lezioni e migliora il tuo cinese un video alla volta.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content (Grid Cards) -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            
+            <!-- Card 1 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1592037628150-3b21af8fc6f4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyOXx8Vm9jYWJvbGFyaW8lMjBjaW5lc2V8ZW58MHx8fHwxNzYzMjQ5MzczfDA&ixlib=rb-4.1.0&q=85" alt="Giorni della settimana" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Giorni della settimana</h3>
+                    <button onclick="openModal('modal1')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1602716006102-631257093163?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwzMHx8Vm9jYWJvbGFyaW8lMjBjaW5lc2V8ZW58MHx8fHwxNzYzMjQ5MzczfDA&ixlib=rb-4.1.0&q=85" alt="Paesi" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Paesi</h3>
+                    <button onclick="openModal('modal2')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1578073273382-f847b29d2192?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyNHx8Q2hpbmVzZXxlbnwwfHx8fDE3NjMzMTUzMzF8MA&ixlib=rb-4.1.0&q=85" alt="Family" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Family</h3>
+                    <button onclick="openModal('modal3')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1678801451652-3a7991b94b35?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwzMHx8Q2luZXNlfGVufDB8fHx8MTc2MzM5MTMwN3ww&ixlib=rb-4.1.0&q=85" alt="Luoghi" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Luoghi</h3>
+                    <button onclick="openModal('modal4')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1691683268517-02ec5ebbc732?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyN3x8Q2luZXNlJTIwc2N1b2xhfGVufDB8fHx8MTc2MzM5MTYxMnww&ixlib=rb-4.1.0&q=85" alt="Scuola-lavoro" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Scuola-lavoro</h3>
+                    <button onclick="openModal('modal5')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1623042576837-31329d932898?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyfHxDaW5lc2UlMjAlRTQlQkQlQTAlRTUlQTUlQkR8ZW58MHx8fHwxNzYzMzkyMjE3fDA&ixlib=rb-4.1.0&q=85" alt="Saluti" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Saluti</h3>
+                    <button onclick="openModal('modal6')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1620226145137-bac9d59d2a14?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwzMHx8Q2luZXNlJTIwY2lib3xlbnwwfHx8fDE3NjMzOTI5MTJ8MA&ixlib=rb-4.1.0&q=85" alt="Cibo e bevande" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Cibo e bevande</h3>
+                    <button onclick="openModal('modal7')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1735342623465-949e42dec917?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxM3x8Q2luZXNlJTIwZmVsaWNlfGVufDB8fHx8MTc2MzM5Mjk4Mnww&ixlib=rb-4.1.0&q=85" alt="Stati D'animo" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Stati D'animo</h3>
+                    <button onclick="openModal('modal8')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1723360480906-44dc0d612f0f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyNHx8Q2luZXNlJTIwZG9tYW5kZXxlbnwwfHx8fDE3NjMzOTMzODZ8MA&ixlib=rb-4.1.0&q=85" alt="Domande" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Domande</h3>
+                    <button onclick="openModal('modal9')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 10 -->
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 overflow-hidden group border border-slate-100 flex flex-col">
+                <div class="relative overflow-hidden h-48">
+                    <img src="https://images.unsplash.com/photo-1690706828728-ad5a7431f5eb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHw1fHxDaW5lc2UlMjBhZXJlb3BvcnRvfGVufDB8fHx8MTc2MzM5MzQ2MHww&ixlib=rb-4.1.0&q=85" alt="Aereoporto" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-5 flex flex-col flex-grow text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex-grow">Aereoporto</h3>
+                    <button onclick="openModal('modal10')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-colors active:scale-95 flex items-center justify-center gap-2">
+                        ▶️ Guarda Video
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-10 mt-auto shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+            <a href="video.html" class="inline-block">
+                <button class="inline-flex items-center justify-center rounded-xl px-8 py-3 text-lg text-white font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 bg-gradient-to-r from-red-600 to-red-800 focus:ring-4 focus:ring-red-500/50 active:scale-95">
+                    <span class="mr-2">📝</span> Vai agli Esercizi
+                </button>
+            </a>
+            <a href="webvideo.html" class="inline-block">
+                <button class="inline-flex items-center justify-center rounded-xl px-8 py-3 text-lg text-white font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 bg-gradient-to-r from-red-600 to-red-800 focus:ring-4 focus:ring-red-500/50 active:scale-95">
+                    <span class="mr-2">🎥</span> Web Video
+                </button>
+            </a>
+            <div class="border-t border-slate-700 pt-6 mt-6">
+                <p class="mb-4 text-sm font-medium uppercase tracking-wider text-slate-400">Social & Fonti</p>
+                <a href="https://www.facebook.com/share/17jAQcLoyR/" target="_blank" rel="noopener noreferrer">
+                    <button class="inline-flex items-center gap-2 px-6 py-2 bg-[#1877f2] hover:bg-[#166fe5] text-white rounded-lg transition-colors font-medium">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                         Facebook
+                    </button>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS ================= -->
+    <!-- Template riutilizzabile per la logica, ripetuto per ogni video -->
     
-  </div>
-</section>
-    <!-- Card -->
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1592037628150-3b21af8fc6f4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyOXx8Vm9jYWJvbGFyaW8lMjBjaW5lc2V8ZW58MHx8fHwxNzYzMjQ5MzczfDA&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Giorni della settimana</h3>
-  
-<br>
-  <button data-modal="modal1">Guarda Video</button>
-</div>
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1602716006102-631257093163?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwzMHx8Vm9jYWJvbGFyaW8lMjBjaW5lc2V8ZW58MHx8fHwxNzYzMjQ5MzczfDA&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Paesi</h3>
-  
-<br>
-  <button data-modal="modal2">Guarda Video</button>
-</div>
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Giorni della settimana</h2>
+                <button onclick="closeModal('modal1')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/XRecorder_20251116_01.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1578073273382-f847b29d2192?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyNHx8Q2hpbmVzZXxlbnwwfHx8fDE3NjMzMTUzMzF8MA&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Family</h3>
-  
-<br>
-  <button data-modal="modal3">Guarda Video</button>
-</div>
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1678801451652-3a7991b94b35?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwzMHx8Q2luZXNlfGVufDB8fHx8MTc2MzM5MTMwN3ww&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Luoghi</h3>
-  
-<br>
-  <button data-modal="modal4">Guarda Video</button>
-</div>
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Paesi</h2>
+                <button onclick="closeModal('modal2')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/paesi.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1691683268517-02ec5ebbc732?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyN3x8Q2luZXNlJTIwc2N1b2xhfGVufDB8fHx8MTc2MzM5MTYxMnww&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Scuola-lavoro</h3>
-  
-<br>
-  <button data-modal="modal5">Guarda Video</button>
-</div>
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1623042576837-31329d932898?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyfHxDaW5lc2UlMjAlRTQlQkQlQTAlRTUlQTUlQkR8ZW58MHx8fHwxNzYzMzkyMjE3fDA&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Saluti</h3>
-  
-<br>
-  <button data-modal="modal6">Guarda Video</button>
-</div>
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Family</h2>
+                <button onclick="closeModal('modal3')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/family.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1620226145137-bac9d59d2a14?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwzMHx8Q2luZXNlJTIwY2lib3xlbnwwfHx8fDE3NjMzOTI5MTJ8MA&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Cibo e bevande</h3>
-  
-<br>
-  <button data-modal="modal7">Guarda Video</button>
-</div>
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1735342623465-949e42dec917?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxM3x8Q2luZXNlJTIwZmVsaWNlfGVufDB8fHx8MTc2MzM5Mjk4Mnww&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Stati D'animo</h3>
-  
-<br>
-  <button data-modal="modal8">Guarda Video</button>
-</div>
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1723360480906-44dc0d612f0f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyNHx8Q2luZXNlJTIwZG9tYW5kZXxlbnwwfHx8fDE3NjMzOTMzODZ8MA&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Domande</h3>
-  
-<br>
-  <button data-modal="modal9">Guarda Video</button>
-</div>
+    <!-- Modal 4 -->
+    <div id="modal4" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Luoghi</h2>
+                <button onclick="closeModal('modal4')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/posti.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-  <img src="https://images.unsplash.com/photo-1690706828728-ad5a7431f5eb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHw1fHxDaW5lc2UlMjBhZXJlb3BvcnRvfGVufDB8fHx8MTc2MzM5MzQ2MHww&ixlib=rb-4.1.0&q=85" alt="Immagine card">
-  <h3>Aereoporto</h3>
-  
-<br>
-  <button data-modal="modal10">Guarda Video</button>
-</div>
+    <!-- Modal 5 -->
+    <div id="modal5" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Scuola-lavoro</h2>
+                <button onclick="closeModal('modal5')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/lavoro&scuola.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
 
-<!-- Modal Video -->
-<div id="modal1" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/XRecorder_20251116_01.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal2" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/paesi.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal3" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/family.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal4" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/posti.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal5" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/lavoro&scuola.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal6" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/saluti.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal7" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/cibo-bevande.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal8" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/stati-danino.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal9" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/domande.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<div id="modal10" class="modal">
-  <div style="background:#fff; border-radius:8px; max-width:90vw; padding:24px; margin:auto; position:relative;">
-    <span class="close" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 style="margin-top:0;">Video nel Modal</h2>
-    <video controls style="width:100%; max-width:600px;">
-      <source src="video/aereoporto.mp4" type="video/mp4">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-</div>
-<footer class="bg-gradient-to-r from-yellow-600 to-red-800 text-white py-5 shadow-2xl transition-all text-center">
-<a href="video.html"><button class="inline-flex items-center justify-center rounded-md px-4 py-2 text-base text-white font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:transform active:scale-95">
-    <span class="mr-2">➡️</span>Esercizi
-</button></a>
-<br>
-<h3>Source video <a href="https://www.facebook.com/share/17jAQcLoyR/"></h3><button>Facebook</button></a>
-</footer>
-<script>
-// Apri il modal associato al pulsante
-document.querySelectorAll('button[data-modal]').forEach(button => {
-  button.addEventListener('click', () => {
-    const modalId = button.getAttribute('data-modal');
-    document.getElementById(modalId).style.display = 'flex';
-  });
-});
+    <!-- Modal 6 -->
+    <div id="modal6" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Saluti</h2>
+                <button onclick="closeModal('modal6')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/saluti.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
 
-// Chiudi il modal cliccando sulla "x"
-document.querySelectorAll('.modal .close').forEach(span => {
-  span.addEventListener('click', () => {
-    const modal = span.closest('.modal');
-    // Metti pausa al video dentro il modal
-    const video = modal.querySelector('video');
-    if(video) video.pause();
-    modal.style.display = 'none';
-  });
-});
+    <!-- Modal 7 -->
+    <div id="modal7" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Cibo e bevande</h2>
+                <button onclick="closeModal('modal7')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/cibo-bevande.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
 
-// Chiudi il modal cliccando fuori dal contenuto
-window.addEventListener('click', event => {
-  if(event.target.classList.contains('modal')) {
-    // Metti pausa al video dentro il modal
-    const video = event.target.querySelector('video');
-    if(video) video.pause();
-    event.target.style.display = 'none';
-  }
-});
-</script>
+    <!-- Modal 8 -->
+    <div id="modal8" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Stati D'animo</h2>
+                <button onclick="closeModal('modal8')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/stati-danino.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 9 -->
+    <div id="modal9" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Domande</h2>
+                <button onclick="closeModal('modal9')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/domande.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 10 -->
+    <div id="modal10" class="modal-overlay fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="modal-box bg-white rounded-2xl overflow-hidden w-full max-w-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-xl font-bold text-slate-800">Aereoporto</h2>
+                <button onclick="closeModal('modal10')" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-full transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="bg-black aspect-video w-full relative">
+                <video controls class="w-full h-full absolute inset-0">
+                    <source src="video/aereoporto.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per aprire il modal con effetto di transizione
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            const modalBox = modal.querySelector('.modal-box');
+            
+            // Rimuovi display: none
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Forza il reflow per far partire l'animazione CSS
+            void modal.offsetWidth;
+            
+            // Aggiungi le classi per l'animazione di entrata
+            modal.classList.remove('opacity-0');
+            modalBox.classList.remove('scale-95');
+            modalBox.classList.add('scale-100');
+        }
+
+        // Funzione per chiudere il modal e mettere in pausa il video
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            const modalBox = modal.querySelector('.modal-box');
+            const video = modal.querySelector('video');
+            
+            // Anima l'uscita
+            modal.classList.add('opacity-0');
+            modalBox.classList.remove('scale-100');
+            modalBox.classList.add('scale-95');
+            
+            // Metti in pausa il video
+            if(video) {
+                video.pause();
+            }
+            
+            // Aspetta la fine della transizione prima di nascondere l'elemento dal DOM
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300); // 300ms corrisponde a duration-300 in Tailwind
+        }
+
+        // Chiudi il modal cliccando fuori dal contenuto (sul background scuro)
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(event) {
+                // Assicurati che il click sia sull'overlay e non sui figli (es. il modal box stesso)
+                if (event.target === this) {
+                    closeModal(this.id);
+                }
+            });
+        });
+
+        // Opzionale: chiudi il modal premendo il tasto ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay:not(.hidden)').forEach(modal => {
+                    closeModal(modal.id);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
