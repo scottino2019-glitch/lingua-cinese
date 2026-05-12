@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>找到 - Media Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+           background-color: #a34134;
+  background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
+  
+  /* Effetto ombra ambientale */
+  box-shadow: inset 0 0 150px rgba(0,0,0,0.4);
+  border: 4px solid #333;
+}
+        .font-serif { 
+            font-family: 'Crimson Pro', serif; 
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex items-center justify-center p-4 py-12 md:p-8">
+
+    <main class="w-full max-w-4xl bg-white p-6 md:p-12 lg:p-16 rounded-[40px] shadow-sm border border-slate-100">
+        
+        <div class="text-center mb-12">
+            <span class="text-xs font-black tracking-[0.2em] text-indigo-500 uppercase">Ideogrammi</span>
+            <h1 class="text-6xl md:text-7xl font-serif font-bold mt-4 text-zinc-900">找到</h1>
+        </div>
+
+        <div class="flex flex-col gap-8">
+            
+            <!-- Sezione Video -->
+            <div class="rounded-2xl overflow-hidden bg-black shadow-lg ring-1 ring-slate-900/5">
+                <video controls src="video/zhaodao.mp4" class="w-full aspect-video object-contain outline-none">
+                    Il tuo browser non supporta il video.
+                </video>
+            </div>
+
+            <!-- Griglia Immagini: proporzioni intatte -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <div class="rounded-2xl overflow-hidden shadow-md ring-1 ring-slate-900/5 transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl bg-white flex items-center justify-center p-2">
+                    <img src="img/zdao1.jpg" class="w-full h-auto object-contain rounded-xl" alt="Illustrazione 1" />
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-md ring-1 ring-slate-900/5 transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl bg-white flex items-center justify-center p-2">
+                    <img src="img/zdao2.jpg" class="w-full h-auto object-contain rounded-xl" alt="Illustrazione 2" />
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-md ring-1 ring-slate-900/5 transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl bg-white flex items-center justify-center p-2">
+                    <img src="img/zdao3.jpg" class="w-full h-auto object-contain rounded-xl" alt="Illustrazione 3" />
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-md ring-1 ring-slate-900/5 transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl bg-white flex items-center justify-center p-2">
+                    <img src="img/zdao3.jpg" class="w-full h-auto object-contain rounded-xl" alt="Illustrazione 4" />
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
