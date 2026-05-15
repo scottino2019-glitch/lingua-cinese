@@ -29,8 +29,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@300..700&display=swap" rel="stylesheet">
 
-
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
   <style>
     #modalIframe {
       display: none;
@@ -91,6 +92,69 @@
 }
 @media (max-width: 768px) { .bell-container { top: 15px; right: 15px; } .animated-element { font-size: 1.6rem; padding: 10px; } }
 .demo-info { max-width: 500px; margin: 120px auto 0; padding: 24px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); text-align: center; }
+
+/* ---sticker---*/
+.quote-sticker-wrap {
+  padding: 20px;
+
+}
+
+.quote-sticker {
+  position: relative;
+  max-width: 300px;
+  padding: 18px 18px 16px;
+  background: #f6df7e;
+  color: #4a341c;
+  border-radius: 18px 18px 20px 18px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+  transform: rotate(-1.5deg);
+}
+
+.quote-sticker::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, #d63b3b 55%, #8d1111 100%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.22);
+}
+
+.quote-label {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.4);
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  font-family: "Shadows Into Light", cursive;
+}
+
+.quote-hanzi {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  line-height: 1.6;
+  font-weight: 700;
+font-family: "Zen Kaku Gothic New", sans-serif;
+font-family: "Zen Kaku Gothic New", sans-serif;
+}
+
+.quote-pinyin {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: #6b4c2f;
+font-family: "Zen Kaku Gothic New", sans-serif;
+}
+
+.quote-sticker-error {
+  background: #f1d3d3;
+}
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-r from-yellow-500 to-red-500 text-slate-800">
@@ -111,6 +175,9 @@
       <span class="text-lg font-serif italic text-yellow-400">Apprendimento Interattivo</span>
     </div>
   </div>
+<section class="quote-sticker-wrap">
+  <div id="quoteSticker"></div>
+</section>
 <div class="bell-container">
 <span id="bell-swing" class="animated-element">🔔</span>
 </div>
@@ -510,6 +577,37 @@ if (updateTime > sevenDaysAgo) {
       console.error('Errore nel caricamento delle visite:', error);
       document.getElementById('contatore-visite').innerText = 'N/D';
     });
+
+// stickers
+async function loadQuoteSticker() {
+  const container = document.getElementById("quoteSticker");
+
+  try {
+    const response = await fetch("./sticker-frase.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("JSON non trovato");
+
+    const data = await response.json();
+    const item = data[0];
+
+    container.innerHTML = `
+      <article class="quote-sticker">
+        <div class="quote-label">${item.title}</div>
+        <p class="quote-hanzi">${item.hanzi}</p>
+        <p class="quote-pinyin">${item.pinyin}</p>
+      </article>
+    `;
+  } catch (error) {
+    container.innerHTML = `
+      <article class="quote-sticker quote-sticker-error">
+        <div class="quote-label">Frase del giorno</div>
+        <p class="quote-hanzi">Contenuto non disponibile</p>
+        <p class="quote-pinyin">Controlla il file JSON</p>
+      </article>
+    `;
+  }
+}
+
+loadQuoteSticker();
   </script>
 </body>
 </html>
