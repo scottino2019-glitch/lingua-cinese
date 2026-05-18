@@ -94,18 +94,6 @@
     "Esempio: 我不去 (Wǒ bù qù) - Io non vado."
   ]
 },
-{
-  "chinese": "人",
-  "pinyin": "rén",
-  "translation": "persona / uomo",
-  "category": "Sostantivi",
-  "spiegazione": [
-    "👤 ORIGINE: Un pittogramma che raffigura una persona di profilo che cammina.",
-    "🏮 RADICALE: Quando si trova a sinistra in altri caratteri, si stringe e diventa 亻 (dàn rén páng).",
-    "🧠 CURIOSITÀ: Indica l'essere umano in generale, senza distinzione di genere.",
-    "💬 ESEMPIO: 中国人 (Zhōngguórén) - Persona cinese (Cinese)."
-  ]
-},
   {
     "chinese": "中文",
     "pinyin": "zhōngwén",
@@ -141,19 +129,7 @@
       "💬 ESEMPIO: 大海 (Dà hăi) - Mare, oceano"
     ]
   },
-  {
-    "chinese": "女",
-    "pinyin": "nŭ",
-    "translation": "Donna",
-    "category": "Sostantivi",
-    "spiegazione": [
-      "👤 ORIGINE: Rappresenta una donna che camnina da sinistra verso destra.",
-      "💬 ESEMPIO: 女王 (nŭ wáng) - Regina",
-      "💬 ESEMPIO: 女儿 (nŭ er) - Figlia"
-    ]
-  },
-    
-  {
+ {
     "chinese": "米饭",
     "pinyin": "mǐ fàn",
     "translation": "Riso (cotto)",
