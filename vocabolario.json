@@ -248,8 +248,307 @@
       "👤 ORIGINE: il carattere è composto da una 'lama' (刃) sopra un 'cuore' (心). Significa avere il cuore così forte da sopportare anche il taglio di una lama senza reagire d'impulso",
       "🎎 PROVERBIO: Se sei paziente in un momento di rabbia sfuggirai a cento giorni di dolore."
     ]
+  },
+  {
+    "chinese": "山",
+    "pinyin": "shān",
+    "translation": "montagna",
+    "category": "Natura",
+    "spiegazione": [
+      "💧 ORIGINE: Rappresenta graficamente tre vette montuose stilizzate.",
+      "🏮 RADICALE: Funge da radicale per caratteri legati al rilievo, come 岛 (isola) o 岭 (catena montuosa).",
+      "🧠 CURIOSITÀ: Le montagne sono considerate sacre nella cultura cinese, simboli di stabilità e saggezza.",
+      "⚠️ ESEMPIO: 泰山在山东 (Tàishān zài Shāndōng) - Il Monte Tai si trova nello Shandong."
+    ]
+  },
+  {
+    "chinese": "月",
+    "pinyin": "yuè",
+    "translation": "luna / mese",
+    "category": "Tempo/Natura",
+    "spiegazione": [
+      "💧 ORIGINE: Deriva dalla forma di una falce di luna crescente.",
+      "🏮 RADICALE: Come radicale laterale (a sinistra) spesso indica parti del corpo (derivando da 肉 - carne).",
+      "🧠 CURIOSITÀ: Il calendario tradizionale cinese è lunisolare, per questo 'mese' e 'luna' usano lo stesso carattere.",
+      "⚠️ ESEMPIO: 下个月见 (Xià gè yuè jiàn) - Ci vediamo il mese prossimo."
+    ]
+  },
+  {
+    "chinese": "火",
+    "pinyin": "huǒ",
+    "translation": "fuoco",
+    "category": "Natura",
+    "spiegazione": [
+      "💧 ORIGINE: Raffigura una fiamma che divampa con scintille ai lati.",
+      "🏮 RADICALE: Quando appare alla base di un carattere si trasforma in quattro puntini: 灬.",
+      "🧠 CURIOSITÀ: Nel moderno gergo internet, 'huǒ' significa anche 'popolare' o 'virale'.",
+      "⚠️ ESEMPIO: 别玩火 (Bié wán huǒ) - Non giocare con il fuoco."
+    ]
+  },
+  {
+    "chinese": "木",
+    "pinyin": "mù",
+    "translation": "legno / albero",
+    "category": "Natura",
+    "spiegazione": [
+      "💧 ORIGINE: Disegno di un albero con rami e radici.",
+      "🏮 RADICALE: Costituisce la base di caratteri come 林 (bosco) o 森 (foresta).",
+      "🧠 CURIOSITÀ: È uno dei cinque elementi (Wuxing) della filosofia tradizionale cinese.",
+      "⚠️ ESEMPIO: 这是木头做的 (Zhè shì mùtou zuò de) - Questo è fatto di legno."
+    ]
+  },
+  {
+    "chinese": "日",
+    "pinyin": "rì",
+    "translation": "sole / giorno",
+    "category": "Tempo/Natura",
+    "spiegazione": [
+      "💧 ORIGINE: Anticamente era un cerchio con un punto al centro, che rappresentava il sole.",
+      "🏮 RADICALE: Presente in caratteri legati al tempo o alla luce, come 明 (luminoso/domani).",
+      "🧠 CURIOSITÀ: È l'unità fondamentale per contare i giorni e indica anche il Giappone (日本).",
+      "⚠️ ESEMPIO: 生日快乐 (Shēngrì kuàilè) - Buon compleanno."
+    ]
+  },
+  {
+    "chinese": "人",
+    "pinyin": "rén",
+    "translation": "persona / uomo",
+    "category": "Umanità",
+    "spiegazione": [
+      "💧 ORIGINE: Rappresentazione stilizzata di un uomo di profilo che cammina.",
+      "🏮 RADICALE: A sinistra si trasforma in 亻 (single person radical).",
+      "🧠 CURIOSITÀ: È uno dei caratteri più frequenti; due persone insieme formano 从 (seguire).",
+      "⚠️ ESEMPIO: 他是中国人 (Tā shì Zhōngguórén) - Lui è cinese."
+    ]
+  },
+  {
+    "chinese": "女",
+    "pinyin": "nǚ",
+    "translation": "donna",
+    "category": "Umanità",
+    "spiegazione": [
+      "💧 ORIGINE: Raffigura una donna inginocchiata in segno di rispetto (visione arcaica).",
+      "🏮 RADICALE: Presente in molti aggettivi come 好 (buono) e 妈 (mamma).",
+      "🧠 CURIOSITÀ: Molti cognomi antichi cinesi contengono questo radicale perché la società era originariamente matrilineare.",
+      "⚠️ ESEMPIO: 女儿八岁了 (Nǚ'ér bā suì le) - Mia figlia ha otto anni."
+    ]
+  },
+  {
+    "chinese": "子",
+    "pinyin": "zǐ",
+    "translation": "figlio / bambino",
+    "category": "Umanità",
+    "spiegazione": [
+      "💧 ORIGINE: Mostra un neonato in fasce con le braccia aperte.",
+      "🏮 RADICALE: Usato in caratteri relativi all'infanzia o allo studio, come 学 (studiare).",
+      "🧠 CURIOSITÀ: È anche un titolo onorifico per grandi filosofi, come Kongzi (Confucio).",
+      "⚠️ ESEMPIO: 男孩子 (Nánháizi) - Ragazzo."
+    ]
+  },
+  {
+    "chinese": "口",
+    "pinyin": "kǒu",
+    "translation": "bocca",
+    "category": "Corpo Umano",
+    "spiegazione": [
+      "💧 ORIGINE: Un semplice quadrato che rappresenta l'apertura della bocca.",
+      "🏮 RADICALE: Fondamentale per verbi legati all'uso della voce come 吃 (mangiare) o 喝 (bere).",
+      "🧠 CURIOSITÀ: È anche il classificatore per i membri della famiglia.",
+      "⚠️ ESEMPIO: 你家有几口人？ (Nǐ jiā yǒu jǐ kǒu rén?) - Quante persone ci sono nella tua famiglia?"
+    ]
+  },
+  {
+    "chinese": "心",
+    "pinyin": "xīn",
+    "translation": "cuore / mente",
+    "category": "Corpo Umano",
+    "spiegazione": [
+      "💧 ORIGINE: Pittogramma che riproduce vagamente la forma di un cuore umano.",
+      "🏮 RADICALE: Sotto un carattere rimane 心, a sinistra diventa 忄.",
+      "🧠 CURIOSITÀ: Per i cinesi, il cuore è la sede sia delle emozioni che del pensiero logico.",
+      "⚠️ ESEMPIO: 请放心 (Qǐng fàngxīn) - Per favore, stai tranquillo (letteralmente: posa il cuore)."
+    ]
+  },
+  {
+    "chinese": "手",
+    "pinyin": "shǒu",
+    "translation": "mano",
+    "category": "Corpo Umano",
+    "spiegazione": [
+      "💧 ORIGINE: Disegno di una mano con le cinque dita distinte.",
+      "🏮 RADICALE: Quando si trova a sinistra, assume la forma 扌 (ti-shou-pang).",
+      "🧠 CURIOSITÀ: Molti verbi d'azione manuale contengono questo radicale, come 打 (colpire).",
+      "⚠️ ESEMPIO: 手机 (shǒujī) - Telefono cellulare (letteralmente: macchina da mano)."
+    ]
+  },
+  {
+    "chinese": "目",
+    "pinyin": "mù",
+    "translation": "occhio",
+    "category": "Corpo Umano",
+    "spiegazione": [
+      "💧 ORIGINE: Rappresentazione di un occhio con la pupilla, ruotato in verticale.",
+      "🏮 RADICALE: Compare in verbi legati alla vista, come 看 (guardare) o 睡 (dormire).",
+      "🧠 CURIOSITÀ: In cinese moderno si usa più spesso 眼睛 (yǎnjing), mentre 目 è formale.",
+      "⚠️ ESEMPIO: 目标 (mùbiāo) - Obiettivo / Traguardo."
+    ]
+  },
+  {
+    "chinese": "门",
+    "pinyin": "mén",
+    "translation": "porta",
+    "category": "Oggetti",
+    "spiegazione": [
+      "💧 ORIGINE: Rappresenta un battente di una porta tradizionale.",
+      "🏮 RADICALE: Spesso racchiude altri caratteri, come 问 (chiedere) o 间 (spazio/stanza).",
+      "🧠 CURIOSITÀ: La soglia della porta è un elemento architettonico e spirituale importante in Cina.",
+      "⚠️ ESEMPIO: 开门 (kāimén) - Aprire la porta."
+    ]
+  },
+  {
+    "chinese": "鱼",
+    "pinyin": "yú",
+    "translation": "pesce",
+    "category": "Animali",
+    "spiegazione": [
+      "💧 ORIGINE: Pittogramma che mostra testa, corpo squamato e pinne del pesce.",
+      "🏮 RADICALE: Usato per nomi di creature acquatiche come 鲜 (fresco).",
+      "🧠 CURIOSITÀ: Il pesce è simbolo di abbondanza perché la sua pronuncia è identica a 余 (eccedenza).",
+      "⚠️ ESEMPIO: 我喜欢吃鱼 (Wǒ xǐhuān chī yú) - Mi piace mangiare il pesce."
+    ]
+  },
+  {
+    "chinese": "马",
+    "pinyin": "mǎ",
+    "translation": "cavallo",
+    "category": "Animali",
+    "spiegazione": [
+      "💧 ORIGINE: Rappresenta la criniera e le zampe di un cavallo al galoppo.",
+      "🏮 RADICALE: Presente in caratteri come 骑 (cavalcare) o 驾 (guidare).",
+      "🧠 CURIOSITÀ: È un carattere fondamentale per la fonetica: la particella interrogativa 吗 (ma) lo usa come base sonora.",
+      "⚠️ ESEMPIO: 马上 (mǎshàng) - Subito (letteralmente: sopra il cavallo)."
+    ]
+  },
+  {
+    "chinese": "雨",
+    "pinyin": "yǔ",
+    "translation": "pioggia",
+    "category": "Natura",
+    "spiegazione": [
+      "💧 ORIGINE: Mostra le gocce d'acqua che cadono dal cielo (rappresentato dalla linea superiore).",
+      "🏮 RADICALE: Si trova nella parte superiore di caratteri meteorologici come 雪 (neve) o 露 (rugiada).",
+      "🧠 CURIOSITÀ: La pioggia è storicamente legata alla figura del Drago, portatore d'acqua.",
+      "⚠️ ESEMPIO: 下雨了 (Xià yǔ le) - Sta piovendo."
+    ]
+  },
+  {
+    "chinese": "田",
+    "pinyin": "tián",
+    "translation": "campo coltivato",
+    "category": "Natura/Agricoltura",
+    "spiegazione": [
+      "💧 ORIGINE: Raffigura un appezzamento di terra diviso da canali di irrigazione.",
+      "🏮 RADICALE: Base di caratteri come 男 (uomo = forza 力 nei campi 田).",
+      "🧠 CURIOSITÀ: Molti cognomi cinesi derivano da questo carattere, evidenziando le radici agricole.",
+      "⚠️ ESEMPIO: 农田 (nóngtián) - Campo agricolo."
+    ]
+  },
+  {
+    "chinese": "车",
+    "pinyin": "chē",
+    "translation": "veicolo / carro",
+    "category": "Oggetti",
+    "spiegazione": [
+      "💧 ORIGINE: Vista dall'alto di un carro antico con ruote e asse.",
+      "🏮 RADICALE: Usato per termini legati ai trasporti, come 输 (trasportare) o 轮 (ruota).",
+      "🧠 CURIOSITÀ: Nel gioco degli scacchi cinesi (Xiangqi), il carro è il pezzo più potente.",
+      "⚠️ ESEMPIO: 火车 (huǒchē) - Treno (letteralmente: carro di fuoco)."
+    ]
+  },
+  {
+    "chinese": "言",
+    "pinyin": "yán",
+    "translation": "parola / parlare",
+    "category": "Comunicazione",
+    "spiegazione": [
+      "💧 ORIGINE: Raffigura una bocca con sopra dei tratti che indicano il suono emesso.",
+      "🏮 RADICALE: A sinistra si trasforma in 讠 (yan-zi-pang).",
+      "🧠 CURIOSITÀ: Presente in quasi tutti i caratteri relativi al linguaggio come 说 (parlare) o 语 (lingua).",
+      "⚠️ ESEMPIO: 语言 (yǔyán) - Lingua / Linguaggio."
+    ]
+  },
+  {
+    "chinese": "贝",
+    "pinyin": "bèi",
+    "translation": "conchiglia / denaro",
+    "category": "Economia",
+    "spiegazione": [
+      "💧 ORIGINE: Pittogramma di una conchiglia di ciprea aperta.",
+      "🏮 RADICALE: Indica concetti legati al valore o al commercio, come 贵 (costoso) o 货 (merce).",
+      "🧠 CURIOSITÀ: Le conchiglie erano la moneta corrente nell'antica Cina prima del metallo.",
+      "⚠️ ESEMPIO: 宝贝 (bǎobèi) - Tesoro / Tesoro (affettuoso)."
+    ]
+  },
+  {
+    "chinese": "食",
+    "pinyin": "shí",
+    "translation": "cibo / mangiare",
+    "category": "Cibo",
+    "spiegazione": [
+      "💧 ORIGINE: Raffigura un contenitore di cibo con un coperchio sopra.",
+      "🏮 RADICALE: A sinistra si trasforma in 饣 (shí-zì-páng).",
+      "🧠 CURIOSITÀ: Fondamentale in caratteri come 饭 (riso/pasto) e 饺 (raviolo).",
+      "⚠️ ESEMPIO: 食物 (shíwù) - Cibo / Alimento."
+    ]
+  },
+  {
+    "chinese": "走",
+    "pinyin": "zǒu",
+    "translation": "camminare / andare via",
+    "category": "Azioni",
+    "spiegazione": [
+      "💧 ORIGINE: Rappresenta una persona che corre con le braccia che oscillano.",
+      "🏮 RADICALE: Usato come base per verbi di movimento come 起 (alzarsi).",
+      "🧠 CURIOSITÀ: In cinese moderno significa camminare, ma in cinese classico significava correre.",
+      "⚠️ ESEMPIO: 我们走吧 (Wǒmen zǒu ba) - Andiamo!"
+    ]
+  },
+  {
+    "chinese": "衣",
+    "pinyin": "yī",
+    "translation": "vestito / abbigliamento",
+    "category": "Oggetti",
+    "spiegazione": [
+      "💧 ORIGINE: Raffigura un abito tradizionale incrociato sul petto.",
+      "🏮 RADICALE: A sinistra diventa 衤 (da non confondere con quello della divinità 礻).",
+      "🧠 CURIOSITÀ: Presente in caratteri come 裤 (pantaloni) o 衬 (camicia).",
+      "⚠️ ESEMPIO: 衣服 (yīfu) - Vestiti."
+    ]
+  },
+  {
+    "chinese": "鸟",
+    "pinyin": "niǎo",
+    "translation": "uccello",
+    "category": "Animali",
+    "spiegazione": [
+      "💧 ORIGINE: Pittogramma di un uccello con piume, becco e artigli.",
+      "🏮 RADICALE: Compare in nomi di specie volatili come 鸡 (pollo) o 鸭 (anatra).",
+      "🧠 CURIOSITÀ: La versione tradizionale (鳥) mostrava chiaramente quattro punti per le zampe.",
+      "⚠️ ESEMPIO: 小鸟在唱歌 (Xiǎoniǎo zài chànggē) - L'uccellino sta cantando."
+    ]
+  },
+  {
+    "chinese": "足",
+    "pinyin": "zú",
+    "translation": "piede / sufficiente",
+    "category": "Corpo Umano",
+    "spiegazione": [
+      "💧 ORIGINE: Rappresenta un piede collegato alla gamba (il cerchio superiore è il ginocchio).",
+      "🏮 RADICALE: A sinistra si trasforma in ⻊.",
+      "🧠 CURIOSITÀ: Come aggettivo significa 'abbastanza', derivando dall'idea di aver camminato a sufficienza.",
+      "⚠️ ESEMPIO: 足球 (zúqiú) - Calcio (palla al piede)."
+    ]
   }
-
 ]
 
 
