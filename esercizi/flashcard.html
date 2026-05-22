@@ -1,0 +1,857 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Cinese - Impara gli Ideogrammi</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .progress-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .game-area {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .flashcard-container {
+            perspective: 1000px;
+            margin: 30px auto;
+            width: 300px;
+            height: 200px;
+        }
+        
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .card-back {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 2rem;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .option-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #334155;
+        }
+        
+        .option-btn:hover {
+            border-color: #667eea;
+            background: #f1f5f9;
+            transform: translateY(-2px);
+        }
+        
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #166534;
+        }
+        
+        .option-btn.incorrect {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .feedback {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .feedback.show {
+            opacity: 1;
+        }
+        
+        .feedback.correct {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #22c55e;
+        }
+        
+        .feedback.incorrect {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-btn.active {
+            background: white;
+            color: #667eea;
+        }
+        
+        .writing-container {
+            max-width: 400px;
+            margin: 30px auto;
+            text-align: center;
+        }
+        
+        .writing-prompt {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+        
+        .writing-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 2rem;
+            font-family: 'Noto Sans SC', sans-serif;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .writing-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .writing-input.correct {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
+        
+        .writing-input.incorrect {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .game-area {
+                padding: 20px;
+            }
+            
+            .flashcard-container {
+                width: 250px;
+                height: 160px;
+            }
+            
+            .card-face {
+                font-size: 3rem;
+            }
+            
+            .card-back {
+                font-size: 1.5rem;
+            }
+            
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .mode-selector {
+                flex-wrap: wrap;
+            }
+            
+            .mode-btn {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇨🇳 Flashcard Cinese</h1>
+            <p>Impara 150 ideogrammi con il loro pinyin</p>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="currentCard">1</span>
+                    <span class="stat-label">Carta Attuale</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCards">150</span>
+                    <span class="stat-label">Totale</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="correctAnswers">0</span>
+                    <span class="stat-label">Corrette</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="accuracy">0%</span>
+                    <span class="stat-label">Precisione</span>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0.67%"></div>
+            </div>
+            
+            <div class="mode-selector">
+                <button class="mode-btn active" onclick="setMode('hanzi-to-pinyin')">Ideogramma → Pinyin</button>
+                <button class="mode-btn" onclick="setMode('pinyin-to-hanzi')">Pinyin → Ideogramma</button>
+                <button class="mode-btn" onclick="setMode('writing-hanzi')">Scrivi Ideogramma</button>
+                <button class="mode-btn" onclick="setMode('writing-pinyin')">Scrivi Pinyin</button>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <div class="flashcard-container">
+                <div class="flashcard" id="flashcard" onclick="flipCard()">
+                    <div class="card-face card-front" id="cardFront">
+                        人
+                    </div>
+                    <div class="card-face card-back" id="cardBack">
+                        rén
+                    </div>
+                </div>
+            </div>
+            
+            <div class="options-container" id="optionsContainer">
+                <button class="option-btn" onclick="selectAnswer(0)">rén</button>
+                <button class="option-btn" onclick="selectAnswer(1)">nǐ</button>
+                <button class="option-btn" onclick="selectAnswer(2)">hǎo</button>
+                <button class="option-btn" onclick="selectAnswer(3)">wǒ</button>
+            </div>
+            
+            <div class="writing-container" id="writingContainer" style="display: none;">
+                <div class="writing-prompt" id="writingPrompt">Scrivi l'ideogramma per "persona":</div>
+                <input type="text" class="writing-input" id="writingInput" placeholder="Scrivi qui...">
+                <button class="btn" onclick="checkWritingAnswer()" id="checkBtn">Controlla</button>
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <div class="controls">
+                <button class="btn" onclick="flipCard()">Gira Carta</button>
+                <button class="btn" onclick="nextCard()" id="nextBtn" disabled>Prossima</button>
+                <button class="btn" onclick="resetGame()">Ricomincia</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database di 150 ideogrammi cinesi con pinyin
+        const flashcards = [
+            {hanzi: '人', pinyin: 'rén', meaning: 'persona'},
+            {hanzi: '你', pinyin: 'nǐ', meaning: 'tu'},
+            {hanzi: '好', pinyin: 'hǎo', meaning: 'bene/buono'},
+            {hanzi: '我', pinyin: 'wǒ', meaning: 'io'},
+            {hanzi: '是', pinyin: 'shì', meaning: 'essere'},
+            {hanzi: '的', pinyin: 'de', meaning: 'particella possessiva'},
+            {hanzi: '不', pinyin: 'bù', meaning: 'non'},
+            {hanzi: '在', pinyin: 'zài', meaning: 'essere in/a'},
+            {hanzi: '有', pinyin: 'yǒu', meaning: 'avere'},
+            {hanzi: '他', pinyin: 'tā', meaning: 'lui'},
+            {hanzi: '这', pinyin: 'zhè', meaning: 'questo'},
+            {hanzi: '中', pinyin: 'zhōng', meaning: 'centro/mezzo'},
+            {hanzi: '来', pinyin: 'lái', meaning: 'venire'},
+            {hanzi: '了', pinyin: 'le', meaning: 'particella aspettuale'},
+            {hanzi: '时', pinyin: 'shí', meaning: 'tempo'},
+            {hanzi: '会', pinyin: 'huì', meaning: 'sapere/incontrare'},
+            {hanzi: '可', pinyin: 'kě', meaning: 'potere'},
+            {hanzi: '什', pinyin: 'shén', meaning: 'cosa'},
+            {hanzi: '么', pinyin: 'me', meaning: 'particella interrogativa'},
+            {hanzi: '说', pinyin: 'shuō', meaning: 'dire'},
+            {hanzi: '她', pinyin: 'tā', meaning: 'lei'},
+            {hanzi: '去', pinyin: 'qù', meaning: 'andare'},
+            {hanzi: '出', pinyin: 'chū', meaning: 'uscire'},
+            {hanzi: '就', pinyin: 'jiù', meaning: 'allora/proprio'},
+            {hanzi: '都', pinyin: 'dōu', meaning: 'tutto'},
+            {hanzi: '把', pinyin: 'bǎ', meaning: 'prendere'},
+            {hanzi: '和', pinyin: 'hé', meaning: 'e/con'},
+            {hanzi: '对', pinyin: 'duì', meaning: 'giusto/verso'},
+            {hanzi: '没', pinyin: 'méi', meaning: 'non avere'},
+            {hanzi: '起', pinyin: 'qǐ', meaning: 'alzare'},
+            {hanzi: '还', pinyin: 'hái', meaning: 'ancora'},
+            {hanzi: '也', pinyin: 'yě', meaning: 'anche'},
+            {hanzi: '看', pinyin: 'kàn', meaning: 'guardare'},
+            {hanzi: '想', pinyin: 'xiǎng', meaning: 'pensare'},
+            {hanzi: '那', pinyin: 'nà', meaning: 'quello'},
+            {hanzi: '种', pinyin: 'zhǒng', meaning: 'tipo'},
+            {hanzi: '上', pinyin: 'shàng', meaning: 'sopra'},
+            {hanzi: '下', pinyin: 'xià', meaning: 'sotto'},
+            {hanzi: '自', pinyin: 'zì', meaning: 'se stesso'},
+            {hanzi: '己', pinyin: 'jǐ', meaning: 'se stesso'},
+            {hanzi: '过', pinyin: 'guò', meaning: 'passare'},
+            {hanzi: '家', pinyin: 'jiā', meaning: 'casa'},
+            {hanzi: '学', pinyin: 'xué', meaning: 'studiare'},
+            {hanzi: '生', pinyin: 'shēng', meaning: 'nascere/vita'},
+            {hanzi: '同', pinyin: 'tóng', meaning: 'stesso'},
+            {hanzi: '老', pinyin: 'lǎo', meaning: 'vecchio'},
+            {hanzi: '师', pinyin: 'shī', meaning: 'maestro'},
+            {hanzi: '开', pinyin: 'kāi', meaning: 'aprire'},
+            {hanzi: '三', pinyin: 'sān', meaning: 'tre'},
+            {hanzi: '现', pinyin: 'xiàn', meaning: 'ora/apparire'},
+            {hanzi: '问', pinyin: 'wèn', meaning: 'chiedere'},
+            {hanzi: '长', pinyin: 'cháng', meaning: 'lungo'},
+            {hanzi: '工', pinyin: 'gōng', meaning: 'lavoro'},
+            {hanzi: '作', pinyin: 'zuò', meaning: 'fare'},
+            {hanzi: '地', pinyin: 'dì', meaning: 'terra'},
+            {hanzi: '方', pinyin: 'fāng', meaning: 'direzione'},
+            {hanzi: '年', pinyin: 'nián', meaning: 'anno'},
+            {hanzi: '全', pinyin: 'quán', meaning: 'tutto'},
+            {hanzi: '手', pinyin: 'shǒu', meaning: 'mano'},
+            {hanzi: '应', pinyin: 'yīng', meaning: 'dovere'},
+            {hanzi: '该', pinyin: 'gāi', meaning: 'dovere'},
+            {hanzi: '因', pinyin: 'yīn', meaning: 'causa'},
+            {hanzi: '为', pinyin: 'wéi', meaning: 'per/fare'},
+            {hanzi: '所', pinyin: 'suǒ', meaning: 'luogo'},
+            {hanzi: '以', pinyin: 'yǐ', meaning: 'con/usare'},
+            {hanzi: '然', pinyin: 'rán', meaning: 'così'},
+            {hanzi: '后', pinyin: 'hòu', meaning: 'dopo'},
+            {hanzi: '前', pinyin: 'qián', meaning: 'prima'},
+            {hanzi: '面', pinyin: 'miàn', meaning: 'faccia'},
+            {hanzi: '公', pinyin: 'gōng', meaning: 'pubblico'},
+            {hanzi: '司', pinyin: 'sī', meaning: 'dipartimento'},
+            {hanzi: '又', pinyin: 'yòu', meaning: 'di nuovo'},
+            {hanzi: '从', pinyin: 'cóng', meaning: 'da'},
+            {hanzi: '事', pinyin: 'shì', meaning: 'cosa/affare'},
+            {hanzi: '两', pinyin: 'liǎng', meaning: 'due'},
+            {hanzi: '次', pinyin: 'cì', meaning: 'volta'},
+            {hanzi: '使', pinyin: 'shǐ', meaning: 'usare'},
+            {hanzi: '身', pinyin: 'shēn', meaning: 'corpo'},
+            {hanzi: '者', pinyin: 'zhě', meaning: 'persona che'},
+            {hanzi: '高', pinyin: 'gāo', meaning: 'alto'},
+            {hanzi: '代', pinyin: 'dài', meaning: 'generazione'},
+            {hanzi: '小', pinyin: 'xiǎo', meaning: 'piccolo'},
+            {hanzi: '大', pinyin: 'dà', meaning: 'grande'},
+            {hanzi: '水', pinyin: 'shuǐ', meaning: 'acqua'},
+            {hanzi: '火', pinyin: 'huǒ', meaning: 'fuoco'},
+            {hanzi: '土', pinyin: 'tǔ', meaning: 'terra'},
+            {hanzi: '木', pinyin: 'mù', meaning: 'legno'},
+            {hanzi: '金', pinyin: 'jīn', meaning: 'oro/metallo'},
+            {hanzi: '日', pinyin: 'rì', meaning: 'sole/giorno'},
+            {hanzi: '月', pinyin: 'yuè', meaning: 'luna/mese'},
+            {hanzi: '山', pinyin: 'shān', meaning: 'montagna'},
+            {hanzi: '川', pinyin: 'chuān', meaning: 'fiume'},
+            {hanzi: '田', pinyin: 'tián', meaning: 'campo'},
+            {hanzi: '目', pinyin: 'mù', meaning: 'occhio'},
+            {hanzi: '口', pinyin: 'kǒu', meaning: 'bocca'},
+            {hanzi: '耳', pinyin: 'ěr', meaning: 'orecchio'},
+            {hanzi: '心', pinyin: 'xīn', meaning: 'cuore'},
+            {hanzi: '门', pinyin: 'mén', meaning: 'porta'},
+            {hanzi: '车', pinyin: 'chē', meaning: 'macchina'},
+            {hanzi: '马', pinyin: 'mǎ', meaning: 'cavallo'},
+            {hanzi: '鱼', pinyin: 'yú', meaning: 'pesce'},
+            {hanzi: '鸟', pinyin: 'niǎo', meaning: 'uccello'},
+            {hanzi: '花', pinyin: 'huā', meaning: 'fiore'},
+            {hanzi: '草', pinyin: 'cǎo', meaning: 'erba'},
+            {hanzi: '树', pinyin: 'shù', meaning: 'albero'},
+            {hanzi: '书', pinyin: 'shū', meaning: 'libro'},
+            {hanzi: '电', pinyin: 'diàn', meaning: 'elettricità'},
+            {hanzi: '话', pinyin: 'huà', meaning: 'parola'},
+            {hanzi: '国', pinyin: 'guó', meaning: 'paese'},
+            {hanzi: '城', pinyin: 'chéng', meaning: 'città'},
+            {hanzi: '市', pinyin: 'shì', meaning: 'mercato/città'},
+            {hanzi: '店', pinyin: 'diàn', meaning: 'negozio'},
+            {hanzi: '饭', pinyin: 'fàn', meaning: 'riso/cibo'},
+            {hanzi: '菜', pinyin: 'cài', meaning: 'verdura'},
+            {hanzi: '肉', pinyin: 'ròu', meaning: 'carne'},
+            {hanzi: '茶', pinyin: 'chá', meaning: 'tè'},
+            {hanzi: '酒', pinyin: 'jiǔ', meaning: 'alcol'},
+            {hanzi: '钱', pinyin: 'qián', meaning: 'soldi'},
+            {hanzi: '买', pinyin: 'mǎi', meaning: 'comprare'},
+            {hanzi: '卖', pinyin: 'mài', meaning: 'vendere'},
+            {hanzi: '走', pinyin: 'zǒu', meaning: 'camminare'},
+            {hanzi: '跑', pinyin: 'pǎo', meaning: 'correre'},
+            {hanzi: '坐', pinyin: 'zuò', meaning: 'sedere'},
+            {hanzi: '站', pinyin: 'zhàn', meaning: 'stare in piedi'},
+            {hanzi: '睡', pinyin: 'shuì', meaning: 'dormire'},
+            {hanzi: '吃', pinyin: 'chī', meaning: 'mangiare'},
+            {hanzi: '喝', pinyin: 'hē', meaning: 'bere'},
+            {hanzi: '穿', pinyin: 'chuān', meaning: 'indossare'},
+            {hanzi: '住', pinyin: 'zhù', meaning: 'abitare'},
+            {hanzi: '玩', pinyin: 'wán', meaning: 'giocare'},
+            {hanzi: '笑', pinyin: 'xiào', meaning: 'ridere'},
+            {hanzi: '哭', pinyin: 'kū', meaning: 'piangere'},
+            {hanzi: '唱', pinyin: 'chàng', meaning: 'cantare'},
+            {hanzi: '跳', pinyin: 'tiào', meaning: 'saltare'},
+            {hanzi: '读', pinyin: 'dú', meaning: 'leggere'},
+            {hanzi: '写', pinyin: 'xiě', meaning: 'scrivere'},
+            {hanzi: '听', pinyin: 'tīng', meaning: 'ascoltare'},
+            {hanzi: '爱', pinyin: 'ài', meaning: 'amare'},
+            {hanzi: '喜', pinyin: 'xǐ', meaning: 'piacere'},
+            {hanzi: '欢', pinyin: 'huān', meaning: 'gioia'},
+            {hanzi: '快', pinyin: 'kuài', meaning: 'veloce'},
+            {hanzi: '慢', pinyin: 'màn', meaning: 'lento'},
+            {hanzi: '新', pinyin: 'xīn', meaning: 'nuovo'},
+            {hanzi: '旧', pinyin: 'jiù', meaning: 'vecchio'},
+            {hanzi: '多', pinyin: 'duō', meaning: 'molto'},
+            {hanzi: '少', pinyin: 'shǎo', meaning: 'poco'},
+            {hanzi: '远', pinyin: 'yuǎn', meaning: 'lontano'},
+            {hanzi: '近', pinyin: 'jìn', meaning: 'vicino'},
+            {hanzi: '左', pinyin: 'zuǒ', meaning: 'sinistra'},
+            {hanzi: '右', pinyin: 'yòu', meaning: 'destra'},
+            {hanzi: '东', pinyin: 'dōng', meaning: 'est'},
+            {hanzi: '西', pinyin: 'xī', meaning: 'ovest'},
+            {hanzi: '南', pinyin: 'nán', meaning: 'sud'},
+            {hanzi: '北', pinyin: 'běi', meaning: 'nord'},
+            {hanzi: '今', pinyin: 'jīn', meaning: 'oggi'},
+            {hanzi: '天', pinyin: 'tiān', meaning: 'cielo/giorno'},
+            {hanzi: '昨', pinyin: 'zuó', meaning: 'ieri'},
+            {hanzi: '明', pinyin: 'míng', meaning: 'domani/luminoso'},
+            {hanzi: '早', pinyin: 'zǎo', meaning: 'presto'},
+            {hanzi: '晚', pinyin: 'wǎn', meaning: 'tardi'},
+            {hanzi: '冷', pinyin: 'lěng', meaning: 'freddo'},
+            {hanzi: '热', pinyin: 'rè', meaning: 'caldo'},
+            {hanzi: '雨', pinyin: 'yǔ', meaning: 'pioggia'},
+            {hanzi: '雪', pinyin: 'xuě', meaning: 'neve'},
+            {hanzi: '风', pinyin: 'fēng', meaning: 'vento'},
+            {hanzi: '云', pinyin: 'yún', meaning: 'nuvola'}
+        ];
+        
+        let currentCardIndex = 0;
+        let correctAnswers = 0;
+        let totalAnswered = 0;
+        let gameMode = 'hanzi-to-pinyin'; // 'hanzi-to-pinyin', 'pinyin-to-hanzi', 'writing-hanzi', 'writing-pinyin'
+        let isFlipped = false;
+        let hasAnswered = false;
+        
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        function generateOptions(correctAnswer, isHanziMode) {
+            const options = [correctAnswer];
+            const availableCards = flashcards.filter(card => 
+                isHanziMode ? card.hanzi !== correctAnswer : card.pinyin !== correctAnswer
+            );
+            
+            const shuffledCards = shuffleArray(availableCards);
+            for (let i = 0; i < 3 && i < shuffledCards.length; i++) {
+                options.push(isHanziMode ? shuffledCards[i].hanzi : shuffledCards[i].pinyin);
+            }
+            
+            return shuffleArray(options);
+        }
+        
+        function updateCard() {
+            const card = flashcards[currentCardIndex];
+            const cardFront = document.getElementById('cardFront');
+            const cardBack = document.getElementById('cardBack');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const writingContainer = document.getElementById('writingContainer');
+            const writingPrompt = document.getElementById('writingPrompt');
+            const writingInput = document.getElementById('writingInput');
+            
+            // Reset card flip
+            document.getElementById('flashcard').classList.remove('flipped');
+            isFlipped = false;
+            hasAnswered = false;
+            
+            // Hide feedback
+            const feedback = document.getElementById('feedback');
+            feedback.classList.remove('show');
+            
+            // Disable next button
+            document.getElementById('nextBtn').disabled = true;
+            
+            if (gameMode === 'writing-hanzi' || gameMode === 'writing-pinyin') {
+                // Writing mode
+                optionsContainer.style.display = 'none';
+                writingContainer.style.display = 'block';
+                
+                if (gameMode === 'writing-hanzi') {
+                    cardFront.textContent = card.meaning;
+                    cardBack.textContent = card.hanzi;
+                    writingPrompt.textContent = `Scrivi l'ideogramma per "${card.meaning}":`;
+                    writingInput.placeholder = 'Scrivi l\'ideogramma...';
+                } else {
+                    cardFront.textContent = card.hanzi;
+                    cardBack.textContent = card.pinyin;
+                    writingPrompt.textContent = `Scrivi il pinyin per "${card.hanzi}":`;
+                    writingInput.placeholder = 'Scrivi il pinyin...';
+                }
+                
+                writingInput.value = '';
+                writingInput.className = 'writing-input';
+                writingInput.disabled = false;
+                document.getElementById('checkBtn').disabled = false;
+                
+            } else {
+                // Multiple choice mode
+                optionsContainer.style.display = 'grid';
+                writingContainer.style.display = 'none';
+                
+                if (gameMode === 'hanzi-to-pinyin') {
+                    cardFront.textContent = card.hanzi;
+                    cardBack.textContent = card.pinyin;
+                } else {
+                    cardFront.textContent = card.pinyin;
+                    cardBack.textContent = card.hanzi;
+                }
+                
+                // Generate new options
+                const correctAnswer = gameMode === 'hanzi-to-pinyin' ? card.pinyin : card.hanzi;
+                const options = generateOptions(correctAnswer, gameMode === 'pinyin-to-hanzi');
+                
+                const optionButtons = document.querySelectorAll('.option-btn');
+                optionButtons.forEach((btn, index) => {
+                    btn.textContent = options[index];
+                    btn.className = 'option-btn';
+                    btn.disabled = false;
+                });
+            }
+            
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            document.getElementById('currentCard').textContent = currentCardIndex + 1;
+            document.getElementById('correctAnswers').textContent = correctAnswers;
+            
+            const accuracy = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            
+            const progress = ((currentCardIndex + 1) / flashcards.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+        
+        function flipCard() {
+            const flashcard = document.getElementById('flashcard');
+            flashcard.classList.toggle('flipped');
+            isFlipped = !isFlipped;
+        }
+        
+        function selectAnswer(optionIndex) {
+            if (hasAnswered) return;
+            
+            hasAnswered = true;
+            totalAnswered++;
+            
+            const card = flashcards[currentCardIndex];
+            const correctAnswer = gameMode === 'hanzi-to-pinyin' ? card.pinyin : card.hanzi;
+            const selectedButton = document.querySelectorAll('.option-btn')[optionIndex];
+            const selectedAnswer = selectedButton.textContent;
+            
+            const feedback = document.getElementById('feedback');
+            const optionButtons = document.querySelectorAll('.option-btn');
+            
+            // Disable all buttons
+            optionButtons.forEach(btn => btn.disabled = true);
+            
+            if (selectedAnswer === correctAnswer) {
+                correctAnswers++;
+                selectedButton.classList.add('correct');
+                feedback.textContent = `Corretto! ${card.hanzi} si pronuncia "${card.pinyin}" e significa "${card.meaning}"`;
+                feedback.className = 'feedback correct show';
+            } else {
+                selectedButton.classList.add('incorrect');
+                // Highlight correct answer
+                optionButtons.forEach(btn => {
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                });
+                feedback.textContent = `Sbagliato! La risposta corretta è "${correctAnswer}". ${card.hanzi} significa "${card.meaning}"`;
+                feedback.className = 'feedback incorrect show';
+            }
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+            
+            updateProgress();
+        }
+        
+        function nextCard() {
+            if (currentCardIndex < flashcards.length - 1) {
+                currentCardIndex++;
+                updateCard();
+            } else {
+                // Game completed
+                const feedback = document.getElementById('feedback');
+                const accuracy = Math.round((correctAnswers / totalAnswered) * 100);
+                feedback.textContent = `Gioco completato! Hai risposto correttamente a ${correctAnswers} su ${totalAnswered} domande (${accuracy}% di precisione)`;
+                feedback.className = 'feedback correct show';
+                document.getElementById('nextBtn').disabled = true;
+            }
+        }
+        
+        function setMode(mode) {
+            gameMode = mode;
+            
+            // Update mode buttons
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            updateCard();
+        }
+        
+        function checkWritingAnswer() {
+            if (hasAnswered) return;
+            
+            hasAnswered = true;
+            totalAnswered++;
+            
+            const card = flashcards[currentCardIndex];
+            const writingInput = document.getElementById('writingInput');
+            const userAnswer = writingInput.value.trim();
+            const correctAnswer = gameMode === 'writing-hanzi' ? card.hanzi : card.pinyin;
+            
+            const feedback = document.getElementById('feedback');
+            
+            // Disable input and check button
+            writingInput.disabled = true;
+            document.getElementById('checkBtn').disabled = true;
+            
+            if (userAnswer === correctAnswer) {
+                correctAnswers++;
+                writingInput.classList.add('correct');
+                feedback.textContent = `Corretto! ${card.hanzi} si pronuncia "${card.pinyin}" e significa "${card.meaning}"`;
+                feedback.className = 'feedback correct show';
+            } else {
+                writingInput.classList.add('incorrect');
+                feedback.textContent = `Sbagliato! La risposta corretta è "${correctAnswer}". ${card.hanzi} significa "${card.meaning}"`;
+                feedback.className = 'feedback incorrect show';
+            }
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+            
+            updateProgress();
+        }
+        
+        function resetGame() {
+            currentCardIndex = 0;
+            correctAnswers = 0;
+            totalAnswered = 0;
+            updateCard();
+        }
+        
+        // Initialize game
+        updateCard();
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === ' ') {
+                e.preventDefault();
+                flipCard();
+            } else if (e.key >= '1' && e.key <= '4' && (gameMode === 'hanzi-to-pinyin' || gameMode === 'pinyin-to-hanzi')) {
+                const optionIndex = parseInt(e.key) - 1;
+                if (!hasAnswered) {
+                    selectAnswer(optionIndex);
+                }
+            } else if (e.key === 'Enter') {
+                if (gameMode === 'writing-hanzi' || gameMode === 'writing-pinyin') {
+                    if (!hasAnswered && !document.getElementById('checkBtn').disabled) {
+                        checkWritingAnswer();
+                    } else if (!document.getElementById('nextBtn').disabled) {
+                        nextCard();
+                    }
+                } else if (!document.getElementById('nextBtn').disabled) {
+                    nextCard();
+                }
+            } else if (e.key === 'ArrowRight') {
+                if (!document.getElementById('nextBtn').disabled) {
+                    nextCard();
+                }
+            }
+        });
+        
+        // Enable writing input re-activation
+        document.addEventListener('DOMContentLoaded', function() {
+            const writingInput = document.getElementById('writingInput');
+            writingInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !hasAnswered) {
+                    checkWritingAnswer();
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96366ddbd6fdbab8',t:'MTc1MzIyMzkxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+Answer();
+                }
+            });
+        });
+    </script>
+    </body>
+</hmlZ>
