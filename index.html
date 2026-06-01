@@ -664,7 +664,7 @@ font-family: "Zen Kaku Gothic New", sans-serif;
  async function renderingPostCinese() {
   try {
     // Carica il tuo file originale (aggiungiamo il timestamp per evitare che il browser lo tenga in cache)
-    const risposta = await fetch('./post.json?v=' + new Date().getTime()); 
+    const risposta = await fetch('post/post.json?v=' + new Date().getTime()); 
     const post = await risposta.json();
 
     // Formatta la data interna del tuo JSON in formato leggibile (es. 1 Giugno 2026)
