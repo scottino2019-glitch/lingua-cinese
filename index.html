@@ -156,7 +156,23 @@ font-family: "Zen Kaku Gothic New", sans-serif;
 .quote-sticker-error {
   background: #f1d3d3;
 }
+  #roji-container {
+  width: 80px; 
+  height: 80px;
+  /* L'espansione partirà dall'angolo in basso a destra */
+  transform-origin: bottom right; 
+}
+
+/* Espansione quando passi il mouse (PC) o fai tap (Mobile) */
+#roji-container:hover, 
+#roji-container:focus-within {
+  width: 450px !important;  /* Più largo per accogliere bene la chat */
+  height: 750px !important; /* Più alto */
   
+  /* Regole fondamentali per non uscire dallo schermo sugli smartphone */
+  max-width: calc(100vw - 40px) !important; 
+  max-height: calc(100vh - 40px) !important;
+}
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-r from-yellow-500 to-red-500 text-slate-800">
@@ -457,15 +473,7 @@ font-family: "Zen Kaku Gothic New", sans-serif;
     </div>
   </main>
 
-<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
-  <iframe 
-    id="roji-iframe"
-    src="https://roji-tawny.vercel.app/" 
-    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
-    scrolling="no"
-    allowtransparency="true">
-  </iframe>
-</div>
+
 
   <!-- Modal -->
   <div id="modalIframe">
@@ -519,7 +527,15 @@ font-family: "Zen Kaku Gothic New", sans-serif;
   </div>
 
 </footer>
-
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="auto"
+    allowtransparency="true">
+  </iframe>
+</div>
 
   <script>
 // Bell
