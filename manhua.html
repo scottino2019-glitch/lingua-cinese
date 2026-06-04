@@ -52,8 +52,23 @@
         .app-container {
             width: 100%;
             max-width: 400px;
-            height: 100vh;
-            max-height: 800px;
+            height: 100vh;"chat6": {
+            title: "Incontro dopo scuola (放学后见面)",
+            avatar: "🧋", 
+            messages: [
+                { type: "received", msgType: "audio", zh: "嘿！小王，好久不见！", py: "Hēi! Xiǎo Wáng, hǎojiǔ bùjiàn!", it: "Ehi! Xiao Wang, quanto tempo!", duration: "0:02", audioUrl: "demo" },
+                { type: "sent", zh: "咦？是你啊！你怎么在这儿？", py: "Yí? Shì nǐ a! Nǐ zěnme zài zhèr?", it: "Uh? Oh, sei tu! Come mai sei qui?" },
+                { type: "received", zh: "我来买杯奶茶。要一起吗？", py: "Wǒ lái mǎi bēi nǎichá. Yào yìqǐ ma?", it: "Sono venuto a prendere un bubble tea. Vuoi venire con me?" },
+                { type: "sent", zh: "好啊，走吧！我请客。", py: "Hǎo a, zǒu ba! Wǒ qǐngkè.", it: "Ottimo, andiamo! Offro io." }
+            ],
+            grammar: [
+                { title: "好久不见", desc: "Espressione molto comune per dire 'è tanto che non ci vediamo'." },
+                { title: "是你啊", desc: "Struttura usata quando si riconosce qualcuno con sorpresa: 'ah, sei tu!'." },
+                { title: "怎么在这儿", desc: "Usato per chiedere 'come mai sei qui?' in modo naturale." },
+                { title: "要一起吗？", desc: "Invito informale: 'vuoi venire insieme?'." },
+                { title: "我请客", desc: "Espressione per dire 'offro io' (pago io)." }
+            ]
+        }            max-height: 800px;
             background-color: var(--wa-bg);
             display: flex;
             flex-direction: column;
@@ -402,23 +417,23 @@
         { title: "好不好哇?", desc: "Forma molto colloquiale e dolce per fare una proposta: 'va bene?', 'daiiii?'. " }
     ]
 },
-        "chat6": {
-    title: "Incontro dopo scuola (放学后见面)",
-    avatar: "🧋", 
-    messages: [
-        { type: "received", msgType: "audio" zh: "嘿！小王，好久不见！", py: "Hēi! Xiǎo Wáng, hǎojiǔ bùjiàn!", it: "Ehi! Xiao Wang, quanto tempo!", duration: "0:02", audioUrl: "demo"  },
-        { type: "sent", zh: "咦？是你啊！你怎么在这儿？", py: "Yí? Shì nǐ a! Nǐ zěnme zài zhèr?", it: "Uh? Oh, sei tu! Come mai sei qui?" },
-        { type: "received", zh: "我来买杯奶茶。要一起吗？", py: "Wǒ lái mǎi bēi nǎichá. Yào yìqǐ ma?", it: "Sono venuto a prendere un bubble tea. Vuoi venire con me?" },
-        { type: "sent", zh: "好啊，走吧！我请客。", py: "Hǎo a, zǒu ba! Wǒ qǐngkè.", it: "Ottimo, andiamo! Offro io." }
-    ],
-    grammar: [
-        { title: "好久不见", desc: "Espressione molto comune per dire 'è tanto che non ci vediamo'." },
-        { title: "是你啊", desc: "Struttura usata quando si riconosce qualcuno con sorpresa: 'ah, sei tu!'." },
-        { title: "怎么在这儿", desc: "Usato per chiedere 'come mai sei qui?' in modo naturale." },
-        { title: "要一起吗？", desc: "Invito informale: 'vuoi venire insieme?'." },
-        { title: "我请客", desc: "Espressione per dire 'offro io' (pago io)." }
-    ]
-}
+       "chat6": {
+            title: "Incontro dopo scuola (放学后见面)",
+            avatar: "🧋", 
+            messages: [
+                { type: "received", msgType: "audio", zh: "嘿！小王，好久不见！", py: "Hēi! Xiǎo Wáng, hǎojiǔ bùjiàn!", it: "Ehi! Xiao Wang, quanto tempo!", duration: "0:02", audioUrl: "demo" },
+                { type: "sent", zh: "咦？是你啊！你怎么在这儿？", py: "Yí? Shì nǐ a! Nǐ zěnme zài zhèr?", it: "Uh? Oh, sei tu! Come mai sei qui?" },
+                { type: "received", zh: "我来买杯奶茶。要一起吗？", py: "Wǒ lái mǎi bēi nǎichá. Yào yìqǐ ma?", it: "Sono venuto a prendere un bubble tea. Vuoi venire con me?" },
+                { type: "sent", zh: "好啊，走吧！我请客。", py: "Hǎo a, zǒu ba! Wǒ qǐngkè.", it: "Ottimo, andiamo! Offro io." }
+            ],
+            grammar: [
+                { title: "好久不见", desc: "Espressione molto comune per dire 'è tanto che non ci vediamo'." },
+                { title: "是你啊", desc: "Struttura usata quando si riconosce qualcuno con sorpresa: 'ah, sei tu!'." },
+                { title: "怎么在这儿", desc: "Usato per chiedere 'come mai sei qui?' in modo naturale." },
+                { title: "要一起吗？", desc: "Invito informale: 'vuoi venire insieme?'." },
+                { title: "我请客", desc: "Espressione per dire 'offro io' (pago io)." }
+            ]
+        }
     };
 
     const chatSelector = document.getElementById('chatSelector');
