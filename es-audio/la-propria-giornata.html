@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>frasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');/* Animazione per il testo scorrevole nello schermetto MP3 */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-150%); }
+        }
+        .animate-marquee {
+            animation: marquee 5s linear infinite;
+        }
+
+        /* Riflesso realistico del vinile con gradiente conico */
+        .vinyl-reflex {
+            background: conic-gradient(
+                #18181b 0deg, #3f3f46 45deg, #18181b 90deg, #3f3f46 135deg, 
+                #18181b 180deg, #3f3f46 225deg, #18181b 270deg, #3f3f46 315deg, #18181b 360deg
+            );
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 min-h-screen">
+    <div class="max-w-3xl mx-auto space-y-12">
+        <!-- Header -->
+        <header class="text-center space-y-4">
+            <p class="text-[10px] uppercase font-bold tracking-[0.4em] text-[#8a867e]">Progetto Educativo</p>
+            <h1 class="text-5xl serif font-bold text-[#2d2d2a] italic tracking-tight">la-propria-giornata</h1>
+            <div class="w-20 h-1 bg-[#d1a27e] mx-auto rounded-full"></div>
+            <p class="text-lg italic text-[#8a867e] serif leading-relaxed">ascoltare, leggere il testo </p>
+        </header>
+
+        <!-- Audio Player -->
+       <div id="turntable" class="group relative w-80 h-80 bg-[#5c3a21] border-8 border-[#3b2210] rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] p-4 flex items-center justify-center overflow-hidden transition-all">
+        
+        <!-- Piatto Metallica e Vinile -->
+        <div class="absolute left-6 w-64 h-64 bg-zinc-800 rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.8)] border border-zinc-600 flex items-center justify-center transition-transform group-[.is-playing]:animate-[spin_3s_linear_infinite]">
+            
+            <!-- Vinile con solchi e riflesso luce -->
+            <div class="w-60 h-60 rounded-full vinyl-reflex border-[4px] border-zinc-950 flex items-center justify-center shadow-inner relative">
+                <!-- Solchi del vinile finti -->
+                <div class="absolute inset-0 rounded-full border-[1px] border-zinc-700/20 m-2"></div>
+                <div class="absolute inset-0 rounded-full border-[1px] border-zinc-700/20 m-6"></div>
+                <div class="absolute inset-0 rounded-full border-[1px] border-zinc-700/20 m-10"></div>
+                <div class="absolute inset-0 rounded-full border-[1px] border-zinc-700/20 m-14"></div>
+                
+                <!-- Etichetta Centrale -->
+                <div class="w-20 h-20 bg-orange-600 rounded-full border-2 border-zinc-950 flex items-center justify-center z-10">
+                    <span class="text-[8px] font-bold text-orange-950 uppercase -mt-4">JAZZ REC</span>
+                    <!-- Foro del mandrino -->
+                    <div class="absolute w-2 h-2 bg-zinc-300 rounded-full border border-zinc-500 shadow-sm"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Braccio Meccanico (Tonearm) -->
+        <div class="absolute top-8 right-6 origin-[16px_16px] transition-transform duration-1000 ease-in-out group-[.is-playing]:rotate-[35deg] drop-shadow-xl z-20">
+            <!-- Base Rotante -->
+            <div class="w-8 h-8 rounded-full bg-zinc-300 border-4 border-zinc-400 shadow-lg relative z-10"></div>
+            <!-- Asta del braccio -->
+            <div class="w-2 h-36 bg-gradient-to-b from-zinc-200 to-zinc-400 absolute top-4 left-[12px] shadow-md z-0"></div>
+            <!-- Testina (Headshell) -->
+            <div class="w-5 h-8 bg-zinc-800 rounded-sm absolute top-[140px] left-[10px] rotate-[15deg] shadow-lg border-t-2 border-zinc-400">
+                <!-- Puntina (Stylus) -->
+                <div class="absolute -bottom-1 left-2 w-1 h-2 bg-red-500"></div>
+            </div>
+        </div>
+
+        <!-- Pulsante Accensione/Start (Alluminio) -->
+        <button id="btn-vinyl" class="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-zinc-300 border-b-4 border-zinc-500 active:border-b-0 active:translate-y-1 shadow-md flex items-center justify-center group-hover:ring-2 ring-zinc-400 transition-all z-30">
+            <div class="w-4 h-4 rounded-full bg-red-800 group-[.is-playing]:bg-red-500 group-[.is-playing]:shadow-[0_0_10px_#ef4444] transition-colors"></div>
+        </button>
+        
+        <!-- Decorazione manopole Volume/Pitch -->
+        <div class="absolute bottom-4 right-4 flex gap-2">
+            <div class="w-6 h-6 rounded-full bg-zinc-800 border-t-2 border-zinc-600 shadow-lg relative"><div class="absolute top-1 left-3 w-0.5 h-2 bg-white rotate-45"></div></div>
+            <div class="w-6 h-6 rounded-full bg-zinc-800 border-t-2 border-zinc-600 shadow-lg relative"><div class="absolute top-1 left-3 w-0.5 h-2 bg-white -rotate-12"></div></div>
+        </div>
+    </div>
+
+  <button onclick="toggleScript()" class="mt-6 text-[#5A5A40] font-bold hover:underline text-xs uppercase tracking-widest">
+                Mostra/Nascondi Trascrizione
+            </button>
+            <div id="script-container" class="hidden mt-6 p-8 bg-white rounded-2xl border border-[#e5e2db] text-[#3d3d3a] serif text-lg leading-relaxed whitespace-pre-wrap shadow-inner">
+                我的名字叫张明。我今年二十五岁，在一家电脑公司工作。虽然我的工作很忙，但是我很喜欢我的生活。
+Wǒ de míngzi jiào Zhāng Míng. Wǒ jīnnián èrshíwǔ suì, zài yī jiā diànnǎo gōngsī gōngzuò. Suīrán wǒ de gōngzuò hěn máng, dànshì wǒ hěn xǐhuan wǒ de shēnghuó.
+
+今天是星期六，我不用上班。早上八点半，我起床去公园跑步。早上的空气很好，公园里的人很多，有的在散步，有的在打太极拳。
+Jīntiān shì xīngqīliù, wǒ búyòng shàngbān. Zǎoshang bā diǎn bàn, wǒ qǐchuáng qù gōngyuán pǎobù. Zǎoshang de kōngqì hěn hǎo, gōngyuán lǐ de rén hěn duō, yǒude zài sànbù, yǒude zài dǎ tàijíquán.
+
+中午，我和朋友在一家四川餐馆吃午饭。我们点了麻婆豆腐和鱼香肉丝，菜有点儿辣，但是非常好吃。
+Zhōngwǔ, wǒ hé péngyou zài yī jiā Sìchuān cānguǎn chī wǔfàn. Wǒmen diǎnle mápó dòufu hé yúxiāng ròusī, cài yǒudiǎnr là, dànshì fēicháng hǎochī.
+
+晚上，我打算在家里看一部新电影，然后早点睡觉。明天我还要去超市买东西。
+Wǎnshang, wǒ dǎsuàn zài jiālǐ kàn yī bù xīn diànyǐng, ránhòu zǎodiǎn shuìjiào. Míngtiān wǒ hái yào qù chāoshì mǎi dōngxi.
+
+🇮🇹 Traduzione del testo
+Il mio nome è Zhang Ming. Quest'anno ho venticinque anni e lavoro in un'azienda informatica. Sebbene il mio lavoro mi impegni molto, la mia vita mi piace davvero tanto.
+
+Oggi è sabato e non devo lavorare. Alle 8:30 del mattino mi sono alzato e sono andato a correre al parco. L'aria del mattino è fantastica e al parco c'è molta gente: c'è chi passeggia e chi fa Tai Chi.
+
+A pranzo ho mangiato con un amico in un ristorante del Sichuan. Abbiamo ordinato il Mapo Tofu e il maiale sfilacciato al profumo di pesce (Yuxiang Rousi); i piatti erano un po' piccanti, ma davvero deliziosi.
+
+Questa sera ho intenzione di guardare un nuovo film a casa e poi di andare a dormire presto. Domani devo anche andare al supermercato a fare la spesa.
+            </div>
+        </div>
+
+        <!-- Comprehension Questions -->
+        <div class="space-y-8">
+            <h2 class="text-xs uppercase tracking-[0.3em] font-black text-[#8a867e] text-center">Analisi e Comprensione</h2>
+            <div class="grid gap-6">
+                
+            </div>
+        </div>
+
+        <!-- Final Quiz -->
+        
+            <div id="quiz-section" class="card p-12 bg-[#5A5A40] text-white border-none shadow-2xl shadow-[#5A5A40]/30 overflow-hidden relative">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
+                <h2 class="text-3xl serif font-bold italic mb-4 relative z-10">Quiz Finale</h2>
+                <div id="quiz-content" class="relative z-10">
+                    <p class="opacity-80 mb-8 serif text-lg italic">Metti alla prova quello che hai imparato con la sfida finale.</p>
+                    <button onclick="startQuiz()" class="bg-white text-[#5A5A40] px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#f9f7f2] transition-colors shadow-lg">
+                        Inizia il Quiz Finale
+                    </button>
+                </div>
+            </div>
+        
+
+        <footer class="text-center text-[#8a867e] py-16 text-xs uppercase tracking-[0.5em] font-bold border-t border-[#e5e2db] space-y-8">
+            <button onclick="window.location.reload()" class="mx-auto block px-8 py-3 bg-white border border-[#e5e2db] text-[#5A5A40] rounded-full text-[10px] tracking-widest font-black hover:bg-[#f9f7f2] transition-all">
+                Ricomincia l'Esercizio
+            </button>
+            <div>AudioEdu Creator • Natural Tones</div>
+        </footer>
+    </div>
+
+    <script>
+        function toggleScript() {
+            const container = document.getElementById('script-container');
+            container.classList.toggle('hidden');
+        }
+
+        function checkShortAnswer(qIdx, correctTxt) {
+            const input = document.getElementById('q-' + qIdx + '-input');
+            const btn = document.getElementById('q-' + qIdx + '-btn');
+            const val = input.value.trim().toLowerCase();
+            const correct = correctTxt.trim().toLowerCase();
+            
+            input.disabled = true;
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            
+            const feedback = document.getElementById('feedback-' + qIdx);
+            feedback.classList.remove('hidden');
+            
+            if (val === correct) {
+                feedback.innerText = "Ottimo lavoro! La risposta è corretta.";
+                feedback.className = "mt-6 p-4 rounded-xl text-sm font-bold serif italic bg-green-50 text-green-700 border border-green-100";
+                input.className = "flex-1 p-4 rounded-xl border-2 border-green-500 bg-green-50 outline-none";
+            } else {
+                feedback.innerText = "Quasi. La risposta corretta era: " + correctTxt;
+                feedback.className = "mt-6 p-4 rounded-xl text-sm font-bold serif italic bg-orange-50 text-orange-700 border border-orange-100";
+                input.className = "flex-1 p-4 rounded-xl border-2 border-orange-500 bg-orange-50 outline-none";
+            }
+        }
+
+        function checkAnswer(qIdx, optIdx, correctIdx) {
+            const feedback = document.getElementById('feedback-' + qIdx);
+            const buttons = document.querySelectorAll('[id^="q-' + qIdx + '-opt-"]');
+            
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.opacity = "0.5";
+            });
+            
+            feedback.classList.remove('hidden');
+            const clickedBtn = document.getElementById('q-' + qIdx + '-opt-' + optIdx);
+            clickedBtn.style.opacity = "1";
+
+            if (optIdx === correctIdx) {
+                feedback.innerText = "Eccellente. La risposta è corretta.";
+                feedback.className = "mt-6 p-4 rounded-xl text-sm font-bold serif italic bg-green-50 text-green-700 border border-green-100";
+                clickedBtn.className = "text-left p-4 rounded-xl border-2 border-green-500 bg-green-50 font-bold";
+            } else {
+                feedback.innerText = "Non proprio. La riflessione corretta era la numero " + (correctIdx + 1);
+                feedback.className = "mt-6 p-4 rounded-xl text-sm font-bold serif italic bg-orange-50 text-orange-700 border border-orange-100";
+                clickedBtn.className = "text-left p-4 rounded-xl border-2 border-orange-500 bg-orange-50 font-bold";
+                const correctBtn = document.getElementById('q-' + qIdx + '-opt-' + correctIdx);
+                correctBtn.style.opacity = "1";
+                correctBtn.className = "text-left p-4 rounded-xl border-2 border-green-500 bg-green-50 font-bold";
+            }
+        }
+
+        // Quiz Logic
+        let currentQuizQuestion = 0;
+        let score = 0;
+        const quizData = [{"id":"8864422b-7f9a-4e30-a697-f047b28d5f2b","type":"true_false","text":"张明在一家医院工作。","options":["Vero","Falso"],"correctAnswer":1},{"id":"33cb9b1a-31f1-41c5-8140-b58c022ad07e","type":"true_false","text":"今天是星期六，所以张明不用去公司","options":["Vero","Falso"],"correctAnswer":0},{"id":"b798b717-3a49-49b0-8e69-85538785cc1f","type":"true_false","text":"张明中午一个人吃了饭","options":["Vero","Falso"],"correctAnswer":1},{"id":"bf76edb1-0fe0-42ee-bb59-9d88e98eaa0a","type":"true_false","text":"四川菜的味道有点儿辣","options":["Vero","Falso"],"correctAnswer":0},{"id":"ae6b3705-4875-4545-aec4-e1ab0058fc81","type":"short_answer","text":"张明早上几点起床？去哪儿做什么？","options":[],"correctAnswer":"他早上八点半起床。他去公园跑步。"},{"id":"4e2360bd-3620-4d4e-9a7f-bad855c3dd52","type":"short_answer","text":"公园里的人在做什么？（写出两个活动）","options":[],"correctAnswer":"有的人在散步，有的人在打太极拳。"},{"id":"52a999ef-f00b-4082-968e-f93493debbe1","type":"short_answer","text":"张明今天晚上打算做什么？","options":[],"correctAnswer":"他打算在家里看一部新电影，然后早点睡觉。"}];
+
+        function startQuiz() {
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const container = document.getElementById('quiz-content');
+            if (currentQuizQuestion >= quizData.length) {
+                container.innerHTML = `
+                    <div class="text-center space-y-6 py-8">
+                        <h3 class="text-4xl serif font-bold italic">Sfida Completata</h3>
+                        <div class="w-16 h-1 bg-white/30 mx-auto rounded-full"></div>
+                        <p class="text-xl serif italic opacity-90">Il tuo punteggio: <span class="font-bold underline decoration-[#d1a27e] decoration-4 text-white">${score} / ${quizData.length}</span></p>
+                        <button onclick="window.location.reload()" class="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-full border border-white/30 transition-all font-bold text-xs uppercase tracking-widest mt-6">Ricomincia</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = quizData[currentQuizQuestion];
+            let interactiveContent = '';
+
+            if (q.type === 'short_answer') {
+                interactiveContent = `
+                    <div class="flex flex-col gap-4">
+                        <input 
+                            type="text" 
+                            id="quiz-input" 
+                            class="p-6 rounded-2xl border border-white/20 bg-white/5 text-white outline-none serif text-xl italic" 
+                            placeholder="Scrivi la risposta e premi invio..."
+                            onkeypress="if(event.key === 'Enter') handleQuizAnswer(this.value)"
+                        >
+                        <button 
+                            onclick="handleQuizAnswer(document.getElementById('quiz-input').value)"
+                            class="bg-white text-[#5A5A40] py-4 rounded-2xl font-bold uppercase tracking-widest text-xs"
+                        >
+                            Invia Risposta
+                        </button>
+                    </div>
+                `;
+            } else {
+                interactiveContent = `
+                    <div class="grid gap-4">
+                        ${q.options.map((opt, i) => `
+                            <button onclick="handleQuizAnswer(${i})" class="text-left p-6 rounded-2xl border border-white/20 bg-white/5 hover:bg-white/10 transition-all font-medium text-white shadow-sm serif text-lg italic">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="space-y-8">
+                    <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">
+                        <span>Domanda ${currentQuizQuestion + 1} di ${quizData.length}</span>
+                        <span>Corrette: ${score}</span>
+                    </div>
+                    <p class="text-2xl serif font-bold italic leading-tight">${q.text}</p>
+                    ${interactiveContent}
+                </div>
+            `;
+
+            if (q.type === 'short_answer') {
+                setTimeout(() => {
+                    const inp = document.getElementById('quiz-input');
+                    if(inp) inp.focus();
+                }, 100);
+            }
+        }
+
+        function handleQuizAnswer(ans) {
+            const q = quizData[currentQuizQuestion];
+            let isCorrect = false;
+
+            if (q.type === 'short_answer') {
+                const val = String(ans).trim().toLowerCase();
+                const correct = String(q.correctAnswer).trim().toLowerCase();
+                isCorrect = (val === correct);
+            } else {
+                isCorrect = (ans === q.correctAnswer);
+            }
+
+            if (isCorrect) score++;
+            currentQuizQuestion++;
+            renderQuizQuestion();
+        }
+  // --- LOGICA AUDIO E MECCANICA ---
+  
+        // --- LOGICA AUDIO E MECCANICA ---
+
+// TRACCIA 1: Giradischi (Brano soft/Jazzy)
+const trackVinyl = new Audio('voce/la-propria-giornata.mp3');
+const turntable = document.getElementById('turntable');
+const btnVinyl = document.getElementById('btn-vinyl');
+
+btnVinyl.addEventListener('click', () => {
+    if (turntable.classList.contains('is-playing')) {
+        trackVinyl.pause();
+        turntable.classList.remove('is-playing');
+    } else {
+        // Rimosse le righe errate su trackMP3 e mp3player che bloccavano il codice
+        trackVinyl.play().catch(error => {
+            console.error("Errore durante la riproduzione audio:", error);
+        });
+        turntable.classList.add('is-playing');
+    }
+});
+
+// Reset del vinile quando l'audio finisce naturalmente
+trackVinyl.addEventListener('ended', () => {
+    turntable.classList.remove('is-playing');
+});
+    </script>
+</body>
+</html>
