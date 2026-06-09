@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AudioGrid — Playlist</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-red-600 via-orange-500 to-amber-500 text-zinc-900 font-sans antialiased p-8">
+
+  <header class="max-w-7xl mx-auto mb-12 flex justify-between items-center border-b border-black/10 pb-6">
+    <div>
+      <h1 class="text-3xl font-black tracking-tight text-white drop-shadow-sm">Esercizi<span class="text-zinc-900">Audio</span></h1>
+      <p class="text-sm text-white/80 font-medium mt-1">Seleziona una card per aprire l'esercizio.</p>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto">
+    <div id="tracksGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      </div>
+  </main>
+
+  <script>
+    // Configura qui le tue card. Ogni card punta a un URL specifico.
+    const tracks = [
+      {
+        id: 1,
+        title: "Presentarsi",
+        category: "Ambient",
+        cover: "img/presentarsi.png",
+        url: "presentarsi.html", // Sostituisci con il tuo link alla pagina
+        emojis: "👥 👏 🗣"
+      },
+      {
+        id: 2,
+        title: "Beats Energetici",
+        category: "Synthwave",
+        cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80",
+        url: "https://www.google.com", // Sostituisci con il tuo link alla pagina
+        emojis: "⚡ 🎸 🎧"
+      },
+      {
+        id: 3,
+        title: "Podcast Epilogo",
+        category: "Talk",
+        cover: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=500&q=80",
+        url: "#", 
+        emojis: "🎙️ 🗣️ 💭"
+      },
+      {
+        id: 4,
+        title: "Natura e Suoni",
+        category: "Field Recording",
+        cover: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=500&q=80",
+        url: "#", 
+        emojis: "🍃 🐦 🌧️"
+      }
+    ];
+
+    const tracksGrid = document.getElementById('tracksGrid');
+
+    function renderGrid() {
+      tracksGrid.innerHTML = '';
+      
+      tracks.forEach(track => {
+        // Ogni card ora è un tag <a> che si comporta come un link alla pagina desiderata
+        const card = document.createElement('a');
+        card.href = track.url;
+        // Rimuovi o mantieni target="_blank" a seconda se vuoi aprire in una nuova scheda
+        card.target = "_blank"; 
+        card.className = "group block bg-white/95 backdrop-blur-md rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between border border-white/20";
+        
+        card.innerHTML = `
+          <div>
+            <div class="aspect-video w-full bg-zinc-100 relative overflow-hidden flex items-center justify-center">
+              <img src="${track.cover}" alt="${track.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              
+              <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200">
+                <div class="bg-white text-zinc-900 p-3 rounded-full shadow-md">
+                  <i data-lucide="external-link" class="w-5 h-5"></i>
+                </div>
+              </div>
+
+              <span class="absolute bottom-2 left-2 bg-zinc-900/80 backdrop-blur-md text-white text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-bold">
+                ${track.category}
+              </span>
+            </div>
+
+            <div class="p-4">
+              <h4 class="font-bold text-zinc-900 text-lg line-clamp-1 group-hover:text-red-600 transition-colors">
+                ${track.title}
+              </h4>
+              <p class="text-xs text-zinc-500 mt-0.5">Apri la pagina della traccia</p>
+            </div>
+          </div>
+
+          <div class="px-4 pb-4 pt-2 border-t border-zinc-100 bg-zinc-50/50 flex items-center gap-2 text-lg">
+            <span class="tracking-widest">${track.emojis}</span>
+          </div>
+        `;
+        
+        tracksGrid.appendChild(card);
+      });
+      
+      // Inizializza le icone Lucide
+      lucide.createIcons();
+    }
+
+    renderGrid();
+  </script>
+</body>
+</html>
