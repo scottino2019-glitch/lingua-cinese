@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TV RETRO - SINTONIZZATA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700;900&family=Courier+Prime:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            newspaper: ['"Courier Prime"', 'serif'],
+            chineseCalligraphy: ['"Ma Shan Zheng"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Sfondo nero assoluto con texture CRT integrata ad alta visibilità */
+    body {
+      background-color: #050505 !important;
+      background-image: 
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04)),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
+      background-size: 100% 4px, 6px 100%, 100% 100%;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+   /* SFONDO DINAMICO: Effetto segnale TV mal sintonizzato / Canale fantasma */
+    .bg-static-noise {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.18; 
+      background-image: url('https://images.unsplash.com/photo-1501141178950-e7fa06e4adf5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxOXx8c2ZhcmZhbGlvJTIwdGVsZXZpc2l2ZXxlbnwwfHx8fDE3ODE0Njg5NDJ8MA&ixlib=rb-4.1.0&q=85');
+      background-size: 400px 400px; 
+      background-repeat: repeat; 
+      pointer-events: none;
+    }
+
+    /* SPEGNIMENTO COMPLETO DELLE BARRE DI INTERFERENZA */
+    .bg-interference-bar, .bg-interference-bar-2 {
+      display: none !important;
+    }
+    /* Barre di tracking orizzontali (tipiche dei canali fuori frequenza o nastri VHS rovinati) */
+    .bg-interference-bar {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      height: 140px;
+      /* Aumentata la visibilità del bianco per contrastare il nero del body */
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05), transparent);
+      filter: blur(4px);
+      z-index: 0;
+      pointer-events: none;
+      animation: trackingPass 10s linear infinite;
+    }
+
+    .bg-interference-bar-2 {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02), transparent);
+      filter: blur(6px);
+      z-index: 0;
+      pointer-events: none;
+      animation: trackingPass 16s linear infinite;
+      animation-delay: -4s;
+    }
+
+    /* Distorsione sussultante dello sfondo */
+    @keyframes trackingPass {
+      0% { top: -20%; transform: scaleY(1) skewX(0deg); }
+      50% { transform: scaleY(1.3) skewX(3deg); }
+      100% { top: 120%; transform: scaleY(1) skewX(0deg); }
+    }
+
+    /* Vignettatura cinematografica attorno alla pagina */
+    .tv-vignette {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.95) 100%) !important;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
+    .wood-grain {
+      background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 12px);
+    }
+    .blinking {
+      animation: blinker 1.5s linear infinite;
+    }
+    @keyframes blinker {
+      50% { opacity: 0; }
+    }
+    
+    @media (max-width: 440px) {
+      #wrapper-main { transform: scale(0.85); }
+    }
+    @media (max-width: 375px) {
+      #wrapper-main { transform: scale(0.75); }
+    }
+  </style>
+</head>
+<body class="text-stone-900 font-sans min-h-screen flex flex-col items-center justify-start p-4 md:p-8 antialiased overflow-y-auto">
+
+  <div class="bg-static-noise"></div>
+  <div class="bg-interference-bar"></div>
+  <div class="bg-interference-bar-2"></div>
+  <div class="tv-vignette"></div>
+
+  <main id="wrapper-main" class="w-full max-w-xl flex flex-col justify-center items-center mt-6">        
+    
+    <div 
+      id="device-body"
+      class="aspect-video w-full max-w-xl rounded-[2rem] md:rounded-[2.5rem] mb-6 p-4 relative overflow-visible md:overflow-hidden flex flex-col justify-between shadow-[0_30px_70px_-15px_rgba(0,0,0,0.95)] transition-transform duration-300"
+      style="background: linear-gradient(135deg, #a0522d 0%, #ef4444 50%, #5c2c16 100%); border: 12px solid #4a210d; box-shadow: inset 0 4px 12px rgba(255,255,255,0.15), 0 10px 25px rgba(0,0,0,0.5);"
+    >
+      <div class="absolute inset-0 wood-grain pointer-events-none opacity-10"></div>
+            
+      <svg class="absolute inset-0 w-full h-full opacity-70 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <line x1="5" y1="12" x2="25" y2="22" stroke="#4a4a4a" stroke-width="0.5" stroke-linecap="round" />
+        <line x1="25" y1="22" x2="20" y2="35" stroke="#4a4a4a" stroke-width="0.4" stroke-linecap="round" />
+        <line x1="85" y1="10" x2="70" y2="35" stroke="#1c1c1c" stroke-width="0.5" stroke-linecap="round" />
+        <line x1="72" y1="33" x2="88" y2="45" stroke="#ffffff" stroke-width="0.3" stroke-linecap="round" />
+        <line x1="12" y1="75" x2="45" y2="92" stroke="#2a2a2a" stroke-width="0.4" stroke-linecap="round" />
+      </svg>    
+
+      <div class="relative w-full h-full z-10">                
+        <div class="relative w-full h-full flex p-3.5 gap-3.5 text-neutral-800">
+          
+          <div class="absolute inset-x-0 top-0 h-4 flex justify-between px-16 pointer-events-none select-none">
+            <div id="tv-antenna-l" class="absolute left-24 w-1 bg-stone-400 origin-bottom transition-all duration-300 pointer-events-none z-0" style="height: 60px; transform: rotate(-35deg) translateY(-100%);">
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-600 rounded-full"></div>
+            </div>
+            <div id="tv-antenna-r" class="absolute right-28 w-1 bg-stone-400 origin-bottom transition-all duration-300 pointer-events-none z-0" style="height: 60px; transform: rotate(35deg) translateY(-100%);">
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-600 rounded-full"></div>
+            </div>
+          </div>
+
+          <div class="flex-1 rounded-[1.8rem] border-[6px] border-neutral-700/60 bg-neutral-900 shadow-inner relative flex overflow-hidden ring-4 ring-black/45 z-10 select-none">
+            <div class="absolute inset-0 bg-[#1e2a1e] overflow-hidden flex items-center justify-center font-mono" id="crt-screen">
+              <div id="crt-bg-glow" class="absolute inset-0 bg-[#344e34] pointer-events-none opacity-40 animate-pulse"></div>
+                    
+              <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.15)_50%,transparent_50%)] bg-[size:100%_4px] pointer-events-none z-10"></div>
+              <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_33%,rgba(255,0,0,0.03)_66%,rgba(0,0,255,0.03)_100%)] bg-[size:3px_100%] pointer-events-none z-10"></div>
+              <div class="absolute inset-0 bg-radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0)_60%) pointer-events-none z-15"></div>
+              <div class="absolute inset-0 shadow-[inset_0_4px_24px_rgba(0,0,0,0.85)] pointer-events-none z-15"></div>
+
+              <div id="tv-snow-layer" class="absolute inset-0 bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[size:4px_4px] mix-blend-difference pointer-events-none z-9 opacity-40 transition-opacity duration-300"></div>
+
+              <div id="tv-video-container" class="absolute inset-0 z-20 hidden">
+                <video id="tv-player" class="w-full h-full object-cover" loop playsinline></video>
+              </div>
+
+              <div id="tv-status-screen" class="z-25 text-center text-[#7cfc00] leading-tight tracking-wider flex flex-col items-center">
+                <span class="text-3xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-3 py-1 rounded bg-black/50">CH 04</span>
+                <span class="text-white bg-red-650 text-[9px] px-2 py-0.5 rounded mt-2 uppercase tracking-widest font-bold">ASSENZA SEGNALE</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-24 bg-black/15 border border-black/5 rounded-2xl flex flex-col justify-between items-center p-2 pt-3 z-10 font-mono select-none">
+            <div class="text-[9px] font-black uppercase text-black/60 tracking-wider text-center">SUPER-CHRON</div>
+
+            <div class="flex flex-col items-center gap-0.5 mt-2">
+              <button id="tv-knob-ch" class="w-10 h-10 rounded-full bg-gradient-to-r from-stone-600 via-stone-400 to-stone-700 border-2 border-stone-850 flex items-center justify-center shadow-md active:scale-95 transition-transform cursor-pointer relative">
+                <div id="tv-knob-notch" class="absolute inset-0 pointer-events-none flex justify-center transform transition-transform" style="transform: rotate(0deg);">
+                  <div class="w-0.5 h-3 bg-stone-900 rounded-b"></div>
+                </div>
+                <div class="w-6 h-6 bg-stone-800 rounded-full border border-stone-900 flex items-center justify-center text-stone-300 font-bold text-xs select-none shadow-inner" id="tv-ch-num">
+                  4
+                </div>
+              </button>
+              <span class="text-[7.5px] text-black/55 font-bold mt-0.5 uppercase tracking-wide">CANALE</span>
+            </div>
+
+            <div class="w-full flex justify-around my-1 px-1">
+              <div class="flex flex-col items-center">
+                <input type="range" id="tv-slider-ant" min="20" max="140" value="60" class="w-1.5 h-10 bg-black/45 rounded-lg cursor-ns-resize cursor-pointer" style="writing-mode: vertical-lr; direction: rtl; -webkit-appearance: slider-vertical;" />
+                <span class="text-[6.5px] text-black/55 font-bold mt-1 scale-85 uppercase">ANT</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <input type="range" id="tv-slider-stat" min="0" max="100" value="45" class="w-1.5 h-10 bg-black/45 rounded-lg cursor-ns-resize cursor-pointer" style="writing-mode: vertical-lr; direction: rtl; -webkit-appearance: slider-vertical;" />
+                <span class="text-[6.5px] text-black/55 font-bold mt-1 scale-85 uppercase">STAT</span>
+              </div>
+            </div>
+
+            <div class="w-full h-8 flex justify-between px-2 bg-black/20 rounded-md py-1">
+              <div class="w-1 h-full bg-stone-900/40 rounded-full"></div>
+              <div class="w-1 h-full bg-stone-900/40 rounded-full"></div>
+              <div class="w-1 h-full bg-stone-900/40 rounded-full"></div>
+              <div class="w-1 h-full bg-stone-900/40 rounded-full"></div>
+            </div>
+
+            <div class="flex flex-col items-center mt-2.5">
+              <button id="tv-toggle-power" class="w-8 h-8 rounded-full border border-black/40 shadow-md flex items-center justify-center transition-all cursor-pointer bg-red-650 text-white active:translate-y-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
+                </svg>
+              </button>
+              <span class="text-[7px] text-black/55 font-bold mt-0.5 tracking-wider">POWER</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full max-w-xl bg-[#ebdcb9] border-2 border-[#ccbd96] text-stone-900 p-6 rounded-sm shadow-2xl font-newspaper relative mt-2 border-t-[6px] border-t-stone-800">
+      
+      <div class="border-b-4 border-stone-900 pb-2 mb-4 text-center relative">
+        <h1 class="text-5xl font-chineseCalligraphy text-stone-950 tracking-wide mb-1 select-none">
+          遠東無線電日報
+        </h1>
+        <p class="text-[11px] tracking-[0.25em] text-stone-700 font-sans font-bold uppercase mb-2">
+          - THE FAR EAST WIRELESS DAILY -
+        </p>
+        
+        <div class="flex justify-between text-xs font-mono px-2 border-t-2 border-stone-900 mt-1 pt-1 font-bold text-stone-800">
+          <span>第 ... 號 (N. 947)</span>
+          <span>14 GIUGNO 1976</span>
+          <span>定價五角 (0.50 YUAN)</span>
+        </div>
+      </div>
+
+      <div class="w-full text-stone-950">
+        <div class="bg-stone-950 text-[#ebdcb9] text-xs font-bold px-3 py-1.5 uppercase tracking-widest text-center mb-4 font-sans">
+          電視節目表 ── ANNUNCIO PROGRAMMI TELEVISIVI
+        </div>
+        
+        <div class="space-y-3" id="tv-guide-list">
+          </div>
+      </div>
+
+      <div class="border-t border-stone-400 mt-5 pt-3 grid grid-cols-2 text-[10px] text-stone-700 leading-tight">
+        <div class="pr-2 border-r border-stone-300">
+          <span class="font-bold">SINTONIZZAZIONE AUTOMATICA:</span> Ruotando il selettore analogico si rinfresca la Guida Spettacoli sul quotidiano cartaceo.
+        </div>
+        <div class="pl-2 font-sans text-right text-[9px] uppercase tracking-wider self-center text-stone-600">
+          廠 電 導 半 華 中 ‧ 上海中央工廠
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const videoDatabase = {
+      2: { 
+        title: "Day Life", 
+        url: "tv/day.mp4" 
+      },
+      3: { 
+        title: "Carozza Ristorante", 
+        url: "tv/dialoghi.mp4" 
+      },
+      4: { 
+        title: "Il topo che amava il riso", 
+        url: "tv/micerice.mp4" 
+      },
+      5: { 
+        title: "Storia dei Proverbi", 
+        url: "tv/proverbi.mp4" 
+      },
+      6: { title: "Canzone per il nuovo anno", url: "tv/newyear.mp4" },
+      7: { title: "Nuovo Anno", url: "tv/year2.mp4" },
+      8: { title: "Segnale Interrotto", url: null }
+    };
+
+    const channels = [2, 3, 4, 5, 6, 7, 8];
+    let chIndex = channels.indexOf(2);
+
+    const chKnob = document.getElementById('tv-knob-ch');
+    const chNotch = document.getElementById('tv-knob-notch');
+    const chNum = document.getElementById('tv-ch-num');
+    const powerToggle = document.getElementById('tv-toggle-power');
+    const screen = document.getElementById('crt-screen');
+    const screenLabel = document.getElementById('tv-status-screen');
+    const videoContainer = document.getElementById('tv-video-container');
+    const tvPlayer = document.getElementById('tv-player');
+    const tvSnowLayer = document.getElementById('tv-snow-layer');
+    const sliderAnt = document.getElementById('tv-slider-ant');
+    const sliderStat = document.getElementById('tv-slider-stat');
+    const antL = document.getElementById('tv-antenna-l');
+    const antR = document.getElementById('tv-antenna-r');
+    const guideList = document.getElementById('tv-guide-list');
+
+    let isOn = true;
+    let snowInterval = null;
+
+    function renderTvGuide() {
+      guideList.innerHTML = "";
+      channels.forEach(ch => {
+        const info = videoDatabase[ch];
+        const isCurrent = channels[chIndex] === ch;
+        
+        const item = document.createElement('div');
+        item.className = `flex gap-3 items-center p-2 rounded-md transition-all ${isCurrent && isOn ? 'bg-stone-900 text-[#ebdcb9] font-bold shadow-md' : 'text-stone-900'}`;
+        item.innerHTML = `
+          <span class="font-mono bg-stone-300 text-stone-950 px-2 py-0.5 rounded text-xs font-black ${isCurrent && isOn ? '!bg-amber-500 !text-black' : ''}">CH ${ch.toString().padStart(2, '0')}</span>
+          <span class="truncate text-xs md:text-sm uppercase tracking-wide font-sans">${info ? info.title : '頻道空置 - VUOTO'}</span>
+        `;
+        guideList.appendChild(item);
+      });
+    }
+
+    function tvZipBeep() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+      } catch(e){}
+    }
+
+    function updateScreenSignal() {
+      renderTvGuide();
+
+      if (!isOn) {
+        tvSnowLayer.style.opacity = '0';
+        if (snowInterval) clearInterval(snowInterval);
+        snowInterval = null;
+        tvPlayer.pause();
+        return;
+      }
+
+      const antVal = parseInt(sliderAnt.value);
+      antL.style.height = antVal + 'px';
+      antR.style.height = antVal + 'px';
+
+      const statStrength = parseFloat(sliderStat.value) / 100;
+      const currentChannel = channels[chIndex];
+      const channelData = videoDatabase[currentChannel];
+
+      if (channelData && channelData.url) {
+        videoContainer.classList.remove('hidden');
+        screenLabel.classList.add('hidden');
+        
+        if (tvPlayer.src !== channelData.url) {
+          tvPlayer.src = channelData.url;
+          tvPlayer.load();
+        }
+        
+        // Forza l'avvio con audio attivo
+        tvPlayer.muted = false;
+        tvPlayer.play().catch(err => {
+          console.log("Autoplay con audio bloccato. In attesa di interazione utente.");
+          // Fallback silenzioso temporaneo se il browser blocca l'avvio prima del click
+          tvPlayer.muted = true;
+          tvPlayer.play();
+        });
+        
+        tvSnowLayer.style.opacity = '0';
+        if (snowInterval) clearInterval(snowInterval);
+        snowInterval = null;
+      } else {
+        videoContainer.classList.add('hidden');
+        screenLabel.classList.remove('hidden');
+        tvPlayer.pause();
+        tvPlayer.src = '';
+
+        screenLabel.innerHTML = `
+          <div class="text-3xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-3 py-1 rounded bg-black/50">CH ${currentChannel.toString().padStart(2, '0')}</div>
+          <div class="text-[9px] mt-2 font-black">ASSENZA SEGNALE</div>
+          <div class="text-[7.5px] mt-1 text-red-500 font-extrabold uppercase blinking">● NO SYNC SIGNAL</div>
+        `;
+
+        if (!snowInterval) {
+          snowInterval = setInterval(() => {
+            tvSnowLayer.style.backgroundPosition = Math.random() * 10 + 'px ' + Math.random() * 10 + 'px';
+            tvSnowLayer.style.opacity = String((statStrength * 0.45) + Math.random() * 0.15);
+          }, 40);
+        }
+      }
+    }
+
+    chNum.textContent = channels[chIndex];
+    chNotch.style.transform = 'rotate(' + ((channels[chIndex] - 2) * 45) + 'deg)';
+    updateScreenSignal();
+
+    chKnob.addEventListener('click', () => {
+      chIndex = (chIndex + 1) % channels.length;
+      chNum.textContent = channels[chIndex];
+      chNotch.style.transform = 'rotate(' + ((channels[chIndex] - 2) * 45) + 'deg)';
+      tvZipBeep();
+      if (isOn) {
+        updateScreenSignal();
+      } else {
+        renderTvGuide();
+      }
+    });
+
+    sliderAnt.addEventListener('input', () => {
+      if (isOn) updateScreenSignal();
+    });
+
+    sliderStat.addEventListener('input', () => {
+      if (isOn) updateScreenSignal();
+    });
+
+    powerToggle.addEventListener('click', () => {
+      isOn = !isOn;
+      if (isOn) {
+        screen.style.opacity = "1";
+        powerToggle.classList.remove('bg-stone-550');
+        powerToggle.classList.add('bg-red-650');
+        tvZipBeep();
+        updateScreenSignal();
+      } else {
+        screen.style.opacity = "0";
+        powerToggle.classList.remove('bg-red-650');
+        powerToggle.classList.add('bg-stone-550');
+        videoContainer.classList.add('hidden');
+        updateScreenSignal();
+      }
+    });
+  </script>
+</body>
+</html>
