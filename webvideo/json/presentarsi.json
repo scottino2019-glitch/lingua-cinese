@@ -1,1 +1,91 @@
-{"id":"2pisi9axn","name":"Nuovo Script","backgroundId":"school","dialogues":[{"id":"1","characterId":"char4","text":"同学们好，我是你们的中文老师，王老师。","lang":"zh-CN","voiceIndex":0},{"id":"g1qmznw59","characterId":"char1","text":"王老师好！","lang":"zh-CN","voiceIndex":1},{"id":"pm79tvl8z","characterId":"char4","text":"今天是第一天，请大家自我介绍一下。","lang":"zh-CN","voiceIndex":0},{"id":"8jucb6llz","characterId":"char2","text":"我叫马可，很高兴认识老师。","lang":"zh-CN","voiceIndex":4},{"id":"hi54q0581","characterId":"char1","text":"我是吗人她","lang":"zh-CN","voiceIndex":1}],"visibleCharacterIds":["char1","char2","char4"],"updatedAt":1781800882697}
+[
+    {
+        "speaker": "王老师 (Insegnante)",
+        "characters": [
+            { "h": "同", "p": "tóng" },
+            { "h": "学", "p": "xué" },
+            { "h": "们", "p": "men" },
+            { "h": "好", "p": "hǎo" },
+            { "h": "，", "p": "" },
+            { "h": "我", "p": "wǒ" },
+            { "h": "是", "p": "shì" },
+            { "h": "你", "p": "nǐ" },
+            { "h": "们", "p": "men" },
+            { "h": "的", "p": "de" },
+            { "h": "中", "p": "zhōng" },
+            { "h": "文", "p": "wén" },
+            { "h": "老", "p": "lǎo" },
+            { "h": "师", "p": "shī" },
+            { "h": "，", "p": "" },
+            { "h": "王", "p": "wáng" },
+            { "h": "老", "p": "lǎo" },
+            { "h": "师", "p": "shī" },
+            { "h": "。", "p": "" }
+        ],
+        "italian": "Ciao studenti, sono il vostro insegnante di cinese, il professor Wang."
+    },
+    {
+        "speaker": "学生 (Studenti)",
+        "characters": [
+            { "h": "王", "p": "wáng" },
+            { "h": "老", "p": "lǎo" },
+            { "h": "师", "p": "shī" },
+            { "h": "好", "p": "hǎo" },
+            { "h": "！", "p": "" }
+        ],
+        "italian": "Buongiorno, professore Wang!"
+    },
+    {
+        "speaker": "王老师 (Insegnante)",
+        "characters": [
+            { "h": "今", "p": "jīn" },
+            { "h": "天", "p": "tiān" },
+            { "h": "是", "p": "shì" },
+            { "h": "第", "p": "dì" },
+            { "h": "一", "p": "yī" },
+            { "h": "天", "p": "tiān" },
+            { "h": "，", "p": "" },
+            { "h": "请", "p": "qǐng" },
+            { "h": "大", "p": "dà" },
+            { "h": "家", "p": "jiā" },
+            { "h": "自", "p": "zì" },
+            { "h": "我", "p": "wǒ" },
+            { "h": "介", "p": "jiè" },
+            { "h": "绍", "p": "shào" },
+            { "h": "一", "p": "yī" },
+            { "h": "下", "p": "xià" },
+            { "h": "。", "p": "" }
+        ],
+        "italian": "Oggi è il primo giorno, per favore presentatevi."
+    },
+    {
+        "speaker": "马可 (Marco)",
+        "characters": [
+            { "h": "我", "p": "wǒ" },
+            { "h": "叫", "p": "jiào" },
+            { "h": "马", "p": "mǎ" },
+            { "h": "可", "p": "kě" },
+            { "h": "，", "p": "" },
+            { "h": "很", "p": "hěn" },
+            { "h": "高", "p": "gāo" },
+            { "h": "兴", "p": "xìng" },
+            { "h": "认", "p": "rèn" },
+            { "h": "识", "p": "shí" },
+            { "h": "老", "p": "lǎo" },
+            { "h": "师", "p": "shī" },
+            { "h": "。", "p": "" }
+        ],
+        "italian": "Mi chiamo Marco, piacere di conoscerla professore."
+    },
+    {
+        "speaker": "马可 (Marco)",
+        "characters": [
+            { "h": "我", "p": "wǒ" },
+            { "h": "是", "p": "shì" },  我是
+            { "h": "吗", "p": "ma" },
+            { "h": "人", "p": "r" },
+            { "h": "她", "p": "ta" }
+        ],
+        "italian": "Sono Marta."
+    }
+]
