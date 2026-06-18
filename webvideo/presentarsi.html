@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video App - Trascrizione Ruby</title>
+    <style>
+        /* Stili Base e Colori (Stile Webtoon / Fumetto) */
+        :root {
+            --bg-color: #f0fdf4; /* Verde chiarissimo */
+            --primary: #00dc64;  /* Verde Webtoon */
+            --text-dark: #111827;
+            --border-color: #111827;
+            --card-bg: #ffffff;
+            --pinyin-color: #059669;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 600px; /* Perfetto per formato mobile/webtoon */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* --- PLAYER VIDEO --- */
+        .video-box {
+            background-color: var(--card-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 6px 6px 0px var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+            display: block;
+        }
+
+        .video-title {
+            padding: 16px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin: 0;
+            background-color: var(--primary);
+            border-top: 4px solid var(--border-color);
+        }
+
+        /* --- SEZIONE TRASCRIZIONE (RUBY) --- */
+        .transcript-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .dialogue-card {
+            background-color: var(--card-bg);
+            border: 3px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 4px 4px 0px var(--border-color);
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Il triangolino per fare l'effetto nuvoletta da fumetto */
+        .dialogue-card::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 40px;
+            border-width: 0 15px 15px 0;
+            border-style: solid;
+            border-color: transparent var(--border-color) transparent transparent;
+        }
+
+        /* Stili per il Cinese e Pinyin */
+        .chinese-text {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        ruby {
+            font-size: 2.2rem; /* Ideogrammi belli grandi e leggibili */
+            font-weight: bold;
+            ruby-position: over;
+            margin-right: 6px; /* Spazio tra le parole */
+        }
+
+        rt {
+            font-size: 1rem; /* Dimensione del pinyin */
+            color: var(--pinyin-color);
+            font-weight: normal;
+            transform: translateY(-2px); /* Alza un pelo il pinyin */
+        }
+
+        /* Stile Traduzione Italiana */
+        .italian-translation {
+            font-size: 1.1rem;
+            color: #4b5563;
+            border-top: 2px dashed #d1d5db;
+            padding-top: 12px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Player Video -->
+        <div class="video-box">
+            <video controls>
+                <!-- Inserisci qui il tuo video -->
+                <source src="video/presentarsi.webm" type="video/mp4">
+                Il tuo browser non supporta i video.
+            </video>
+            <h2 class="video-title">Episodio 2: Aereoporto</h2>
+        </div>
+
+        <!-- Qui verranno iniettate le card della trascrizione -->
+        <div class="transcript-container" id="transcript-box">
+            <!-- Il contenuto viene generato da JavaScript -->
+        </div>
+
+    </div>
+
+    <script>
+        
+      // Svuota il contenitore prima di caricare
+const container = document.getElementById("transcript-box");
+container.innerHTML = "<p style='text-align:center;'>Caricamento in corso...</p>";
+
+// Recupera il file JSON esterno (assicurati che sia nella stessa cartella)
+fetch('json/presentarsi.json')
+    .then(response => response.json())
+    .then(data => {
+        container.innerHTML = ""; // Rimuove "Caricamento in corso"
+
+        data.forEach(dialogue => {
+            const card = document.createElement("div");
+            card.className = "dialogue-card";
+
+            // Etichetta di chi parla (utile per i dialoghi)
+            const speakerLabel = document.createElement("strong");
+            speakerLabel.style.display = "block";
+            speakerLabel.style.color = "var(--primary)";
+            speakerLabel.style.marginBottom = "8px";
+            speakerLabel.textContent = dialogue.speaker;
+            card.appendChild(speakerLabel);
+
+            // Costruisce il blocco Ruby (Hanzi + Pinyin)
+            const chineseDiv = document.createElement("div");
+            chineseDiv.className = "chinese-text";
+
+            dialogue.characters.forEach(char => {
+                const ruby = document.createElement("ruby");
+                ruby.textContent = char.h;
+                
+                if (char.p) {
+                    const rt = document.createElement("rt");
+                    rt.textContent = char.p;
+                    ruby.appendChild(rt);
+                }
+                chineseDiv.appendChild(ruby);
+            });
+
+            // Aggiunge la traduzione
+            const italianDiv = document.createElement("div");
+            italianDiv.className = "italian-translation";
+            italianDiv.textContent = dialogue.italian;
+
+            card.appendChild(chineseDiv);
+            card.appendChild(italianDiv);
+            container.appendChild(card);
+        });
+    })
+    .catch(error => {
+        container.innerHTML = "<p>Errore nel caricamento del dialogo.</p>";
+        console.error("Errore:", error);
+    });
+</script>
+
+</body>
+</html>
