@@ -1,0 +1,104 @@
+[
+    {
+        "speaker": "朋友A (Luca)",
+        "characters": [
+            { "h": "好", "p": "hǎo" },
+            { "h": "久", "p": "jiǔ" },
+            { "h": "不", "p": "bù" },
+            { "h": "见", "p": "jiàn" },
+            { "h": "！", "p": "" },
+            { "h": "最", "p": "zuì" },
+            { "h": "近", "p": "jìn" },
+            { "h": "怎", "p": "zěn" },
+            { "h": "么", "p": "me" },
+            { "h": "样", "p": "yàng" },
+            { "h": "？", "p": "" },
+            { "h": "我", "p": "wǒ" },
+            { "h": "们", "p": "men" },
+            { "h": "要", "p": "yào" },
+            { "h": "点", "p": "diǎn" },
+            { "h": "菜", "p": "cài" },
+            { "h": "吗", "p": "ma" },
+            { "h": "？", "p": "" }
+        ],
+        "italian": "È tanto che non ci vediamo! Come stai ultimamente? Ordiniamo da mangiare?"
+    },
+    {
+        "speaker": "朋友B (Marta)",
+        "characters": [
+            { "h": "我", "p": "wǒ" },
+            { "h": "很", "p": "hěn" },
+            { "h": "好", "p": "hǎo" },
+            { "h": "。", "p": "" },
+            { "h": "我", "p": "wǒ" },
+            { "h": "也", "p": "yě" },
+            { "h": "很", "p": "hěn" },
+            { "h": "饿", "p": "è" },
+            { "h": "。", "p": "" }
+            { "h": "我", "p": "wǒ" },
+            { "h": "们", "p": "men" },
+            { "h": "要", "p": "yào" },
+            { "h": "米", "p": "mǐ" },
+            { "h": "饭", "p": "fàn" },
+            { "h": "、", "p": "" },
+            { "h": "面", "p": "miàn" },     
+            { "h": "包", "p": "bāo" },
+            { "h": "和", "p": "hé" },
+            { "h": "鸡", "p": "jī" },
+            { "h": "肉", "p": "ròu" },
+            { "h": "。", "p": "" }
+ 
+        ],
+        "italian": "Sto bene. Ho anche fame. Prendiamo riso, pane e pollo."
+    },
+    {
+        "speaker": "朋友A (Luca)",
+        "characters": [
+            { "h": "好", "p": "hǎo" },
+            { "h": "的", "p": "de" },
+            { "h": "。", "p": "" },
+            { "h": "我", "p": "wǒ" },
+            { "h": "们", "p": "men" },
+            { "h": "还", "p": "hái" },
+            { "h": "要", "p": "yào" },
+            { "h": "一", "p": "yī" },
+            { "h": "个", "p": "gè" },
+            { "h": "汤", "p": "tāng" },
+            { "h": "。", "p": "" },
+             { "h": "你", "p": "nǐ" },
+            { "h": "想", "p": "xiǎng" },
+            { "h": "喝", "p": "hē" },
+            { "h": "什", "p": "shén" },
+            { "h": "么", "p": "me" },
+            { "h": "？", "p": "" }
+        ],
+        "italian": " Va bene. Prendiamo anche una zuppa. Cosa vuoi bere?"
+    },
+    {
+        "speaker": "朋友B (Marta)",
+        "characters": [
+           
+            { "h": "我", "p": "wǒ" },
+            { "h": "想", "p": "xiǎng" },
+            { "h": "喝", "p": "hē" },
+            { "h": "矿", "p": "kuàng" },
+            { "h": "泉", "p": "quán" },
+            { "h": "水", "p": "shuǐ" },
+            { "h": "。", "p": "" }
+          ],
+        "italian": " Voglio bere acqua minerale."
+      },
+       {
+         "speaker": "朋友A (Luca)",
+          "characters": [
+            {  "h": "服", "p": "fú" },
+            { "h": "务", "p": "wù" },
+            { "h": "员", "p": "yuán" },
+            { "h": "，", "p": "" },
+            { "h": "点", "p": "diǎn" },
+            { "h": "菜", "p": "cài" },
+            { "h": "！", "p": "" }
+     ],
+        "italian": "  Cameriere, ordiniamo!"
+   }
+]
