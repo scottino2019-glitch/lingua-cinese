@@ -129,7 +129,7 @@
         <div class="video-box">
             <video controls>
                 <!-- Inserisci qui il tuo video -->
-                <source src="video/al-ristorante.webm" type="video/mp4">
+                <source src="video/ristorante.webm" type="video/mp4">
                 Il tuo browser non supporta i video.
             </video>
             <h2 class="video-title">Episodio 3: Ristorante</h2>
@@ -149,7 +149,7 @@ const container = document.getElementById("transcript-box");
 container.innerHTML = "<p style='text-align:center;'>Caricamento in corso...</p>";
 
 // Recupera il file JSON esterno (assicurati che sia nella stessa cartella)
-fetch('json/al-ristorante.json')
+fetch('json/ristorante.json')
     .then(response => response.json())
     .then(data => {
         container.innerHTML = ""; // Rimuove "Caricamento in corso"
