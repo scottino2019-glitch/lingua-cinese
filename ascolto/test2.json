@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "text": "猫",
+    "pinyin": " māo",
+    "translation": "gatto",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 2,
+    "text": "狗",
+    "pinyin": "gǒu",
+    "translation": "cane",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 3,
+    "text": "水",
+    "pinyin": "shuǐ",
+    "translation": "acqua",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 4,
+    "text": "茶",
+    "pinyin": "chá",
+    "translation": "tè",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 5,
+    "text": "饭",
+    "pinyin": "fàn",
+    "translation": "cibo / riso",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 6,
+    "text": "书",
+    "pinyin": "shū",
+    "translation": "libro",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 7,
+    "text": "老师",
+    "pinyin": "lǎoshī",
+    "translation": "maestro / insegnante",
+    "lang": "zh-CN"
+  },
+  {
+    "id": 8,
+    "text": "学生",
+    "pinyin": "xuéshēng",
+    "translation": "studente",
+    "lang": "zh-CN"
+  }
+]
