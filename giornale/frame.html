@@ -1,32 +1,38 @@
-<!-- CONTENITORE RESPONSIVO DEL GIORNALE -->
-<div class="giornale-container">
-  <!-- Il tag iframe punta direttamente al tuo file del giornale -->
-  <iframe 
-    src="giornale.html" 
-    title="L'Eco del Tempo - Giornale Sfogliabile"
-    loading="lazy"
-    allowfullscreen>
-  </iframe>
+<div class="giornale-wrapper">
+  <div class="giornale-container">
+    <iframe 
+      id="giornale-iframe"
+      src="giornale.html" 
+      title="L'Eco del Tempo - Giornale Sfogliabile"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+  </div>
 </div>
 
-<!-- STILI CSS PER RENDERE IL FRAME RESPONSIVO E ADATTO AL DESKTOP -->
 <style>
+  .giornale-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
   .giornale-container {
     position: relative;
     width: 100%;
-    max-width: 1200px; /* Larghezza massima ideale per le 2 pagine su desktop */
-    margin: 0 auto;
-    background: #170d07; /* Colore scuro di sfondo per evitare flash bianchi durante il caricamento */
+    background: #170d07;
     border-radius: 12px;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
     overflow: hidden;
   }
 
-  /* Proporzione matematica (Aspect Ratio) per mantenere il giornale perfetto sia su desktop che su mobile */
+  /* Aspect Ratio proporzionale */
   .giornale-container::before {
     content: "";
     display: block;
-    padding-top: 65%; /* Ottimale per la visualizzazione a due pagine affiancate */
+    padding-top: 65%; /* Proporzione orizzontale ideale per Desktop (2 pagine) */
   }
 
   .giornale-container iframe {
@@ -38,10 +44,35 @@
     border: none;
   }
 
-  /* Regolazione per schermi piccoli (Mobile): i giornali a pagina singola hanno bisogno di più altezza verticale */
+  /* FORZATURA MOBILE: Cambia la proporzione del box per ospitare la pagina singola verticale */
   @media (max-width: 767px) {
     .giornale-container::before {
-      padding-top: 140%; /* Più alto su mobile per contenere la pagina singola verticale */
+      padding-top: 145%; /* Più alto in verticale per contenere bene la singola pagina */
     }
   }
 </style>
+
+<script>
+  (function() {
+    const iframe = document.getElementById('giornale-iframe');
+
+    function inviaFormato() {
+      if (!iframe || !iframe.contentWindow) return;
+      
+      // Controlla la vera larghezza dello schermo del telefono dell'utente
+      const isMobileSize = window.innerWidth < 768;
+      
+      // Invia un messaggio sicuro all'interno dell'iframe per impostare la modalità corretta
+      iframe.contentWindow.postMessage({
+        tipo: 'CAMBIA_FORMATO',
+        forzaMobile: isMobileSize
+      }, '*');
+    }
+
+    // Invia la configurazione quando l'iframe ha finito di caricarsi
+    iframe.addEventListener('load', inviaFormato);
+
+    // Aggiorna se l'utente ruota il telefono o ridimensiona lo schermo
+    window.addEventListener('resize', inviaFormato);
+  })();
+</script>
