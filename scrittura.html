@@ -29,16 +29,19 @@
           <div class="text-sm italic text-slate-700 font-serif-custom">Māo gǒu yú</div>
           <div class="text-sm font-semibold text-slate-800 mt-2 font-serif-custom">Gatti, cani e pesci</div>
         
-<button onclick="stampaPDF()">Stampa PDF</button>
+<button onclick="stampaFile('scrittura/animali.pdf')">Stampa</button>
 
-<iframe id="mioPDF" src="scrittura/animali.pdf" style="display:none;"></iframe>
+<iframe id="stampanteInvisibile" style="display: none;"></iframe>
 </div>
 
         <div class="text-center">
-          <div class="text-3xl font-bold text-slate-900 mb-2 font-serif-custom">2 你会说中文吗?</div>
-          <div class="text-xl italic text-slate-700 font-serif-custom">Nǐ huì shuō Zhōngwén ma?</div>
-          <div class="text-lg font-semibold text-slate-800 mt-2">Parli cinese?</div>
+          <div class="text-3xl font-bold text-slate-900 mb-2 font-serif-custom">2 山水日月</div>
+          <div class="text-xl italic text-slate-700 font-serif-custom">Shān shuǐ rì yuè</div>
+          <div class="text-lg font-semibold text-slate-800 mt-2">Montagna, acqua, sole, luna</div>
+       
+<button onclick="stampaFile('scrittura/natura.pdf')">Stampa</button>
 
+<iframe id="stampanteInvisibile" style="display: none;"></iframe>
         </div>
 
         <div class="text-center">
@@ -57,10 +60,24 @@
     <div class="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/old-paper.png')]"></div>
   </div>
 <script>
-function stampaPDF() {
-  const iframe = document.getElementById('mioPDF');
-  iframe.contentWindow.focus();
-  iframe.contentWindow.print();
+function stampaFile(percorsoPDF) {
+  // 1. Controlla se l'utente sta usando un telefono
+  const èMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (èMobile) {
+    // STRATEGIA TELEFONO: Apre il file a schermo intero in un'altra scheda
+    window.open(percorsoPDF, '_blank');
+  } else {
+    // STRATEGIA PC: Carica il file nell'iframe invisibile e lo stampa
+    const iframe = document.getElementById('stampanteInvisibile');
+    iframe.src = percorsoPDF;
+
+    // Aspetta che il PC abbia finito di caricare il file prima di stampare
+    iframe.onload = function() {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+    };
+  }
 }
 </script>
 </body>
