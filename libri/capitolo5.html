@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lettura Cinese - Il Mandriano e la Tessitrice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Crimson+Text:400,700,900,400italic,700italic,900italic|Playfair+Display:400,700,900,400italic,700italic,900italic|Rock+Salt:400);
+
+        *, :before, :after { box-sizing: border-box; }
+
+        body {
+            background-color: #1d1f20;
+            color: #e5e5e5;
+            font: 16px/1.25 'Crimson Text', sans-serif;
+            margin: 0;
+        }
+
+        #wrapper {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 80em;
+        }
+
+        #container {
+            float: left;
+            padding: 1em;
+            width: 100%;
+        }
+
+        /*** OPEN BOOK ***/
+        .open-book {
+            background: #fff;
+            box-shadow: rgba(0,0,0,0.5) 0 1em 3em;
+            color: #000;
+            padding: 2em;
+        }
+
+        .open-book * { position: relative; }
+
+        .open-book *::-moz-selection { background: rgba(222,255,0,0.75); }
+        .open-book *::selection { background: rgba(222,255,0,0.75); }
+
+        .open-book header { padding-bottom: 1em; }
+        .open-book header *, .open-book footer * {
+            font: 700 1em/1.25 'Playfair Display', sans-serif;
+            letter-spacing: 0.125em;
+            margin: 0;
+        }
+
+        .open-book header * { font-size: 0.75em; text-transform: uppercase; }
+        .open-book footer { padding-top: 1em; }
+        
+        .open-book footer #page-numbers {
+            display: none;
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .open-book footer #page-numbers > li:last-child { text-align: right; }
+
+        .open-book .chapter-title {
+            font: 700 7vw/1.25 'Playfair Display', sans-serif;
+            letter-spacing: 0.125em;
+            margin: 0 0 1em 0;
+            padding: 1em 0;
+            position: relative;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .open-book article { line-height: 1.5; }
+        .open-book article *:not(.chapter-title):not(hr):not(dl) {
+            margin: 0 auto;
+            max-width: 32em; /* Leggermente allargato per accomodare meglio il testo cinese inline-block */
+        }
+
+        /* Modifica per permettere ai tuoi <span> di non sovrascrivere l'indentazione */
+        .open-book article p { text-indent: 2em; margin-bottom: 1em;}
+
+        .open-book .chapter-title + div:first-of-type { text-indent: 0; }
+        
+        @media only screen and ( min-width: 50em ) {
+            .open-book {
+                margin: 1em;
+                position: relative;
+            }
+
+            .open-book:before {
+                background-color: #8B4513;
+                border-radius: 0.25em;
+                bottom: -1em;
+                content: '';
+                left: -1em;
+                position: absolute;
+                right: -1em;
+                top: -1em;
+                z-index: -1;
+            }
+
+            .open-book:after {
+                background: linear-gradient(to right, transparent 0%,rgba(0,0,0,0.2) 46%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.5) 51%,rgba(0,0,0,0.2) 52%,transparent 100%);
+                bottom: -1em;
+                content: '';
+                left: 50%;
+                position: absolute;
+                top: -1em;
+                transform: translate(-50%,0);
+                width: 4em;
+                z-index: 1;
+            }
+
+            .open-book > * {
+                column-count: 2;
+                column-gap: 6em;
+                position: relative;
+                z-index: 1;
+            }
+
+            .open-book header:before, .open-book header:after,
+            .open-book footer:before, .open-book footer:after {
+                background: #fff;
+                border-radius: 25%;
+                content: '';
+                height: 2em;
+                position: absolute;
+                z-index: -1;
+                width: calc(50% + 2em);
+            }
+
+            .open-book header:before, .open-book footer:before, .open-book footer:after { border-top-left-radius: 0; }
+            .open-book header:after, .open-book footer:before, .open-book footer:after { border-top-right-radius: 0; }
+            .open-book header:before, .open-book header:after, .open-book footer:after { border-bottom-right-radius: 0; }
+            .open-book header:before, .open-book header:after, .open-book footer:before { border-bottom-left-radius: 0; }
+
+            .open-book header:before, .open-book header:after { top: -2.65em; }
+            .open-book header:before, .open-book footer:before { right: 50%; }
+            .open-book header:before { transform: rotate(-2deg); }
+            .open-book header:after, .open-book footer:after { left: 50%; }
+            .open-book header:after { transform: rotate(2deg); }
+            .open-book footer:before, .open-book footer:after { bottom: -2.65em; }
+            .open-book footer:before { transform: rotate(2deg); }
+            .open-book footer:after { transform: rotate(-2deg); }
+
+            .open-book header > *:last-child, .open-book footer > *:last-child { text-align: right; }
+            .open-book footer #page-numbers { display: block; }
+            .open-book .chapter-title { font-size: 3em; }
+            .open-book article p { text-indent: 3em; }
+        }
+
+        /* Menu */
+        .menu-toggle {
+            position: fixed;
+            top: 2em;
+            left: 2em;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .menu-toggle .bar {
+            width: 30px;
+            height: 3px;
+            background-color: #e5e5e5;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+        .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        .vertical-menu {
+            position: fixed;
+            top: 4.5em;
+            left: 2em;
+            background-color: #1d1f20;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.25em;
+            box-shadow: rgba(0,0,0,0.5) 0 1em 3em;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s ease-in-out;
+            z-index: 999;
+        }
+
+        .vertical-menu.open { max-height: 400px; }
+        .vertical-menu ul { list-style: none; margin: 0; padding: 0; }
+        .vertical-menu li { border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .vertical-menu li:last-child { border-bottom: none; }
+        
+        .vertical-menu a {
+            display: block;
+            padding: 1em 2em;
+            color: #e5e5e5;
+            text-decoration: none;
+            font-family: 'Playfair Display', sans-serif;
+            font-size: 1.1em;
+            transition: background 0.2s;
+        }
+
+        .vertical-menu a:hover, .vertical-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* Pinyin (Ruby) e Interattività */
+        ruby { 
+            ruby-align: center; 
+            margin-right: 2px; 
+            cursor: pointer;
+            padding: 0 2px;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        /* Effetto hover per evidenziare la parola che si sta leggendo */
+        ruby:hover {
+            background-color: rgba(79, 70, 229, 0.1); /* indigo-100 */
+            color: #4f46e5; /* indigo-600 */
+        }
+        
+        rt { 
+            font-size: 0.65em; 
+            color: #6B7280; 
+            padding-bottom: 2px; 
+            transition: color 0.2s;
+        }
+        
+        ruby:hover rt {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu Toggle -->
+    <div class="menu-toggle" id="menu-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <nav class="vertical-menu" id="vertical-menu">
+        <ul>
+            <li><a href="https://scottino2019-glitch.github.io/lingua-cinese/libri/libriaudio.html" class="active">Capitolo 1</a></li>
+            <li><a href="capitolo2.html">Capitolo 2</a></li>
+            <li><a href="capitolo3.html">Capitolo 3</a></li>
+            <li><a href="capitolo4.html">Capitolo 4</a></li>
+        </ul>
+    </nav>
+
+    <div id="wrapper">
+        <div id="container">
+            <section class="open-book">
+                <header>
+                    <h1>第二章</h1>
+                    <div class="max-w-3xl mx-auto bg-white p-4 rounded-xl shadow-lg mt-4 text-center">
+                        <!-- Audio Player UI -->
+                        <audio id="audio-lettura" src="storia2.mp3"></audio>
+                        
+                        <div class="flex justify-center gap-4">
+                            <button id="btn-ascolta" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300">
+                                ▶ Ascolta
+                            </button>
+                            <button id="btn-rallenta" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-full transition duration-300" title="Cambia velocità">
+                                🐢 1.0x
+                            </button>
+                        </div>
+                      <div class="border-t pt-3">
+            <p class="text-xs text-gray-500 uppercase tracking-wider mb-2 font-semibold">Seleziona la parte da ascoltare:</p>
+            <div class="flex flex-wrap justify-center gap-2" id="playlist-audio">
+                <button data-src="storia5_1.mp3" class="btn-traccia bg-gray-100 hover:bg-indigo-100 text-gray-700 text-sm font-medium py-1.5 px-3 rounded-lg transition">Parte 1</button>
+                <button data-src="storia5_2.mp3" class="btn-traccia bg-gray-100 hover:bg-indigo-100 text-gray-700 text-sm font-medium py-1.5 px-3 rounded-lg transition">Parte 2</button>
+                <button data-src="storia5_3.mp3" class="btn-traccia bg-gray-100 hover:bg-indigo-100 text-gray-700 text-sm font-medium py-1.5 px-3 rounded-lg transition">Parte 3</button>
+                <button data-src="storia5_4.mp3" class="btn-traccia bg-gray-100 hover:bg-indigo-100 text-gray-700 text-sm font-medium py-1.5 px-3 rounded-lg transition">Parte 4</button>
+                <button data-src="storia5_5.mp3" class="btn-traccia bg-gray-100 hover:bg-indigo-100 text-gray-700 text-sm font-medium py-1.5 px-3 rounded-lg transition">Parte 5</button>
+                <button data-src="storia5_6.mp3" class="btn-traccia bg-gray-100 hover:bg-indigo-100 text-gray-700 text-sm font-medium py-1.5 px-3 rounded-lg transition">Parte 6</button>
+            </div>
+        </div>
+                    </div>
+                </header>
+                
+                <article>
+                    <h1 class="text-3xl font-bold text-center mb-6 text-indigo-900 chapter-title">
+                        <ruby>小<rt>Xiǎo</rt></ruby><ruby>熊<rt>xióng</rt></ruby><ruby>的<rt>de</rt></ruby>
+                          <ruby>神<rt>shén</rt></ruby><ruby>奇<rt>qí</rt></ruby><ruby>冒<rt>mào</rt></ruby>
+                      <ruby>险<rt>xiǎn</rt></ruby>
+                    </h1>
+                      
+                    
+                    <!-- Testo in Cinese con Pinyin (Ruby) -->
+                    <div class="testo-cinese text-xl leading-loose mb-10 text-gray-800">
+              <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>熊</rb><rt>xióng</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>住</rb><rt>zhù</rt></ruby><ruby><rb>在</rb><rt>zài</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>座</rb><rt>zuò</rt></ruby><ruby><rb>美</rb><rt>měi</rt></ruby><ruby><rb>丽</rb><rt>lì</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>森</rb><rt>sēn</rt></ruby><ruby><rb>林</rb><rt>lín</rt></ruby><ruby><rb>里</rb><rt>lǐ</rt></ruby>。
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>朋</rb><rt>péng</rt></ruby><ruby><rb>友</rb><rt>you</rt></ruby>，
+        <ruby><rb>比</rb><rt>bǐ</rt></ruby><ruby><rb>如</rb><rt>rú</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>兔</rb><rt>tù</rt></ruby>、<ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>松</rb><rt>sōng</rt></ruby><ruby><rb>鼠</rb><rt>shǔ</rt></ruby><ruby><rb>和</rb><rt>hé</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>鸟</rb><rt>niǎo</rt></ruby>。
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>喜</rb><rt>xǐ</rt></ruby><ruby><rb>欢</rb><rt>huan</rt></ruby><ruby><rb>在</rb><rt>zài</rt></ruby><ruby><rb>森</rb><rt>sēn</rt></ruby><ruby><rb>林</rb><rt>lín</rt></ruby><ruby><rb>里</rb><rt>lǐ</rt></ruby><ruby><rb>玩</rb><rt>wán</rt></ruby><ruby><rb>耍</rb><rt>shuǎ</rt></ruby>，
+        <ruby><rb>每</rb><rt>měi</rt></ruby><ruby><rb>天</rb><rt>tiān</rt></ruby><ruby><rb>都</rb><rt>dōu</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>开</rb><rt>kāi</rt></ruby><ruby><rb>心</rb><rt>xīn</rt></ruby>。
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>最</rb><rt>zuì</rt></ruby><ruby><rb>喜</rb><rt>xǐ</rt></ruby><ruby><rb>欢</rb><rt>huan</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>事</rb><rt>shì</rt></ruby><ruby><rb>情</rb><rt>qing</rt></ruby><ruby><rb>就</rb><rt>jiù</rt></ruby><ruby><rb>是</rb><rt>shì</rt></ruby><ruby><rb>和</rb><rt>hé</rt></ruby><ruby><rb>朋</rb><rt>péng</rt></ruby><ruby><rb>友</rb><rt>you</rt></ruby><ruby><rb>们</rb><rt>men</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>起</rb><rt>qǐ</rt></ruby><ruby><rb>探</rb><rt>tàn</rt></ruby><ruby><rb>索</rb><rt>suǒ</rt></ruby><ruby><rb>新</rb><rt>xīn</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>地</rb><rt>dì</rt></ruby><ruby><rb>方</rb><rt>fang</rt></ruby>，
+        <ruby><rb>发</rb><rt>fā</rt></ruby><ruby><rb>现</rb><rt>xiàn</rt></ruby><ruby><rb>神</rb><rt>shén</rt></ruby><ruby><rb>奇</rb><rt>qí</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>东</rb><rt>dōng</rt></ruby><ruby><rb>西</rb><rt>xi</rt></ruby>。
+  
+                <ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>天</rb><rt>tiān</rt></ruby>，<ruby><rb>天</rb><rt>tiān</rt></ruby><ruby><rb>气</rb><rt>qì</rt></ruby><ruby><rb>晴</rb><rt>qíng</rt></ruby><ruby><rb>朗</rb><rt>lǎng</rt></ruby>，
+        <ruby><rb>天</rb><rt>tiān</rt></ruby><ruby><rb>空</rb><rt>kōng</rt></ruby><ruby><rb>蓝</rb><rt>lán</rt></ruby><ruby><rb>蓝</rb><rt>lán</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby>，
+        <ruby><rb>太</rb><rt>tài</rt></ruby><ruby><rb>阳</rb><rt>yáng</rt></ruby><ruby><rb>温</rb><rt>wēn</rt></ruby><ruby><rb>暖</rb><rt>nuǎn</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>照</rb><rt>zhào</rt></ruby><ruby><rb>在</rb><rt>zài</rt></ruby><ruby><rb>森</rb><rt>sēn</rt></ruby><ruby><rb>林</rb><rt>lín</rt></ruby><ruby><rb>里</rb><rt>lǐ</rt></ruby>。
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>熊</rb><rt>xióng</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>吃</rb><rt>chī</rt></ruby><ruby><rb>完</rb><rt>wán</rt></ruby><ruby><rb>早</rb><rt>zǎo</rt></ruby><ruby><rb>餐</rb><rt>cān</rt></ruby><ruby><rb>后</rb><rt>hòu</rt></ruby>，
+        <ruby><rb>决</rb><rt>jué</rt></ruby><ruby><rb>定</rb><rt>dìng</rt></ruby><ruby><rb>去</rb><rt>qù</rt></ruby><ruby><rb>外</rb><rt>wài</rt></ruby><ruby><rb>面</rb><rt>mian</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby>。
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby>，
+        <ruby><rb>忽</rb><rt>hū</rt></ruby><ruby><rb>然</rb><rt>rán</rt></ruby><ruby><rb>看</rb><rt>kàn</rt></ruby><ruby><rb>到</rb><rt>dào</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>条</rb><rt>tiáo</rt></ruby><ruby><rb>陌</rb><rt>mò</rt></ruby><ruby><rb>生</rb><rt>shēng</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>路</rb><rt>lù</rt></ruby>。
+        <ruby><rb>这</rb><rt>zhè</rt></ruby><ruby><rb>条</rb><rt>tiáo</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>路</rb><rt>lù</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>特</rb><rt>tè</rt></ruby><ruby><rb>别</rb><rt>bié</rt></ruby>，
+        <ruby><rb>两</rb><rt>liǎng</rt></ruby><ruby><rb>旁</rb><rt>páng</rt></ruby><ruby><rb>长</rb><rt>zhǎng</rt></ruby><ruby><rb>满</rb><rt>mǎn</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>五</rb><rt>wǔ</rt></ruby><ruby><rb>颜</rb><rt>yán</rt></ruby><ruby><rb>六</rb><rt>liù</rt></ruby><ruby><rb>色</rb><rt>sè</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>花</rb><rt>huā</rt></ruby><ruby><rb>朵</rb><rt>duǒ</rt></ruby>，
+        <ruby><rb>空</rb><rt>kōng</rt></ruby><ruby><rb>气</rb><rt>qì</rt></ruby><ruby><rb>中</rb><rt>zhōng</rt></ruby><ruby><rb>飘</rb><rt>piāo</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby><ruby><rb>淡</rb><rt>dàn</rt></ruby><ruby><rb>淡</rb><rt>dàn</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>花</rb><rt>huā</rt></ruby><ruby><rb>香</rb><rt>xiāng</rt></ruby>。
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>好</rb><rt>hào</rt></ruby><ruby><rb>奇</rb><rt>qí</rt></ruby>，
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>想</rb><rt>xiǎng</rt></ruby><ruby><rb>知</rb><rt>zhī</rt></ruby><ruby><rb>道</rb><rt>dào</rt></ruby><ruby><rb>这</rb><rt>zhè</rt></ruby><ruby><rb>条</rb><rt>tiáo</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>路</rb><rt>lù</rt></ruby><ruby><rb>通</rb><rt>tōng</rt></ruby><ruby><rb>向</rb><rt>xiàng</rt></ruby><ruby><rb>哪</rb><rt>nǎ</rt></ruby><ruby><rb>里</rb><rt>li</rt></ruby>。
+        <ruby><rb>于</rb><rt>yú</rt></ruby><ruby><rb>是</rb><rt>shì</rt></ruby>，<ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>鼓</rb><rt>gǔ</rt></ruby><ruby><rb>起</rb><rt>qǐ</rt></ruby><ruby><rb>勇</rb><rt>yǒng</rt></ruby><ruby><rb>气</rb><rt>qì</rt></ruby>，
+        <ruby><rb>踏</rb><rt>tà</rt></ruby><ruby><rb>上</rb><rt>shàng</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>这</rb><rt>zhè</rt></ruby><ruby><rb>次</rb><rt>cì</rt></ruby><ruby><rb>新</rb><rt>xīn</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>冒</rb><rt>mào</rt></ruby><ruby><rb>险</rb><rt>xiǎn</rt></ruby>。
+    
+                      <ruby><rb>走</rb><rt>zǒu</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>会</rb><rt>huì</rt></ruby><ruby><rb>儿</rb><rt>r</rt></ruby>，
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>听</rb><rt>tīng</rt></ruby><ruby><rb>到</rb><rt>dào</rt></ruby>“<ruby><rb>哗</rb><rt>huā</rt></ruby><ruby><rb>啦</rb><rt>lā</rt></ruby><ruby><rb>啦</rb><rt>lā</rt></ruby>”<ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>声</rb><rt>shēng</rt></ruby><ruby><rb>音</rb><rt>yīn</rt></ruby>。
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>抬</rb><rt>tái</rt></ruby><ruby><rb>头</rb><rt>tóu</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>看</rb><rt>kàn</rt></ruby>，
+        <ruby><rb>发</rb><rt>xiàn</rt></ruby><ruby><rb>现</rb><rt>xiàn</rt></ruby><ruby><rb>前</rb><rt>qián</rt></ruby><ruby><rb>面</rb><rt>mian</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>座</rb><rt>zuò</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>桥</rb><rt>qiáo</rt></ruby>，
+        <ruby><rb>桥</rb><rt>qiáo</rt></ruby><ruby><rb>下</rb><rt>xià</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>条</rb><rt>tiáo</rt></ruby><ruby><rb>清</rb><rt>qīng</rt></ruby><ruby><rb>澈</rb><rt>chè</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>河</rb><rt>hé</rt></ruby><ruby><rb>流</rb><rt>liú</rt></ruby>。
+        <ruby><rb>河</rb><rt>hé</rt></ruby><ruby><rb>水</rb><rt>shuǐ</rt></ruby><ruby><rb>里</rb><rt>lǐ</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>鱼</rb><rt>yú</rt></ruby>，
+        <ruby><rb>它</rb><rt>tā</rt></ruby><ruby><rb>们</rb><rt>men</rt></ruby><ruby><rb>在</rb><rt>zài</rt></ruby><ruby><rb>水</rb><rt>shuǐ</rt></ruby><ruby><rb>里</rb><rt>lǐ</rt></ruby><ruby><rb>自</rb><rt>zì</rt></ruby><ruby><rb>由</rb><rt>yóu</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>游</rb><rt>yóu</rt></ruby><ruby><rb>泳</rb><rt>yǒng</rt></ruby>，
+        <ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>还</rb><rt>hái</rt></ruby><ruby><rb>跳</rb><rt>tiào</rt></ruby><ruby><rb>出</rb><rt>chū</rt></ruby><ruby><rb>水</rb><rt>shuǐ</rt></ruby><ruby><rb>面</rb><rt>miàn</rt></ruby>，
+        <ruby><rb>溅</rb><rt>jiàn</rt></ruby><ruby><rb>起</rb><rt>qǐ</rt></ruby><ruby><rb>晶</rb><rt>jīng</rt></ruby><ruby><rb>莹</rb><rt>yíng</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>水</rb><rt>shuǐ</rt></ruby><ruby><rb>花</rb><rt>huā</rt></ruby>。
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>蹲</rb><rt>dūn</rt></ruby><ruby><rb>下</rb><rt>xià</rt></ruby><ruby><rb>来</rb><rt>lai</rt></ruby>，
+        <ruby><rb>看</rb><rt>kàn</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>鱼</rb><rt>yú</rt></ruby><ruby><rb>们</rb><rt>men</rt></ruby><ruby><rb>快</rb><rt>kuài</rt></ruby><ruby><rb>乐</rb><rt>lè</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>游</rb><rt>yóu</rt></ruby><ruby><rb>动</rb><rt>dòng</rt></ruby>，
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>也</rb><rt>yě</rt></ruby><ruby><rb>觉</rb><rt>jué</rt></ruby><ruby><rb>得</rb><rt>de</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>开</rb><rt>kāi</rt></ruby><ruby><rb>心</rb><rt>xīn</rt></ruby>。
+    <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>跨</rb><rt>kuà</rt></ruby><ruby><rb>过</rb><rt>guò</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>桥</rb><rt>qiáo</rt></ruby>，
+        <ruby><rb>继</rb><rt>jì</rt></ruby><ruby><rb>续</rb><rt>xù</rt></ruby><ruby><rb>向</rb><rt>xiàng</rt></ruby><ruby><rb>前</rb><rt>qián</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby>。
+        <ruby><rb>不</rb><rt>bù</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>会</rb><rt>huì</rt></ruby><ruby><rb>儿</rb><rt>r</rt></ruby>，
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>来</rb><rt>lái</rt></ruby><ruby><rb>到</rb><rt>dào</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>片</rb><rt>piàn</rt></ruby><ruby><rb>茂</rb><rt>mào</rt></ruby><ruby><rb>密</rb><rt>mì</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>竹</rb><rt>zhú</rt></ruby><ruby><rb>林</rb><rt>lín</rt></ruby>。
+        <ruby><rb>竹</rb><rt>zhú</rt></ruby><ruby><rb>林</rb><rt>lín</rt></ruby><ruby><rb>里</rb><rt>lǐ</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>安</rb><rt>ān</rt></ruby><ruby><rb>静</rb><rt>jìng</rt></ruby>，
+        <ruby><rb>只</rb><rt>zhǐ</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>风</rb><rt>fēng</rt></ruby><ruby><rb>吹</rb><rt>chuī</rt></ruby><ruby><rb>过</rb><rt>guò</rt></ruby><ruby><rb>竹</rb><rt>zhú</rt></ruby><ruby><rb>叶</rb><rt>yè</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>声</rb><rt>shēng</rt></ruby><ruby><rb>音</rb><rt>yīn</rt></ruby><ruby><rb>和</rb><rt>hé</rt></ruby><ruby><rb>鸟</rb><rt>niǎo</rt></ruby><ruby><rb>儿</rb><rt>r</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>歌</rb><rt>gē</rt></ruby><ruby><rb>唱</rb><rt>chàng</rt></ruby><ruby><rb>声</rb><rt>shēng</rt></ruby>。
+        <ruby><rb>突</rb><rt>tū</rt></ruby><ruby><rb>然</rb><rt>rán</rt></ruby>，<ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>看</rb><rt>kàn</rt></ruby><ruby><rb>到</rb><rt>dào</rt></ruby><ruby><rb>前</rb><rt>qián</rt></ruby><ruby><rb>面</rb><rt>mian</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>个</rb><rt>gè</rt></ruby><ruby><rb>黑</rb><rt>hēi</rt></ruby><ruby><rb>乎</rb><rt>hū</rt></ruby><ruby><rb>乎</rb><rt>hū</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>洞</rb><rt>dòng</rt></ruby><ruby><rb>穴</rb><rt>xué</rt></ruby>。
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>心</rb><rt>xīn</rt></ruby><ruby><rb>翼</rb><rt>yì</rt></ruby><ruby><rb>翼</rb><rt>yì</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby><ruby><rb>过</rb><rt>guò</rt></ruby><ruby><rb>去</rb><rt>qu</rt></ruby>，
+        <ruby><rb>发</rb><rt>xiàn</rt></ruby><ruby><rb>现</rb><rt>xiàn</rt></ruby><ruby><rb>洞</rb><rt>dòng</rt></ruby><ruby><rb>口</rb><rt>kǒu</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>只</rb><rt>zhǐ</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby>，
+        <ruby><rb>它</rb><rt>tā</rt></ruby><ruby><rb>看</rb><rt>kàn</rt></ruby><ruby><rb>起</rb><rt>qǐ</rt></ruby><ruby><rb>来</rb><rt>lai</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>害</rb><rt>hài</rt></ruby><ruby><rb>怕</rb><rt>pà</rt></ruby>，
+        <ruby><rb>不</rb><rt>bù</rt></ruby><ruby><rb>停</rb><rt>tíng</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>发</rb><rt>fā</rt></ruby><ruby><rb>抖</rb><rt>dǒu</rt></ruby>。
+        “<ruby><rb>你</rb><rt>nǐ</rt></ruby><ruby><rb>怎</rb><rt>zěn</rt></ruby><ruby><rb>么</rb><rt>me</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby>？”
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>轻</rb><rt>qīng</rt></ruby><ruby><rb>声</rb><rt>shēng</rt></ruby><ruby><rb>问</rb><rt>wèn</rt></ruby><ruby><rb>道</rb><rt>dào</rt></ruby>。
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>抬</rb><rt>tái</rt></ruby><ruby><rb>起</rb><rt>qǐ</rt></ruby><ruby><rb>头</rb><rt>tóu</rt></ruby>，
+        <ruby><rb>眼</rb><rt>yǎn</rt></ruby><ruby><rb>里</rb><rt>li</rt></ruby><ruby><rb>充</rb><rt>chōng</rt></ruby><ruby><rb>满</rb><rt>mǎn</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>泪</rb><rt>lèi</rt></ruby><ruby><rb>水</rb><rt>shuǐ</rt></ruby>，
+        <ruby><rb>它</rb><rt>tā</rt></ruby><ruby><rb>哭</rb><rt>zhuàn</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby><ruby><rb>说</rb><rt>shuō</rt></ruby>：
+        “<ruby><rb>我</rb><rt>wǒ</rt></ruby><ruby><rb>迷</rb><rt>mí</rt></ruby><ruby><rb>路</rb><rt>lù</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby>，
+        <ruby><rb>找</rb><rt>zhǎo</rt></ruby><ruby><rb>不</rb><rt>bú</rt></ruby><ruby><rb>到</rb><rt>dào</rt></ruby><ruby><rb>回</rb><rt>huí</rt></ruby><ruby><rb>家</rb><rt>jiā</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>路</rb><rt>lù</rt></ruby>。”
+   
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>想</rb><rt>xiǎng</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>想</rb><rt>xiǎng</rt></ruby>，
+        <ruby><rb>然</rb><rt>rán</rt></ruby><ruby><rb>后</rb><rt>hòu</rt></ruby><ruby><rb>坚</rb><rt>jiān</rt></ruby><ruby><rb>定</rb><rt>dìng</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>说</rb><rt>shuō</rt></ruby>：
+        “<ruby><rb>别</rb><rt>bié</rt></ruby><ruby><rb>担</rb><rt>dān</rt></ruby><ruby><rb>心</rb><rt>xīn</rt></ruby>，
+        <ruby><rb>我</rb><rt>wǒ</rt></ruby><ruby><rb>帮</rb><rt>bāng</rt></ruby><ruby><rb>你</rb><rt>nǐ</rt></ruby><ruby><rb>找</rb><rt>zhǎo</rt></ruby><ruby><rb>家</rb><rt>jiā</rt></ruby>！”
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>擦</rb><rt>cā</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>擦</rb><rt>cā</rt></ruby><ruby><rb>眼</rb><rt>yǎn</rt></ruby><ruby><rb>泪</rb><rt>lèi</rt></ruby>，
+        <ruby><rb>感</rb><rt>gǎn</rt></ruby><ruby><rb>激</rb><rt>jī</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>看</rb><rt>kàn</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby>。
+        <ruby><rb>于</rb><rt>yú</rt></ruby><ruby><rb>是</rb><rt>shì</rt></ruby>，<ruby><rb>他们</rb><rt>tāmen</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>起</rb><rt>qǐ</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby><ruby><rb>出</rb><rt>chū</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>竹</rb><rt>zhú</rt></ruby><ruby><rb>林</rb><rt>lín</rt></ruby>，
+        <ruby><rb>开</rb><rt>kāi</rt></ruby><ruby><rb>始</rb><rt>shǐ</rt></ruby><ruby><rb>寻</rb><rt>xún</rt></ruby><ruby><rb>找</rb><rt>zhǎo</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>家</rb><rt>jiā</rt></ruby>。
+   
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>们</rb><rt>men</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby><ruby><rb>过</rb><rt>guò</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>片</rb><rt>piàn</rt></ruby><ruby><rb>宽</rb><rt>kuān</rt></ruby><ruby><rb>广</rb><rt>guǎng</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>草</rb><rt>cǎo</rt></ruby><ruby><rb>地</rb><rt>dì</rt></ruby>，
+        <ruby><rb>草</rb><rt>cǎo</rt></ruby><ruby><rb>地</rb><rt>dì</rt></ruby><ruby><rb>上</rb><rt>shang</rt></ruby><ruby><rb>长</rb><rt>zhǎng</rt></ruby><ruby><rb>满</rb><rt>mǎn</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>柔</rb><rt>róu</rt></ruby><ruby><rb>软</rb><rt>ruǎn</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>青</rb><rt>qīng</rt></ruby><ruby><rb>草</rb><rt>cǎo</rt></ruby>，
+        <ruby><rb>还</rb><rt>hái</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>许</rb><rt>xǔ</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>美</rb><rt>měi</rt></ruby><ruby><rb>丽</rb><rt>lì</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>花</rb><rt>huā</rt></ruby><ruby><rb>朵</rb><rt>duǒ</rt></ruby>。
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>慢</rb><rt>màn</rt></ruby><ruby><rb>慢</rb><rt>màn</rt></ruby><ruby><rb>不</rb><rt>bù</rt></ruby><ruby><rb>再</rb><rt>zài</rt></ruby><ruby><rb>害</rb><rt>hài</rt></ruby><ruby><rb>怕</rb><rt>pà</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby>，
+        <ruby><rb>它</rb><rt>tā</rt></ruby><ruby><rb>闻</rb><rt>wén</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>闻</rb><rt>wén</rt></ruby><ruby><rb>花</rb><rt>huā</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>香</rb><rt>xiāng</rt></ruby><ruby><rb>味</rb><rt>wèi</rt></ruby>，
+        <ruby><rb>露</rb><rt>lù</rt></ruby><ruby><rb>出</rb><rt>chū</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>微</rb><rt>wēi</rt></ruby><ruby><rb>笑</rb><rt>xiào</rt></ruby>。
+        “<ruby><rb>你</rb><rt>nǐ</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>家</rb><rt>jiā</rt></ruby><ruby><rb>是</rb><rt>shì</rt></ruby><ruby><rb>什</rb><rt>shén</rt></ruby><ruby><rb>么</rb><rt>me</rt></ruby><ruby><rb>样</rb><rt>yàng</rt></ruby><ruby><rb>子</rb><rt>zi</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby>？”
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>问</rb><rt>wèn</rt></ruby>。
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>想</rb><rt>xiǎng</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>想</rb><rt>xiǎng</rt></ruby>，<ruby><rb>说</rb><rt>shuō</rt></ruby>：
+        “<ruby><rb>我</rb><rt>wǒ</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>家</rb><rt>jiā</rt></ruby><ruby><rb>在</rb><rt>zài</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>棵</rb><rt>kē</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>大</rb><rt>dà</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>树</rb><rt>shù</rt></ruby><ruby><rb>旁</rb><rt>páng</rt></ruby><ruby><rb>边</rb><rt>biān</rt></ruby>，
+        <ruby><rb>那</rb><rt>nà</rt></ruby><ruby><rb>里</rb><rt>li</rt></ruby><ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>个</rb><rt>gè</rt></ruby><ruby><rb>红</rb><rt>hóng</rt></ruby><ruby><rb>色</rb><rt>sè</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>屋</rb><rt>wū</rt></ruby><ruby><rb>顶</rb><rt>dǐng</rt></ruby>。”
+        <ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>们</rb><rt>men</rt></ruby><ruby><rb>继</rb><rt>jì</rt></ruby><ruby><rb>续</rb><rt>xù</rt></ruby><ruby><rb>向</rb><rt>xiàng</rt></ruby><ruby><rb>前</rb><rt>qián</rt></ruby><ruby><rb>走</rb><rt>zǒu</rt></ruby>，
+        <ruby><rb>忽</rb><rt>hū</rt></ruby><ruby><rb>然</rb><rt>rán</rt></ruby>，<ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>高</rb><rt>gāo</rt></ruby><ruby><rb>兴</rb><rt>xìng</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>跳</rb><rt>tiào</rt></ruby><ruby><rb>起</rb><rt>qǐ</rt></ruby><ruby><rb>来</rb><rt>lai</rt></ruby>，
+        <ruby><rb>指</rb><rt>zhǐ</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby><ruby><rb>前</rb><rt>qián</rt></ruby><ruby><rb>方</rb><rt>fāng</rt></ruby><ruby><rb>说</rb><rt>shuō</rt></ruby>：
+        “<ruby><rb>我</rb><rt>wǒ</rt></ruby><ruby><rb>看</rb><rt>kàn</rt></ruby><ruby><rb>到</rb><rt>dào</rt></ruby><ruby><rb>我</rb><rt>wǒ</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>家</rb><rt>jiā</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby>！”
+  
+
+    
+        <ruby><rb>果</rb><rt>guǒ</rt></ruby><ruby><rb>然</rb><rt>rán</rt></ruby>，<ruby><rb>在</rb><rt>zài</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>棵</rb><rt>kē</rt></ruby><ruby><rb>高</rb><rt>gāo</rt></ruby><ruby><rb>大</rb><rt>dà</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>橡</rb><rt>xiàng</rt></ruby><ruby><rb>树</rb><rt>shù</rt></ruby><ruby><rb>旁</rb><rt>páng</rt></ruby>，
+        <ruby><rb>有</rb><rt>yǒu</rt></ruby><ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>间</rb><rt>jiān</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>木</rb><rt>mù</rt></ruby><ruby><rb>屋</rb><rt>wū</rt></ruby>，
+        <ruby><rb>屋</rb><rt>wū</rt></ruby><ruby><rb>顶</rb><rt>dǐng</rt></ruby><ruby><rb>是</rb><rt>shì</rt></ruby><ruby><rb>红</rb><rt>hóng</rt></ruby><ruby><rb>色</rb><rt>sè</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby>，
+        <ruby><rb>窗</rb><rt>chuāng</rt></ruby><ruby><rb>户</rb><rt>hu</rt></ruby><ruby><rb>上</rb><rt>shang</rt></ruby><ruby><rb>挂</rb><rt>guà</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby><ruby><rb>漂</rb><rt>piào</rt></ruby><ruby><rb>亮</rb><rt>liang</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>窗</rb><rt>chuāng</rt></ruby><ruby><rb>帘</rb><rt>lián</rt></ruby>。
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>飞</rb><rt>fēi</rt></ruby><ruby><rb>快</rb><rt>kuài</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>跑</rb><rt>pǎo</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>过</rb><rt>guò</rt></ruby><ruby><rb>去</rb><rt>qu</rt></ruby>，
+        <ruby><rb>站</rb><rt>zhàn</rt></ruby><ruby><rb>在</rb><rt>zài</rt></ruby><ruby><rb>门</rb><rt>mén</rt></ruby><ruby><rb>口</rb><rt>kǒu</rt></ruby><ruby><rb>大</rb><rt>dà</rt></ruby><ruby><rb>声</rb><rt>shēng</rt></ruby><ruby><rb>喊</rb><rt>hǎn</rt></ruby>：
+        “<ruby><rb>妈</rb><rt>mā</rt></ruby><ruby><rb>妈</rb><rt>ma</rt></ruby>！<ruby><rb>妈</rb><rt>mā</rt></ruby><ruby><rb>妈</rb><rt>ma</rt></ruby>！”
+        <ruby><rb>门</rb><rt>mén</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>快</rb><rt>kuài</rt></ruby><ruby><rb>打</rb><rt>dǎ</rt></ruby><ruby><rb>开</rb><rt>kāi</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby>，
+        <ruby><rb>一</rb><rt>yì</rt></ruby><ruby><rb>只</rb><rt>zhǐ</rt></ruby><ruby><rb>大</rb><rt>dà</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>跑</rb><rt>pǎo</rt></ruby><ruby><rb>出</rb><rt>chū</rt></ruby><ruby><rb>来</rb><rt>lai</rt></ruby>，
+        <ruby><rb>把</rb><rt>bǎ</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>紧</rb><rt>jǐn</rt></ruby><ruby><rb>紧</rb><rt>jǐn</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>抱</rb><rt>bào</rt></ruby><ruby><rb>住</rb><rt>zhù</rt></ruby>，<ruby><rb>说</rb><rt>shuō</rt></ruby>：
+        “<ruby><rb>孩</rb><rt>hái</rt></ruby><ruby><rb>子</rb><rt>zi</rt></ruby>，<ruby><rb>你</rb><rt>nǐ</rt></ruby><ruby><rb>终</rb><rt>zhōng</rt></ruby><ruby><rb>于</rb><rt>yú</rt></ruby><ruby><rb>回</rb><rt>huí</rt></ruby><ruby><rb>来</rb><rt>lái</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby>！
+        <ruby><rb>我</rb><rt>wǒ</rt></ruby><ruby><rb>找</rb><rt>zhǎo</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>你</rb><rt>nǐ</rt></ruby><ruby><rb>很</rb><rt>hěn</rt></ruby><ruby><rb>久</rb><rt>jiǔ</rt></ruby>。”
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>开</rb><rt>kāi</rt></ruby><ruby><rb>心</rb><rt>xīn</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>对</rb><rt>duì</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>说</rb><rt>shuō</rt></ruby>：
+        “<ruby><rb>谢</rb><rt>xiè</rt></ruby><ruby><rb>谢</rb><rt>xie</rt></ruby><ruby><rb>你</rb><rt>nǐ</rt></ruby>，<ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby>！
+        <ruby><rb>你</rb><rt>nǐ</rt></ruby><ruby><rb>真</rb><rt>zhēn</rt></ruby><ruby><rb>是</rb><rt>shì</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>个</rb><rt>gè</rt></ruby><ruby><rb>勇</rb><rt>yǒng</rt></ruby><ruby><rb>敢</rb><rt>gǎn</rt></ruby><ruby><rb>又</rb><rt>yòu</rt></ruby><ruby><rb>善</rb><rt>shàn</rt></ruby><ruby><rb>良</rb><rt>liáng</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>朋</rb><rt>péng</rt></ruby><ruby><rb>友</rb><rt>you</rt></ruby>！”
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>笑</rb><rt>xiào</rt></ruby><ruby><rb>着</rb><rt>zhe</rt></ruby><ruby><rb>说</rb><rt>shuō</rt></ruby>：
+        “<ruby><rb>不</rb><rt>bù</rt></ruby><ruby><rb>用</rb><rt>yòng</rt></ruby><ruby><rb>谢</rb><rt>xie</rt></ruby>！
+        <ruby><rb>朋</rb><rt>péng</rt></ruby><ruby><rb>友</rb><rt>you</rt></ruby><ruby><rb>就</rb><rt>jiù</rt></ruby><ruby><rb>应</rb><rt>yīng</rt></ruby><ruby><rb>该</rb><rt>gāi</rt></ruby><ruby><rb>互</rb><rt>hù</rt></ruby><ruby><rb>相</rb><rt>xiāng</rt></ruby><ruby><rb>帮</rb><rt>bāng</rt></ruby><ruby><rb>助</rb><rt>zhù</rt></ruby>！”
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>妈</rb><rt>mā</rt></ruby><ruby><rb>妈</rb><rt>ma</rt></ruby><ruby><rb>邀</rb><rt>yāo</rt></ruby><ruby><rb>请</rb><rt>qǐng</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>留</rb><rt>liú</rt></ruby><ruby><rb>下</rb><rt>xià</rt></ruby><ruby><rb>来</rb><rt>lai</rt></ruby><ruby><rb>喝</rb><rt>hē</rt></ruby><ruby><rb>茶</rb><rt>chá</rt></ruby Black>，
+        <ruby><rb>并</rb><rt>bìng</rt></ruby><ruby><rb>给</rb><rt>gěi</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby><ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>块</rb><rt>kuài</rt></ruby><ruby><rb>香</rb><rt>xiāng</rt></ruby><ruby><rb>甜</rb><rt>tián</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>蛋</rb><rt>dàn</rt></ruby><ruby><rb>糕</rb><rt>gāo</rt></ruby>。
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>高</rb><rt>gāo</rt></ruby><ruby><rb>星</rb><rt>xìng</rt></ruby><ruby><rb>地</rb><rt>de</rt></ruby><ruby><rb>吃</rb><rt>chī</rt></ruby><ruby><rb>完</rb><rt>wán</rt></ruby><ruby><rb>后</rb><rt>hòu</rt></ruby>，
+        <ruby><rb>和</rb><rt>hé</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>猫</rb><rt>māo</rt></ruby><ruby><rb>道</rb><rt>dào</rt></ruby><ruby><rb>别</rb><rt>bié</rt></ruby>，
+        <ruby><rb>继</rb><rt>jì</rt></ruby><ruby><rb>续</rb><rt>xù</rt></ruby><ruby><rb>踏</rb><rt>tà</rt></ruby><ruby><rb>上</rb><rt>shàng</rt></ruby><ruby><rb>回</rb><rt>huí</rt></ruby><ruby><rb>家</rb><rt>jiā</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>路</rb><rt>lù</rt></ruby>。
+   
+
+   
+        <ruby><rb>回</rb><rt>huí</rt></ruby><ruby><rb>到</rb><rt>dào</rt></ruby><ruby><rb>家</rb><rt>jiā</rt></ruby><ruby><rb>后</rb><rt>hòu</rt></ruby>，
+     <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>把</rb><rt>bǎ</rt></ruby><ruby><rb>这</rb><rt>zhè</rt></ruby><ruby><rb>次</rb><rt>cì</rt></ruby><ruby><rb>冒</rb><rt>mào</rt></ruby><ruby><rb>险</rb><rt>xiǎn</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>故</rb><rt>gù</rt></ruby><ruby><rb>事</rb><rt>shi</rt></ruby><ruby><rb>讲</rb><rt>jiǎng</rt></ruby><ruby><rb>给</rb><rt>gěi</rt></ruby><ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>朋</rb><rt>péng</rt></ruby><ruby><rb>友</rb><rt>you</rt></ruby><ruby><rb>们</rb><rt>men</rt></ruby><ruby><rb>听</rb><rt>tīng</rt></ruby>。
+        <ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>兔</rb><rt>tù</rt></ruby>、<ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>松</rb><rt>sōng</rt></ruby><ruby><rb>鼠</rb><rt>shǔ</rt></ruby><ruby><rb>和</rb><rt>hé</rt></ruby><ruby><rb>小</rb><rt>xiǎo</rt></ruby><ruby><rb>鸟</rb><rt>niǎo</rt></ruby><ruby><rb>都</rb><rt>dōu</rt></ruby><ruby><rb>听</rb><rt>tīng</rt></ruby><ruby><rb>得</rb><rt>de</rt></ruby><ruby><rb>目</rb><rt>mù</rt></ruby><ruby><rb>瞪</rb><rt>dèng</rt></ruby><ruby><rb>口</rb><rt>kǒu</rt></ruby><ruby><rb>呆</rb><rt>dāi</rt></ruby>，
+        <ruby><rb>连</rb><rt>lián</rt></ruby><ruby><rb>连</rb><rt>lián</rt></ruby><ruby><rb>称</rb><rt>chēng</rt></ruby><ruby><rb>赞</rb><rt>zàn</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby>：
+        “<ruby><rb>你</rb><rt>nǐ</rt></ruby><ruby><rb>真</rb><rt>zhēn</rt></ruby><ruby><rb>是</rb><rt>shì</rt></ruby><ruby><rb>太</rb><rt>tài</rt></ruby><ruby><rb>勇</rb><rt>yǎng</rt></ruby><ruby><rb>敢</rb><rt>gǎn</rt></ruby><ruby><rb>了</rb><rt>le</rt></ruby>！”
+        <ruby><rb>从</rb><rt>cóng</rt></ruby><ruby><rb>那</rb><rt>nà</rt></ruby><ruby><rb>天</rb><rt>tiān</rt></ruby><ruby><rb>起</rb><rt>qǐ</rt></ruby>，
+        <ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>多</rb><rt>duō</rt></ruby><ruby><rb>更</rb><rt>gèng</rt></ruby><ruby><rb>加</rb><rt>jiā</rt></ruby><ruby><rb>喜</rb><rt>xǐ</rt></ruby><ruby><rb>欢</rb><rt>huan</rt></ruby><ruby><rb>探</rb><rt>tàn</rt></ruby><ruby><rb>索</rb><rt>suǒ</rt></ruby><ruby><rb>世</rb><rt>shì</rt></ruby><ruby><rb>界</rb><rt>jiè</rt></ruby>，
+        <ruby><rb>因</rb><rt>yīn</rt></ruby><ruby><rb>为</rb><rt>wèi</rt></ruby><ruby><rb>他</rb><rt>tā</rt></ruby><ruby><rb>知</rb><rt>zhī</rt></ruby><ruby><rb>道</rb><rt>dào</rt></ruby>，
+        <ruby><rb>每</rb><rt>měi</rt></ruby><ruby><rb>一</rb><rt>yí</rt></ruby><ruby><rb>次</rb><rt>cì</rt></ruby><ruby><rb>新</rb><rt>xīn</rt></ruby><ruby><rb>的</rb><rt>de</rt></ruby><ruby><rb>冒</rb><rt>mào</rt></ruby><ruby><rb>险</rb><rt>xiǎn</rt></ruby>，
+        <ruby><rb>都</rb><rt>dōu</rt></ruby><ruby><rb>会</rb><rt>huì</rt></ruby><ruby><rb>带</rb><rt>dài</rt></ruby><ruby><rb>来</rb><rt>lái</rt></ruby><ruby><rb>惊</rb><rt>jīng</rt></ruby><ruby><rb>喜</rb><rt>xǐ</rt></ruby><ruby><rb>和</rb><rt>hé</rt></ruby><ruby><rb>发</rb><rt>fā</rt></ruby><ruby><rb>现</rb><rt>xiàn</rt></ruby>！
+    
+
+</body>   
+
+                    </div>
+
+                    <!-- Traduzione Italiana -->
+                    <div class="traduzione-italiana mt-8 pt-6 border-t border-gray-200 text-gray-600 text-base">
+                        <h3 class="font-bold mb-2 text-indigo-900 font-sans uppercase tracking-wider text-sm">Traduzione in Italiano</h3>
+                        <p class="mb-2">L’orsetto Dodo viveva in una bellissima foresta. Aveva tanti amici, come il coniglio, lo scoiattolo e l’uccellino. Dodo amava giocare nella foresta e ogni giorno era felice. La sua attività preferita era esplorare posti nuovi con i suoi amici e scoprire cose magiche. Un giorno, il cielo era azzurro e il sole splendeva caldo sulla foresta. Dopo aver fatto colazione, Dodo decise di fare una passeggiata. Camminando, notò un sentiero sconosciuto. Era un sentiero speciale, ai lati crescevano fiori coloratissimi e nell’aria si sentiva un dolce profumo. Dodo era curioso di sapere dove portasse e, con coraggio, iniziò una nuova avventura. 
+Dopo un po’, sentì un suono di acqua che scorreva: “Splash, splash…” Alzò lo sguardo e vide un piccolo ponte, sotto il quale scorreva un limpido fiume. Nel fiume c’erano tanti pesci che nuotavano felici, alcuni saltavano fuori dall’acqua, creando piccole onde scintillanti. Dodo si accovacciò a guardarli con un sorriso. Attraversato il ponte, Dodo entrò in una fitta foresta di bambù. Era molto silenziosa, si sentiva solo il fruscio delle foglie al vento e il cinguettio degli uccelli. All’improvviso, Dodo notò una grotta scura e vicino all’ingresso vide un piccolo gattino spaventato, tremante. “Cosa c’è che non va?” chiese Dodo gentilmente. 
+Il gattino alzò lo sguardo con gli occhi pieni di lacrime e rispose: “Mi sono perso e non trovo la strada di casa.” Dodo pensò per un attimo e poi disse deciso: “Non preoccuparti, ti aiuterò a trovare la tua casa!” Il gattino si asciugò le lacrime e sorrise a Dodo. Insieme, uscirono dalla foresta di bambù e iniziarono la ricerca. Attraversarono un grande prato, ricoperto di morbida erba e bellissimi fiori profumati. Il gattino cominciò a sentirsi meno impaurito e annusò il dolce profumo nell’aria. “Com’è fatta la tua casa?” chiese Dodo. 
+“È vicino a un grande albero e ha un tetto rosso,” rispose il gattino. Proseguirono e all’improvviso il gattino esclamò felice: “Ho visto la mia casa!” Vicino a una grande quercia c’era una piccola casetta di legno con un tetto rosso e delle bellissime tendine alle finestre. Il gattino corse alla porta e gridò: “Mamma! Mamma!” La porta si aprì subito e una gatta grande abbracciò forte il gattino. “Finalmente sei tornato! Ti ho cercato ovunque!” Il gattino si girò verso Dodo e disse: “Grazie, Dodo! Sei un amico coraggioso e gentile! "
+Dodo sorrise: “Non c’è di che! Gli amici devono aiutarsi a vicenda!” Dopo aver mangiato una fetta di torta, Dodo salutò e tornò a casa, felice della sua nuova avventura e delle sue nuove scoperte!</p>
+                    </div>
+                </article>
+
+                <footer>
+                    <ol id="page-numbers">
+                        <li>1</li>
+                        <li>2</li>
+                    </ol>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+    <!-- Logica JavaScript Vanilla -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // --- Logica Menu Hamburger ---
+            const menuToggle = document.getElementById("menu-toggle");
+            const verticalMenu = document.getElementById("vertical-menu");
+
+            menuToggle.addEventListener("click", () => {
+                menuToggle.classList.toggle("is-active");
+                verticalMenu.classList.toggle("open");
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!menuToggle.contains(e.target) && !verticalMenu.contains(e.target)) {
+                    menuToggle.classList.remove("is-active");
+                    verticalMenu.classList.remove("open");
+                }
+            });
+
+           // --- Logica Audio Player con Playlist (6 parti) ---
+const btnAscolta = document.getElementById("btn-ascolta");
+const btnRallenta = document.getElementById("btn-rallenta");
+const audio = document.getElementById("audio-lettura");
+const pulsantiTracce = document.querySelectorAll(".btn-traccia");
+
+let tracciaSelezionata = false;
+const speeds = [1.0, 0.75, 0.5];
+let speedIndex = 0;
+
+// Gestione selezione delle tracce
+pulsantiTracce.forEach(bottone => {
+    bottone.addEventListener("click", () => {
+        // Rimuove lo stile "attivo" da tutti i bottoni della playlist
+        pulsantiTracce.forEach(b => b.classList.remove("bg-indigo-600", "text-white", "hover:bg-indigo-700"));
+        pulsantiTracce.forEach(b => b.classList.add("bg-gray-100", "text-gray-700", "hover:bg-indigo-100"));
+
+        // Attiva visivamente il bottone cliccato
+        bottone.classList.remove("bg-gray-100", "text-gray-700", "hover:bg-indigo-100");
+        bottone.classList.add("bg-indigo-600", "text-white", "hover:bg-indigo-700");
+
+        // Cambia la sorgente dell'audio e avvia la riproduzione
+        audio.src = bottone.getAttribute("data-src");
+        
+        // Mantieni la velocità selezionata anche sulla nuova traccia
+        audio.playbackRate = speeds[speedIndex]; 
+        
+        audio.play();
+
+        // Sblocca il pulsante principale Play/Pausa se era bloccato
+        tracciaSelezionata = true;
+        btnAscolta.disabled = false;
+        btnAscolta.classList.remove("opacity-50", "cursor-not-allowed");
+        btnAscolta.innerHTML = "⏸ Pausa";
+    });
+});
+
+// Play / Pausa principale
+btnAscolta.addEventListener("click", () => {
+    if (!tracciaSelezionata) return;
+
+    if (audio.paused) {
+        audio.play();
+        btnAscolta.innerHTML = "⏸ Pausa";
+    } else {
+        audio.pause();
+        btnAscolta.innerHTML = "▶ Ascolta";
+    }
+});
+
+// Controllo della velocità (Tartaruga/Lumaca/Bradipo)
+btnRallenta.addEventListener("click", () => {
+    speedIndex = (speedIndex + 1) % speeds.length;
+    let currentSpeed = speeds[speedIndex];
+
+    audio.playbackRate = currentSpeed;
+
+    let icon = "🐢";
+    if(currentSpeed === 0.75) icon = "🐌";
+    if(currentSpeed === 0.5) icon = "🦥";
+
+    btnRallenta.innerHTML = `${icon} ${currentSpeed}x`;
+});
+
+// Al termine dell'audio rimetti l'icona Play
+audio.addEventListener("ended", () => {
+    btnAscolta.innerHTML = "▶ Ascolta";
+});
+    </script>
+</body>
+</html>
