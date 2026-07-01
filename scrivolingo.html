@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrivolingo Hub</title>
+  <!-- Tailwind CSS per lo stile dei blocchi -->
+  <script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Milonga&display=swap" rel="stylesheet">
+  <style>
+   .font-serif-custom { font-family: 'Milonga', serif;}
+    .font-cursive-custom { font-family:  "Ma Shan Zheng", cursive;}
+    /* L'effetto del tasto 3D che si schiaccia al click */
+    .duo-btn {
+      transition: all 0.1s ease;
+      transform: translateY(-4px);
+    }
+    .duo-btn:active {
+      transform: translateY(0px);
+      box-shadow: 0 0px 0px transparent !important;
+    }
+    
+    .nodo-sinistra { transform: translateX(-40px); }
+    .nodo-destra { transform: translateX(40px); }
+  </style>
+</head>
+<body class=" bg-gradient-to-r from-yellow-500 to-red-500 text-slate-800" text-[#3C3C3C] font-sans antialiased pb-24">
+
+  <!-- BARRA SUPERIORE (STATISTICHE STATICHE) -->
+<header class="bg-gradient-to-r from-red-700 to-red-600 text-white border-b-4 border-yellow-500 shadow-lg p-4 sticky top-0 z-50">
+  <div class="max-w-xl mx-auto flex justify-between items-center">
+    
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" height="180" viewBox="0 0 1070 180" class="w-full max-h-16">
+      <defs>
+        <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+          <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/>
+        </filter>
+      
+        <linearGradient id="grad-ext-0-S" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ff9000" />
+          <stop offset="100%" stop-color="#ff3d00" />
+        </linearGradient>
+        <clipPath id="clip-ext-0-S">
+          <path d="M82,25 Q70,12 50,12 Q25,12 25,32 Q25,48 50,52 Q72,55 72,70 Q72,82 50,82 Q28,82 20,68 H42 Q45,70 52,70 Q60,70 60,60 Q60,53 45,50 Q20,44 20,28 Q20,10 50,10 Q80,10 85,25 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-1-C" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ff3366" />
+          <stop offset="100%" stop-color="#ff00cc" />
+        </linearGradient>
+        <clipPath id="clip-ext-1-C">
+          <path d="M82,26 Q55,8 28,30 Q10,52 28,78 Q55,96 82,82 Q72,66 54,66 Q38,56 42,42 Q48,34 68,34 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-2-R" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#a6ff00" />
+          <stop offset="100%" stop-color="#00e676" />
+        </linearGradient>
+        <clipPath id="clip-ext-2-R">
+          <path d="M18,10 H65 Q85,10 85,38 Q80,55 58,58 L85,90 H60 L38,62 H40 V90 H18 Z M40,24 H52 Q62,24 62,38 Q62,45 48,45 H40 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-3-I" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ff416c" />
+          <stop offset="100%" stop-color="#ff4b2b" />
+        </linearGradient>
+        <clipPath id="clip-ext-3-I">
+          <path d="M30,10 H70 V26 H55 V74 H70 V90 H30 V74 H45 V26 H30 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-4-V" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#7b2ff7" />
+          <stop offset="100%" stop-color="#f107a3" />
+        </linearGradient>
+        <clipPath id="clip-ext-4-V">
+          <path d="M12,10 H36 L50,66 L64,10 H88 L64,90 H36 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-5-O" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#00f2fe" />
+          <stop offset="100%" stop-color="#4facfe" />
+        </linearGradient>
+        <clipPath id="clip-ext-5-O">
+          <path d="M50,10 Q85,10 85,50 Q85,90 50,90 Q15,90 15,50 Q15,10 50,10 Z M50,30 Q63,30 63,50 Q63,70 50,70 Q37,70 37,50 Q37,30 50,30 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-6-L" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fdd835" />
+          <stop offset="100%" stop-color="#f57c00" />
+        </linearGradient>
+        <clipPath id="clip-ext-6-L">
+          <path d="M20,10 H42 V70 H80 V90 H20 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-7-I" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffeb3b" />
+          <stop offset="100%" stop-color="#4caf50" />
+        </linearGradient>
+        <clipPath id="clip-ext-7-I">
+          <path d="M30,10 H70 V26 H55 V74 H70 V90 H30 V74 H45 V26 H30 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-8-N" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e91e63" />
+          <stop offset="100%" stop-color="#9c27b0" />
+        </linearGradient>
+        <clipPath id="clip-ext-8-N">
+          <path d="M15,10 H38 L68,60 V10 H90 V90 H68 L38,38 V90 H15 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-9-G" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ff9000" />
+          <stop offset="100%" stop-color="#ff3d00" />
+        </linearGradient>
+        <clipPath id="clip-ext-9-G">
+          <path d="M82,24 Q55,8 28,30 Q10,52 28,78 Q55,96 82,84 V52 H54 V70 H70 V75 Q55,83 44,70 Q34,54 44,38 Q55,25 72,34 Z" />
+        </clipPath>
+      
+        <linearGradient id="grad-ext-10-O" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ff3366" />
+          <stop offset="100%" stop-color="#ff00cc" />
+        </linearGradient>
+        <clipPath id="clip-ext-10-O">
+          <path d="M50,10 Q85,10 85,50 Q85,90 50,90 Q15,90 15,50 Q15,10 50,10 Z M50,30 Q63,30 63,50 Q63,70 50,70 Q37,70 37,50 Q37,30 50,30 Z" />
+        </clipPath>
+      </defs>
+      
+      <rect width="100%" height="100%" fill="none" />
+      
+      <g filter="url(#shadow)">
+        <g transform="translate(40, 34) rotate(-6, 50, 50) scale(1)">
+          <path d="M12,40 C-8,45 -12,20 -2,12 C2,22 8,30 12,40 Z M12,40 C-2,46 -4,55 0,60 C4,52 8,46 12,40 Z" fill="#2A1A4A" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M88,40 C108,45 112,20 102,12 C98,22 92,30 88,40 Z M88,40 C102,46 104,55 100,60 C96,52 92,46 88,40 Z" fill="#2A1A4A" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M18,18 Q5,5 2,22 Q5,28 15,22 Z" fill="url(#grad-ext-0-S)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M82,18 Q95,5 98,22 Q95,28 85,22 Z" fill="url(#grad-ext-0-S)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M82,25 Q70,12 50,12 Q25,12 25,32 Q25,48 50,52 Q72,55 72,70 Q72,82 50,82 Q28,82 20,68 H42 Q45,70 52,70 Q60,70 60,60 Q60,53 45,50 Q20,44 20,28 Q20,10 50,10 Q80,10 85,25 Z" fill="url(#grad-ext-0-S)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-0-S)"></g>
+          <g transform="translate(0, -20)">
+            <path d="M45,95 L50,78 L55,95 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M32,92 L36,80 L40,92 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M60,92 L64,80 L68,92 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="34" cy="6" r="11" fill="#ffffff" />
+            <circle cx="30.333333333333332" cy="9.666666666666666" r="4.95" fill="#1e0b20" />
+            <circle cx="31.25" cy="3.25" r="1.65" fill="#ffffff" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="66" cy="4" r="12" fill="#ffffff" />
+            <circle cx="69" cy="8" r="5.4" fill="#1e0b20" />
+            <circle cx="63" cy="1" r="1.7999999999999998" fill="#ffffff" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M 50 86 L 37 77 V 95 Z" fill="#ff296d" />
+            <path d="M 50 86 L 63 77 V 95 Z" fill="#ff296d" />
+            <circle cx="50" cy="86" r="4" fill="#f5ee30" stroke="#1e0b20" stroke-width="2.5" />
+          </g>
+        </g>
+        <g transform="translate(129, 46) rotate(6, 50, 50) scale(1)">
+          <path d="M35,10 L50,-4 L65,10 Z" fill="url(#grad-ext-1-C)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M15,18 L26,8 L37,18 Z" fill="url(#grad-ext-1-C)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M63,18 L74,8 L85,18 Z" fill="url(#grad-ext-1-C)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M82,26 Q55,8 28,30 Q10,52 28,78 Q55,96 82,82 Q72,66 54,66 Q38,56 42,42 Q48,34 68,34 Z" fill="url(#grad-ext-1-C)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-1-C)"></g>
+          <g transform="translate(-5, -22)">
+            <path d="M40,90 Q50,70 60,90 Q50,95 40,90 Z" fill="#ff4081" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="50" cy="4" r="14" fill="#ffffff" />
+            <circle cx="50" cy="4" r="6.3" fill="#1e0b20" />
+            <circle cx="46.5" cy="0.5" r="2.1" fill="#ffffff" stroke="none" />
+          </g>
+          <g opacity="0.65">
+            <ellipse cx="27" cy="58" rx="6.5" ry="3.5" fill="#ff4081" stroke="none" />
+            <ellipse cx="63" cy="58" rx="6.5" ry="3.5" fill="#ff4081" stroke="none" />
+          </g>
+        </g>
+        <g transform="translate(218, 40) rotate(-6, 50, 50) scale(1)">
+          <path d="M40,12 L43,2 L50,8 L57,2 L60,12 Z" fill="#ffea00" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M15,10 H65 Q85,10 85,38 Q80,55 58,58 L85,90 H60 L38,62 H40 V90 H18 Z M40,24 H52 Q62,24 62,38 Q62,45 48,45 H40 Z" fill="url(#grad-ext-2-R)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-2-R)"></g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="26" cy="10" r="9" fill="#ffffff" />
+            <circle cx="26" cy="8.5" r="4.05" fill="#1e0b20" />
+            <circle cx="23.75" cy="7.75" r="1.3499999999999999" fill="#ffffff" stroke="none" />
+            <path d="M15,5.5 L37,1 L37,-2 L15,-2 Z" fill="currentColor" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="50" cy="2" r="12" fill="#ffffff" />
+            <circle cx="50" cy="0" r="5.4" fill="#1e0b20" />
+            <circle cx="47" cy="-1" r="1.7999999999999998" fill="#ffffff" stroke="none" />
+            <path d="M36,-4 L64,-10 L64,-13 L36,-13 Z" fill="currentColor" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="74" cy="10" r="10" fill="#ffffff" />
+            <circle cx="74" cy="8.333333333333334" r="4.5" fill="#1e0b20" />
+            <circle cx="71.5" cy="7.5" r="1.5" fill="#ffffff" stroke="none" />
+            <path d="M62,5 L86,0 L86,-3 L62,-3 Z" fill="currentColor" stroke="none" />
+          </g>
+          <path d="M25,85 Q25,102 22,102 Q19,102 19,85 Z" fill="url(#grad-ext-2-R)" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" />
+          <path d="M50,83 Q50,110 46,110 Q42,110 42,83 Z" fill="url(#grad-ext-2-R)" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" />
+          <path d="M75,85 Q75,100 72,100 Q69,100 69,85 Z" fill="url(#grad-ext-2-R)" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" />
+        </g>
+        <g transform="translate(307, 34) rotate(6, 50, 50) scale(1)">
+          <path d="M35,10 Q28,-5 34,-12 Q40,-12 40,-5 L41,10 Z" fill="url(#grad-ext-3-I)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M65,10 Q72,-5 66,-12 Q60,-12 60,-5 L59,10 Z" fill="url(#grad-ext-3-I)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <circle cx="34" cy="-11" r="4" fill="#fff" stroke="#1e0b20" stroke-width="2.5" />
+          <circle cx="33.5" cy="-11" r="1.8" fill="#1e0b20" />
+          <circle cx="66" cy="-11" r="4" fill="#fff" stroke="#1e0b20" stroke-width="2.5" />
+          <circle cx="65.5" cy="-11" r="1.8" fill="#1e0b20" />
+          <path d="M30,10 H70 V26 H55 V74 H70 V90 H30 V74 H45 V26 H30 Z" fill="url(#grad-ext-3-I)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-3-I)">
+            <circle cx="30" cy="30" r="6" fill="#000" opacity="0.15" />
+            <circle cx="75" cy="70" r="8" fill="#000" opacity="0.15" />
+            <circle cx="70" cy="25" r="4" fill="#000" opacity="0.15" />
+            <circle cx="25" cy="75" r="5" fill="#000" opacity="0.15" />
+          </g>
+          <g transform="translate(0, 5)">
+            <path d="M38,5 Q38,18 43,18 Q45,15 45,5 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M62,5 Q62,18 57,18 Q55,15 55,5 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="34" cy="6" r="11" fill="#ffffff" />
+            <circle cx="32.9" cy="4.9" r="4.95" fill="#1e0b20" />
+            <circle cx="30.333333333333332" cy="2.3333333333333335" r="2.2" fill="#ffffff" stroke="none" />
+            <circle cx="36.75" cy="8.75" r="1.1" fill="#ffffff" stroke="none" />
+            <line x1="25.2" y1="0.5" x2="20.8" y2="-3.9000000000000004" stroke="#1e0b20" stroke-width="2.7777777777777777" />
+            <line x1="42.8" y1="0.5" x2="47.2" y2="-3.9000000000000004" stroke="#1e0b20" stroke-width="2.7777777777777777" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="66" cy="4" r="12" fill="#ffffff" />
+            <circle cx="64.8" cy="2.8" r="5.4" fill="#1e0b20" />
+            <circle cx="62" cy="0" r="2.4000000000000004" fill="#ffffff" stroke="none" />
+            <circle cx="69" cy="7" r="1.2000000000000002" fill="#ffffff" stroke="none" />
+            <line x1="56.4" y1="-2" x2="51.6" y2="-6.800000000000001" stroke="#1e0b20" stroke-width="2.7777777777777777" />
+            <line x1="75.6" y1="-2" x2="80.4" y2="-6.800000000000001" stroke="#1e0b20" stroke-width="2.7777777777777777" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="3.2" fill="none" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="36" cy="49" r="10.5" />
+            <circle cx="64" cy="49" r="10.5" />
+            <line x1="46.5" y1="49" x2="53.5" y2="49" />
+            <path d="M 25.5 49 Q 19 45 13 53" />
+            <path d="M 74.5 49 Q 81 45 87 53" />
+          </g>
+        </g>
+        <g transform="translate(396, 46) rotate(-6, 50, 50) scale(1)">
+          <path d="M12,10 H36 L50,66 L64,10 H88 L64,90 H36 Z" fill="url(#grad-ext-4-V)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-4-V)">
+            <path d="M35,35 Q40,40 45,35 M50,45 Q55,50 60,45 M30,55 Q35,60 40,55" fill="none" stroke="#1e0b20" stroke-opacity="0.25" stroke-width="2.5" />
+          </g>
+          <g transform="translate(0, -7)">
+            <path d="M30,5 L35,16 L40,5 L45,16 L50,5 L55,16 L65,5 L70,16 L75,5" fill="none" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="50" cy="4" r="14" fill="#ffffff" />
+            <circle cx="50" cy="4" r="6.3" fill="#1e0b20" />
+            <circle cx="46.5" cy="0.5" r="2.1" fill="#ffffff" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M 50 49 Q 37 45 30 52 Q 40 55 50 50.5 Q 60 55 70 52 Q 63 45 50 49 Z" fill="#1e0b20" />
+          </g>
+        </g>
+        <g transform="translate(485, 40) rotate(6, 50, 50) scale(1)">
+          <path d="M25,12 C18,2 8,10 12,25 C16,20 22,17 25,12 Z" fill="url(#grad-ext-5-O)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M75,12 C82,2 92,10 88,25 C84,20 78,17 75,12 Z" fill="url(#grad-ext-5-O)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M50,10 Q85,10 85,50 Q85,90 50,90 Q15,90 15,50 Q15,10 50,10 Z M50,30 Q63,30 63,50 Q63,70 50,70 Q37,70 37,50 Q37,30 50,30 Z" fill="url(#grad-ext-5-O)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-5-O)"></g>
+          <g transform="translate(0, -20)">
+            <path d="M45,95 L50,78 L55,95 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M32,92 L36,80 L40,92 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M60,92 L64,80 L68,92 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="34" cy="6" r="11" fill="#ffffff" />
+            <circle cx="36.75" cy="9.666666666666666" r="4.95" fill="#1e0b20" />
+            <circle cx="31.25" cy="3.25" r="1.65" fill="#ffffff" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="66" cy="4" r="12" fill="#ffffff" />
+            <circle cx="62" cy="8" r="5.4" fill="#1e0b20" />
+            <circle cx="63" cy="1" r="1.7999999999999998" fill="#ffffff" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M 50 86 L 37 77 V 95 Z" fill="#ff296d" />
+            <path d="M 50 86 L 63 77 V 95 Z" fill="#ff296d" />
+            <circle cx="50" cy="86" r="4" fill="#f5ee30" stroke="#1e0b20" stroke-width="2.5" />
+          </g>
+          <path d="M80,80 Q98,82 105,72 Q112,62 102,55 Q96,51 90,62 Q85,72 80,80 Z" fill="url(#grad-ext-5-O)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M101,58 L108,52 L103,64 Z" fill="#ffeb3b" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M106,66 L113,63 L107,71 Z" fill="#ffeb3b" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+        </g>
+        <g transform="translate(574, 34) rotate(-6, 50, 50) scale(1)">
+          <path d="M12,40 C-8,45 -12,20 -2,12 C2,22 8,30 12,40 Z M12,40 C-2,46 -4,55 0,60 C4,52 8,46 12,40 Z" fill="#2A1A4A" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M88,40 C108,45 112,20 102,12 C98,22 92,30 88,40 Z M88,40 C102,46 104,55 100,60 C96,52 92,46 88,40 Z" fill="#2A1A4A" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M18,18 Q5,5 2,22 Q5,28 15,22 Z" fill="url(#grad-ext-6-L)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M82,18 Q95,5 98,22 Q95,28 85,22 Z" fill="url(#grad-ext-6-L)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M20,10 H42 V70 H80 V90 H20 Z" fill="url(#grad-ext-6-L)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-6-L)"></g>
+          <g transform="translate(-20, -12)">
+            <path d="M40,90 Q50,70 60,90 Q50,95 40,90 Z" fill="#ff4081" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="50" cy="4" r="14" fill="#ffffff" />
+            <circle cx="50" cy="4" r="6.3" fill="#1e0b20" />
+            <circle cx="46.5" cy="0.5" r="2.1" fill="#ffffff" stroke="none" />
+          </g>
+          <g opacity="0.65">
+            <ellipse cx="12" cy="68" rx="6.5" ry="3.5" fill="#ff4081" stroke="none" />
+            <ellipse cx="48" cy="68" rx="6.5" ry="3.5" fill="#ff4081" stroke="none" />
+          </g>
+        </g>
+        <g transform="translate(663, 46) rotate(6, 50, 50) scale(1)">
+          <path d="M35,10 L50,-4 L65,10 Z" fill="url(#grad-ext-7-I)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M15,18 L26,8 L37,18 Z" fill="url(#grad-ext-7-I)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M63,18 L74,8 L85,18 Z" fill="url(#grad-ext-7-I)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M30,10 H70 V26 H55 V74 H70 V90 H30 V74 H45 V26 H30 Z" fill="url(#grad-ext-7-I)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-7-I)"></g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="26" cy="10" r="9" fill="#ffffff" />
+            <circle cx="26" cy="8.5" r="4.05" fill="#1e0b20" />
+            <circle cx="23.75" cy="7.75" r="1.3499999999999999" fill="#ffffff" stroke="none" />
+            <path d="M15,5.5 L37,1 L37,-2 L15,-2 Z" fill="currentColor" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="50" cy="2" r="12" fill="#ffffff" />
+            <circle cx="50" cy="0" r="5.4" fill="#1e0b20" />
+            <circle cx="47" cy="-1" r="1.7999999999999998" fill="#ffffff" stroke="none" />
+            <path d="M36,-4 L64,-10 L64,-13 L36,-13 Z" fill="currentColor" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="74" cy="10" r="10" fill="#ffffff" />
+            <circle cx="74" cy="8.333333333333334" r="4.5" fill="#1e0b20" />
+            <circle cx="71.5" cy="7.5" r="1.5" fill="#ffffff" stroke="none" />
+            <path d="M62,5 L86,0 L86,-3 L62,-3 Z" fill="currentColor" stroke="none" />
+          </g>
+        </g>
+        <g transform="translate(752, 40) rotate(-6, 50, 50) scale(1)">
+          <path d="M40,12 L43,2 L50,8 L57,2 L60,12 Z" fill="#ffea00" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M15,10 H38 L68,60 V10 H90 V90 H68 L38,38 V90 H15 Z" fill="url(#grad-ext-8-N)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-8-N)"></g>
+          <g transform="translate(0, 5)">
+            <path d="M38,5 Q38,18 43,18 Q45,15 45,5 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M62,5 Q62,18 57,18 Q55,15 55,5 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="34" cy="6" r="11" fill="#ffffff" />
+            <circle cx="32.9" cy="4.9" r="4.95" fill="#1e0b20" />
+            <circle cx="30.333333333333332" cy="2.3333333333333335" r="2.2" fill="#ffffff" stroke="none" />
+            <circle cx="36.75" cy="8.75" r="1.1" fill="#ffffff" stroke="none" />
+            <line x1="25.2" y1="0.5" x2="20.8" y2="-3.9000000000000004" stroke="#1e0b20" stroke-width="2.7777777777777777" />
+            <line x1="42.8" y1="0.5" x2="47.2" y2="-3.9000000000000004" stroke="#1e0b20" stroke-width="2.7777777777777777" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="66" cy="4" r="12" fill="#ffffff" />
+            <circle cx="64.8" cy="2.8" r="5.4" fill="#1e0b20" />
+            <circle cx="62" cy="0" r="2.4000000000000004" fill="#ffffff" stroke="none" />
+            <circle cx="69" cy="7" r="1.2000000000000002" fill="#ffffff" stroke="none" />
+            <line x1="56.4" y1="-2" x2="51.6" y2="-6.800000000000001" stroke="#1e0b20" stroke-width="2.7777777777777777" />
+            <line x1="75.6" y1="-2" x2="80.4" y2="-6.800000000000001" stroke="#1e0b20" stroke-width="2.7777777777777777" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="3.2" fill="none" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="36" cy="49" r="10.5" />
+            <circle cx="64" cy="49" r="10.5" />
+            <line x1="46.5" y1="49" x2="53.5" y2="49" />
+            <path d="M 25.5 49 Q 19 45 13 53" />
+            <path d="M 74.5 49 Q 81 45 87 53" />
+          </g>
+          <path d="M25,85 Q25,102 22,102 Q19,102 19,85 Z" fill="url(#grad-ext-8-N)" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" />
+          <path d="M50,83 Q50,110 46,110 Q42,110 42,83 Z" fill="url(#grad-ext-8-N)" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" />
+          <path d="M75,85 Q75,100 72,100 Q69,100 69,85 Z" fill="url(#grad-ext-8-N)" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" />
+        </g>
+        <g transform="translate(841, 34) rotate(6, 50, 50) scale(1)">
+          <path d="M35,10 Q28,-5 34,-12 Q40,-12 40,-5 L41,10 Z" fill="url(#grad-ext-9-G)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <path d="M65,10 Q72,-5 66,-12 Q60,-12 60,-5 L59,10 Z" fill="url(#grad-ext-9-G)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <circle cx="34" cy="-11" r="4" fill="#fff" stroke="#1e0b20" stroke-width="2.5" />
+          <circle cx="33.5" cy="-11" r="1.8" fill="#1e0b20" />
+          <circle cx="66" cy="-11" r="4" fill="#fff" stroke="#1e0b20" stroke-width="2.5" />
+          <circle cx="65.5" cy="-11" r="1.8" fill="#1e0b20" />
+          <path d="M82,24 Q55,8 28,30 Q10,52 28,78 Q55,96 82,84 V52 H54 V70 H70 V75 Q55,83 44,70 Q34,54 44,38 Q55,25 72,34 Z" fill="url(#grad-ext-9-G)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-9-G)">
+            <circle cx="30" cy="30" r="6" fill="#000" opacity="0.15" />
+            <circle cx="75" cy="70" r="8" fill="#000" opacity="0.15" />
+            <circle cx="70" cy="25" r="4" fill="#000" opacity="0.15" />
+            <circle cx="25" cy="75" r="5" fill="#000" opacity="0.15" />
+          </g>
+          <g transform="translate(-5, 0)">
+            <path d="M30,5 L35,16 L40,5 L45,16 L50,5 L55,16 L65,5 L70,16 L75,5" fill="none" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="50" cy="4" r="14" fill="#ffffff" />
+            <circle cx="50" cy="4" r="6.3" fill="#1e0b20" />
+            <circle cx="46.5" cy="0.5" r="2.1" fill="#ffffff" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M 45 56 Q 32 52 25 59 Q 35 62 45 57.5 Q 55 62 65 59 Q 58 52 45 56 Z" fill="#1e0b20" />
+          </g>
+        </g>
+        <g transform="translate(930, 46) rotate(-6, 50, 50) scale(1)">
+          <path d="M50,10 Q85,10 85,50 Q85,90 50,90 Q15,90 15,50 Q15,10 50,10 Z M50,30 Q63,30 63,50 Q63,70 50,70 Q37,70 37,50 Q37,30 50,30 Z" fill="url(#grad-ext-10-O)" stroke="#1e0b20" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" />
+          <g clip-path="url(#clip-ext-10-O)">
+            <path d="M35,35 Q40,40 45,35 M50,45 Q55,50 60,45 M30,55 Q35,60 40,55" fill="none" stroke="#1e0b20" stroke-opacity="0.25" stroke-width="2.5" />
+          </g>
+          <g transform="translate(0, -20)">
+            <path d="M45,95 L50,78 L55,95 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M32,92 L36,80 L40,92 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+            <path d="M60,92 L64,80 L68,92 Z" fill="#ffffff" stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="34" cy="6" r="11" fill="#ffffff" />
+            <circle cx="30.333333333333332" cy="9.666666666666666" r="4.95" fill="#1e0b20" />
+            <circle cx="31.25" cy="3.25" r="1.65" fill="#ffffff" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="2.7777777777777777" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="66" cy="4" r="12" fill="#ffffff" />
+            <circle cx="69" cy="8" r="5.4" fill="#1e0b20" />
+            <circle cx="63" cy="1" r="1.7999999999999998" fill="#ffffff" stroke="none" />
+          </g>
+          <g stroke="#1e0b20" stroke-width="3.3333333333333335" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M 50 86 L 37 77 V 95 Z" fill="#ff296d" />
+            <path d="M 50 86 L 63 77 V 95 Z" fill="#ff296d" />
+            <circle cx="50" cy="86" r="4" fill="#f5ee30" stroke="#1e0b20" stroke-width="2.5" />
+          </g>
+        </g>
+      </g>
+    </svg>
+
+
+      <div class="flex space-x-6 font-bold text-sm text-[#777777]">
+        <span class="flex items-center font-cursive-custom text-[#1CB0F6] text-2xl">🈸 <span class="ml-1">文</span></span>
+        <span class="flex items-center font-cursive-custom text-[#1CB0F6] text-2xl">汉<span class="ml-1"> 字</span></span>
+      </div>
+    </div>
+  </header>
+<div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0 opacity-10">
+  <span class="text-[15rem] md:text-[30rem] lg:text-[40rem] font-calligrafico text-white leading-none transform -rotate-12 select-none">
+    汉字
+  </span>
+</div>
+  <!-- CONTENITORE PRINCIPALE DELLA MAPPA -->
+  <main class="max-w-xl mx-auto px-4 py-8 flex flex-col items-center space-y-16">
+
+    <!-- ================= LIVELLO 1 ================= -->
+    <div class="w-full flex flex-col items-center space-y-10">
+      
+      <!-- Intestazione Livello 1 -->
+      <div class="bg-[#58CC02] text-white text-center font-black px-6 py-4 rounded-2xl border-b-4 border-[#46A302] w-full max-w-sm shadow-sm font-serif-custom">
+        LIVELLO 1( 一级)
+      </div>
+
+      <!-- App 1 (Centro) -->
+      <div class="flex flex-col items-center">
+  <a href="scrittura/animali.html">      <button class="duo-btn w-20 h-20 bg-[#58CC02] border-b-4 border-[#46A302] shadow-[0_4px_0_#46A302] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+         🐼
+        </button> </a>
+        <span class="text-xs font-black mt-2 uppercase tracking-wide text-[#430C69] font-serif-custom">Animali</span>
+      </div>
+
+      <!-- App 2 (Sinistra) -->
+      <div class="nodo-sinistra flex flex-col items-center">
+  <a href="scrittura/famiglia.html">      <button class="duo-btn w-20 h-20 bg-[#58CC02] border-b-4 border-[#46A302] shadow-[0_4px_0_#46A302] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          🏡
+        </button> </a>
+        <span class="text-xs font-black font-serif-custom mt-2 uppercase tracking-wide text-[#430C69]">Family</span>
+      </div>
+
+      <!-- App 3 (Destra) -->
+      <div class="nodo-destra flex flex-col items-center">
+   <a href="scrittur/natura.html">     <button class="duo-btn w-20 h-20 bg-[#58CC02] border-b-4 border-[#46A302] shadow-[0_4px_0_#46A302] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          🌿
+        </button> </a>
+        <span class="text-xs font-black  font-serif-custom mt-2 uppercase tracking-wide text-[#430C69]">Natura</span>
+      </div>
+
+      <!-- App 4 (Sinistra) -->
+      <div class="nodo-sinistra flex flex-col items-center">
+        <button class="duo-btn w-20 h-20 bg-[#58CC02] border-b-4 border-[#46A302] shadow-[0_4px_0_#46A302] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          ⚡
+        </button>
+        <span class="text-xs font-black font-serif-custom mt-2 uppercase tracking-wide text-[#430C69]">Scintilla</span>
+      </div>
+
+      <!-- App 5 (Centro) -->
+      <div class="flex flex-col items-center">
+        <button class="duo-btn w-20 h-20 bg-[#58CC02] border-b-4 border-[#46A302] shadow-[0_4px_0_#46A302] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          🎨
+        </button>
+        <span class="text-xs font-black  font-serif-custom mt-2 uppercase tracking-wide text-[#430C69]">Colori</span>
+      </div>
+
+    </div>
+
+    <!-- Separatore tra i livelli -->
+    <hr class="w-full border-[#E5E5E5] border-t-2">
+
+    <!-- ================= LIVELLO 2 ================= -->
+    <div class="w-full flex flex-col items-center space-y-10">
+      
+      <!-- Intestazione Livello 2 -->
+      <div class="bg-[#1CB0F6] text-white text-center font-serif-custom font-black px-6 py-4 rounded-2xl border-b-4 border-[#1899D6] w-full max-w-sm shadow-sm">
+        LIVELLO 2: LO STILE
+      </div>
+
+      <!-- App 6 (Centro) -->
+      <div class="flex flex-col items-center">
+        <button class="duo-btn w-20 h-20 bg-[#1CB0F6] border-b-4 border-[#1899D6] shadow-[0_4px_0_#1899D6] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          🎭
+        </button>
+        <span class="text-xs font-black mt-2 uppercase tracking-wide text-[#777777]">Dialoghi</span>
+      </div>
+
+      <!-- App 7 (Sinistra) -->
+      <div class="nodo-sinistra flex flex-col items-center">
+        <button class="duo-btn w-20 h-20 bg-[#1CB0F6] border-b-4 border-[#1899D6] shadow-[0_4px_0_#1899D6] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          ✂️
+        </button>
+        <span class="text-xs font-black mt-2 uppercase tracking-wide text-[#777777]">Editing</span>
+      </div>
+
+      <!-- App 8 (Destra) -->
+      <div class="nodo-destra flex flex-col items-center">
+        <button class="duo-btn w-20 h-20 bg-[#1CB0F6] border-b-4 border-[#1899D6] shadow-[0_4px_0_#1899D6] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          👁️
+        </button>
+        <span class="text-xs font-black mt-2 uppercase tracking-wide text-[#777777]">Sensi</span>
+      </div>
+
+      <!-- App 9 (Sinistra) -->
+      <div class="nodo-sinistra flex flex-col items-center">
+        <button class="duo-btn w-20 h-20 bg-[#1CB0F6] border-b-4 border-[#1899D6] shadow-[0_4px_0_#1899D6] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          🦄
+        </button>
+        <span class="text-xs font-black mt-2 uppercase tracking-wide text-[#777777]">Metafore</span>
+      </div>
+
+      <!-- App 10 (Centro) -->
+      <div class="flex flex-col items-center">
+        <!-- Bottone Arancione per la sfida "Boss" finale del livello -->
+        <button class="duo-btn w-20 h-20 bg-[#FF9600] border-b-4 border-[#CC7800] shadow-[0_4px_0_#CC7800] rounded-full flex items-center justify-center text-3xl text-white hover:brightness-105">
+          👑
+        </button>
+        <span class="text-xs font-black mt-2 uppercase tracking-wide text-[#777777]">L'Incipit</span>
+      </div>
+
+    </div>
+
+  </main>
+<br><br><br>
+  <!-- BARRA DI NAVIGAZIONE IN BASSO -->
+  <nav class="bg-gradient-to-r from-red-700 to-red-600 text-white border-b-4 border-yellow-500 shadow-lg fixed bottom-0 left-0 right-0 p-3 z-50">
+    <div class="max-w-xl mx-auto flex justify-around text-2xl">
+  <a href="https://scottino2019-glitch.github.io/lingua-cinese/">    <button class="text-[#58CC02] font-bold text-md flex flex-col items-center">🏠 <span class="text-lg font-cursive-custom">房屋</span></button></a>
+  <a href="duo-hub.html">  <button class="text-[#AFAFAF] font-bold text-md flex flex-col items-center">🖨 <span class="text-lg font-cursive-custom">出版社</span></button> </a>
+ <a href="https://scottino2019-glitch.github.io/lingua-cinese/caratteri.html">     <button class="text-[#AFAFAF] font-bold text-md flex flex-col items-center">🧧<span class="text-lg font-cursive-custom">象形文字</span></button></a>
+    </div>
+  </nav>
+
+</body>
+</html>
