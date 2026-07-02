@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="it">
+<head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title> cinese semplificato | 中文学习 - Lingua Cinese</title>
+  <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法和练习。">
+  <meta name="keywords" content="lingua cinese, cinese semplificato, vocaboli cinesi, grammatica cinese, esercizi cinesi, giochi cinesi, pdf cinesi,video cinesi, audio cinese  中文学习, 汉语, 词汇, 语法, 练习">
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://scottino2019-glitch.github.io/lingua-cinese">
+  <link rel="alternate" hreflang="it" href="https://scottino2019-glitch.github.io/lingua-cinese">
+  <link rel="alternate" hreflang="zh-CN" href="https://scottino2019-glitch.github.io/lingua-cinese">
+  <link rel="alternate" hreflang="x-default" href="https://scottino2019-glitch.github.io/lingua-cinese">
+
+  <meta property="og:title" content="Impara il cinese semplificato | Lingua Cinese">
+  <meta property="og:description" content="Grammatica • Ideogrammi • Risorse • App • Video • Audio • Esercizi • Pdf.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://scottino2019-glitch.github.io/lingua-cinese">
+
+
+  <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          'titolo': ['"Playfair Display"', 'serif'],
+          'calligrafico': ['"Ma Shan Zheng"', 'cursive'],
+        }
+      }
+    }
+  }
+</script>
+
+
+  <meta name="description" content="Grammatica,Caratteri,Esercizi,Vocabolario della Lingua Cinese" />
+
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@300..700&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
+  <style>
+    #modalIframe {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    #modalIframe.active { display: flex; }
+    #modalContent {
+      background: white;
+      border-radius: 8px;
+      width: 90vw; max-width: 800px;
+      height: 80vh;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #modalContent iframe {
+      width: 100%; height: 100%;
+      border: none; border-radius: 8px;
+    }
+    #modalCloseBtn {
+      position: absolute;
+      top: 0.5rem; right: 0.7rem;
+      font-size: 1.8rem; font-weight: bold;
+      background: none; border: none; cursor: pointer;
+      color: #666; padding: 0.25rem;
+    }
+    #modalCloseBtn:hover { color: #000; }
+    .timeline-iframe { width: 100%; height: 800px; border: none; }
+
+/* ---bel--- */
+@keyframes animate-swing {
+  0% { transform: rotate(0deg); transform-origin: top center; }
+  20% { transform: rotate(15deg); transform-origin: top center; }
+  40% { transform: rotate(-10deg); transform-origin: top center; }
+  60% { transform: rotate(5deg); transform-origin: top center; }
+  80% { transform: rotate(-5deg); transform-origin: top center; }
+  100% { transform: rotate(0deg); transform-origin: top center; }
+}
+.bell-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+.animated-element {
+  display: inline-block; font-size: 2rem; font-family: 'Noto Color Emoji', sans-serif;
+  padding: 8px; line-height: 1; cursor: pointer;
+  /* NO SFONDO BIANCO - Trasparente! */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15); /* Solo ombra soft */
+  animation: animate-swing 2.8s ease-out infinite; animation-play-state: paused;
+  will-change: transform; transition: transform 0.2s;
+}
+.animated-element:hover { transform: scale(1.1) !important; }
+.badge {
+  position: absolute; top: -6px; right: -6px; background: #ff4757; color: white;
+  border-radius: 50%; width: 18px; height: 18px; font-size: 11px; font-weight: bold;
+  line-height: 18px; text-align: center; box-shadow: 0 2px 8px rgba(255,71,87,0.4);
+}
+@media (max-width: 768px) { .bell-container { top: 15px; right: 15px; } .animated-element { font-size: 1.6rem; padding: 10px; } }
+.demo-info { max-width: 500px; margin: 120px auto 0; padding: 24px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); text-align: center; }
+
+/* ---sticker---*/
+.quote-sticker-wrap {
+  padding: 20px;
+
+}
+
+.quote-sticker {
+  position: relative;
+  max-width: 300px;
+  padding: 18px 18px 16px;
+  background: #f6df7e;
+  color: #4a341c;
+  border-radius: 18px 18px 20px 18px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+  transform: rotate(-1.5deg);
+}
+
+.quote-sticker::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, #d63b3b 55%, #8d1111 100%);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.quote-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.4);
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  font-family: "Shadows Into Light", cursive;
+}
+
+.quote-hanzi {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  font-weight: 700;
+font-family: "Zen Kaku Gothic New", sans-serif;
+font-family: "Zen Kaku Gothic New", sans-serif;
+}
+
+.quote-pinyin {
+  margin: 0;
+  font-size: 0.92rem; 
+  opacity: 0.85;
+  line-height: 1.5;
+  font-style: italic;
+  color: #6b4c2f;
+font-family: "Zen Kaku Gothic New", sans-serif;
+}
+
+.quote-sticker-error {
+  background: #f1d3d3;
+}
+  #roji-container {
+  width: 80px; 
+  height: 80px;
+  /* L'espansione partirà dall'angolo in basso a destra */
+  transform-origin: bottom right; 
+}
+
+/* Espansione quando passi il mouse (PC) o fai tap (Mobile) */
+#roji-container:hover, 
+#roji-container:focus-within {
+  width: 450px !important;  /* Più largo per accogliere bene la chat */
+  height: 750px !important; /* Più alto */
+  
+  /* Regole fondamentali per non uscire dallo schermo sugli smartphone */
+  max-width: calc(100vw - 40px) !important; 
+  max-height: calc(100vh - 40px) !important;
+}
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-r from-yellow-500 to-red-500 text-slate-800">
+  <!-- Header -->
+    
+<header class="relative z-20 bg-gradient-to-r from-red-700 to-red-600 text-white border-b-4 border-yellow-500 shadow-lg">
+  <div class="mx-auto max-w-7xl px-6 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-4">
+      <div class="bg-yellow-500 text-red-700 font-bold text-2xl w-12 h-12 flex items-center justify-center rounded-full shadow-inner border border-white/20">
+        中
+      </div>
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-titolo font-bold tracking-tight">Lingua Cinese</h1>
+        <p class="text-xs text-yellow-200 font-medium tracking-widest uppercase">Grammatica • Ideogrammi • Risorse</p>
+      </div>
+    </div>
+    <div class="hidden md:block text-right border-l border-white/20 pl-6">
+      <span class="text-lg font-serif italic text-yellow-400">Apprendimento Interattivo</span>
+    </div>
+  </div>
+<section class="quote-sticker-wrap">
+  <div id="quoteSticker"></div>
+</section>
+<div class="bell-container">
+<span id="bell-swing" class="animated-element">🔔</span>
+</div>
+</header>
+
+<div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0 opacity-10">
+  <span class="text-[15rem] md:text-[30rem] lg:text-[40rem] font-calligrafico text-white leading-none transform -rotate-12 select-none">
+    中文
+  </span>
+</div>
+
+<main class="relative z-10 mx-auto max-w-7xl px-4 py-10 sm:py-12">
+
+      <!-- Sezione Calendario Cinese Fisso -->
+    <div class="mt-16 bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/20 p-6 sm:p-8 transform transition-all hover:shadow-2xl hover:bg-white/90">
+      
+      <!-- Intestazione della sezione -->
+      <div class="flex items-center gap-3 mb-6">
+        <div class="bg-red-100 p-3 rounded-full text-red-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-titolo font-bold text-slate-900">Calendario Cinese</h2>
+          <p class="text-sm text-slate-600">Consulta le festività, i termini solari e le date tradizionali</p>
+        </div>
+      </div>
+
+      <!-- Contenitore Iframe -->
+      <div class="w-full h-[500px] md:h-[600px] rounded-xl overflow-hidden border border-slate-200 shadow-inner bg-slate-50/50">
+        <iframe 
+          src="https://calendario-cinese.vercel.app/" 
+          title="Calendario Cinese" 
+          class="w-full h-full border-none"
+          loading="lazy">
+        </iframe>
+      </div>
+      
+    </div>
+<br><br>
+<hr><br><br>
+  <iframe 
+  src="giornale.html" 
+  style="width: 100%; height: 720px; border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"
+  title="华夏纪事 - Giornale Sfogliabile"
+  allowfullscreen
+></iframe>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+   
+
+<! -- Card Social -- >
+<iframe 
+  src="post/social.html" 
+  width="105%" 
+  height="650" 
+  style="border:none; border-radius:16px; overflow:hidden; background:transparent; width:100%;" 
+  title="Angolo Sociale"
+  loading="lazy">
+</iframe>
+<br><br>
+  <!-- Grid Cards -->
+
+      <!-- Cultura -->
+      <a href="cultura.html" class="group block bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-sm ring-1 ring-white/20 hover:shadow-2xl hover:bg-white/95 transition-all duration-500 transform hover:-translate-y-2">
+      <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+        <div class="absolute inset-0 bg-red-900/10 group-hover:bg-transparent transition-colors duration-300"></div>
+          <img src="img/cultura.jpg" alt="Cultura cinese" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-slate-900">Cultura e Tradizioni</h3>
+          <p class="mt-1 text-sm text-slate-600">Festival, leggende e tradizioni antiche.</p>
+          <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium text-sm">
+            Scopri →<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+        </div>
+      </a>
+
+     <!-- Biblioteca -->
+      <a href="biblioteca.html" class="group block bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-sm ring-1 ring-white/20 hover:shadow-2xl hover:bg-white/95 transition-all duration-500 transform hover:-translate-y-2">
+      <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+        <div class="absolute inset-0 bg-red-900/10 group-hover:bg-transparent transition-colors duration-300"></div>
+          <img src="img/biblioteca.png" alt="Biblioteca cinese" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-slate-900">Biblioteca </h3>
+          <p class="mt-1 text-sm text-slate-600">Raccolta di libri cinesi tradotti</p>
+          <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium text-sm">
+            Scopri →<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+        </div>
+      </a>
+    
+     <!-- Biblioteca Manhua -->
+      <a href="manhua.html" class="group block bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-sm ring-1 ring-white/20 hover:shadow-2xl hover:bg-white/95 transition-all duration-500 transform hover:-translate-y-2">
+      <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+        <div class="absolute inset-0 bg-red-900/10 group-hover:bg-transparent transition-colors duration-300"></div>
+          <img src="img/mahua.png" alt="Biblioteca cinese" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-slate-900">Manhua</h3>
+          <p class="mt-1 text-sm text-slate-600">Brevi dialoghi e note grammaticali dal mondo dei fumetti</p>
+          <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium text-sm">
+            Scopri 🗯  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+        </div>
+      </a>
+    <!-- Libri audio -->
+      <a href="libri/libriaudio.html" class="group block bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-sm ring-1 ring-white/20 hover:shadow-2xl hover:bg-white/95 transition-all duration-500 transform hover:-translate-y-2">
+      <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+        <div class="absolute inset-0 bg-red-900/10 group-hover:bg-transparent transition-colors duration-300"></div>
+          <img src="img/libriaudio.png" alt="Cultura cinese" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-slate-900">Libri Audio</h3>
+          <p class="mt-1 text-sm text-slate-600">Piccoli racconti con audio e traduzione</p>
+          <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium text-sm">
+            Scopri →<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+        </div>
+      </a>
+    <!-- Chat whatsapp -->
+      <a href="whatsapp.html" class="group block bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-sm ring-1 ring-white/20 hover:shadow-2xl hover:bg-white/95 transition-all duration-500 transform hover:-translate-y-2">
+      <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
+        <div class="absolute inset-0 bg-red-900/10 group-hover:bg-transparent transition-colors duration-300"></div>
+          <img src="img/chat.png" alt="Dialoghi" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-slate-900">Dialoghi</h3>
+          <p class="mt-1 text-sm text-slate-600">Brevi dialoghi e vocaboli</p>
+          <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium text-sm">
+            Scopri 🗯  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Vocabolario Modal -->
+      <button onclick="openModal()" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition-all duration-300">
+        <div class="aspect-[4/3] bg-slate-100 overflow-hidden">
+          <img src="img/forum.jpg" alt="Vocabolario" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-slate-900">Vocabolario</h3>
+          <p class="mt-1 text-sm text-slate-600">Nuovo vocabolario interattivo.</p>
+          <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium text-sm">
+            Apri →<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </span>
+        </div>
+      </button>
+
+      <!-- Altre Card (esempi abbreviati, completa come originale) -->
+      <a href="caratteri.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition-all duration-300">
+        <div class="aspect-[4/3] bg-slate-100 overflow-hidden"><img src="img/ideogrammi.png" alt="Ideogrammi" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy"/></div>
+        <div class="p-6"><h3 class="text-lg font-semibold text-slate-900">Ideogrammi</h3><p class="mt-1 text-sm text-slate-600">Scrittura e caratteri cinesi.</p><span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium text-sm">Scopri →</span></div>
+      </a>
+
+      <a href="grammatica.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition-all duration-300">
+        <div class="aspect-[4/3] bg-slate-100 overflow-hidden"><img src="img/grammatica.png" alt="Grammatica" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy"/></div>
+        <div class="p-6"><h3 class="text-lg font-semibold text-slate-900">Grammatica</h3><p class="mt-1 text-sm text-slate-600">Regole per frasi corrette.</p><span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium text-sm">Scopri →</span></div>
+      </a>
+
+  <!-- Card: Esercizi -->
+        <a href="esercizi.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/esercizi.png" alt="Esercizi di Cinese" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Esercizi</h3>
+            <p class="mt-1 text-sm text-slate-600">Metti alla prova le tue conoscenze con esercizi mirati.</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+     
+        <!-- Card: Radicali -->
+        <a href="Radicali_Cinesi.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/radicali.png" alt="Radicali Cinesi" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Radicali</h3>
+            <p class="mt-1 text-sm text-slate-600">I componenti fondamentali dei caratteri cinesi.</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+<!-- Card: Vocabolario -->
+        <a href="vocabolario.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/aichat_435232.jpg" alt="Vocabolario" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Vocabolario Tematico</h3>
+            <p class="mt-1 text-sm text-slate-600">Cinese-Italiano</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+<!-- Card Pdf-->
+
+<a href="cinese-pdf.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/pdf.png" alt="Pdf" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Pdf</h3>
+            <p class="mt-1 text-sm text-slate-600">Lettura e caratteri</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+<!--Card Frasario-->
+
+<a href="frasi-cinesi.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/aichat_510365 (1).jpg" alt="Pdf" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Frasi</h3>
+            <p class="mt-1 text-sm text-slate-600">Raccolta di frasi per ogni occasione</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+        <!--Card Giochi-->
+        <a href="playground.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/giochi.png" alt="giochi" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Giochi</h3>
+            <p class="mt-1 text-sm text-slate-600">Impara il cinese divertendoti</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+        <!--Card Utility-->
+         <a href="utility.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/image.png" alt="utility" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Utility</h3>
+            <p class="mt-1 text-sm text-slate-600">Traduttore,Lettore audio, correttore esercizi</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+<!--Card Quaderno-->
+         <a href="https://poliglotta-pdf.vercel.app/" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/quaderno.jpg" alt="utility" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Quaderno</h3>
+            <p class="mt-1 text-sm text-slate-600">Lettore PDF e un comodo quaderno per fare esercizi</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+        <!--Card Flashcard-->
+        <a href="flashcards.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/flashcard.jpeg" alt="flashcard" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">FlashCard</h3>
+            <p class="mt-1 text-sm text-slate-600">Flashcard con pinyin ideogramma e teaduzione</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+        <!--card video-->
+        <a href="audiovideo.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/video.jpg" alt="video" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Video</h3>
+            <p class="mt-1 text-sm text-slate-600">Video ed esercizi di ascolto</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+         <!--card tv-->
+        <a href="tv-cinese.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/tv.png" alt="tv" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Tv</h3>
+            <p class="mt-1 text-sm text-slate-600">Video da youtube</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+
+       <!--ScrivoLingo-->
+        <a href="scrittura/scrivolingo.html" class="group block bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-slate-200 hover:shadow-md hover:ring-slate-300 transition">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            <img src="img/panda.png" alt="HanZi" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">Tv</h3>
+            <p class="mt-1 text-sm text-slate-600">Scrivolingo</p>
+            <span class="mt-3 inline-flex items-center gap-1 text-indigo-600 font-medium">Scopri <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 1 1-1.414-1.414L14.586 11H3a1 1 0 1 1 0-2h11.586l-4.293-4.293a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"/></svg></span>
+          </div>
+        </a>
+
+    </div>
+
+    <!-- Timeline Embed -->
+    <div class="mt-12">
+      <iframe src="timeline-display.html" class="timeline-iframe rounded-xl shadow-lg" title="Timeline"></iframe>
+    </div>
+  </main>
+
+
+
+  <!-- Modal -->
+  <div id="modalIframe">
+    <div id="modalContent">
+      <button id="modalCloseBtn" onclick="closeModal()" aria-label="Chiudi">&times;</button>
+      <iframe src="https://scottino2019-glitch.github.io/Vocabolario-Cinese/" title="Vocabolario Cinese"></iframe>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="relative z-20 bg-gradient-to-br from-slate-900 to-red-900 text-white pt-16 pb-8 mt-20 border-t-4 border-yellow-500">
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-8 pb-10 border-b border-white/10">
+      
+      <div class="text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-3 mb-3">
+          <span class="bg-yellow-500 text-red-800 font-bold px-2 py-1 rounded text-sm">中</span>
+          <span class="text-xl font-titolo font-bold tracking-wider uppercase">Lingua Cinese</span>
+        </div>
+        <p class="text-slate-400 text-sm max-w-xs leading-relaxed">
+          La tua risorsa interattiva per lo studio del cinese mandarino. Impara, gioca e connettiti con la community e se vuoi contattarmi clucca su contatti.
+        </p>
+      </div>
+
+      <div class="flex flex-col items-center md:items-end gap-4">
+        <h4 class="text-yellow-400 font-bold uppercase tracking-widest text-xs">Unisciti alla Community</h4>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="https://t.me/linguacinese_gruppo" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/20 px-5 py-2.5 rounded-full transition-all duration-300 group" target="_blank">
+            <span class="text-blue-400 group-hover:scale-110 transition-transform">✈️</span>
+            <span class="text-sm font-semibold">Gruppo Telegram</span>
+          </a>
+          <a href="https://t.me/linguacinese2000" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/20 px-5 py-2.5 rounded-full transition-all duration-300 group" target="_blank">
+            <span class="text-blue-400 group-hover:scale-110 transition-transform">📢</span>
+            <span class="text-sm font-semibold">Canale Ufficiale</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+<!-- Un contatore molto discreto usando Tailwind CSS -->
+<div class="fixed bottom-2 left-2 text-xs text-black-400 bg-white/50 px-2 py-1 rounded-full shadow-sm backdrop-blur-sm">
+  Visite totali: <span id="contatore-visite" class="font-bold text-blue-600">...</span>
+</div>
+    <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
+      <p>© 2026 Lingua Cinese - Tutti i diritti riservati.</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+        <a href="contatti.html" class="hover:text-white transition-colors">Contatti</a>
+      </div>
+    </div>
+  </div>
+
+</footer>
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="auto"
+    allowtransparency="true">
+  </iframe>
+</div>
+
+  <script>
+// Bell
+
+const bell = document.getElementById('bell-swing');
+const UPDATE_DATE = '2026-07-2'; // ← Data RECENTE = attiva tutto!
+const updateTime = new Date(UPDATE_DATE).getTime();
+const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+
+if (updateTime > sevenDaysAgo) {
+  // SOLO QUI: badge + swing + onclick
+  bell.innerHTML = '🔔<span class="badge">●</span>';
+  bell.style.animationPlayState = 'running';
+  bell.onclick = function() {
+    alert("Nuova sessione Scrivolingo");
+  };
+  console.log('🔔 ATTIVA: swing + click OK');
+} else {
+  // Data vecchia: solo icona statica, NO onclick!
+  console.log('🔔 Inattiva: no action');
+}
+    // Modal functions
+    function openModal() {
+      document.getElementById('modalIframe').classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scroll
+    }
+    function closeModal() {
+      document.getElementById('modalIframe').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    // Close on outside click or ESC
+    window.addEventListener('click', (e) => {
+      if (e.target.id === 'modalIframe') closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+  // Chiamata all'API (no-store previene i problemi di cache)
+  fetch('https://api.counterapi.dev/v1/scottino2019_glitch/lingua_cinese/up', { cache: 'no-store' })
+    .then(response => response.json())
+    .then(data => {
+      // Inserisce il dato esatto usando l'ID "contatore-visite"
+      document.getElementById('contatore-visite').innerText = data.count;
+    })
+    .catch(error => {
+      console.error('Errore nel caricamento delle visite:', error);
+      document.getElementById('contatore-visite').innerText = 'N/D';
+    });
+
+// stickers
+async function loadQuoteSticker() {
+  const container = document.getElementById("quoteSticker");
+
+  try {
+    const response = await fetch("./sticker-frase.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("JSON non trovato");
+
+    const data = await response.json();
+    const item = data[0];
+
+    container.innerHTML = `
+      <article class="quote-sticker">
+        <div class="quote-label">${item.title}</div>
+        <p class="quote-hanzi">${item.hanzi}</p>
+        <p class="quote-pinyin">${item.pinyin}</p>
+      </article>
+    `;
+  } catch (error) {
+    container.innerHTML = `
+      <article class="quote-sticker quote-sticker-error">
+        <div class="quote-label">Frase del giorno</div>
+        <p class="quote-hanzi">Contenuto non disponibile</p>
+        <p class="quote-pinyin">Controlla il file JSON</p>
+      </article>
+    `;
+  }
+}
+
+loadQuoteSticker();
+  </script>
+</body>
+</html>
