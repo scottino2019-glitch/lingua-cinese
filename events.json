@@ -4,7 +4,16 @@
   "date": "2026-07-2",
   "title": "Scrivolingo",
   "description": "App di scrittura",
-  "category": "ideogrammi",
+  "category": "app",
   "link":  "https://scottino2019-glitch.github.io/lingua-cinese/scrittura/scrivolingo.html"  
+},
+   {
+  "id": 2,
+  "date": "2026-07-2",
+  "title": "Libro-Audio",
+  "description": "Nuovo libro",
+  "category": "libri",
+  "link":  "https://scottino2019-glitch.github.io/lingua-cinese/libri/capitolo5.html"  
 }
+   
 ]
