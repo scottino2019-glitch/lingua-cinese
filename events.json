@@ -5,7 +5,7 @@
   "title": "Scrivolingo",
   "description": "App di scrittura",
   "category": "app",
-  "link":  "https://scottino2019-glitch.github.io/lingua-cinese/scrittura/scrivolingo.html"  
+  "link":  "https://lingua-cinese.vercel.app/scrittura/scrivolingo.html"  
 },
    {
   "id": 2,
@@ -13,7 +13,7 @@
   "title": "Libro-Audio",
   "description": "Nuovo libro",
   "category": "libri",
-  "link":  "https://scottino2019-glitch.github.io/lingua-cinese/libri/capitolo5.html"  
+  "link":  "https://lingua-cinese.vercel.app/libri/capitolo5.html"  
 }
    
 ]
