@@ -594,7 +594,7 @@ font-family: "Zen Kaku Gothic New", sans-serif;
 // Bell
 
 const bell = document.getElementById('bell-swing');
-const UPDATE_DATE = '2026-07-2'; // ← Data RECENTE = attiva tutto!
+const UPDATE_DATE = '2026-07-11'; // ← Data RECENTE = attiva tutto!
 const updateTime = new Date(UPDATE_DATE).getTime();
 const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
 
@@ -603,7 +603,7 @@ if (updateTime > sevenDaysAgo) {
   bell.innerHTML = '🔔<span class="badge">●</span>';
   bell.style.animationPlayState = 'running';
   bell.onclick = function() {
-    alert("nuova app");
+    alert("nuova utility");
   };
   console.log('🔔 ATTIVA: swing + click OK');
 } else {
