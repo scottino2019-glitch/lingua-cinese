@@ -1,14 +1,6 @@
 [
-   {
+  {
   "id": 1,
-  "date": "2026-07-2",
-  "title": "Scrivolingo",
-  "description": "App di scrittura",
-  "category": "app",
-  "link":  "https://lingua-cinese.vercel.app/scrittura/scrivolingo.html"  
-},
-   {
-  "id": 2,
   "date": "2026-07-11",
   "title": "Convertitore",
   "description": "pinyin converter",
