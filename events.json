@@ -9,11 +9,11 @@
 },
    {
   "id": 2,
-  "date": "2026-07-2",
-  "title": "Libro-Audio",
-  "description": "Nuovo libro",
-  "category": "libri",
-  "link":  "https://lingua-cinese.vercel.app/libri/capitolo5.html"  
+  "date": "2026-07-11",
+  "title": "Convertitore",
+  "description": "pinyin converter",
+  "category": "app",
+  "link":  "https://pinyin-converter-ashen.vercel.app/"  
 }
    
 ]
