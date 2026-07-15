@@ -1,0 +1,86 @@
+{
+  "quiz_titolo": "Quiz di Traduzione Cinese-Italiano",
+  "descrizione": "10 frasi di diversa difficoltà per mettere alla prova la tua conoscenza del cinese mandarino.",
+  "domande": [
+    {
+      "id": 1,
+      "difficolta": "Facile",
+      "italiano": "Ciao, come ti chiami?",
+      "cinese": "你好，你叫什么名字？",
+      "pinyin": "Nǐ hǎo, nǐ jiào shénme míngzi?",
+      "note": "La struttura base per chiedere il nome. '叫' (jiào) significa 'chiamarsi' e '什么' (shénme) significa 'cosa/quale'."
+    },
+    {
+      "id": 2,
+      "difficolta": "Facile",
+      "italiano": "Mi piace bere il tè cinese.",
+      "cinese": "我喜欢喝中国茶。",
+      "pinyin": "Wǒ xǐhuan hē Zhōngguó chá.",
+      "note": "'喜欢' (xǐhuan) significa 'piacere', '喝' (hē) è il verbo 'bere'."
+    },
+    {
+      "id": 3,
+      "difficolta": "Facile",
+      "italiano": "Domani vado a Pechino.",
+      "cinese": "我明天去北京。",
+      "pinyin": "Wǒ míngtiān qù Běijīng.",
+      "note": "In cinese il tempo (明天 - domani) si posiziona prima del verbo (去 - andare)."
+    },
+    {
+      "id": 4,
+      "difficolta": "Facile",
+      "italiano": "Quanti anni hai?",
+      "cinese": "你多大了？",
+      "pinyin": "Nǐ duō dà le?",
+      "note": "Modo comune per chiedere l'età a un coetaneo o a un adulto. Per i bambini si usa di solito '你几岁了？' (Nǐ jǐ suì le?)."
+    },
+    {
+      "id": 5,
+      "difficolta": "Medio",
+      "italiano": "Hai mai visto questo film?",
+      "cinese": "你看过这部电影吗？",
+      "pinyin": "Nǐ kànguò zhè bù diànyǐng ma?",
+      "note": "La particella '过' (guò) indica un'esperienza passata. '部' (bù) è il classificatore per i film."
+    },
+    {
+      "id": 6,
+      "difficolta": "Medio",
+      "italiano": "Sebbene piova, voglio comunque uscire a fare una passeggiata.",
+      "cinese": "虽然下雨，但我还是想出去散步。",
+      "pinyin": "Suīrán xià yǔ, dàn wǒ háishì xiǎng chūqù sànbù.",
+      "note": "Costruzione correlativa tipica: '虽然... 但是...' (Sebbene... ma...). '还是' (háishì) qui significa 'comunque/ancora'."
+    },
+    {
+      "id": 7,
+      "difficolta": "Medio",
+      "italiano": "Sto studiando il cinese da tre anni.",
+      "cinese": "我学中文学了三年了。",
+      "pinyin": "Wǒ xué Zhōngwén xuéle sān nián le.",
+      "note": "Struttura con la ripetizione del verbo per indicare la durata di un'azione che continua nel presente (Verbo + Oggetto + Verbo + 了 + Durata + 了)."
+    },
+    {
+      "id": 8,
+      "difficolta": "Difficile",
+      "italiano": "Solo insistendo si può raggiungere il successo.",
+      "cinese": "只有坚持才能获得成功。",
+      "pinyin": "Zhǐyǒu jiānchí cái néng huòdé chénggōng.",
+      "note": "Struttura condizionale restrittiva: '只有... 才...' (Solo se... allora [e solo allora]). '坚持' (jiānchí) significa persistere/insistere."
+    },
+    {
+      "id": 9,
+      "difficolta": "Difficile",
+      "italiano": "Se ieri non fosse scoppiato quel temporale improvviso, saremmo andati in montagna.",
+      "cinese": "如果昨天没有下那场突如其来的暴雨，我们就会去爬山了。",
+      "pinyin": "Rúguǒ zuótiān méiyǒu xià nà chǎng tūrúqílái de bàoyǔ, wǒmen jiù huì qù páshān le.",
+      "note": "Uso di '如果... 就...' per il periodo ipotetico. '突如其来' (tūrúqílái) è unchengyu (idioma a quattro caratteri) che significa 'improvviso/inaspettato'."
+    },
+    {
+      "id": 10,
+      "difficolta": "Difficile",
+      "italiano": "È fondamentale trovare un equilibrio tra il lavoro e la vita privata.",
+      "cinese": "在工作和私人生活之间找到平衡是至关重要的。",
+      "pinyin": "Zài gōngzuò hé sīrén shēnghuó zhījiān zhǎodào pínghéng shì zhìguān zhòngyào de.",
+      "note": "'在... 之间' (zài... zhījiān) significa 'tra/in mezzo a'. '至关重要' (zhìguān zhòngyào) è un'espressione formale per dire 'di vitale importanza/fondamentale'."
+    }
+  ]
+}
