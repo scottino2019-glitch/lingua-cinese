@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinese Mandarino Passaporto - Lettore Interattivo</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom theme settings -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          borderWidth: {
+            '105': '1.05pxpx'
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+    }
+    .speech-highlight {
+      background-color: #f0fdf4 !important;
+      border-color: #4ade80 !important;
+      transform: scale(1.005);
+    }
+    .term-highlight {
+      border-left: 2px solid #2563eb !important;
+      background-color: #eff6ff !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-905 flex flex-col font-sans">
+
+  <!-- Desktop Sticky Header -->
+  <header class="sticky top-0 z-40 bg-white border-b border-slate-200 h-14 flex items-center shrink-0 px-6 shadow-xs">
+    <div class="max-w-7xl w-full mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-sm">
+          L
+        </div>
+        <div>
+          <span class="font-semibold text-sm sm:text-base tracking-tight text-slate-900">Cinese Mandarino Passaporto</span>
+          <span class="text-[10px] text-slate-400 font-mono ml-2 hidden sm:inline">Offline Reader</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 text-[9px] font-bold text-slate-100 bg-amber-600 rounded uppercase">
+          CINESE
+        </span>
+        <span class="px-2 py-0.5 text-[9px] bg-slate-900 text-white font-bold rounded uppercase">
+          PRINCIPIANTE
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Sandbox Workspace Grid -->
+  <main class="max-w-7xl w-full mx-auto px-4 md:px-6 py-6 flex-1">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- Sidebar navigation (Chapters) -->
+      <aside class="lg:col-span-3 bg-white border border-slate-200 rounded-md p-4 shadow-xs space-y-4">
+        <div class="p-3 bg-slate-50 border border-slate-100 rounded space-y-1">
+          <span class="text-[9px] text-blue-600 font-bold tracking-widest block uppercase">STUDIO OFFLINE</span>
+          <h4 class="text-xs font-bold text-slate-800 leading-tight">Cinese Mandarino Passaporto</h4>
+          <p class="text-[10px] text-slate-400 leading-relaxed">Afferra il ritmo della lingua più parlata al mondo padroneggiando la magia dei 4 toni fonetici.</p>
+        </div>
+        
+        <div class="space-y-1">
+          <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-2">Capitoli Libro</span>
+          <nav class="space-y-1" id="chapters-nav-list">
+            
+      <button 
+        id="nav-chapter-zh-ch-1"
+        onclick="showChapter('chapter-zh-ch-1')" 
+        class="chapter-nav-btn w-full flex items-center justify-between text-left px-3 py-2 rounded text-xs font-medium transition-all duration-150 cursor-pointer bg-blue-50 text-blue-700 font-bold border border-blue-105"
+      >
+        <span class="truncate pr-2">1. I 4 Toni Fondamentali e i Saluti</span>
+        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
+      </button>
+    
+          </nav>
+        </div>
+        
+        <div class="pt-2 border-t border-slate-100 text-center">
+          <span class="text-[9px] font-mono text-slate-400">Esportato con LinguaEdit Pro</span>
+        </div>
+      </aside>
+      
+      <!-- Chapter Core Reading Pane -->
+      <section class="lg:col-span-9 space-y-6" id="chapters-content-container">
+        
+      <div id="chapter-zh-ch-1" class="chapter-content-panel space-y-6 ">
+        <!-- Chapter Header -->
+        <div class="bg-white border border-slate-200 rounded-md p-6 shadow-xs space-y-3">
+          <span class="text-xs font-mono font-bold uppercase text-blue-600 flex items-center gap-1">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Capitolo 1
+          </span>
+          <div class="space-y-1.5">
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900">
+              Capitolo 1: I 4 Toni Fondamentali e i Saluti
+            </h1>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              La melodia del Cinese risiede nei toni. Scopri come una singola sillaba &quot;ma&quot; può assumere quattro significati diversi.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Chapter Blocks -->
+        <div class="space-y-6">
+          
+        <!-- Grammar explanatory block -->
+        <div id="block-card-zh-block-gram-1" class="bg-white border border-slate-200 rounded-md p-6 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5 text-blue-600">
+            <div class="p-2 bg-blue-50 rounded">
+              <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i>
+            </div>
+            <div>
+              <span class="text-[9px] font-bold tracking-widest uppercase text-slate-400">SPIEGAZIONE GRAMMATICALE</span>
+              <h3 class="text-base font-bold text-slate-900">La Magia dei Toni Mandarini</h3>
+            </div>
+          </div>
+          
+          <div class="text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded border border-slate-150 font-sans whitespace-pre-wrap">
+            Il Cinese Mandarino è una lingua tonale. Ci sono <strong>4 toni principales</strong> più un tono neutro:<br><br>1. <strong>Primo Tono (─)</strong>: Alto e costante (es. _mā_ - mamma).<br>2. <strong>Secondo Tono (↗)</strong>: Ascendente, come quando fai una domanda stupito (es. _má_ - canapa).<br>3. <strong>Terzo Tono (v)</strong>: Discendente e poi leggermente ascendente (es. _mǎ_ - cavallo).<br>4. <strong>Quarto Tono (↘)</strong>: Deciso e discendente, come un ordine (es. _mà_ - rimproverare).<br><br>Pronunciare il tono errato può creare divertenti malintesi! Salutiamo sempre con <strong>你好 (nǐ hǎo)</strong> (Terzo tono + Terzo tono, che per combinazione fonetica si legge come Secondo + Terzo!).
+          </div>
+          
+          
+            <div class="space-y-2">
+              <span class="text-xs font-bold text-slate-400 block pl-0.5 uppercase tracking-wider">TERMINI DI RIFERIMENTO (Premi per l'audio)</span>
+              
+              <div class="border border-slate-200 rounded overflow-hidden text-xs">
+                <!-- Table Header -->
+                <div class="grid grid-cols-12 bg-slate-100 px-4 py-2 font-semibold text-slate-600 border-b border-slate-200">
+                  <div class="col-span-5">Carattere Originale</div>
+                  <div class="col-span-3">Trascrizione / Fonetica</div>
+                  <div class="col-span-4">Traduzione</div>
+                </div>
+                
+                <!-- Table Rows -->
+                <div class="divide-y divide-slate-100 bg-white">
+                  
+                      <div 
+                        id="zh-block-gram-1-term-0"
+                        onclick="speakText('你好 (nǐ hǎo)', 'Chinese', 'zh-block-gram-1-term-0')"
+                        class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-50 cursor-pointer transition-colors text-slate-705 border-l-2 border-l-transparent"
+                      >
+                        <div class="col-span-5 font-bold text-sm tracking-wide flex items-center gap-2">
+                          <i data-lucide="volume-2" class="w-4 h-4 shrink-0 text-slate-300"></i>
+                          <span>你好 (nǐ hǎo)</span>
+                        </div>
+                        <div class="col-span-3 font-mono text-slate-400 font-medium">ni3 hao3</div>
+                        <div class="col-span-4 text-slate-600">Ciao / Ciao a te</div>
+                      </div>
+                    
+                      <div 
+                        id="zh-block-gram-1-term-1"
+                        onclick="speakText('老师 (lǎoshī)', 'Chinese', 'zh-block-gram-1-term-1')"
+                        class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-50 cursor-pointer transition-colors text-slate-705 border-l-2 border-l-transparent"
+                      >
+                        <div class="col-span-5 font-bold text-sm tracking-wide flex items-center gap-2">
+                          <i data-lucide="volume-2" class="w-4 h-4 shrink-0 text-slate-300"></i>
+                          <span>老师 (lǎoshī)</span>
+                        </div>
+                        <div class="col-span-3 font-mono text-slate-400 font-medium">lao3 shi1</div>
+                        <div class="col-span-4 text-slate-600">Maestro / Insegnante</div>
+                      </div>
+                    
+                      <div 
+                        id="zh-block-gram-1-term-2"
+                        onclick="speakText('您好 (nín hǎo)', 'Chinese', 'zh-block-gram-1-term-2')"
+                        class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-50 cursor-pointer transition-colors text-slate-705 border-l-2 border-l-transparent"
+                      >
+                        <div class="col-span-5 font-bold text-sm tracking-wide flex items-center gap-2">
+                          <i data-lucide="volume-2" class="w-4 h-4 shrink-0 text-slate-300"></i>
+                          <span>您好 (nín hǎo)</span>
+                        </div>
+                        <div class="col-span-3 font-mono text-slate-400 font-medium">nin2 hao3</div>
+                        <div class="col-span-4 text-slate-600">Buongiorno / Salve (formale)</div>
+                      </div>
+                    
+                      <div 
+                        id="zh-block-gram-1-term-3"
+                        onclick="speakText('再见 (zàijiàn)', 'Chinese', 'zh-block-gram-1-term-3')"
+                        class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-50 cursor-pointer transition-colors text-slate-705 border-l-2 border-l-transparent"
+                      >
+                        <div class="col-span-5 font-bold text-sm tracking-wide flex items-center gap-2">
+                          <i data-lucide="volume-2" class="w-4 h-4 shrink-0 text-slate-300"></i>
+                          <span>再见 (zàijiàn)</span>
+                        </div>
+                        <div class="col-span-3 font-mono text-slate-400 font-medium">zai4 jian4</div>
+                        <div class="col-span-4 text-slate-600">Arrivederci / Ciao</div>
+                      </div>
+                    
+                </div>
+              </div>
+            </div>
+          
+        </div>
+      
+        <!-- Dialogue dialogue block -->
+        <div id="block-card-zh-block-dial-1" class="bg-white border border-slate-200 rounded-md p-6 shadow-xs space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div class="flex items-center gap-2.5 text-blue-600">
+              <div class="p-2 bg-blue-50 rounded">
+                <i data-lucide="message-square" class="w-5 h-5 text-blue-600"></i>
+              </div>
+              <div>
+                <span class="text-[9px] font-bold tracking-widest uppercase text-slate-400">DIALOGO INTERATTIVO (Ascolta e Ripeti)</span>
+                <h3 class="text-base font-bold text-slate-900">Salutare un collega a Pechino</h3>
+              </div>
+            </div>
+            
+            <button 
+              id="btn-play-dialogue-zh-block-dial-1"
+              onclick="playDialogueSpeech('zh-block-dial-1', 'Chinese')"
+              class="dialogue-play-btn px-4 py-1.5 rounded text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-xs border bg-blue-50 text-blue-700 border-blue-105"
+            >
+              <i data-lucide="play" class="w-3.5 h-3.5"></i> Ascolta Dialogo
+            </button>
+          </div>
+          
+          <div class="space-y-3.5">
+            
+                <div class="flex items-start gap-3 ">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none shadow-xs border bg-slate-100 text-slate-800 border-slate-200">
+                    L
+                  </div>
+                  
+                  <div 
+                    id="zh-block-dial-1-dialogue-line-0"
+                    onclick="speakText('你好！你是莎拉吗？', 'Chinese', 'zh-block-dial-1-dialogue-line-0')"
+                    data-phrase="你好！你是莎拉吗？"
+                    class="dialogue-row-bubble rounded-md p-3.5 space-y-1 group relative transition-all border cursor-pointer max-w-sm hover:bg-slate-50/50 border-slate-200 bg-white"
+                  >
+                    <div class="flex items-center justify-between gap-2">
+                      <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wide">
+                        Lin (林)
+                      </span>
+                      <i data-lucide="volume-2" class="w-3.5 h-3.5 text-slate-300"></i>
+                    </div>
+                    
+                    <p class="font-sans text-sm tracking-wide text-slate-800">
+                      你好！你是莎拉吗？
+                    </p>
+                    
+                    <p class="font-mono text-[10px] text-slate-400 pt-0.5 font-medium leading-none">
+                      Nǐ hǎo! Nǐ shì Shālā ma?
+                    </p>
+                    
+                    <div class="border-t border-slate-100 pt-1.5 mt-1.5">
+                      <p class="text-xs text-slate-500 italic">
+                        Ciao! Tu sei Sarah?
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="flex items-start gap-3 flex-row-reverse">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none shadow-xs border bg-slate-100 text-slate-800 border-slate-200">
+                    S
+                  </div>
+                  
+                  <div 
+                    id="zh-block-dial-1-dialogue-line-1"
+                    onclick="speakText('你好！对，我是莎拉。你是林老师吗？', 'Chinese', 'zh-block-dial-1-dialogue-line-1')"
+                    data-phrase="你好！对，我是莎拉。你是林老师吗？"
+                    class="dialogue-row-bubble rounded-md p-3.5 space-y-1 group relative transition-all border cursor-pointer max-w-sm hover:bg-slate-50/50 border-slate-200 bg-white"
+                  >
+                    <div class="flex items-center justify-between gap-2">
+                      <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wide">
+                        Sarah (莎拉)
+                      </span>
+                      <i data-lucide="volume-2" class="w-3.5 h-3.5 text-slate-300"></i>
+                    </div>
+                    
+                    <p class="font-sans text-sm tracking-wide text-slate-800">
+                      你好！对，我是莎拉。你是林老师吗？
+                    </p>
+                    
+                    <p class="font-mono text-[10px] text-slate-400 pt-0.5 font-medium leading-none">
+                      Nǐ hǎo! Duì, wǒ shì Shālā. Nǐ shì Lín lǎoshī ma?
+                    </p>
+                    
+                    <div class="border-t border-slate-100 pt-1.5 mt-1.5">
+                      <p class="text-xs text-slate-500 italic">
+                        Ciao! Sì, esatto, io sono Sarah. Tu sei il Maestro Lin?
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="flex items-start gap-3 ">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none shadow-xs border bg-slate-100 text-slate-800 border-slate-200">
+                    L
+                  </div>
+                  
+                  <div 
+                    id="zh-block-dial-1-dialogue-line-2"
+                    onclick="speakText('是的，我是林。欢迎你来到中国！', 'Chinese', 'zh-block-dial-1-dialogue-line-2')"
+                    data-phrase="是的，我是林。欢迎你来到中国！"
+                    class="dialogue-row-bubble rounded-md p-3.5 space-y-1 group relative transition-all border cursor-pointer max-w-sm hover:bg-slate-50/50 border-slate-200 bg-white"
+                  >
+                    <div class="flex items-center justify-between gap-2">
+                      <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wide">
+                        Lin (林)
+                      </span>
+                      <i data-lucide="volume-2" class="w-3.5 h-3.5 text-slate-300"></i>
+                    </div>
+                    
+                    <p class="font-sans text-sm tracking-wide text-slate-800">
+                      是的，我是林。欢迎你来到中国！
+                    </p>
+                    
+                    <p class="font-mono text-[10px] text-slate-400 pt-0.5 font-medium leading-none">
+                      Shì de, wǒ shì Lín. Huānyíng nǐ lái dào Zhōngguó!
+                    </p>
+                    
+                    <div class="border-t border-slate-100 pt-1.5 mt-1.5">
+                      <p class="text-xs text-slate-500 italic">
+                        Sì, io sono Lin. Benvenuta in Cina!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="flex items-start gap-3 flex-row-reverse">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none shadow-xs border bg-slate-100 text-slate-800 border-slate-200">
+                    S
+                  </div>
+                  
+                  <div 
+                    id="zh-block-dial-1-dialogue-line-3"
+                    onclick="speakText('谢谢你，林老师！再见。', 'Chinese', 'zh-block-dial-1-dialogue-line-3')"
+                    data-phrase="谢谢你，林老师！再见。"
+                    class="dialogue-row-bubble rounded-md p-3.5 space-y-1 group relative transition-all border cursor-pointer max-w-sm hover:bg-slate-50/50 border-slate-200 bg-white"
+                  >
+                    <div class="flex items-center justify-between gap-2">
+                      <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wide">
+                        Sarah (莎拉)
+                      </span>
+                      <i data-lucide="volume-2" class="w-3.5 h-3.5 text-slate-300"></i>
+                    </div>
+                    
+                    <p class="font-sans text-sm tracking-wide text-slate-800">
+                      谢谢你，林老师！再见。
+                    </p>
+                    
+                    <p class="font-mono text-[10px] text-slate-400 pt-0.5 font-medium leading-none">
+                      Xièxie nǐ, Lín lǎoshī! Zàijiàn.
+                    </p>
+                    
+                    <div class="border-t border-slate-100 pt-1.5 mt-1.5">
+                      <p class="text-xs text-slate-500 italic">
+                        Grazie mille, Maestro Lin! Arrivederci.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              
+          </div>
+        </div>
+      
+          <!-- Exercise Multiple Choice -->
+          <div id="block-card-zh-block-ex-1" class="exercise-mc-block bg-white border border-slate-200 rounded-md p-6 shadow-xs space-y-4" data-correct-idx="0">
+            <div class="flex justify-between items-start gap-4 border-b border-slate-150 pb-3">
+              <div class="flex items-center gap-2.5 text-blue-600">
+                <div class="p-2 bg-blue-50 rounded">
+                  <i data-lucide="help-circle" class="w-5 h-5 text-blue-600"></i>
+                </div>
+                <div>
+                  <span class="text-[9px] font-bold tracking-widest uppercase text-slate-400">ESERCIZIO - SCELTA MULTIPLA</span>
+                  <h4 class="text-sm font-bold text-slate-900">Cosa succede quando due &quot;Terzi toni&quot; (come nǐ hǎo) si incontrano uno di seguito all&#039;altro?</h4>
+                </div>
+              </div>
+              
+              <button 
+                onclick="resetMC(this)"
+                class="text-blue-600 hover:text-blue-750 text-xs font-semibold flex items-center gap-1 cursor-pointer"
+              >
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Ripristina
+              </button>
+            </div>
+            
+            
+              <p class="text-xs text-slate-500 bg-slate-50 p-2.5 rounded border border-slate-150">
+                💡 Questa regola è denominata &quot;Sabbia Tonica&quot; o Tone Sandhi.
+              </p>
+            
+            
+            <div class="grid gap-2">
+              
+                <button 
+                  onclick="checkMC(this, 0)"
+                  data-raw-text="Il primo tono si trasforma in Secondo Tono"
+                  class="mc-option-btn px-4 py-3 text-left text-xs sm:text-sm border border-slate-200 rounded hover:bg-slate-50 transition-colors w-full"
+                >
+                  Il primo tono si trasforma in Secondo Tono
+                </button>
+              
+                <button 
+                  onclick="checkMC(this, 1)"
+                  data-raw-text="Entrambi diventano quarti toni"
+                  class="mc-option-btn px-4 py-3 text-left text-xs sm:text-sm border border-slate-200 rounded hover:bg-slate-50 transition-colors w-full"
+                >
+                  Entrambi diventano quarti toni
+                </button>
+              
+                <button 
+                  onclick="checkMC(this, 2)"
+                  data-raw-text="Il secondo tono viene eliminato"
+                  class="mc-option-btn px-4 py-3 text-left text-xs sm:text-sm border border-slate-200 rounded hover:bg-slate-50 transition-colors w-full"
+                >
+                  Il secondo tono viene eliminato
+                </button>
+              
+                <button 
+                  onclick="checkMC(this, 3)"
+                  data-raw-text="Non succede nulla, restano invariati"
+                  class="mc-option-btn px-4 py-3 text-left text-xs sm:text-sm border border-slate-200 rounded hover:bg-slate-50 transition-colors w-full"
+                >
+                  Non succede nulla, restano invariati
+                </button>
+              
+            </div>
+            
+            <div class="feedback-msg hidden p-3 rounded text-xs font-semibold"></div>
+          </div>
+        
+          <!-- Exercise Fill-in-the-gap -->
+          <div id="block-card-zh-block-ex-2" class="exercise-fb-block bg-white border border-slate-200 rounded-md p-6 shadow-xs space-y-4" data-correct-answer="不用">
+            <div class="flex justify-between items-start gap-4 border-b border-slate-150 pb-3">
+              <div class="flex items-center gap-2.5 text-blue-600">
+                <div class="p-2 bg-blue-50 rounded">
+                  <i data-lucide="help-circle" class="w-5 h-5 text-blue-600"></i>
+                </div>
+                <div>
+                  <span class="text-[9px] font-bold tracking-widest uppercase text-slate-400">ESERCIZIO - COMPLETA LA FRASE</span>
+                  <h4 class="text-sm font-bold text-slate-900">Inserisci le parole mancanti prima di &quot;Kèqi&quot; per dire &quot;Non c&#039;è di che&quot;:</h4>
+                </div>
+              </div>
+              
+              <button 
+                onclick="resetFB(this)"
+                class="text-blue-600 hover:text-blue-750 text-xs font-semibold flex items-center gap-1 cursor-pointer"
+              >
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Ripristina
+              </button>
+            </div>
+            
+            
+              <p class="text-xs text-slate-505 bg-slate-50 p-2.5 rounded border border-slate-150">
+                💡 Significa letteralmente &quot;Non usare cortesie&quot;!
+              </p>
+            
+            
+            <div class="py-4 px-6 bg-slate-50 rounded flex flex-wrap items-center justify-center gap-2 text-md border border-slate-200 font-sans">
+              <span class="text-slate-605 font-bold tracking-wide">谢谢你 (Grazie) - Come si risponde? </span>
+              
+              <input 
+                type="text"
+                class="fb-input px-3 py-1 text-center w-40 text-sm font-bold rounded border bg-white border-slate-200 text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-600"
+                placeholder="..."
+              />
+              
+              <span class="text-slate-605 font-bold tracking-wide">客气 (Prego / Non essere formale)</span>
+            </div>
+            
+            <div class="flex gap-2 justify-end">
+              <button 
+                onclick="checkFB(this)"
+                class="fb-verify-btn px-4 py-1.5 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-700 cursor-pointer shadow-xs"
+              >
+                Verifica Soluzione
+              </button>
+            </div>
+            
+            <div class="feedback-msg hidden p-3 rounded text-xs font-semibold"></div>
+          </div>
+        
+        </div>
+      </div>
+    
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-100 py-6 mt-12 text-center text-xs text-slate-400 font-medium">
+    <p>© 2026 Generato da LinguaEdit Pro. Tutti i diritti riservati.</p>
+    <p class="font-mono text-[10px] text-slate-300 mt-1">Sintesi vocale ed esercitazioni interattive realizzate in client puramente statico.</p>
+  </footer>
+
+  <!-- Vanilla Speech synthesis engine & interactives script -->
+  <script>
+    // System TTS Voice Selector
+    let speechActiveElementId = null;
+
+    function speakText(text, langName, elId) {
+      if (!window.speechSynthesis) {
+        alert("Sintesi vocale non supportata.");
+        return;
+      }
+      
+      window.speechSynthesis.cancel();
+      
+      // Select best culture
+      let targetLang = 'ja-JP';
+      if (langName === 'Chinese') targetLang = 'zh-CN';
+      else if (langName === 'Korean') targetLang = 'ko-KR';
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = targetLang;
+      
+      // Manage visual highlights
+      if (speechActiveElementId) {
+        const prev = document.getElementById(speechActiveElementId);
+        if (prev) prev.classList.remove('speech-highlight', 'term-highlight');
+      }
+      
+      if (elId) {
+        speechActiveElementId = elId;
+        const currentEl = document.getElementById(elId);
+        if (currentEl) {
+          if (currentEl.classList.contains('dialogue-row-bubble')) {
+            currentEl.classList.add('speech-highlight');
+          } else {
+            currentEl.classList.add('term-highlight');
+          }
+        }
+      }
+      
+      utterance.onend = () => {
+        if (speechActiveElementId && elId === speechActiveElementId) {
+          const currentEl = document.getElementById(elId);
+          if (currentEl) currentEl.classList.remove('speech-highlight', 'term-highlight');
+          speechActiveElementId = null;
+        }
+      };
+      
+      window.speechSynthesis.speak(utterance);
+    }
+    
+    // Auto Dialogue autoplay
+    let dialogueTimers = {};
+    
+    function playDialogueSpeech(blockId, langName) {
+      const container = document.getElementById(blockId);
+      const rows = container.querySelectorAll('.dialogue-row-bubble');
+      const actionBtn = container.querySelector('.dialogue-play-btn');
+      
+      if (dialogueTimers[blockId]) {
+        // Stop current
+        clearInterval(dialogueTimers[blockId]);
+        delete dialogueTimers[blockId];
+        rows.forEach(r => r.classList.remove('speech-highlight'));
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        actionBtn.innerHTML = '<i data-lucide="play" class="w-3.5 h-3.5"></i> Ascolta Dialogo';
+        lucide.createIcons();
+        return;
+      }
+      
+      actionBtn.innerHTML = '<i data-lucide="square" class="w-3.5 h-3.5"></i> Stop';
+      lucide.createIcons();
+      
+      let cursor = 0;
+      
+      function readRow() {
+        if (cursor >= rows.length) {
+          delete dialogueTimers[blockId];
+          rows.forEach(r => r.classList.remove('speech-highlight'));
+          actionBtn.innerHTML = '<i data-lucide="play" class="w-3.5 h-3.5"></i> Ascolta Dialogo';
+          lucide.createIcons();
+          return;
+        }
+        
+        rows.forEach((r, idx) => {
+          if (idx === cursor) {
+            r.classList.add('speech-highlight');
+            // Scroll to view if out of screen
+            r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          } else {
+            r.classList.remove('speech-highlight');
+          }
+        });
+        
+        const phrase = rows[cursor].getAttribute('data-phrase');
+        speakText(phrase, langName, null);
+        
+        // Dynamic wait proportional to size
+        const charactersCount = phrase.length;
+        const delay = Math.max(2100, charactersCount * 220 + 900);
+        
+        cursor++;
+        dialogueTimers[blockId] = setTimeout(readRow, delay);
+      }
+      
+      readRow();
+    }
+
+    // Tab chapter switcher
+    function showChapter(chapterId) {
+      // Hide all chapters
+      const panels = document.querySelectorAll('.chapter-content-panel');
+      panels.forEach(p => p.classList.add('hidden'));
+      
+      // Show selected panel
+      const targetPanel = document.getElementById(chapterId);
+      if (targetPanel) targetPanel.classList.remove('hidden');
+      
+      // Select navbar button
+      const navButtons = document.querySelectorAll('.chapter-nav-btn');
+      navButtons.forEach(btn => {
+        if (btn.id === 'nav-' + chapterId) {
+          btn.className = "chapter-nav-btn w-full flex items-center justify-between text-left px-3 py-2 rounded text-xs font-bold bg-blue-50 text-blue-700 border border-blue-105 cursor-pointer";
+        } else {
+          btn.className = "chapter-nav-btn w-full flex items-center justify-between text-left px-3 py-2 rounded text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-normal border border-transparent cursor-pointer";
+        }
+      });
+      
+      // Scroll core screen back to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // MULTIPLE CHOICE EXERCISE HANDLERS
+    function checkMC(btn, idx) {
+      const parent = btn.closest('.exercise-mc-block');
+      const correctIdx = parseInt(parent.getAttribute('data-correct-idx'));
+      const options = parent.querySelectorAll('.mc-option-btn');
+      const feedback = parent.querySelector('.feedback-msg');
+      
+      options.forEach((optBtn, oIdx) => {
+        optBtn.disabled = true;
+        if (oIdx === correctIdx) {
+          optBtn.className = "mc-option-btn px-4 py-3 text-left text-xs sm:text-sm border rounded bg-emerald-600 border-emerald-600 text-white font-bold w-full flex justify-between items-center";
+          optBtn.innerHTML += ' <i data-lucide="check-circle" class="w-4 h-4 text-emerald-100"></i>';
+        } else if (oIdx === idx) {
+          optBtn.className = "mc-option-btn px-4 py-3 text-left text-xs sm:text-sm border rounded bg-rose-600 border-rose-600 text-white font-bold w-full flex justify-between items-center";
+          optBtn.innerHTML += ' <i data-lucide="x-circle" class="w-4 h-4 text-rose-100"></i>';
+        } else {
+          optBtn.className = "mc-option-btn px-4 py-3 text-left text-xs sm:text-sm border rounded text-slate-400 border-slate-100 opacity-60 w-full";
+        }
+      });
+      
+      feedback.classList.remove('hidden');
+      if (idx === correctIdx) {
+        feedback.className = "feedback-msg p-3 rounded text-xs font-semibold bg-emerald-50 text-emerald-800 border-l-4 border-emerald-500";
+        feedback.innerText = "🎉 Risposta corretta! Ottimo lavoro.";
+      } else {
+        feedback.className = "feedback-msg p-3 rounded text-xs font-semibold bg-rose-50 text-rose-800 border-l-4 border-rose-500";
+        feedback.innerText = "❌ Risposta non corretta. No problem, vedi la risposta giusta selezionata in verde!";
+      }
+      lucide.createIcons();
+    }
+
+    function resetMC(btn) {
+      const parent = btn.closest('.exercise-mc-block');
+      const options = parent.querySelectorAll('.mc-option-btn');
+      const feedback = parent.querySelector('.feedback-msg');
+      feedback.classList.add('hidden');
+      
+      options.forEach((optBtn, oIdx) => {
+        optBtn.disabled = false;
+        optBtn.className = "mc-option-btn px-4 py-3 text-left text-xs sm:text-sm border border-slate-200 rounded hover:bg-slate-50 transition-colors w-full";
+        optBtn.innerHTML = optBtn.getAttribute('data-raw-text') || optBtn.innerText;
+      });
+    }
+
+    // FILL IN THE BLANKS HANDLERS
+    function checkFB(btn) {
+      const parent = btn.closest('.exercise-fb-block');
+      const correctText = parent.getAttribute('data-correct-answer').trim().toLowerCase();
+      const input = parent.querySelector('.fb-input');
+      const userText = input.value.trim().toLowerCase();
+      const feedback = parent.querySelector('.feedback-msg');
+      
+      input.disabled = true;
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      
+      feedback.classList.remove('hidden');
+      const isCorrect = userText === correctText;
+      
+      if (isCorrect) {
+        input.className = "fb-input px-3 py-1 text-center w-40 text-sm font-bold rounded border-2 bg-emerald-600 border-emerald-600 text-white font-bold";
+        feedback.className = "feedback-msg p-3 rounded text-xs font-semibold bg-emerald-50 text-emerald-800 border-l-4 border-emerald-500";
+        feedback.innerText = "🎉 Risposta corretta! Eccellente trascrizione.";
+      } else {
+        input.className = "fb-input px-3 py-1 text-center w-40 text-sm font-bold rounded border-2 bg-rose-600 border-rose-600 text-white font-bold";
+        feedback.className = "feedback-msg p-3 rounded text-xs font-semibold bg-rose-50 text-rose-800 border-l-4 border-rose-500";
+        feedback.innerText = '❌ Risposta errata. Hai immesso "' + input.value + '", ma la soluzione corretta era "' + parent.getAttribute('data-correct-answer') + '".';
+      }
+    }
+
+    function resetFB(btn) {
+      const parent = btn.closest('.exercise-fb-block');
+      const input = parent.querySelector('.fb-input');
+      const verifyBtn = parent.querySelector('.fb-verify-btn');
+      const feedback = parent.querySelector('.feedback-msg');
+      
+      feedback.classList.add('hidden');
+      input.disabled = false;
+      input.value = '';
+      input.className = "fb-input px-3 py-1 text-center w-40 text-sm font-bold rounded border-2 border-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white text-slate-800";
+      verifyBtn.disabled = false;
+      verifyBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+
+    // WORD REORDER INTERACTIVE HANDLERS
+    function toggleReorderWord(btn, word) {
+      if (btn.classList.contains('opacity-45')) return; // Already clicked
+      
+      const parent = btn.closest('.exercise-reorder-block');
+      const target = parent.querySelector('.reorder-target-container');
+      const placeholder = target.querySelector('.placeholder-text');
+      
+      if (placeholder) placeholder.remove();
+      
+      // Make source look inactive
+      btn.classList.add('opacity-45', 'bg-slate-50', 'text-slate-300', 'cursor-not-allowed');
+      btn.disabled = true;
+      
+      // Add bubble to target
+      const span = document.createElement('span');
+      span.className = "target-bubble px-3 py-1 text-xs font-bold bg-blue-600 text-white rounded border border-blue-500 font-sans cursor-pointer flex items-center";
+      span.innerText = word;
+      target.appendChild(span);
+    }
+
+    function checkReorder(btn) {
+      const parent = btn.closest('.exercise-reorder-block');
+      const target = parent.querySelector('.reorder-target-container');
+      const feedback = parent.querySelector('.feedback-msg');
+      const bubbles = target.querySelectorAll('.target-bubble');
+      
+      const selectedArr = Array.from(bubbles).map(b => b.innerText);
+      const userSentence = selectedArr.join(' ');
+      const correctSentence = parent.getAttribute('data-correct-sentence').trim();
+      
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      feedback.classList.remove('hidden');
+      
+      const isCorrect = userSentence.replace(/\s+/g, '') === correctSentence.replace(/\s+/g, '');
+      
+      if (isCorrect) {
+        bubbles.forEach(b => {
+          b.className = "target-bubble px-3 py-1 text-xs font-bold bg-emerald-600 text-white rounded border border-emerald-500 font-sans";
+        });
+        feedback.className = "feedback-msg p-3 rounded text-xs font-semibold bg-emerald-50 text-emerald-800 border-l-4 border-emerald-500";
+        feedback.innerText = "🎉 Risposta corretta! Sintassi logica impeccabile.";
+      } else {
+        bubbles.forEach(b => {
+          b.className = "target-bubble px-3 py-1 text-xs font-bold bg-rose-600 text-white rounded border border-rose-500 font-sans";
+        });
+        feedback.className = "feedback-msg p-3 rounded text-xs font-semibold bg-rose-50 text-rose-800 border-l-4 border-rose-500";
+        feedback.innerText = '❌ Ordine errato. Hai composto "' + (userSentence || '[Frase vuota]') + '". La soluzione corretta è: "' + correctSentence + '"';
+      }
+    }
+
+    function resetReorder(btn) {
+      const parent = btn.closest('.exercise-reorder-block');
+      const target = parent.querySelector('.reorder-target-container');
+      const sources = parent.querySelectorAll('.reorder-source-btn');
+      const verifyBtn = parent.querySelector('.reorder-verify-btn');
+      const feedback = parent.querySelector('.feedback-msg');
+      
+      feedback.classList.add('hidden');
+      verifyBtn.disabled = false;
+      verifyBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      
+      target.innerHTML = '<span class="placeholder-text text-xs text-slate-400 select-none italic">Seleziona le parole in ordine logico per comporre la frase</span>';
+      
+      sources.forEach(sBtn => {
+        sBtn.disabled = false;
+        sBtn.className = "reorder-source-btn px-3 py-1.5 text-sm font-semibold bg-white border border-slate-200 rounded hover:border-blue-400 shadow-xs transition-all cursor-pointer";
+      });
+    }
+
+    // Initialize Lucide
+    window.addEventListener('load', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
