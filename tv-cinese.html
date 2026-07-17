@@ -151,7 +151,7 @@
             </div>
           </div>
 
-          <!-- SCHERMO CRT OTTIMIZZATO: Impostato in aspect-video (16:9) per allargarlo al massimo in orizzontale sul telefono -->
+          <!-- SCHERMO CRT OTTIMIZZATO -->
           <div class="flex-1 aspect-video rounded-[0.8rem] sm:rounded-[1.5rem] border-[3px] sm:border-[5px] border-neutral-700/60 bg-neutral-900 shadow-inner relative overflow-hidden ring-2 sm:ring-4 ring-black/45 z-10 select-none self-center">
             <div class="absolute inset-0 bg-[#1e2a1e] overflow-hidden flex items-center justify-center font-mono" id="crt-screen">
               <div id="crt-bg-glow" class="absolute inset-0 bg-[#344e34] pointer-events-none opacity-40 animate-pulse"></div>
@@ -163,19 +163,19 @@
 
               <div id="tv-snow-layer" class="absolute inset-0 bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[size:4px_4px] mix-blend-difference pointer-events-none z-9 opacity-40 transition-opacity duration-300"></div>
 
-              <!-- VIDEO FIXATO: object-fill costringe il video ad espandersi totalmente ingrandendo i sottotitoli -->
+              <!-- VIDEO FIXATO -->
               <div id="tv-video-container" class="absolute inset-0 z-20 hidden flex items-center justify-center bg-black">
                 <video id="tv-player" class="w-full h-full object-fill" loop playsinline></video>
               </div>
 
               <div id="tv-status-screen" class="z-25 text-center text-[#7cfc00] leading-tight tracking-wider flex flex-col items-center justify-center p-2">
-                <span class="text-base sm:text-2xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-3 py-0.5 rounded bg-black/50">CH 04</span>
+                <span class="text-base sm:text-2xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-3 py-0.5 rounded bg-black/50">CH 02</span>
                 <span class="text-white bg-red-650 text-[7px] sm:text-[9px] px-2 py-0.5 rounded mt-1 uppercase tracking-widest font-bold">ASSENZA SEGNALE</span>
               </div>
             </div>
           </div>
 
-          <!-- Pannello laterale analogico leggermente più stretto per dare spazio al video -->
+          <!-- Pannello laterale analogico -->
           <div class="w-12 sm:w-24 bg-black/15 border border-black/5 rounded-xl sm:rounded-2xl flex flex-col justify-between items-center p-1 sm:p-2 pt-2 z-10 font-mono select-none shrink-0">
             <div class="text-[6px] sm:text-[9px] font-black uppercase text-black/60 tracking-wider text-center hidden sm:block">SUPER-CHRON</div>
 
@@ -185,7 +185,7 @@
                   <div class="w-0.5 h-1.5 sm:h-3 bg-stone-900 rounded-b"></div>
                 </div>
                 <div class="w-3.5 h-3.5 sm:w-6 sm:h-6 bg-stone-800 rounded-full border border-stone-900 flex items-center justify-center text-stone-300 font-bold text-[8px] sm:text-xs select-none shadow-inner" id="tv-ch-num">
-                  4
+                  2
                 </div>
               </button>
               <span class="text-[5px] sm:text-[7.5px] text-black/55 font-bold mt-0.5 uppercase tracking-wide">CANALE</span>
@@ -271,6 +271,7 @@
     };
 
     const channels = [2, 3, 4, 5, 6, 7, 8];
+    // Partiamo direttamente dal canale 2 che ha il primo video!
     let chIndex = channels.indexOf(2);
 
     const chKnob = document.getElementById('tv-knob-ch');
@@ -290,6 +291,7 @@
 
     let isOn = true;
     let snowInterval = null;
+    let userHasInteracted = false; // Controlla se l'utente ha toccato lo schermo
 
     function renderTvGuide() {
       guideList.innerHTML = "";
@@ -308,6 +310,7 @@
     }
 
     function tvZipBeep() {
+      if (!userHasInteracted) return; // Evita di bloccare l'app se l'audio non è abilitato
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
@@ -347,17 +350,22 @@
         videoContainer.classList.remove('hidden');
         screenLabel.classList.add('hidden');
 
-        if (tvPlayer.src !== channelData.url) {
+        if (tvPlayer.src !== window.location.origin + '/' + channelData.url && !tvPlayer.src.endsWith(channelData.url)) {
           tvPlayer.src = channelData.url;
           tvPlayer.load();
         }
 
-        tvPlayer.muted = false;
-        tvPlayer.play().catch(err => {
-          console.log("Autoplay con audio bloccato. In attesa di interazione.");
-          tvPlayer.muted = true;
-          tvPlayer.play();
-        });
+        // Se l'utente ha già cliccato, togliamo il muto, altrimenti lasciamolo muto per evitare blocchi
+        tvPlayer.muted = !userHasInteracted;
+        
+        const playPromise = tvPlayer.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.log("Autoplay con audio bloccato. Avvio in modalità provvisoria.");
+            tvPlayer.muted = true;
+            tvPlayer.play();
+          });
+        }
 
         tvSnowLayer.style.opacity = '0';
         if (snowInterval) clearInterval(snowInterval);
@@ -383,11 +391,33 @@
       }
     }
 
+    // FUNZIONE DI SBLOCCO AUDIO TOTALE AL PRIMO TOCCO SULLA PAGINA
+    function unlockAudio() {
+      if (userHasInteracted) return;
+      userHasInteracted = true;
+      
+      // Sblocca il lettore video attivando l'audio al volo
+      tvPlayer.muted = false;
+      if (isOn && videoDatabase[channels[chIndex]]?.url) {
+        tvPlayer.play().catch(() => {});
+      }
+      
+      tvZipBeep();
+      // Rimuove i listener così non consuma risorse
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+    }
+
+    // Registra i tocchi ovunque sulla pagina per dare il consenso al browser
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('touchstart', unlockAudio);
+
     chNum.textContent = channels[chIndex];
     chNotch.style.transform = 'rotate(' + ((channels[chIndex] - 2) * 45) + 'deg)';
     updateScreenSignal();
 
-    chKnob.addEventListener('click', () => {
+    chKnob.addEventListener('click', (e) => {
+      e.stopPropagation(); // Evita conflitti
       chIndex = (chIndex + 1) % channels.length;
       chNum.textContent = channels[chIndex];
       chNotch.style.transform = 'rotate(' + ((channels[chIndex] - 2) * 45) + 'deg)';
@@ -407,7 +437,8 @@
       if (isOn) updateScreenSignal();
     });
 
-    powerToggle.addEventListener('click', () => {
+    powerToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       isOn = !isOn;
       if (isOn) {
         screen.style.opacity = "1";
