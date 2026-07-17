@@ -271,7 +271,6 @@
     };
 
     const channels = [2, 3, 4, 5, 6, 7, 8];
-    // Partiamo direttamente dal canale 2 che ha il primo video!
     let chIndex = channels.indexOf(2);
 
     const chKnob = document.getElementById('tv-knob-ch');
@@ -291,7 +290,7 @@
 
     let isOn = true;
     let snowInterval = null;
-    let userHasInteracted = false; // Controlla se l'utente ha toccato lo schermo
+    let userHasInteracted = false; 
 
     function renderTvGuide() {
       guideList.innerHTML = "";
@@ -310,7 +309,7 @@
     }
 
     function tvZipBeep() {
-      if (!userHasInteracted) return; // Evita di bloccare l'app se l'audio non è abilitato
+      if (!userHasInteracted) return; 
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
@@ -355,13 +354,13 @@
           tvPlayer.load();
         }
 
-        // Se l'utente ha già cliccato, togliamo il muto, altrimenti lasciamolo muto per evitare blocchi
+        // Togliamo il muto solo se l'utente ha toccato lo schermo
         tvPlayer.muted = !userHasInteracted;
         
         const playPromise = tvPlayer.play();
         if (playPromise !== undefined) {
           playPromise.catch(err => {
-            console.log("Autoplay con audio bloccato. Avvio in modalità provvisoria.");
+            console.log("Autoplay bloccato.");
             tvPlayer.muted = true;
             tvPlayer.play();
           });
@@ -391,24 +390,20 @@
       }
     }
 
-    // FUNZIONE DI SBLOCCO AUDIO TOTALE AL PRIMO TOCCO SULLA PAGINA
+    // MODIFICA CHIRURGICA: Forza l'aggiornamento del segnale video non appena l'utente tocca lo schermo
     function unlockAudio() {
       if (userHasInteracted) return;
       userHasInteracted = true;
       
-      // Sblocca il lettore video attivando l'audio al volo
-      tvPlayer.muted = false;
-      if (isOn && videoDatabase[channels[chIndex]]?.url) {
-        tvPlayer.play().catch(() => {});
-      }
-      
+      // Sblocca immediatamente l'audio e aggiorna lo stato dello schermo
+      updateScreenSignal();
       tvZipBeep();
-      // Rimuove i listener così non consuma risorse
+      
+      // Pulisce i listener
       document.removeEventListener('click', unlockAudio);
       document.removeEventListener('touchstart', unlockAudio);
     }
 
-    // Registra i tocchi ovunque sulla pagina per dare il consenso al browser
     document.addEventListener('click', unlockAudio);
     document.addEventListener('touchstart', unlockAudio);
 
@@ -417,7 +412,7 @@
     updateScreenSignal();
 
     chKnob.addEventListener('click', (e) => {
-      e.stopPropagation(); // Evita conflitti
+      e.stopPropagation(); 
       chIndex = (chIndex + 1) % channels.length;
       chNum.textContent = channels[chIndex];
       chNotch.style.transform = 'rotate(' + ((channels[chIndex] - 2) * 45) + 'deg)';
