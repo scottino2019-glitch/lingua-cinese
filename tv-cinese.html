@@ -34,7 +34,6 @@
     }
   </script>
   <style>
-    /* Sfondo nero assoluto con texture CRT integrata ad alta visibilità */
     body {
       background-color: #050505 !important;
       background-image: 
@@ -46,29 +45,25 @@
       overflow-x: hidden;
     }
 
-   /* SFONDO DINAMICO: Effetto segnale TV mal sintonizzato / Canale fantasma */
     .bg-static-noise {
       position: fixed;
       inset: 0;
       z-index: 0;
       opacity: 0.18; 
-      background-image: url('https://images.unsplash.com/photo-1501141178950-e7fa06e4adf5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxOXx8c2ZhcmZhbGlvJTIwdGVsZXZpc2l2ZXxlbnwwfHx8fDE3ODE0Njg5NDJ8MA&ixlib=rb-4.1.0&q=85');
+      background-image: url('https://images.unsplash.com/photo-1501141178950-e7fa06e4adf5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxOXx8c2ZhcmZhavfGVsZXZpc2l2ZXxlbnwwfHx8fDE3ODE0Njg5NDJ8MA&ixlib=rb-4.1.0&q=85');
       background-size: 400px 400px; 
       background-repeat: repeat; 
       pointer-events: none;
     }
 
-    /* SPEGNIMENTO COMPLETO DELLE BARRE DI INTERFERENZA */
     .bg-interference-bar, .bg-interference-bar-2 {
       display: none !important;
     }
-    /* Barre di tracking orizzontali (tipiche dei canali fuori frequenza o nastri VHS rovinati) */
     .bg-interference-bar {
       position: fixed;
       left: 0;
       width: 100%;
       height: 140px;
-      /* Aumentata la visibilità del bianco per contrastare il nero del body */
       background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05), transparent);
       filter: blur(4px);
       z-index: 0;
@@ -89,14 +84,12 @@
       animation-delay: -4s;
     }
 
-    /* Distorsione sussultante dello sfondo */
     @keyframes trackingPass {
       0% { top: -20%; transform: scaleY(1) skewX(0deg); }
       50% { transform: scaleY(1.3) skewX(3deg); }
       100% { top: 120%; transform: scaleY(1) skewX(0deg); }
     }
 
-    /* Vignettatura cinematografica attorno alla pagina */
     .tv-vignette {
       position: fixed;
       inset: 0;
@@ -119,8 +112,6 @@
     @keyframes blinker {
       50% { opacity: 0; }
     }
-    
-    /* RIMOSSI I TRASFORM SCALE CHE RIMPICCIOLIVANO TUTTO SUL CELLULARE */
   </style>
 </head>
 <body class="text-stone-900 font-sans min-h-screen flex flex-col items-center justify-start p-2 sm:p-4 md:p-8 antialiased overflow-y-auto">
@@ -132,10 +123,10 @@
 
   <main id="wrapper-main" class="w-full max-w-xl flex flex-col justify-center items-center mt-2 sm:mt-6">        
 
-    <!-- Ottimizzato: tolto aspect fisso orizzontale restrittivo sul mobile, inserito padding e bordi fluidi per dare massima area allo schermo -->
+    <!-- Struttura TV Esterna -->
     <div 
       id="device-body"
-      class="w-full max-w-xl rounded-[1.5rem] sm:rounded-[2.5rem] mb-6 p-2 sm:p-4 relative overflow-visible md:overflow-hidden flex flex-col justify-between shadow-[0_30px_70px_-15px_rgba(0,0,0,0.95)] transition-transform duration-300"
+      class="w-full rounded-[1.5rem] sm:rounded-[2.5rem] mb-6 p-2 sm:p-4 relative overflow-visible flex flex-col justify-between shadow-[0_30px_70px_-15px_rgba(0,0,0,0.95)]"
       style="background: linear-gradient(135deg, #a0522d 0%, #ef4444 50%, #5c2c16 100%); border: 8px solid #4a210d; box-shadow: inset 0 4px 12px rgba(255,255,255,0.15), 0 10px 25px rgba(0,0,0,0.5);"
     >
       <div class="absolute inset-0 wood-grain pointer-events-none opacity-10"></div>
@@ -149,7 +140,7 @@
       </svg>    
 
       <div class="relative w-full h-full z-10">                
-        <div class="relative w-full h-full flex p-1 sm:p-2 gap-2 sm:gap-3.5 text-neutral-800">
+        <div class="relative w-full h-full flex p-1 sm:p-2 gap-2 sm:gap-3.5 text-neutral-800 items-stretch">
 
           <div class="absolute inset-x-0 top-0 h-4 flex justify-between px-16 pointer-events-none select-none">
             <div id="tv-antenna-l" class="absolute left-10 sm:left-24 w-1 bg-stone-400 origin-bottom transition-all duration-300 pointer-events-none z-0" style="height: 45px; transform: rotate(-35deg) translateY(-100%);">
@@ -160,8 +151,8 @@
             </div>
           </div>
 
-          <!-- Schermo CRT: Adesso sfrutta un'altezza minima fluida (min-h-[180px] sul telefono, cresce su PC) rendendo i video e testi enormi -->
-          <div class="flex-1 rounded-[1rem] sm:rounded-[1.8rem] border-[3px] sm:border-[6px] border-neutral-700/60 bg-neutral-900 shadow-inner relative flex overflow-hidden ring-2 sm:ring-4 ring-black/45 z-10 select-none min-h-[180px] sm:min-h-[280px]">
+          <!-- SCHERMO CRT CORRETTO: Forzato l'aspect ratio 4:3 per renderlo nativamente grande e spazioso su ogni display -->
+          <div class="flex-1 aspect-[4/3] rounded-[1rem] sm:rounded-[1.8rem] border-[3px] sm:border-[6px] border-neutral-700/60 bg-neutral-900 shadow-inner relative overflow-hidden ring-2 sm:ring-4 ring-black/45 z-10 select-none">
             <div class="absolute inset-0 bg-[#1e2a1e] overflow-hidden flex items-center justify-center font-mono" id="crt-screen">
               <div id="crt-bg-glow" class="absolute inset-0 bg-[#344e34] pointer-events-none opacity-40 animate-pulse"></div>
 
@@ -172,19 +163,20 @@
 
               <div id="tv-snow-layer" class="absolute inset-0 bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[size:4px_4px] mix-blend-difference pointer-events-none z-9 opacity-40 transition-opacity duration-300"></div>
 
+              <!-- CONTENITORE VIDEO CORRETTO: Riempie al 100% lo schermo CRT -->
               <div id="tv-video-container" class="absolute inset-0 z-20 hidden flex items-center justify-center bg-black">
-                <video id="tv-player" class="w-full h-full object-contain" loop playsinline></video>
+                <video id="tv-player" class="w-full h-full object-cover" loop playsinline></video>
               </div>
 
-              <div id="tv-status-screen" class="z-25 text-center text-[#7cfc00] leading-tight tracking-wider flex flex-col items-center">
+              <div id="tv-status-screen" class="z-25 text-center text-[#7cfc00] leading-tight tracking-wider flex flex-col items-center justify-center p-2">
                 <span class="text-xl sm:text-3xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-3 py-1 rounded bg-black/50">CH 04</span>
                 <span class="text-white bg-red-650 text-[8px] sm:text-[9px] px-2 py-0.5 rounded mt-2 uppercase tracking-widest font-bold">ASSENZA SEGNALE</span>
               </div>
             </div>
           </div>
 
-          <!-- Pannello laterale compatto su mobile per lasciare spazio allo schermo -->
-          <div class="w-16 sm:w-24 bg-black/15 border border-black/5 rounded-xl sm:rounded-2xl flex flex-col justify-between items-center p-1 sm:p-2 pt-2 z-10 font-mono select-none shrink-0">
+          <!-- Pannello laterale analogico -->
+          <div class="w-14 sm:w-24 bg-black/15 border border-black/5 rounded-xl sm:rounded-2xl flex flex-col justify-between items-center p-1 sm:p-2 pt-2 z-10 font-mono select-none shrink-0">
             <div class="text-[6px] sm:text-[9px] font-black uppercase text-black/60 tracking-wider text-center hidden sm:block">SUPER-CHRON</div>
 
             <div class="flex flex-col items-center gap-0.5 mt-1">
@@ -230,7 +222,7 @@
     </div>
 
     <!-- Giornale di sotto -->
-    <div class="w-full max-w-xl bg-[#ebdcb9] border-2 border-[#ccbd96] text-stone-900 p-4 sm:p-6 rounded-sm shadow-2xl font-newspaper relative mt-2 border-t-[6px] border-t-stone-800">
+    <div class="w-full bg-[#ebdcb9] border-2 border-[#ccbd96] text-stone-900 p-4 sm:p-6 rounded-sm shadow-2xl font-newspaper relative mt-2 border-t-[6px] border-t-stone-800">
 
       <div class="border-b-4 border-stone-900 pb-2 mb-4 text-center relative">
         <h1 class="text-3xl sm:text-5xl font-chineseCalligraphy text-stone-950 tracking-wide mb-1 select-none">
