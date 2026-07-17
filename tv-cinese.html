@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TV CINESE - SINTONIZZATA-</title>
-   <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法和练习。">
+   <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法 and 练习。">
   <meta name="keywords" content="lingua cinese, cinese semplificato, vocaboli cinesi, grammatica cinese, esercizi cinesi, giochi cinesi, pdf cinesi,video cinesi, audio cinese  中文学习, 汉语, 词汇, 语法, 练习">
   <meta name="robots" content="index, follow">
 
@@ -151,8 +151,8 @@
             </div>
           </div>
 
-          <!-- SCHERMO CRT CORRETTO: Forzato l'aspect ratio 4:3 per renderlo nativamente grande e spazioso su ogni display -->
-          <div class="flex-1 aspect-[4/3] rounded-[1rem] sm:rounded-[1.8rem] border-[3px] sm:border-[6px] border-neutral-700/60 bg-neutral-900 shadow-inner relative overflow-hidden ring-2 sm:ring-4 ring-black/45 z-10 select-none">
+          <!-- SCHERMO CRT OTTIMIZZATO: Impostato in aspect-video (16:9) per allargarlo al massimo in orizzontale sul telefono -->
+          <div class="flex-1 aspect-video rounded-[0.8rem] sm:rounded-[1.5rem] border-[3px] sm:border-[5px] border-neutral-700/60 bg-neutral-900 shadow-inner relative overflow-hidden ring-2 sm:ring-4 ring-black/45 z-10 select-none self-center">
             <div class="absolute inset-0 bg-[#1e2a1e] overflow-hidden flex items-center justify-center font-mono" id="crt-screen">
               <div id="crt-bg-glow" class="absolute inset-0 bg-[#344e34] pointer-events-none opacity-40 animate-pulse"></div>
 
@@ -163,42 +163,42 @@
 
               <div id="tv-snow-layer" class="absolute inset-0 bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[size:4px_4px] mix-blend-difference pointer-events-none z-9 opacity-40 transition-opacity duration-300"></div>
 
-              <!-- CONTENITORE VIDEO CORRETTO: Riempie al 100% lo schermo CRT -->
+              <!-- VIDEO FIXATO: object-fill costringe il video ad espandersi totalmente ingrandendo i sottotitoli -->
               <div id="tv-video-container" class="absolute inset-0 z-20 hidden flex items-center justify-center bg-black">
-                <video id="tv-player" class="w-full h-full object-cover" loop playsinline></video>
+                <video id="tv-player" class="w-full h-full object-fill" loop playsinline></video>
               </div>
 
               <div id="tv-status-screen" class="z-25 text-center text-[#7cfc00] leading-tight tracking-wider flex flex-col items-center justify-center p-2">
-                <span class="text-xl sm:text-3xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-3 py-1 rounded bg-black/50">CH 04</span>
-                <span class="text-white bg-red-650 text-[8px] sm:text-[9px] px-2 py-0.5 rounded mt-2 uppercase tracking-widest font-bold">ASSENZA SEGNALE</span>
+                <span class="text-base sm:text-2xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-3 py-0.5 rounded bg-black/50">CH 04</span>
+                <span class="text-white bg-red-650 text-[7px] sm:text-[9px] px-2 py-0.5 rounded mt-1 uppercase tracking-widest font-bold">ASSENZA SEGNALE</span>
               </div>
             </div>
           </div>
 
-          <!-- Pannello laterale analogico -->
-          <div class="w-14 sm:w-24 bg-black/15 border border-black/5 rounded-xl sm:rounded-2xl flex flex-col justify-between items-center p-1 sm:p-2 pt-2 z-10 font-mono select-none shrink-0">
+          <!-- Pannello laterale analogico leggermente più stretto per dare spazio al video -->
+          <div class="w-12 sm:w-24 bg-black/15 border border-black/5 rounded-xl sm:rounded-2xl flex flex-col justify-between items-center p-1 sm:p-2 pt-2 z-10 font-mono select-none shrink-0">
             <div class="text-[6px] sm:text-[9px] font-black uppercase text-black/60 tracking-wider text-center hidden sm:block">SUPER-CHRON</div>
 
             <div class="flex flex-col items-center gap-0.5 mt-1">
-              <button id="tv-knob-ch" class="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-stone-600 via-stone-400 to-stone-700 border border-stone-850 flex items-center justify-center shadow-md active:scale-95 transition-transform cursor-pointer relative">
+              <button id="tv-knob-ch" class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-stone-600 via-stone-400 to-stone-700 border border-stone-850 flex items-center justify-center shadow-md active:scale-95 transition-transform cursor-pointer relative">
                 <div id="tv-knob-notch" class="absolute inset-0 pointer-events-none flex justify-center transform transition-transform" style="transform: rotate(0deg);">
-                  <div class="w-0.5 h-2 sm:h-3 bg-stone-900 rounded-b"></div>
+                  <div class="w-0.5 h-1.5 sm:h-3 bg-stone-900 rounded-b"></div>
                 </div>
-                <div class="w-4 h-4 sm:w-6 sm:h-6 bg-stone-800 rounded-full border border-stone-900 flex items-center justify-center text-stone-300 font-bold text-[9px] sm:text-xs select-none shadow-inner" id="tv-ch-num">
+                <div class="w-3.5 h-3.5 sm:w-6 sm:h-6 bg-stone-800 rounded-full border border-stone-900 flex items-center justify-center text-stone-300 font-bold text-[8px] sm:text-xs select-none shadow-inner" id="tv-ch-num">
                   4
                 </div>
               </button>
-              <span class="text-[5.5px] sm:text-[7.5px] text-black/55 font-bold mt-0.5 uppercase tracking-wide">CANALE</span>
+              <span class="text-[5px] sm:text-[7.5px] text-black/55 font-bold mt-0.5 uppercase tracking-wide">CANALE</span>
             </div>
 
             <div class="w-full flex justify-around my-1 px-0.5">
               <div class="flex flex-col items-center">
-                <input type="range" id="tv-slider-ant" min="20" max="140" value="60" class="w-1 h-6 sm:h-10 bg-black/45 rounded-lg cursor-pointer" style="writing-mode: vertical-lr; direction: rtl; -webkit-appearance: slider-vertical;" />
-                <span class="text-[5.5px] sm:text-[6.5px] text-black/55 font-bold mt-0.5 scale-90 uppercase">ANT</span>
+                <input type="range" id="tv-slider-ant" min="20" max="140" value="60" class="w-1 h-5 sm:h-10 bg-black/45 rounded-lg cursor-pointer" style="writing-mode: vertical-lr; direction: rtl; -webkit-appearance: slider-vertical;" />
+                <span class="text-[5px] sm:text-[6.5px] text-black/55 font-bold mt-0.5 scale-90 uppercase">ANT</span>
               </div>
               <div class="flex flex-col items-center">
-                <input type="range" id="tv-slider-stat" min="0" max="100" value="45" class="w-1 h-6 sm:h-10 bg-black/45 rounded-lg cursor-pointer" style="writing-mode: vertical-lr; direction: rtl; -webkit-appearance: slider-vertical;" />
-                <span class="text-[5.5px] sm:text-[6.5px] text-black/55 font-bold mt-0.5 scale-90 uppercase">STAT</span>
+                <input type="range" id="tv-slider-stat" min="0" max="100" value="45" class="w-1 h-5 sm:h-10 bg-black/45 rounded-lg cursor-pointer" style="writing-mode: vertical-lr; direction: rtl; -webkit-appearance: slider-vertical;" />
+                <span class="text-[5px] sm:text-[6.5px] text-black/55 font-bold mt-0.5 scale-90 uppercase">STAT</span>
               </div>
             </div>
 
@@ -209,12 +209,12 @@
             </div>
 
             <div class="flex flex-col items-center mt-1">
-              <button id="tv-toggle-power" class="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-black/40 shadow-md flex items-center justify-center transition-all cursor-pointer bg-red-650 text-white active:translate-y-0.5">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5">
+              <button id="tv-toggle-power" class="w-5 h-5 sm:w-8 sm:h-8 rounded-full border border-black/40 shadow-md flex items-center justify-center transition-all cursor-pointer bg-red-650 text-white active:translate-y-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-2 h-2 sm:w-3.5 sm:h-3.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
                 </svg>
               </button>
-              <span class="text-[5.5px] sm:text-[7px] text-black/55 font-bold mt-0.5 tracking-wider">POWER</span>
+              <span class="text-[5px] sm:text-[7px] text-black/55 font-bold mt-0.5 tracking-wider">POWER</span>
             </div>
           </div>
         </div>
@@ -369,7 +369,7 @@
         tvPlayer.src = '';
 
         screenLabel.innerHTML = `
-          <div class="text-lg sm:text-3xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-2.5 py-0.5 sm:px-3 sm:py-1 rounded bg-black/50">CH ${currentChannel.toString().padStart(2, '0')}</div>
+          <div class="text-base sm:text-2xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-2.5 py-0.5 rounded bg-black/50">CH ${currentChannel.toString().padStart(2, '0')}</div>
           <div class="text-[8px] sm:text-[9px] mt-1.5 font-black">ASSENZA SEGNALE</div>
           <div class="text-[7px] sm:text-[7.5px] mt-0.5 text-red-500 font-extrabold uppercase blinking">● NO SYNC SIGNAL</div>
         `;
