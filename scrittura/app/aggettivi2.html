@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lavagna di Scrittura Cinese - App Offline Autonoma</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    ::-webkit-scrollbar {
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen p-4 sm:p-8 flex items-center justify-center">
+
+  <div class="w-full max-w-[820px] bg-white rounded-2xl border border-slate-200/60 shadow-xl p-5 sm:p-7 flex flex-col gap-6">
+    
+    <!-- HEADER -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+      <div>
+        <h1 class="text-xl font-extrabold text-slate-900">Lavagna di Scrittura Cinese</h1>
+        <p class="text-xs text-slate-500 font-medium mt-1">Applicazione Offline Autonoma • Esercitati a tracciare ed ascoltare senza internet</p>
+      </div>
+      <div class="flex items-center gap-1.5 self-start bg-emerald-50 text-emerald-700 font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-emerald-100">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Pronta all'uso Offline
+      </div>
+    </div>
+
+    <!-- 1. HORIZONTAL CAROUSEL SELECTOR -->
+    <div>
+      <span class="text-xs font-bold text-slate-400 block uppercase tracking-wider mb-2.5">
+        Seleziona Carattere (<span id="active-num-label">1</span> di <span id="total-num-label">1</span>):
+      </span>
+      <div id="carousel-container" class="flex gap-2 overflow-x-auto pb-2.5">
+        <!-- Buttons will be injected here -->
+      </div>
+    </div>
+
+    <!-- 2. CENTRAL INTERACTIVE DRAWING CONTAINER -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+      
+      <!-- Drawing board canvas left -->
+      <div class="md:col-span-7 flex flex-col items-center gap-4 bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
+        
+        <!-- Main Drawing Grid Canvas wrapper -->
+        <div class="relative w-full aspect-square max-w-[340px] sm:max-w-[380px] bg-white rounded-xl shadow-inner border-2 border-slate-200/80 overflow-hidden">
+          <!-- Trace character helper -->
+          <div 
+            id="guide-char-trace"
+            class="absolute inset-0 flex items-center justify-center select-none pointer-events-none font-sans text-slate-100 text-[180px] sm:text-[220px] leading-none transition-opacity duration-200"
+            style="opacity: 0.35"
+          >
+            字
+          </div>
+
+          <canvas
+            id="paint-canvas"
+            class="absolute inset-0 w-full h-full cursor-crosshair touch-none z-10"
+          ></canvas>
+        </div>
+
+        <!-- Quick Actions canvas buttons -->
+        <div class="w-full max-w-[340px] sm:max-w-[380px] flex gap-2">
+          <button
+            onclick="clearCanvas()"
+            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl text-slate-700 bg-white border border-slate-200 hover:bg-slate-100 transition shadow-sm"
+          >
+            Cancella Tratto
+          </button>
+          <button
+            id="toggle-guide-btn"
+            onclick="toggleGuide()"
+            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition shadow-sm bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100"
+          >
+            Nascondi Traccia
+          </button>
+        </div>
+      </div>
+
+      <!-- Character information & controls right -->
+      <div class="md:col-span-5 flex flex-col justify-between gap-5">
+        <div class="space-y-4">
+          
+          <!-- Active Character Detail Banner -->
+          <div class="bg-red-50/40 p-4 rounded-2xl border border-red-100/60 text-center md:text-left">
+            <div class="flex flex-col md:flex-row items-center gap-3.5">
+              <span 
+                id="active-badge-char"
+                class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white text-red-600 border border-red-200 text-3xl font-sans font-extrabold shadow-sm"
+              >
+                字
+              </span>
+              <div>
+                <h4 id="active-title-char" class="font-sans font-bold text-slate-900 text-lg">
+                  字
+                </h4>
+                <p class="font-mono text-sm text-slate-700 font-bold mt-0.5">
+                  Pinyin: <span id="active-pinyin-label" class="bg-white px-2 py-0.5 rounded-md border border-slate-200/60">zì</span>
+                </p>
+                <p class="text-xs text-slate-500 italic mt-1 font-sans">
+                  Traduzione: <span id="active-translation-label" class="text-slate-800 font-semibold">Carattere</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Speaking Pronunciation trigger -->
+          <button
+            onclick="speakCharacter()"
+            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold rounded-xl text-red-700 bg-red-100 hover:bg-red-200/80 active:bg-red-200 border border-red-200 transition"
+          >
+            Ascolta Pronuncia Vocale
+          </button>
+
+          <!-- Custom ink brush selector -->
+          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 space-y-2">
+            <span class="text-[10.5px] font-bold text-slate-500 block uppercase tracking-wider">Colore Inchiostro Pennello:</span>
+            <div class="grid grid-cols-4 gap-2">
+              <button onclick="setInkColor('#1e293b')" class="py-1.5 rounded-lg border bg-white border-slate-400 flex items-center justify-center"><span class="w-3.5 h-3.5 rounded-full bg-slate-850 border"></span></button>
+              <button onclick="setInkColor('#000000')" class="py-1.5 rounded-lg border bg-slate-100/50 flex items-center justify-center"><span class="w-3.5 h-3.5 rounded-full bg-black border"></span></button>
+              <button onclick="setInkColor('#dc2626')" class="py-1.5 rounded-lg border bg-slate-100/50 flex items-center justify-center"><span class="w-3.5 h-3.5 rounded-full bg-red-600 border"></span></button>
+              <button onclick="setInkColor('#2563eb')" class="py-1.5 rounded-lg border bg-slate-100/50 flex items-center justify-center"><span class="w-3.5 h-3.5 rounded-full bg-blue-600 border"></span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sibling navigation row -->
+        <div class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex gap-2.5">
+            <button
+              id="prev-btn"
+              onclick="goPrev()"
+              class="flex-1 inline-flex items-center justify-center gap-1 py-2.5 px-3 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-200"
+            >
+              Precedente
+            </button>
+            <button
+              id="next-btn"
+              onclick="goNext()"
+              class="flex-1 inline-flex items-center justify-center gap-1 py-2.5 px-3 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-200"
+            >
+              Successivo
+            </button>
+          </div>
+
+          <!-- Stroke order educational checklist -->
+          <div class="bg-amber-50/40 p-3 rounded-xl border border-amber-200/50 text-[10.5px] leading-relaxed text-slate-600">
+            <h5 class="font-bold text-amber-800 mb-1">Ordine Tratti Tradizionale:</h5>
+            <p>Dall'alto in basso, da sinistra a destra. Disegna prima i tratti orizzontali e poi quelli verticali.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Embedded Characters List
+    const characters = [
+  {
+    "char": "多",
+    "pinyin": "duō",
+    "translation": "tanti"
+  },
+  {
+    "char": "少",
+    "pinyin": "shǎo",
+    "translation": "poco"
+  },
+  {
+    "char": "怀",
+    "pinyin": "huài",
+    "translation": "cattivo"
+  },
+  {
+    "char": "长",
+    "pinyin": "cháng",
+    "translation": "lungo"
+  },
+  {
+    "char": "短",
+    "pinyin": "duān",
+    "translation": "corto"
+  },
+  {
+    "char": "高兴",
+    "pinyin": "gāoxìng",
+    "translation": "felice"
+  },
+  {
+    "char": "难过",
+    "pinyin": "nánguò",
+    "translation": "triste"
+  },
+  {
+    "char": "累",
+    "pinyin": "lèi",
+    "translation": "stanco"
+  },
+  {
+    "char": "饿",
+    "pinyin": "è",
+    "translation": "affamato"
+  },
+  {
+    "char": "渴",
+    "pinyin": "kě",
+    "translation": "assetato"
+  },
+  {
+    "char": "忙",
+    "pinyin": "máng",
+    "translation": "occupato"
+  }
+];
+    let activeIndex = 0;
+    let isDrawing = false;
+    let showGuide = true;
+    let inkColor = "#1e293b";
+
+    // Grid config
+    const gridType = "tianzi";
+    const gridColor = "red";
+    const gridStyle = "dotted";
+
+    const canvas = document.getElementById("paint-canvas");
+    const ctx = canvas.getContext("2d");
+
+    function getGridHex() {
+      switch (gridColor) {
+        case "red": return "rgba(239, 68, 68, 0.4)";
+        case "green": return "rgba(34, 197, 94, 0.4)";
+        case "blue": return "rgba(59, 130, 246, 0.4)";
+        case "gray": return "rgba(156, 163, 175, 0.4)";
+        default: return "rgba(239, 68, 68, 0.4)";
+      }
+    }
+
+    function drawGrid() {
+      const size = canvas.width;
+      const color = getGridHex();
+      ctx.save();
+      
+      ctx.strokeStyle = color.replace("0.4", "0.85");
+      ctx.lineWidth = 3;
+      ctx.strokeRect(1.5, 1.5, size - 3, size - 3);
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      const dashArray = gridStyle === "dashed" ? [6, 4] : gridStyle === "dotted" ? [2, 5] : [];
+      ctx.setLineDash(dashArray);
+
+      if (gridType === "tianzi" || gridType === "mizi") {
+        ctx.beginPath();
+        ctx.moveTo(0, size / 2);
+        ctx.lineTo(size, size / 2);
+        ctx.moveTo(size / 2, 0);
+        ctx.lineTo(size / 2, size);
+        ctx.stroke();
+      }
+
+      if (gridType === "mizi") {
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(size, size);
+        ctx.moveTo(size, 0);
+        ctx.lineTo(0, size);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function initCanvas() {
+      canvas.width = 500;
+      canvas.height = 500;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = 16;
+      drawGrid();
+    }
+
+    function renderActiveCharacter() {
+      if (!characters || characters.length === 0) return;
+      const charObj = characters[activeIndex];
+
+      document.getElementById("active-num-label").textContent = activeIndex + 1;
+      document.getElementById("total-num-label").textContent = characters.length;
+      document.getElementById("guide-char-trace").textContent = charObj.char;
+      document.getElementById("active-badge-char").textContent = charObj.char;
+      document.getElementById("active-title-char").textContent = charObj.char;
+      document.getElementById("active-pinyin-label").textContent = charObj.pinyin;
+      document.getElementById("active-translation-label").textContent = charObj.translation;
+
+      // Enable/disable navigation buttons
+      document.getElementById("prev-btn").disabled = activeIndex === 0;
+      document.getElementById("prev-btn").style.opacity = activeIndex === 0 ? "0.3" : "1";
+      document.getElementById("next-btn").disabled = activeIndex === characters.length - 1;
+      document.getElementById("next-btn").style.opacity = activeIndex === characters.length - 1 ? "0.3" : "1";
+
+      renderCarousel();
+      clearCanvas();
+      speakCharacter();
+    }
+
+    function renderCarousel() {
+      const container = document.getElementById("carousel-container");
+      container.innerHTML = "";
+      characters.forEach((charObj, index) => {
+        const btn = document.createElement("button");
+        btn.onclick = () => { activeIndex = index; renderActiveCharacter(); };
+        const isActive = index === activeIndex;
+        btn.className = "flex-none flex items-center gap-2.5 px-3.5 py-2 rounded-xl border transition-all " + 
+          (isActive 
+            ? "bg-red-50 text-red-700 border-red-200 ring-2 ring-red-500/10 font-bold" 
+            : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 hover:text-slate-950");
+        
+        btn.innerHTML = `<span class="font-sans text-xl">${charObj.char}</span>
+          <div class="text-left leading-none">
+            <span class="font-mono text-[10px] block font-bold">${charObj.pinyin}</span>
+            <span class="text-[9px] text-slate-400 block max-w-[60px] truncate">${charObj.translation}</span>
+          </div>`;
+        container.appendChild(btn);
+      });
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawGrid();
+    }
+
+    function toggleGuide() {
+      showGuide = !showGuide;
+      document.getElementById("guide-char-trace").style.opacity = showGuide ? "0.35" : "0";
+      const btn = document.getElementById("toggle-guide-btn");
+      if (showGuide) {
+        btn.className = "flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition shadow-sm bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100";
+        btn.textContent = "Nascondi Traccia";
+      } else {
+        btn.className = "flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition shadow-sm bg-white text-slate-500 border-slate-200 hover:bg-slate-100";
+        btn.textContent = "Mostra Traccia";
+      }
+    }
+
+    function speakCharacter() {
+      if (!characters || characters.length === 0) return;
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(characters[activeIndex].char);
+        utterance.lang = "zh-CN";
+        utterance.rate = 0.75;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function setInkColor(color) {
+      inkColor = color;
+    }
+
+    function goNext() {
+      if (activeIndex < characters.length - 1) {
+        activeIndex++;
+        renderActiveCharacter();
+      }
+    }
+
+    function goPrev() {
+      if (activeIndex > 0) {
+        activeIndex--;
+        renderActiveCharacter();
+      }
+    }
+
+    // Canvas Events
+    function getCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: (clientX - rect.left) * (canvas.width / rect.width),
+        y: (clientY - rect.top) * (canvas.height / rect.height)
+      };
+    }
+
+    canvas.addEventListener("mousedown", (e) => {
+      const coords = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(coords.x, coords.y);
+      isDrawing = true;
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      if (!isDrawing) return;
+      const coords = getCoords(e);
+      ctx.lineTo(coords.x, coords.y);
+      ctx.strokeStyle = inkColor;
+      ctx.stroke();
+    });
+
+    window.addEventListener("mouseup", () => { isDrawing = false; });
+
+    // Touch support for tablets/phones
+    canvas.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      const coords = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(coords.x, coords.y);
+      isDrawing = true;
+    }, { passive: false });
+
+    canvas.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      if (!isDrawing) return;
+      const coords = getCoords(e);
+      ctx.lineTo(coords.x, coords.y);
+      ctx.strokeStyle = inkColor;
+      ctx.stroke();
+    }, { passive: false });
+
+    canvas.addEventListener("touchend", () => { isDrawing = false; });
+
+    // Start
+    initCanvas();
+    renderActiveCharacter();
+  </script>
+</body>
+</html>
