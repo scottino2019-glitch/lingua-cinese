@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi di Ascolto Multilingue - Esercizio di Ascolto</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts: Inter for general UI, Space Grotesk for display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .heading-font {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+        }
+        .mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Custom pulses for the active speech state */
+        @keyframes custom-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.85; }
+        }
+        .speaking-active {
+            animation: custom-pulse 1.2s infinite ease-in-out;
+            background-color: #10b981 !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-900">
+
+    <!-- Header Section -->
+    <header class="bg-white border-b border-slate-100 py-5 px-4 shadow-xs">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+                <a href="#" class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full tracking-wide uppercase mb-1.5 label-badge">
+                    🎧 Esercizio di Ascolto Standalone
+                </a>
+                <h1 id="quiz-title" class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 heading-font">
+                    Esercizi di Ascolto Multilingue
+                </h1>
+                <p id="quiz-description" class="text-sm text-slate-500 mt-1 max-w-2xl">
+                    Ascolta attentamente le espressioni pronunciate dal sintetizzatore vocale del tuo browser e seleziona l&#039;opzione corretta.
+                </p>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-400 font-medium">
+                <span>Total domande:</span>
+                <span class="px-2 py-1 bg-slate-100 text-slate-700 font-bold rounded-md mono-font text-sm" id="header-total-badge">-</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Stage -->
+    <main class="flex-grow py-8 px-4 max-w-2xl mx-auto w-full flex flex-col justify-center">
+        
+        <!-- START CARD -->
+        <div id="start-screen" class="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm text-center transition-all duration-300">
+            <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <!-- Headphone Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-950 mb-3 heading-font">Sei pronto ad iniziare?</h2>
+            <p class="text-slate-500 mb-8 max-w-md mx-auto">
+                Questo test verificherà la tua comprensione uditiva. Assicurati che l'audio del tuo dispositivo sia attivo ed a un volume adeguato.
+            </p>
+            
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-left text-xs text-amber-900 mb-8 max-w-md mx-auto space-y-2">
+                <p class="font-bold flex items-center gap-1.5">
+                    💡 Nota Tecnica Importante:
+                </p>
+                <p>
+                    Questo esercizio utilizza la sintesi vocale interna del tuo browser. Se non senti l'audio, potrebbe essere necessario concedere le autorizzazioni audio o provare un browser aggiornato come Chrome, Safari o Edge.
+                </p>
+            </div>
+
+            <button id="btn-start" class="w-full bg-slate-900 hover:bg-indigo-700 text-white font-semibold py-4 px-6 rounded-2xl shadow-md cursor-pointer transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                <span>Inizia l'Esercizio</span>
+                <!-- Arrow Right Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+        </div>
+
+
+        <!-- QUIZ ACTIVE CARD -->
+        <div id="quiz-screen" class="hidden bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm transition-all duration-300">
+            <!-- Progress Line Indicator -->
+            <div class="w-full bg-slate-100 h-1.5">
+                <div id="progress-bar-fill" class="bg-indigo-600 h-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <div class="p-6 md:p-8">
+                <!-- Info Header Info -->
+                <div class="flex items-center justify-between mb-6 text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                    <span id="question-index-label">Domanda - di -</span>
+                    <span class="px-2 py-1 bg-indigo-50 text-indigo-700 rounded-md mono-font font-bold uppercase tracking-normal" id="question-lang-label">IT-IT</span>
+                </div>
+
+                <!-- SPEECH COMMAND BOX (LARGE AUDIO STAGE) -->
+                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 md:p-8 text-center mb-8 flex flex-col items-center justify-center">
+                    
+                    <!-- Main Speaker Circular Button -->
+                    <button id="btn-speak-normal" class="w-20 h-20 bg-slate-900 border border-slate-800 hover:bg-indigo-600 hover:border-indigo-500 text-white rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 transform hover:scale-105 shadow-md mb-4" title="Ascolta a velocità normale">
+                        <!-- Speaker Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                    </button>
+
+                    <p class="text-xs font-semibold text-slate-500 tracking-wide uppercase mb-3">Clicca per ascoltare l'audio</p>
+                    
+                    <!-- Secondary Audio controls (Slow speed / Play Rate) -->
+                    <div class="flex flex-wrap items-center justify-center gap-2">
+                        <button id="btn-speak-slow" class="px-3.5 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-amber-50 hover:text-amber-700 hover:border-amber-200 text-xs font-medium rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer" title="Ascolta l'audio a velocità rallentata (0.7x)">
+                            <!-- Turtle / Slow Speed Icon (custom svg clock with arrow for slow) -->
+                            🐢 Ascolta lentamente (0.7x)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MULTIPLE CHOICE OPTIONS GRID -->
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-400 tracking-wide uppercase mb-3.5">Fai la tua scelta:</h3>
+                    
+                    <div id="options-container" class="space-y-3">
+                        <!-- Options injected dynamically here -->
+                    </div>
+                </div>
+
+                <!-- FEEDBACK MESSAGE BLOCK -->
+                <div id="feedback-block" class="mt-6 p-4 rounded-2xl text-left hidden border transition-all duration-300">
+                    <div class="flex items-start gap-3">
+                        <div id="feedback-icon-wrapper" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-white">
+                            <!-- Injected icon -->
+                        </div>
+                        <div>
+                            <p id="feedback-title" class="font-bold text-sm"></p>
+                            <p id="feedback-explanation" class="text-xs opacity-90 mt-1 max-w-md"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NAVIGATION / CONFIRM BUTTON -->
+                <div class="mt-8 flex justify-end">
+                    <button id="btn-next" class="hidden bg-slate-900 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-xl cursor-pointer transition-all duration-200 flex items-center gap-1.5">
+                        <span id="btn-next-text">Prossima domanda</span>
+                        <!-- Arrow right -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- RESULTS SCREEN -->
+        <div id="results-screen" class="hidden bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm transition-all duration-300">
+            <div class="text-center pb-6 border-b border-slate-100">
+                <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <!-- Trophy Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"/><path d="M12 2a6 6 0 0 1 6 6v1a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V8a6 6 0 0 1 6-6z"/></svg>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 heading-font">Esercizio Completato!</h2>
+                <p class="text-sm text-slate-500 mt-1">Ottimo lavoro. Controlla il tuo punteggio e riascolta le risposte qui sotto.</p>
+
+                <!-- SCORE STATS BADGES Grid -->
+                <div class="mt-6 inline-flex flex-col sm:flex-row items-center justify-center gap-4 bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+                    <div class="text-center px-4">
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Risposte Esatte</p>
+                        <p class="text-2xl font-bold text-slate-900 mono-font mt-0.5" id="score-counter">0 / 0</p>
+                    </div>
+                    <div class="w-px h-8 bg-slate-200 hidden sm:block"></div>
+                    <div class="text-center px-4">
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Percentuale</p>
+                        <p class="text-2xl font-bold text-indigo-600 mono-font mt-0.5" id="percentage-counter">0%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DETAILED REVIEW SECTION -->
+            <div class="mt-6">
+                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide mb-4">Revisione dettagliata delle domande</h3>
+                
+                <div id="review-list" class="space-y-4 max-h-80 overflow-y-auto pr-1">
+                    <!-- Dynamic review list of questions, correct words, and play buttons -->
+                </div>
+            </div>
+
+            <!-- FOOTER CONTROLS inside result screen -->
+            <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+                <button id="btn-restart" class="flex-grow bg-slate-900 hover:bg-indigo-600 text-white font-semibold py-3 px-5 rounded-2xl transition-all duration-150 cursor-pointer flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>Riprova il Quiz</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Copyright Branding (Very small, lightweight, no ad noise, clean) -->
+    <footer class="bg-white border-t border-slate-100 py-4 px-4 text-center text-xs text-slate-400">
+        <div class="max-w-4xl mx-auto flex items-center justify-center gap-1.5 font-medium">
+            <span>Esercizio generato con successo. Alimentato al 100% via Web Speech API offline.</span>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // Inline raw config injected
+        const EXERCISES = [{"id":"ex-3","textToSpeak":"今天天气很好，我们去公园散步吧。","options":["今天天气很好，我们去公园散步吧。 (Il tempo è fantastico oggi, andiamo a passeggiare al parco.)","明天下大雨，我们呆在家里看书。 (Domani pioverà molto, resteremo a casa a leggere.)","这家饭馆的肉包子和饺子很好吃。 (I panini di carne e i ravioli di questo locale sono deliziosi.)","你平时更喜欢听轻音乐还是看科幻电影？ (Solitamente ti piace di più ascoltare musica soft o i film di fantascienza?)"],"correctOptionIndex":0,"language":"zh-CN","hint":"Il testo contiene 'tiānqì hěn hǎo' (tempo molto bello) e 'gōngyuán sànbù' (passeggiata al parco)."},{"id":"ex-import-1784803624926-0-0","textToSpeak":"今天天气很好，我们去公园散步吧。","options":["今天天气很好，我们去公园散步吧。 (Il tempo è fantastico oggi, andiamo a passeggiare al parco.)","明天下大雨，我们呆在家里看书。 (Domani pioverà molto, resteremo a casa a leggere.)","这家饭馆的肉包子和饺子很好吃。 (I panini di carne e i ravioli di questo locale sono deliziosi.)","你平时更喜欢听轻音乐还是看科幻电影？ (Solitamente ti piace di più ascoltare musica soft o i film di fantascienza?)"],"correctOptionIndex":0,"language":"zh-CN","hint":"Il testo contiene 'tiānqì hěn hǎo' (tempo molto bello) e 'gōngyuán sànbù' (passeggiata al parco)."},{"id":"ex-import-1784803624926-1-1","textToSpeak":"很高兴认识你，你是意大利人吗？","options":["我想喝一杯冷水。 (Vorrei bere un bicchiere d'acqua fredda.)","很高兴认识你，你是意大利人吗？ (Piacere di conoscerti, sei italiano?)","你在哪里学汉语？ (Dove studi la lingua cinese?)","我很喜欢做运动。 (Mi piace molto fare sport.)"],"correctOptionIndex":1,"language":"zh-CN","hint":"Presentazione e domanda di nazionalità ('nǐ shì yìdàlì rén ma?')."},{"id":"ex-import-1784803624926-2-2","textToSpeak":"请问，这双红色的鞋子多少钱？","options":["那双蓝色的鞋子三十块钱。 (Quel paio di scarpe blu costa trenta yuan.)","请问，这双红色的鞋子多少钱？ (Scusi, quanto costa questo paio di scarpe rosse?)","这条黑色的裤子太长了。 (Questi pantaloni neri sono troppo lunghi.)","我不喜欢买衣服。 (Non mi piace comprare vestiti.)"],"correctOptionIndex":1,"language":"zh-CN","hint":"Chiede esplicitamente il prezzo ('duōshao qián?') dell'oggetto rosso ('hóngsè de xiézi')."},{"id":"ex-import-1784803624926-3-3","textToSpeak":"老师，我能问一个关于汉字的问题吗？","options":["老师，我能问一个关于汉字的问题吗？ (Professore, posso fare una domanda sui caratteri cinesi?)","我想借一本中文书。 (Vorrei prendere in prestito un libro in cinese.)","今天的汉语课非常有趣。 (La lezione di cinese di oggi è stata divertente.)","请跟我一起读课文。 (Per favore leggete il testo insieme a me.)"],"correctOptionIndex":0,"language":"zh-CN","hint":"Formula educata rivolta all'insegnante ('lǎoshī') per porre un quesito sui caratteri cinesi ('hànzì')."}];
+        
+        // App State
+        let currentQuizIndex = 0;
+        let score = 0;
+        let userAnswers = []; // stores { chosenIndex: number, isCorrect: boolean } for each question
+        let answerSelected = false; // block multiple clicks
+        let activeSpeakerButton = null;
+
+        // Global voice pre-loading
+        let VOICES = [];
+        function loadVoices() {
+            if ('speechSynthesis' in window) {
+                VOICES = window.speechSynthesis.getVoices();
+            }
+        }
+        loadVoices();
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        // Speech Engine helper
+        function speak(text, lang, rate = 1.0, targetButton = null) {
+            if (!('speechSynthesis' in window)) {
+                alert("La sintesi vocale non è supportata dal tuo browser attuale.");
+                return;
+            }
+            
+            // Highlight audio button with speaking class
+            const addSpeakingClass = (btn) => {
+                if(btn) {
+                    btn.classList.add('speaking-active');
+                    activeSpeakerButton = btn;
+                }
+            };
+            const removeSpeakingClass = () => {
+                if(activeSpeakerButton) {
+                    activeSpeakerButton.classList.remove('speaking-active');
+                    activeSpeakerButton = null;
+                }
+            };
+
+            try {
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.rate = rate;
+                utterance.pitch = 1.0;
+
+                // Pre-fetch voices safely from the global VOICES array
+                const voices = VOICES.length > 0 ? VOICES : window.speechSynthesis.getVoices();
+                const normalizedLang = lang.toLowerCase().replace('_', '-');
+                const matchedVoice = 
+                    voices.find(v => v.lang.toLowerCase().replace('_', '-') === normalizedLang) ||
+                    voices.find(v => v.lang.toLowerCase().startsWith(normalizedLang.split('-')[0]));
+                if (matchedVoice) {
+                    utterance.voice = matchedVoice;
+                }
+
+                utterance.onstart = () => {
+                    // Find matching voice button on the current UI to animate
+                    const activeBtn = targetButton || document.querySelector('#btn-speak-normal');
+                    addSpeakingClass(activeBtn);
+                };
+
+                utterance.onend = () => removeSpeakingClass();
+                utterance.onerror = (e) => {
+                    console.warn("SpeechSynthesis error:", e);
+                    removeSpeakingClass();
+                };
+
+                window.speechSynthesis.speak(utterance);
+            } catch (err) {
+                console.error("Speech synthesis failed execution: ", err);
+                removeSpeakingClass();
+            }
+        }
+
+        // DOM query elements
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        
+        const btnStart = document.getElementById('btn-start');
+        const btnSpeakNormal = document.getElementById('btn-speak-normal');
+        const btnSpeakSlow = document.getElementById('btn-speak-slow');
+        const optionsContainer = document.getElementById('options-container');
+        
+        const labelIndex = document.getElementById('question-index-label');
+        const labelLang = document.getElementById('question-lang-label');
+        const barFill = document.getElementById('progress-bar-fill');
+        
+        const feedbackBlock = document.getElementById('feedback-block');
+        const feedbackWrapper = document.getElementById('feedback-icon-wrapper');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackExplanation = document.getElementById('feedback-explanation');
+        
+        const btnNext = document.getElementById('btn-next');
+        const btnNextText = document.getElementById('btn-next-text');
+        
+        const scoreCounter = document.getElementById('score-counter');
+        const percentageCounter = document.getElementById('percentage-counter');
+        const reviewList = document.getElementById('review-list');
+        const btnRestart = document.getElementById('btn-restart');
+        const totalHeaderBadge = document.getElementById('header-total-badge');
+
+        // Init Header Info
+        if (totalHeaderBadge) {
+            totalHeaderBadge.textContent = EXERCISES.length;
+        }
+
+        // Click listeners
+        btnStart.addEventListener('click', () => {
+            startQuiz();
+            // Speak the first question synchronously in click event context (never blocked)
+            const currentEx = EXERCISES[0];
+            if (currentEx) {
+                speak(currentEx.textToSpeak, currentEx.language, 1.0);
+            }
+        });
+        btnRestart.addEventListener('click', restartQuiz);
+        
+        btnSpeakNormal.addEventListener('click', () => {
+            const currentEx = EXERCISES[currentQuizIndex];
+            if (currentEx) {
+                speak(currentEx.textToSpeak, currentEx.language, 1.0, btnSpeakNormal);
+            }
+        });
+
+        btnSpeakSlow.addEventListener('click', () => {
+            const currentEx = EXERCISES[currentQuizIndex];
+            if (currentEx) {
+                speak(currentEx.textToSpeak, currentEx.language, 0.7, btnSpeakSlow);
+            }
+        });
+
+        btnNext.addEventListener('click', () => {
+            if (currentQuizIndex < EXERCISES.length - 1) {
+                currentQuizIndex++;
+                renderQuestion();
+                // Speak the next question synchronously in click event context (never blocked)
+                const currentEx = EXERCISES[currentQuizIndex];
+                if (currentEx) {
+                    speak(currentEx.textToSpeak, currentEx.language, 1.0);
+                }
+            } else {
+                showResults();
+            }
+        });
+
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            currentQuizIndex = 0;
+            score = 0;
+            userAnswers = [];
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            answerSelected = false;
+            
+            // Hide next button & feedback block
+            btnNext.classList.add('hidden');
+            feedbackBlock.classList.add('hidden');
+            
+            const currentEx = EXERCISES[currentQuizIndex];
+            if (!currentEx) return;
+
+            // Header state updates
+            labelIndex.textContent = "Domanda " + (currentQuizIndex + 1) + " di " + EXERCISES.length;
+            labelLang.textContent = currentEx.language.toUpperCase();
+            
+            // Progress Bar
+            const percentWidth = ((currentQuizIndex) / EXERCISES.length) * 100;
+            barFill.style.width = percentWidth + "%";
+
+            // Options list
+            optionsContainer.innerHTML = '';
+            
+            currentEx.options.forEach((optionTxt, idx) => {
+                const btnOption = document.createElement('button');
+                btnOption.type = 'button';
+                btnOption.className = "w-full text-left px-5 py-4 bg-white border border-slate-200 text-slate-800 hover:bg-indigo-50 hover:border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-100 rounded-2xl flex items-center justify-between transition-all duration-150 font-medium text-sm cursor-pointer shadow-1xs select-none target-option";
+                btnOption.setAttribute('id', 'option-' + idx);
+                
+                // Content elements
+                const pText = document.createElement('span');
+                pText.className = "pr-4";
+                pText.textContent = optionTxt;
+                
+                const iconContainer = document.createElement('div');
+                iconContainer.className = "w-5 h-5 border-2 border-slate-200 rounded-full flex items-center justify-center shrink-0 text-white transition-all duration-150";
+                
+                btnOption.appendChild(pText);
+                btnOption.appendChild(iconContainer);
+                
+                btnOption.addEventListener('click', () => handleOptionSelection(idx));
+                
+                optionsContainer.appendChild(btnOption);
+            });
+        }
+
+        function handleOptionSelection(chosenIndex) {
+            if (answerSelected) return; // ignore multiple clicks
+            answerSelected = true;
+
+            const currentEx = EXERCISES[currentQuizIndex];
+            const isCorrect = (chosenIndex === currentEx.correctOptionIndex);
+            
+            // Record answer history
+            userAnswers.push({
+                chosenIndex: chosenIndex,
+                isCorrect: isCorrect
+            });
+
+            if (isCorrect) score++;
+
+            // Highlight chosen and correct options
+            currentEx.options.forEach((_, idx) => {
+                const optionEl = document.getElementById('option-' + idx);
+                if (!optionEl) return;
+                
+                // Remove hover classes since state is resolved
+                optionEl.classList.remove('hover:bg-indigo-50', 'hover:border-indigo-200');
+                const badge = optionEl.querySelector('div');
+
+                if (idx === currentEx.correctOptionIndex) {
+                    // Correct green styling
+                    optionEl.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-950');
+                    if (badge) {
+                        badge.className = "w-5 h-5 bg-emerald-500 border-emerald-500 rounded-full flex items-center justify-center shrink-0 text-white";
+                        badge.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+                    }
+                } else if (idx === chosenIndex) {
+                    // Wrong red styling
+                    optionEl.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-950');
+                    if (badge) {
+                        badge.className = "w-5 h-5 bg-rose-500 border-rose-500 rounded-full flex items-center justify-center shrink-0 text-white";
+                        badge.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+                    }
+                } else {
+                    // Non-involved choices become slightly muted
+                    optionEl.style.opacity = '0.5';
+                }
+            });
+
+            // Set up rich feedback panel
+            feedbackBlock.className = isCorrect ? 
+                "mt-6 p-4 rounded-2xl text-left border bg-emerald-50/50 border-emerald-100 text-emerald-900 flex transition-all duration-300" :
+                "mt-6 p-4 rounded-2xl text-left border bg-rose-50/50 border-rose-100 text-rose-900 flex transition-all duration-300";
+
+            feedbackWrapper.className = isCorrect ? 
+                "w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0 text-white mt-0.5" :
+                "w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center shrink-0 text-white mt-0.5";
+
+            feedbackWrapper.innerHTML = isCorrect ?
+                '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7.5 7.5L9 4 2 11h11l7.5-7.5Z"/><path d="m11 11 3 9.7 7.5-12.7"/></svg>' :
+                '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>';
+
+            feedbackTitle.textContent = isCorrect ? "Eccellente! Corretto." : "Ops, Risposta Errata.";
+            
+            // If the question has a hint/explanation, show it; otherwise show general reassurance
+            const defaultExplanation = isCorrect ? "Hai riconosciuto perfettamente la pronuncia corretta!" : "Riascolta con calma l'audio premendo l'icona dell'altoparlante.";
+            feedbackExplanation.textContent = currentEx.hint ? currentEx.hint : defaultExplanation;
+            feedbackBlock.classList.remove('hidden');
+
+            // Set Next button label & show
+            btnNextText.textContent = (currentQuizIndex === EXERCISES.length - 1) ? "Vedi Risultati" : "Prossima domanda";
+            btnNext.classList.remove('hidden');
+        }
+
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            // Fill the score cards
+            scoreCounter.textContent = score + " / " + EXERCISES.length;
+            const percent = EXERCISES.length > 0 ? Math.round((score / EXERCISES.length) * 100) : 0;
+            percentageCounter.textContent = percent + "%";
+
+            // Setup detailed review list
+            reviewList.innerHTML = '';
+            
+            EXERCISES.forEach((ex, idx) => {
+                const answerState = userAnswers[idx] || { chosenIndex: -1, isCorrect: false };
+                
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between gap-3 p-4 bg-slate-50 border border-slate-100 rounded-2xl relative";
+
+                // Left text section
+                const textSection = document.createElement('div');
+                textSection.className = "flex-grow";
+                
+                const headRow = document.createElement('div');
+                headRow.className = "flex items-center flex-wrap gap-2 mb-1";
+                
+                const badgeStatus = document.createElement('span');
+                if (answerState.isCorrect) {
+                  badgeStatus.className = "px-1.5 py-0.5 bg-emerald-100 text-emerald-800 rounded text-[10px] font-bold uppercase tracking-wider";
+                  badgeStatus.textContent = "Corretto";
+                } else {
+                  badgeStatus.className = "px-1.5 py-0.5 bg-rose-100 text-rose-800 rounded text-[10px] font-bold uppercase tracking-wider";
+                  badgeStatus.textContent = "Errato";
+                }
+                
+                const langBadge = document.createElement('span');
+                langBadge.className = "px-1 py-0.5 bg-slate-200 text-slate-700 rounded text-[10px] uppercase font-semibold mono-font";
+                langBadge.textContent = ex.language;
+
+                headRow.appendChild(badgeStatus);
+                headRow.appendChild(langBadge);
+
+                const spokenPhraseText = document.createElement('p');
+                spokenPhraseText.className = "text-sm font-bold text-slate-900 pr-1 select-all";
+                spokenPhraseText.textContent = "🔊 " + ex.textToSpeak;
+
+                const choiceDetailsText = document.createElement('p');
+                choiceDetailsText.className = "text-xs text-slate-500 mt-1";
+                const givenAnswerText = ex.options[answerState.chosenIndex] || "[Nessuna risposta]";
+                const correctAnswerText = ex.options[ex.correctOptionIndex];
+                
+                if (answerState.isCorrect) {
+                    choiceDetailsText.innerHTML = "Risposta data: <span class='text-emerald-700 font-semibold'>" + givenAnswerText + "</span>";
+                } else {
+                    choiceDetailsText.innerHTML = "Risposta data: <span class='text-rose-600 font-semibold'>" + givenAnswerText + "</span> • Corretta: <span class='text-emerald-700 font-semibold'>" + correctAnswerText + "</span>";
+                }
+
+                textSection.appendChild(headRow);
+                textSection.appendChild(spokenPhraseText);
+                textSection.appendChild(choiceDetailsText);
+
+                // Replay speaker button
+                const btnReplay = document.createElement('button');
+                btnReplay.type = 'button';
+                btnReplay.className = "w-10 h-10 bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 rounded-xl flex items-center justify-center shrink-0 cursor-pointer shadow-3xs transition-transform hover:scale-105 active:scale-95 speaking-feedback-btn";
+                btnReplay.title = "Ascolta di nuovo questa pronuncia";
+                btnReplay.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+                
+                btnReplay.addEventListener('click', () => {
+                    speak(ex.textToSpeak, ex.language, 1.0, btnReplay);
+                });
+
+                item.appendChild(textSection);
+                item.appendChild(btnReplay);
+                
+                reviewList.appendChild(item);
+            });
+        }
+
+        function restartQuiz() {
+            startQuiz();
+            const currentEx = EXERCISES[0];
+            if (currentEx) {
+                speak(currentEx.textToSpeak, currentEx.language, 1.0);
+            }
+        }
+
+        // Initialize voices list loading triggering to warm sound API
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    window.speechSynthesis.getVoices();
+                };
+            }
+        }
+    </script>
+</body>
+</html>
