@@ -1,11 +1,11 @@
 [
   {
   "id": 1,
-  "date": "2026-07-11",
-  "title": "Convertitore",
+  "date": "2026-08-03",
+  "title": "Nuovi Video",
   "description": "pinyin converter",
-  "category": "app",
-  "link":  "https://pinyin-converter-ashen.vercel.app/"  
+  "category": "video",
+  "link":  "https://lingua-cinese.vercel.app/tv-cinese.html"  
 }
    
 ]
