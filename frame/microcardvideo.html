@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>掩耳盗铃 • Idiom Story</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #F2EFE9;
+      background-image: radial-gradient(#4A4238 0.6px, transparent 0.6px);
+      background-size: 20px 20px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      padding: 2.5rem 1rem;
+    }
+    .card-3d-flipper {
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.7s ease-in-out;
+    }
+    .card-front-face, .card-back-face {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card-back-face {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body>
+  <svg id="artisanal-svg-filters" class="absolute w-0 h-0 overflow-hidden" aria-hidden="true"><defs><filter id="torn-paper-edge" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="noise"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter><filter id="paper-fiber" x="0%" y="0%" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"></feTurbulence><feColorMatrix type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.15  0 0 0 0 0.15 0"></feColorMatrix><feBlend mode="multiply" in="SourceGraphic" in2="noise"></feBlend></filter><filter id="ink-bleed"><feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves="2" result="noise"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5"></feDisplacementMap></filter></defs></svg>
+  <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+    <div id="exportable-analog-card" class="p-4 flex items-center justify-center"><div class="relative inline-block transition-all duration-300 group select-none" style="transform: scale(1) rotate(-2deg); cursor: default; perspective: 1200px;"><div class="relative"><div class="card-3d-flipper relative transition-transform duration-700 ease-in-out" style="transform-style: preserve-3d; transform: rotateY(0deg);"><div class="card-front-face" style="backface-visibility: hidden; filter: drop-shadow(rgba(0, 0, 0, 0.45) 0px 16px 36px) drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 10px);"><div class="relative w-[270px] bg-stone-950 text-stone-100 rounded-sm overflow-hidden select-none"><div class="absolute z-20 pointer-events-none select-none -top-3 -right-3 rotate-[22deg]" style="height: 24px; width: 80px; background: rgba(243, 229, 199, 0.72); backdrop-filter: blur(1px); border-left: 1px solid rgba(212, 180, 131, 0.5); border-right: 1px solid rgba(212, 180, 131, 0.5); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px; clip-path: polygon(0% 0%, 5% 20%, 0% 40%, 8% 60%, 0% 80%, 5% 100%, 100% 100%, 95% 80%, 100% 60%, 92% 40%, 100% 20%, 95% 0%);"><div class="w-full h-full opacity-30 bg-[radial-gradient(#854d0e_1px,transparent_1px)] [background-size:6px_6px]"></div></div><div class="bg-stone-900 p-2 flex justify-between items-center border-b border-stone-800 px-3"><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div></div>
+      
+      <!-- CONTENITORE CON CONTROLLI E AUDIO ATTIVO -->
+      <div class="relative h-[190px] w-full bg-stone-950 overflow-hidden">
+        <iframe 
+          class="w-full h-full border-0" 
+          src="https://www.youtube.com/embed/LW9YPv_4qpM?si=X0RdcK745lyVl07d" 
+          title="YouTube video player" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="bg-stone-900 p-2 flex justify-between items-center border-t border-stone-800 px-3"><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div><div class="w-2.5 h-3.5 bg-stone-950 rounded-[1px] border border-stone-800"></div></div><div class="p-3 bg-stone-900 flex justify-between items-center border-t border-stone-800 text-xs"><div><div class="font-bold text-stone-200" style="font-family: &quot;Space Mono&quot;, monospace; font-size: 1rem; font-weight: 700; color: rgb(243, 244, 246);">掩耳盗铃 • Idiom Story</div><div class="text-[11px] text-stone-400">Little Chinese Learners</div></div><div class="text-[10px] font-mono text-amber-400">2026</div></div></div></div><div class="card-back-face absolute inset-0 w-full h-full" style="backface-visibility: hidden; transform: rotateY(180deg); filter: drop-shadow(rgba(0, 0, 0, 0.45) 0px 16px 36px) drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 10px);"><div class="relative w-full h-full min-h-[340px] p-6 bg-[#FEFCF8] text-[#2C2C2C] rounded-sm select-none border border-[#D9D1C7] flex flex-col justify-between" style="clip-path: polygon(0% 1.2%, 6% 0%, 14% 1.8%, 25% 0.3%, 38% 1.5%, 52% 0.2%, 66% 1.6%, 79% 0.4%, 91% 1.4%, 100% 0.2%, 98.8% 12%, 100% 25%, 98.5% 39%, 100% 55%, 98.9% 70%, 100% 86%, 98.6% 98.8%, 88% 100%, 75% 98.5%, 62% 100%, 48% 98.7%, 35% 100%, 20% 98.8%, 8% 100%, 0% 98.6%, 1.2% 84%, 0% 68%, 1.4% 52%, 0% 36%, 1.1% 18%); background-color: rgb(254, 252, 248); background-image: repeating-linear-gradient(transparent, transparent 27px, rgba(74, 66, 56, 0.12) 28px);"><div class="flex justify-between items-center border-b border-[#D9D1C7] pb-2 mb-3"><span class="text-[10px] font-mono uppercase tracking-widest text-[#8B8378]">RETRO DELLA CARD • NOTE PERSONALI</span><span class="text-xs">✉️</span></div><div class="flex-1 font-serif italic text-sm leading-relaxed text-[#2C2C2C] pt-2"><span>In questa classica storia antica, un ladro cerca di rubare una gigantesca campana di bronzo. Rendendosi conto che è troppo pesante, decide di frantumarla in pezzi più piccoli. Ma aspetta: martellare una campana fa un rumore fortissimo! La sua soluzione? Tapparsi le orecchie con del cotone per non sentire il rumore! </span></div><div class="mt-4 pt-2 border-t border-[#D9D1C7] flex justify-between text-[10px] font-mono text-[#8B8378]"><span>COLLEZIONE ARTIGIANALE</span><span>2026</span></div></div></div></div><button type="button" class="flip-btn absolute -bottom-5 right-2 z-40 bg-[#4A4238] hover:bg-[#3D362E] text-white px-3 py-1.5 rounded-full shadow-md text-xs flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 cursor-pointer" title="Ruota la card (Fronte / Retro)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flip-horizontal w-3.5 h-3.5 text-amber-200" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3"></path><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"></path><path d="M12 20v2"></path><path d="M12 14v2"></path><path d="M12 8v2"></path><path d="M12 2v2"></path></svg><span class="text-[10px] font-semibold uppercase tracking-wider">Vedi Retro</span></button></div></div></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const flipper = document.querySelector('.card-3d-flipper');
+      const flipBtn = document.querySelector('.flip-btn');
+      let isFlipped = false;
+
+      function toggleCardFlip(e) {
+        if (e) e.stopPropagation();
+        isFlipped = !isFlipped;
+        if (flipper) {
+          flipper.style.transform = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+        }
+        if (flipBtn) {
+          const label = flipBtn.querySelector('span');
+          if (label) {
+            label.textContent = isFlipped ? 'VEDI FRONTE' : 'VEDI RETRO';
+          }
+        }
+      }
+
+      if (flipBtn) {
+        flipBtn.addEventListener('click', toggleCardFlip);
+      }
+      if (flipper) {
+        flipper.style.cursor = 'pointer';
+        flipper.addEventListener('click', toggleCardFlip);
+      }
+    });
+  </script>
+</body>
+</html>
