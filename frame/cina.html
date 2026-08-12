@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CARTA LINGUISTICA - ZHŌNGGUÓ</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #F2EFE9;
+      background-image: radial-gradient(#4A4238 0.6px, transparent 0.6px);
+      background-size: 20px 20px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      padding: 2.5rem 1rem;
+    }
+    .card-3d-flipper {
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.7s ease-in-out;
+    }
+    .card-front-face, .card-back-face {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card-back-face {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body>
+  <svg id="artisanal-svg-filters" class="absolute w-0 h-0 overflow-hidden" aria-hidden="true">
+    <defs>
+      <filter id="torn-paper-edge" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="noise"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+      </filter>
+      <filter id="paper-fiber" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"></feTurbulence>
+        <feColorMatrix type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.15  0 0 0 0 0.1  0 0 0 0.15 0"></feColorMatrix>
+        <feBlend mode="multiply" in="SourceGraphic" in2="noise"></feBlend>
+      </filter>
+      <filter id="ink-bleed">
+        <feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves="2" result="noise"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5"></feDisplacementMap>
+      </filter>
+    </defs>
+  </svg>
+
+  <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+    <div id="exportable-analog-card" class="p-4 flex items-center justify-center">
+      <div class="relative inline-block transition-all duration-300 group select-none" style="transform: scale(1) rotate(0deg); cursor: default; perspective: 1200px;">
+        <div class="relative">
+          <div class="card-3d-flipper relative transition-transform duration-700 ease-in-out" style="transform-style: preserve-3d; transform: rotateY(0deg);">
+            
+            <!-- FRONTE CARD (ORIZZONTALE) -->
+            <div class="card-front-face" style="backface-visibility: hidden; filter: drop-shadow(rgba(0, 0, 0, 0.45) 0px 16px 36px) drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 10px);">
+              <div class="relative w-[680px] max-w-[92vw] p-6 rounded-sm select-none border" style="clip-path: polygon(0% 0%, 5% 2%, 10% 0%, 15% 2%, 20% 0%, 25% 2%, 30% 0%, 35% 2%, 40% 0%, 45% 2%, 50% 0%, 55% 2%, 60% 0%, 65% 2%, 70% 0%, 75% 2%, 80% 0%, 85% 2%, 90% 0%, 95% 2%, 100% 0%, 98% 5%, 100% 10%, 98% 15%, 100% 20%, 98% 25%, 100% 30%, 98% 35%, 100% 40%, 98% 45%, 100% 50%, 98% 55%, 100% 60%, 98% 65%, 100% 70%, 98% 75%, 100% 80%, 98% 85%, 100% 90%, 98% 95%, 100% 100%, 95% 98%, 90% 100%, 85% 98%, 80% 100%, 75% 98%, 70% 100%, 65% 98%, 60% 100%, 55% 98%, 50% 100%, 45% 98%, 40% 100%, 35% 98%, 30% 100%, 25% 98%, 20% 100%, 15% 98%, 10% 100%, 5% 98%, 0% 100%, 2% 95%, 0% 90%, 2% 85%, 0% 80%, 2% 75%, 0% 70%, 2% 65%, 0% 60%, 2% 55%, 0% 50%, 2% 45%, 0% 40%, 2% 35%, 0% 30%, 2% 25%, 0% 20%, 2% 15%, 0% 10%, 2% 5%); background-color: rgb(3, 105, 161); color: rgb(240, 249, 255);">
+                
+                <!-- SIGILLO / TIMBRO IN BASSO A DESTRA -->
+                <div class="absolute pointer-events-none select-none z-30 drop-shadow-md bottom-4 right-4">
+                  <div class="relative w-20 h-20 rounded-full flex flex-col items-center justify-center text-amber-100 font-serif font-bold tracking-widest uppercase shadow-lg border-2 border-amber-300/40" style="background: radial-gradient(circle at 35% 30%, rgb(248, 113, 113) 0%, rgb(56, 189, 248) 60%, rgb(69, 10, 10) 100%); box-shadow: rgba(255, 255, 255, 0.4) 0px 2px 4px inset, rgba(0, 0, 0, 0.6) 0px -3px 6px inset, rgba(0, 0, 0, 0.35) 0px 6px 12px; border-radius: 48% 52% 51% 49% / 53% 47%;">
+                    <div class="absolute inset-1 rounded-full border border-amber-200/30 opacity-70" style="border-radius: 52% 48% 47% 53% / 46% 54%;"></div>
+                    <div class="text-center px-1 font-serif text-amber-100 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] border-b border-t border-amber-200/40 py-0.5 leading-tight">
+                      <div class="text-xs font-semibold">中国</div>
+                      <div class="text-[8px] tracking-tighter opacity-90">Zhōngguó</div>
+                      <div class="text-[7px] tracking-normal text-amber-200 opacity-80">Regno di Mezzo</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- PUNTINA / PUSH PIN -->
+                <div class="absolute z-30 pointer-events-none select-none drop-shadow-md top-1 left-1/2 -translate-x-1/2">
+                  <div class="relative w-5 h-5 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-md border border-amber-200 flex items-center justify-center">
+                    <div class="w-2 h-2 rounded-full bg-amber-100 opacity-80"></div>
+                    <div class="absolute -bottom-1 w-1 h-2 bg-stone-700 rounded-b-sm"></div>
+                  </div>
+                </div>
+
+                <!-- GRIGLIA SFONDO -->
+                <div class="absolute inset-0 bg-[linear-gradient(to_right,#0284c715_1px,transparent_1px),linear-gradient(to_bottom,#0284c715_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"></div>
+
+                <div class="flex flex-col h-full justify-between relative z-10">
+                  <div>
+                    <div class="text-[10px] font-mono tracking-widest uppercase opacity-75 mb-3 border-b pb-1" style="border-color: rgb(56, 189, 248);">✦ APPRENDIMENTO LINGUISTICO • CINESE</div>
+                    
+                    <!-- CONTENITORE RUBY COMPLETO CON STRUTTURA ED ELEMENTI ORIGINALI -->
+                    <div class="pinyin-ruby-container bg-sky-950/40 p-3 rounded-md border border-sky-400/20 text-white pr-24" style="display: flex; flex-wrap: wrap; gap: 8px 10px; font-family: system-ui, sans-serif; line-height: 1.4;">
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;"><br/></span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">在</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zài</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">普</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">pǔ</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">通</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">tōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">话</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">huà</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">，</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">的</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">de</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">名</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">míng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">字</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">是</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">shì</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;"> “</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">” (Zhōngguó)。<br/></span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">令</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">lìng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">人</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">rén</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">着</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhe</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">迷</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">mí</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">的</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">de</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">是</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">shì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">这</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhè</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">些</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">xiē</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">汉</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">hàn</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">字</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">的</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">de</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">字</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">面</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">miàn</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">意</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">思</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">sī</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">：<br/>* </span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;"> (Zhōng) </span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">的</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">de</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">意</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">思</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">sī</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">是</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">shì</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">“</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">心</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">xīn</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">”</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">或</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">huò</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">“</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">间</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">jiān</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">”。<br/>* </span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;"> (Guó) </span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">的</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">de</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">意</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">思</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">sī</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">是</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">shì</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">“</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">家</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">jiā</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">”</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">或</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">huò</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">“</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">王</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">wáng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">”。<br/><br/></span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">因</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yīn</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">此</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">cǐ</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">，</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">对</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">duì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">人</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">rén</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">来</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">lái</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">说</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">shuō</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">，</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">就</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">jiù</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">是</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">shì</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">“</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">央</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yāng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">之</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhī</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">”。</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">这</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhè</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">个</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">gè</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">名</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">míng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">字</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">源</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yuán</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">于</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yú</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">古</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">gǔ</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">代</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">dài</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">的</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">de</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">一</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yī</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">种</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhǒng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">信</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">xìn</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">念</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">niàn</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">，</span>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">即</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">jí</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">国</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">guó</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">正</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhèng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">位</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">wèi</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">于</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">yú</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">世</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">shì</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">界</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">jiè</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">的</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">de</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">中</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">zhōng</rt>
+                      </ruby>
+                      <ruby style="display: inline-flex; flex-direction: column-reverse; align-items: center; ruby-position: over;">
+                        <span class="char" style="font-size: 20px; font-weight: 500;">心</span>
+                        <rt class="pinyin" style="font-size: 11px; color: #93c5fd; margin-bottom: 1px;">xīn</rt>
+                      </ruby>
+                      <span class="text" style="font-size: 20px; display: inline-block; align-self: flex-end; margin-bottom: 2px;">！🌏</span>
+                    </div>
+
+                  </div>
+
+                  <div class="mt-4 pt-2 border-t flex justify-between items-end text-xs" style="border-color: rgba(56, 189, 248, 0.314);">
+                    <div>
+                      <span class="opacity-60 text-[10px] font-mono block">ARGOMENTO</span>
+                      <span class="font-semibold text-white">Etimologia &amp; Caratteri</span>
+                    </div>
+                    <span class="font-mono text-[10px] opacity-70">HSK Study</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RETRO CARD (ORIZZONTALE) -->
+            <div class="card-back-face absolute inset-0 w-full h-full" style="backface-visibility: hidden; transform: rotateY(180deg); filter: drop-shadow(rgba(0, 0, 0, 0.45) 0px 16px 36px) drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 10px);">
+              <div class="relative w-full h-full p-6 bg-[#FEFCF8] text-[#2C2C2C] rounded-sm select-none border border-[#D9D1C7] flex flex-col justify-between" style="clip-path: polygon(0% 0%, 5% 2%, 10% 0%, 15% 2%, 20% 0%, 25% 2%, 30% 0%, 35% 2%, 40% 0%, 45% 2%, 50% 0%, 55% 2%, 60% 0%, 65% 2%, 70% 0%, 75% 2%, 80% 0%, 85% 2%, 90% 0%, 95% 2%, 100% 0%, 98% 5%, 100% 10%, 98% 15%, 100% 20%, 98% 25%, 100% 30%, 98% 35%, 100% 40%, 98% 45%, 100% 50%, 98% 55%, 100% 60%, 98% 65%, 100% 70%, 98% 75%, 100% 80%, 98% 85%, 100% 90%, 98% 95%, 100% 100%, 95% 98%, 90% 100%, 85% 98%, 80% 100%, 75% 98%, 70% 100%, 65% 98%, 60% 100%, 55% 98%, 50% 100%, 45% 98%, 40% 100%, 35% 98%, 30% 100%, 25% 98%, 20% 100%, 15% 98%, 10% 100%, 5% 98%, 0% 100%, 2% 95%, 0% 90%, 2% 85%, 0% 80%, 2% 75%, 0% 70%, 2% 65%, 0% 60%, 2% 55%, 0% 50%, 2% 45%, 0% 40%, 2% 35%, 0% 30%, 2% 25%, 0% 20%, 2% 15%, 0% 10%, 2% 5%); background-color: rgb(254, 252, 248); background-image: repeating-linear-gradient(transparent, transparent 27px, rgba(74, 66, 56, 0.12) 28px);">
+                
+                <div class="flex justify-between items-center border-b border-[#D9D1C7] pb-2 mb-3">
+                  <span class="text-[10px] font-mono uppercase tracking-widest text-[#8B8378]">TRADUZIONE &amp; SPIEGAZIONE</span>
+                  <span class="text-xs">🇨🇳</span>
+                </div>
+
+                <!-- TRADUZIONE IN ITALIANO COMPLETA -->
+                <div class="flex-1 font-serif text-sm leading-relaxed text-[#2C2C2C] pt-1">
+                  <p class="mb-2">In mandarino il nome della Cina è <strong>Zhōngguó</strong> (中国).</p>
+                  <p class="mb-2">La cosa affascinante è il significato letterale dei caratteri:</p>
+                  <ul class="list-disc pl-4 space-y-1 my-2">
+                    <li><strong>Zhōng (中)</strong>: significa "centro" o "mezzo".</li>
+                    <li><strong>Guó (国)</strong>: significa "paese" o "regno".</li>
+                  </ul>
+                  <p class="mt-2">
+                    Quindi, per i cinesi, la Cina è il <strong>"Regno di Mezzo"</strong>. Questo nome deriva dall'antica convinzione che la Cina fosse situata proprio al centro del mondo! 🌏
+                  </p>
+                </div>
+
+                <div class="mt-4 pt-2 border-t border-[#D9D1C7] flex justify-between text-[10px] font-mono text-[#8B8378]">
+                  <span>NOTE LINGUISTICHE</span>
+                  <span>2026</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- BOTTONE PER GIRARE CARTA -->
+          <button type="button" class="flip-btn absolute -bottom-5 right-2 z-40 bg-[#4A4238] hover:bg-[#3D362E] text-white px-3 py-1.5 rounded-full shadow-md text-xs flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 cursor-pointer" title="Ruota la card (Fronte / Retro)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flip-horizontal w-3.5 h-3.5 text-amber-200" aria-hidden="true">
+              <path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3"></path>
+              <path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"></path>
+              <path d="M12 20v2"></path>
+              <path d="M12 14v2"></path>
+              <path d="M12 8v2"></path>
+              <path d="M12 2v2"></path>
+            </svg>
+            <span class="text-[10px] font-semibold uppercase tracking-wider">Vedi Retro</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const flipper = document.querySelector('.card-3d-flipper');
+      const flipBtn = document.querySelector('.flip-btn');
+      let isFlipped = false;
+
+      function toggleCardFlip(e) {
+        if (e) e.stopPropagation();
+        isFlipped = !isFlipped;
+        if (flipper) {
+          flipper.style.transform = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+        }
+        if (flipBtn) {
+          const label = flipBtn.querySelector('span');
+          if (label) {
+            label.textContent = isFlipped ? 'VEDI FRONTE' : 'VEDI RETRO';
+          }
+        }
+      }
+
+      if (flipBtn) {
+        flipBtn.addEventListener('click', toggleCardFlip);
+      }
+      if (flipper) {
+        flipper.style.cursor = 'pointer';
+        flipper.addEventListener('click', toggleCardFlip);
+      }
+    });
+  </script>
+</body>
+</html>
