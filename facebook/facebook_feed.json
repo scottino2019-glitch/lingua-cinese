@@ -1,0 +1,158 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-08-12T18:07:51.442Z",
+  "profile": {
+    "name": "Marco Rossi",
+    "category": "Creator di Contenuti e Digital Marketing",
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    "coverUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+    "friendsCount": "3,420 amici",
+    "mutualFriendsCount": "142 amici in comune",
+    "intro": {
+      "bio": "🚀 Apasionato di tecnologia, social media e sviluppo web. Creo contenuti per aiutare creator e aziende a crescere online!",
+      "work": "Digital Strategist & Tech Creator presso Studio Web Pro",
+      "education": "Ha studiato Informatica presso Università degli Studi di Milano",
+      "livesIn": "Vive a Milano",
+      "fromLocation": "Da Roma",
+      "relationshipStatus": "In una relazione",
+      "joinedDate": "Iscritto a Facebook da Maggio 2012",
+      "website": "https://marcorossi-digital.it",
+      "followersCount": "12,450 persone seguono questo profilo"
+    },
+    "featuredPhotos": [
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=500&q=80"
+    ]
+  },
+  "posts": [
+    {
+      "id": "post-pinned-1",
+      "authorName": "Marco Rossi",
+      "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "timestamp": "12 maggio alle ore 14:30",
+      "privacy": "public",
+      "isPinned": true,
+      "type": "image",
+      "content": "Benvenuti sulla mia pagina Facebook! 🌟 Qui condivido aggiornamenti quotidiani, tutorial sui social media, Reel ed anteprime dei miei progetti. Lascia un commento o un Mi Piace se ti va di fare due chiacchiere!",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "reactions": {
+        "like": 142,
+        "love": 89,
+        "care": 31,
+        "haha": 4,
+        "wow": 12,
+        "sad": 0,
+        "angry": 0
+      },
+      "userReaction": "love",
+      "sharesCount": 18,
+      "comments": [
+        {
+          "id": "c-1",
+          "authorName": "Laura Bianchi",
+          "authorAvatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
+          "text": "Grande Marco! Bellissima iniziativa, ti seguo sempre volentieri! 🔥",
+          "timestamp": "2 ore fa",
+          "likesCount": 12,
+          "userLiked": true
+        },
+        {
+          "id": "c-2",
+          "authorName": "Alessandro Neri",
+          "authorAvatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+          "text": "Spettacolo, non vedo l'ora di leggere i prossimi post!",
+          "timestamp": "1 ora fa",
+          "likesCount": 5
+        }
+      ]
+    },
+    {
+      "id": "post-reel-1",
+      "authorName": "Marco Rossi",
+      "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "timestamp": "Ieri alle 18:15",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "reel",
+      "content": "🎬 NUOVO REEL! 5 trucchi che non conoscevi per ottimizzare la tua presenza social in soli 60 secondi. Qual è il tuo preferito? 👇 #SocialMediaTips #Creator #ReelFacebook",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-vertical-video-of-a-person-typing-on-a-laptop-41554-large.mp4",
+      "reelAudioTitle": "Marco Rossi • Suono originale - Tips & Tricks",
+      "reelViewsCount": 15420,
+      "reactions": {
+        "like": 320,
+        "love": 140,
+        "care": 25,
+        "haha": 8,
+        "wow": 45,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 42,
+      "comments": [
+        {
+          "id": "c-3",
+          "authorName": "Giulia Verdi",
+          "authorAvatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80",
+          "text": "Il trucco #3 mi ha cambiato la vita! Grazie davvero per queste pillole utili!",
+          "timestamp": "18 ore fa",
+          "likesCount": 9
+        }
+      ]
+    },
+    {
+      "id": "post-text-bg-1",
+      "authorName": "Marco Rossi",
+      "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "timestamp": "3 giorni fa",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "text",
+      "content": "Il miglior investimento che puoi fare oggi è imparare nuove competenze digitali! 💡🚀",
+      "textBackgroundPreset": "gradient-purple",
+      "reactions": {
+        "like": 88,
+        "love": 54,
+        "care": 12,
+        "haha": 0,
+        "wow": 6,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 7,
+      "comments": []
+    },
+    {
+      "id": "post-video-1",
+      "authorName": "Marco Rossi",
+      "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+      "isVerified": true,
+      "timestamp": "4 giorni fa",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "video",
+      "content": "📹 Ecco la mia guida video completa alla creazione di contenuti ad alto impatto visivo. Ho racchiuso anni di esperienza in questo video di 5 minuti!",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "videoTitle": "Guida alla Creazione Contenuti per Facebook & Social Media",
+      "isEmbedIframe": true,
+      "reactions": {
+        "like": 210,
+        "love": 95,
+        "care": 18,
+        "haha": 2,
+        "wow": 22,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 31,
+      "comments": []
+    }
+  ]
+}
