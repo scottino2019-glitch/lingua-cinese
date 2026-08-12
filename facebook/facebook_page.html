@@ -54,7 +54,7 @@
       </div>
       <div class="relative hidden sm:block">
         <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
-        <input type="text" placeholder="Cerca su Facebook" class="bg-[#F0F2F5] dark:bg-[#3A3B3C] text-sm pl-9 pr-4 py-2 rounded-full outline-none w-60 text-gray-800 dark:text-gray-200" />
+        <input id="searchInput" oninput="handleHtmlSearch()" type="text" placeholder="Cerca su Facebook..." class="bg-[#F0F2F5] dark:bg-[#3A3B3C] text-sm pl-9 pr-4 py-2 rounded-full outline-none w-60 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-[#1877F2]/50" />
       </div>
     </div>
 
@@ -76,16 +76,44 @@
 
     <!-- Right Controls -->
     <div class="flex items-center gap-2">
-      <button id="themeToggleBtn" onclick="toggleTheme()" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200 hover:opacity-80">
+      <!-- Telegram / Messenger Link -->
+      <a id="navTelegramLink" href="https://t.me/telegram" target="_blank" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-[#0088cc] hover:opacity-80 relative" title="Apri Telegram (Messenger)">
+        <i class="fab fa-telegram-plane text-lg"></i>
+      </a>
+
+      <!-- Bell Notifications Dropdown -->
+      <div class="relative">
+        <button id="notifBellBtn" onclick="toggleNotifications()" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200 hover:opacity-80 relative" title="Notifiche">
+          <i class="fas fa-bell text-lg"></i>
+          <span id="notifBadge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+        </button>
+
+        <div id="notifDropdown" class="hidden absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-[#242526] rounded-xl shadow-2xl border border-gray-200 dark:border-[#393A3B] z-50 overflow-hidden">
+          <div class="p-3.5 border-b border-gray-200 dark:border-[#393A3B] flex items-center justify-between">
+            <h3 class="font-bold text-gray-900 dark:text-gray-100 text-base flex items-center gap-2">
+              <i class="fas fa-bell text-[#1877F2]"></i> Notifiche
+            </h3>
+            <button onclick="toggleNotifications()" class="text-gray-400 hover:text-gray-600">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div id="notifList" class="max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-[#393A3B]">
+            <!-- Injected notifications -->
+          </div>
+          <div class="p-2 bg-gray-50 dark:bg-[#3A3B3C]/50 text-center border-t border-gray-200 dark:border-[#393A3B]">
+            <button onclick="markAllNotificationsRead()" class="text-xs text-[#1877F2] font-semibold hover:underline">
+              <i class="fas fa-check"></i> Segna tutte come lette
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme Toggle -->
+      <button id="themeToggleBtn" onclick="toggleTheme()" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200 hover:opacity-80" title="Cambia Tema">
         <i class="fas fa-moon dark:hidden"></i>
         <i class="fas fa-sun hidden dark:inline text-amber-400"></i>
       </button>
-      <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200 cursor-pointer">
-        <i class="fab fa-facebook-messenger"></i>
-      </div>
-      <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200 cursor-pointer">
-        <i class="fas fa-bell"></i>
-      </div>
+
       <img id="navAvatar" onclick="switchTab('about')" src="" class="w-9 h-9 rounded-full object-cover border border-gray-300 cursor-pointer" alt="Avatar" />
     </div>
   </header>
@@ -121,11 +149,11 @@
           <!-- Action Buttons -->
           <div class="flex items-center gap-2">
             <button class="bg-[#1877F2] hover:bg-[#166FE5] text-white font-medium px-4 py-2 rounded-md text-sm flex items-center gap-2 shadow-sm">
-              <i class="fas fa-plus"></i> Aggiungi alla storia
+              <i class="fas fa-plus"></i> Segui
             </button>
-            <button class="bg-gray-200 dark:bg-[#3A3B3C] hover:bg-gray-300 dark:hover:bg-[#4E4F50] text-gray-800 dark:text-gray-200 font-medium px-4 py-2 rounded-md text-sm flex items-center gap-2">
-              <i class="fab fa-facebook-messenger"></i> Messaggio
-            </button>
+            <a id="headerTelegramBtn" href="https://t.me/telegram" target="_blank" class="bg-gray-200 dark:bg-[#3A3B3C] hover:bg-gray-300 dark:hover:bg-[#4E4F50] text-gray-800 dark:text-gray-200 font-medium px-4 py-2 rounded-md text-sm flex items-center gap-2">
+              <i class="fab fa-telegram-plane text-[#0088cc]"></i> Messaggio (Telegram)
+            </a>
           </div>
         </div>
 
@@ -269,6 +297,71 @@
       document.getElementById('htmlLightbox').classList.add('hidden');
     }
 
+    function toggleNotifications() {
+      const dropdown = document.getElementById('notifDropdown');
+      if (dropdown) dropdown.classList.toggle('hidden');
+    }
+
+    function markAllNotificationsRead() {
+      if (!pageData || !pageData.notifications) return;
+      pageData.notifications.forEach(n => n.isUnread = false);
+      renderNotifications();
+    }
+
+    function renderNotifications() {
+      if (!pageData) return;
+      const notifs = pageData.notifications || [];
+      const unreadCount = notifs.filter(n => n.isUnread).length;
+      const badge = document.getElementById('notifBadge');
+      if (badge) {
+        badge.textContent = unreadCount;
+        if (unreadCount > 0) badge.classList.remove('hidden');
+        else badge.classList.add('hidden');
+      }
+
+      const list = document.getElementById('notifList');
+      if (!list) return;
+      if (notifs.length === 0) {
+        list.innerHTML = '<div class="p-4 text-center text-gray-500 text-xs">Nessuna notifica presente.</div>';
+        return;
+      }
+
+      list.innerHTML = '';
+      notifs.forEach(n => {
+        list.innerHTML += `
+          <div class="p-3 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-[#3A3B3C] cursor-pointer transition-colors ${n.isUnread ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''}">
+            <img src="${n.avatarUrl || pageData.profile.avatarUrl}" class="w-10 h-10 rounded-full object-cover border border-gray-200" />
+            <div class="flex-1 min-w-0">
+              <p class="text-xs text-gray-800 dark:text-gray-200">
+                <span class="font-bold">${n.user}</span> ${n.text}
+              </p>
+              <span class="text-[10px] text-gray-400 mt-0.5 block">${n.timestamp}</span>
+            </div>
+            ${n.isUnread ? '<span class="w-2.5 h-2.5 bg-[#1877F2] rounded-full self-center"></span>' : ''}
+          </div>
+        `;
+      });
+    }
+
+    function handleHtmlSearch() {
+      const input = document.getElementById('searchInput');
+      if (!input) return;
+      const q = input.value.toLowerCase().trim();
+      
+      const feed = document.getElementById('postsFeed');
+      if (feed) {
+        const posts = feed.querySelectorAll('.fb-post-card');
+        posts.forEach(p => {
+          const txt = p.innerText.toLowerCase();
+          if (!q || txt.includes(q)) {
+            p.style.display = '';
+          } else {
+            p.style.display = 'none';
+          }
+        });
+      }
+    }
+
     async function init() {
       try {
         const response = await fetch(JSON_FILE);
@@ -299,9 +392,18 @@
       document.getElementById('profileCategory').textContent = p.category || '';
       document.getElementById('friendsCount').textContent = p.friendsCount || '';
 
+      if (p.telegramUrl) {
+        const navTg = document.getElementById('navTelegramLink');
+        if (navTg) navTg.href = p.telegramUrl;
+        const headTg = document.getElementById('headerTelegramBtn');
+        if (headTg) headTg.href = p.telegramUrl;
+      }
+
       if (p.isVerified) {
         document.getElementById('verifiedBadge').classList.remove('hidden');
       }
+
+      renderNotifications();
 
       // 1. Intro Sidebar
       document.getElementById('introBio').textContent = p.intro.bio || '';
@@ -369,7 +471,7 @@
 
       posts.forEach(post => {
         const postEl = document.createElement('div');
-        postEl.className = 'bg-white dark:bg-[#242526] rounded-lg shadow border border-gray-200 dark:border-[#393A3B] overflow-hidden';
+        postEl.className = 'fb-post-card bg-white dark:bg-[#242526] rounded-lg shadow border border-gray-200 dark:border-[#393A3B] overflow-hidden';
         
         let mediaHtml = '';
         if (post.type === 'image' && post.imageUrls && post.imageUrls.length > 0) {
