@@ -311,7 +311,7 @@
     function renderNotifications() {
       if (!pageData) return;
       const notifs = pageData.notifications || [];
-      const unreadCount = notifs.filter(n => n.isUnread).length;
+      const unreadCount = notifs.filter(n => n.isUnread !== false).length;
       const badge = document.getElementById('notifBadge');
       if (badge) {
         badge.textContent = unreadCount;
@@ -327,12 +327,13 @@
       }
 
       list.innerHTML = '';
-      notifs.forEach(n => {
+      notifs.forEach((n, idx) => {
         const avatar = n.avatar || n.avatarUrl || pageData.profile.avatarUrl;
         const title = n.title || n.user || 'Utente Facebook';
         const text = n.text || '';
+        const isUnread = n.isUnread !== false;
         list.innerHTML += `
-          <div class="p-3 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-[#3A3B3C] cursor-pointer transition-colors ${n.isUnread ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''}">
+          <div onclick="markSingleNotifRead(${idx})" class="p-3 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-[#3A3B3C] cursor-pointer transition-colors ${isUnread ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''}">
             <img src="${avatar}" class="w-10 h-10 rounded-full object-cover border border-gray-200" />
             <div class="flex-1 min-w-0">
               <p class="text-xs text-gray-800 dark:text-gray-200">
@@ -340,10 +341,16 @@
               </p>
               <span class="text-[10px] text-gray-400 mt-0.5 block">${n.timestamp || ''}</span>
             </div>
-            ${n.isUnread ? '<span class="w-2.5 h-2.5 bg-[#1877F2] rounded-full self-center"></span>' : ''}
+            ${isUnread ? '<span class="w-2.5 h-2.5 bg-[#1877F2] rounded-full self-center flex-shrink-0"></span>' : ''}
           </div>
         `;
       });
+    }
+
+    function markSingleNotifRead(idx) {
+      if (!pageData || !pageData.notifications || !pageData.notifications[idx]) return;
+      pageData.notifications[idx].isUnread = false;
+      renderNotifications();
     }
 
     function handleHtmlSearch() {
