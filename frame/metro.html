@@ -1,337 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
-<head>
+ <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Videocamera VHS Handycam '95 - Esportato da RetroCraft</title>
-  
-  <!-- Tailwind CSS Play CDN e font -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;800&family=VT323&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  
+  <title>Paginazione Contenuti</title>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-      color: #f8fafc;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      box-sizing: border-box;
+      margin: 0;
+      font-family: Arial, sans-serif;
       padding: 2rem;
-    }
-    
-    .font-retro {
-      font-family: 'VT323', monospace;
-    }
-    
-    .font-mono {
-      font-family: 'JetBrains Mono', monospace;
+      background: #f5f5f5;
     }
 
-    .font-serif {
-      font-family: 'Bodoni Moda', serif;
-    }
-
-    /* CRT Flicker */
-    @keyframes crt-flicker {
-      0% { opacity: 0.98; }
-      50% { opacity: 1; }
-      100% { opacity: 0.99; }
-    }
-    .animate-crt-flicker {
-      animation: crt-flicker 0.15s infinite;
-    }
-
-    /* Hardware accelerated vinyl record rotation */
-    @keyframes spin-record {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .animate-spin-slow {
-      animation: spin-record 5s linear infinite;
-    }
-
-    /* Fluid upward bubbling column animations */
-    @keyframes bubble-rise {
-      0% { transform: translateY(120px) scale(0.8); opacity: 0.2; }
-      20% { opacity: 0.9; }
-      80% { opacity: 0.9; }
-      100% { transform: translateY(-120px) scale(1.1); opacity: 0.1; }
-    }
-    .animate-bubble-fast {
-      animation: bubble-rise 2s linear infinite;
-    }
-    .animate-bubble-medium {
-      animation: bubble-rise 3.2s linear infinite;
-    }
-    .animate-bubble-slow {
-      animation: bubble-rise 4.5s linear infinite;
-    }
+   
   </style>
-</head>
-<body>
-
-  <!-- LAYER DEL COMPONENTE VINTAGE -->
-  <div class="flex flex-col items-center space-y-6 w-full max-w-[900px]">
-    <div class="text-center">
-      <h1 class="text-3xl font-extrabold tracking-tight mb-1 text-white">Prendere la metropolitana </h1>
-      <p class="text-[11px] font-mono text-amber-500 uppercase tracking-widest">Storia cinese lenta</p>
-    </div>
-
-    <!-- AREA DEL COMPONENTE IN LINEA -->
-    
-  <!-- VIDEOCAMERA VHS PORTATILE COMPLETA -->
-  <div class="relative w-full max-w-[850px] aspect-[1.8/1] rounded-[40px] p-4 flex flex-col justify-between shadow-2xl overflow-hidden border-[10px]"
-       style="background: linear-gradient(135deg, #421e10 0%, #290f05 70%, #421e10 100%); border-color: #170701; background-image: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.3) 100%);">
-    
-    <!-- Obiettivo 3D Sinistro lampada -->
-    <div class="absolute left-[-20px] top-12 w-14 h-24 bg-gradient-to-tr from-stone-900 to-stone-750 rounded-r-3xl border-r-4 border-y-2 border-stone-850 shadow-lg flex flex-col justify-between py-4 pl-3 z-30 select-none">
-      <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-900 via-cyan-500 to-transparent border border-white/20 relative overflow-hidden">
-        <div class="w-2 h-2 rounded-full bg-white/40 absolute top-1 left-1"></div>
-      </div>
-      <div class="flex flex-col items-center gap-0.5">
-        <div id="cam-led" class="w-2 h-2 rounded-full border border-black shadow bg-red-950 transition-all"></div>
-        <span class="text-[5px] font-mono text-zinc-400">LED</span>
-      </div>
-    </div>
-
-    <!-- Schermo LCD integrato -->
-    <div class="flex-1 rounded-[24px] bg-zinc-950 relative overflow-hidden border-[10px] border-stone-900 flex flex-col justify-between p-1 z-20 shadow-inner">
-      <div class="relative flex-1 rounded-xl bg-slate-950 overflow-hidden flex items-center justify-center border-2 border-zinc-900">
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+<div class="flex justify-center">
+    <div class="rounded-lg shadow-lg bg-white max-w-sm">
         
-        <!-- Scena vettoriale retro-sunset ingrandibile con zoom -->
-        <div id="cam-lens-scene" class="absolute inset-0 transition-transform duration-300 ease-out flex items-center justify-center overflow-hidden">
-          <iframe class="w-[135%] h-[118%] max-w-none" src="https://www.youtube.com/embed/mEb9AKcWdZY?si=SCyh9rDxZHffJVjc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-
-        <!-- Sovrapposizione Griglia -->
-        <div id="cam-grid" class="absolute inset-x-0 inset-y-0 border border-white/5 pointer-events-none grid grid-cols-3 grid-rows-3 z-20 hidden">
-          <div class="border-r border-b border-white/10"></div>
-          <div class="border-r border-b border-white/10"></div>
-          <div class="border-b border-white/10"></div>
-          <div class="border-r border-b border-white/10"></div>
-          <div class="border-r border-b border-white/10"></div>
-          <div class="border-b border-white/10"></div>
-        </div>
-
-        <!-- Sovrapposizione VHS scanlines -->
-        <div id="cam-scanline" class="absolute inset-0 pointer-events-none opacity-40 z-20 hidden"
-             style="background-image: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.5) 50%); background-size: 100% 4px;"></div>
-
-        <!-- Informazioni sul mirino -->
-        <div class="absolute top-2.5 left-3 text-white font-mono text-[10px] tracking-widest flex flex-col items-start gap-0.5 z-25 bg-black/40 px-2 py-0.5 rounded backdrop-blur-xs select-none">
-          <span class="flex items-center gap-1">
-            <span id="cam-rec-status-dot" class="w-2 h-2 rounded-full bg-zinc-500"></span>
-            <span id="cam-rec-status-text">PAUSE</span>
-          </span>
-          <span>SP / 120min</span>
-        </div>
-
-        <div class="absolute top-2.5 right-3 text-white font-mono text-[10px] tracking-wider flex flex-col items-end gap-0.5 z-25 bg-black/40 px-2 py-0.5 rounded backdrop-blur-xs select-none">
-          <span id="cam-zoom-label">⚡ LENTE: x2.0</span>
-          <span>🔋 BATT: ████ 100%</span>
-        </div>
-
-        <div class="absolute bottom-2 inset-x-0 flex justify-between px-3 text-white font-mono text-[10px] tracking-wide bg-black/55 py-0.5 z-25">
-          <span>15 LUG 1995</span>
-          <span id="cam-timecode" class="text-yellow-400 font-bold">CR: 00:02:14:00</span>
-          <span>0:00:24 lp</span>
-        </div>
-      </div>
-
-      <div class="mt-1 flex items-center justify-between px-2 text-[9px] font-mono text-zinc-500 py-0.5 bg-zinc-950 border-t border-zinc-900 select-none">
-        <span>FADER</span>
-        <span>MENU</span>
-        <span>BRIGHTN</span>
-        <span>AUTO LOCK</span>
-      </div>
-    </div>
-
-    <!-- Bottoni di controllo inferiore -->
-    <div class="flex justify-between items-center bg-black/50 px-3 py-2 rounded-2xl border border-white/5 z-20 mt-2 text-white gap-2 select-none">
-      <div class="flex items-center space-x-1">
-        <button onclick="zoomLens(-1)" class="w-7 h-7 bg-stone-800 border border-slate-700/60 active:scale-90 rounded-lg text-[9px] font-mono font-bold flex items-center justify-center cursor-pointer">W</button>
-        <button onclick="zoomLens(1)" class="w-7 h-7 bg-stone-800 border border-slate-700/60 active:scale-90 rounded-lg text-[9px] font-mono font-bold flex items-center justify-center cursor-pointer">T</button>
-        <span class="text-[7.5px] font-mono text-stone-400">ZOOM</span>
-      </div>
-
-      <button onclick="cycleFilter()" class="px-2 py-1.5 bg-stone-850 hover:bg-stone-800 border border-stone-700 rounded-lg text-[8px] font-mono uppercase truncate" id="cam-filter-btn">
-        📺 Filtro: standard
-      </button>
-
-      <div class="flex gap-1">
-        <button onclick="toggleCamGrid()" class="w-6 h-6 rounded border border-stone-700 bg-stone-850 text-xs font-mono font-bold flex items-center justify-center">#</button>
-        <button onclick="toggleRec()" id="cam-rec-btn" class="px-3 py-1 bg-stone-900 border border-stone-700 text-red-500 font-bold text-[9px] rounded-full uppercase flex items-center gap-1 active:scale-95 cursor-pointer">
-          <span class="w-2 h-2 rounded-full bg-red-650"></span> Play
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // SCRIPT DEL COMPONENTE INTELLIGENTE
-    (function() {
-      // Safe Silent Audio Mock to completely silence any Web Audio beep/noise
-      class SilentAudioContext {
-        constructor() {
-          this.state = 'running';
-          this.destination = {};
-          const start = Date.now();
-          Object.defineProperty(this, 'currentTime', {
-            get: () => (Date.now() - start) / 1000
-          });
-        }
-        resume() { return Promise.resolve(); }
-        suspend() { return Promise.resolve(); }
-        createOscillator() {
-          return {
-            type: 'sine',
-            frequency: {
-              value: 440,
-              setValueAtTime: () => {},
-              exponentialRampToValueAtTime: () => {},
-              linearRampToValueAtTime: () => {}
-            },
-            connect: () => {},
-            disconnect: () => {},
-            start: () => {},
-            stop: () => {}
-          };
-        }
-        createGain() {
-          return {
-            gain: {
-              value: 1,
-              setValueAtTime: () => {},
-              exponentialRampToValueAtTime: () => {},
-              linearRampToValueAtTime: () => {}
-            },
-            connect: () => {},
-            disconnect: () => {}
-          };
-        }
-        createBiquadFilter() {
-          return {
-            type: 'lowpass',
-            frequency: {
-              value: 350,
-              setValueAtTime: () => {},
-              exponentialRampToValueAtTime: () => {},
-              linearRampToValueAtTime: () => {}
-            },
-            connect: () => {},
-            disconnect: () => {}
-          };
-        }
-        createBuffer(channels, length, sampleRate) {
-          return {
-            getChannelData: () => new Float32Array(length)
-          };
-        }
-        createBufferSource() {
-          return {
-            buffer: null,
-            connect: () => {},
-            start: () => {},
-            stop: () => {}
-          };
-        }
-      }
-      window.AudioContext = SilentAudioContext;
-      window.webkitAudioContext = SilentAudioContext;
-
-      function startComponentCode() {
-        
-      let isRecording = false;
-      let zoomLevel = 2;
-      let currentFilterIndex = 0;
-      const filters = ['none', 'vintage-vhs', 'b-w', 'sepia'];
-      let camSeconds = 134;
-      let recTimer = null;
-
-      const led = document.getElementById('cam-led');
-      const lensScene = document.getElementById('cam-lens-scene');
-      const camGrid = document.getElementById('cam-grid');
-      const camScanline = document.getElementById('cam-scanline');
-      const recDot = document.getElementById('cam-rec-status-dot');
-      const recText = document.getElementById('cam-rec-status-text');
-      const zoomLabel = document.getElementById('cam-zoom-label');
-      const timecodeLabel = document.getElementById('cam-timecode');
-      const recBtn = document.getElementById('cam-rec-btn');
-      const filterBtn = document.getElementById('cam-filter-btn');
-
-      function beep(freq) {
-        // Completamente silenzioso (Nessuna chiamata Web Audio API)
-      }
-
-      window.zoomLens = function(dir) {
-        zoomLevel = Math.max(1, Math.min(8, zoomLevel + dir));
-        lensScene.style.transform = 'scale(' + (1 + (zoomLevel-1)*0.4) + ')';
-        zoomLabel.innerText = '⚡ LENTE: x' + zoomLevel + '.0';
-        beep(750);
-      };
-
-      window.toggleCamGrid = function() {
-        camGrid.classList.toggle('hidden');
-        beep(500);
-      };
-
-      window.cycleFilter = function() {
-        currentFilterIndex = (currentFilterIndex + 1) % filters.length;
-        const currentF = filters[currentFilterIndex];
-        
-        lensScene.style.filter = 'none';
-        camScanline.classList.add('hidden');
-
-        if(currentF === 'vintage-vhs') {
-          camScanline.classList.remove('hidden');
-        } else if(currentF === 'b-w') {
-          lensScene.style.filter = 'grayscale(1)';
-        } else if(currentF === 'sepia') {
-          lensScene.style.filter = 'sepia(0.8) hue-rotate(10deg)';
-        }
-
-        filterBtn.innerText = '📺 Filtro: ' + currentF;
-        beep(600);
-      };
-
-      function updateTimer() {
-        camSeconds++;
-        const secs = camSeconds % 60;
-        const mins = Math.floor(camSeconds / 60) % 60;
-        const hrs = Math.floor(camSeconds / 3600) % 24;
-        const pad = (n) => n.toString().padStart(2, '0');
-        timecodeLabel.innerText = 'CR: ' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs) + ':00';
-      }
-
-      window.toggleRec = function() {
-        isRecording = !isRecording;
-        if(isRecording) {
-          recTimer = setInterval(updateTimer, 1000);
-          led.className = 'w-2 h-2 rounded-full border border-black shadow bg-red-500 animate-pulse';
-          recDot.className = 'w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse';
-          recText.innerText = '● REC';
-          recBtn.className = 'px-3 py-1 bg-red-650 border border-red-700 text-white font-bold text-[9px] rounded-full uppercase flex items-center gap-1 active:scale-95 cursor-pointer animate-pulse';
-          recBtn.innerHTML = '<span class="w-2 h-2 rounded-full bg-red-800"></span> REC STOP';
-        } else {
-          clearInterval(recTimer);
-          led.className = 'w-2 h-2 rounded-full border border-black shadow bg-red-950';
-          recDot.className = 'w-1.5 h-1.5 rounded-full bg-zinc-500';
-          recText.innerText = 'PAUSE';
-          recBtn.className = 'px-3 py-1 bg-stone-900 border border-stone-700 text-red-500 font-bold text-[9px] rounded-full uppercase flex items-center gap-1 active:scale-95 cursor-pointer';
-          recBtn.innerHTML = '<span class="w-2 h-2 rounded-full bg-red-650"></span> REC INI';
-        }
-        beep(800);
-      };
+            <div width="320" height="240" controls class="w-full rounded-t-lg">
+               <iframe width="385" height="240" src="https://www.youtube.com/embed/mEb9AKcWdZY?si=qEYHKDTX4N7rpylG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
       
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', startComponentCode);
-      } else {
-        startComponentCode();
-      }
-    })();
-  </script>
-</body>
+        <div class="p-6">
+            <h5 class="text-gray-900 text-xl font-medium mb-2">Video Card</h5>
+            <p class="text-gray-700 text-base mb-4">
+             
+🎯 Obiettivi di Apprendimento di questo Video:
+Padroneggiare il vocabolario e le strutture fraseologiche per usare la metropolitana e chiedere indicazioni. Adatto a studenti HSK 2-3.
+
+🎧 Caratteristiche del Video:
+
+Lettura Lenta: Ideale per lo shadowing e l'imitazione, migliora speaking e ascolto.
+
+Animazione AI: Vivace e coinvolgente, aiuta a comprendere il contesto della storia.
+            </p>
+         
+        </div>
+    </div>
+</div></body>
 </html>
