@@ -328,14 +328,17 @@
 
       list.innerHTML = '';
       notifs.forEach(n => {
+        const avatar = n.avatar || n.avatarUrl || pageData.profile.avatarUrl;
+        const title = n.title || n.user || 'Utente Facebook';
+        const text = n.text || '';
         list.innerHTML += `
           <div class="p-3 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-[#3A3B3C] cursor-pointer transition-colors ${n.isUnread ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''}">
-            <img src="${n.avatarUrl || pageData.profile.avatarUrl}" class="w-10 h-10 rounded-full object-cover border border-gray-200" />
+            <img src="${avatar}" class="w-10 h-10 rounded-full object-cover border border-gray-200" />
             <div class="flex-1 min-w-0">
               <p class="text-xs text-gray-800 dark:text-gray-200">
-                <span class="font-bold">${n.user}</span> ${n.text}
+                <span class="font-bold">${title}</span> ${text}
               </p>
-              <span class="text-[10px] text-gray-400 mt-0.5 block">${n.timestamp}</span>
+              <span class="text-[10px] text-gray-400 mt-0.5 block">${n.timestamp || ''}</span>
             </div>
             ${n.isUnread ? '<span class="w-2.5 h-2.5 bg-[#1877F2] rounded-full self-center"></span>' : ''}
           </div>
@@ -495,6 +498,32 @@
 
         const reactionTotal = Object.values(post.reactions || {}).reduce((a, b) => (Number(a)||0) + (Number(b)||0), 0);
 
+        let commentsHtml = '';
+        if (post.comments && post.comments.length > 0) {
+          commentsHtml = `<div class="bg-gray-50/80 dark:bg-[#18191A]/60 p-3.5 border-t border-gray-100 dark:border-[#393A3B] space-y-2.5">`;
+          post.comments.forEach(c => {
+            const avatar = c.authorAvatar || pageData.profile.avatarUrl;
+            const commentText = c.text || c.content || '';
+            commentsHtml += `
+              <div class="flex items-start gap-2 text-xs">
+                <img src="${avatar}" class="w-7 h-7 rounded-full object-cover mt-0.5" />
+                <div class="flex-1">
+                  <div class="bg-white dark:bg-[#3A3B3C] p-2.5 rounded-2xl shadow-2xs inline-block">
+                    <span class="font-bold text-gray-900 dark:text-gray-100 block">${c.authorName}</span>
+                    <p class="text-gray-800 dark:text-gray-200 font-normal mt-0.5">${commentText}</p>
+                  </div>
+                  <div class="flex items-center gap-3 text-[11px] text-gray-500 dark:text-gray-400 mt-1 pl-2">
+                    <span class="hover:underline font-semibold cursor-pointer">Mi piace</span>
+                    <span class="hover:underline font-semibold cursor-pointer">Rispondi</span>
+                    <span>${c.timestamp || ''}</span>
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+          commentsHtml += `</div>`;
+        }
+
         postEl.innerHTML = `
           <div class="p-4">
             <!-- Author Header -->
@@ -542,6 +571,8 @@
               <i class="fas fa-share"></i> Condividi
             </button>
           </div>
+
+          ${commentsHtml}
         `;
 
         feed.appendChild(postEl);
@@ -584,16 +615,16 @@
       const countEl = document.getElementById('friendsTabCount');
       if (!container) return;
 
-      const friends = pageData.friendsList || [
-        { name: "Laura Bianchi", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80", mutualFriends: "12 amici in comune" },
-        { name: "Alessandro Neri", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80", mutualFriends: "45 amici in comune" },
-        { name: "Giulia Verdi", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80", mutualFriends: "8 amici in comune" },
-        { name: "Matteo Romano", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80", mutualFriends: "22 amici in comune" }
-      ];
+      const friends = pageData.friendsList || [];
 
       if (countEl) countEl.textContent = `Tutti gli amici (${friends.length})`;
 
       container.innerHTML = '';
+      if (friends.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 col-span-2 py-8">Nessun amico presente nella lista.</p>';
+        return;
+      }
+
       friends.forEach(f => {
         container.innerHTML += `
           <div class="flex items-center gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#3A3B3C]/30">

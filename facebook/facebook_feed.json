@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-08-12T19:40:45.082Z",
+  "updatedAt": "2026-08-12T19:53:53.900Z",
   "profile": {
     "name": "Marco Rossi",
     "category": "Creator di Contenuti e Digital Marketing",
@@ -170,15 +170,16 @@
       "isEmbedIframe": true,
       "reactions": {
         "like": 210,
-        "love": 95,
+        "love": 96,
         "care": 18,
         "haha": 2,
         "wow": 22,
         "sad": 0,
         "angry": 0
       },
-      "sharesCount": 31,
-      "comments": []
+      "sharesCount": 33,
+      "comments": [],
+      "userReaction": "love"
     }
   ],
   "friendsList": [],
