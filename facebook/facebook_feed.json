@@ -210,10 +210,10 @@
   "notifications": [
     {
       "id": "n-1",
-      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
-      "title": "Laura Bianchi",
-      "text": "vedi: nuovi video.",
-      "timestamp": "2 minuti fa",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+      "title": "Alessandro Mero",
+      "text": "ha condiviso il tuo video 'nuovo viedo cinese'.",
+      "timestamp": "1 minuto fa",
       "isUnread": false
     },
     {
@@ -230,6 +230,14 @@
       "title": "Alessandro Neri",
       "text": "ha condiviso il tuo video 'Guida alla Creazione Contenuti'.",
       "timestamp": "3 ore fa",
+      "isUnread": false
+    },
+     {
+      "id": "n-4",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+      "title": "Alessandro Mero",
+      "text": "ha condiviso il tuo video 'nuovo viedo cinese'.",
+      "timestamp": "2 ore fa",
       "isUnread": false
     }
   ]
