@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="it" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagina Facebook</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons for Facebook icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            fb: {
+              blue: '#1877F2',
+              hoverBlue: '#166FE5',
+              bgLight: '#F0F2F5',
+              cardLight: '#FFFFFF',
+              bgDark: '#18191A',
+              cardDark: '#242526',
+              hoverDark: '#3A3B3C',
+              textDark: '#E4E6EB',
+              subtextDark: '#B0B3B8',
+              borderDark: '#393A3B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .fb-gradient-purple { background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%); color: #fff; }
+    .fb-gradient-blue { background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); color: #fff; }
+    .fb-gradient-dark { background: linear-gradient(135deg, #232526 0%, #414345 100%); color: #fff; }
+    .fb-gradient-pink { background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%); color: #fff; }
+    .fb-gradient-green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: #fff; }
+  </style>
+</head>
+<body class="bg-[#F0F2F5] dark:bg-[#18191A] text-gray-900 dark:text-[#E4E6EB] min-h-screen">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-50 bg-white dark:bg-[#242526] border-b border-gray-200 dark:border-[#393A3B] shadow-sm px-4 h-14 flex items-center justify-between">
+    <!-- Left: Logo & Search -->
+    <div class="flex items-center gap-2">
+      <div class="text-[#1877F2] text-3xl font-bold flex items-center gap-1">
+        <i class="fab fa-facebook"></i>
+      </div>
+      <div class="relative hidden sm:block">
+        <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+        <input type="text" placeholder="Cerca su Facebook" class="bg-[#F0F2F5] dark:bg-[#3A3B3C] text-sm pl-9 pr-4 py-2 rounded-full outline-none w-60 text-gray-800 dark:text-gray-200" />
+      </div>
+    </div>
+
+    <!-- Center Navigation Icons -->
+    <div class="hidden md:flex items-center gap-1 h-full">
+      <button class="h-full px-8 text-[#1877F2] border-b-4 border-[#1877F2] flex items-center justify-center text-xl">
+        <i class="fas fa-home"></i>
+      </button>
+      <button class="h-full px-8 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-lg flex items-center justify-center text-xl">
+        <i class="fas fa-tv"></i>
+      </button>
+      <button class="h-full px-8 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-lg flex items-center justify-center text-xl">
+        <i class="fas fa-store"></i>
+      </button>
+      <button class="h-full px-8 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-lg flex items-center justify-center text-xl">
+        <i class="fas fa-users"></i>
+      </button>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-2">
+      <button id="themeToggleBtn" onclick="toggleTheme()" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200 hover:opacity-80">
+        <i class="fas fa-moon dark:hidden"></i>
+        <i class="fas fa-sun hidden dark:inline"></i>
+      </button>
+      <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200">
+        <i class="fab fa-facebook-messenger"></i>
+      </div>
+      <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200">
+        <i class="fas fa-bell"></i>
+      </div>
+      <img id="navAvatar" src="" class="w-9 h-9 rounded-full object-cover border border-gray-300" alt="Avatar" />
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-6xl mx-auto pb-12">
+    <!-- Cover Photo & Profile Banner -->
+    <div class="bg-white dark:bg-[#242526] shadow">
+      <!-- Cover -->
+      <div class="relative h-48 sm:h-72 md:h-96 w-full bg-gray-300 overflow-hidden">
+        <img id="coverImg" src="" class="w-full h-full object-cover" alt="Copertina" />
+      </div>
+
+      <!-- Profile Header Info Bar -->
+      <div class="max-w-5xl mx-auto px-4 pb-4">
+        <div class="flex flex-col md:flex-row items-center md:items-end justify-between -mt-16 md:-mt-8 mb-4 gap-4">
+          <div class="flex flex-col md:flex-row items-center md:items-end gap-4 text-center md:text-left">
+            <!-- Profile Avatar -->
+            <div class="relative w-36 h-36 md:w-40 md:h-40 rounded-full border-4 border-white dark:border-[#242526] overflow-hidden bg-gray-200 shadow-md">
+              <img id="profileImg" src="" class="w-full h-full object-cover" alt="Foto Profilo" />
+            </div>
+            <!-- Name & Bio -->
+            <div class="mb-2">
+              <h1 class="text-2xl md:text-3xl font-bold flex items-center justify-center md:justify-start gap-2">
+                <span id="profileName">Caricamento...</span>
+                <i id="verifiedBadge" class="fas fa-check-circle text-[#1877F2] text-xl hidden"></i>
+              </h1>
+              <p id="profileCategory" class="text-gray-500 dark:text-[#B0B3B8] text-sm font-medium"></p>
+              <p id="friendsCount" class="text-gray-500 dark:text-[#B0B3B8] text-sm mt-1"></p>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-2">
+            <button class="bg-[#1877F2] hover:bg-[#166FE5] text-white font-medium px-4 py-2 rounded-md text-sm flex items-center gap-2">
+              <i class="fas fa-plus"></i> Aggiungi alla storia
+            </button>
+            <button class="bg-gray-200 dark:bg-[#3A3B3C] hover:bg-gray-300 dark:hover:bg-[#4E4F50] text-gray-800 dark:text-gray-200 font-medium px-4 py-2 rounded-md text-sm flex items-center gap-2">
+              <i class="fab fa-facebook-messenger"></i> Messaggio
+            </button>
+          </div>
+        </div>
+
+        <hr class="border-gray-200 dark:border-[#393A3B] my-2" />
+
+        <!-- Profile Navigation Tabs -->
+        <div class="flex items-center gap-1 overflow-x-auto text-sm font-medium text-gray-600 dark:text-[#B0B3B8]">
+          <button onclick="switchTab('posts')" id="tab-posts" class="px-4 py-3 text-[#1877F2] border-b-4 border-[#1877F2] font-semibold whitespace-nowrap">Post</button>
+          <button onclick="switchTab('about')" id="tab-about" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap">Informazioni</button>
+          <button onclick="switchTab('friends')" id="tab-friends" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap">Amici</button>
+          <button onclick="switchTab('photos')" id="tab-photos" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap">Foto</button>
+          <button onclick="switchTab('reels')" id="tab-reels" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap">Reel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="max-w-5xl mx-auto px-4 mt-4">
+      <!-- POSTS TAB CONTENT -->
+      <div id="content-posts" class="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <!-- Left Sidebar (Intro Box) -->
+        <div class="md:col-span-5 space-y-4">
+          <div class="bg-white dark:bg-[#242526] p-4 rounded-lg shadow border border-gray-200 dark:border-[#393A3B]">
+            <h2 class="text-lg font-bold mb-3">Introduzione</h2>
+            <p id="introBio" class="text-center text-sm mb-4 text-gray-700 dark:text-gray-300 font-normal"></p>
+            
+            <div id="introList" class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+              <!-- Dynamically populated intro list -->
+            </div>
+          </div>
+
+          <!-- Featured Photos Box -->
+          <div class="bg-white dark:bg-[#242526] p-4 rounded-lg shadow border border-gray-200 dark:border-[#393A3B]">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-lg font-bold">Foto in evidenza</h2>
+            </div>
+            <div id="featuredPhotosGrid" class="grid grid-cols-2 gap-2 rounded-lg overflow-hidden">
+              <!-- Photos injected here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Main Feed -->
+        <div id="postsFeed" class="md:col-span-7 space-y-4">
+          <!-- Posts will be rendered here dynamically -->
+        </div>
+      </div>
+
+      <!-- OTHER TABS (Hidden by default) -->
+      <div id="content-about" class="hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B]">
+        <h2 class="text-xl font-bold mb-4">Informazioni generali</h2>
+        <div id="aboutFullContent" class="space-y-4 text-sm"></div>
+      </div>
+
+      <div id="content-friends" class="hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B]">
+        <h2 class="text-xl font-bold mb-4">Amici</h2>
+        <p class="text-gray-500">Visualizzazione amici in corso...</p>
+      </div>
+
+      <div id="content-photos" class="hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B]">
+        <h2 class="text-xl font-bold mb-4">Tutte le foto</h2>
+        <div id="allPhotosGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2"></div>
+      </div>
+
+      <div id="content-reels" class="hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B]">
+        <h2 class="text-xl font-bold mb-4">Tutti i Reel</h2>
+        <div id="allReelsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- JavaScript to Fetch JSON & Render Page -->
+  <script>
+    let pageData = null;
+    const JSON_FILE = 'facebook_feed.json';
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    async function init() {
+      try {
+        const response = await fetch(JSON_FILE);
+        if (!response.ok) {
+          throw new Error('Impossibile caricare ' + JSON_FILE);
+        }
+        pageData = await response.json();
+        renderPage();
+      } catch (err) {
+        console.error(err);
+        document.body.innerHTML = `<div class="p-8 text-center text-red-500 font-bold">
+          <i class="fas fa-exclamation-triangle text-3xl mb-2"></i><br>
+          Errore nel caricamento del file JSON (\"${JSON_FILE}\"). Assicurati che il file sia presente nella stessa cartella.
+        </div>`;
+      }
+    }
+
+    function renderPage() {
+      if (!pageData) return;
+      const p = pageData.profile;
+
+      // Header & Profile Setup
+      document.getElementById('navAvatar').src = p.avatarUrl;
+      document.getElementById('coverImg').src = p.coverUrl;
+      document.getElementById('profileImg').src = p.avatarUrl;
+      document.getElementById('profileName').textContent = p.name;
+      document.getElementById('profileCategory').textContent = p.category || '';
+      document.getElementById('friendsCount').textContent = p.friendsCount || '';
+
+      if (p.isVerified) {
+        document.getElementById('verifiedBadge').classList.remove('hidden');
+      }
+
+      // Intro
+      document.getElementById('introBio').textContent = p.intro.bio || '';
+      
+      const introList = document.getElementById('introList');
+      introList.innerHTML = '';
+      if (p.intro.work) {
+        introList.innerHTML += `<div class="flex items-center gap-3"><i class="fas fa-[#8C939D] fa-briefcase w-5 text-gray-500"></i><span>${p.intro.work}</span></div>`;
+      }
+      if (p.intro.education) {
+        introList.innerHTML += `<div class="flex items-center gap-3"><i class="fas fa-graduation-cap w-5 text-gray-500"></i><span>${p.intro.education}</span></div>`;
+      }
+      if (p.intro.livesIn) {
+        introList.innerHTML += `<div class="flex items-center gap-3"><i class="fas fa-home w-5 text-gray-500"></i><span>${p.intro.livesIn}</span></div>`;
+      }
+      if (p.intro.fromLocation) {
+        introList.innerHTML += `<div class="flex items-center gap-3"><i class="fas fa-map-marker-alt w-5 text-gray-500"></i><span>${p.intro.fromLocation}</span></div>`;
+      }
+      if (p.intro.website) {
+        introList.innerHTML += `<div class="flex items-center gap-3"><i class="fas fa-link w-5 text-gray-500"></i><a href="${p.intro.website}" target="_blank" class="text-[#1877F2] hover:underline">${p.intro.website}</a></div>`;
+      }
+
+      // Featured Photos
+      const grid = document.getElementById('featuredPhotosGrid');
+      grid.innerHTML = '';
+      if (p.featuredPhotos && p.featuredPhotos.length > 0) {
+        p.featuredPhotos.forEach(url => {
+          grid.innerHTML += `<img src="${url}" class="w-full h-28 object-cover rounded" />`;
+        });
+      }
+
+      // Render Posts
+      renderPosts(pageData.posts);
+    }
+
+    function renderPosts(posts) {
+      const feed = document.getElementById('postsFeed');
+      feed.innerHTML = '';
+
+      if (!posts || posts.length === 0) {
+        feed.innerHTML = '<div class="bg-white dark:bg-[#242526] p-6 rounded-lg text-center text-gray-500">Nessun post presente.</div>';
+        return;
+      }
+
+      posts.forEach(post => {
+        const postEl = document.createElement('div');
+        postEl.className = 'bg-white dark:bg-[#242526] rounded-lg shadow border border-gray-200 dark:border-[#393A3B] overflow-hidden';
+        
+        let mediaHtml = '';
+        if (post.type === 'image' && post.imageUrls && post.imageUrls.length > 0) {
+          mediaHtml = `<div class="mt-2"><img src="${post.imageUrls[0]}" class="w-full max-h-[500px] object-cover" /></div>`;
+        } else if (post.type === 'reel' && post.videoUrl) {
+          mediaHtml = `<div class="mt-2 relative bg-black flex justify-center py-4">
+            <video src="${post.videoUrl}" controls class="max-h-[500px] rounded-lg shadow-lg" loop></video>
+          </div>`;
+        } else if (post.type === 'video' && post.videoUrl) {
+          if (post.isEmbedIframe || post.videoUrl.includes('youtube') || post.videoUrl.includes('embed')) {
+            mediaHtml = `<div class="mt-2 aspect-video w-full"><iframe src="${post.videoUrl}" class="w-full h-full" frameborder="0" allowfullscreen></iframe></div>`;
+          } else {
+            mediaHtml = `<div class="mt-2"><video src="${post.videoUrl}" controls class="w-full max-h-[500px]"></video></div>`;
+          }
+        }
+
+        let bgClass = '';
+        if (post.textBackgroundPreset) {
+          bgClass = 'fb-' + post.textBackgroundPreset + ' p-8 text-center text-2xl font-bold rounded-md my-2';
+        }
+
+        const reactionTotal = Object.values(post.reactions || {}).reduce((a, b) => a + b, 0);
+
+        postEl.innerHTML = `
+          <div class="p-4">
+            <!-- Author Header -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img src="${post.authorAvatar || pageData.profile.avatarUrl}" class="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <h3 class="font-bold text-sm flex items-center gap-1">
+                    ${post.authorName || pageData.profile.name}
+                    ${post.isVerified ? '<i class="fas fa-check-circle text-[#1877F2] text-xs"></i>' : ''}
+                  </h3>
+                  <p class="text-xs text-gray-500 dark:text-[#B0B3B8] flex items-center gap-1">
+                    ${post.timestamp} • <i class="fas fa-globe-americas"></i>
+                    ${post.isPinned ? '<span class="ml-2 text-[#1877F2] font-semibold"><i class="fas fa-thumbtack"></i> Post fissato</span>' : ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Text -->
+            <div class="mt-3 text-sm whitespace-pre-wrap ${bgClass}">${post.content || ''}</div>
+          </div>
+
+          ${mediaHtml}
+
+          <!-- Post Footer / Reactions Info -->
+          <div class="px-4 py-2 border-t border-gray-100 dark:border-[#393A3B] text-xs text-gray-500 dark:text-[#B0B3B8] flex items-center justify-between">
+            <div class="flex items-center gap-1">
+              <span class="bg-[#1877F2] text-white p-1 rounded-full text-[10px]"><i class="fas fa-thumbs-up"></i></span>
+              <span class="bg-red-500 text-white p-1 rounded-full text-[10px]"><i class="fas fa-heart"></i></span>
+              <span>${reactionTotal}</span>
+            </div>
+            <div>${(post.comments || []).length} commenti • ${post.sharesCount || 0} condivisioni</div>
+          </div>
+        `;
+
+        feed.appendChild(postEl);
+      });
+    }
+
+    function switchTab(tabName) {
+      ['posts', 'about', 'friends', 'photos', 'reels'].forEach(t => {
+        const content = document.getElementById('content-' + t);
+        const btn = document.getElementById('tab-' + t);
+        if (content) content.classList.add('hidden');
+        if (btn) {
+          btn.classList.remove('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]', 'font-semibold');
+        }
+      });
+
+      const activeContent = document.getElementById('content-' + tabName);
+      const activeBtn = document.getElementById('tab-' + tabName);
+      if (activeContent) activeContent.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.classList.add('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]', 'font-semibold');
+      }
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
