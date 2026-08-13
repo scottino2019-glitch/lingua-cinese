@@ -87,30 +87,6 @@
       "text": "ha accettato la tua richiesta di amicizia.",
       "timestamp": "Proprio ora",
       "isUnread": false
-    },
-    {
-      "id": "n-1",
-      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
-      "title": "Laura Bianchi",
-      "text": "ha messo 'Mi Piace' al tuo post in evidenza.",
-      "timestamp": "10 minuti fa",
-      "isUnread": false
-    },
-    {
-      "id": "n-2",
-      "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80",
-      "title": "Giulia Verdi",
-      "text": "ha commentato il tuo Reel: 'Il trucco #3 mi ha cambiato la vita...'",
-      "timestamp": "1 ora fa",
-      "isUnread": false
-    },
-    {
-      "id": "n-3",
-      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
-      "title": "Alessandro Neri",
-      "text": "ha condiviso il tuo video 'Guida alla Creazione Contenuti'.",
-      "timestamp": "3 ore fa",
-      "isUnread": false
     }
   ],
   "posts": [
