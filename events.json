@@ -1,11 +1,11 @@
 [
   {
   "id": 1,
-  "date": "2026-08-03",
-  "title": "Nuovi Video",
-  "description": "PodCast-Presentarsi",
-  "category": "video",
-  "link":  "https://lingua-cinese.vercel.app/tv-cinese.html"  
+  "date": "2026-08-14",
+  "title": "Pagina Social",
+  "description": "Nuova Pagina",
+  "category": "generale",
+  "link":  "https://lingua-cinese.vercel.app/facebook/facebook_page.html"  
 }
    
 ]
