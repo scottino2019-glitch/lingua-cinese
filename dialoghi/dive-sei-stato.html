@@ -1,0 +1,469 @@
+
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>WhatsApp Chat - 小美</title>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+          body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e5ddd5;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+          }
+          .chat-container { max-width: 600px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+          .message { margin-bottom: 8px; max-width: 80%; position: relative; padding: 6px 10px; border-radius: 8px; font-size: 14.5px; line-height: 1.4; display: block; clear: both; }
+          .message-me { align-self: flex-end; float: right; background-color: #dcf8c6; border-top-right-radius: 0; }
+          .message-other { align-self: flex-start; float: left; background-color: #ffffff; border-top-left-radius: 0; }
+          .timestamp { font-size: 11px; float: right; margin-left: 8px; margin-top: 4px; color: rgba(0,0,0,0.45); }
+          .header { background: #075e54; color: white; padding: 10px 16px; display: flex; align-items: center; position: sticky; top: 0; z-index: 10; }
+          .wrapper { display: flex; flex-direction: column; }
+          .play-btn { cursor: pointer; transition: opacity 0.2s; }
+          .play-btn:hover { opacity: 0.8; }
+        </style>
+      </head>
+      <body>
+        <div class="chat-container">
+          <div class="header">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #ccc; margin-right: 12px; overflow: hidden">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGlkPSJjaGliaS1hdmF0YXItc3ZnIiB2aWV3Qm94PSIwIDAgNTAwIDUwMCIgY2xhc3M9InctZnVsbCBoLWZ1bGwgbWF4LXctZnVsbCBtYXgtaC1mdWxsIGRyb3Atc2hhZG93LW1kIHNlbGVjdC1ub25lIHJvdW5kZWQtMnhsIG92ZXJmbG93LWhpZGRlbiIgc3R5bGU9ImJhY2tncm91bmQ6IHJnYigyNTUsIDI0MCwgMjQ1KTsiPjxkZWZzPjxmaWx0ZXIgaWQ9InNrZXRjaC1maWx0ZXIiIHg9Ii0xMCUiIHk9Ii0xMCUiIHdpZHRoPSIxMjAlIiBoZWlnaHQ9IjEyMCUiPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjAzIiBudW1PY3RhdmVzPSIzIiByZXN1bHQ9Im5vaXNlIi8+PGZlRGlzcGxhY2VtZW50TWFwIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9Im5vaXNlIiBzY2FsZT0iMS41IiB4Q2hhbm5lbFNlbGVjdG9yPSJSIiB5Q2hhbm5lbFNlbGVjdG9yPSJHIi8+PC9maWx0ZXI+PGxpbmVhckdyYWRpZW50IGlkPSJiZy1ncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjRkZGMEY1Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjRkZGRkZGIi8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImV5ZS1ncmFkLWxlZnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNTk0QTQyIi8+PHN0b3Agb2Zmc2V0PSI2NSUiIHN0b3AtY29sb3I9IiMzYTMwMmIiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxRTE3MTUiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZXllLWdyYWQtcmlnaHQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNTk0QTQyIi8+PHN0b3Agb2Zmc2V0PSI2NSUiIHN0b3AtY29sb3I9IiMzYTMwMmIiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxRTE3MTUiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iYmx1c2gtZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNGRkFBQTYiIHN0b3Atb3BhY2l0eT0iMC41Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjRkZBQUE2IiBzdG9wLW9wYWNpdHk9IjAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0idXJsKCNiZy1ncmFkKSIvPjxnIGZpbHRlcj0idXJsKCNza2V0Y2gtZmlsdGVyKSI+PGcgZmlsbD0iIzJGMjYyNCIgb3BhY2l0eT0iMC4yIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzIi8+IDxjaXJjbGUgY3g9IjE1MCIgY3k9IjUwIiByPSIzIi8+IDxjaXJjbGUgY3g9IjI1MCIgY3k9IjUwIiByPSIzIi8+IDxjaXJjbGUgY3g9IjM1MCIgY3k9IjUwIiByPSIzIi8+IDxjaXJjbGUgY3g9IjQ1MCIgY3k9IjUwIiByPSIzIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTUwIiByPSIzIi8+IDxjaXJjbGUgY3g9IjIwMCIgY3k9IjE1MCIgcj0iMyIvPiA8Y2lyY2xlIGN4PSIzMDAiIGN5PSIxNTAiIHI9IjMiLz4gPGNpcmNsZSBjeD0iNDAwIiBjeT0iMTUwIiByPSIzIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSIyNTAiIHI9IjMiLz4gPGNpcmNsZSBjeD0iMTUwIiBjeT0iMjUwIiByPSIzIi8+IDxjaXJjbGUgY3g9IjI1MCIgY3k9IjI1MCIgcj0iMyIvPiA8Y2lyY2xlIGN4PSIzNTAiIGN5PSIyNTAiIHI9IjMiLz4gPGNpcmNsZSBjeD0iNDUwIiBjeT0iMjUwIiByPSIzIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMzUwIiByPSIzIi8+IDxjaXJjbGUgY3g9IjIwMCIgY3k9IjM1MCIgcj0iMyIvPiA8Y2lyY2xlIGN4PSIzMDAiIGN5PSIzNTAiIHI9IjMiLz4gPGNpcmNsZSBjeD0iNDAwIiBjeT0iMzUwIiByPSIzIi8+PC9nPjwvZz48ZyBmaWx0ZXI9InVybCgjc2tldGNoLWZpbHRlcikiPjxwYXRoIGQ9Ik0gMTMwLDE2MCBMIDk1LDIyMCBMIDExNSwyNDAgTCA4NSwzMjAgTCAxMjUsMzAwIEwgMTEwLDM4MCBMIDE1MCwzMzAgTSAzNzAsMTYwIEwgNDA1LDIyMCBMIDM4NSwyNDAgTCA0MTUsMzIwIEwgMzc1LDMwMCBMIDM5MCwzODAgTCAzNTAsMzMwIiBmaWxsPSIjRkZDNkZGIiBzdHJva2U9IiMyRjI2MjQiIHN0cm9rZS13aWR0aD0iMy41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L2c+PGcgZmlsdGVyPSJ1cmwoI3NrZXRjaC1maWx0ZXIpIj48cGF0aCBkPSJNIDIzOCwyOTUgTCAyMzgsMzI4IFEgMjUwLDMzNCAyNjIsMzI4IEwgMjYyLDI5NSBaIiBmaWxsPSIjZDJhNjk3IiBzdHJva2U9IiMyRjI2MjQiIHN0cm9rZS13aWR0aD0iMy41IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTSAxNzUsMzI1IFEgMjUwLDM0MiAzMjUsMzI1IEwgMzM1LDQxNSBMIDE2NSw0MTUgWiIgZmlsbD0iI0RGQjFBMSIgc3Ryb2tlPSIjMkYyNjI0IiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTSAxMzAsMjA1IEMgMTEwLDIwNSAxMTAsMjM1IDEzMCwyMzUgWiIgZmlsbD0iI0RGQjFBMSIgc3Ryb2tlPSIjMkYyNjI0IiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTSAzNzAsMjA1IEMgMzkwLDIwNSAzOTAsMjM1IDM3MCwyMzUgWiIgZmlsbD0iI0RGQjFBMSIgc3Ryb2tlPSIjMkYyNjI0IiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTSAxMzAsMTgwIEMgMTIwLDI1MCAxNzAsMzA1IDI1MCwzMDUgQyAzMzAsMzA1IDM4MCwyNTAgMzcwLDE4MCBDIDM3MCwxMjUgMTMwLDEyNSAxMzAsMTgwIFoiIGZpbGw9IiNERkIxQTEiIHN0cm9rZT0iIzJGMjYyNCIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvZz48Zy8+PGcgZmlsdGVyPSJ1cmwoI3NrZXRjaC1maWx0ZXIpIj48ZyBzdHJva2U9IiMyRjI2MjQiIHN0cm9rZS13aWR0aD0iMi44IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjxwYXRoIGQ9Ik0gMTc0LDE4OCBRIDE4NCwxODEgMTk0LDE4NyIvPjxwYXRoIGQ9Ik0gMzA2LDE4NyBRIDMxNiwxODEgMzI2LDE4OCIvPjwvZz48Zz48cGF0aCBkPSJNIDE3NiwyMjQgUSAxOTAsMjEwIDIwNCwyMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJGMjYyNCIgc3Ryb2tlLXdpZHRoPSI0LjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIxNzYiIHkxPSIyMjQiIHgyPSIxNzEiIHkyPSIyMjgiIHN0cm9rZT0iIzJGMjYyNCIgc3Ryb2tlLXdpZHRoPSI0LjUiLz48ZWxsaXBzZSBjeD0iMzEwIiBjeT0iMjIwIiByeD0iMTQiIHJ5PSIxOSIgZmlsbD0idXJsKCNleWUtZ3JhZC1yaWdodCkiIHN0cm9rZT0iIzJGMjYyNCIgc3Ryb2tlLXdpZHRoPSIzIi8+PGNpcmNsZSBjeD0iMzEwIiBjeT0iMjI4IiByPSI4IiBmaWxsPSIjNTk0QTQyIiBvcGFjaXR5PSIwLjgiLz48cGF0aCBkPSJNIDI5NCwyMTUgUSAzMTAsMjAwIDMyNiwyMTMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJGMjYyNCIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSIzMDUiIGN5PSIyMTIiIHI9IjQuNSIgZmlsbD0iI0ZGRkZGRiIvPjwvZz48cGF0aCBkPSJNIDI0OSwyMjMgTCAyNDksMjM0IEwgMjQ2LDIzNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMkYyNjI0IiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PGc+PHBhdGggZD0iTSAyNDMsMjU3IFEgMjUwLDI2MyAyNTcsMjU3IiBmaWxsPSJub25lIiBzdHJva2U9IiMyRjI2MjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTSAyNDYsMjYwIEMgMjQ2LDI2NiwgMjU0LDI2NiwgMjU0LDI2MCBaIiBmaWxsPSIjRkY2QjhCIiBzdHJva2U9IiMyRjI2MjQiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L2c+PGcgZmlsdGVyPSJ1cmwoI3NrZXRjaC1maWx0ZXIpIj48Zz48cGF0aCBkPSJNIDE3NSwzMjUgUSAyNTAsMzQyIDMyNSwzMjUgTCAzMzUsNDE1IEwgMTY1LDQxNSBaIiBmaWxsPSIjRkZGRkZGIiBzdHJva2U9IiMyRjI2MjQiIHN0cm9rZS13aWR0aD0iMy41Ii8+PHBhdGggZD0iTSAxOTAsMzQ1IEwgMzEwLDM0NSBMIDMxNSw0MTUgTCAxODUsNDE1IFoiIGZpbGw9IiNDN0NFRUEiIHN0cm9rZT0iIzJGMjYyNCIgc3Ryb2tlLXdpZHRoPSIzLjUiLz48bGluZSB4MT0iMjA1IiB5MT0iMzI0IiB4Mj0iMjA1IiB5Mj0iMzQ1IiBzdHJva2U9IiMyRjI2MjQiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjIwNSIgeTE9IjMyNCIgeDI9IjIwNSIgeTI9IjM0NSIgc3Ryb2tlPSIjYTlhZmM3IiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjI5NSIgeTE9IjMyNCIgeDI9IjI5NSIgeTI9IjM0NSIgc3Ryb2tlPSIjMkYyNjI0IiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIyOTUiIHkxPSIzMjQiIHgyPSIyOTUiIHkyPSIzNDUiIHN0cm9rZT0iI2E5YWZjNyIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvZz48L2c+PGcgZmlsdGVyPSJ1cmwoI3NrZXRjaC1maWx0ZXIpIj48Zz48cGF0aCBkPSJNIDEyNiwxNTggQyAxNTAsMTE1LCAzNTAsMTE1LCAzNzQsMTU4IEwgMzU4LDE4MiBMIDM0MiwxNzIgTCAzMjgsMTkyIEwgMzEwLDE3OCBMIDI5MCwyMDIgUSAyNjAsMTYyLCAyNDgsMjAyIEwgMjI1LDE3OCBMIDIwOCwxOTIgTCAxOTIsMTcyIEwgMTY4LDE4NSBNIDEyNiwxNTggWiIgZmlsbD0iI0ZGQzZGRiIgc3Ryb2tlPSIjMkYyNjI0IiBzdHJva2Utd2lkdGg9IjMuNSIvPjwvZz48L2c+PGcgZmlsdGVyPSJ1cmwoI3NrZXRjaC1maWx0ZXIpIj48ZyBzdHJva2U9IiMyRjI2MjQiIHN0cm9rZS13aWR0aD0iMy41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0gMTM1LDEzNiBBIDExNSwxMTUgMCAwLDEgMzY1LDEzNiIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSI1LjUiLz48cmVjdCB4PSIxMTAiIHk9IjE4OCIgd2lkdGg9IjIyIiBoZWlnaHQ9IjQyIiByeD0iOSIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIzLjUiLz48cmVjdCB4PSIzNjgiIHk9IjE4OCIgd2lkdGg9IjIyIiBoZWlnaHQ9IjQyIiByeD0iOSIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIzLjUiLz48L2c+PC9nPjxnIGZpbHRlcj0idXJsKCNza2V0Y2gtZmlsdGVyKSI+PGcgc3Ryb2tlPSIjMkYyNjI0IiBzdHJva2Utd2lkdGg9IjIuOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48ZWxsaXBzZSBjeD0iMjE1IiBjeT0iMzg1IiByeD0iMzIiIHJ5PSIyNCIgZmlsbD0iI0U2QTE1QyIvPjxjaXJjbGUgY3g9IjIxNSIgY3k9IjM4NSIgcj0iNiIgZmlsbD0iIzNEM0EzNSIvPjxjaXJjbGUgY3g9IjIwMCIgY3k9IjM3NSIgcj0iNC41IiBmaWxsPSIjRTYzOTQ2IiBzdHJva2U9Im5vbmUiLz48Y2lyY2xlIGN4PSIyMTUiIGN5PSIzNzIiIHI9IjQuNSIgZmlsbD0iIzJBOUQ4RiIgc3Ryb2tlPSJub25lIi8+PGNpcmNsZSBjeD0iMjMwIiBjeT0iMzc4IiByPSI0LjUiIGZpbGw9IiNGNEEyNjEiIHN0cm9rZT0ibm9uZSIvPjxjaXJjbGUgY3g9IjIyMCIgY3k9IjQwNSIgcj0iOC41IiBmaWxsPSIjREZCMUExIi8+PC9nPjwvZz48L3N2Zz4=" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div>
+              <div style="font-weight: 500;">小美</div>
+              <div style="font-size: 12px; opacity: 0.8;">online</div>
+            </div>
+          </div>
+          <div style="flex: 1; padding: 20px; display: flex; flex-direction: column;">
+            
+              <div class="wrapper">
+                <div class="message message-other">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>你好！ 你好吗？</div>
+                      <div class="play-btn" onclick="playVoice('你好！ 你好吗？ '）')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">10:00</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-me">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>很好 你呢？</div>
+                      <div class="play-btn" onclick="playVoice('很好, 你呢?')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">10:01</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-other">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>小美，你昨天去哪儿了？</div>
+                      <div class="play-btn" onclick="playVoice('小美，你昨天去哪儿了？')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:38</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-me">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>我昨天去商店了。你呢？</div>
+                      <div class="play-btn" onclick="playVoice('我昨天去商店了。你呢？')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:39</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-other">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>我去公园了。你在商店做什么？</div>
+                      <div class="play-btn" onclick="playVoice('我去公园了。你在商店做什么？')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:40</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-me">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>我和妈妈买衣服，还买了水果。</div>
+                      <div class="play-btn" onclick="playVoice('我和妈妈买衣服，还买了水果。')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:41</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-other">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>你买了什么水果？</div>
+                      <div class="play-btn" onclick="playVoice('你买了什么水果？')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:41</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-me">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>我买了苹果和香蕉。你在公园做什么？</div>
+                      <div class="play-btn" onclick="playVoice('我买了苹果和香蕉。你在公园做什么？')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:42</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-other">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>我和爸爸一起跑步，还看见很多花。</div>
+                      <div class="play-btn" onclick="playVoice('我和爸爸一起跑步，还看见很多花。')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:42</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-me">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>公园的花好看吗？</div>
+                      <div class="play-btn" onclick="playVoice('公园的花好看吗？')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:43</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-other">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div> 很好看！有红的，有白的。</div>
+                      <div class="play-btn" onclick="playVoice(' 很好看！有红的，有白的。')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:43</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-me">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div> 真好！我也想去公园看花。</div>
+                      <div class="play-btn" onclick="playVoice(' 真好！我也想去公园看花。')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:43</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-other">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div>明天我们一起去吧！</div>
+                      <div class="play-btn" onclick="playVoice('明天我们一起去吧！')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:44</span>
+                </div>
+              </div>
+            
+              <div class="wrapper">
+                <div class="message message-me">
+                  
+                  
+                  
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                      <div> 好的，明天见！
+😊</div>
+                      <div class="play-btn" onclick="playVoice(' 好的，明天见！
+😊')" style="font-size:12px; color:#00a884; opacity:0.6;">▶</div>
+                    </div>
+                  
+                  <span class="timestamp">18:44</span>
+                </div>
+              </div>
+            
+          </div>
+
+
+        </div>
+<br><br><hr>
+<div style="max-width: 600px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif;">
+  <table style="width: 100%; border-collapse: collapse; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <thead>
+      <tr style="background-color: #075e54; color: #ffffff;">
+        <th style="padding: 12px; text-align: left; font-size: 15px; font-weight: 600;">Hanzi</th>
+        <th style="padding: 12px; text-align: left; font-size: 15px; font-weight: 600;">Pinyin</th>
+        <th style="padding: 12px; text-align: left; font-size: 15px; font-weight: 600;">Italiano</th>
+      </tr>
+    </thead>
+    <tbody style="color: #333333; font-size: 14px;">
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">你好</td>
+        <td style="padding: 10px 12px; color: #555555;">nǐ hǎo</td>
+        <td style="padding: 10px 12px;">Ciao / Salve</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">好</td>
+        <td style="padding: 10px 12px; color: #555555;">hǎo</td>
+        <td style="padding: 10px 12px;">Buono / Bene</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">吗</td>
+        <td style="padding: 10px 12px; color: #555555;">ma</td>
+        <td style="padding: 10px 12px;">Particella interrogativa</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">很</td>
+        <td style="padding: 10px 12px; color: #555555;">hěn</td>
+        <td style="padding: 10px 12px;">Molto</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">呢</td>
+        <td style="padding: 10px 12px; color: #555555;">ne</td>
+        <td style="padding: 10px 12px;">Particella interrogativa ("e tu?")</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">昨天</td>
+        <td style="padding: 10px 12px; color: #555555;">zuótiān</td>
+        <td style="padding: 10px 12px;">Ieri</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">去</td>
+        <td style="padding: 10px 12px; color: #555555;">qù</td>
+        <td style="padding: 10px 12px;">Andare</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">哪儿</td>
+        <td style="padding: 10px 12px; color: #555555;">nǎr</td>
+        <td style="padding: 10px 12px;">Dove</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">商店</td>
+        <td style="padding: 10px 12px; color: #555555;">shāngdiàn</td>
+        <td style="padding: 10px 12px;">Negozio</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">公园</td>
+        <td style="padding: 10px 12px; color: #555555;">gōngyuán</td>
+        <td style="padding: 10px 12px;">Parco</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">在</td>
+        <td style="padding: 10px 12px; color: #555555;">zài</td>
+        <td style="padding: 10px 12px;">Stare / Essere a / In</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">做</td>
+        <td style="padding: 10px 12px; color: #555555;">zuò</td>
+        <td style="padding: 10px 12px;">Fare</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">什么</td>
+        <td style="padding: 10px 12px; color: #555555;">shénme</td>
+        <td style="padding: 10px 12px;">Cosa / Che cosa</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">和</td>
+        <td style="padding: 10px 12px; color: #555555;">hé</td>
+        <td style="padding: 10px 12px;">E / Con</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">妈妈</td>
+        <td style="padding: 10px 12px; color: #555555;">māma</td>
+        <td style="padding: 10px 12px;">Mamma</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">买</td>
+        <td style="padding: 10px 12px; color: #555555;">mǎi</td>
+        <td style="padding: 10px 12px;">Comprare</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">衣服</td>
+        <td style="padding: 10px 12px; color: #555555;">yīfu</td>
+        <td style="padding: 10px 12px;">Vestiti</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">还</td>
+        <td style="padding: 10px 12px; color: #555555;">hái</td>
+        <td style="padding: 10px 12px;">Anche / In più</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">水果</td>
+        <td style="padding: 10px 12px; color: #555555;">shuǐguǒ</td>
+        <td style="padding: 10px 12px;">Frutta</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">苹果</td>
+        <td style="padding: 10px 12px; color: #555555;">píngguǒ</td>
+        <td style="padding: 10px 12px;">Mela</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">香蕉</td>
+        <td style="padding: 10px 12px; color: #555555;">xiāngjiāo</td>
+        <td style="padding: 10px 12px;">Banana</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">爸爸</td>
+        <td style="padding: 10px 12px; color: #555555;">bàba</td>
+        <td style="padding: 10px 12px;">Papà</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">一起</td>
+        <td style="padding: 10px 12px; color: #555555;">yìqǐ</td>
+        <td style="padding: 10px 12px;">Insieme</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">跑步</td>
+        <td style="padding: 10px 12px; color: #555555;">pǎobù</td>
+        <td style="padding: 10px 12px;">Correre / Fare jogging</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">看见</td>
+        <td style="padding: 10px 12px; color: #555555;">kànjiàn</td>
+        <td style="padding: 10px 12px;">Vedere</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">很多</td>
+        <td style="padding: 10px 12px; color: #555555;">hěn duō</td>
+        <td style="padding: 10px 12px;">Molti / Molto</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">花</td>
+        <td style="padding: 10px 12px; color: #555555;">huā</td>
+        <td style="padding: 10px 12px;">Fiore</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">好看</td>
+        <td style="padding: 10px 12px; color: #555555;">hǎokàn</td>
+        <td style="padding: 10px 12px;">Bello (da vedere)</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">有</td>
+        <td style="padding: 10px 12px; color: #555555;">yǒu</td>
+        <td style="padding: 10px 12px;">Avere / Esserci</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">红</td>
+        <td style="padding: 10px 12px; color: #555555;">hóng</td>
+        <td style="padding: 10px 12px;">Rosso</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">白</td>
+        <td style="padding: 10px 12px; color: #555555;">bái</td>
+        <td style="padding: 10px 12px;">Bianco</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">真</td>
+        <td style="padding: 10px 12px; color: #555555;">zhēn</td>
+        <td style="padding: 10px 12px;">Davvero</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">想</td>
+        <td style="padding: 10px 12px; color: #555555;">xiǎng</td>
+        <td style="padding: 10px 12px;">Volere / Desiderare</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">看</td>
+        <td style="padding: 10px 12px; color: #555555;">kàn</td>
+        <td style="padding: 10px 12px;">Guardare / Vedere</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">明天</td>
+        <td style="padding: 10px 12px; color: #555555;">míngtiān</td>
+        <td style="padding: 10px 12px;">Domani</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">我们</td>
+        <td style="padding: 10px 12px; color: #555555;">wǒmen</td>
+        <td style="padding: 10px 12px;">Noi</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee;">
+        <td style="padding: 10px 12px; font-weight: 500;">吧</td>
+        <td style="padding: 10px 12px; color: #555555;">ba</td>
+        <td style="padding: 10px 12px;">Particella esortativa</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eeeeee; background-color: #fcfcfc;">
+        <td style="padding: 10px 12px; font-weight: 500;">好的</td>
+        <td style="padding: 10px 12px; color: #555555;">hǎo de</td>
+        <td style="padding: 10px 12px;">Va bene / OK</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 12px; font-weight: 500;">见</td>
+        <td style="padding: 10px 12px; color: #555555;">jiàn</td>
+        <td style="padding: 10px 12px;">Vedere / Incontrare</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+        <script>
+          function playVoice(text) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Try to find Italian voice or default
+            const voices = window.speechSynthesis.getVoices();
+            const itVoice = voices.find(v => v.lang.startsWith('it')) || voices[0];
+            if (itVoice) utterance.voice = itVoice;
+
+            window.speechSynthesis.speak(utterance);
+          }
+          // Pre-load voices
+          window.speechSynthesis.getVoices();
+        </script>
+      </body>
+      </html>
+    
