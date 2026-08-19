@@ -1,6 +1,14 @@
 [
   {
   "id": 1,
+  "date": "2026-08-19",
+  "title": "Tra Amici",
+  "description": "Nuovo Dialogo",
+  "category": "generale",
+  "link":  "https://lingua-cinese.vercel.app/whatsapp.html"  
+},
+   {
+  "id": 2,
   "date": "2026-08-14",
   "title": "Pagina Social",
   "description": "Nuova Pagina",
@@ -8,4 +16,7 @@
   "link":  "https://lingua-cinese.vercel.app/facebook/facebook_page.html"  
 }
    
+
 ]
+
+
