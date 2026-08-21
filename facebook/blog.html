@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progetto Tailwind CSS</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  
+
+  <!-- Tailwind CSS Config -->
+  <script>
+    
+window.tailwind = window.tailwind || {};
+window.module = window.module || { exports: {} };
+window.exports = window.exports || {};
+try {
+  // Configurazione Tailwind
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#0ea5e9',
+      }
+    }
+  }
+}
+  if (window.module && window.module.exports && Object.keys(window.module.exports).length > 0) {
+    window.tailwind.config = window.module.exports;
+  }
+} catch(e) {
+  console.warn('Errore esecuzione tailwind.config:', e.message);
+}
+    if (window.tailwind && window.tailwind.config && !window.tailwind.config.darkMode) {
+      window.tailwind.config.darkMode = 'class';
+    }
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+
+  <!-- Custom CSS & Tailwind Directives -->
+  
+</head>
+<body class="bg-[#0b0f19] text-[#f1f5f9] min-h-screen ">
+<!-- VINTAGE NEWSPAPER LAYOUT - GENERATED WITH VINTAGE NEWSPAPER STUDIO -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bad+Script&family=Caveat:wght@400;700&family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Liu+Jian+Mao+Cao&family=Long+Cang&family=Ma+Shan+Zheng&family=Marck+Script&family=Noto+Serif+SC:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Rye&family=Special+Elite&family=UnifrakturMaguntia&family=Yuji+Syuku&family=Zhi+Mang+Xing&display=swap');
+
+  /* Il foglio di giornale */
+  .giornale-realistico {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #f4edd9;
+    color: #111111;
+    border: 1px solid #d3c7a3;
+    box-shadow: 5px 5px 0px #d3c7a3;
+  }
+
+  /* La testata */
+  .testata-giornale {
+    text-align: center;
+    border-bottom: 8px double #111111;
+    border-top: 3px solid #111111;
+    padding: 20px 0;
+    margin-bottom: 35px;
+  }
+  .testata-giornale h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 3.8rem;
+    color: #111111;
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .testata-meta {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    word-spacing: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  /* GRIGLIA GIORNALE */
+  .griglia-giornale {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 25px;
+  }
+
+  @media (max-width: 900px) {
+    .griglia-giornale { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .griglia-giornale { grid-template-columns: 1fr; }
+  }
+
+  /* STILE TRAFILETTI */
+  .pezzo {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #111111;
+  }
+
+  .pezzo.principale {
+    grid-column: span 2;
+    border-right: 1px solid #111111;
+    padding-right: 25px;
+  }
+
+  .pezzo.boxato {
+    background-color: #ebe2c7;
+    border: 3px double #111111;
+    padding: 15px;
+  }
+
+  .titolo-pezzo {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+  .principale .titolo-pezzo {
+    font-size: 2.2rem;
+  }
+
+  /* Carattere orientali/cirillico */
+  .cina-carattere {
+    font-family: 'Zhi Mang Xing', cursive;
+    font-size: 2.8rem;
+    float: left;
+    margin: 0 15px 5px 0;
+    line-height: 0.8;
+    color: #8c1d1d;
+  }
+
+  ruby rt {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    font-weight: bold;
+    color: #444444;
+    text-transform: uppercase;
+  }
+
+  .testo-pezzo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    text-align: justify;
+    margin: 0;
+  }
+  
+  .principale .testo-pezzo::first-letter {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 8px;
+    font-weight: 900;
+  }
+</style>
+
+<!-- STRUTTURA DEL GIORNALE -->
+<div class="giornale-realistico">
+  <div class="testata-giornale">
+    <h1>THE SHANGHAI CHRONICLE</h1>
+    <div class="testata-meta">ANNO CVI - N. 142 — PECHINO, OGGI — PREZZO: 5 CASH</div>
+  </div>
+
+  <div class="griglia-giornale">
+    <!-- ARTICOLO PRINCIPALE -->
+    <article class="pezzo principale" style=" grid-column: span 2;">
+      <h2 class="titolo-pezzo" style="font-family: 'Cinzel', serif;">L'Impero si piega alla geomanzia: i grattacieli forati di Hong Kong</h2>
+      <h3 style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; margin-bottom: 10px;">I colossi di cemento sventrati al centro per consentire il passaggio ancestrale dei draghi montani</h3>
+      <p class="testo-pezzo" style="font-family: 'Playfair Display', serif;">
+        A Hong Kong l'architettura moderna non risponde solo alle leggi della fisica, ma si sottomette cecamente a quelle del destino. Sulla costa, colossi di cemento e vetro vengono deliberatamente sventrati al centro per lasciare varchi enormi denominati "Porte dei Draghi".<br/><br/>Secondo i maestri del Feng Shui, i draghi che risiedono tra le vette montuose devono poter scendere liberamente verso le acque del mare per abbeverarsi. Ostruire questo antico tragitto attirerebbe un collasso finanziario catastrofico sulle compagnie proprietarie degli stabili.
+      </p>
+    </article>
+
+    <!-- ARTICOLO CON CARATTERE CALLIGRAFICO -->
+    <article class="pezzo">
+      <h2 class="titolo-pezzo" style="font-family: 'Cinzel', serif;">Il paradosso del cavallo-tigre</h2>
+      
+      <div class="cina-carattere" style="font-family: 'Zhi Mang Xing', cursive; color: #8c1d1d;">
+        <ruby>马虎<rt>mǎ·hū</rt></ruby>
+      </div>
+      
+      <p class="testo-pezzo" style="font-family: 'Playfair Display', serif;">
+        Un'espressione che unisce due predatori per definire la noncuranza. La bizzarra combinazione linguistica nasce dalla storia di un pittore distratto che, avendo dipinto una testa di tigre su un corpo di cavallo, causò la morte dei figli incapaci ormai di distinguere il pericolo dalla docilità. Oggi l'idioma vive nel gergo comune per indicare qualcosa fatto in modo grossolano o "così così".
+      </p>
+    </article>
+
+    <!-- BOX NOTIZIA / TABÙ -->
+    <article class="pezzo boxato">
+      <h2 class="titolo-pezzo" style="font-size: 1.2rem; color: #8c1d1d; font-family: 'Cinzel', serif;">† Il Tabù del Suono e della Tetrafobia</h2>
+      
+      <div class="cina-carattere" style="font-size: 2.2rem; float: none; display: block; margin: 5px 0;">
+        <ruby>四<rt>sì</rt></ruby>
+      </div>
+      <p class="testo-pezzo" style="font-size: 0.88rem; line-height: 1.4; font-family: 'Playfair Display', serif;">
+        La paura del numero quattro in Oriente è un fenomeno totale. La parola che lo designa suona in modo quasi identico al termine "morte". Questo paradosso acustico ha spinto gli ingegneri a eliminare i tasti dei quarti piani dagli ascensori di ospedali, alberghi e uffici di tutta la nazione, saltando direttamente dal tre al cinque.
+      </p>
+    </article>
+
+    <!-- ARTICOLO PRINCIPALE -->
+    <article class="pezzo principale">
+      <h2 class="titolo-pezzo" style="font-family: 'Cinzel', serif;">La diplomazia dei panda giganti</h2>
+      <h3 style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; margin-bottom: 10px;">Proprietà statale e prestiti internazionali da un milione di dollari</h3>
+      <p class="testo-pezzo" style="font-family: 'Playfair Display', serif;">
+        Pochi sanno che ogni singolo esemplare di panda gigante esistente sul pianeta Terra è legalmente di proprietà dello Stato cinese. Gli zoo sparsi per il globo firmano contratti di locazione onerosi da un milione di dollari l'anno. Qualsiasi cucciolo nasca in territorio straniero deve essere tassativamente restituito alla Cina non appena superata l'infanzia.
+      </p>
+    </article>
+
+    <!-- FOTO D'EPOCA CON DICITURA -->
+    <article class="pezzo">
+      <h2 class="titolo-pezzo" style="font-family: 'Cinzel', serif;">Il Porto delle Giunche Imperiale</h2>
+      
+      <div style="margin-bottom: 8px; border: 1px solid #111; padding: 4px; background: #fff;">
+        <img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=800&q=80" alt="Il Porto delle Giunche Imperiale" style="width: 100%; height: auto; display: block; filter: sepia(100%) contrast(110%);" />
+        <div style="font-size: 0.75rem; font-style: italic; margin-top: 4px; text-align: center;">Il porto di Shanghai nel 1924 prima dei moderni grattacieli.</div>
+      </div>
+      <p class="testo-pezzo" style="font-family: 'Playfair Display', serif;">
+        Scatto fotografico originale scattato sul fiume Huangpu all'alba delle prime traversate a vapore.
+      </p>
+    </article>
+
+  </div>
+  <div class="relative w-full h-[450px] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-3xl border-4 border-solid border-slate-200 shadow-lg">
+  <iframe 
+    srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;it&quot; class=&quot;light&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Pagina Facebook&lt;/title&gt;
+  &lt;!-- Tailwind CSS CDN --&gt;
+  &lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;
+  &lt;!-- Font Awesome Icons for Facebook icons --&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&quot;&gt;
+  &lt;script&gt;
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            fb: {
+              blue: '#1877F2',
+              hoverBlue: '#166FE5',
+              bgLight: '#F0F2F5',
+              cardLight: '#FFFFFF',
+              bgDark: '#18191A',
+              cardDark: '#242526',
+              hoverDark: '#3A3B3C',
+              textDark: '#E4E6EB',
+              subtextDark: '#B0B3B8',
+              borderDark: '#393A3B'
+            }
+          }
+        }
+      }
+    }
+  &lt;/script&gt;
+  &lt;style&gt;
+    body { font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif; }
+    .fb-gradient-purple { background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%); color: #fff; }
+    .fb-gradient-blue { background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); color: #fff; }
+    .fb-gradient-dark { background: linear-gradient(135deg, #232526 0%, #414345 100%); color: #fff; }
+    .fb-gradient-pink { background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%); color: #fff; }
+    .fb-gradient-green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: #fff; }
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class=&quot;bg-[#F0F2F5] dark:bg-[#18191A] text-gray-900 dark:text-[#E4E6EB] min-h-screen&quot;&gt;
+
+  &lt;!-- Top Navigation Header --&gt;
+  &lt;header class=&quot;sticky top-0 z-50 bg-white dark:bg-[#242526] border-b border-gray-200 dark:border-[#393A3B] shadow-sm px-4 h-14 flex items-center justify-between&quot;&gt;
+    &lt;!-- Left: Logo &amp; Search --&gt;
+    &lt;div class=&quot;flex items-center gap-2&quot;&gt;
+      &lt;div onclick=&quot;switchTab('posts')&quot; class=&quot;text-[#1877F2] text-3xl font-bold flex items-center gap-1 cursor-pointer&quot;&gt;
+        &lt;i class=&quot;fab fa-facebook&quot;&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;relative hidden sm:block&quot;&gt;
+        &lt;i class=&quot;fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm&quot;&gt;&lt;/i&gt;
+        &lt;input id=&quot;searchInput&quot; oninput=&quot;handleHtmlSearch()&quot; type=&quot;text&quot; placeholder=&quot;Cerca su Facebook...&quot; class=&quot;bg-[#F0F2F5] dark:bg-[#3A3B3C] text-sm pl-9 pr-4 py-2 rounded-full outline-none w-60 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-[#1877F2]/50&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Center Navigation Icons (Interactive Menu) --&gt;
+    &lt;div class=&quot;hidden md:flex items-center gap-1 h-full&quot;&gt;
+      &lt;button onclick=&quot;switchTab('posts')&quot; id=&quot;nav-home&quot; class=&quot;h-full px-8 text-[#1877F2] border-b-4 border-[#1877F2] flex items-center justify-center text-xl&quot; title=&quot;Home / Post&quot;&gt;
+        &lt;i class=&quot;fas fa-home&quot;&gt;&lt;/i&gt;
+      &lt;/button&gt;
+      &lt;button onclick=&quot;switchTab('videos')&quot; id=&quot;nav-videos&quot; class=&quot;h-full px-8 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-lg flex items-center justify-center text-xl transition-colors&quot; title=&quot;Watch / Video&quot;&gt;
+        &lt;i class=&quot;fas fa-tv&quot;&gt;&lt;/i&gt;
+      &lt;/button&gt;
+      &lt;button onclick=&quot;switchTab('photos')&quot; id=&quot;nav-photos&quot; class=&quot;h-full px-8 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-lg flex items-center justify-center text-xl transition-colors&quot; title=&quot;Foto&quot;&gt;
+        &lt;i class=&quot;fas fa-images&quot;&gt;&lt;/i&gt;
+      &lt;/button&gt;
+      &lt;button onclick=&quot;switchTab('friends')&quot; id=&quot;nav-friends&quot; class=&quot;h-full px-8 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-lg flex items-center justify-center text-xl transition-colors&quot; title=&quot;Amici&quot;&gt;
+        &lt;i class=&quot;fas fa-users&quot;&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Right Controls --&gt;
+    &lt;div class=&quot;flex items-center gap-2&quot;&gt;
+      &lt;!-- Telegram / Messenger Link --&gt;
+      &lt;a id=&quot;navTelegramLink&quot; href=&quot;https://t.me/telegram&quot; target=&quot;_blank&quot; class=&quot;w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-[#0088cc] hover:opacity-80 relative&quot; title=&quot;Apri Telegram (Messenger)&quot;&gt;
+        &lt;i class=&quot;fab fa-telegram-plane text-lg&quot;&gt;&lt;/i&gt;
+      &lt;/a&gt;
+
+      &lt;!-- Bell Notifications Dropdown --&gt;
+      &lt;div class=&quot;relative&quot;&gt;
+        &lt;button id=&quot;notifBellBtn&quot; onclick=&quot;toggleNotifications()&quot; class=&quot;w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200 hover:opacity-80 relative&quot; title=&quot;Notifiche&quot;&gt;
+          &lt;i class=&quot;fas fa-bell text-lg&quot;&gt;&lt;/i&gt;
+          &lt;span id=&quot;notifBadge&quot; class=&quot;absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md&quot;&gt;0&lt;/span&gt;
+        &lt;/button&gt;
+
+        &lt;div id=&quot;notifDropdown&quot; class=&quot;hidden absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-[#242526] rounded-xl shadow-2xl border border-gray-200 dark:border-[#393A3B] z-50 overflow-hidden&quot;&gt;
+          &lt;div class=&quot;p-3.5 border-b border-gray-200 dark:border-[#393A3B] flex items-center justify-between&quot;&gt;
+            &lt;h3 class=&quot;font-bold text-gray-900 dark:text-gray-100 text-base flex items-center gap-2&quot;&gt;
+              &lt;i class=&quot;fas fa-bell text-[#1877F2]&quot;&gt;&lt;/i&gt; Notifiche
+            &lt;/h3&gt;
+            &lt;button onclick=&quot;toggleNotifications()&quot; class=&quot;text-gray-400 hover:text-gray-600&quot;&gt;
+              &lt;i class=&quot;fas fa-times&quot;&gt;&lt;/i&gt;
+            &lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div id=&quot;notifList&quot; class=&quot;max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-[#393A3B]&quot;&gt;
+            &lt;!-- Injected notifications --&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;p-2 bg-gray-50 dark:bg-[#3A3B3C]/50 text-center border-t border-gray-200 dark:border-[#393A3B]&quot;&gt;
+            &lt;button onclick=&quot;markAllNotificationsRead()&quot; class=&quot;text-xs text-[#1877F2] font-semibold hover:underline&quot;&gt;
+              &lt;i class=&quot;fas fa-check&quot;&gt;&lt;/i&gt; Segna tutte come lette
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Theme Toggle --&gt;
+      &lt;button id=&quot;themeToggleBtn&quot; onclick=&quot;toggleTheme()&quot; class=&quot;w-10 h-10 rounded-full bg-gray-200 dark:bg-[#3A3B3C] flex items-center justify-center text-gray-700 dark:text-gray-200 hover:opacity-80&quot; title=&quot;Cambia Tema&quot;&gt;
+        &lt;i class=&quot;fas fa-moon dark:hidden&quot;&gt;&lt;/i&gt;
+        &lt;i class=&quot;fas fa-sun hidden dark:inline text-amber-400&quot;&gt;&lt;/i&gt;
+      &lt;/button&gt;
+
+      &lt;img id=&quot;navAvatar&quot; onclick=&quot;switchTab('about')&quot; src=&quot;&quot; class=&quot;w-9 h-9 rounded-full object-cover border border-gray-300 cursor-pointer&quot; alt=&quot;Avatar&quot; /&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;!-- Main Container --&gt;
+  &lt;main class=&quot;max-w-6xl mx-auto pb-12&quot;&gt;
+    &lt;!-- Cover Photo &amp; Profile Banner --&gt;
+    &lt;div class=&quot;bg-white dark:bg-[#242526] shadow&quot;&gt;
+      &lt;!-- Cover --&gt;
+      &lt;div class=&quot;relative h-48 sm:h-72 md:h-96 w-full bg-gray-300 overflow-hidden&quot;&gt;
+        &lt;img id=&quot;coverImg&quot; src=&quot;&quot; class=&quot;w-full h-full object-cover&quot; alt=&quot;Copertina&quot; /&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Profile Header Info Bar --&gt;
+      &lt;div class=&quot;max-w-5xl mx-auto px-4 pb-4&quot;&gt;
+        &lt;div class=&quot;flex flex-col md:flex-row items-center md:items-end justify-between -mt-16 md:-mt-8 mb-4 gap-4&quot;&gt;
+          &lt;div class=&quot;flex flex-col md:flex-row items-center md:items-end gap-4 text-center md:text-left&quot;&gt;
+            &lt;!-- Profile Avatar --&gt;
+            &lt;div class=&quot;relative w-36 h-36 md:w-40 md:h-40 rounded-full border-4 border-white dark:border-[#242526] overflow-hidden bg-gray-200 shadow-md&quot;&gt;
+              &lt;img id=&quot;profileImg&quot; src=&quot;&quot; class=&quot;w-full h-full object-cover&quot; alt=&quot;Foto Profilo&quot; /&gt;
+            &lt;/div&gt;
+            &lt;!-- Name &amp; Bio --&gt;
+            &lt;div class=&quot;mb-2&quot;&gt;
+              &lt;h1 class=&quot;text-2xl md:text-3xl font-bold flex items-center justify-center md:justify-start gap-2&quot;&gt;
+                &lt;span id=&quot;profileName&quot;&gt;Caricamento...&lt;/span&gt;
+                &lt;i id=&quot;verifiedBadge&quot; class=&quot;fas fa-check-circle text-[#1877F2] text-xl hidden&quot;&gt;&lt;/i&gt;
+              &lt;/h1&gt;
+              &lt;p id=&quot;profileCategory&quot; class=&quot;text-gray-500 dark:text-[#B0B3B8] text-sm font-medium&quot;&gt;&lt;/p&gt;
+              &lt;p id=&quot;friendsCount&quot; class=&quot;text-gray-500 dark:text-[#B0B3B8] text-sm mt-1&quot;&gt;&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Action Buttons --&gt;
+          &lt;div class=&quot;flex items-center gap-2&quot;&gt;
+            &lt;button class=&quot;bg-[#1877F2] hover:bg-[#166FE5] text-white font-medium px-4 py-2 rounded-md text-sm flex items-center gap-2 shadow-sm&quot;&gt;
+              &lt;i class=&quot;fas fa-plus&quot;&gt;&lt;/i&gt; Segui
+            &lt;/button&gt;
+            &lt;a id=&quot;headerTelegramBtn&quot; href=&quot;https://t.me/telegram&quot; target=&quot;_blank&quot; class=&quot;bg-gray-200 dark:bg-[#3A3B3C] hover:bg-gray-300 dark:hover:bg-[#4E4F50] text-gray-800 dark:text-gray-200 font-medium px-4 py-2 rounded-md text-sm flex items-center gap-2&quot;&gt;
+              &lt;i class=&quot;fab fa-telegram-plane text-[#0088cc]&quot;&gt;&lt;/i&gt; Messaggio (Telegram)
+            &lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;hr class=&quot;border-gray-200 dark:border-[#393A3B] my-2&quot; /&gt;
+
+        &lt;!-- Profile Navigation Tabs --&gt;
+        &lt;div class=&quot;flex items-center gap-1 overflow-x-auto text-sm font-medium text-gray-600 dark:text-[#B0B3B8] no-scrollbar&quot;&gt;
+          &lt;button onclick=&quot;switchTab('posts')&quot; id=&quot;tab-posts&quot; class=&quot;px-4 py-3 text-[#1877F2] border-b-4 border-[#1877F2] font-semibold whitespace-nowrap&quot;&gt;Post&lt;/button&gt;
+          &lt;button onclick=&quot;switchTab('about')&quot; id=&quot;tab-about&quot; class=&quot;px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap&quot;&gt;Informazioni&lt;/button&gt;
+          &lt;button onclick=&quot;switchTab('friends')&quot; id=&quot;tab-friends&quot; class=&quot;px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap&quot;&gt;Amici&lt;/button&gt;
+          &lt;button onclick=&quot;switchTab('photos')&quot; id=&quot;tab-photos&quot; class=&quot;px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap&quot;&gt;Foto&lt;/button&gt;
+          &lt;button onclick=&quot;switchTab('videos')&quot; id=&quot;tab-videos&quot; class=&quot;px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap&quot;&gt;Video&lt;/button&gt;
+          &lt;button onclick=&quot;switchTab('reels')&quot; id=&quot;tab-reels&quot; class=&quot;px-4 py-3 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md whitespace-nowrap&quot;&gt;Reel&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Content Area --&gt;
+    &lt;div class=&quot;max-w-5xl mx-auto px-4 mt-4&quot;&gt;
+      
+      &lt;!-- 1. POSTS TAB CONTENT --&gt;
+      &lt;div id=&quot;content-posts&quot; class=&quot;grid grid-cols-1 md:grid-cols-12 gap-4&quot;&gt;
+        &lt;!-- Left Sidebar (Intro Box) --&gt;
+        &lt;div class=&quot;md:col-span-5 space-y-4&quot;&gt;
+          &lt;div class=&quot;bg-white dark:bg-[#242526] p-4 rounded-lg shadow border border-gray-200 dark:border-[#393A3B]&quot;&gt;
+            &lt;h2 class=&quot;text-lg font-bold mb-3&quot;&gt;Introduzione&lt;/h2&gt;
+            &lt;p id=&quot;introBio&quot; class=&quot;text-center text-sm mb-4 text-gray-700 dark:text-gray-300 font-normal whitespace-pre-wrap&quot;&gt;&lt;/p&gt;
+            
+            &lt;div id=&quot;introList&quot; class=&quot;space-y-3 text-sm text-gray-700 dark:text-gray-300&quot;&gt;
+              &lt;!-- Dynamically populated intro list --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Featured Photos Box --&gt;
+          &lt;div class=&quot;bg-white dark:bg-[#242526] p-4 rounded-lg shadow border border-gray-200 dark:border-[#393A3B]&quot;&gt;
+            &lt;div class=&quot;flex items-center justify-between mb-3&quot;&gt;
+              &lt;h2 class=&quot;text-lg font-bold&quot;&gt;Foto in evidenza&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div id=&quot;featuredPhotosGrid&quot; class=&quot;grid grid-cols-2 gap-2 rounded-lg overflow-hidden&quot;&gt;
+              &lt;!-- Photos injected here --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Right Main Feed --&gt;
+        &lt;div id=&quot;postsFeed&quot; class=&quot;md:col-span-7 space-y-4&quot;&gt;
+          &lt;!-- Posts will be rendered here dynamically --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- 2. INFORMAZIONI (ABOUT) TAB --&gt;
+      &lt;div id=&quot;content-about&quot; class=&quot;hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B] space-y-6&quot;&gt;
+        &lt;div class=&quot;border-b border-gray-200 dark:border-[#393A3B] pb-3&quot;&gt;
+          &lt;h2 class=&quot;text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2&quot;&gt;
+            &lt;i class=&quot;fas fa-info-circle text-[#1877F2]&quot;&gt;&lt;/i&gt; Informazioni e Dettagli Profilo
+          &lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;aboutFullContent&quot; class=&quot;grid grid-cols-1 md:grid-cols-2 gap-6 text-sm&quot;&gt;
+          &lt;!-- Populated dynamically --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- 3. AMICI (FRIENDS) TAB --&gt;
+      &lt;div id=&quot;content-friends&quot; class=&quot;hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B] space-y-4&quot;&gt;
+        &lt;div class=&quot;flex items-center justify-between border-b border-gray-200 dark:border-[#393A3B] pb-4&quot;&gt;
+          &lt;div&gt;
+            &lt;h2 class=&quot;text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2&quot;&gt;
+              &lt;i class=&quot;fas fa-user-friends text-[#1877F2]&quot;&gt;&lt;/i&gt; Amici
+            &lt;/h2&gt;
+            &lt;p id=&quot;friendsTabCount&quot; class=&quot;text-xs text-gray-500 mt-0.5&quot;&gt;&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;friendsGrid&quot; class=&quot;grid grid-cols-1 sm:grid-cols-2 gap-4&quot;&gt;
+          &lt;!-- Friends populated dynamically --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- 4. FOTO (PHOTOS) TAB --&gt;
+      &lt;div id=&quot;content-photos&quot; class=&quot;hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B] space-y-4&quot;&gt;
+        &lt;div class=&quot;border-b border-gray-200 dark:border-[#393A3B] pb-3&quot;&gt;
+          &lt;h2 class=&quot;text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2&quot;&gt;
+            &lt;i class=&quot;fas fa-images text-[#1877F2]&quot;&gt;&lt;/i&gt; Tutte le Foto
+          &lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;allPhotosGrid&quot; class=&quot;grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3&quot;&gt;
+          &lt;!-- Photos populated dynamically --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- 5. VIDEO TAB --&gt;
+      &lt;div id=&quot;content-videos&quot; class=&quot;hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B] space-y-4&quot;&gt;
+        &lt;div class=&quot;border-b border-gray-200 dark:border-[#393A3B] pb-3&quot;&gt;
+          &lt;h2 class=&quot;text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2&quot;&gt;
+            &lt;i class=&quot;fas fa-video text-red-500&quot;&gt;&lt;/i&gt; Tutti i Video
+          &lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;allVideosGrid&quot; class=&quot;grid grid-cols-1 sm:grid-cols-2 gap-4&quot;&gt;
+          &lt;!-- Videos populated dynamically --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- 6. REELS TAB --&gt;
+      &lt;div id=&quot;content-reels&quot; class=&quot;hidden bg-white dark:bg-[#242526] p-6 rounded-lg shadow border border-gray-200 dark:border-[#393A3B] space-y-4&quot;&gt;
+        &lt;div class=&quot;border-b border-gray-200 dark:border-[#393A3B] pb-3&quot;&gt;
+          &lt;h2 class=&quot;text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2&quot;&gt;
+            &lt;i class=&quot;fas fa-film text-pink-600&quot;&gt;&lt;/i&gt; Tutti i Reel
+          &lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;allReelsGrid&quot; class=&quot;grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4&quot;&gt;
+          &lt;!-- Reels populated dynamically --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;!-- Lightbox Modal for Fullsize Images --&gt;
+  &lt;div id=&quot;htmlLightbox&quot; onclick=&quot;closeLightbox()&quot; class=&quot;fixed inset-0 z-50 bg-black/95 hidden flex items-center justify-center p-4&quot;&gt;
+    &lt;button onclick=&quot;closeLightbox()&quot; class=&quot;absolute top-4 right-4 text-white bg-black/60 hover:bg-black/90 p-3 rounded-full text-xl z-10&quot;&gt;
+      &lt;i class=&quot;fas fa-times&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;img id=&quot;lightboxImg&quot; src=&quot;&quot; class=&quot;max-w-full max-h-[92vh] object-contain rounded-lg shadow-2xl&quot; onclick=&quot;event.stopPropagation()&quot; /&gt;
+  &lt;/div&gt;
+
+  &lt;!-- JavaScript to Fetch JSON &amp; Render Page --&gt;
+  &lt;script&gt;
+    let pageData = null;
+    const JSON_FILE = 'facebook_feed.json';
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    function openLightbox(url) {
+      if (!url) return;
+      document.getElementById('lightboxImg').src = url;
+      document.getElementById('htmlLightbox').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('htmlLightbox').classList.add('hidden');
+    }
+
+    function toggleNotifications() {
+      const dropdown = document.getElementById('notifDropdown');
+      if (dropdown) dropdown.classList.toggle('hidden');
+    }
+
+    function markAllNotificationsRead() {
+      if (!pageData || !pageData.notifications) return;
+      pageData.notifications.forEach(n =&gt; n.isUnread = false);
+      renderNotifications();
+    }
+
+    function renderNotifications() {
+      if (!pageData) return;
+      const notifs = pageData.notifications || [];
+      const unreadCount = notifs.filter(n =&gt; n.isUnread !== false).length;
+      const badge = document.getElementById('notifBadge');
+      if (badge) {
+        badge.textContent = unreadCount;
+        if (unreadCount &gt; 0) badge.classList.remove('hidden');
+        else badge.classList.add('hidden');
+      }
+
+      const list = document.getElementById('notifList');
+      if (!list) return;
+      if (notifs.length === 0) {
+        list.innerHTML = '&lt;div class=&quot;p-4 text-center text-gray-500 text-xs&quot;&gt;Nessuna notifica presente.&lt;/div&gt;';
+        return;
+      }
+
+      list.innerHTML = '';
+      notifs.forEach((n, idx) =&gt; {
+        const avatar = n.avatar || n.avatarUrl || pageData.profile.avatarUrl;
+        const title = n.title || n.user || 'Utente Facebook';
+        const text = n.text || '';
+        const isUnread = n.isUnread !== false;
+        list.innerHTML += `
+          &lt;div onclick=&quot;markSingleNotifRead(${idx})&quot; class=&quot;p-3 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-[#3A3B3C] cursor-pointer transition-colors ${isUnread ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''}&quot;&gt;
+            &lt;img src=&quot;${avatar}&quot; class=&quot;w-10 h-10 rounded-full object-cover border border-gray-200&quot; /&gt;
+            &lt;div class=&quot;flex-1 min-w-0&quot;&gt;
+              &lt;p class=&quot;text-xs text-gray-800 dark:text-gray-200&quot;&gt;
+                &lt;span class=&quot;font-bold&quot;&gt;${title}&lt;/span&gt; ${text}
+              &lt;/p&gt;
+              &lt;span class=&quot;text-[10px] text-gray-400 mt-0.5 block&quot;&gt;${n.timestamp || ''}&lt;/span&gt;
+            &lt;/div&gt;
+            ${isUnread ? '&lt;span class=&quot;w-2.5 h-2.5 bg-[#1877F2] rounded-full self-center flex-shrink-0&quot;&gt;&lt;/span&gt;' : ''}
+          &lt;/div&gt;
+        `;
+      });
+    }
+
+    function markSingleNotifRead(idx) {
+      if (!pageData || !pageData.notifications || !pageData.notifications[idx]) return;
+      pageData.notifications[idx].isUnread = false;
+      renderNotifications();
+    }
+
+    function handleHtmlSearch() {
+      const input = document.getElementById('searchInput');
+      if (!input) return;
+      const q = input.value.toLowerCase().trim();
+      
+      const feed = document.getElementById('postsFeed');
+      if (feed) {
+        const posts = feed.querySelectorAll('.fb-post-card');
+        posts.forEach(p =&gt; {
+          const txt = p.innerText.toLowerCase();
+          if (!q || txt.includes(q)) {
+            p.style.display = '';
+          } else {
+            p.style.display = 'none';
+          }
+        });
+      }
+    }
+
+    async function init() {
+      try {
+        const response = await fetch(JSON_FILE);
+        if (!response.ok) {
+          throw new Error('Impossibile caricare ' + JSON_FILE);
+        }
+        pageData = await response.json();
+        renderPage();
+      } catch (err) {
+        console.error(err);
+        document.body.innerHTML = `&lt;div class=&quot;p-8 text-center text-red-500 font-bold max-w-md mx-auto my-12 bg-white rounded-xl shadow&quot;&gt;
+          &lt;i class=&quot;fas fa-exclamation-triangle text-4xl mb-3 text-red-500&quot;&gt;&lt;/i&gt;&lt;br&gt;
+          &lt;h3 class=&quot;text-lg font-bold text-gray-900&quot;&gt;Errore nel caricamento del file JSON&lt;/h3&gt;
+          &lt;p class=&quot;text-sm text-gray-600 mt-2&quot;&gt;Assicurati che il file &lt;code&gt;&quot;${JSON_FILE}&quot;&lt;/code&gt; sia presente nella stessa cartella dell'HTML sul server web.&lt;/p&gt;
+        &lt;/div&gt;`;
+      }
+    }
+
+    function renderPage() {
+      if (!pageData) return;
+      const p = pageData.profile;
+
+      // Header &amp; Profile Setup
+      document.getElementById('navAvatar').src = p.avatarUrl;
+      document.getElementById('coverImg').src = p.coverUrl;
+      document.getElementById('profileImg').src = p.avatarUrl;
+      document.getElementById('profileName').textContent = p.name;
+      document.getElementById('profileCategory').textContent = p.category || '';
+      document.getElementById('friendsCount').textContent = p.friendsCount || '';
+
+      if (p.telegramUrl) {
+        const navTg = document.getElementById('navTelegramLink');
+        if (navTg) navTg.href = p.telegramUrl;
+        const headTg = document.getElementById('headerTelegramBtn');
+        if (headTg) headTg.href = p.telegramUrl;
+      }
+
+      if (p.isVerified) {
+        document.getElementById('verifiedBadge').classList.remove('hidden');
+      }
+
+      renderNotifications();
+
+      // 1. Intro Sidebar
+      document.getElementById('introBio').textContent = p.intro.bio || '';
+      
+      const introList = document.getElementById('introList');
+      introList.innerHTML = '';
+      if (p.intro.work) {
+        introList.innerHTML += `&lt;div class=&quot;flex items-center gap-3&quot;&gt;&lt;i class=&quot;fas fa-briefcase w-5 text-gray-500 text-center&quot;&gt;&lt;/i&gt;&lt;span&gt;${p.intro.work}&lt;/span&gt;&lt;/div&gt;`;
+      }
+      if (p.intro.education) {
+        introList.innerHTML += `&lt;div class=&quot;flex items-center gap-3&quot;&gt;&lt;i class=&quot;fas fa-graduation-cap w-5 text-gray-500 text-center&quot;&gt;&lt;/i&gt;&lt;span&gt;${p.intro.education}&lt;/span&gt;&lt;/div&gt;`;
+      }
+      if (p.intro.livesIn) {
+        introList.innerHTML += `&lt;div class=&quot;flex items-center gap-3&quot;&gt;&lt;i class=&quot;fas fa-home w-5 text-gray-500 text-center&quot;&gt;&lt;/i&gt;&lt;span&gt;${p.intro.livesIn}&lt;/span&gt;&lt;/div&gt;`;
+      }
+      if (p.intro.fromLocation) {
+        introList.innerHTML += `&lt;div class=&quot;flex items-center gap-3&quot;&gt;&lt;i class=&quot;fas fa-map-marker-alt w-5 text-gray-500 text-center&quot;&gt;&lt;/i&gt;&lt;span&gt;${p.intro.fromLocation}&lt;/span&gt;&lt;/div&gt;`;
+      }
+      if (p.intro.relationshipStatus) {
+        introList.innerHTML += `&lt;div class=&quot;flex items-center gap-3&quot;&gt;&lt;i class=&quot;fas fa-heart w-5 text-gray-500 text-center&quot;&gt;&lt;/i&gt;&lt;span&gt;${p.intro.relationshipStatus}&lt;/span&gt;&lt;/div&gt;`;
+      }
+      if (p.intro.joinedDate) {
+        introList.innerHTML += `&lt;div class=&quot;flex items-center gap-3&quot;&gt;&lt;i class=&quot;fas fa-clock w-5 text-gray-500 text-center&quot;&gt;&lt;/i&gt;&lt;span&gt;${p.intro.joinedDate}&lt;/span&gt;&lt;/div&gt;`;
+      }
+      if (p.intro.website) {
+        introList.innerHTML += `&lt;div class=&quot;flex items-center gap-3&quot;&gt;&lt;i class=&quot;fas fa-globe w-5 text-gray-500 text-center&quot;&gt;&lt;/i&gt;&lt;a href=&quot;${p.intro.website}&quot; target=&quot;_blank&quot; class=&quot;text-[#1877F2] hover:underline truncate&quot;&gt;${p.intro.website}&lt;/a&gt;&lt;/div&gt;`;
+      }
+
+      // Featured Photos Grid
+      const grid = document.getElementById('featuredPhotosGrid');
+      grid.innerHTML = '';
+      if (p.featuredPhotos &amp;&amp; p.featuredPhotos.length &gt; 0) {
+        p.featuredPhotos.forEach(url =&gt; {
+          grid.innerHTML += `&lt;img src=&quot;${url}&quot; class=&quot;w-full h-28 object-cover rounded shadow-xs&quot; /&gt;`;
+        });
+      }
+
+      // 2. Render Posts Feed
+      renderPosts(pageData.posts);
+
+      // 3. Render About Tab Details
+      renderAboutTab(p);
+
+      // 4. Render Friends Tab
+      renderFriendsTab();
+
+      // 5. Render Photos Tab
+      renderPhotosTab();
+
+      // 6. Render Videos Tab
+      renderVideosTab();
+
+      // 7. Render Reels Tab
+      renderReelsTab();
+    }
+
+    function renderPosts(posts) {
+      const feed = document.getElementById('postsFeed');
+      feed.innerHTML = '';
+
+      if (!posts || posts.length === 0) {
+        feed.innerHTML = '&lt;div class=&quot;bg-white dark:bg-[#242526] p-6 rounded-lg text-center text-gray-500&quot;&gt;Nessun post presente sulla bacheca.&lt;/div&gt;';
+        return;
+      }
+
+      posts.forEach(post =&gt; {
+        const postEl = document.createElement('div');
+        postEl.className = 'fb-post-card bg-white dark:bg-[#242526] rounded-lg shadow border border-gray-200 dark:border-[#393A3B] overflow-hidden';
+        
+        let mediaHtml = '';
+        if (post.type === 'image' &amp;&amp; post.imageUrls &amp;&amp; post.imageUrls.length &gt; 0) {
+          mediaHtml = `&lt;div class=&quot;mt-2 bg-[#0f0f0f] flex justify-center cursor-pointer&quot; onclick=&quot;openLightbox('${post.imageUrls[0]}')&quot;&gt;&lt;img src=&quot;${post.imageUrls[0]}&quot; class=&quot;w-full h-auto max-h-[650px] object-contain&quot; /&gt;&lt;/div&gt;`;
+        } else if (post.type === 'reel' &amp;&amp; post.videoUrl) {
+          mediaHtml = `&lt;div class=&quot;mt-2 relative bg-black flex justify-center py-4&quot;&gt;
+            &lt;video src=&quot;${post.videoUrl}&quot; controls class=&quot;max-h-[500px] rounded-lg shadow-lg&quot; loop&gt;&lt;/video&gt;
+          &lt;/div&gt;`;
+        } else if (post.type === 'video' &amp;&amp; post.videoUrl) {
+          if (post.isEmbedIframe || post.videoUrl.includes('youtube') || post.videoUrl.includes('embed')) {
+            mediaHtml = `&lt;div class=&quot;mt-2 aspect-video w-full&quot;&gt;&lt;iframe src=&quot;${post.videoUrl}&quot; class=&quot;w-full h-full&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;`;
+          } else {
+            mediaHtml = `&lt;div class=&quot;mt-2&quot;&gt;&lt;video src=&quot;${post.videoUrl}&quot; controls class=&quot;w-full max-h-[500px]&quot;&gt;&lt;/video&gt;&lt;/div&gt;`;
+          }
+        }
+
+        let bgClass = '';
+        if (post.textBackgroundPreset) {
+          bgClass = 'fb-' + post.textBackgroundPreset + ' p-8 text-center text-2xl font-bold rounded-md my-2';
+        }
+
+        const reactionTotal = Object.values(post.reactions || {}).reduce((a, b) =&gt; (Number(a)||0) + (Number(b)||0), 0);
+
+        let commentsHtml = '';
+        if (post.comments &amp;&amp; post.comments.length &gt; 0) {
+          commentsHtml = `&lt;div class=&quot;bg-gray-50/80 dark:bg-[#18191A]/60 p-3.5 border-t border-gray-100 dark:border-[#393A3B] space-y-2.5&quot;&gt;`;
+          post.comments.forEach(c =&gt; {
+            const avatar = c.authorAvatar || pageData.profile.avatarUrl;
+            const commentText = c.text || c.content || '';
+            commentsHtml += `
+              &lt;div class=&quot;flex items-start gap-2 text-xs&quot;&gt;
+                &lt;img src=&quot;${avatar}&quot; class=&quot;w-7 h-7 rounded-full object-cover mt-0.5&quot; /&gt;
+                &lt;div class=&quot;flex-1&quot;&gt;
+                  &lt;div class=&quot;bg-white dark:bg-[#3A3B3C] p-2.5 rounded-2xl shadow-2xs inline-block&quot;&gt;
+                    &lt;span class=&quot;font-bold text-gray-900 dark:text-gray-100 block&quot;&gt;${c.authorName}&lt;/span&gt;
+                    &lt;p class=&quot;text-gray-800 dark:text-gray-200 font-normal mt-0.5&quot;&gt;${commentText}&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;flex items-center gap-3 text-[11px] text-gray-500 dark:text-gray-400 mt-1 pl-2&quot;&gt;
+                    &lt;span class=&quot;hover:underline font-semibold cursor-pointer&quot;&gt;Mi piace&lt;/span&gt;
+                    &lt;span class=&quot;hover:underline font-semibold cursor-pointer&quot;&gt;Rispondi&lt;/span&gt;
+                    &lt;span&gt;${c.timestamp || ''}&lt;/span&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            `;
+          });
+          commentsHtml += `&lt;/div&gt;`;
+        }
+
+        postEl.innerHTML = `
+          &lt;div class=&quot;p-4&quot;&gt;
+            &lt;!-- Author Header --&gt;
+            &lt;div class=&quot;flex items-center justify-between&quot;&gt;
+              &lt;div class=&quot;flex items-center gap-3&quot;&gt;
+                &lt;img src=&quot;${post.authorAvatar || pageData.profile.avatarUrl}&quot; class=&quot;w-10 h-10 rounded-full object-cover&quot; /&gt;
+                &lt;div&gt;
+                  &lt;h3 class=&quot;font-bold text-sm flex items-center gap-1&quot;&gt;
+                    ${post.authorName || pageData.profile.name}
+                    ${post.isVerified ? '&lt;i class=&quot;fas fa-check-circle text-[#1877F2] text-xs&quot;&gt;&lt;/i&gt;' : ''}
+                  &lt;/h3&gt;
+                  &lt;p class=&quot;text-xs text-gray-500 dark:text-[#B0B3B8] flex items-center gap-1&quot;&gt;
+                    ${post.timestamp} • &lt;i class=&quot;fas fa-globe-americas&quot;&gt;&lt;/i&gt;
+                    ${post.isPinned ? '&lt;span class=&quot;ml-2 text-[#1877F2] font-semibold&quot;&gt;&lt;i class=&quot;fas fa-thumbtack&quot;&gt;&lt;/i&gt; Post fissato&lt;/span&gt;' : ''}
+                  &lt;/p&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Content Text --&gt;
+            &lt;div class=&quot;mt-3 text-sm whitespace-pre-wrap ${bgClass}&quot;&gt;${post.content || ''}&lt;/div&gt;
+          &lt;/div&gt;
+
+          ${mediaHtml}
+
+          &lt;!-- Post Footer / Reactions Info --&gt;
+          &lt;div class=&quot;px-4 py-2 border-t border-gray-100 dark:border-[#393A3B] text-xs text-gray-500 dark:text-[#B0B3B8] flex items-center justify-between&quot;&gt;
+            &lt;div class=&quot;flex items-center gap-1&quot;&gt;
+              &lt;span class=&quot;bg-[#1877F2] text-white p-1 rounded-full text-[10px]&quot;&gt;&lt;i class=&quot;fas fa-thumbs-up&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+              &lt;span class=&quot;bg-red-500 text-white p-1 rounded-full text-[10px]&quot;&gt;&lt;i class=&quot;fas fa-heart&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+              &lt;span&gt;${reactionTotal}&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div&gt;${(post.comments || []).length} commenti • ${post.sharesCount || 0} condivisioni&lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Interaction Buttons --&gt;
+          &lt;div class=&quot;flex justify-around py-1 mx-3 border-t border-gray-100 dark:border-[#393A3B]&quot;&gt;
+            &lt;button class=&quot;flex-1 flex items-center justify-center gap-2 py-2 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md text-gray-600 dark:text-gray-300 font-semibold text-sm&quot;&gt;
+              &lt;i class=&quot;far fa-thumbs-up&quot;&gt;&lt;/i&gt; Mi piace
+            &lt;/button&gt;
+            &lt;button class=&quot;flex-1 flex items-center justify-center gap-2 py-2 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md text-gray-600 dark:text-gray-300 font-semibold text-sm&quot;&gt;
+              &lt;i class=&quot;far fa-comment&quot;&gt;&lt;/i&gt; Commenta
+            &lt;/button&gt;
+            &lt;button class=&quot;flex-1 flex items-center justify-center gap-2 py-2 hover:bg-gray-100 dark:hover:bg-[#3A3B3C] rounded-md text-gray-600 dark:text-gray-300 font-semibold text-sm&quot;&gt;
+              &lt;i class=&quot;fas fa-share&quot;&gt;&lt;/i&gt; Condividi
+            &lt;/button&gt;
+          &lt;/div&gt;
+
+          ${commentsHtml}
+        `;
+
+        feed.appendChild(postEl);
+      });
+    }
+
+    function renderAboutTab(p) {
+      const container = document.getElementById('aboutFullContent');
+      if (!container) return;
+
+      container.innerHTML = `
+        &lt;div class=&quot;space-y-3 bg-gray-50 dark:bg-[#3A3B3C]/30 p-4 rounded-xl border border-gray-200 dark:border-gray-700&quot;&gt;
+          &lt;h3 class=&quot;font-bold text-base border-b pb-2 dark:border-gray-700&quot;&gt;Lavoro e Istruzione&lt;/h3&gt;
+          &lt;p class=&quot;flex items-center gap-2&quot;&gt;&lt;i class=&quot;fas fa-briefcase text-gray-500&quot;&gt;&lt;/i&gt; &lt;strong&gt;Lavoro:&lt;/strong&gt; ${p.intro.work || 'Non specificato'}&lt;/p&gt;
+          &lt;p class=&quot;flex items-center gap-2&quot;&gt;&lt;i class=&quot;fas fa-graduation-cap text-gray-500&quot;&gt;&lt;/i&gt; &lt;strong&gt;Istruzione:&lt;/strong&gt; ${p.intro.education || 'Non specificata'}&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;space-y-3 bg-gray-50 dark:bg-[#3A3B3C]/30 p-4 rounded-xl border border-gray-200 dark:border-gray-700&quot;&gt;
+          &lt;h3 class=&quot;font-bold text-base border-b pb-2 dark:border-gray-700&quot;&gt;Luoghi in cui hai vissuto&lt;/h3&gt;
+          &lt;p class=&quot;flex items-center gap-2&quot;&gt;&lt;i class=&quot;fas fa-home text-gray-500&quot;&gt;&lt;/i&gt; &lt;strong&gt;Città attuale:&lt;/strong&gt; ${p.intro.livesIn || 'Non specificata'}&lt;/p&gt;
+          &lt;p class=&quot;flex items-center gap-2&quot;&gt;&lt;i class=&quot;fas fa-map-marker-alt text-gray-500&quot;&gt;&lt;/i&gt; &lt;strong&gt;Città di origine:&lt;/strong&gt; ${p.intro.fromLocation || 'Non specificata'}&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;space-y-3 bg-gray-50 dark:bg-[#3A3B3C]/30 p-4 rounded-xl border border-gray-200 dark:border-gray-700&quot;&gt;
+          &lt;h3 class=&quot;font-bold text-base border-b pb-2 dark:border-gray-700&quot;&gt;Informazioni di contatto e web&lt;/h3&gt;
+          &lt;p class=&quot;flex items-center gap-2&quot;&gt;&lt;i class=&quot;fas fa-globe text-gray-500&quot;&gt;&lt;/i&gt; &lt;strong&gt;Sito Web:&lt;/strong&gt; &lt;a href=&quot;${p.intro.website || '#'}&quot; target=&quot;_blank&quot; class=&quot;text-[#1877F2] hover:underline&quot;&gt;${p.intro.website || 'Non inserito'}&lt;/a&gt;&lt;/p&gt;
+          &lt;p class=&quot;flex items-center gap-2&quot;&gt;&lt;i class=&quot;fas fa-users text-gray-500&quot;&gt;&lt;/i&gt; &lt;strong&gt;Follower:&lt;/strong&gt; ${p.intro.followersCount || '0'}&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;space-y-3 bg-gray-50 dark:bg-[#3A3B3C]/30 p-4 rounded-xl border border-gray-200 dark:border-gray-700&quot;&gt;
+          &lt;h3 class=&quot;font-bold text-base border-b pb-2 dark:border-gray-700&quot;&gt;Informazioni di base&lt;/h3&gt;
+          &lt;p class=&quot;flex items-center gap-2&quot;&gt;&lt;i class=&quot;fas fa-heart text-gray-500&quot;&gt;&lt;/i&gt; &lt;strong&gt;Relazione:&lt;/strong&gt; ${p.intro.relationshipStatus || 'Non specificata'}&lt;/p&gt;
+          &lt;p class=&quot;flex items-center gap-2&quot;&gt;&lt;i class=&quot;fas fa-clock text-gray-500&quot;&gt;&lt;/i&gt; &lt;strong&gt;Data di iscrizione:&lt;/strong&gt; ${p.intro.joinedDate || 'Facebook Member'}&lt;/p&gt;
+        &lt;/div&gt;
+      `;
+    }
+
+    function renderFriendsTab() {
+      const container = document.getElementById('friendsGrid');
+      const countEl = document.getElementById('friendsTabCount');
+      if (!container) return;
+
+      const friends = pageData.friendsList || [];
+
+      if (countEl) countEl.textContent = `Tutti gli amici (${friends.length})`;
+
+      container.innerHTML = '';
+      if (friends.length === 0) {
+        container.innerHTML = '&lt;p class=&quot;text-center text-gray-500 col-span-2 py-8&quot;&gt;Nessun amico presente nella lista.&lt;/p&gt;';
+        return;
+      }
+
+      friends.forEach(f =&gt; {
+        container.innerHTML += `
+          &lt;div class=&quot;flex items-center gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#3A3B3C]/30&quot;&gt;
+            &lt;img src=&quot;${f.avatar}&quot; class=&quot;w-16 h-16 rounded-lg object-cover&quot; /&gt;
+            &lt;div&gt;
+              &lt;h4 class=&quot;font-bold text-sm text-gray-900 dark:text-gray-100&quot;&gt;${f.name}&lt;/h4&gt;
+              &lt;p class=&quot;text-xs text-gray-500 mt-0.5&quot;&gt;${f.mutualFriends || 'Amico su Facebook'}&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        `;
+      });
+    }
+
+    function renderPhotosTab() {
+      const container = document.getElementById('allPhotosGrid');
+      if (!container) return;
+
+      const p = pageData.profile;
+      const allImgs = [];
+      if (p.avatarUrl) allImgs.push(p.avatarUrl);
+      if (p.coverUrl) allImgs.push(p.coverUrl);
+      if (p.featuredPhotos) allImgs.push(...p.featuredPhotos);
+
+      (pageData.posts || []).forEach(post =&gt; {
+        if (post.imageUrls &amp;&amp; post.imageUrls.length &gt; 0) {
+          allImgs.push(...post.imageUrls);
+        }
+      });
+
+      const uniqueImgs = Array.from(new Set(allImgs));
+      container.innerHTML = '';
+
+      uniqueImgs.forEach(url =&gt; {
+        container.innerHTML += `
+          &lt;div onclick=&quot;openLightbox('${url}')&quot; class=&quot;aspect-square bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow-xs cursor-pointer group&quot;&gt;
+            &lt;img src=&quot;${url}&quot; class=&quot;w-full h-full object-cover group-hover:scale-105 transition-transform&quot; /&gt;
+          &lt;/div&gt;
+        `;
+      });
+    }
+
+    function renderVideosTab() {
+      const container = document.getElementById('allVideosGrid');
+      if (!container) return;
+
+      const videoPosts = (pageData.posts || []).filter(p =&gt; p.type === 'video' &amp;&amp; p.videoUrl);
+      container.innerHTML = '';
+
+      if (videoPosts.length === 0) {
+        container.innerHTML = '&lt;p class=&quot;text-center text-gray-500 col-span-2 py-8&quot;&gt;Nessun video presente nella bacheca.&lt;/p&gt;';
+        return;
+      }
+
+      videoPosts.forEach(post =&gt; {
+        let videoPlayer = '';
+        if (post.isEmbedIframe || post.videoUrl.includes('youtube') || post.videoUrl.includes('embed')) {
+          videoPlayer = `&lt;iframe src=&quot;${post.videoUrl}&quot; class=&quot;w-full h-full&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;`;
+        } else {
+          videoPlayer = `&lt;video src=&quot;${post.videoUrl}&quot; controls class=&quot;w-full h-full object-cover&quot;&gt;&lt;/video&gt;`;
+        }
+
+        container.innerHTML += `
+          &lt;div class=&quot;bg-gray-50 dark:bg-[#3A3B3C]/50 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden&quot;&gt;
+            &lt;div class=&quot;aspect-video w-full bg-black&quot;&gt;${videoPlayer}&lt;/div&gt;
+            &lt;div class=&quot;p-3&quot;&gt;
+              &lt;h4 class=&quot;font-bold text-sm text-gray-900 dark:text-gray-100 line-clamp-1&quot;&gt;${post.videoTitle || post.content || 'Video Facebook'}&lt;/h4&gt;
+              &lt;p class=&quot;text-xs text-gray-500 mt-1&quot;&gt;${post.timestamp}&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        `;
+      });
+    }
+
+    function renderReelsTab() {
+      const container = document.getElementById('allReelsGrid');
+      if (!container) return;
+
+      const reelPosts = (pageData.posts || []).filter(p =&gt; p.type === 'reel' &amp;&amp; p.videoUrl);
+      container.innerHTML = '';
+
+      if (reelPosts.length === 0) {
+        container.innerHTML = '&lt;p class=&quot;text-center text-gray-500 col-span-4 py-8&quot;&gt;Nessun Reel pubblicato.&lt;/p&gt;';
+        return;
+      }
+
+      reelPosts.forEach(post =&gt; {
+        container.innerHTML += `
+          &lt;div class=&quot;relative aspect-[9/16] bg-black rounded-xl overflow-hidden shadow-lg border border-gray-800&quot;&gt;
+            &lt;video src=&quot;${post.videoUrl}&quot; controls loop class=&quot;w-full h-full object-cover&quot;&gt;&lt;/video&gt;
+            &lt;div class=&quot;absolute top-2 left-2 bg-pink-600 text-white px-2 py-0.5 rounded-full text-[10px] font-bold&quot;&gt;REEL&lt;/div&gt;
+            ${post.reelViewsCount ? `&lt;div class=&quot;absolute bottom-2 left-2 text-white text-[11px] font-bold flex items-center gap-1 bg-black/60 px-2 py-0.5 rounded&quot;&gt;&lt;i class=&quot;fas fa-play&quot;&gt;&lt;/i&gt; ${post.reelViewsCount.toLocaleString()}&lt;/div&gt;` : ''}
+          &lt;/div&gt;
+        `;
+      });
+    }
+
+    function switchTab(tabName) {
+      ['posts', 'about', 'friends', 'photos', 'videos', 'reels'].forEach(t =&gt; {
+        const content = document.getElementById('content-' + t);
+        const btn = document.getElementById('tab-' + t);
+        if (content) content.classList.add('hidden');
+        if (btn) {
+          btn.classList.remove('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]', 'font-semibold');
+        }
+      });
+
+      // Update Nav Icons
+      ['home', 'videos', 'photos', 'friends'].forEach(nav =&gt; {
+        const navBtn = document.getElementById('nav-' + nav);
+        if (navBtn) {
+          navBtn.classList.remove('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]');
+          navBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+        }
+      });
+
+      const activeContent = document.getElementById('content-' + tabName);
+      const activeBtn = document.getElementById('tab-' + tabName);
+      if (activeContent) activeContent.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.classList.add('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]', 'font-semibold');
+      }
+
+      // Highlight Nav Icon
+      if (tabName === 'posts') {
+        const n = document.getElementById('nav-home');
+        if (n) { n.classList.add('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]'); n.classList.remove('text-gray-500'); }
+      } else if (tabName === 'videos' || tabName === 'reels') {
+        const n = document.getElementById('nav-videos');
+        if (n) { n.classList.add('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]'); n.classList.remove('text-gray-500'); }
+      } else if (tabName === 'photos') {
+        const n = document.getElementById('nav-photos');
+        if (n) { n.classList.add('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]'); n.classList.remove('text-gray-500'); }
+      } else if (tabName === 'friends') {
+        const n = document.getElementById('nav-friends');
+        if (n) { n.classList.add('text-[#1877F2]', 'border-b-4', 'border-[#1877F2]'); n.classList.remove('text-gray-500'); }
+      }
+    }
+
+    window.onload = init;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" 
+    class="w-full h-full border-0"
+    title="Pagina HTML Interna Inline"
+    scrolling="auto"
+    loading="lazy">
+  </iframe>
+</div>
+</div>
+
+
+</body>
+</html>
