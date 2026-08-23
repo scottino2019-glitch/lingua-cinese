@@ -955,47 +955,60 @@ body {
       </div>
 
       <!-- CARD POST-IT GIALLO CON SPILLA 📌 -->
-      <div class="relative col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#fef08a] text-slate-900 border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between min-h-[160px]">
-        <!-- Spilla 📌 in alto al centro -->
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-lg select-none">
+      <div class="absolute -top-2.5 right-4 text-base select-none z-10">
           📌
         </div>
 
-        <div class="flex items-center justify-between pt-1">
-          <span class="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-300/80 px-2 py-0.5 rounded">
-            MEMO / FOCUS
+        <div class="flex items-center justify-between pt-1 pl-2 relative z-10">
+          <span class="text-[9px] font-black uppercase tracking-wider text-amber-950 bg-amber-200/90 px-2 py-0.5 rounded border border-amber-300">
+            📖 笔记本 / NOTEBOOK
           </span>
-          <span class="text-xs font-mono font-bold text-amber-900">#01</span>
+          <span class="text-xs font-mono font-bold text-amber-800 mr-4">#02</span>
         </div>
 
-        <div class="my-1">
-          <p class="text-xs sm:text-sm font-black text-slate-900 font-sans leading-snug">
-            “La semplicità è la massima sofisticazione.”
+        <div class="my-1 pl-2 relative z-10">
+          <p class="text-xs font-bold text-slate-800 font-sans leading-snug">
+            “学而不思则罔，思而不学则殆。”
+          </p>
+          <p class="text-[10px] text-amber-900/80 italic mt-0.5 font-sans">
+            Studiare senza riflettere è vano; riflettere senza studiare è pericoloso.
           </p>
         </div>
 
-        <div class="text-[10px] font-mono text-amber-900 font-bold flex justify-between border-t border-amber-300 pt-1">
-          <span>Priorità: Alta</span>
-          <span>✓ Oggi</span>
+        <div class="text-[10px] font-mono text-amber-900 font-bold flex justify-between border-t border-amber-300/80 pt-1 pl-2 relative z-10">
+          <span>Appunti Personali</span>
+   <a href="https://poliglotta-pdf.vercel.app/"       <button class="text-amber-800 font-bold">✓ Quaderno</button> </a>
         </div>
       </div>
 
       <!-- CARD COBALTO ANGOLI ASIMMETRICI -->
-      <div class="col-span-1 sm:col-span-1 row-span-1 p-5 bg-blue-600 text-white border-2 border-slate-950 rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px]">
-        <div class="flex items-center justify-between">
-          <span class="text-[10px] font-mono font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
-            ★ STAMP #84
+     <div class="relative overflow-hidden col-span-1 sm:col-span-1 row-span-1 p-5 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white border-2 border-slate-950 rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px] group">
+        <!-- Sigillo / Ideogramma Grande di Sfondo Filigrana -->
+        <div class="absolute -right-3 -bottom-4 select-none pointer-events-none opacity-20 font-calligrafico text-7xl text-amber-300 transform -rotate-12 group-hover:scale-110 group-hover:opacity-30 transition-all duration-500">
+          龙
+        </div>
+        <!-- Timbro Sigillo Cinese Rosso/Oro ad incisione -->
+        <div class="absolute top-2 right-4 w-7 h-7 rounded bg-red-700/80 border border-amber-300 flex items-center justify-center text-[11px] font-calligrafico text-amber-200 shadow-inner rotate-6 select-none pointer-events-none">
+          印
+        </div>
+
+        <div class="flex items-center justify-between relative z-10">
+          <span class="text-[10px] font-mono font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full border border-white/20">
+            ★ 中国激进分子
           </span>
-          <span class="text-xs font-bold text-blue-200">2026</span>
+          <span class="text-xs font-bold text-blue-200 mr-7">2026</span>
         </div>
 
-        <div>
-          <h4 class="text-sm font-black text-white">Moduli Dinamici</h4>
-          <p class="text-[11px] text-blue-100 mt-0.5">Forme e geometrie che rompono la monotonia.</p>
+        <div class="relative z-10">
+          <h4 class="text-sm font-black text-white flex items-center gap-1.5">
+           Radicali cinesi
+          </h4>
+          <p class="text-[11px] text-blue-100 mt-0.5">Impara i radicali per capire meglio gli ideogrammi</p>
         </div>
 
-        <div class="text-[10px] font-mono text-blue-200 flex justify-between border-t border-blue-500 pt-1">
-          <span>Crafted with pure Tailwind</span>
+        <div class="text-[10px] font-mono text-blue-200 flex justify-between border-t border-blue-500/80 pt-1 relative z-10">
+          
+   <a href="Radicali_Cinesi">       <button class="text-blue-300 font-mono">✦ 东方美学</button></a>
         </div>
       </div>
 
@@ -1043,23 +1056,33 @@ body {
       </div>
 
       <!-- CARD SMERALDO FOREST STATISTICA -->
-      <div class="col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px]">
-        <div class="flex items-center justify-between">
-          <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/80 px-2 py-0.5 rounded-full">
-            SPEED SCORE
-          </span>
-          <span class="text-xs font-bold text-emerald-300 bg-emerald-900 px-2 py-0.5 rounded-md">
-            +28% ↗
-          </span>
+    <!-- CARD SMERALDO FOREST STATISTICA (CON SIGILLO E IDEOGRAMMA) -->
+      <div class="relative overflow-hidden col-span-1 sm:col-span-1 row-span-1 p-5 bg-gradient-to-br from-[#065f46] to-[#022c22] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px] group">
+        <!-- Ideogramma Smeraldo Sfondo Filigrana (极 = Velocità/Top) -->
+        <div class="absolute -right-2 -bottom-3 select-none pointer-events-none opacity-20 font-calligrafico text-7xl text-emerald-300 transform -rotate-6 group-hover:scale-110 group-hover:opacity-30 transition-all duration-500">
+          极
         </div>
 
-        <div class="my-1">
-          <div class="text-3xl font-black tracking-tight text-white">99.9%</div>
-          <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Uptime & Performance Globale</p>
+        <div class="flex items-center justify-between relative z-10">
+          <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/90 px-2 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            IDEOGRAMMI
+          </span>
+     <a href="caratteri.html"     <button class="text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-600/40 px-2 py-0.5 rounded-md shadow-xs">
+            Vai ↗
+          </button></a>
         </div>
 
-        <div class="w-full bg-emerald-800 rounded-full h-1.5 overflow-hidden">
-          <div class="bg-emerald-300 h-full w-[94%] rounded-full"></div>
+        <div class="my-1 relative z-10">
+          <div class="text-3xl font-black tracking-tight text-white flex items-baseline gap-2">
+            表意符号
+            <span class="text-[10px] font-mono text-emerald-300 font-normal">迅捷 / FAST</span>
+          </div>
+          <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Scopri gli ideogrammi cinesi</p>
+        </div>
+
+        <div class="w-full bg-emerald-950/80 rounded-full h-1.5 overflow-hidden relative z-10 border border-emerald-800/50">
+          <div class="bg-gradient-to-r from-emerald-400 to-teal-200 h-full w-[94%] rounded-full"></div>
         </div>
       </div>
 
