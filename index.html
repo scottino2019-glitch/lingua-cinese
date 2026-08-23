@@ -1,320 +1,3 @@
-
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎨 Creative Multi-Color Studio (Vibrante & Tattile)</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-/* ==========================================================================
-   Bento Studio - Custom Styles & Backgrounds
-   ========================================================================== */
-/* Stile Base */
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #f7f4ed;
-  background-image: radial-gradient(#292524 1.1px, transparent 1.1px);
-  background-size: 22px 22px;
-  color: #1c1917;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Transizioni fluide */
-* {
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-}
-/* --- DEVICE: SMARTPHONE --- */
-.smartphone-card {
-  position: relative;
-  width: 310px;
-  min-height: 290px;
-  background-color:#F34E90;
-  border: 1px solid #1f222b;
-  border-radius: 16px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-}
-
-.smartphone-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  border-color: #06b6d4;
-  box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15), 0 15px 30px rgba(0, 0, 0, 0.5);
-}
-
-.phone-rim {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border: 2px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.phone-bezel {
-  position: relative;
-  width: 220px;
-  height: 250px;
-  background:#00A4EF;
-  border: 4px solid #14151a;
-  border-radius: 20px;
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.05);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 2;
-  transition: border-color 0.4s;
-}
-.smartphone-card:hover .phone-bezel {
-  border-color: #1e1f26;
-}
-
-/* Speaker and camera */
-.phone-earpiece {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 34px;
-  height: 3px;
-  background: #830777;
-  border-radius: 2px;
-  z-index: 10;
-}
-.phone-camera {
-  position: absolute;
-  top: 5px;
-  left: calc(50% + 24px);
-  width: 5px;
-  height: 5px;
-  background: #111;
-  border: 1px solid #1f1f22;
-  border-radius: 50%;
-  z-index: 10;
-}
-
-/* Screen */
-.phone-screen {
-  position: relative;
-  flex-grow: 1;
-  background: #B1210D;
-  margin: 3px;
-  border-radius: 14px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.phone-status-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 10px;
-  font-family: monospace;
-  font-size: 8px;
-  color: #000;
-  z-index: 6;
-}
-.status-right {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-.phone-wifi {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #444;
-  transition: background-color 0.4s;
-}
-.phone-battery {
-  width: 9px;
-  height: 5px;
-  border: 1px solid #444;
-  border-radius: 1px;
-  position: relative;
-  transition: border-color 0.4s;
-}
-.phone-battery::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 60%;
-  background: #444;
-}
-.smartphone-card:hover .phone-wifi {
-  background-color: #06b6d4;
-}
-.smartphone-card:hover .phone-battery {
-  border-color: #10b981;
-}
-.smartphone-card:hover .phone-battery::after {
-  width: 100%;
-  background: #10b981;
-  animation: batteryChargePulse 1s infinite alternate;
-}
-
-/* Clock section */
-.lockscreen-clock {
-  text-align: center;
-  margin-top: 14px;
-  z-index: 5;
-}
-.clock-hour {
-  font-size: 24px;
-  font-weight: 200;
-  color: #fff;
-  letter-spacing: -0.5px;
-  transition: transform 0.4s;
-}
-.smartphone-card:hover .clock-hour {
-  transform: scale(1.05);
-}
-.clock-date {
-  font-size: 10px;
-  letter-spacing: 1.2px;
-  color: #00;
-  font-weight: bold;
-}
-
-/* Push messages */
-.push-messages {
-  flex-grow: 1;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  justify-content: flex-start;
-  z-index: 5;
-  margin-top: 6px;
-}
-.msg-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 6px;
-  padding: 6px 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  opacity: 0.15;
-  transform: translateY(8px);
-  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-}
-.msg-dot {
-  width: 5px;
-  height: 5px;
-  background: #888;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.msg-dot.neon { background: #06b6d4; }
-.msg-text {
-  display: flex;
-  flex-direction: column;
-}
-.msg-sender {
-  font-size: 7px;
-  font-weight: bold;
-  color: #e4e4e7;
-}
-.msg-preview {
-  font-size: 6px;
-  color: #a1a1aa;
-  line-height: 1.2;
-}
-
-.smartphone-card:hover .msg-1 {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.1s;
-}
-.smartphone-card:hover .msg-2 {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.25s;
-}
-
-/* Charging Wave Effect */
-.charging-wave-ocean {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 0px;
-  background: rgba(6, 182, 212, 0.12);
-  overflow: hidden;
-  transition: height 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.smartphone-card:hover .charging-wave-ocean {
-  height: 55px;
-}
-.liquid-wave {
-  position: absolute;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  border-radius: 38%;
-  background-color: rgba(6, 182, 212, 0.25);
-  bottom: 12px;
-}
-.wave-back {
-  animation: waveScroll 5s linear infinite;
-}
-.wave-front {
-  background-color: rgba(6, 182, 212, 0.4);
-  bottom: 6px;
-  animation: waveScroll 3s linear infinite reverse;
-}
-.charging-text {
-  position: relative;
-  z-index: 10;
-  font-family: monospace;
-  font-size: 7px;
-  color: #ffffff;
-  font-weight: 900;
-  letter-spacing: 0.8px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-.smartphone-card:hover .charging-text {
-  opacity: 1;
-}
-
-.phone-home-indicator {
-  width: 45px;
-  height: 2px;
-  background: #333;
-  margin: 4px auto;
-  border-radius: 1px;
-  z-index: 6;
-  transition: background-color 0.4s;
-}
-.smartphone-card:hover .phone-home-indicator {
-  background: #fff;
-}
-
-@keyframes waveScroll {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@keyframes batteryChargePulse {
-  0% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
-  </style>
-</head>
-<body class="min-h-screen antialiased">
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -585,7 +268,7 @@ body {
 
 
 
-      <!-- CARD Biblioteca -->
+      <!-- CARD SMERALDO FOREST STATISTICA -->
 <div class="col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between">
   <div class="flex items-center justify-between">
     <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/80 px-2 py-0.5 rounded-full">
@@ -607,7 +290,7 @@ body {
 </div>
 
 
-      <!-- Fascebook-->
+      <!-- FRAME POLAROID 1:1 CON WASHI TAPE -->
 <div class="relative col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform">
   <!-- Washi tape in alto centrato -->
   <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/90 text-amber-950 text-[10px] font-mono font-black px-6 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400">
@@ -635,18 +318,18 @@ body {
 
 
 
-      <!-- Pdf -->
+      <!-- Vocabolario -->
 <div class="col-span-1 sm:col-span-2 row-span-1 p-5 bg-amber-400 text-slate-950 border-3 border-slate-950 rounded-2xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all flex items-center justify-between gap-4">
   <div>
     <span class="text-[10px] font-black uppercase tracking-widest bg-slate-950 text-amber-400 px-2 py-0.5 rounded">
       PDF
     </span>
     <h3 class="text-base font-black text-slate-950 mt-1">Lettura e Caratteri</h3>
-
+   
   </div>
-<a href="cinese-pdf.html" >  <button class="px-4 py-2 bg-slate-950 hover:bg-slate-900 text-white font-black text-xs rounded-xl border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] whitespace-nowrap">
+<a href="cinese-pdf.html" > <button class="px-4 py-2 bg-slate-950 hover:bg-slate-900 text-white font-black text-xs rounded-xl border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] whitespace-nowrap">
     Scopri ➔
-  </button></a>
+  </button></a> 
 </div>
       <!-- CARD Frasario 📌 -->
 <div class="relative col-span-1 row-span-1 p-5 bg-[#fef08a] text-slate-900 border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between">
@@ -657,23 +340,23 @@ body {
 
   <div class="flex items-center justify-between pt-1">
     <span class="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-300/80 px-2 py-0.5 rounded">
-        FRASARIO CINESE
+      FRASARIO CINESE
     </span>
     <span class="text-xs font-mono font-bold text-amber-900">#01</span>
   </div>
 
   <div class="my-1">
     <p class="text-xs sm:text-sm font-black text-slate-900 font-sans leading-snug">
-      “La semplicità è la massima sofisticazione.”
+      “Raccolta di frasi per ogni occasione”
     </p>
   </div>
 
   <div class="text-[10px] font-mono text-amber-900 font-bold flex justify-between border-t border-amber-300 pt-1">
-    <span>Frasi per Ogni Occasione</span>
-   <a href="frasi-cinesi.html">  <button>✓ Lette</button></a> 
+    
+ <a href="frasi-cinesi.html">  <button>✓ Lette</button></a> 
   </div>
 </div>
-     <!-- CARD Utility-->
+      <!-- CARD Utility-->
 <div class="col-span-1 row-span-1 p-5 bg-[#0a192f] text-cyan-200 border-2 border-cyan-500/40 rounded-3xl shadow-xl flex flex-col justify-between font-mono">
   <div class="flex items-center justify-between text-[10px]">
     <span class="text-cyan-400 font-bold">SEC-04 // SPEC</span>
@@ -681,16 +364,16 @@ body {
   </div>
 
   <div class="my-1">
-    <div class="text-xs font-bold text-white uppercase tracking-wider">UTILITY</div>
-    <p class="text-[11px] text-cyan-300/80 mt-0.5">Traduttore,Lettore audio....</p>
+    <div class="text-xs font-bold text-white uppercase tracking-wider">Traduttore,Lettore audio.</div>
+    <p class="text-[11px] text-cyan-300/80 mt-0.5">correttore esercizi</p>
   </div>
 
   <div class="text-[10px] text-cyan-500 flex justify-between border-t border-cyan-900 pt-1">
-    <span>Scopri</span>
- <a href="utility.html" class="text-emerald-400">PASSED ✓</a>
+    <span>Utility</span>
+   <a href="utility.html" class="text-emerald-400">PASSED ✓</a>
   </div>
 </div>
-  <!-- CARD Playground -->
+      <!-- CARD Playground -->
 <div class="col-span-1 sm:col-span-2 row-span-1 p-5 bg-slate-950 text-white border-2 border-slate-800 rounded-3xl shadow-xl flex flex-col justify-between font-mono">
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-2">
@@ -722,16 +405,16 @@ body {
 
   <div class="text-[10px] text-slate-400 flex justify-between">
     <span>Streak: 48 giorni</span>
-   <a href="playground.html" class="text-cyan-400">playground.html</a>
+    <a href="playground.html" class="text-cyan-400">playground.html</a>
   </div>
 </div>
-         <!-- Vocabolario modal -->
+      <!-- Vocabolario modal -->
 <div class="col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between">
   <div class="flex items-center justify-between">
     <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/80 px-2 py-0.5 rounded-full">
       词汇
     </span>
-    <button onclick="openModal()"  class="text-xs font-bold text-emerald-300 bg-emerald-900 px-2 py-0.5 rounded-md">
+   <button onclick="openModal()"  class="text-xs font-bold text-emerald-300 bg-emerald-900 px-2 py-0.5 rounded-md">
       apri ↗
     </button>
   </div>
@@ -745,7 +428,7 @@ body {
     <div class="bg-emerald-300 h-full w-[94%] rounded-full"></div>
   </div>
 </div>
-       <!-- AUdio video -->
+      <!-- AUdio video -->
 <div class="relative col-span-1 row-span-2 rounded-3xl overflow-hidden bg-slate-950 border-2 border-slate-800 shadow-2xl group flex flex-col justify-between p-4 text-white">
   <img 
     src="img
@@ -756,7 +439,7 @@ body {
 
   <div class="relative z-10 flex items-center justify-between">
     <span class="px-2.5 py-0.5 bg-rose-600 text-white text-[10px] font-bold rounded-full">
-      Video e Audio
+      VIdeo e Audio
     </span>
     <span class="text-xs font-mono">🔊</span>
   </div>
@@ -777,14 +460,15 @@ body {
   </div>
 
   <div class="relative z-10 bg-slate-950/80 backdrop-blur-md p-2.5 rounded-xl border border-slate-800">
-    <div class="text-[11px] font-bold">@Video ed esercizi di ascolto</div>
+    <div class="text-[11px] font-bold">Video ed esercizi di ascolto</div>
      <a href="audiovideo.html"> <button class="text-[10px] text-slate-300 truncate">  🎧</button></a> 
+  </div>
 </div>
       <!-- Flashcard -->
 <div class="relative col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform">
   <!-- Washi tape in alto centrato -->
   <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/90 text-amber-950 text-[9px] font-mono font-black px-4 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400">
-   FLASHCARD
+    RAW SHOT · 2026
   </div>
 
   <!-- Foto Quadrata -->
@@ -794,9 +478,10 @@ body {
       alt="FlashCard" 
       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
     />
-    <a href="flashcards.html">  <button class="absolute bottom-2 right-2 px-2 py-0.5 bg-slate-950/80 text-[9px] font-mono text-white rounded-md">
+  <a href="flashcards.html">  <button class="absolute bottom-2 right-2 px-2 py-0.5 bg-slate-950/80 text-[9px] font-mono text-white rounded-md">
+   
       35mm · f/1.8
-    </span>
+    </button></a>
   </div>
 
   <!-- Didascalia Polaroid -->
@@ -807,8 +492,7 @@ body {
 </div>
       <!-- Tv cinese -->
 <div class="relative col-span-1 row-span-1 rounded-3xl overflow-hidden bg-slate-950 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] group flex flex-col justify-between p-4">
- <img src="img/tv.jpg" alt="Sfondo" class="absolute inset-0 w-full h-full object-cover opacity-40">
-  
+  <img src="URL_IMMAGINE" alt="Sfondo" class="absolute inset-0 w-full h-full object-cover opacity-40">
   <div class="absolute inset-0 bg-gradient-to-tr from-indigo-950 via-slate-900 to-cyan-950 opacity-30"></div>
 
   <div class="relative z-10 flex items-center justify-between">
@@ -819,16 +503,16 @@ body {
   </div>
 
   <div class="relative z-10 mx-auto my-auto">
-   <a href="tv-cinese.html"> <button class="w-10 h-10 rounded-full bg-white text-slate-950 flex items-center justify-center text-sm shadow-xl transition-transform group-hover:scale-110">
+  <a href="tv-cinese.html"> <button class="w-10 h-10 rounded-full bg-white text-slate-950 flex items-center justify-center text-sm shadow-xl transition-transform group-hover:scale-110">
       ▶
-    </button>
+    </button></a> 
   </div>
 
   <div class="relative z-10 text-[11px] font-bold text-white truncate text-center">
     tv-cinese.mp4
   </div>
 </div>
- <!-- Esercizi -->
+ <!-- CARD COBALTO ANGOLI ASIMMETRICI -->
 <div class="col-span-1 row-span-1 p-5 bg-blue-600 text-white border-2 border-slate-950 rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between">
   <div class="flex items-center justify-between">
     <span class="text-[10px] font-mono font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
@@ -843,14 +527,14 @@ body {
   </div>
 
   <div class="text-[10px] font-mono text-blue-200 flex justify-between border-t border-blue-500 pt-1">
-   <a href="esercizi.html">  <button>Esercitati</button></a> 
+ <a href="esercizi.html">  <button>Esercitati</button></a> 
   </div>
 </div>
-      <!-- Grammatica -->
+      <!-- HERO COBALTO CON WASHI TAPE & ANGOLI ASIMMETRICI -->
 <div class="relative col-span-1 sm:col-span-2 row-span-2 p-6 sm:p-8 bg-blue-600 text-white rounded-[2.5rem] rounded-tr-lg border-3 border-slate-950 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between overflow-hidden">
   
   <!-- Nastro Washi Tape Inclinato -->
-  <div class="absolute -top-3 right-8 bg-amber-300 text-amber-950 text-[10px] font-mono font-black px-4 py-1 rotate-3 shadow-md uppercase tracking-wider border-t border-b border-amber-400">
+  <div class="absolute -top-3 right-12 bg-amber-300 text-amber-950 text-[10px] font-mono font-black px-4 py-3 rotate-3 shadow-md uppercase tracking-wider border-t border-b border-amber-400">
     ★ GRAMMATICA
   </div>
 
@@ -862,8 +546,8 @@ body {
   </div>
 
   <div class="my-4 space-y-2">
-    <h2 class="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
-     所有汉语语法规则
+    <h2 class="text-2xl lg:text-5xl font-black tracking-tight leading-tight">
+    所有汉语语法规则
     </h2>
    <a href="grammatica.html" class="text-md md:text-md text-blue-100 font-medium leading-relaxed max-w-md">
      tutte le regole della Grammatica cinese
@@ -871,7 +555,7 @@ body {
   </div>
 
   <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-blue-500/60">
-<span class="px-3 py-1 bg-blue-700/80 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40">形容词 </span>
+    <span class="px-3 py-1 bg-blue-700/80 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40">形容词 </span>
     <span class="px-3 py-1 bg-blue-700/80 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40">分类词</span>
     <span class="px-3 py-1 bg-blue-700/80 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40">副词</span>
   </div>
@@ -1124,7 +808,13 @@ body {
     </div>
 
   </div>
-</div>
+  <!-- Modal -->
+  <div id="modalIframe">
+    <div id="modalContent">
+      <button id="modalCloseBtn" onclick="closeModal()" aria-label="Chiudi">&times;</button>
+      <iframe src="https://scottino2019-glitch.github.io/Vocabolario-Cinese/" title="Vocabolario Cinese"></iframe>
+    </div>
+  </div>
   <footer class="mt-20 bg-slate-900 text-slate-400 border-t-4 border-yellow-500 py-12 px-6">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
       <div>
@@ -1231,6 +921,30 @@ async function loadQuoteSticker() {
 }
 
 loadQuoteSticker();
-    <script>
+  </script>
+
+
+<script>
+// JavaScript interattivo
+let clicks = 0;
+const ctaBtn = document.getElementById('cta-btn');
+const counterEl = document.getElementById('click-counter');
+const toastBtn = document.getElementById('toast-btn');
+
+if (ctaBtn && counterEl) {
+  ctaBtn.addEventListener('click', () => {
+    clicks++;
+    counterEl.textContent = clicks;
+    console.log('Pulsante cliccato! Totale click:', clicks);
+  });
+}
+
+if (toastBtn) {
+  toastBtn.addEventListener('click', () => {
+    console.info('Notifica triggerata da JS preview!');
+    alert('Ciao! Il codice JavaScript viene eseguito direttamente nell\'anteprima.');
+  });
+}
+</script>
 </body>
 </html>
