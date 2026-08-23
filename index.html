@@ -1,13 +1,330 @@
+
 <!DOCTYPE html>
-<html lang="it" class="scroll-smooth">
+<html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lingua Cinese | 中文学习 - Cyber Hutong Concept</title>
-  
-  <!-- Tailwind CSS CDN -->
+  <title>🎨 Creative Multi-Color Studio (Vibrante & Tattile)</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+  <style>
+/* ==========================================================================
+   Bento Studio - Custom Styles & Backgrounds
+   ========================================================================== */
+/* Stile Base */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f7f4ed;
+  background-image: radial-gradient(#292524 1.1px, transparent 1.1px);
+  background-size: 22px 22px;
+  color: #1c1917;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Transizioni fluide */
+* {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* --- DEVICE: SMARTPHONE --- */
+.smartphone-card {
+  position: relative;
+  width: 310px;
+  min-height: 290px;
+  background-color:#F34E90;
+  border: 1px solid #1f222b;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.smartphone-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #06b6d4;
+  box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15), 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.phone-rim {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.phone-bezel {
+  position: relative;
+  width: 220px;
+  height: 250px;
+  background:#00A4EF;
+  border: 4px solid #14151a;
+  border-radius: 20px;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2;
+  transition: border-color 0.4s;
+}
+.smartphone-card:hover .phone-bezel {
+  border-color: #1e1f26;
+}
+
+/* Speaker and camera */
+.phone-earpiece {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 3px;
+  background: #830777;
+  border-radius: 2px;
+  z-index: 10;
+}
+.phone-camera {
+  position: absolute;
+  top: 5px;
+  left: calc(50% + 24px);
+  width: 5px;
+  height: 5px;
+  background: #111;
+  border: 1px solid #1f1f22;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+/* Screen */
+.phone-screen {
+  position: relative;
+  flex-grow: 1;
+  background: #B1210D;
+  margin: 3px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.phone-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 10px;
+  font-family: monospace;
+  font-size: 8px;
+  color: #000;
+  z-index: 6;
+}
+.status-right {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.phone-wifi {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #444;
+  transition: background-color 0.4s;
+}
+.phone-battery {
+  width: 9px;
+  height: 5px;
+  border: 1px solid #444;
+  border-radius: 1px;
+  position: relative;
+  transition: border-color 0.4s;
+}
+.phone-battery::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 60%;
+  background: #444;
+}
+.smartphone-card:hover .phone-wifi {
+  background-color: #06b6d4;
+}
+.smartphone-card:hover .phone-battery {
+  border-color: #10b981;
+}
+.smartphone-card:hover .phone-battery::after {
+  width: 100%;
+  background: #10b981;
+  animation: batteryChargePulse 1s infinite alternate;
+}
+
+/* Clock section */
+.lockscreen-clock {
+  text-align: center;
+  margin-top: 14px;
+  z-index: 5;
+}
+.clock-hour {
+  font-size: 24px;
+  font-weight: 200;
+  color: #fff;
+  letter-spacing: -0.5px;
+  transition: transform 0.4s;
+}
+.smartphone-card:hover .clock-hour {
+  transform: scale(1.05);
+}
+.clock-date {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: #00;
+  font-weight: bold;
+}
+
+/* Push messages */
+.push-messages {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: flex-start;
+  z-index: 5;
+  margin-top: 6px;
+}
+.msg-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.15;
+  transform: translateY(8px);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.msg-dot {
+  width: 5px;
+  height: 5px;
+  background: #888;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.msg-dot.neon { background: #06b6d4; }
+.msg-text {
+  display: flex;
+  flex-direction: column;
+}
+.msg-sender {
+  font-size: 7px;
+  font-weight: bold;
+  color: #e4e4e7;
+}
+.msg-preview {
+  font-size: 6px;
+  color: #a1a1aa;
+  line-height: 1.2;
+}
+
+.smartphone-card:hover .msg-1 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+.smartphone-card:hover .msg-2 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+
+/* Charging Wave Effect */
+.charging-wave-ocean {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 0px;
+  background: rgba(6, 182, 212, 0.12);
+  overflow: hidden;
+  transition: height 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.smartphone-card:hover .charging-wave-ocean {
+  height: 55px;
+}
+.liquid-wave {
+  position: absolute;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  border-radius: 38%;
+  background-color: rgba(6, 182, 212, 0.25);
+  bottom: 12px;
+}
+.wave-back {
+  animation: waveScroll 5s linear infinite;
+}
+.wave-front {
+  background-color: rgba(6, 182, 212, 0.4);
+  bottom: 6px;
+  animation: waveScroll 3s linear infinite reverse;
+}
+.charging-text {
+  position: relative;
+  z-index: 10;
+  font-family: monospace;
+  font-size: 7px;
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.smartphone-card:hover .charging-text {
+  opacity: 1;
+}
+
+.phone-home-indicator {
+  width: 45px;
+  height: 2px;
+  background: #333;
+  margin: 4px auto;
+  border-radius: 1px;
+  z-index: 6;
+  transition: background-color 0.4s;
+}
+.smartphone-card:hover .phone-home-indicator {
+  background: #fff;
+}
+
+@keyframes waveScroll {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes batteryChargePulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎨 Creative Multi-Color Studio (Vibrante & Tattile)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
     tailwind.config = {
       theme: {
         extend: {
@@ -19,9 +336,10 @@
           },
           colors: {
             'china-red': '#D32F2F',
-            'china-dark-red': '#8E0000',
             'china-gold': '#FFD700',
             'cyber-neon': '#00E5FF',
+            'cyber-pink': '#FF007F',
+            'cyber-dark': '#0B0F19',
           }
         }
       }
@@ -31,10 +349,95 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Playfair+Display:ital,wght@0,700;1,400&family=Shadows+Into+Light&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Playfair+Display:ital,wght@0,700;1,400&family=Shadows+Into+Light&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Effetto Caos Ordinato: micro-rotazioni e sovrapposizioni soft */
+/* ==========================================================================
+   Bento Studio - Custom Styles & Backgrounds
+   ========================================================================== */
+
+
+body {
+  background-color: #fbf8f3;
+  background-image: 
+    linear-gradient(rgba(194, 65, 12, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(194, 65, 12, 0.08) 1px, transparent 1px);
+  background-size: 26px 26px;
+  color: #292524;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Transizioni fluide */
+* {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+    #modalIframe {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    #modalIframe.active { display: flex; }
+    #modalContent {
+      background: white;
+      border-radius: 8px;
+      width: 90vw; max-width: 800px;
+      height: 80vh;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #modalContent iframe {
+      width: 100%; height: 100%;
+      border: none; border-radius: 8px;
+    }
+    #modalCloseBtn {
+      position: absolute;
+      top: 0.5rem; right: 0.7rem;
+      font-size: 1.8rem; font-weight: bold;
+      background: none; border: none; cursor: pointer;
+      color: #666; padding: 0.25rem;
+    }
+    #modalCloseBtn:hover { color: #000; }
+    .timeline-iframe { width: 100%; height: 800px; border: none; }
+
+/* ---bel--- */
+@keyframes animate-swing {
+  0% { transform: rotate(0deg); transform-origin: top center; }
+  20% { transform: rotate(15deg); transform-origin: top center; }
+  40% { transform: rotate(-10deg); transform-origin: top center; }
+  60% { transform: rotate(5deg); transform-origin: top center; }
+  80% { transform: rotate(-5deg); transform-origin: top center; }
+  100% { transform: rotate(0deg); transform-origin: top center; }
+}
+.bell-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+.animated-element {
+  display: inline-block; font-size: 2rem; font-family: 'Noto Color Emoji', sans-serif;
+  padding: 8px; line-height: 1; cursor: pointer;
+  /* NO SFONDO BIANCO - Trasparente! */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15); /* Solo ombra soft */
+  animation: animate-swing 2.8s ease-out infinite; animation-play-state: paused;
+  will-change: transform; transition: transform 0.2s;
+}
+.animated-element:hover { transform: scale(1.1) !important; }
+.badge {
+  position: absolute; top: -6px; right: -6px; background: #ff4757; color: white;
+  border-radius: 50%; width: 18px; height: 18px; font-size: 11px; font-weight: bold;
+  line-height: 18px; text-align: center; box-shadow: 0 2px 8px rgba(255,71,87,0.4);
+}
+@media (max-width: 768px) { .bell-container { top: 15px; right: 15px; } .animated-element { font-size: 1.6rem; padding: 10px; } }
+.demo-info { max-width: 500px; margin: 120px auto 0; padding: 24px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); text-align: center; }
+/* ---sticker---*/
+.quote-sticker-wrap {
+  padding: 20px;
+
+}
+
+
+  /* Effetto Caos Ordinato: micro-rotazioni e sovrapposizioni soft */
     .sticker-rotate-left { transform: rotate(-1.5deg); }
     .sticker-rotate-right { transform: rotate(1.8deg); }
     .sticker-rotate-slight { transform: rotate(-0.8deg); }
@@ -58,424 +461,668 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       z-index: 10;
     }
+  #roji-container {
+  width: 80px; 
+  height: 80px;
+  /* L'espansione partirà dall'angolo in basso a destra */
+  transform-origin: bottom right; 
+}
 
-    /* Scrollbar personalizzata per gli iframe e container */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(0,0,0,0.05);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #e2e8f0;
-      border-radius: 999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #cbd5e1;
-    }
-
-    /* Animazione Campanello */
-    @keyframes animate-swing {
-      0% { transform: rotate(0deg); transform-origin: top center; }
-      20% { transform: rotate(15deg); transform-origin: top center; }
-      40% { transform: rotate(-10deg); transform-origin: top center; }
-      60% { transform: rotate(5deg); transform-origin: top center; }
-      80% { transform: rotate(-5deg); transform-origin: top center; }
-      100% { transform: rotate(0deg); transform-origin: top center; }
-    }
-    .bell-animated {
-      display: inline-block;
-      animation: animate-swing 2.8s ease-out infinite;
-    }
-/* Texture Carta Di Riso / Bambù Warm Neutral */
-  .bg-warm-rice {
-    background-color: #e5d8c3;
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(217, 180, 140, 0.35) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(184, 134, 78, 0.25) 0px, transparent 50%),
-      radial-gradient(at 50% 50%, rgba(245, 230, 210, 0.5) 0px, transparent 60%);
-  }
+/* Espansione quando passi il mouse (PC) o fai tap (Mobile) */
+#roji-container:hover, 
+#roji-container:focus-within {
+  width: 450px !important;  /* Più largo per accogliere bene la chat */
+  height: 750px !important; /* Più alto */
+  
+  /* Regole fondamentali per non uscire dallo schermo sugli smartphone */
+  max-width: calc(100vw - 40px) !important; 
+  max-height: calc(100vh - 40px) !important;
+}
   </style>
 </head>
-<body class="min-h-screen bg-warm-rice text-slate-800 font-sans relative overflow-x-hidden">
 
-  <!-- Ideogramma Gigante Filigrana sullo Sfondo -->
-<div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0 opacity-[0.07] select-none">
-    <span class="text-[25rem] md:text-[45rem] font-calligrafico text-amber-950 leading-none transform -rotate-12">
+
+
+<body class="min-h-screen bg-warm-rice text-slate-900 font-sans relative overflow-x-hidden pb-12">
+
+  <!-- Ideogramma Gigante Filigrana -->
+  <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0 opacity-[0.06] select-none">
+    <span class="text-[30rem] md:text-[50rem] font-calligrafico text-amber-950 leading-none transform -rotate-12">
       中文
     </span>
   </div>
 
-  <!-- HEADER COMPATTO CON NEON & CAMPANELLA -->
-  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md text-white border-b-2 border-yellow-500 shadow-xl">
+  <!-- HEADER STILE CYBER-HUTONG -->
+  <header class="sticky top-0 z-50 bg-cyber-dark/95 backdrop-blur-md text-white border-b-2 border-yellow-500 shadow-2xl">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-      
-      <!-- Brand Logo -->
       <div class="flex items-center gap-3">
-        <div class="bg-gradient-to-br from-yellow-400 to-amber-500 text-red-900 font-bold text-xl w-10 h-10 flex items-center justify-center rounded-xl shadow-lg border border-yellow-200">
+        <div class="bg-gradient-to-br from-yellow-400 to-amber-500 text-red-950 font-black text-2xl w-11 h-11 flex items-center justify-center rounded-xl shadow-lg border border-yellow-200">
           中
         </div>
         <div>
-          <h1 class="text-xl md:text-2xl font-titolo font-bold tracking-tight text-yellow-400">Lingua Cinese</h1>
-          <p class="text-[10px] text-slate-300 tracking-widest uppercase font-medium">Cyber-Hutong Interactive Hub</p>
+          <h1 class="text-xl md:text-2xl font-titolo font-bold text-yellow-400 tracking-tight leading-none">Lingua Cinese</h1>
+          <p class="text-[9px] text-cyan-400 tracking-[0.25em] uppercase font-bold mt-1">Cyber-Hutong Interactive Hub</p>
         </div>
       </div>
 
-      <!-- Azioni Header & Bell -->
-      <div class="flex items-center gap-4">
-        <span class="hidden sm:inline-block px-3 py-1 bg-red-900/60 border border-red-500/30 rounded-full text-xs text-yellow-300 font-serif italic">
-          学无止境 • L'apprendimento non ha limiti
-        </span>
-        
-        <!-- Bell Icon -->
-        <button id="bellBtn" onclick="alert('Novità e Notifiche Social!')" class="relative p-2 bg-slate-800 rounded-full hover:bg-slate-700 transition border border-slate-700">
-          <span class="text-xl bell-animated">🔔</span>
-          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">●</span>
-        </button>
-      </div>
+
+<div class="bell-container">
+<span id="bell-swing" class="animated-element">🔔</span>
+</div>
 
     </div>
   </header>
 
-  <!-- FILTRI RAPIDI PER "CAOS ORDINATO" (FLOATING NAV) -->
-  <nav class="sticky top-16 z-40 my-4 max-w-max mx-auto px-4">
-    <div class="flex flex-wrap items-center justify-center gap-2 p-1.5 bg-slate-900/85 backdrop-blur-md rounded-full border border-yellow-500/40 shadow-2xl text-xs font-medium text-slate-200">
-      <button onclick="filterCategory('all')" class="filter-btn active px-3.5 py-1.5 rounded-full bg-yellow-500 text-slate-950 font-bold transition">🔥 Tutti (21)</button>
-      <button onclick="filterCategory('media')" class="filter-btn px-3.5 py-1.5 rounded-full hover:bg-white/10 transition">🎬 Media & Tv</button>
-      <button onclick="filterCategory('lettura')" class="filter-btn px-3.5 py-1.5 rounded-full hover:bg-white/10 transition">📚 Lettura & Manhua</button>
-      <button onclick="filterCategory('studio')" class="filter-btn px-3.5 py-1.5 rounded-full hover:bg-white/10 transition">✍️ Scrittura & Studio</button>
-      <button onclick="filterCategory('pratica')" class="filter-btn px-3.5 py-1.5 rounded-full hover:bg-white/10 transition">🎮 Pratica & Giochi</button>
-    </div>
-  </nav>
-
-  <!-- CONTENITORE PRINCIPALE: BENTO GRID ASIMMETRICA -->
-  <main class="relative z-10 max-w-7xl mx-auto px-4 py-4 min-h-screen">
+<!-- CANVAS BENTO MODULARE -->
+<div class="min-h-screen font-sans p-4 sm:p-8 flex flex-col items-center">
+  <div class="w-full max-w-6xl space-y-6">
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-[minmax(180px,auto)]">
-
-      <!-- 1. STICKER FRASE DEL GIORNO (Adesivo Post-it) -->
-      <div class="card-item cat-studio lg:col-span-1 sticker-rotate-left pin-sticker relative bg-amber-200/90 text-amber-950 p-5 rounded-2xl shadow-xl border border-amber-300 transition duration-300 flex flex-col justify-between">
+    <!-- 🏗️ GRIGLIA BENTO (Inserisci i tuoi pezzi qui dentro!) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 auto-rows-[160px] gap-5">
+       <!-- 1. STICKER FRASE DEL GIORNO (Adesivo Post-it) -->
+      <div class="card-item cat-studio lg:col-span-1 row-span-1 sticker-rotate-left pin-sticker relative bg-amber-200/90 text-amber-950 p-5 rounded-2xl shadow-xl border border-amber-300 transition duration-300 flex flex-col justify-between">
         <div>
           <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-300/60 font-handwriting text-sm font-bold text-amber-900 mb-2">Frase del giorno</span>
           <p class="text-xl font-bold font-sans text-slate-900 mb-1">温故而知新</p>
           <p class="text-xs text-amber-800 italic mb-2">wēn gù ér zhī xīn</p>
           <p class="text-xs text-slate-700 leading-relaxed">Rivedere il vecchio per comprendere il nuovo.</p>
         </div>
-        <div class="mt-4 pt-2 border-t border-amber-300/50 flex justify-between items-center text-[11px] text-amber-800">
-          <span>#Analects</span>
-          <span>Pillola daily</span>
-        </div>
       </div>
 
-     <!-- 1. Calendario Cinese -->
-<div class="w-full h-[500px] md:h-[600px] rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-50">
+  <!-- FRAME Social MOBILE 9:16 -->
+<div class="col-span-1 row-span-3 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-3 flex flex-col justify-between relative overflow-hidden">
   <iframe 
-    src="https://calendario-cinese.vercel.app/" 
-    title="Calendario Cinese" 
-    class="w-full h-full border-none" 
+  src="post/social.html" 
+  width="105%" 
+  height="650" 
+  style="border:none; border-radius:16px; overflow:hidden; background:transparent; width:100%;" 
+  title="Angolo Sociale"
+  loading="lazy">
+</iframe>
+</div>
+      
+
+      <!-- FRAME json MOBILE 9:16 -->
+<div class="col-span-2 row-span-3 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-3 flex flex-col justify-between relative overflow-hidden">
+
+<div class="relative overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] w-full h-[550px] rounded-3xl border-4 border-solid border-indigo-200 shadow-lg">
+  <iframe 
+    src="frame/cina.html" 
+    style="width: 125.00%; height: 125.00%; transform: scale(0.8); transform-origin: top left; border: 0; position: absolute; top: 0; left: 0;"
+    title="Iframe Miniaturizzato"
+    scrolling="auto"
     loading="lazy">
   </iframe>
 </div>
-
-<!-- Divisore -->
-<hr class="my-8 border-slate-200">
-
-<!-- 2. Giornale Sfogliabile -->
-<div class="w-full h-[600px] md:h-[720px] rounded-2xl overflow-hidden shadow-lg border border-slate-200">
+</div>
+      <!-- FRAME video MOBILE 9:16 -->
+<div class="col-span-2 row-span-3 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-3 flex flex-col justify-between relative overflow-hidden">
+ <div class="relative w-full h-[600px] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-3xl border-4 border-solid border-indigo-200 shadow-lg">
   <iframe 
-    src="giornale.html" 
-    class="w-full h-full border-none"
-    title="华夏纪事 - Giornale Sfogliabile" 
-    allowfullscreen>
+    src="frame/metro.html" 
+    class="w-full h-full border-0"
+    title="Iframe Standard"
+    scrolling="auto"
+    loading="lazy">
   </iframe>
 </div>
-
-<!-- 3. Griglia Widget / Frame -->
-<div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-
-  <!-- Card Social -->
-  <div class="w-full h-[600px] rounded-2xl overflow-hidden border border-slate-200 shadow-md">
-    <iframe 
-      src="post/social.html" 
-      class="w-full h-full border-none bg-transparent"
-      title="Angolo Sociale" 
-      loading="lazy">
-    </iframe>
-  </div>
-
-  <!-- Metro -->
-  <div class="relative w-full h-[600px] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-2xl border-2 border-indigo-200 shadow-md">
-    <iframe 
-      src="frame/metro.html" 
-      class="w-full h-full border-none"
-      title="Metro" 
-      loading="lazy">
-    </iframe>
-  </div>
-
-  <!-- China Widget -->
-  <div class="relative w-full h-[600px] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-2xl border-2 border-indigo-200 shadow-md">
-    <iframe 
-      src="frame/cina.html" 
-      class="w-full h-full border-none"
-      title="Widget Cina" 
-      loading="lazy">
-    </iframe>
-  </div>
-
-  <!-- Media Vocaboli (Video MP4) -->
-  <div class="relative w-full h-[600px] overflow-hidden rounded-2xl border-2 border-emerald-200 shadow-md bg-black">
-    <video 
-      src="frame/vocaboli.mp4" 
-      class="w-full h-full object-cover" 
-      controls 
-      playsinline 
-      preload="metadata">
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
-
 </div>
 
-      <!-- 7. MANHUA & COMICS -->
-      <a href="manhua.html" class="card-item cat-lettura sticker-rotate-slight group bg-gradient-to-br from-rose-500 to-red-600 text-white rounded-2xl p-5 shadow-xl hover:shadow-2xl transition duration-300 flex flex-col justify-between">
-        <div>
-          <div class="flex justify-between items-start mb-2">
-            <span class="text-2xl">🗯️</span>
-            <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full uppercase font-bold">Fumetti</span>
-          </div>
-          <h3 class="font-bold text-lg leading-tight group-hover:underline">Biblioteca Manhua</h3>
-          <p class="text-xs text-rose-100 mt-1">Dialoghi e note grammaticali dai fumetti.</p>
-        </div>
-        <span class="text-xs text-yellow-300 font-bold mt-4 flex items-center gap-1">Esplora Manhua →</span>
-      </a>
 
-      <!-- 8. VOCABOLARIO MODAL (MODALE INTERATTIVA) -->
-      <button onclick="openModal()" class="card-item cat-studio text-left group bg-white rounded-2xl p-5 shadow-lg border border-slate-200 hover:border-yellow-500 transition duration-300 flex flex-col justify-between">
-        <div>
-          <div class="flex justify-between items-start mb-2">
-            <span class="text-2xl">📖</span>
-            <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold">Database</span>
-          </div>
-          <h3 class="font-bold text-slate-900 text-base group-hover:text-red-600 transition">Vocabolario Interattivo</h3>
-          <p class="text-xs text-slate-500 mt-1">Cerca parole, pinyin e definizioni.</p>
-        </div>
-        <span class="text-xs text-indigo-600 font-bold mt-4 flex items-center gap-1">Apri Modale →</span>
-      </button>
 
-      <!-- 9. CINA WIDGET (Miniaturizzato) -->
-      <div class="card-item cat-media lg:col-span-1 bg-slate-800 rounded-2xl p-3 shadow-xl border border-cyan-500/30">
-        <span class="text-xs font-bold text-cyan-300 block mb-2">🌏 Pillole sulla Cina</span>
-        <div class="w-full h-[180px] rounded-xl overflow-hidden bg-slate-950">
-          <iframe src="frame/cina.html" class="w-full h-full border-none" loading="lazy"></iframe>
-        </div>
-      </div>
+      <!-- FRAME dinamico MOBILE 9:16 -->
+<div class="col-span-1 row-span-3 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-3 flex flex-col justify-between relative overflow-hidden">
+<div class="relative w-full h-[650px] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-3xl border-4 border-solid border-emerald-200 shadow-lg">
+  <iframe 
+    src="frame/vocaboli.mp4" 
+    class="w-full h-full border-0"
+    title="Iframe Standard"
+    scrolling="auto"
+    loading="lazy">
+  </iframe>
+</div>
+</div>
 
-      <!-- 10. BIBLIOTECA CLASSICA -->
-      <a href="biblioteca.html" class="card-item cat-lettura bg-amber-900/90 text-amber-50 rounded-2xl p-5 shadow-xl border border-amber-700/50 hover:bg-amber-900 transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">📚</span>
-          <h3 class="font-bold text-base text-yellow-400">Biblioteca Cinese</h3>
-          <p class="text-xs text-amber-200 mt-1">Raccolta di testi tradotti con testo a fronte.</p>
-        </div>
-        <span class="text-xs text-yellow-300 font-bold mt-3">Leggi ora →</span>
-      </a>
 
-      <!-- 11. LIBRI AUDIO -->
-      <a href="libri/libriaudio.html" class="card-item cat-lettura bg-white rounded-2xl p-5 shadow-lg border border-slate-200 hover:shadow-xl transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">🎧</span>
-          <h3 class="font-bold text-slate-900 text-base">Libri Audio</h3>
-          <p class="text-xs text-slate-500 mt-1">Racconti brevi letti da madrelingua.</p>
-        </div>
-        <span class="text-xs text-red-600 font-bold mt-3">Ascolta →</span>
-      </a>
 
-      <!-- 12. CULTURA E TRADIZIONI -->
-      <a href="cultura.html" class="card-item cat-lettura sticker-rotate-left bg-gradient-to-br from-yellow-500 to-amber-600 text-red-950 rounded-2xl p-5 shadow-xl transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">🐉</span>
-          <h3 class="font-bold text-lg">Cultura & Tradizioni</h3>
-          <p class="text-xs text-amber-950/80 mt-1">Festival, miti e usanze millenarie.</p>
-        </div>
-        <span class="text-xs text-red-900 font-bold mt-3">Scopri di più →</span>
-      </a>
-
-      <!-- 13. IDEOGRAMMI & SCRITTURA -->
-      <a href="caratteri.html" class="card-item cat-studio bg-white rounded-2xl p-5 shadow-lg border border-slate-200 hover:border-red-400 transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">✍️</span>
-          <h3 class="font-bold text-slate-900 text-base">Ideogrammi</h3>
-          <p class="text-xs text-slate-500 mt-1">Ordine dei tratti e struttura dei caratteri.</p>
-        </div>
-        <span class="text-xs text-red-600 font-bold mt-3">Impara a scrivere →</span>
-      </a>
-
-      <!-- 14. GRAMMATICA -->
-      <a href="grammatica.html" class="card-item cat-studio bg-slate-900 text-white rounded-2xl p-5 shadow-xl border border-yellow-500/30 hover:border-yellow-500 transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">📐</span>
-          <h3 class="font-bold text-yellow-400 text-base">Grammatica</h3>
-          <p class="text-xs text-slate-300 mt-1">Struttura delle frasi e regole sintattiche.</p>
-        </div>
-        <span class="text-xs text-yellow-400 font-bold mt-3">Consulta le regole →</span>
-      </a>
-
-      <!-- 15. RADICALI CINESI -->
-      <a href="Radicali_Cinesi.html" class="card-item cat-studio bg-white rounded-2xl p-5 shadow-lg border border-slate-200 hover:shadow-xl transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">🧱</span>
-          <h3 class="font-bold text-slate-900 text-base">Radicali Cinesi</h3>
-          <p class="text-xs text-slate-500 mt-1">I 214 mattoncini base della lingua.</p>
-        </div>
-        <span class="text-xs text-red-600 font-bold mt-3">Esplora la tavola →</span>
-      </a>
-
-      <!-- 16. SCRIVOLINGO (Panda Writing) -->
-      <a href="scrittura/scrivolingo.html" class="card-item cat-pratica sticker-rotate-right bg-emerald-600 text-white rounded-2xl p-5 shadow-xl transition duration-300 flex flex-col justify-between">
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-3xl">🐼</span>
-            <span class="text-[10px] bg-emerald-800/60 px-2 py-0.5 rounded-full">PDF & Tratti</span>
-          </div>
-          <h3 class="font-bold text-lg">Scrivolingo</h3>
-          <p class="text-xs text-emerald-100 mt-1">Quaderni di scrittura scaricabili.</p>
-        </div>
-        <span class="text-xs text-yellow-300 font-bold mt-3">Esercitati ora →</span>
-      </a>
-
-      <!-- 17. FLASHCARDS -->
-      <a href="flashcards.html" class="card-item cat-pratica bg-white rounded-2xl p-5 shadow-lg border border-slate-200 hover:border-emerald-500 transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">🎴</span>
-          <h3 class="font-bold text-slate-900 text-base">FlashCard</h3>
-          <p class="text-xs text-slate-500 mt-1">Ripasso rapido con Hanzi e Pinyin.</p>
-        </div>
-        <span class="text-xs text-emerald-600 font-bold mt-3">Avvia Sessione →</span>
-      </a>
-
-      <!-- 18. ESERCIZI INTERATTIVI -->
-      <a href="esercizi.html" class="card-item cat-pratica bg-white rounded-2xl p-5 shadow-lg border border-slate-200 hover:shadow-xl transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">📝</span>
-          <h3 class="font-bold text-slate-900 text-base">Esercizi</h3>
-          <p class="text-xs text-slate-500 mt-1">Test a risposta multipla e completamento.</p>
-        </div>
-        <span class="text-xs text-red-600 font-bold mt-3">Mettiti alla prova →</span>
-      </a>
-
-      <!-- 19. PLAYGROUND & GIOCHI -->
-      <a href="playground.html" class="card-item cat-pratica bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-2xl p-5 shadow-xl transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">🎮</span>
-          <h3 class="font-bold text-lg">Playground Giochi</h3>
-          <p class="text-xs text-indigo-200 mt-1">Impara il cinese divertendoti.</p>
-        </div>
-        <span class="text-xs text-yellow-300 font-bold mt-3">Gioca ora →</span>
-      </a>
-
-      <!-- 20. UTILITY & TOOLS -->
-      <a href="utility.html" class="card-item cat-pratica bg-slate-100 rounded-2xl p-5 shadow-md border border-slate-300 hover:bg-slate-200 transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">🛠️</span>
-          <h3 class="font-bold text-slate-800 text-base">Utility Tools</h3>
-          <p class="text-xs text-slate-600 mt-1">Traduttore, audio e correttore frasi.</p>
-        </div>
-        <span class="text-xs text-slate-900 font-bold mt-3">Apri strumenti →</span>
-      </a>
-
-      <!-- 21. QUADERNO PDF (External App) -->
-      <a href="https://poliglotta-pdf.vercel.app/" target="_blank" class="card-item cat-lettura bg-amber-100/80 rounded-2xl p-5 shadow-md border border-amber-300 hover:bg-amber-200/80 transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">📓</span>
-          <h3 class="font-bold text-amber-950 text-base">Quaderno Poliglotta</h3>
-          <p class="text-xs text-amber-800 mt-1">Lettore PDF e blocco appunti interattivo.</p>
-        </div>
-        <span class="text-xs text-amber-900 font-bold mt-3">Apri App ↗</span>
-      </a>
-
-      <!-- 22. TV CINESE & YOUTUBE -->
-      <a href="tv-cinese.html" class="card-item cat-media bg-red-900 text-white rounded-2xl p-5 shadow-xl border border-red-700 transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">📺</span>
-          <h3 class="font-bold text-yellow-400 text-base">TV Cinese</h3>
-          <p class="text-xs text-red-200 mt-1">Selezione di show e canali YouTube.</p>
-        </div>
-        <span class="text-xs text-yellow-300 font-bold mt-3">Guarda ora →</span>
-      </a>
-
-      <!-- 23. FRASARIO & DIALOGHI -->
-      <a href="frasi-cinesi.html" class="card-item cat-studio bg-white rounded-2xl p-5 shadow-lg border border-slate-200 hover:shadow-xl transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">💬</span>
-          <h3 class="font-bold text-slate-900 text-base">Frasario</h3>
-          <p class="text-xs text-slate-500 mt-1">Espressioni per ogni situazione reale.</p>
-        </div>
-        <span class="text-xs text-red-600 font-bold mt-3">Vedi frasi →</span>
-      </a>
-
-      <!-- 24. PAGINA SOCIAL FACEBOOK -->
-      <a href="facebook/facebook_page.html" class="card-item cat-media bg-blue-700 text-white rounded-2xl p-5 shadow-xl hover:bg-blue-800 transition duration-300 flex flex-col justify-between">
-        <div>
-          <span class="text-2xl mb-2 block">👍</span>
-          <h3 class="font-bold text-base">Pagina Facebook</h3>
-          <p class="text-xs text-blue-100 mt-1">Video, reel e aggiornamenti social.</p>
-        </div>
-        <span class="text-xs text-yellow-300 font-bold mt-3">Segui la pagina →</span>
-      </a>
-
-    </div>
-
-    <!-- TIMELINE EMBED BOTTOM SECTION -->
-    <div class="mt-12 bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-slate-200">
-      <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
-        <span>⏳</span> Timeline Storica & Culturale
-      </h3>
-      <iframe src="timeline-display.html" class="w-full h-[450px] rounded-xl border-none" title="Timeline"></iframe>
-    </div>
-
-  </main>
-
-  <!-- MODAL CONTAINER (FOR VOCABOLARIO) -->
-  <div id="modalIframe" class="fixed inset-0 z-[1000] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-    <div class="relative w-full max-w-4xl h-[85vh] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-      <div class="flex items-center justify-between p-4 bg-slate-900 text-white border-b border-slate-800">
-        <h3 class="font-bold text-yellow-400">Vocabolario Cinese Interattivo</h3>
-        <button onclick="closeModal()" class="text-2xl text-slate-400 hover:text-white">&times;</button>
-      </div>
-      <iframe src="https://scottino2019-glitch.github.io/Vocabolario-Cinese/" class="w-full h-full border-none"></iframe>
-    </div>
+      <!-- CARD SMERALDO FOREST STATISTICA -->
+<div class="col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between">
+  <div class="flex items-center justify-between">
+    <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/80 px-2 py-0.5 rounded-full">
+      书店
+    </span>
+   <a href="biblioteca.html">  <button class="text-xs font-bold text-emerald-300 bg-emerald-900 px-2 py-0.5 rounded-md">
+      vai ↗
+    </button> </a>
   </div>
 
-  <!-- FLOATING CHAT WIDGET (ROJI CHATBOT) -->
-<!-- ROJI FLOATING ICON & CHAT WINDOW -->
-<div class="fixed bottom-6 right-6 z-[999] flex flex-col items-end gap-2 group">
-  
-  <!-- Pop-up Chat Roji (Apertura al Click/Tap o Hover) -->
-  <div id="rojiWindow" class="hidden group-hover:flex sm:group-hover:flex w-[90vw] sm:w-[380px] h-[500px] bg-slate-900 border-2 border-amber-500 rounded-2xl shadow-2xl overflow-hidden flex-col transition-all duration-300">
-    <div class="flex items-center justify-between p-3 bg-slate-950 text-white border-b border-slate-800">
-      <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="font-bold text-sm text-amber-400">Roji 🤖</span>
-      </div>
-      <button onclick="toggleRoji()" class="text-slate-400 hover:text-white text-xl px-2">&times;</button>
-    </div>
-    <iframe id="rojiIframe" src="https://roji-tawny.vercel.app/" class="w-full h-full border-none" loading="lazy"></iframe>
+  <div class="my-1">
+    <div class="text-3xl font-black tracking-tight text-white">Biblioteca</div>
+    <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Raccolta di libri cinesi tradotti </p>
   </div>
 
-  <!-- FACCINA ORIGINALE ROJI (Avatar Badge) -->
-  <button onclick="toggleRoji()" class="relative flex items-center justify-center w-16 h-16 bg-slate-900 border-2 border-amber-400 rounded-full shadow-2xl hover:scale-110 transition duration-300 overflow-hidden cursor-pointer">
-    <!-- Icona/Faccina Roji -->
-    <span class="text-3xl select-none">🐼</span>
-    
-    <!-- Indicatori Attivo / Glow -->
-    <span class="absolute bottom-1 right-1 w-4 h-4 bg-emerald-400 border-2 border-slate-900 rounded-full animate-pulse"></span>
+  <div class="w-full bg-emerald-800 rounded-full h-1.5 overflow-hidden">
+    <div class="bg-emerald-300 h-full w-[94%] rounded-full"></div>
+  </div>
+</div>
+
+
+      <!-- FRAME POLAROID 1:1 CON WASHI TAPE -->
+<div class="relative col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform">
+  <!-- Washi tape in alto centrato -->
+  <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/90 text-amber-950 text-[10px] font-mono font-black px-6 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400">
+   Facebook
+  </div>
+
+  <!-- Foto Quadrata -->
+  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-300 group mt-1">
+    <img 
+      src="img/facebook.png" 
+      alt="facebook" 
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+    />
+ <a href="facebook/facebook_page.html">   <button class="absolute bottom-2 right-2 px-2 py-0.5 bg-slate-950/80 text-[9px] font-mono text-white rounded-md">
+        35mm · f/1.8
+    </button></a>
+  </div>
+
+  <!-- Didascalia Polaroid -->
+  <div class="pt-3 pb-1 text-center font-mono">
+    <div class="text-xs font-black text-slate-900">Pagina Social</div>
+    <div class="text-[10px] text-slate-500">Video-Reel-Post-Foto</div>
+  </div>
+</div>
+
+
+
+      <!-- CARD NEOBRUTALIST AMBRA 3D -->
+<div class="col-span-1 sm:col-span-2 row-span-1 p-5 bg-amber-400 text-slate-950 border-3 border-slate-950 rounded-2xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all flex items-center justify-between gap-4">
+  <div>
+    <span class="text-[10px] font-black uppercase tracking-widest bg-slate-950 text-amber-400 px-2 py-0.5 rounded">
+      HIGH-IMPACT
+    </span>
+    <h3 class="text-base font-black text-slate-950 mt-1">Design Solido & Audace</h3>
+    <p class="text-xs font-bold text-slate-900">Bordi netti, contrasto elevato e personalità decisa.</p>
+  </div>
+  <button class="px-4 py-2 bg-slate-950 hover:bg-slate-900 text-white font-black text-xs rounded-xl border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] whitespace-nowrap">
+    Scopri ➔
   </button>
+</div>
+      <!-- CARD POST-IT GIALLO CON SPILLA 📌 -->
+<div class="relative col-span-1 row-span-1 p-5 bg-[#fef08a] text-slate-900 border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between">
+  <!-- Spilla 📌 in alto al centro -->
+  <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-lg select-none">
+    📌
+  </div>
 
+  <div class="flex items-center justify-between pt-1">
+    <span class="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-300/80 px-2 py-0.5 rounded">
+      MEMO / FOCUS
+    </span>
+    <span class="text-xs font-mono font-bold text-amber-900">#01</span>
+  </div>
+
+  <div class="my-1">
+    <p class="text-xs sm:text-sm font-black text-slate-900 font-sans leading-snug">
+      “La semplicità è la massima sofisticazione.”
+    </p>
+  </div>
+
+  <div class="text-[10px] font-mono text-amber-900 font-bold flex justify-between border-t border-amber-300 pt-1">
+    <span>Priorità: Alta</span>
+    <span>✓ Oggi</span>
+  </div>
+</div>
+      <!-- CARD BLUEPRINT CAD TECNICO -->
+<div class="col-span-1 row-span-1 p-5 bg-[#0a192f] text-cyan-200 border-2 border-cyan-500/40 rounded-3xl shadow-xl flex flex-col justify-between font-mono">
+  <div class="flex items-center justify-between text-[10px]">
+    <span class="text-cyan-400 font-bold">SEC-04 // SPEC</span>
+    <span class="text-cyan-500">45°27'N 9°11'E</span>
+  </div>
+
+  <div class="my-1">
+    <div class="text-xs font-bold text-white uppercase tracking-wider">Modular Protocol</div>
+    <p class="text-[11px] text-cyan-300/80 mt-0.5">High fault-tolerance & zero exceptions.</p>
+  </div>
+
+  <div class="text-[10px] text-cyan-500 flex justify-between border-t border-cyan-900 pt-1">
+    <span>BUILD #891</span>
+    <span class="text-emerald-400">PASSED ✓</span>
+  </div>
+</div>
+      <!-- CARD GITHUB COMMIT HEATMAP -->
+<div class="col-span-1 sm:col-span-2 row-span-1 p-5 bg-slate-950 text-white border-2 border-slate-800 rounded-3xl shadow-xl flex flex-col justify-between font-mono">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-slate-400">🐙</span>
+      <span class="text-xs font-bold text-white">GitHub Activity</span>
+    </div>
+    <span class="text-[10px] text-emerald-400 font-bold">1,420 commits / anno</span>
+  </div>
+
+  <div class="flex items-center gap-1 my-1 overflow-x-auto py-1">
+    <div class="grid grid-rows-3 grid-flow-col gap-1">
+      <span class="w-3 h-3 rounded-xs bg-slate-800"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-900"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-500"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-700"></span>
+      <span class="w-3 h-3 rounded-xs bg-slate-800"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-400"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-500"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-400"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-300"></span>
+      <span class="w-3 h-3 rounded-xs bg-slate-800"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-600"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-500"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-400"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-300"></span>
+      <span class="w-3 h-3 rounded-xs bg-emerald-400"></span>
+    </div>
+  </div>
+
+  <div class="text-[10px] text-slate-400 flex justify-between">
+    <span>Streak: 48 giorni</span>
+    <span class="text-cyan-400">github.com/tuonome</span>
+  </div>
+</div>
+      <!-- CARD SMERALDO FOREST STATISTICA -->
+<div class="col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between">
+  <div class="flex items-center justify-between">
+    <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/80 px-2 py-0.5 rounded-full">
+      SPEED SCORE
+    </span>
+    <span class="text-xs font-bold text-emerald-300 bg-emerald-900 px-2 py-0.5 rounded-md">
+      +28% ↗
+    </span>
+  </div>
+
+  <div class="my-1">
+    <div class="text-3xl font-black tracking-tight text-white">99.9%</div>
+    <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Uptime & Performance Globale</p>
+  </div>
+
+  <div class="w-full bg-emerald-800 rounded-full h-1.5 overflow-hidden">
+    <div class="bg-emerald-300 h-full w-[94%] rounded-full"></div>
+  </div>
+</div>
+      <!-- REEL & SHORTS VIDEO VERTICALE 9:16 -->
+<div class="relative col-span-1 row-span-2 rounded-3xl overflow-hidden bg-slate-950 border-2 border-slate-800 shadow-2xl group flex flex-col justify-between p-4 text-white">
+  <img 
+    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80" 
+    alt="Reel Preview" 
+    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60"
+  />
+
+  <div class="relative z-10 flex items-center justify-between">
+    <span class="px-2.5 py-0.5 bg-rose-600 text-white text-[10px] font-bold rounded-full">
+      REELS
+    </span>
+    <span class="text-xs font-mono">🔊</span>
+  </div>
+
+  <div class="relative z-10 ml-auto space-y-3 text-right">
+    <div class="flex flex-col items-center">
+      <button class="w-8 h-8 rounded-full bg-slate-900/80 hover:bg-rose-600 flex items-center justify-center text-sm shadow-md transition-colors">
+        ❤️
+      </button>
+      <span class="text-[9px] font-bold mt-0.5">2.4k</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <button class="w-8 h-8 rounded-full bg-slate-900/80 hover:bg-indigo-600 flex items-center justify-center text-sm shadow-md transition-colors">
+        💬
+      </button>
+      <span class="text-[9px] font-bold mt-0.5">184</span>
+    </div>
+  </div>
+
+  <div class="relative z-10 bg-slate-950/80 backdrop-blur-md p-2.5 rounded-xl border border-slate-800">
+    <div class="text-[11px] font-bold">@design.studio · Speedrun</div>
+    <p class="text-[10px] text-slate-300 truncate">Nuovo template rilasciato in anteprima!</p>
+  </div>
+</div>
+      <!-- FRAME POLAROID 1:1 CON WASHI TAPE -->
+<div class="relative col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform">
+  <!-- Washi tape in alto centrato -->
+  <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/90 text-amber-950 text-[9px] font-mono font-black px-4 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400">
+    RAW SHOT · 2026
+  </div>
+
+  <!-- Foto Quadrata -->
+  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-300 group mt-1">
+    <img 
+      src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80" 
+      alt="Workstation" 
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+    />
+    <span class="absolute bottom-2 right-2 px-2 py-0.5 bg-slate-950/80 text-[9px] font-mono text-white rounded-md">
+      35mm · f/1.8
+    </span>
+  </div>
+
+  <!-- Didascalia Polaroid -->
+  <div class="pt-3 pb-1 text-center font-mono">
+    <div class="text-xs font-black text-slate-900">Milano Workstation</div>
+    <div class="text-[10px] text-slate-500">Design Studio HQ</div>
+  </div>
+</div>
+      <!-- MINI VIDEO BUBBLE 1x1 (QUADRATO COMPATTO) -->
+<div class="relative col-span-1 row-span-1 rounded-3xl overflow-hidden bg-slate-950 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] group flex flex-col justify-between p-4">
+  <div class="absolute inset-0 bg-gradient-to-tr from-indigo-950 via-slate-900 to-cyan-950 opacity-90"></div>
+
+  <div class="relative z-10 flex items-center justify-between">
+    <span class="text-[10px] font-mono font-bold bg-cyan-400 text-slate-950 px-2 py-0.5 rounded-full flex items-center gap-1">
+      <span class="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping"></span> 0:15
+    </span>
+    <span class="text-[10px] text-slate-400 font-mono">LOOP</span>
+  </div>
+
+  <div class="relative z-10 mx-auto my-auto">
+    <button class="w-10 h-10 rounded-full bg-white text-slate-950 flex items-center justify-center text-sm shadow-xl transition-transform group-hover:scale-110">
+      ▶
+    </button>
+  </div>
+
+  <div class="relative z-10 text-[11px] font-bold text-white truncate text-center">
+    Micro-Interazione UI.mp4
+  </div>
+</div>
+ <!-- CARD COBALTO ANGOLI ASIMMETRICI -->
+<div class="col-span-1 row-span-1 p-5 bg-blue-600 text-white border-2 border-slate-950 rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between">
+  <div class="flex items-center justify-between">
+    <span class="text-[10px] font-mono font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
+      ★ STAMP #84
+    </span>
+    <span class="text-xs font-bold text-blue-200">2026</span>
+  </div>
+
+  <div>
+    <h4 class="text-sm font-black text-white">Moduli Dinamici</h4>
+    <p class="text-[11px] text-blue-100 mt-0.5">Forme e geometrie che rompono la monotonia.</p>
+  </div>
+
+  <div class="text-[10px] font-mono text-blue-200 flex justify-between border-t border-blue-500 pt-1">
+    <span>Crafted with pure Tailwind</span>
+  </div>
+</div>
+      <!-- HERO COBALTO CON WASHI TAPE & ANGOLI ASIMMETRICI -->
+<div class="relative col-span-1 sm:col-span-2 row-span-2 p-6 sm:p-8 bg-blue-600 text-white rounded-[2.5rem] rounded-tr-lg border-3 border-slate-950 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between overflow-hidden">
+  
+  <!-- Nastro Washi Tape Inclinato -->
+  <div class="absolute -top-3 right-8 bg-amber-300 text-amber-950 text-[10px] font-mono font-black px-4 py-1 rotate-3 shadow-md uppercase tracking-wider border-t border-b border-amber-400">
+    ★ CREATIVE DIRECTION
+  </div>
+
+  <div class="flex items-center justify-between">
+    <span class="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-mono font-black rounded-full border border-white/30">
+      01 // PITCH
+    </span>
+    <span class="w-3 h-3 rounded-full bg-emerald-400 ring-4 ring-white/30 animate-pulse"></span>
+  </div>
+
+  <div class="my-4 space-y-2">
+    <h2 class="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
+      Creo prodotti digitali che uniscono estetica e codice pulito.
+    </h2>
+    <p class="text-xs sm:text-sm text-blue-100 font-medium leading-relaxed max-w-md">
+      Design asimmetrico, griglie bento personalizzate e interfacce interattive per brand che si distinguono.
+    </p>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-blue-500/60">
+    <span class="px-3 py-1 bg-blue-700/80 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40">React 19</span>
+    <span class="px-3 py-1 bg-blue-700/80 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40">Tailwind</span>
+    <span class="px-3 py-1 bg-blue-700/80 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40">TypeScript</span>
+  </div>
+</div>
+<!-- FRAME POLAROID 1:1 CON WASHI TAPE -->
+<div class="relative col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform">
+  <!-- Washi tape in alto centrato -->
+  <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/90 text-amber-950 text-[9px] font-mono font-black px-4 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400">
+    RAW SHOT · 2026
+  </div>
+
+  <!-- Foto Quadrata -->
+  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-300 group mt-1">
+    <img 
+      src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80" 
+      alt="Workstation" 
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+    />
+    <span class="absolute bottom-2 right-2 px-2 py-0.5 bg-slate-950/80 text-[9px] font-mono text-white rounded-md">
+      35mm · f/1.8
+    </span>
+  </div>
+
+  <!-- Didascalia Polaroid -->
+  <div class="pt-3 pb-1 text-center font-mono">
+    <div class="text-xs font-black text-slate-900">Milano Workstation</div>
+    <div class="text-[10px] text-slate-500">Design Studio HQ</div>
+  </div>
+</div>
+<!-- CARD POST-IT GIALLO CON SPILLA 📌 -->
+<div class="relative col-span-1 row-span-1 p-5 bg-[#fef08a] text-slate-900 border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between">
+  <!-- Spilla 📌 in alto al centro -->
+  <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-lg select-none">
+    📌
+  </div>
+
+  <div class="flex items-center justify-between pt-1">
+    <span class="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-300/80 px-2 py-0.5 rounded">
+      MEMO / FOCUS
+    </span>
+    <span class="text-xs font-mono font-bold text-amber-900">#01</span>
+  </div>
+
+  <div class="my-1">
+    <p class="text-xs sm:text-sm font-black text-slate-900 font-sans leading-snug">
+      “La semplicità è la massima sofisticazione.”
+    </p>
+  </div>
+
+  <div class="text-[10px] font-mono text-amber-900 font-bold flex justify-between border-t border-amber-300 pt-1">
+    <span>Priorità: Alta</span>
+    <span>✓ Oggi</span>
+  </div>
+</div>
+<!-- CARD SPOTIFY AUDIO NOW PLAYING -->
+<div class="col-span-1 sm:col-span-2 row-span-1 p-5 bg-gradient-to-r from-slate-900 via-slate-950 to-emerald-950 border-2 border-slate-900 rounded-3xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex items-center justify-between gap-4">
+  <div class="flex items-center gap-3.5">
+    <div class="w-12 h-12 rounded-2xl bg-emerald-500 text-slate-950 flex items-center justify-center text-xl font-black shadow-lg shadow-emerald-500/20 shrink-0">
+      🎵
+    </div>
+    <div>
+      <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        NOW PLAYING ON SPOTIFY
+      </div>
+      <div class="text-xs font-black text-white">Midnight Cyber Synthwave</div>
+      <div class="text-[10px] text-slate-400 font-mono">Synth Studio · 03:24</div>
+    </div>
+  </div>
+
+  <!-- Barre Equalizzatore Audio -->
+  <div class="flex items-center gap-1 shrink-0">
+    <span class="w-1 h-3 bg-emerald-400 rounded-full animate-bounce"></span>
+    <span class="w-1 h-6 bg-emerald-500 rounded-full animate-pulse"></span>
+    <span class="w-1 h-8 bg-emerald-400 rounded-full animate-bounce"></span>
+    <span class="w-1 h-4 bg-emerald-500 rounded-full animate-pulse"></span>
+  </div>
+</div>
+      <!-- CARD NEOBRUTALIST AMBRA 3D -->
+<div class="col-span-1 sm:col-span-2 row-span-1 p-5 bg-amber-400 text-slate-950 border-3 border-slate-950 rounded-2xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all flex items-center justify-between gap-4">
+  <div>
+    <span class="text-[10px] font-black uppercase tracking-widest bg-slate-950 text-amber-400 px-2 py-0.5 rounded">
+      HIGH-IMPACT
+    </span>
+    <h3 class="text-base font-black text-slate-950 mt-1">Design Solido & Audace</h3>
+    <p class="text-xs font-bold text-slate-900">Bordi netti, contrasto elevato e personalità decisa.</p>
+  </div>
+  <button class="px-4 py-2 bg-slate-950 hover:bg-slate-900 text-white font-black text-xs rounded-xl border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] whitespace-nowrap">
+    Scopri ➔
+  </button>
 </div>
 
-  <!-- FOOTER -->
+ 
+      <!-- CARD POST-IT GIALLO CON SPILLA 📌 -->
+<div class="relative col-span-1 row-span-1 p-5 bg-[#fef08a] text-slate-900 border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between">
+  <!-- Spilla 📌 in alto al centro -->
+  <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-lg select-none">
+    📌
+  </div>
+
+  <div class="flex items-center justify-between pt-1">
+    <span class="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-300/80 px-2 py-0.5 rounded">
+      MEMO / FOCUS
+    </span>
+    <span class="text-xs font-mono font-bold text-amber-900">#01</span>
+  </div>
+
+  <div class="my-1">
+    <p class="text-xs sm:text-sm font-black text-slate-900 font-sans leading-snug">
+      “La semplicità è la massima sofisticazione.”
+    </p>
+  </div>
+
+  <div class="text-[10px] font-mono text-amber-900 font-bold flex justify-between border-t border-amber-300 pt-1">
+    <span>Priorità: Alta</span>
+    <span>✓ Oggi</span>
+  </div>
+</div>
+<!-- CARD COBALTO ANGOLI ASIMMETRICI -->
+<div class="col-span-1 row-span-1 p-5 bg-blue-600 text-white border-2 border-slate-950 rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between">
+  <div class="flex items-center justify-between">
+    <span class="text-[10px] font-mono font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
+      ★ STAMP #84
+    </span>
+    <span class="text-xs font-bold text-blue-200">2026</span>
+  </div>
+
+  <div>
+    <h4 class="text-sm font-black text-white">Moduli Dinamici</h4>
+    <p class="text-[11px] text-blue-100 mt-0.5">Forme e geometrie che rompono la monotonia.</p>
+  </div>
+
+  <div class="text-[10px] font-mono text-blue-200 flex justify-between border-t border-blue-500 pt-1">
+    <span>Crafted with pure Tailwind</span>
+  </div>
+</div>
+<!-- CARD COBALTO ANGOLI ASIMMETRICI -->
+
+
+
+<div class="smartphone-card col-span-1 row-span-2 p-5 bg-purple-600 text-white border-2 border-slate-950 rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between" >
+  <div class="phone-rim"></div>
+  <div class="phone-bezel">
+    <div class="phone-earpiece"></div>
+    <div class="phone-camera"></div>
+    
+    <div class="phone-screen">
+      <div class="phone-status-bar">
+        <span class="phone-time">12:30</span>
+        <div class="status-right">
+          <div class="phone-wifi"></div>
+          <div class="phone-battery"></div>
+        </div>
+      </div>
+      
+      <div class="phone-screen-content">
+        <div class="lockscreen-clock">
+          <div class="clock-hour">12:30</div>
+          <div class="clock-date">MARTEDÌ, 17 GIUGNO</div>
+        </div>
+        
+        <div class="push-messages">
+          <div class="msg-card msg-1">
+            <div class="msg-dot animate-pulse"></div>
+            <div class="msg-text">
+              <span class="msg-sender">Card Canvas Studio</span>
+              <span class="msg-preview">Nuova card caricata con successo!</span>
+            </div>
+          </div>
+          <div class="msg-card msg-2">
+            <div class="msg-dot neon"></div>
+            <div class="msg-text">
+              <span class="msg-sender">Sistema</span>
+              <span class="msg-preview">Pannello contrasto e zoom ottimizzato.</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="charging-wave-ocean">
+          <div class="liquid-wave wave-back"></div>
+          <div class="liquid-wave wave-front"></div>
+          <div class="charging-text">89% IN CARICA</div>
+        </div>
+      </div>
+      
+      <div class="phone-home-indicator"></div>
+    </div>
+  </div>
+  <div class="phone-exterior-shadow"></div>
+</div>
+</div>
+<!-- CARD SMERALDO FOREST STATISTICA -->
+<div class="col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between">
+  <div class="flex items-center justify-between">
+    <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/80 px-2 py-0.5 rounded-full">
+      SPEED SCORE
+    </span>
+    <span class="text-xs font-bold text-emerald-300 bg-emerald-900 px-2 py-0.5 rounded-md">
+      +28% ↗
+    </span>
+  </div>
+
+  <div class="my-1">
+    <div class="text-3xl font-black tracking-tight text-white">99.9%</div>
+    <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Uptime & Performance Globale</p>
+  </div>
+
+  <div class="w-full bg-emerald-800 rounded-full h-1.5 overflow-hidden">
+    <div class="bg-emerald-300 h-full w-[94%] rounded-full"></div>
+  </div>
+</div>
+<!-- CARD NEOBRUTALIST AMBRA 3D -->
+<div class="col-span-1 sm:col-span-2 row-span-1 p-5 bg-amber-400 text-slate-950 border-3 border-slate-950 rounded-2xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all flex items-center justify-between gap-4">
+  <div>
+    <span class="text-[10px] font-black uppercase tracking-widest bg-slate-950 text-amber-400 px-2 py-0.5 rounded">
+      HIGH-IMPACT
+    </span>
+    <h3 class="text-base font-black text-slate-950 mt-1">Design Solido & Audace</h3>
+    <p class="text-xs font-bold text-slate-900">Bordi netti, contrasto elevato e personalità decisa.</p>
+  </div>
+  <button class="px-4 py-2 bg-slate-950 hover:bg-slate-900 text-white font-black text-xs rounded-xl border-2 border-slate-950 shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] whitespace-nowrap">
+    Scopri ➔
+  </button>
+</div>
+ <!-- FRAME BROWSER DESKTOP 16:9 -->
+<div class="col-span-1 sm:col-span-2 row-span-2 bg-slate-900 border-2 border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+  <!-- Barra Superiore Browser -->
+  <div class="bg-slate-950 border-b border-slate-800 px-4 py-2.5 flex items-center justify-between">
+    <div class="flex items-center gap-1.5">
+      <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+      <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+      <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+    </div>
+    <div class="bg-slate-900 border border-slate-800 rounded-lg px-4 py-1 text-[11px] font-mono text-slate-400 flex items-center gap-2 max-w-xs w-full mx-4">
+      <span class="text-emerald-400">🔒</span>
+      <span class="text-slate-300 truncate">https://app.tuodominio.com/live</span>
+    </div>
+    <div class="text-slate-500 text-xs">⚡</div>
+  </div>
+
+  <!-- Viewport Applicazione -->
+  
+   
+    <div class="mt-12">
+      <iframe src="timeline-display.html" class="timeline-iframe rounded-xl shadow-lg" title="Timeline"></iframe>
+    </div>  
+ 
+</div>
+
+    </div>
+
+  </div>
+</div>
   <footer class="mt-20 bg-slate-900 text-slate-400 border-t-4 border-yellow-500 py-12 px-6">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
       <div>
@@ -487,71 +1134,101 @@
         </p>
       </div>
       <div class="flex gap-4">
-        <a href="https://t.me/linguacinese_gruppo" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-full border border-slate-700 transition">Telegram Group</a>
-        <a href="https://t.me/linguacinese2000" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-full border border-slate-700 transition">Canale Ufficiale</a>
+          <a href="https://t.me/linguacinese_gruppo" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/20 px-5 py-2.5 rounded-full transition-all duration-300 group" target="_blank">
+            <span class="text-blue-400 group-hover:scale-110 transition-transform">✈️</span>
+            <span class="text-sm font-semibold">Gruppo Telegram</span>
+          </a>
+          <a href="https://t.me/linguacinese2000" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/20 px-5 py-2.5 rounded-full transition-all duration-300 group" target="_blank">
+            <span class="text-blue-400 group-hover:scale-110 transition-transform">📢</span>
+            <span class="text-sm font-semibold">Canale Ufficiale</span>
+          </a>
       </div>
     </div>
-    <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-slate-800 text-center text-[11px] text-slate-500">
-      © 2026 Lingua Cinese • Tutti i diritti riservati.
-    </div>
+     <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
+      <a href="contatti.html" class="hover:text-white transition-colors">Contatti</a>
+     
+        
+      
+      
   </footer>
+<div id="roji-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 2147483647; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto;">
+  <iframe 
+    id="roji-iframe"
+    src="https://roji-tawny.vercel.app/" 
+    style="width: 100%; height: 100%; border: none; overflow: hidden; background: transparent;"
+    scrolling="auto"
+    allowtransparency="true">
+  </iframe>
+</div>
 
-  <!-- SCRIPT FILTRI E MODALE -->
   <script>
-    // Gestione Modale Vocabolario
-    function openModal() {
-      const modal = document.getElementById('modalIframe');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
+// Bell
 
+const bell = document.getElementById('bell-swing');
+const UPDATE_DATE = '2026-08-14'; // ← Data RECENTE = attiva tutto!
+const updateTime = new Date(UPDATE_DATE).getTime();
+const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+
+if (updateTime > sevenDaysAgo) {
+  // SOLO QUI: badge + swing + onclick
+  bell.innerHTML = '🔔<span class="badge">●</span>';
+  bell.style.animationPlayState = 'running';
+  bell.onclick = function() {
+    alert("Pagina Social");
+  };
+  console.log('🔔 ATTIVA: swing + click OK');
+} else {
+  // Data vecchia: solo icona statica, NO onclick!
+  console.log('🔔 Inattiva: no action');
+}
+    // Modal functions
+    function openModal() {
+      document.getElementById('modalIframe').classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scroll
+    }
     function closeModal() {
-      const modal = document.getElementById('modalIframe');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      document.getElementById('modalIframe').classList.remove('active');
       document.body.style.overflow = '';
     }
-
-    // Chiudi modale premendo ESC
+    // Close on outside click or ESC
+    window.addEventListener('click', (e) => {
+      if (e.target.id === 'modalIframe') closeModal();
+    });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
 
-    // Filtri dinamici delle Card
-    function filterCategory(cat) {
-      const cards = document.querySelectorAll('.card-item');
-      const buttons = document.querySelectorAll('.filter-btn');
 
-      // Update button styling
-      buttons.forEach(btn => {
-        btn.classList.remove('bg-yellow-500', 'text-slate-950', 'font-bold');
-        btn.classList.add('hover:bg-white/10');
-      });
+// stickers
+async function loadQuoteSticker() {
+  const container = document.getElementById("quoteSticker");
 
-      event.currentTarget.classList.add('bg-yellow-500', 'text-slate-950', 'font-bold');
-      event.currentTarget.classList.remove('hover:bg-white/10');
+  try {
+    const response = await fetch("./sticker-frase.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("JSON non trovato");
 
-      // Filter logic
-      cards.forEach(card => {
-        if (cat === 'all' || card.classList.contains('cat-' + cat)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-function toggleRoji() {
-  const rojiWin = document.getElementById('rojiWindow');
-  if (rojiWin.classList.contains('hidden')) {
-    rojiWin.classList.remove('hidden');
-    rojiWin.classList.add('flex');
-  } else {
-    rojiWin.classList.add('hidden');
-    rojiWin.classList.remove('flex');
+    const data = await response.json();
+    const item = data[0];
+
+    container.innerHTML = `
+      <article class="quote-sticker">
+        <div class="quote-label">${item.title}</div>
+        <p class="quote-hanzi">${item.hanzi}</p>
+        <p class="quote-pinyin">${item.pinyin}</p>
+      </article>
+    `;
+  } catch (error) {
+    container.innerHTML = `
+      <article class="quote-sticker quote-sticker-error">
+        <div class="quote-label">Frase del giorno</div>
+        <p class="quote-hanzi">Contenuto non disponibile</p>
+        <p class="quote-pinyin">Controlla il file JSON</p>
+      </article>
+    `;
   }
 }
-  </script>
 
+loadQuoteSticker();
+    <script>
 </body>
 </html>
