@@ -110,8 +110,7 @@ body {
 .animated-element {
   display: inline-block; font-size: 2rem; font-family: 'Noto Color Emoji', sans-serif;
   padding: 8px; line-height: 1; cursor: pointer;
-  /* NO SFONDO BIANCO - Trasparente! */
-  box-shadow: 0 2px 12px rgba(0,0,0,0.15); /* Solo ombra soft */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
   animation: animate-swing 2.8s ease-out infinite; animation-play-state: paused;
   will-change: transform; transition: transform 0.2s;
 }
@@ -309,86 +308,6 @@ body {
   width: 100%;
   background: #10b981;
   animation: batteryChargePulse 1s infinite alternate;
-}
-
-/* Clock section */
-.lockscreen-clock {
-  text-align: center;
-  margin-top: 14px;
-  z-index: 5;
-}
-.clock-hour {
-  font-size: 24px;
-  font-weight: 200;
-  color: #fff;
-  letter-spacing: -0.5px;
-  transition: transform 0.4s;
-}
-.smartphone-card:hover .clock-hour {
-  transform: scale(1.05);
-}
-.clock-date {
-  font-size: 10px;
-  letter-spacing: 1.2px;
-  color: #000;
-  font-weight: bold;
-}
-
-/* Push messages */
-.push-messages {
-  flex-grow: 1;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  justify-content: flex-start;
-  z-index: 5;
-  margin-top: 6px;
-}
-.msg-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 6px;
-  padding: 6px 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  opacity: 0.15;
-  transform: translateY(8px);
-  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-}
-.msg-dot {
-  width: 5px;
-  height: 5px;
-  background: #888;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.msg-dot.neon { background: #06b6d4; }
-.msg-text {
-  display: flex;
-  flex-direction: column;
-}
-.msg-sender {
-  font-size: 7px;
-  font-weight: bold;
-  color: #e4e4e7;
-}
-.msg-preview {
-  font-size: 6px;
-  color: #a1a1aa;
-  line-height: 1.2;
-}
-
-.smartphone-card:hover .msg-1 {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.1s;
-}
-.smartphone-card:hover .msg-2 {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.25s;
 }
 
 /* Charging Wave Effect */
@@ -765,7 +684,7 @@ body {
       <div class="relative col-span-1 sm:col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform min-h-[320px]">
         <!-- Washi tape in alto centrato -->
         <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/90 text-amber-950 text-[9px] font-mono font-black px-4 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400">
-        闪卡
+          闪卡
         </div>
 
         <!-- Foto Quadrata -->
@@ -867,7 +786,7 @@ body {
       <div class="relative col-span-1 sm:col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform min-h-[320px]">
         <!-- Washi tape in alto centrato -->
         <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/90 text-amber-950 text-[9px] font-mono font-black px-4 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400">
-        漫画
+          漫画
         </div>
 
         <!-- Foto Quadrata -->
@@ -877,9 +796,11 @@ body {
             alt="manhua" 
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-    <a href="manhua.html      <button class="absolute bottom-2 right-2 px-2 py-0.5 bg-slate-950/80 text-[9px] font-mono text-white rounded-md">
-            35mm · f/1.8
-          </button> </a>
+          <a href="manhua.html">
+            <button class="absolute bottom-2 right-2 px-2 py-0.5 bg-slate-950/80 text-[9px] font-mono text-white rounded-md">
+              35mm · f/1.8
+            </button>
+          </a>
         </div>
 
         <!-- Didascalia Polaroid -->
@@ -924,10 +845,12 @@ body {
           <div class="min-w-0">
             <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-             Libri audio
+              Libri audio
             </div>
             <div class="text-xs font-black text-white truncate">Piccoli racconti con audio e traduzione</div>
-      <a href="libri/libriaudio.html"      <button class="text-[10px] text-slate-400 font-mono truncate">Ascolta</button></a>
+            <a href="libri/libriaudio.html" class="inline-block mt-0.5">
+              <button class="text-[10px] text-slate-400 font-mono truncate hover:text-emerald-300">Ascolta</button>
+            </a>
           </div>
         </div>
 
@@ -954,8 +877,20 @@ body {
         </button>
       </div>
 
-      <!-- CARD POST-IT GIALLO CON SPILLA 📌 -->
-      <div class="absolute -top-2.5 right-4 text-base select-none z-10">
+      <!-- CARD QUADERNO / NOTEBOOK -->
+      <div class="relative col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#fffbeb] text-slate-900 border-2 border-amber-900/40 rounded-2xl shadow-[4px_4px_0px_0px_rgba(120,53,15,0.8)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between min-h-[160px] overflow-hidden">
+        <!-- Rilegatura a filo quaderno -->
+        <div class="absolute left-0 top-0 bottom-0 w-4 bg-amber-800/20 border-r border-dashed border-amber-800/40 flex flex-col justify-around items-center py-2 select-none">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-900/60 inline-block"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-900/60 inline-block"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-900/60 inline-block"></span>
+        </div>
+
+        <!-- Linee a righe quaderno -->
+        <div class="absolute inset-0 pl-5 opacity-20 pointer-events-none" style="background-image: linear-gradient(#b45309 1px, transparent 1px); background-size: 100% 20px;"></div>
+
+        <!-- Spilla 📌 in alto a destra -->
+        <div class="absolute -top-2.5 right-4 text-base select-none z-10">
           📌
         </div>
 
@@ -977,12 +912,14 @@ body {
 
         <div class="text-[10px] font-mono text-amber-900 font-bold flex justify-between border-t border-amber-300/80 pt-1 pl-2 relative z-10">
           <span>Appunti Personali</span>
-   <a href="https://poliglotta-pdf.vercel.app/"       <button class="text-amber-800 font-bold">✓ Quaderno</button> </a>
+          <a href="https://poliglotta-pdf.vercel.app/" class="hover:underline">
+            <button class="text-amber-800 font-bold cursor-pointer">✓ Quaderno</button>
+          </a>
         </div>
       </div>
 
-      <!-- CARD COBALTO ANGOLI ASIMMETRICI -->
-     <div class="relative overflow-hidden col-span-1 sm:col-span-1 row-span-1 p-5 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white border-2 border-slate-950 rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px] group">
+      <!-- CARD COBALTO RADICALI CINESI (CON SIGILLO E IDEOGRAMMA) -->
+      <div class="relative overflow-hidden col-span-1 sm:col-span-1 row-span-1 p-5 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white border-2 border-slate-950 rounded-tl-[2.5rem] rounded-br-[2.5rem] rounded-tr-lg rounded-bl-lg shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px] group">
         <!-- Sigillo / Ideogramma Grande di Sfondo Filigrana -->
         <div class="absolute -right-3 -bottom-4 select-none pointer-events-none opacity-20 font-calligrafico text-7xl text-amber-300 transform -rotate-12 group-hover:scale-110 group-hover:opacity-30 transition-all duration-500">
           龙
@@ -994,21 +931,23 @@ body {
 
         <div class="flex items-center justify-between relative z-10">
           <span class="text-[10px] font-mono font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full border border-white/20">
-            ★ 中国激进分子
+            ★ 部首 / RADICALI
           </span>
           <span class="text-xs font-bold text-blue-200 mr-7">2026</span>
         </div>
 
         <div class="relative z-10">
           <h4 class="text-sm font-black text-white flex items-center gap-1.5">
-           Radicali cinesi
+            Radicali cinesi
           </h4>
           <p class="text-[11px] text-blue-100 mt-0.5">Impara i radicali per capire meglio gli ideogrammi</p>
         </div>
 
         <div class="text-[10px] font-mono text-blue-200 flex justify-between border-t border-blue-500/80 pt-1 relative z-10">
-          
-   <a href="Radicali_Cinesi">       <button class="text-blue-300 font-mono">✦ 东方美学</button></a>
+          <span class="text-amber-200">Elementi Base</span>
+          <a href="Radicali_Cinesi.html">
+            <button class="text-blue-300 font-mono hover:text-white cursor-pointer">✦ 东方美学 ↗</button>
+          </a>
         </div>
       </div>
 
@@ -1055,8 +994,7 @@ body {
         </div>
       </div>
 
-      <!-- CARD SMERALDO FOREST STATISTICA -->
-    <!-- CARD SMERALDO FOREST STATISTICA (CON SIGILLO E IDEOGRAMMA) -->
+      <!-- CARD SMERALDO FOREST STATISTICA (CON SIGILLO E IDEOGRAMMA) -->
       <div class="relative overflow-hidden col-span-1 sm:col-span-1 row-span-1 p-5 bg-gradient-to-br from-[#065f46] to-[#022c22] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px] group">
         <!-- Ideogramma Smeraldo Sfondo Filigrana (极 = Velocità/Top) -->
         <div class="absolute -right-2 -bottom-3 select-none pointer-events-none opacity-20 font-calligrafico text-7xl text-emerald-300 transform -rotate-6 group-hover:scale-110 group-hover:opacity-30 transition-all duration-500">
@@ -1068,15 +1006,17 @@ body {
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
             IDEOGRAMMI
           </span>
-     <a href="caratteri.html"     <button class="text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-600/40 px-2 py-0.5 rounded-md shadow-xs">
-            Vai ↗
-          </button></a>
+          <a href="caratteri.html">
+            <button class="text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-600/40 px-2 py-0.5 rounded-md shadow-xs hover:bg-emerald-900 cursor-pointer">
+              Vai ↗
+            </button>
+          </a>
         </div>
 
         <div class="my-1 relative z-10">
           <div class="text-3xl font-black tracking-tight text-white flex items-baseline gap-2">
             表意符号
-            <span class="text-[10px] font-mono text-emerald-300 font-normal">迅捷 / FAST</span>
+            <span class="text-[10px] font-mono text-emerald-300 font-normal">汉字 / HANZI</span>
           </div>
           <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Scopri gli ideogrammi cinesi</p>
         </div>
@@ -1263,4 +1203,4 @@ body {
     }
   </script>
 </body>
-</ht
+</html>
