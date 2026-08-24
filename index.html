@@ -435,6 +435,56 @@ body {
           <p class="text-xs text-slate-700 leading-relaxed">Rivedere il vecchio per comprendere il nuovo.</p>
         </div>
       </div>
+      <!-- Calendario -->
+      <div class="relative overflow-hidden col-span-1 sm:col-span-1 row-span-1 p-3.5 bg-[#fff8f0] text-slate-900 border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px] select-none">
+  
+  <!-- Header con Mese + Frecce Navigazione -->
+  <div class="flex items-center justify-between border-b border-amber-900/20 pb-1.5">
+    <div class="flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+      <span id="cal-month-title" class="text-xs font-black text-slate-900 font-sans tracking-tight">
+        Agosto 2026
+      </span>
+      <span id="cal-month-cn" class="text-[10px] font-bold text-red-700 font-calligrafico ml-1">
+        八月
+      </span>
+    </div>
+    
+    <!-- Controlli Mese Precedente / Successivo -->
+    <div class="flex items-center gap-1">
+      <button onclick="changeMonth(-1)" class="w-5 h-5 rounded bg-amber-200/80 hover:bg-amber-300 border border-amber-800/30 text-[10px] font-bold flex items-center justify-center cursor-pointer transition-colors shadow-2xs">
+        ◀
+      </button>
+      <button onclick="changeMonth(1)" class="w-5 h-5 rounded bg-amber-200/80 hover:bg-amber-300 border border-amber-800/30 text-[10px] font-bold flex items-center justify-center cursor-pointer transition-colors shadow-2xs">
+        ▶
+      </button>
+    </div>
+  </div>
+
+  <!-- Giorni della Settimana (Ideogrammi Cinesi) -->
+  <div class="grid grid-cols-7 text-center text-[9px] font-bold text-amber-950/70 pt-1 font-mono">
+    <span>一</span>
+    <span>二</span>
+    <span>三</span>
+    <span>四</span>
+    <span>五</span>
+    <span class="text-red-600">六</span>
+    <span class="text-red-600">日</span>
+  </div>
+
+  <!-- Griglia Giorni del Mese -->
+  <div id="cal-days-grid" class="grid grid-cols-7 gap-0.5 text-center text-[10px] font-bold py-1">
+    <!-- Generato via JavaScript -->
+  </div>
+
+  <!-- Footer con Auspicio Tradizionale / Segno Zodiacale -->
+  <div class="flex items-center justify-between border-t border-amber-900/20 pt-1 text-[9px] font-mono text-amber-950">
+    <span class="font-bold text-red-800 flex items-center gap-1">
+      <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span> 丙午年 (Cavallo)
+    </span>
+    <span class="text-slate-500 font-sans">Clicca sui giorni</span>
+  </div>
+</div>
 
       <!-- FRAME Social MOBILE 9:16 -->
       <div class="col-span-1 sm:col-span-1 row-span-4 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-3 flex flex-col justify-between relative overflow-hidden min-h-[480px]">
@@ -1260,6 +1310,59 @@ body {
         alert('Ciao! Il codice JavaScript viene eseguito direttamente nell\'anteprima.');
       });
     }
+    // Calendario
+
+    let currentCalDate = new Date();
+
+  function renderCalendar() {
+    const year = currentCalDate.getFullYear();
+    const month = currentCalDate.getMonth();
+    
+    const monthNamesIt = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+    const monthNamesCn = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+    
+    document.getElementById("cal-month-title").textContent = `${monthNamesIt[month]} ${year}`;
+    document.getElementById("cal-month-cn").textContent = monthNamesCn[month];
+
+    const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7; // Lunedì = 0
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    
+    const grid = document.getElementById("cal-days-grid");
+    grid.innerHTML = "";
+
+    // Caselle vuote prima del primo giorno
+    for (let i = 0; i < firstDayIndex; i++) {
+      const emptyCell = document.createElement("span");
+      emptyCell.className = "py-0.5 text-transparent opacity-0";
+      emptyCell.textContent = "0";
+      grid.appendChild(emptyCell);
+    }
+
+    const today = new Date();
+
+    // Giorni del mese
+    for (let d = 1; d <= totalDays; d++) {
+      const dayCell = document.createElement("button");
+      dayCell.textContent = d;
+      const isToday = (today.getDate() === d && today.getMonth() === month && today.getFullYear() === year);
+
+      if (isToday) {
+        dayCell.className = "py-0.5 rounded-full bg-red-600 text-white font-black shadow-xs hover:scale-110 transition-transform cursor-pointer";
+      } else {
+        dayCell.className = "py-0.5 rounded hover:bg-amber-300/80 text-slate-800 transition-colors cursor-pointer";
+      }
+
+      grid.appendChild(dayCell);
+    }
+  }
+
+  function changeMonth(delta) {
+    currentCalDate.setMonth(currentCalDate.getMonth() + delta);
+    renderCalendar();
+  }
+
+  // Inizializza al caricamento
+  renderCalendar();
   </script>
 </body>
 </html>
