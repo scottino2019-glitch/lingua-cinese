@@ -609,29 +609,13 @@
         </div>
 
         <!-- ==========================================
-             3. FRAME SOCIAL MOBILE 9:16 (Migliorato esteticamente)
+             3. FRAME SOCIAL MOBILE 9:16
              ========================================== -->
-        <div data-category="media" data-title="social mobile post feed" class="bento-card col-span-1 sm:col-span-2 row-span-4 frame-wrapper p-3 flex flex-col justify-between min-h-[480px]">
-          <!-- Barra Header Dispositivo Mobile -->
-          <div class="frame-header-bar rounded-xl mb-2">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              <span class="text-[11px] font-mono font-bold text-slate-300 ml-1">📱 Angolo Sociale</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[9px] font-mono bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-800">
-                post/social.html
-              </span>
-            </div>
-          </div>
-
-          <!-- Contenitore Iframe con Fallback Grafico -->
-          <div class="relative w-full h-[620px] max-h-[70vh] rounded-2xl overflow-hidden bg-slate-900 border border-slate-800">
+        <div data-category="media" data-title="social mobile post feed" class="bento-card col-span-1 sm:col-span-2 row-span-4 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-2.5 flex flex-col justify-between relative overflow-hidden min-h-[500px]">
+          <div class="relative w-full h-[650px] max-h-[78vh] rounded-3xl overflow-hidden bg-slate-900 shadow-inner">
             <iframe 
               src="post/social.html" 
-              class="w-full h-full border-0 rounded-2xl"
+              class="w-full h-full border-0 rounded-3xl"
               title="Angolo Sociale"
               loading="lazy">
             </iframe>
@@ -639,22 +623,13 @@
         </div>
 
         <!-- ==========================================
-             4. FRAME JSON CINA MOBILE 9:16 (Migliorato esteticamente)
+             4. FRAME JSON CINA MOBILE 9:16
              ========================================== -->
-        <div data-category="media" data-title="cina frame json info mobile" class="bento-card col-span-1 sm:col-span-2 row-span-4 frame-wrapper p-3 flex flex-col justify-between min-h-[480px]">
-          <!-- Barra Header Dispositivo Mobile -->
-          <div class="frame-header-bar rounded-xl mb-2">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
-              <span class="text-[11px] font-mono font-bold text-indigo-300">🇨🇳 Portale Cultura & Territorio</span>
-            </div>
-            <span class="text-[9px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">frame/cina.html</span>
-          </div>
-
-          <div class="relative overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] w-full h-[580px] max-h-[70vh] rounded-2xl border border-indigo-900/60 bg-slate-900 shadow-inner">
+        <div data-category="media" data-title="cina frame json info mobile" class="bento-card col-span-1 sm:col-span-2 row-span-4 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-2.5 flex flex-col justify-between relative overflow-hidden min-h-[500px]">
+          <div class="relative overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] w-full h-[650px] max-h-[78vh] rounded-3xl border-2 border-indigo-900/40 bg-slate-900 shadow-inner">
             <iframe 
               src="frame/cina.html" 
-              class="w-full h-full border-0"
+              class="w-full h-full border-0 rounded-3xl"
               title="Cina Frame"
               scrolling="auto"
               loading="lazy">
@@ -663,21 +638,14 @@
         </div>
 
         <!-- ==========================================
-             5. FRAME VIDEO METRO MOBILE 9:16 (Migliorato esteticamente)
+             5. FRAME VIDEO METRO MOBILE 9:16 (Pulito senza barre superiori che coprono il contenuto)
              ========================================== -->
-        <div data-category="media" data-title="video metro mobile transito" class="bento-card col-span-1 sm:col-span-2 row-span-4 frame-wrapper p-3 flex flex-col justify-between min-h-[480px]">
-          <div class="frame-header-bar rounded-xl mb-2">
-            <div class="flex items-center gap-2">
-              <span class="text-xs">🕛</span>
-              <span class="text-[11px] font-mono font-bold text-slate-200">La mia giornata</span>
-            </div>
-            <span class="text-[9px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">LIVE FEED</span>
-          </div>
-
-          <div class="relative w-full h-[600px] max-h-[70vh] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-2xl border border-slate-800 bg-slate-900 shadow-inner">
+        <div data-category="media" data-title="video metro mobile transito" class="bento-card col-span-1 sm:col-span-2 row-span-4 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-2.5 flex flex-col justify-between relative overflow-hidden min-h-[520px]">
+          <div class="relative w-full h-[650px] max-h-[80vh] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-3xl border-2 border-slate-800 bg-slate-900 shadow-inner">
             <iframe 
               src="frame/giornata.html" 
-              class="w-full h-full border-0"
+              class="w-full h-full border-0 rounded-3xl"
+              style="width: 100%; height: 100%; min-height: 600px;"
               title="Metro Frame"
               scrolling="auto"
               loading="lazy">
@@ -686,22 +654,15 @@
         </div>
 
         <!-- ==========================================
-             6. FRAME DINAMICO MICE 9:16 (Migliorato esteticamente)
+             6. FRAME DINAMICO MICE ANIMAZIONE (Pulito senza barre superiori che coprono il contenuto)
              ========================================== -->
-        <div data-category="media" data-title="dinamico mice webm animazione" class="bento-card col-span-1 sm:col-span-1 row-span-4 frame-wrapper p-3 flex flex-col justify-between min-h-[480px]">
-          <div class="frame-header-bar rounded-xl mb-2">
-            <div class="flex items-center gap-1.5">
-              <span class="text-xs">🐭</span>
-              <span class="text-[10px] font-mono font-bold text-slate-200">Animation</span>
-            </div>
-            <span class="text-[9px] font-mono text-cyan-400">webm</span>
-          </div>
-
-          <div class="relative w-full h-[600px] max-h-[70vh] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-2xl border border-emerald-900/60 bg-slate-900 shadow-inner">
+        <div data-category="media" data-title="dinamico mice webm animazione video" class="bento-card col-span-1 sm:col-span-1 row-span-4 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-2.5 flex flex-col justify-between relative overflow-hidden min-h-[520px]">
+          <div class="relative w-full h-[650px] max-h-[80vh] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-3xl border-2 border-emerald-950 bg-slate-900 shadow-inner flex items-center justify-center">
             <iframe 
               src="frame/mice.webm" 
-              class="w-full h-full border-0"
-              title="Mice Video"
+              class="w-full h-full border-0 rounded-3xl"
+              style="width: 100%; height: 100%; min-height: 600px;"
+              title="Mice Animation"
               scrolling="auto"
               loading="lazy">
             </iframe>
