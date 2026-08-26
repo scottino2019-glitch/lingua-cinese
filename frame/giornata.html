@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -24,7 +24,7 @@ body {
 .binder-leaf-container {
   display: flex;
   width: 100%;
-  max-width: 960px;
+  max-width: 1020px;
   margin: 0 auto;
   position: relative;
 }
@@ -51,11 +51,11 @@ body {
   left: 18px;
 }
 
-/* Notebook Sheet with Pencil Background Doodles */
+/* Notebook Sheet */
 .notebook-sheet {
   flex-grow: 1;
   background-color: #fbfbf9;
-  /* Graph lines + subtle paper texture */
+  /* Quadretti e trama carta */
   background-image: 
     linear-gradient(rgba(175, 200, 220, 0.45) 1px, transparent 1.5px),
     linear-gradient(90deg, rgba(175, 200, 220, 0.45) 1px, transparent 1.5px);
@@ -110,21 +110,37 @@ body {
   margin-bottom: 16px;
 }
 
-/* Medium Balanced Handwriting */
+/* Testo Cinese con Ruby (Pinyin) */
+.chinese-ruby-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.15rem;
+  line-height: 2.2rem;
+  color: #1a252f;
+}
+
+rt {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #e74c3c; /* Pinyin in rosso rubino stile studio */
+  transform: translateY(-2px);
+}
+
+/* Medium Balanced Italian Handwriting */
 .handwritten-text {
   font-size: 1.15rem;
   line-height: 1.5rem;
   color: #0c2461; /* Penna blu */
 }
 
-/* Background Pencil Doodles (Scarabocchi a matita sullo sfondo del foglio) */
+/* Background Pencil Doodles (Scarabocchi a matita) */
 .pencil-bg-doodles {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
-  opacity: 0.18; /* Effetto leggero matita */
+  opacity: 0.15;
   font-family: serif;
 }
 
@@ -132,20 +148,6 @@ body {
   position: absolute;
   color: #2c3e50;
   user-select: none;
-}
-
-/* Photo Container - Nitida e visibile */
-.photo-card-wrapper {
-  background-color: #ffffff;
-  padding: 8px;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
-  transform: rotate(-1deg);
-  transition: transform 0.2s ease;
-}
-
-.photo-card-wrapper:hover {
-  transform: rotate(0deg) scale(1.01);
 }
   </style>
 </head>
@@ -168,13 +170,11 @@ body {
 
     <!-- BACKGROUND PENCIL SKETCHES / SCARABOCCHI A MATITA -->
     <div class="pencil-bg-doodles">
-      <!-- Ideogrammi scarabocchiati a matita -->
       <span class="pencil-sketch text-6xl font-serif top-8 right-16 rotate-12">学</span>
       <span class="pencil-sketch text-7xl font-serif bottom-12 left-20 -rotate-12">文</span>
       <span class="pencil-sketch text-5xl font-serif top-1/2 left-1/3 rotate-45">书</span>
       <span class="pencil-sketch text-6xl font-serif bottom-24 right-1/3 -rotate-6">水</span>
       
-      <!-- Disegni a matita (stella, cerchi) -->
       <svg class="pencil-sketch top-20 right-48 w-24 h-24 stroke-current stroke-1" fill="none" viewBox="0 0 24 24">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
       </svg>
@@ -191,26 +191,33 @@ body {
           <span class="field">Nome: <strong class="written">Wang Ming (王明)</strong></span>
           <span class="field">Materia: <strong class="written">Esercizi di Cinese (HSK 1)</strong></span>
         </div>
-        <h2 class="ruled-h2">Quaderno degli esercizi ~ 我的一天</h2>
+        <h2 class="ruled-h2">Quaderno degli esercizi ~ 我的一天 (La mia giornata)</h2>
       </header>
       
-      <!-- Main Content Layout (Sinistra: Foto, Destra: Testo) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- Main Content Layout (Sinistra: Testo Cinese con Ruby, Destra: Traduzione Italiano) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- Image Column (A SINISTRA) -->
-        <div class="lg:col-span-5 flex flex-col items-center">
-          <div class="photo-card-wrapper w-full">
-            <img 
-              src="IMG_20260826_123359_381.jpg" 
-              alt="Scheda esercizio HSK 1" 
-              class="w-full h-auto rounded border border-gray-200 block"
-            >
+        <!-- Cinese con Ruby Pinyin (A SINISTRA) -->
+        <div class="lg:col-span-6 chinese-ruby-text space-y-4 bg-white/40 p-4 rounded-lg border border-slate-200/60 shadow-sm">
+          <div class="font-bold text-center text-xl mb-2 text-slate-800">
+            <ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>一<rt>yī</rt></ruby><ruby>天<rt>tiān</rt></ruby>
           </div>
-          <span class="text-xs font-sans text-slate-500 mt-2 italic">★ Scheda originale dell'esercizio (HSK 1)</span>
+
+          <p>
+            <ruby>你<rt>nǐ</rt></ruby><ruby>好<rt>hǎo</rt></ruby>！<ruby>我<rt>wǒ</rt></ruby><ruby>叫<rt>jiào</rt></ruby><ruby>王<rt>wáng</rt></ruby><ruby>明<rt>míng</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>中<rt>zhōng</rt></ruby><ruby>国<rt>guó</rt></ruby><ruby>人<rt>rén</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>现<rt>xiàn</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>北<rt>běi</rt></ruby><ruby>京<rt>jīng</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>一<rt>yī</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>学<rt>xué</rt></ruby><ruby>生<rt>shēng</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>四<rt>sì</rt></ruby><ruby>口<rt>kǒu</rt></ruby><ruby>人<rt>rén</rt></ruby>：<ruby>爸<rt>bà</rt></ruby><ruby>爸<rt>ba</rt></ruby>、<ruby>妈<rt>mā</rt></ruby><ruby>妈<rt>ma</rt></ruby>、<ruby>姐<rt>jiě</rt></ruby><ruby>姐<rt>jie</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>我<rt>wǒ</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>爸<rt>bà</rt></ruby><ruby>爸<rt>ba</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>医<rt>yī</rt></ruby><ruby>生<rt>shēng</rt></ruby>，<ruby>妈<rt>mā</rt></ruby><ruby>妈<rt>ma</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>老<rt>lǎo</rt></ruby><ruby>师<rt>shī</rt></ruby>。<ruby>姐<rt>jiě</rt></ruby><ruby>姐<rt>jie</rt></ruby><ruby>也<rt>yě</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>学<rt>xué</rt></ruby><ruby>生<rt>shēng</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>每<rt>měi</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>早<rt>zǎo</rt></ruby><ruby>上<rt>shang</rt></ruby><ruby>七<rt>qī</rt></ruby><ruby>点<rt>diǎn</rt></ruby><ruby>起<rt>qǐ</rt></ruby><ruby>床<rt>chuáng</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>吃<rt>chī</rt></ruby><ruby>苹<rt>píng</rt></ruby><ruby>果<rt>guǒ</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>喝<rt>hē</rt></ruby><ruby>水<rt>shuǐ</rt></ruby>。<ruby>早<rt>zǎo</rt></ruby><ruby>上<rt>shang</rt></ruby><ruby>八<rt>bā</rt></ruby><ruby>点<rt>diǎn</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>学<rt>xué</rt></ruby><ruby>校<rt>xiào</rt></ruby>。
+          </p>
+
+          <p>
+            <ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>学<rt>xué</rt></ruby><ruby>校<rt>xiào</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>大<rt>dà</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>漂<rt>piào</rt></ruby><ruby>亮<rt>liang</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>学<rt>xué</rt></ruby><ruby>校<rt>xiào</rt></ruby><ruby>学<rt>xué</rt></ruby><ruby>习<rt>xí</rt></ruby><ruby>汉<rt>hàn</rt></ruby><ruby>语<rt>yǔ</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>汉<rt>hàn</rt></ruby><ruby>语<rt>yǔ</rt></ruby><ruby>老<rt>lǎo</rt></ruby><ruby>师<rt>shī</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby>。<ruby>她<rt>tā</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>中<rt>zhōng</rt></ruby><ruby>国<rt>guó</rt></ruby><ruby>人<rt>rén</rt></ruby>，<ruby>叫<rt>jiào</rt></ruby><ruby>李<rt>lǐ</rt></ruby><ruby>老<rt>lǎo</rt></ruby><ruby>师<rt>shī</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>朋<rt>péng</rt></ruby><ruby>友<rt>yǒu</rt></ruby>。<ruby>中<rt>zhōng</rt></ruby><ruby>午<rt>wǔ</rt></ruby><ruby>十<rt>shí</rt></ruby><ruby>二<rt>èr</rt></ruby><ruby>点<rt>diǎn</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>朋<rt>péng</rt></ruby><ruby>友<rt>yǒu</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>学<rt>xué</rt></ruby><ruby>校<rt>xiào</rt></ruby><ruby>吃<rt>chī</rt></ruby><ruby>饭<rt>fàn</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>吃<rt>chī</rt></ruby><ruby>米<rt>mǐ</rt></ruby><ruby>饭<rt>fàn</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>牛<rt>niú</rt></ruby><ruby>肉<rt>ròu</rt></ruby>。<ruby>下<rt>xià</rt></ruby><ruby>午<rt>wǔ</rt></ruby><ruby>三<rt>sān</rt></ruby><ruby>点<rt>diǎn</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>下<rt>xià</rt></ruby><ruby>课<rt>kè</rt></ruby>。<ruby>下<rt>xià</rt></ruby><ruby>午<rt>wǔ</rt></ruby><ruby>四<rt>sì</rt></ruby><ruby>点<rt>diǎn</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>朋<rt>péng</rt></ruby><ruby>友<rt>yǒu</rt></ruby><ruby>一<rt>yī</rt></ruby><ruby>起<rt>qǐ</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>商<rt>shāng</rt></ruby><ruby>店<rt>diàn</rt></ruby><ruby>买<rt>mǎi</rt></ruby><ruby>东<rt>dōng</rt></ruby><ruby>西<rt>xī</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>买<rt>mǎi</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>书<rt>shū</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>衣<rt>yī</rt></ruby><ruby>服<rt>fu</rt></ruby>。
+          </p>
+
+          <p>
+            <ruby>晚<rt>wǎn</rt></ruby><ruby>上<rt>shang</rt></ruby><ruby>六<rt>liù</rt></ruby><ruby>点<rt>diǎn</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>回<rt>huí</rt></ruby><ruby>家<rt>jiā</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>妈<rt>mā</rt></ruby><ruby>妈<rt>ma</rt></ruby><ruby>做<rt>zuò</rt></ruby><ruby>饭<rt>fàn</rt></ruby>。<ruby>她<rt>tā</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>饭<rt>fàn</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>吃<rt>chī</rt></ruby>。<ruby>晚<rt>wǎn</rt></ruby><ruby>上<rt>shang</rt></ruby><ruby>八<rt>bā</rt></ruby><ruby>点<rt>diǎn</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>看<rt>kàn</rt></ruby><ruby>书<rt>shū</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>看<rt>kàn</rt></ruby><ruby>电<rt>diàn</rt></ruby><ruby>视<rt>shì</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>爸<rt>bà</rt></ruby><ruby>爸<rt>ba</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>妈<rt>mā</rt></ruby><ruby>妈<rt>ma</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>喝<rt>hē</rt></ruby><ruby>茶<rt>chá</rt></ruby>。<ruby>晚<rt>wǎn</rt></ruby><ruby>上<rt>shang</rt></ruby><ruby>十<rt>shí</rt></ruby><ruby>点<rt>diǎn</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>睡<rt>shuì</rt></ruby><ruby>觉<rt>jiào</rt></ruby>。<ruby>今<rt>jīn</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby>。<ruby>明<rt>míng</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>星<rt>xīng</rt></ruby><ruby>期<rt>qī</rt></ruby><ruby>六<rt>liù</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>用<rt>yòng</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>学<rt>xué</rt></ruby><ruby>校<rt>xiào</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>朋<rt>péng</rt></ruby><ruby>友<rt>yǒu</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>玩<rt>wán</rt></ruby>。<ruby>我<rt>wǒ</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>周<rt>zhōu</rt></ruby><ruby>末<rt>mò</rt></ruby>！
+          </p>
         </div>
 
-        <!-- Text Column (A DESTRA) -->
-        <div class="lg:col-span-7 handwritten-text space-y-3">
+        <!-- Traduzione in Italiano (A DESTRA) -->
+        <div class="lg:col-span-6 handwritten-text space-y-3 pt-2">
           <p>
             Ciao! Mi chiamo Wang Ming. Sono cinese. Ora mi trovo a Pechino. Sono uno studente. La mia famiglia è composta da quattro persone: papà, mamma, sorella maggiore e io. Mio papà è un medico, mia mamma è un'insegnante. Anche mia sorella è una studentessa.
           </p>
