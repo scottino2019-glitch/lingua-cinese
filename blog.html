@@ -889,7 +889,7 @@ I soldati cinesi vennero massacrati, la cassa dello Stato andò in rosso fisso e
             <div class="word-section">
               <h2 class="target-word" id="targetWord-vocab-1787772680834">霸道</h2>
               <span class="ipa">bàdào</span>
-              <button class="audio-btn" onclick="playVocabPronunciation('vocab-1787772680834', 'zh-CN')" title="Ascolta pronuncia">
+              <button class="audio-btn" onclick="playVocabPronunciation('vocab-1787772680834', 'it-IT')" title="Ascolta pronuncia">
                 🔊 Ascolta Pronuncia
               </button>
             </div>
@@ -963,29 +963,16 @@ I soldati cinesi vennero massacrati, la cassa dello Stato andò in rosso fisso e
 
     // Vocabulary Card Handlers
     function playVocabPronunciation(id, lang) {
-  var wordElem = document.getElementById('targetWord-' + id);
-  var word = wordElem ? wordElem.innerText.trim() : '';
-  
-  if ('speechSynthesis' in window && word) {
-    window.speechSynthesis.cancel();
-    var utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = lang || 'zh-CN';
-    utterance.rate = 0.88;
-
-    // Recupera e assegna la prima voce cinese installata nel browser/sistema
-    var voices = window.speechSynthesis.getVoices();
-    var matchingVoice = voices.find(function(v) {
-      return v.lang.toLowerCase().startsWith('zh');
-    });
-
-    if (matchingVoice) {
-      utterance.voice = matchingVoice;
+      var wordElem = document.getElementById('targetWord-' + id);
+      var word = wordElem ? wordElem.innerText : '';
+      if ('speechSynthesis' in window && word) {
+        window.speechSynthesis.cancel();
+        var utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = lang || 'en-US';
+        utterance.rate = 0.88;
+        window.speechSynthesis.speak(utterance);
+      }
     }
-
-    window.speechSynthesis.speak(utterance);
-  }
-}
-
     function toggleVocabNotes(id) {
       var box = document.getElementById('notesBox-' + id);
       if (box) {
