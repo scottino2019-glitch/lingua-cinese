@@ -3,17 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Progetto Tailwind CSS</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <title>Quaderno - La mia giornata (Wang Ming)</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
-  
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style type="text/tailwindcss">
 body {
@@ -122,7 +112,7 @@ body {
 
 /* Medium Balanced Handwriting */
 .handwritten-text {
-  font-size: 1.15rem; /* Via di mezzo bilanciata */
+  font-size: 1.15rem;
   line-height: 1.5rem;
   color: #0c2461; /* Penna blu */
 }
@@ -150,7 +140,7 @@ body {
   padding: 8px;
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
-  transform: rotate(1deg);
+  transform: rotate(-1deg);
   transition: transform 0.2s ease;
 }
 
@@ -158,44 +148,8 @@ body {
   transform: rotate(0deg) scale(1.01);
 }
   </style>
-
-
-  <!-- Tailwind CSS Config -->
-  <script>
-    
-window.tailwind = window.tailwind || {};
-window.module = window.module || { exports: {} };
-window.exports = window.exports || {};
-try {
-  // Configurazione Tailwind
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        brand: '#0ea5e9',
-      }
-    }
-  }
-}
-  if (window.module && window.module.exports && Object.keys(window.module.exports).length > 0) {
-    window.tailwind.config = window.module.exports;
-  }
-} catch(e) {
-  console.warn('Errore esecuzione tailwind.config:', e.message);
-}
-    if (window.tailwind && window.tailwind.config && !window.tailwind.config.darkMode) {
-      window.tailwind.config.darkMode = 'class';
-    }
-  </script>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-
-  <!-- Custom CSS & Tailwind Directives -->
-  
 </head>
-<body class="bg-[#0b0f19] text-[#f1f5f9] min-h-screen ">
-
+<body>
 
 <div class="binder-leaf-container">
   <!-- Ring holes -->
@@ -220,8 +174,8 @@ tailwind.config = {
       <span class="pencil-sketch text-5xl font-serif top-1/2 left-1/3 rotate-45">书</span>
       <span class="pencil-sketch text-6xl font-serif bottom-24 right-1/3 -rotate-6">水</span>
       
-      <!-- Disegni a matita (stella, cubo, righi) -->
-      <svg class="pencil-sketch top-20 left-48 w-24 h-24 stroke-current stroke-1" fill="none" viewBox="0 0 24 24">
+      <!-- Disegni a matita (stella, cerchi) -->
+      <svg class="pencil-sketch top-20 right-48 w-24 h-24 stroke-current stroke-1" fill="none" viewBox="0 0 24 24">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
       </svg>
       <svg class="pencil-sketch bottom-16 right-12 w-32 h-32 stroke-current stroke-1" fill="none" viewBox="0 0 24 24">
@@ -240,10 +194,22 @@ tailwind.config = {
         <h2 class="ruled-h2">Quaderno degli esercizi ~ 我的一天</h2>
       </header>
       
-      <!-- Main Content Layout -->
+      <!-- Main Content Layout (Sinistra: Foto, Destra: Testo) -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <!-- Text Column (Dimensione testo ridotta e bilanciata) -->
+        <!-- Image Column (A SINISTRA) -->
+        <div class="lg:col-span-5 flex flex-col items-center">
+          <div class="photo-card-wrapper w-full">
+            <img 
+              src="IMG_20260826_123359_381.jpg" 
+              alt="Scheda esercizio HSK 1" 
+              class="w-full h-auto rounded border border-gray-200 block"
+            >
+          </div>
+          <span class="text-xs font-sans text-slate-500 mt-2 italic">★ Scheda originale dell'esercizio (HSK 1)</span>
+        </div>
+
+        <!-- Text Column (A DESTRA) -->
         <div class="lg:col-span-7 handwritten-text space-y-3">
           <p>
             Ciao! Mi chiamo Wang Ming. Sono cinese. Ora mi trovo a Pechino. Sono uno studente. La mia famiglia è composta da quattro persone: papà, mamma, sorella maggiore e io. Mio papà è un medico, mia mamma è un'insegnante. Anche mia sorella è una studentessa.
@@ -265,25 +231,10 @@ tailwind.config = {
           </p>
         </div>
 
-        <!-- Image Column (Nitida, leggibile e ben integrata) -->
-        <div class="lg:col-span-5 flex flex-col items-center">
-          <div class="photo-card-wrapper w-full">
-            <img 
-              src="IMG_20260826_123359_381.jpg" 
-              alt="Scheda esercizio HSK 1" 
-              class="w-full h-auto rounded border border-gray-200 block"
-            >
-          </div>
-          <span class="text-xs font-sans text-slate-500 mt-2 italic">★ Scheda originale dell'esercizio (HSK 1)</span>
-        </div>
-
       </div>
     </div>
   </div>
 </div>
-
-
-
 
 </body>
 </html>
