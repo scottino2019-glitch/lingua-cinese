@@ -1170,38 +1170,57 @@
         <!-- ==========================================
              22. BLOG GIORNALE VINTAGE
              ========================================== -->
-        <div data-category="studio media" data-title="blog giornale vintage curiosita quiz articoli" class="bento-card group relative overflow-hidden col-span-1 sm:col-span-2 row-span-1 p-5 bg-amber-400 text-slate-950 border-3 border-slate-950 rounded-2xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all duration-200 flex items-center justify-between gap-4 min-h-[160px]">
-          <!-- Sfondo Ideogramma Decorativo -->
-          <div class="absolute -right-1 -bottom-4 select-none pointer-events-none opacity-20 font-bold text-8xl text-slate-950 transform -rotate-12 group-hover:scale-110 group-hover:rotate-0 group-hover:opacity-30 transition-all duration-300 ease-out font-calligrafico">
-            中国
-          </div>
+      <!-- CARD NOTIZIE FLASH (Collegata a notizie-flash.json) -->
+<div data-category="studio media" data-title="notizie flash blog news curiosita articoli" class="bento-card group relative overflow-hidden col-span-1 sm:col-span-2 row-span-1 p-5 bg-amber-400 text-slate-950 border-3 border-slate-950 rounded-2xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all duration-200 flex items-center justify-between gap-4 min-h-[160px]">
+  
+  <!-- Sfondo Ideogramma Decorativo (快报 = Notizia Lampo) -->
+  <div class="absolute -right-1 -bottom-4 select-none pointer-events-none opacity-20 font-bold text-8xl text-slate-950 transform -rotate-12 group-hover:scale-110 group-hover:rotate-0 group-hover:opacity-30 transition-all duration-300 ease-out font-calligrafico">
+    快报
+  </div>
 
-          <!-- Contenuto Testuale -->
-          <div class="relative z-10 flex flex-col justify-center max-w-[70%]">
-            <div class="flex items-center gap-2 mb-1.5">
-              <span class="text-[10px] font-extrabold tracking-widest bg-slate-950 text-amber-400 px-2 py-0.5 rounded-md uppercase border border-slate-950 shadow-[1px_1px_0px_0px_rgba(255,255,255,0.4)]">
-                博客 / BLOG
-              </span>
-            </div>
-            
-            <h3 class="text-lg sm:text-xl font-black text-slate-950 leading-tight tracking-tight">
-              Giornale Vintage
-            </h3>
-            
-            <p class="text-xs font-bold text-slate-800 mt-1 leading-snug">
-              Curiosità, Quiz, Approfondimenti e tanto altro
-            </p>
-          </div>
+  <!-- Contenuto Testuale Dinamico -->
+  <div class="relative z-10 flex flex-col justify-center max-w-[70%]">
+    <div class="flex items-center gap-2 mb-1.5">
+      <span id="newsTag" class="text-[10px] font-extrabold tracking-widest bg-slate-950 text-amber-400 px-2 py-0.5 rounded-md uppercase border border-slate-950 shadow-[1px_1px_0px_0px_rgba(255,255,255,0.4)] flex items-center gap-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+        <span>快报 / FLASH NEWS</span>
+      </span>
+      <span id="newsDate" class="text-[9px] font-mono font-bold text-slate-800 bg-amber-300/80 px-1.5 py-0.5 rounded border border-amber-500/40">
+        Oggi
+      </span>
+    </div>
 
-          <!-- Call to Action -->
-          <div class="relative z-10 flex-shrink-0">
-            <a href="blog.html" class="inline-flex items-center justify-center px-4 py-2.5 bg-slate-950 hover:bg-slate-900 text-amber-400 font-black text-xs rounded-xl border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)] transition-all whitespace-nowrap gap-1.5 cursor-pointer">
-              Scopri <span class="text-sm">➔</span>
-            </a>
-          </div>
-        </div>
+    <h3 id="newsTitle" class="text-base sm:text-lg font-black text-slate-950 leading-tight tracking-tight line-clamp-1">
+      Caricamento notizie...
+    </h3>
 
-        <!-- ==========================================
+    <p id="newsDesc" class="text-xs font-bold text-slate-800 mt-1 leading-snug line-clamp-2">
+      Curiosità, approfondimenti culturali e aggiornamenti dal mondo cinese.
+    </p>
+
+    <!-- Controlli avanti/indietro se ci sono più notizie -->
+    <div class="flex items-center gap-2 mt-2">
+      <div class="flex items-center gap-1">
+        <button type="button" onclick="prevNews(event)" class="w-5 h-5 bg-slate-950 text-amber-400 hover:bg-slate-900 rounded text-[9px] font-black flex items-center justify-center cursor-pointer shadow-xs" title="Notizia precedente">
+          ◀
+        </button>
+        <span id="newsCounter" class="text-[9px] font-mono font-bold text-slate-900 px-1">
+          1/1
+        </span>
+        <button type="button" onclick="nextNews(event)" class="w-5 h-5 bg-slate-950 text-amber-400 hover:bg-slate-900 rounded text-[9px] font-black flex items-center justify-center cursor-pointer shadow-xs" title="Notizia successiva">
+          ▶
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="relative z-10 flex-shrink-0">
+    <a id="newsLink" href="blog.html" class="inline-flex items-center justify-center px-4 py-2.5 bg-slate-950 hover:bg-slate-900 text-amber-400 font-black text-xs rounded-xl border-2 border-slate-950 shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)] transition-all whitespace-nowrap gap-1.5 cursor-pointer">
+      Leggi <span class="text-sm">➔</span>
+    </a>
+  </div>
+</div> ==========================================
              23. CARD QUADERNO / NOTEBOOK
              ========================================== -->
         <div data-category="studio" data-title="quaderno appunti studio note confucio" class="bento-card relative col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#fffbeb] text-slate-900 border-2 border-amber-900/40 rounded-2xl shadow-[4px_4px_0px_0px_rgba(120,53,15,0.8)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between min-h-[160px] overflow-hidden">
@@ -1974,6 +1993,68 @@
       renderFlashcard();
       renderCalendar();
     });
+/* ==========================================================================
+   CARICAMENTO NOTIZIE FLASH DA JSON (notizie-flash.json)
+   ========================================================================== */
+let flashNewsList = [
+  {
+    tag: "快报 / FLASH NEWS",
+    title: "Festival e Tradizioni Cinesi",
+    description: "Curiosità, quiz, approfondimenti culturali e articoli dal blog.",
+    date: "Oggi",
+    link: "blog.html"
+  }
+];
+let currentNewsIndex = 0;
+
+async function loadFlashNews() {
+  try {
+    const res = await fetch('./notizie-flash.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('File notizie-flash.json non trovato');
+    const data = await res.json();
+    if (Array.isArray(data) && data.length > 0) {
+      flashNewsList = data;
+    }
+  } catch (err) {
+    console.info('Utilizzo notizia flash predefinita:', err.message);
+  } finally {
+    renderFlashNews();
+  }
+}
+
+function renderFlashNews() {
+  if (!flashNewsList.length) return;
+  const item = flashNewsList[currentNewsIndex];
+
+  const tagEl = document.getElementById('newsTag');
+  const dateEl = document.getElementById('newsDate');
+  const titleEl = document.getElementById('newsTitle');
+  const descEl = document.getElementById('newsDesc');
+  const linkEl = document.getElementById('newsLink');
+  const counterEl = document.getElementById('newsCounter');
+
+  if (tagEl) tagEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span> ${item.tag || '快报 / NEWS'}`;
+  if (dateEl) dateEl.textContent = item.date || 'Oggi';
+  if (titleEl) titleEl.textContent = item.title;
+  if (descEl) descEl.textContent = item.description || '';
+  if (linkEl) linkEl.href = item.link || 'blog.html';
+  if (counterEl) counterEl.textContent = `${currentNewsIndex + 1}/${flashNewsList.length}`;
+}
+
+function nextNews(e) {
+  if (e) e.stopPropagation();
+  currentNewsIndex = (currentNewsIndex + 1) % flashNewsList.length;
+  renderFlashNews();
+}
+
+function prevNews(e) {
+  if (e) e.stopPropagation();
+  currentNewsIndex = (currentNewsIndex - 1 + flashNewsList.length) % flashNewsList.length;
+  renderFlashNews();
+}
+
+// Chiamata all'avvio:
+loadFlashNews();
   </script>
 </body>
 </html>
