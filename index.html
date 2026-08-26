@@ -532,24 +532,24 @@
       <div id="bentoGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 auto-rows-auto sm:auto-rows-[minmax(160px,auto)] gap-4 sm:gap-5 w-full">
         
         <!-- ==========================================
-             1. STICKER FRASE DEL GIORNO (Invariata come richiesto)
+             1. STICKER FRASE DEL GIORNO (Collegata dinamicamente a sticker-frase.json)
              ========================================== -->
-        <div data-category="studio flashcard" data-title="frase del giorno wen gu er zhi xin" class="bento-card col-span-1 sm:col-span-1 row-span-1 sticker-rotate-left pin-sticker relative bg-amber-200/95 text-amber-950 p-5 rounded-2xl shadow-xl border border-amber-300 transition duration-300 flex flex-col justify-between min-h-[160px]">
+        <div id="quoteStickerCard" data-category="studio flashcard" data-title="frase del giorno qian li zhi xing wen gu er zhi xin" class="bento-card col-span-1 sm:col-span-1 row-span-1 sticker-rotate-left pin-sticker relative bg-amber-200/95 text-amber-950 p-5 rounded-2xl shadow-xl border border-amber-300 transition duration-300 flex flex-col justify-between min-h-[160px]">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-300/80 font-handwriting text-sm font-bold text-amber-900">
+              <span id="quoteLabel" class="inline-block px-2.5 py-0.5 rounded-full bg-amber-300/80 font-handwriting text-sm font-bold text-amber-900">
                 Frase del giorno
               </span>
-              <button onclick="speakText('温故而知新')" class="text-xs hover:scale-125 transition-transform cursor-pointer p-1" title="Ascolta pronuncia">
+              <button type="button" onclick="speakQuote()" class="text-xs hover:scale-125 transition-transform cursor-pointer p-1 bg-amber-300/60 hover:bg-amber-300 rounded-full w-6 h-6 flex items-center justify-center shadow-xs" title="Ascolta pronuncia cinese">
                 🔊
               </button>
             </div>
-            <p class="text-xl font-bold font-sans text-slate-900 mb-1">温故而知新</p>
-            <p class="text-xs text-amber-800 italic mb-2 font-mono">wēn gù ér zhī xīn</p>
-            <p class="text-xs text-slate-700 leading-relaxed font-medium">Rivedere il vecchio per comprendere il nuovo.</p>
+            <p id="quoteHanzi" class="text-xl font-bold font-sans text-slate-900 mb-1">千里之行，始于足下.</p>
+            <p id="quotePinyin" class="text-xs text-amber-800 italic mb-2 font-mono">Qiān lǐ zhī xíng, shǐ yú zú xià.</p>
+            <p id="quoteTranslation" class="text-xs text-slate-700 leading-relaxed font-medium">Un viaggio di mille miglia comincia con un solo passo.</p>
           </div>
           <div class="text-[9px] text-amber-800/80 font-mono border-t border-amber-300/80 pt-1.5 flex justify-between items-center">
-            <span>Confucio · 論語</span>
+            <span id="quoteAuthor">Laozi · 老子</span>
             <span class="text-amber-900 font-bold">★ Saggezza</span>
           </div>
         </div>
@@ -643,7 +643,7 @@
         <div data-category="media" data-title="video metro mobile transito" class="bento-card col-span-1 sm:col-span-2 row-span-4 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-2.5 flex flex-col justify-between relative overflow-hidden min-h-[520px]">
           <div class="relative w-full h-[650px] max-h-[80vh] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-3xl border-2 border-slate-800 bg-slate-900 shadow-inner">
             <iframe 
-              src="frame/giornata.html" 
+              src="frame/metro.html" 
               class="w-full h-full border-0 rounded-3xl"
               style="width: 100%; height: 100%; min-height: 600px;"
               title="Metro Frame"
@@ -1638,18 +1638,128 @@
     }
 
     /* ==========================================================================
+       0. CARICAMENTO FRASE DEL GIORNO DA JSON (sticker-frase.json)
+       ========================================================================== */
+    let currentQuoteData = {
+      title: "frase del giorno",
+      hanzi: "千里之行，始于足下.",
+      pinyin: "Qiān lǐ zhī xíng, shǐ yú zú xià.",
+      translation: "Un viaggio di mille miglia comincia con un solo passo.",
+      author: "Laozi · 老子"
+    };
+
+    // Dizionario contestuale di traduzioni e autori per le citazioni cinesi
+    const quoteTranslations = {
+      "千里之行，始于足下.": {
+        translation: "Un viaggio di mille miglia comincia con un solo passo.",
+        author: "Laozi · 老子"
+      },
+      "千里之行，始于足下": {
+        translation: "Un viaggio di mille miglia comincia con un solo passo.",
+        author: "Laozi · 老子"
+      },
+      "温故而知新": {
+        translation: "Rivedere il vecchio per comprendere il nuovo.",
+        author: "Confucio · 論語"
+      },
+      "学而不思则罔，思而不学则殆。": {
+        translation: "Studiare senza riflettere è vano; riflettere senza studiare è pericoloso.",
+        author: "Confucio · 孔子"
+      },
+      "读书百遍，其义自见。": {
+        translation: "Leggi un libro cento volte e il suo significato apparirà spontaneamente.",
+        author: "Proverbio Cinese"
+      }
+    };
+
+    async function loadQuoteSticker() {
+      try {
+        const res = await fetch('./sticker-frase.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('File sticker-frase.json non raggiungibile via fetch');
+        const data = await res.json();
+        const item = Array.isArray(data) ? data[0] : data;
+        
+        if (item && item.hanzi) {
+          currentQuoteData.title = item.title || "Frase del giorno";
+          currentQuoteData.hanzi = item.hanzi;
+          currentQuoteData.pinyin = item.pinyin || "";
+          
+          const rawHanzi = item.hanzi.trim();
+          const cleanHanzi = rawHanzi.replace(/[.。!！]/g, '');
+          const mapped = quoteTranslations[rawHanzi] || quoteTranslations[cleanHanzi];
+          
+          currentQuoteData.translation = item.translation || item.traduzione || item.meaning || (mapped ? mapped.translation : "Massima e proverbio tradizionale cinese.");
+          currentQuoteData.author = item.author || item.autore || (mapped ? mapped.author : "Proverbio Cinese");
+        }
+      } catch (err) {
+        console.info('Utilizzo frase predefinita o locale:', err.message);
+      } finally {
+        updateQuoteUI();
+      }
+    }
+
+    function updateQuoteUI() {
+      const labelEl = document.getElementById('quoteLabel');
+      const hanziEl = document.getElementById('quoteHanzi');
+      const pinyinEl = document.getElementById('quotePinyin');
+      const transEl = document.getElementById('quoteTranslation');
+      const authorEl = document.getElementById('quoteAuthor');
+
+      if (labelEl) labelEl.textContent = currentQuoteData.title || "Frase del giorno";
+      if (hanziEl) hanziEl.textContent = currentQuoteData.hanzi;
+      if (pinyinEl) pinyinEl.textContent = currentQuoteData.pinyin;
+      if (transEl) transEl.textContent = currentQuoteData.translation;
+      if (authorEl) authorEl.textContent = currentQuoteData.author;
+    }
+
+    function speakQuote() {
+      if (currentQuoteData && currentQuoteData.hanzi) {
+        speakText(currentQuoteData.hanzi);
+      }
+    }
+
+    /* ==========================================================================
        2. SINTESI VOCALE PRONUNCIA CINESE (Web Speech API)
        ========================================================================== */
+    let activeSpeechUtterance = null;
+
     function speakText(text) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'zh-CN';
-        utterance.rate = 0.85;
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert("La sintesi vocale non è supportata dal tuo browser.");
+      if (!text) return;
+      if (!('speechSynthesis' in window)) {
+        alert("La sintesi vocale non è supportata da questo browser.");
+        return;
       }
+
+      try {
+        window.speechSynthesis.cancel();
+        
+        setTimeout(() => {
+          const cleanText = text.replace(/[。，！？,!?.]/g, ' ');
+          const utterance = new SpeechSynthesisUtterance(cleanText.trim() || text);
+          utterance.lang = 'zh-CN';
+          utterance.rate = 0.85;
+          utterance.pitch = 1.0;
+
+          // Seleziona la voce cinese nativa se disponibile nel sistema
+          const voices = window.speechSynthesis.getVoices();
+          const zhVoice = voices.find(v => v.lang.startsWith('zh') || v.lang.includes('cmn') || v.lang.toLowerCase().includes('chinese'));
+          if (zhVoice) {
+            utterance.voice = zhVoice;
+          }
+
+          activeSpeechUtterance = utterance; // Evita garbage collection in Chromium/Safari
+          window.speechSynthesis.speak(utterance);
+        }, 40);
+      } catch (err) {
+        console.warn("Errore sintesi vocale:", err);
+      }
+    }
+
+    // Pre-inizializzazione voci browser
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
     }
 
     /* ==========================================================================
@@ -1858,6 +1968,7 @@
 
     // Inizializzazioni al caricamento
     document.addEventListener('DOMContentLoaded', () => {
+      loadQuoteSticker();
       renderFlashcard();
       renderCalendar();
     });
