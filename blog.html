@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Dispatch  — Edizione Storica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Noto+Serif+KR:wght@400;700;900&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Oswald:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Special+Elite&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-paper: #f4efe4;
+      --ink-black: #1a1614;
+      --ink-muted: #4a433e;
+      --border-ink: #2b2520;
+      --accent-red: #8b1e1e;
+      --tape-bg: rgba(230, 215, 175, 0.65);
+      --broadsheet-bg: #fbf7ee;
+      --article-bg: #fdfbf7;
+      --lead-article-bg: #fffefb;
+      --ticker-bg: #edd7a3;
+      --ticker-text: #2b2520;
+      --quiz-bg: #f4ecdc;
+      --quote-bg: #f5eedf;
+      --dot-color: #d6ccb8;
+      --comment-bg: #fdfbf7;
+      --font-masthead: "UnifrakturMaguntia", "Cinzel Decorative", cursive;
+      --font-headline: "Newsreader", Georgia, serif;
+      --font-body: "Noto Serif", "Noto Serif SC", "Noto Serif KR", Georgia, serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-paper);
+      color: var(--ink-black);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      padding: 24px 12px;
+      background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .broadsheet-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--broadsheet-bg);
+      border: 4px double var(--border-ink);
+      padding: 32px 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 0 100px rgba(180, 150, 100, 0.2) inset;
+      position: relative;
+    }
+    /* Header Masthead */
+    .masthead-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--border-ink);
+      padding-bottom: 6px;
+      font-family: 'Special Elite', monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    .masthead-center {
+      text-align: center;
+      padding: 16px 0 10px 0;
+      border-bottom: 4px double var(--border-ink);
+      position: relative;
+    }
+    .masthead-title {
+      font-family: var(--font-masthead);
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: var(--ink-black);
+    }
+    .masthead-subtitle {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-top: 6px;
+      color: var(--ink-muted);
+    }
+    .masthead-bottom-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      border-bottom: 3px solid var(--border-ink);
+      padding: 6px 0;
+      font-family: 'Special Elite', monospace;
+      font-size: 12px;
+      text-align: center;
+      gap: 8px;
+    }
+    /* Ruby styling */
+    ruby.ruby-annotated {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+      padding: 0 2px;
+      vertical-align: baseline;
+    }
+    ruby.ruby-annotated rt {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.6em;
+      color: var(--accent-red);
+      font-weight: normal;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      user-select: none;
+    }
+    /* Articles Grid - Organized Chaos */
+    .articles-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      margin-top: 28px;
+    }
+    .newspaper-article {
+      grid-column: span 6;
+      background: var(--article-bg);
+      border: 1px solid var(--border-ink);
+      padding: 24px 20px;
+      position: relative;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.06);
+    }
+    .newspaper-article.lead-article {
+      grid-column: span 12;
+      border: 2px solid var(--border-ink);
+      background: var(--lead-article-bg);
+    }
+    .scotch-tape {
+      position: absolute;
+      top: -10px;
+      left: 30px;
+      width: 80px;
+      height: 20px;
+      background: var(--tape-bg);
+      transform: rotate(-3deg);
+      border-left: 1px dashed rgba(0,0,0,0.1);
+      border-right: 1px dashed rgba(0,0,0,0.1);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    .article-meta {
+      display: flex;
+      gap: 12px;
+      font-family: 'Special Elite', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--accent-red);
+      margin-bottom: 8px;
+      border-bottom: 1px dashed var(--border-ink);
+      padding-bottom: 4px;
+    }
+    .article-title {
+      font-family: var(--font-headline);
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 6px;
+      color: var(--ink-black);
+    }
+    .article-subtitle {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink-muted);
+      margin-bottom: 12px;
+    }
+    .byline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Special Elite', monospace;
+      font-size: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-ink);
+    }
+    .rubber-stamp {
+      border: 2px solid;
+      padding: 2px 8px;
+      font-weight: bold;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transform: rotate(3deg);
+      display: inline-block;
+    }
+    .rubber-stamp.red { color: #9c1c1c; border-color: #9c1c1c; }
+    .rubber-stamp.navy { color: #1c355e; border-color: #1c355e; }
+    .rubber-stamp.sepia { color: #8a5d24; border-color: #8a5d24; }
+    .rubber-stamp.emerald { color: #15803d; border-color: #15803d; }
+    .lead-dropcap::first-letter {
+      float: left;
+      font-size: 3.5rem;
+      line-height: 0.8;
+      font-family: var(--font-headline);
+      font-weight: 900;
+      padding: 4px 8px 0 0;
+      color: var(--accent-red);
+    }
+    .body-paragraphs {
+      font-family: var(--font-body);
+    }
+    .body-paragraphs p {
+      margin-bottom: 12px;
+      text-align: justify;
+      hyphens: auto;
+    }
+    .vintage-quote {
+      border-left: 3px solid var(--accent-red);
+      padding: 8px 16px;
+      margin: 16px 0;
+      font-style: italic;
+      background: var(--quote-bg);
+      font-size: 1.05rem;
+      font-family: var(--font-body);
+    }
+    /* Vertical Asian Writing Mode */
+    .article-body-layout.has-vertical {
+      display: flex;
+      gap: 20px;
+    }
+    .vertical-asian-panel {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      border: 1px solid var(--border-ink);
+      background: var(--quote-bg);
+      padding: 16px 12px;
+      font-family: 'Noto Serif SC', 'Noto Serif KR', serif;
+      min-width: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .vertical-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      margin-left: 8px;
+    }
+    .vertical-text {
+      font-size: 0.95rem;
+      letter-spacing: 3px;
+      line-height: 1.8;
+    }
+    .hanko-seal {
+      writing-mode: horizontal-tb;
+      border: 2px solid #b91c1c;
+      color: #b91c1c;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif SC', serif;
+      font-weight: bold;
+      border-radius: 4px;
+      margin-top: 12px;
+    }
+    /* Interactive Quiz */
+    .interactive-quiz-box {
+      margin-top: 20px;
+      background: var(--quiz-bg);
+      border: 2px dashed var(--border-ink);
+      padding: 16px;
+      position: relative;
+    }
+    .quiz-badge {
+      background: var(--border-ink);
+      color: #fff;
+      font-family: 'Special Elite', monospace;
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .quiz-title {
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      color: var(--ink-black);
+    }
+    .quiz-opt-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin: 6px 0;
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      background: var(--article-bg);
+      border: 1px solid var(--border-ink);
+      color: var(--ink-black);
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .quiz-opt-btn:hover {
+      background: var(--quote-bg);
+    }
+    .q-feedback {
+      margin-top: 8px;
+      padding: 8px;
+      background: var(--article-bg);
+      border-left: 3px solid var(--accent-red);
+      font-size: 0.9rem;
+    }
+    /* Vintage Reel Frame */
+    .vintage-reel-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .crt-frame {
+      background: #2a221b;
+      border: 8px solid #4a3b2c;
+      border-radius: 12px;
+      padding: 12px;
+      max-width: 320px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      color: #e5d8c3;
+    }
+    .reel-tv-header {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Special Elite', monospace;
+      font-size: 11px;
+      margin-bottom: 8px;
+      color: #ff6b6b;
+    }
+    .video-wrapper {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #000;
+    }
+    .reel-video {
+      width: 100%;
+      display: block;
+      height: 380px;
+      object-fit: cover;
+      filter: sepia(0.5) contrast(1.1) brightness(0.9);
+    }
+    .crt-scanlines {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+    .reel-overlay-controls {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+    }
+    .reel-btn {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #a8947b;
+      color: #f0e6d2;
+      font-family: 'Special Elite', monospace;
+      font-size: 11px;
+      padding: 4px 8px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .reel-caption {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: #d1c2aa;
+    }
+    /* Comments section */
+    .comments-section {
+      margin-top: 24px;
+      border-top: 2px solid var(--border-ink);
+      padding-top: 14px;
+    }
+    .comments-header h5 {
+      font-family: 'Special Elite', monospace;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      color: var(--ink-black);
+    }
+    .comment-card {
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      border: 1.5px solid var(--border-ink);
+      box-shadow: 3px 3px 0px var(--border-ink);
+      transition: all 0.2s;
+    }
+    /* Authentic Vintage Stamp & Category Color Variants */
+    .comment-card.stamp-telegram {
+      background: #f7f0df;
+      border-left: 6px solid #8a5d24;
+      box-shadow: 3px 3px 0px #8a5d24;
+    }
+    .comment-card.stamp-verified {
+      background: #eef3ec;
+      border-left: 6px solid #3e5436;
+      box-shadow: 3px 3px 0px #3e5436;
+    }
+    .comment-card.stamp-dispatch {
+      background: #edf1f5;
+      border-left: 6px solid #2c3f50;
+      box-shadow: 3px 3px 0px #2c3f50;
+    }
+    .comment-card.stamp-scandal {
+      background: #f8eded;
+      border-left: 6px solid #8e281b;
+      box-shadow: 3px 3px 0px #8e281b;
+    }
+    .comment-card.stamp-editorial {
+      background: #f4eff2;
+      border-left: 6px solid #5e2a3c;
+      box-shadow: 3px 3px 0px #5e2a3c;
+    }
+    .comment-card.is-author-reply {
+      background: #faebd7;
+      border-left: 8px solid var(--border-ink);
+      box-shadow: 4px 4px 0px var(--border-ink);
+    }
+    .comment-top {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-family: 'Special Elite', monospace;
+      font-size: 11px;
+      color: var(--ink-muted);
+      margin-bottom: 6px;
+    }
+    .c-author { font-weight: bold; color: var(--ink-black); font-family: var(--font-headline); font-size: 13px; }
+    .c-stamp {
+      font-family: 'Special Elite', monospace;
+      font-weight: bold;
+      padding: 2px 6px;
+      font-size: 9px;
+      border: 1px solid var(--border-ink);
+      box-shadow: 1px 1px 0px var(--border-ink);
+      text-transform: uppercase;
+    }
+    .c-stamp.stamp-telegram { background: #8a5d24; color: #fdfbf7; }
+    .c-stamp.stamp-verified { background: #3e5436; color: #fdfbf7; }
+    .c-stamp.stamp-dispatch { background: #2c3f50; color: #fdfbf7; }
+    .c-stamp.stamp-scandal { background: #8e281b; color: #fdfbf7; }
+    .c-stamp.stamp-editorial { background: #5e2a3c; color: #fdfbf7; }
+    .c-stamp.stamp-author { background: var(--border-ink); color: #fdfbf7; box-shadow: 1px 1px 0px #8e281b; }
+    .c-body { font-size: 0.95rem; line-height: 1.5; color: var(--ink-black); font-family: var(--font-body); }
+    
+    /* Flash Dispatches Ticker (Telegrafo Flash) - Read-only Marquee */
+    .flash-ticker-container {
+      margin: 20px 0 24px 0;
+      background: var(--ticker-bg);
+      border: 2px solid var(--border-ink);
+      box-shadow: 4px 4px 0px var(--border-ink);
+      padding: 10px 12px;
+      font-family: 'Special Elite', monospace;
+      color: var(--ticker-text);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .flash-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .flash-badge {
+      background: var(--border-ink);
+      color: #fdfbf7;
+      font-weight: 900;
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      box-shadow: 2px 2px 0px #8e281b;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+    }
+    .flash-badge-dot {
+      color: #fca5a5;
+      font-size: 12px;
+      animation: pulseDot 1.5s infinite ease-in-out;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.85); }
+    }
+    .flash-marquee-wrapper {
+      width: 100%;
+      min-width: 0;
+      background: var(--article-bg);
+      border: 1.5px solid var(--border-ink);
+      padding: 6px 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      box-sizing: border-box;
+    }
+    .flash-marquee-track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: flashMarquee 35s linear infinite;
+    }
+    .flash-marquee-track:hover {
+      animation-play-state: paused;
+    }
+    @keyframes flashMarquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .flash-item {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 32px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--ink-black);
+    }
+    .flash-item-star {
+      color: var(--accent-red);
+      margin-right: 6px;
+      font-weight: 900;
+    }
+
+    /* Vocabulary Study Card Component */
+    .vocab-card {
+      max-width: 440px;
+      margin: 20px auto;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #1e293b;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      box-sizing: border-box;
+      text-align: left;
+    }
+    .vocab-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .lang-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+    .level-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.12);
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+    .word-section {
+      text-align: center;
+      padding: 10px 0 18px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .target-word {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    .ipa {
+      display: block;
+      font-family: monospace;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin: 4px 0 12px;
+    }
+    .audio-btn {
+      background: #38bdf8;
+      color: #042f2e;
+      border: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .audio-btn:hover {
+      background: #7dd3fc;
+      transform: scale(1.03);
+    }
+    .meaning-section {
+      margin: 18px 0;
+    }
+    .meaning-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .translation {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #38bdf8;
+      line-height: 1.4;
+    }
+    .example-box {
+      background: #1e293b;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .example-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+    .example-original {
+      font-size: 0.95rem;
+      color: #f1f5f9;
+      margin: 0 0 6px;
+      line-height: 1.4;
+    }
+    .example-original em {
+      color: #fbbf24;
+      font-style: normal;
+      font-weight: 700;
+    }
+    .example-translated {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin: 0;
+      font-style: italic;
+    }
+    .toggle-notes-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px dashed #334155;
+      color: #cbd5e1;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .toggle-notes-btn:hover {
+      background: #1e293b;
+      color: #ffffff;
+    }
+    .notes-content {
+      margin-top: 10px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .newspaper-article { grid-column: span 12 !important; }
+      .broadsheet-wrapper { padding: 16px 12px; }
+      .article-body-layout.has-vertical { flex-direction: column; }
+    }
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      .broadsheet-wrapper { border: none !important; box-shadow: none !important; }
+      .reel-overlay-controls { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="broadsheet-wrapper">
+    <!-- Header -->
+    <header>
+      <div class="masthead-top-bar">
+        <span>📍 EDIZIONE STRAORDINARIA A CARATTERI MOBILI</span>
+        <span>VOL. XLVIII · N. 1,492</span>
+        <span>PREZZO: 15日元</span>
+      </div>
+      <div class="masthead-center">
+        <h1 class="masthead-title">The Dispatch </h1>
+        <p class="masthead-subtitle">Cronache dal Mondo · Giornale Illustrato di Arti, Tipografia e Misteri dell'Oriente </p>
+      </div>
+      <div class="masthead-bottom-bar">
+        <span>📅 Mercoledì  26 Agosto 1898</span>
+        <span>🌦 METEO: Cielo velato a Pechino, nebbia fitta sul Tamigi, 18°C a San Pietroburgo</span>
+        <span>⛩ RUBY & MULTILINGUA ASIATICA ABILITATA</span>
+      </div>
+    </header>
+
+    <!-- Live Telegraph Flash Ticker (Notizie Flash) -->
+    <div class="flash-ticker-container" id="flash-ticker-box">
+      <div class="flash-top-row">
+        <span class="flash-badge">
+          <span class="flash-badge-dot">●</span> TELEGRAFO FLASH (2)
+        </span>
+      </div>
+
+      <div class="flash-marquee-wrapper">
+        <div class="flash-marquee-track" id="flash-track">
+          
+            <span class="flash-item"><span class="flash-item-star">✦</span><span>Aforisma: (Shuǐ néng zǎi zhōu, yì néng fù zhōu.) 水能载舟，亦能覆舟。→ "L'acqua può sorreggere la barca, ma può anche rovesciarla."</span></span>
+          
+            <span class="flash-item"><span class="flash-item-star">✦</span><span>Proverbio: (Yǎnjiàn wéi shí, ěrtīng wéi xū.)  眼见为实，耳听为虚。→ "Ciò che vede l'occhio è reale, ciò che sente l'orecchio è illusorio."</span></span>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Articles -->
+    <main class="articles-container">
+      
+        <article class="newspaper-article  " id="art-art-1787776522872" style="transform: rotate(0.13530495804104792deg);">
+          <div class="scotch-tape"></div>
+          <div class="article-meta">
+            <span class="art-category">Cronaca Nera dal Passato</span>
+            <span class="art-location">📍 Cina</span>
+            <span class="art-date">26 Agosto 1898</span>
+          </div>
+
+          <h2 class="article-title">​IL MASSACRO DEI VERMI DA SETA</h2>
+          <h3 class="article-subtitle">IL DELITTO DI PALAZZO CHE SCONVOLSE LA CINA</h3>
+
+          <div class="byline">
+            <span class="author-name">Corrispondente: Redazione</span>
+            <span class="rubber-stamp navy">EDIZIONE AUTORIZZATA</span>
+          </div>
+
+          <div class="article-body-layout ">
+            <div class="article-main-text">
+              <p class="lead-dropcap">Nel 108 d.C., durante la dinastia Han Orientale, la corte imperiale di <ruby class="ruby-annotated">洛阳<rt> luòyáng </rt></ruby> fu teatro di uno dei casi di cronaca nera più inquietanti dell'antichità:</p>
+              <div class="body-paragraphs">
+                <p>una catena di avvelenamenti misteriosi che colpì la famiglia della potente imperatrice  <ruby class="ruby-annotated">邓绥<rt>Dèng suí</rt></ruby>.
+​Tutto iniziò quando le bacheche di seta della corte — utilizzate per le vesti cerimoniali del sovrano — vennero trovate contaminate da una sostanza letale derivata dal veleno del rospo e dalla tuberosa. Nel giro di pochi mesi, due alti funzionari e tre ancelle morirono tra spasmi atroci. I sospetti caddero subito sulla stregoneria e sulle arti oscure (Gu), una pratica vietata sotto pena di morte che consisteva nel far combattere insetti e rettili velenosi all'interno di un vaso finché non ne rimaneva soltanto uno, il cui veleno veniva poi usato per le fatture.
+​La paranoia inghiottì il palazzo: l'imperatrice ordinò un'indagine spietata condotta dagli eunuchi di corte. Oltre trenta persone tra concubine, guardie e servi vennero torturate ed giustiziate prima di scoprire il vero mandante: un intrigo di gelosie interne per l'accesso al trono imperiale. Un caso di cronaca spietato che dimostra come, nell'antica Cina, la seta più raffinata potesse nascondere i veleni più letali.</p>
+              </div>
+
+              <blockquote class="vintage-quote">«L’EDITORIALE DI CRONACA»</blockquote>
+            </div>
+
+            
+          <div class="vertical-asian-panel">
+            <div class="vertical-writing">
+              <h4 class="vertical-title">谚语</h4>
+              <p class="vertical-text">害人终害己。</p>
+            </div>
+            <div class="hanko-seal">命运</div>
+          </div>
+        
+          </div>
+
+          
+          <div class="vocab-card" id="vocab-vocab-1787772680834">
+            <div class="vocab-header">
+              <span class="lang-badge">Cinese 🇨🇳 ➔ Italiano 🇮🇹</span>
+              <span class="level-tag">Livello HSK1</span>
+            </div>
+            
+            <div class="word-section">
+              <h2 class="target-word" id="targetWord-vocab-1787772680834">巫蛊 </h2>
+              <span class="ipa">wūgǔ</span>
+              <button class="audio-btn" onclick="playVocabPronunciation('vocab-1787772680834', 'zh-CN')" title="Ascolta pronuncia">
+                🔊 Ascolta Pronuncia
+              </button>
+            </div>
+
+            <div class="meaning-section">
+              <div class="meaning-label">Significato in Italiano:</div>
+              <div class="translation">Stregoneria con veleni / Magia nera d'epoca imperiale</div>
+            </div>
+
+            
+            <div class="example-box">
+              <div class="example-title">Frase di Esempio:</div>
+              <p class="example-original">"<em>汉朝宫廷里发生的巫蛊之祸导致了许多人的死亡。: Hàncháo gōngtíng lǐ fāshēng de wūgǔ zhī huò dǎozhì le xǔduō rén de sǐwáng</em>"</p>
+              <p class="example-translated">"La maledizione della stregoneria avvenuta alla corte Han causò la morte di molte persone."</p>
+            </div>
+            
+
+            
+          </div>
+        
+          
+        <div class="comments-section" id="comments-box-art-1787776522872">
+          <div class="comments-header">
+            <h5>DISPACCI DEI LETTORI & TELEGRAMMI (1)</h5>
+          </div>
+          <div class="comments-list" id="list-art-1787776522872">
+            
+            
+              <div class="comment-card stamp-editorial">
+                <div class="comment-top">
+                  <span class="c-author">✒ Redazione</span>
+                  <span class="c-loc">da Cina</span>
+                  <span class="c-time">Pochi istanti fa (via Telegrafo)</span>
+                  <span class="c-stamp stamp-editorial">EDITORIAL</span>
+                </div>
+                <p class="c-body">Pinyin del proverbio:Hài rén zhōng hài jǐ.
+Traduzione:  "Chi fa del male agli altri finisce per fare del male a se stesso."</p>
+              </div>
+            
+          </div>
+        </div>
+      
+        </article>
+      
+
+        <article class="newspaper-article  reel-article" id="art-art-1787774437416" style="transform: rotate(0.6875466252537341deg);">
+          <div class="scotch-tape"></div>
+          <div class="article-meta">
+            <span class="art-category">Follie al Potere</span>
+            <span class="art-location">📍 Cina</span>
+            <span class="art-date">26 Agosto 1898</span>
+          </div>
+
+          <h2 class="article-title"><ruby class="ruby-annotated">隋阳<rt>Suí yáng</rt></ruby></h2>
+          <h3 class="article-subtitle">L’IMPERATORE CHE SCAVÒ IL GRAN CANALE COL SANGUE DEI SUDDITI</h3>
+
+          <div class="byline">
+            <span class="author-name">Corrispondente: Redazione</span>
+            <span class="rubber-stamp red">EDIZIONE AUTORIZZATA</span>
+          </div>
+
+          <div class="article-body-layout ">
+            <div class="article-main-text">
+              <p class="lead-dropcap">​Ci sono leader che lasciano in eredità ponti, strade e grandi visioni, ma che la storia preferisce ricordare per il sangue sulle proprie mani. </p>
+              <div class="body-paragraphs">
+                <p>Yang di Sui <ruby class="ruby-annotated">隋阳<rt>Suí yáng</rt></ruby> appartiene a questa categoria: un imperatore megalomane, geniale e spietato che ha governato la Cina all’inizio del VII secolo come se fosse un tabellone di Risiko, usando la vita dei suoi sudditi come gettoni da consumare.
+​Sulla carta, il suo curriculum parla da solo. 
+È l’uomo che si è inventato il Gran Canale, un’arteria d’acqua artificiale lunga più di duemila chilometri che univa il nord e il sud del Paese, trasformando l’economia della Cina per i mille anni successivi.
+ Un’infrastruttura di quelle che oggi vedremmo nei documentari sulla grandezza dell'ingegneria umana.</p><p>​Yang Guang non doveva nemmeno diventare imperatore.
+ Era il secondo figlio, ma giocò la carta della pazienza machiavellica: per anni si finse un asceta sobrio e timorato di Dio (o meglio, degli antenati), mentre il fratello erede si dava alla pazza gioia.
+ Convinti i genitori di essere di fronte a un santo, ottenne il riassetto della successione. Quando il padre morì nel 604 d.C. — in circostanze che odorano di parricidio lontano un miglio — il trono era finalmente suo.
+​Da quel momento in poi, la maschera cadde.</p><p>​Ottenuto il potere assoluto, Yang di lanciò una serie di cantieri faraonici. Oltre alla Grande Muraglia da sistemare, pretese la costruzione del Gran Canale a ritmi serrati. I metodi d'ingaggio? Semplici: arruolamento forzato per milioni di contadini. Chi non lavorava veniva giustiziato; chi lavorava spesso moriva di stenti o epidemie sui cantieri. Si dice che le rive dei canali fossero letteralmente coperte dai cadaveri degli operai.
+​Se la politica interna era sanguinosa, quella estera fu il colpo di grazia. 
+Fissato con l'idea di conquistare il regno coreano di Goguryeo, organizzò tre spedizioni militari disastrose. 
+I soldati cinesi vennero massacrati, la cassa dello Stato andò in rosso fisso e le campagne, svuotate di braccia per l'agricoltura, caddero nella carestia.</p><p>​Mentre la Cina bruciava tra rivolte contadine e generali in ammutinamento, Yang di fece quello che fanno molti tiranni al capolinea: si rifiutò di guardare la realtà.
+ Si rintanò a sud, a Jiangdu, circondandosi di cortigiane, vino e spettacoli, convinto che il suo impero fosse ancora saldo.
+​La resa dei conti arrivò nel 618 d.C. Non fu una rivolta di popolo a toglierlo di mezzo, ma un colpo di Stato interno: le sue stesse guardie imperiali, stanche di servire un folle, lo accerchiarono nella sua stanza e lo strangolarono con un nastro di seta.
+​La dinastia Sui morì con lui dopo appena 37 anni complessivi di vita.
+ Ma il paradosso della storia è crudele: la successiva dinastia Tang si prese tutto il merito della prosperità cinese, viaggiando proprio sulle acque di quel Gran Canale che Yang di aveva scavato con il sangue dei suoi sudditi.</p>
+              </div>
+
+              <blockquote class="vintage-quote">«L’EDITORIALE DI STORIA E POLITICA»</blockquote>
+            </div>
+
+            
+          <div class="vertical-asian-panel">
+            <div class="vertical-writing">
+              <h4 class="vertical-title">霸道</h4>
+              <p class="vertical-text">隋炀帝的统治非常霸道，导致了人民的反抗。</p>
+            </div>
+            <div class="hanko-seal">印</div>
+          </div>
+        
+          </div>
+
+          
+          <div class="vocab-card" id="vocab-vocab-1787772680834">
+            <div class="vocab-header">
+              <span class="lang-badge">Cinese 🇨🇳 ➔ Italiano 🇮🇹</span>
+              <span class="level-tag">Livello HSK1</span>
+            </div>
+            
+            <div class="word-section">
+              <h2 class="target-word" id="targetWord-vocab-1787772680834">霸道</h2>
+              <span class="ipa">bàdào</span>
+              <button class="audio-btn" onclick="playVocabPronunciation('vocab-1787772680834', 'it-IT')" title="Ascolta pronuncia">
+                🔊 Ascolta Pronuncia
+              </button>
+            </div>
+
+            <div class="meaning-section">
+              <div class="meaning-label">Significato in Italiano:</div>
+              <div class="translation">Tirannico / Prepotente / Regnare con la forza</div>
+            </div>
+
+            
+
+            
+          </div>
+        
+          
+        <div class="comments-section" id="comments-box-art-1787774437416">
+          <div class="comments-header">
+            <h5>DISPACCI DEI LETTORI & TELEGRAMMI (0)</h5>
+          </div>
+          <div class="comments-list" id="list-art-1787774437416">
+            <p class="comments-empty-notice" style="font-size:12px; font-style:italic; padding:10px; color:var(--ink-muted); border:1px dashed var(--border-ink); background:rgba(250,238,209,0.3); text-align:center; margin-bottom:10px;">Nessun telegramma recapitato per questo articolo.</p>
+            
+          </div>
+        </div>
+      
+        </article>
+      
+    </main>
+
+    <!-- Footer -->
+    <footer style="margin-top: 40px; text-align: center; border-top: 2px solid var(--border-ink); padding-top: 16px; font-family: 'Special Elite', monospace; font-size: 12px; color: var(--ink-muted);">
+      <p>STAMPATO CON IL SISTEMA A CARATTERI MOBILI DIGITALE — THE VINTAGE DISPATCH ARCHIVE</p>
+    </footer>
+  </div>
+
+  <script>
+    // Standalone Media & Interactive Handlers (Reels & Quiz)
+    function toggleReelPlay(id) {
+      var v = document.getElementById(id);
+      if (v) {
+        if (v.paused) v.play();
+        else v.pause();
+      }
+    }
+    function toggleReelMute(id) {
+      var v = document.getElementById(id);
+      if (v) v.muted = !v.muted;
+    }
+    function likeReel(id) {
+      var span = document.getElementById('like-count-' + id);
+      if (span) {
+        var num = parseInt(span.innerText || '0', 10) + 1;
+        span.innerText = num;
+      }
+    }
+    function handleQuizAnswer(quizId, qIdx, selectedIdx, correctIdx) {
+      var fb = document.getElementById('feedback-' + quizId + '-' + qIdx);
+      var stamp = document.getElementById('stamp-' + quizId + '-' + qIdx);
+      if (!fb || !stamp) return;
+      fb.style.display = 'block';
+      if (selectedIdx === correctIdx) {
+        stamp.innerText = '★ CORRETTO - APPROVATO';
+        stamp.style.color = '#15803d';
+        stamp.style.fontWeight = 'bold';
+      } else {
+        stamp.innerText = '✗ NON ESATTO';
+        stamp.style.color = '#b91c1c';
+        stamp.style.fontWeight = 'bold';
+      }
+    }
+
+    // Vocabulary Card Handlers
+    function playVocabPronunciation(id, lang) {
+      var wordElem = document.getElementById('targetWord-' + id);
+      var word = wordElem ? wordElem.innerText : '';
+      if ('speechSynthesis' in window && word) {
+        window.speechSynthesis.cancel();
+        var utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = lang || 'en-US';
+        utterance.rate = 0.88;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+    function toggleVocabNotes(id) {
+      var box = document.getElementById('notesBox-' + id);
+      if (box) {
+        box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+      }
+    }
+  </script>
+</body>
+</html>
