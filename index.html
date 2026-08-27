@@ -1985,44 +1985,11 @@
         /* ==========================================================================
            3. FILTRO CATEGORIE & RICERCA CARD INTERATTIVA
            ========================================================================== */
-       function filterCategory(category, btnElement) {
-      currentCategory = category;
-    
-      // 1. Rimuovi la classe 'active' da tutti i bottoni
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-    
-      // 2. Aggiungi 'active' solo al bottone cliccato
-      if (btnElement) {
-        btnElement.classList.add('active');
-      }
-    
-      // 3. Aggiorna eventuale testo del banner info
-      const infoBanner = document.getElementById('categoryActiveInfo');
-      const labelText = document.getElementById('categoryLabelText');
-      if (infoBanner && labelText) {
-        if (category === 'all') {
-          infoBanner.classList.add('hidden');
-        } else {
-          infoBanner.classList.remove('hidden');
-          const names = {
-            'studio': '📚 Grammatica & Studio',
-            'flashcard': '🎴 Flashcard & Caratteri',
-            'media': '🎬 Video & Frame',
-            'audio': '🎧 Audio & Racconti',
-            'utility': '🛠️ Strumenti & Utility'
-          };
-          labelText.textContent = `Categoria attiva: ${names[category] || category}`;
-        }
-      }
-    
-      // 4. Applica il filtro sulle card
-   // Variable globale per la categoria
-window.currentCategory = 'all';
+      // Variable globale per la categoria
+let currentCategory = 'all';
 
 function filterCategory(category, btnElement) {
-  window.currentCategory = category;
+  currentCategory = category;
 
   // 1. Rimuovi la classe 'active' da tutti i bottoni
   document.querySelectorAll('.cat-btn').forEach(btn => {
@@ -2092,13 +2059,13 @@ function applyFilters() {
     const cardText = card.textContent.toLowerCase();
 
     // Verifica categoria
-    const activeCat = window.currentCategory.toLowerCase();
+    const activeCat = currentCategory.toLowerCase();
     const matchCat = (activeCat === 'all') || cardCatAttr.includes(activeCat);
 
     // Verifica parola cercata
     const matchSearch = (query === '') || cardTitle.includes(query) || cardText.includes(query);
 
-    // Mostra o nasconde la card direttamente nello stile
+    // Mostra o nasconde la card
     if (matchCat && matchSearch) {
       card.style.display = '';
       visibleCount++;
