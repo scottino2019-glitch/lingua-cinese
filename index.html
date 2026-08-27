@@ -1940,10 +1940,6 @@
           }
         }
     
-     
-
-
-
         /* ==========================================================================
            2. SINTESI VOCALE PRONUNCIA CINESE (Web Speech API)
            ========================================================================== */
@@ -2278,107 +2274,100 @@ function applyFilters() {
      /* ==========================================================================
            1. SISTEMA QUIZ INTERATTIVO DINAMICO
            ========================================================================== */
-       /* ==========================================================================
-   1. SISTEMA QUIZ INTERATTIVO DINAMICO
-   ========================================================================== */
-const quizQuestions = [
-  {
-    question: "Cosa significa '谢谢' (xièxie) in cinese?",
-    options: ["Ciao", "Grazie", "Prego", "Arrivederci"],
-    correctIndex: 1
-  },
-  {
-    question: "Quale frase si usa per chiedere il conto al ristorante?",
-    options: ["请少放点辣", "买单，谢谢", "请给我一杯水", "你好吗"],
-    correctIndex: 1
-  },
-  {
-    question: "Qual è il significato del carattere '水' (shuǐ)?",
-    options: ["Fuoco", "Legno", "Acqua", "Terra"],
-    correctIndex: 2
-  },
-  {
-    question: "Come si dice 'Io studio cinese'?",
-    options: ["我喝咖啡", "我想去中国", "我学习中文", "他是我的朋友"],
-    correctIndex: 2
-  }
-];
-
-let currentQuizIndex = 0;
-let quizScore = 0;
-let quizAnswered = false;
-
-function renderQuizQuestion() {
-  const q = quizQuestions[currentQuizIndex];
-  const qText = document.getElementById('quiz-question-text');
-  const optContainer = document.getElementById('quiz-options-container');
-  const progText = document.getElementById('quiz-progress-text');
-  const scoreDisplay = document.getElementById('quiz-score-display');
-
-  if (!qText || !optContainer) return;
-
-  quizAnswered = false;
-  qText.textContent = `${currentQuizIndex + 1}. ${q.question}`;
-  progText.textContent = `Domanda ${currentQuizIndex + 1} di ${quizQuestions.length}`;
-  scoreDisplay.textContent = `Punti: ${quizScore}/${quizQuestions.length}`;
-
-  optContainer.innerHTML = '';
-  q.options.forEach((opt, idx) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'w-full text-left px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 text-xs font-bold rounded-lg border border-slate-900 neo-shadow-sm transition-transform active:scale-98 cursor-pointer flex items-center justify-between';
-    btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}. ${opt}</span> <span class="opt-status text-[10px]"></span>`;
-
-    btn.onclick = () => selectQuizOption(idx, btn);
-    optContainer.appendChild(btn);
-  });
-}
-
-function selectQuizOption(selectedIdx, btnElement) {
-  if (quizAnswered) return;
-  quizAnswered = true;
-
-  const q = quizQuestions[currentQuizIndex];
-  const isCorrect = (selectedIdx === q.correctIndex);
-  const allButtons = document.querySelectorAll('#quiz-options-container button');
-
-  if (isCorrect) {
-    quizScore++;
-    btnElement.classList.remove('bg-white');
-    btnElement.classList.add('bg-emerald-300', 'text-slate-950');
-    btnElement.querySelector('.opt-status').textContent = '✓ Corretto!';
-  } else {
-    btnElement.classList.remove('bg-white');
-    btnElement.classList.add('bg-rose-300', 'text-slate-950');
-    btnElement.querySelector('.opt-status').textContent = '✗';
-
-    const correctBtn = allButtons[q.correctIndex];
-    if (correctBtn) {
-      correctBtn.classList.remove('bg-white');
-      correctBtn.classList.add('bg-emerald-200');
-      correctBtn.querySelector('.opt-status').textContent = '✓';
-    }
-  }
-
-  const scoreDisplay = document.getElementById('quiz-score-display');
-  if (scoreDisplay) {
-    scoreDisplay.textContent = `Punti: ${quizScore}/${quizQuestions.length}`;
-  }
-}
-
-function nextQuizQuestion() {
-  currentQuizIndex = (currentQuizIndex + 1) % quizQuestions.length;
-  if (currentQuizIndex === 0 && quizAnswered) {
-    quizScore = 0;
-  }
-  renderQuizQuestion();
-}
-
-// Avvio sicuro senza sovrascrivere altri script (come le notizie)
-document.addEventListener('DOMContentLoaded', () => {
-  renderQuizQuestion();
-});
-
+        const quizQuestions = [
+          {
+            question: "Cosa significa '谢谢' (xièxie) in cinese?",
+            options: ["Ciao", "Grazie", "Prego", "Arrivederci"],
+            correctIndex: 1
+          },
+          {
+            question: "Quale frase si usa per chiedere il conto al ristorante?",
+            options: ["请少放点辣", "买单，谢谢", "请给我一杯水", "你好吗"],
+            correctIndex: 1
+          },
+          {
+            question: "Qual è il significato del carattere '水' (shuǐ)?",
+            options: ["Fuoco", "Legno", "Acqua", "Terra"],
+            correctIndex: 2
+          },
+          {
+            question: "Come si dice 'Io studio cinese'?",
+            options: ["我喝咖啡", "我想去中国", "我学习中文", "他是我的朋友"],
+            correctIndex: 2
+          }
+        ];
+    
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let quizAnswered = false;
+    
+        function renderQuizQuestion() {
+          const q = quizQuestions[currentQuizIndex];
+          const qText = document.getElementById('quiz-question-text');
+          const optContainer = document.getElementById('quiz-options-container');
+          const progText = document.getElementById('quiz-progress-text');
+          const scoreDisplay = document.getElementById('quiz-score-display');
+    
+          if (!qText || !optContainer) return;
+    
+          quizAnswered = false;
+          qText.textContent = `${currentQuizIndex + 1}. ${q.question}`;
+          progText.textContent = `Domanda ${currentQuizIndex + 1} di ${quizQuestions.length}`;
+          scoreDisplay.textContent = `Punti: ${quizScore}/${quizQuestions.length}`;
+    
+          optContainer.innerHTML = '';
+          q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'w-full text-left px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 text-xs font-bold rounded-lg border border-slate-900 neo-shadow-sm transition-transform active:scale-98 cursor-pointer flex items-center justify-between';
+            btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}. ${opt}</span> <span class="opt-status text-[10px]"></span>`;
+            
+            btn.onclick = () => selectQuizOption(idx, btn);
+            optContainer.appendChild(btn);
+          });
+        }
+    
+        function selectQuizOption(selectedIdx, btnElement) {
+          if (quizAnswered) return;
+          quizAnswered = true;
+    
+          const q = quizQuestions[currentQuizIndex];
+          const isCorrect = (selectedIdx === q.correctIndex);
+          const allButtons = document.querySelectorAll('#quiz-options-container button');
+    
+          if (isCorrect) {
+            quizScore++;
+            btnElement.classList.remove('bg-white');
+            btnElement.classList.add('bg-emerald-300', 'text-slate-950');
+            btnElement.querySelector('.opt-status').textContent = '✓ Corretto!';
+          } else {
+            btnElement.classList.remove('bg-white');
+            btnElement.classList.add('bg-rose-300', 'text-slate-950');
+            btnElement.querySelector('.opt-status').textContent = '✗';
+            
+            // Evidenzia la corretta
+            const correctBtn = allButtons[q.correctIndex];
+            if (correctBtn) {
+              correctBtn.classList.remove('bg-white');
+              correctBtn.classList.add('bg-emerald-200');
+              correctBtn.querySelector('.opt-status').textContent = '✓';
+            }
+          }
+    
+          const scoreDisplay = document.getElementById('quiz-score-display');
+          if (scoreDisplay) {
+            scoreDisplay.textContent = `Punti: ${quizScore}/${quizQuestions.length}`;
+          }
+        }
+    
+        function nextQuizQuestion() {
+          currentQuizIndex = (currentQuizIndex + 1) % quizQuestions.length;
+          if (currentQuizIndex === 0 && quizAnswered) {
+            // Reset score al completamento del ciclo
+            quizScore = 0;
+          }
+          renderQuizQuestion();
+        }
   </script>
 </body>
 </html>
