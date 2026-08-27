@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Angolo Sociale</title>
+  <!-- Tailwind CSS per la grafica e lo stile -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide icons cdn -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    @keyframes marquee {
+      0% { transform: translate3d(100%, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+    .animate-marquee {
+      animation: marquee 14s linear infinite;
+    }
+  </style>
+</head>
+<body class="bg-transparent p-2">
+
+  <!-- ID del contenitore del widget -->
+  <div id="angolo-sociale-root" class="w-full max-w-xl mx-auto">
+    <div class="p-6 text-center text-zinc-400 font-mono text-xs">Caricamento widget...</div>
+  </div>
+
+  <script>
+    // Caricamento asincrono del file JSON locale
+    fetch('post2.json')
+      .then(res => {
+        if (!res.ok) throw new Error('File post.json non trovato. Assicurati che sia nella stessa cartella della pagina.');
+        return res.json();
+      })
+      .then(data => {
+        const post = data.post || data;
+        renderWidget(post);
+        // Richiama i simboli grafici di Lucide
+        lucide.createIcons();
+      })
+      .catch(err => {
+        document.getElementById('angolo-sociale-root').innerHTML = `
+          <div style="background:#fef2f2; border:1px solid #fee2e2; color:#b91c1c; padding:16px; border-radius:12px; text-align:center; font-size:13px;">
+            <strong style="display:block; margin-bottom:4px;">Errore caricamento dati</strong>
+            ${err.message}
+            <div style="color:#6b7280; font-size:10px; margin-top:10px;">Assicurati che il file 'post.json' scaricato sia nella stessa cartella di questa pagina HTML.</div>
+          </div>
+        `;
+      });
+
+    function renderWidget(post) {
+      const root = document.getElementById('angolo-sociale-root');
+      const style = post.socialStyle || 'instagram';
+      const initials = (post.authorName || 'SL')
+        .split(' ')
+        .map(w => w[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase();
+      
+      const author = post.authorName || 'Scuola di Lingua';
+      const handle = post.authorHandle || 'lingua_roma';
+      const badge = post.langBadge ? `<span style="background:#f0fdfa; color:#115e59; font-weight:700; font-size:9px; padding:2px 6px; border-radius:4px; margin-left:6px; border:1px solid #ccfbf1;">${post.langBadge}</span>` : '';
+
+      // Gestione Media (Immagine / Video)
+      let mediaHtml = '';
+      if (post.mediaType && post.mediaType !== 'none' && post.mediaUrl) {
+        let aspectClass = 'max-h-[480px] object-contain';
+        if (post.aspectRatio === 'square') aspectClass = 'aspect-square object-cover';
+        if (post.aspectRatio === 'video') aspectClass = 'aspect-video object-cover';
+
+        if (post.mediaType === 'image') {
+          mediaHtml = `<div class="bg-zinc-50 border-b border-zinc-100 overflow-hidden relative">
+            <img src="${post.mediaUrl}" class="w-full ${aspectClass}" style="display:block;" />
+          </div>`;
+        } else if (post.mediaType === 'video') {
+          mediaHtml = `<div class="bg-zinc-50 border-b border-zinc-100 overflow-hidden relative">
+            <video src="${post.mediaUrl}" controls class="w-full ${aspectClass}" style="display:block; max-height: 480px;"></video>
+          </div>`;
+        }
+      }
+
+      // Renderizzazione dinamica in base allo stile salvato nel JSON
+      if (style === 'instagram') {
+        root.innerHTML = `
+          <div class="rounded-2xl border border-zinc-200 bg-white text-zinc-900 shadow-sm overflow-hidden font-sans">
+            <div class="flex items-center justify-between p-3.5 border-b border-zinc-100">
+              <div class="flex items-center gap-2.5">
+                <div class="p-[2px] rounded-full bg-gradient-to-tr from-amber-400 via-pink-500 to-purple-600">
+                  <div class="bg-white rounded-full p-[1.5px]">
+                    <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-white text-[10px] font-bold tracking-wider uppercase">${initials}</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center gap-1">
+                    <span class="text-xs font-bold leading-none">${handle}</span>
+                    <span class="text-sky-500 text-[10px]" title="Verificato">✓</span>
+                    ${badge}
+                  </div>
+                  <span class="text-[9.5px] text-gray-400 block mt-0.5">Roma, Italia</span>
+                </div>
+              </div>
+              <button class="text-gray-400 p-1"><i data-lucide="more-horizontal" class="w-5 h-5"></i></button>
+            </div>
+
+            ${mediaHtml ? mediaHtml : '<div class="h-1 bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600"></div>'}
+
+            <div class="p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4 text-zinc-800">
+                  <button class="hover:text-red-500 transition-colors"><i data-lucide="heart" class="w-6 h-6"></i></button>
+                  <button class="hover:text-zinc-500 transition-colors"><i data-lucide="message-circle" class="w-6 h-6"></i></button>
+                  <button class="hover:text-zinc-500 transition-colors"><i data-lucide="send" class="w-5.5 h-5.5"></i></button>
+                </div>
+                <button class="text-zinc-800"><i data-lucide="bookmark" class="w-6 h-6"></i></button>
+              </div>
+
+              <div class="space-y-1 text-sm">
+                <p class="font-bold">Piace a <span class="font-extrabold">${post.likesCount || 0}</span> persone</p>
+                ${post.title ? `<h4 class="font-extrabold text-base tracking-tight text-zinc-950 mt-1">${post.title}</h4>` : ''}
+                <p class="text-zinc-800 leading-relaxed text-[13px] mt-1">
+                  <span class="font-bold mr-1">${handle}</span>
+                  <span class="whitespace-pre-line">${post.text}</span>
+                </p>
+                <span class="text-[9px] text-zinc-400 block uppercase tracking-wider pt-2">Aggiornato</span>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (style === 'twitter') {
+        root.innerHTML = `
+          <div class="rounded-2xl border border-zinc-200 bg-white text-zinc-900 shadow-sm p-4 font-sans">
+            <div class="flex gap-3">
+              <div class="shrink-0">
+                <div class="w-10 h-10 rounded-full bg-zinc-900 text-white font-bold flex items-center justify-center text-xs">${initials}</div>
+              </div>
+              <div class="flex-1 min-w-0 space-y-2">
+                <div class="flex items-center justify-between gap-1">
+                  <div class="flex items-center gap-1.5 truncate">
+                    <span class="font-bold text-[14px] hover:underline">${author}</span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-blue-500 flex items-center justify-center text-white text-[7px]">✓</span>
+                    <span class="text-zinc-400 text-xs">@${handle}</span>
+                    <span class="text-zinc-400 text-xs">·</span>
+                    <span class="text-zinc-400 text-[11px]">Oggi</span>
+                  </div>
+                  <i data-lucide="more-horizontal" class="w-4 h-4 text-zinc-400"></i>
+                </div>
+                ${badge ? `<div class="pb-1">${badge}</div>` : ''}
+                ${post.title ? `<h4 class="font-bold text-[15px] text-zinc-950">${post.title}</h4>` : ''}
+                <p class="text-[13.5px] text-zinc-800 leading-relaxed whitespace-pre-line">${post.text}</p>
+                ${mediaHtml ? `<div class="mt-2 rounded-xl overflow-hidden border border-zinc-150 bg-zinc-50">${mediaHtml}</div>` : ''}
+                
+                <div class="flex items-center justify-between text-zinc-500 text-xs pt-1.5 border-t border-zinc-100 mt-3 max-w-md">
+                  <button class="flex items-center gap-1 hover:text-sky-500"><i data-lucide="message-circle" class="w-4 h-4"></i><span>${post.commentsCount || 0}</span></button>
+                  <button class="flex items-center gap-1 hover:text-emerald-500"><i data-lucide="repeat" class="w-4 h-4"></i><span>${post.sharesCount || 0}</span></button>
+                  <button class="flex items-center gap-1 hover:text-pink-600"><i data-lucide="heart" class="w-4 h-4"></i><span>${post.likesCount || 0}</span></button>
+                  <button class="p-1 hover:text-sky-500"><i data-lucide="share" class="w-4 h-4"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (style === 'facebook') {
+        root.innerHTML = `
+          <div class="rounded-2xl border border-zinc-200 bg-white shadow-sm p-4 font-sans space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs">${initials}</div>
+                <div>
+                  <div class="flex items-center gap-1">
+                    <span class="font-bold text-sm hover:underline">${author}</span>
+                    <span class="text-blue-500 text-xs">✓</span>
+                  </div>
+                  <div class="flex items-center gap-1 text-[10px] text-zinc-500">
+                    <span>Scuola</span>
+                    <span>·</span>
+                    <span>Oggi</span>
+                    <span>·</span>
+                    <i data-lucide="globe" class="w-3 h-3"></i>
+                  </div>
+                </div>
+              </div>
+              ${badge}
+            </div>
+
+            <div class="space-y-1">
+              ${post.title ? `<h3 class="font-bold text-[15px] text-zinc-950">${post.title}</h3>` : ''}
+              <p class="text-[13px] text-zinc-800 leading-relaxed whitespace-pre-line">${post.text}</p>
+            </div>
+
+            ${mediaHtml ? `<div class="-mx-4 border-t border-b border-zinc-100 bg-zinc-50">${mediaHtml}</div>` : ''}
+
+            <div class="flex items-center justify-between text-[11px] text-zinc-500 pb-1 border-b border-zinc-100">
+              <span>👍 ${post.likesCount || 0} persone</span>
+              <span>${post.commentsCount || 0} commenti · ${post.sharesCount || 0} condivisioni</span>
+            </div>
+
+            <div class="grid grid-cols-3 text-center text-zinc-500 text-xs font-semibold pt-1">
+              <button class="py-1.5 hover:bg-zinc-50 flex items-center justify-center gap-1.5 rounded"><i data-lucide="thumbs-up" class="w-4 h-4"></i><span>Mi piace</span></button>
+              <button class="py-1.5 hover:bg-zinc-50 flex items-center justify-center gap-1.5 rounded"><i data-lucide="message-square" class="w-4 h-4"></i><span>Commenta</span></button>
+              <button class="py-1.5 hover:bg-zinc-50 flex items-center justify-center gap-1.5 rounded"><i data-lucide="share" class="w-4 h-4"></i><span>Condividi</span></button>
+            </div>
+          </div>
+        `;
+      } else if (style === 'tiktok') {
+        const hasMedia = post.mediaType && post.mediaType !== 'none' && post.mediaUrl;
+        const tiktokMedia = hasMedia 
+          ? (post.mediaType === 'image' 
+              ? `<img src="${post.mediaUrl}" class="w-full h-full object-cover opacity-90 brightness-95" />`
+              : `<video src="${post.mediaUrl}" autoplay loop muted playsinline class="w-full h-full object-cover opacity-90 brightness-50"></video>`)
+          : `<div class="absolute inset-0 bg-zinc-950 flex flex-col items-center justify-center p-6 text-center space-y-4">
+              <i data-lucide="music" class="w-10 h-10 text-teal-400 animate-pulse"></i>
+              <p class="text-zinc-500 text-xs font-mono">Modalità TikTok</p>
+             </div>`;
+
+        root.innerHTML = `
+          <div class="w-full max-w-[360px] mx-auto aspect-[9/16] rounded-3xl bg-zinc-950 border border-zinc-800 shadow-xl overflow-hidden font-sans relative text-white flex flex-col justify-end">
+            <div class="absolute inset-0 z-0 bg-black flex items-center justify-center overflow-hidden">
+              ${tiktokMedia}
+              <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none"></div>
+            </div>
+            
+            <div class="absolute right-3.5 bottom-24 z-20 flex flex-col items-center gap-4 text-center">
+              <div class="relative mb-2">
+                <div class="w-10 h-10 rounded-full border-2 border-white bg-zinc-800 flex items-center justify-center text-xs font-bold uppercase shadow-lg">${initials}</div>
+                <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-rose-500 border border-white flex items-center justify-center text-[9px] font-bold">+</div>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-9.5 h-9.5 rounded-full bg-black/35 flex items-center justify-center border border-white/5"><i data-lucide="heart" class="w-4.5 h-4.5 text-white"></i></div>
+                <span class="text-[10px] whitespace-nowrap mt-1">${post.likesCount || 0}</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-9.5 h-9.5 rounded-full bg-black/35 flex items-center justify-center border border-white/5"><i data-lucide="message-circle" class="w-4.5 h-4.5 text-white"></i></div>
+                <span class="text-[10px] whitespace-nowrap mt-1">${post.commentsCount || 0}</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-9.5 h-9.5 rounded-full bg-black/35 flex items-center justify-center border border-white/5"><i data-lucide="bookmark" class="w-4.5 h-4.5 text-white"></i></div>
+                <span class="text-[10px] whitespace-nowrap mt-1">Saves</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-9.5 h-9.5 rounded-full bg-black/35 flex items-center justify-center border border-white/5"><i data-lucide="send" class="w-4.5 h-4.5 text-white"></i></div>
+                <span class="text-[10px] whitespace-nowrap mt-1">${post.sharesCount || 0}</span>
+              </div>
+            </div>
+
+            <!-- Bottom Left Info -->
+            <div class="p-4 z-10 w-[78%] space-y-2 text-left text-white drop-shadow pb-5">
+              <div class="flex items-center gap-1">
+                <span class="text-xs font-bold text-teal-300">@${handle}</span>
+                <span class="w-3.5 h-3.5 rounded-full bg-sky-400 flex items-center justify-center text-[7px]">✓</span>
+              </div>
+              ${post.title ? `<h4 class="text-xs font-semibold">${post.title}</h4>` : ''}
+              <p class="text-[11.5px] leading-relaxed text-zinc-200 line-clamp-3 font-light">${post.text}</p>
+              <div class="flex items-center gap-2 pt-1">
+                <i data-lucide="music" class="w-3 h-3 text-zinc-300 shrink-0"></i>
+                <div class="w-full overflow-hidden whitespace-nowrap text-[9px] text-zinc-300 relative h-3.5">
+                  <span class="absolute animate-marquee block">Suono originale - @${handle}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute right-4 bottom-4 z-15">
+              <div class="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center animate-spin" style="animation-duration: 4s;">
+                <div class="w-2 h-2 rounded-full bg-teal-400"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Standard/Editorial template
+        root.innerHTML = `
+          <div class="w-full bg-white text-zinc-900 rounded-2xl border border-zinc-200 p-5 space-y-4 shadow-sm font-serif">
+            <div class="flex items-center justify-between border-b pb-2 text-zinc-500 font-sans text-xs">
+              ${badge ? badge : '<span class="text-zinc-450">Speciale</span>'}
+              <span>Agosto 2026</span>
+            </div>
+            ${mediaHtml ? `<div class="rounded-xl overflow-hidden border border-zinc-100">${mediaHtml}</div>` : ''}
+            <div class="space-y-3">
+              ${post.title ? `<h1 class="text-xl md:text-2xl font-bold font-serif text-zinc-950 leading-tight">${post.title}</h1>` : ''}
+              <p class="text-zinc-700 leading-relaxed text-[13.5px] whitespace-pre-line font-sans">${post.text}</p>
+            </div>
+            <div class="text-[9px] font-sans text-zinc-400 uppercase tracking-widest pt-2 border-t">Angolo Sociale · ${author}</div>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
