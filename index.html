@@ -1994,7 +1994,7 @@
         /* ==========================================================================
            3. FILTRO CATEGORIE & RICERCA CARD INTERATTIVA
            ========================================================================== */
-      // Variable globale per la categoria
+    // Variable globale per la categoria
 let currentCategory = 'all';
 
 function filterCategory(category, btnElement) {
@@ -2082,6 +2082,17 @@ function applyFilters() {
       card.style.display = 'none';
     }
   });
+
+  // Mostra o nasconde l'avviso se non ci sono risultati
+  const noResults = document.getElementById('noResultsState');
+  if (noResults) {
+    if (visibleCount === 0) {
+      noResults.style.display = 'block';
+    } else {
+      noResults.style.display = 'none';
+    }
+  }
+}
 
   // Mostra o nasconde l'avviso se non ci sono risultati
   const noResults = document.getElementById('noResultsState');
