@@ -2059,10 +2059,12 @@ function applyFilters() {
     const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
     const cardText = card.textContent.toLowerCase();
 
-    // Filtro categoria
-    const matchCat = (currentCategory === 'all') || cardCat.includes(currentCategory.toLowerCase());
+    // 1. Se c'è del testo cercato, la categoria viene ignorata per cercare ovunque.
+    // 2. Se la barra è vuota, si applica il filtro della categoria selezionata.
+    const isSearching = query.length > 0;
+    const matchCat = isSearching || (currentCategory === 'all') || cardCat.includes(currentCategory.toLowerCase());
     
-    // Filtro ricerca testo/titolo
+    // Filtro per la parola cercata nel titolo o nel testo
     const matchSearch = (query === '') || cardTitle.includes(query) || cardText.includes(query);
 
     if (matchCat && matchSearch) {
@@ -2082,6 +2084,7 @@ function applyFilters() {
     }
   }
 }
+
 
     
         /* ==========================================================================
