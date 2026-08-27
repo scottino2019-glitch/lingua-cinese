@@ -1999,17 +1999,7 @@
 function filterCategory(category, btnElement) {
   currentCategory = category;
 
-  // 1. Rimuovi la classe 'active' da tutti i bottoni
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-
-  // 2. Aggiungi 'active' solo al bottone cliccato
-  if (btnElement) {
-    btnElement.classList.add('active');
-  }
-
-  // 3. Aggiorna eventuale testo del banner info
+  // Aggiorna eventuale banner testo della categoria attiva
   const infoBanner = document.getElementById('categoryActiveInfo');
   const labelText = document.getElementById('categoryLabelText');
   if (infoBanner && labelText) {
@@ -2024,11 +2014,11 @@ function filterCategory(category, btnElement) {
         'audio': '🎧 Audio & Racconti',
         'utility': '🛠️ Strumenti & Utility'
       };
-      labelText.textContent = `Categoria attiva: ${names[category] || category}`;
+      labelText.textContent = 'Categoria attiva: ' + (names[category] || category);
     }
   }
 
-  // 4. Applica il filtro sulle card
+  // Applica il filtro su ricerca e categoria
   applyFilters();
 }
 
@@ -2046,43 +2036,48 @@ function searchCards(query) {
 
 function clearSearch() {
   const input = document.getElementById('cardSearchInput');
-  if (input) input.value = '';
+  if (input) {
+    input.value = '';
+  }
   
   const clearBtn = document.getElementById('clearSearchBtn');
-  if (clearBtn) clearBtn.classList.add('hidden');
+  if (clearBtn) {
+    clearBtn.classList.add('hidden');
+  }
   
   applyFilters();
 }
 
 function applyFilters() {
-  const query = (document.getElementById('cardSearchInput')?.value || '').toLowerCase().trim();
+  const input = document.getElementById('cardSearchInput');
+  const query = input ? input.value.toLowerCase().trim() : '';
   const cards = document.querySelectorAll('.bento-card');
   let visibleCount = 0;
 
-  cards.forEach(card => {
+  cards.forEach(function(card) {
     const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
     const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
     const cardText = card.textContent.toLowerCase();
 
-    // Verifico la categoria e la parola cercata
+    // Filtro categoria
     const matchCat = (currentCategory === 'all') || cardCat.includes(currentCategory.toLowerCase());
+    
+    // Filtro ricerca testo/titolo
     const matchSearch = (query === '') || cardTitle.includes(query) || cardText.includes(query);
 
     if (matchCat && matchSearch) {
-      card.style.display = ''; // Mostra la card
+      card.style.display = '';
       visibleCount++;
     } else {
-      card.style.display = 'none'; // Nasconde la card
+      card.style.display = 'none';
     }
   });
 
   const noResults = document.getElementById('noResultsState');
   if (noResults) {
     if (visibleCount === 0) {
-      noResults.classList.remove('hidden');
       noResults.style.display = 'block';
     } else {
-      noResults.classList.add('hidden');
       noResults.style.display = 'none';
     }
   }
