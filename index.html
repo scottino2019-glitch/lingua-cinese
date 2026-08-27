@@ -1994,8 +1994,7 @@
         /* ==========================================================================
            3. FILTRO CATEGORIE & RICERCA CARD INTERATTIVA
            ========================================================================== */
-    // Variable globale per la categoria
-let currentCategory = 'all';
+   let currentCategory = 'all';
 
 function filterCategory(category, btnElement) {
   currentCategory = category;
@@ -2056,54 +2055,39 @@ function clearSearch() {
 }
 
 function applyFilters() {
-  const searchInput = document.getElementById('cardSearchInput');
-  const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+  const query = (document.getElementById('cardSearchInput')?.value || '').toLowerCase().trim();
   const cards = document.querySelectorAll('.bento-card');
   let visibleCount = 0;
 
   cards.forEach(card => {
-    // Legge la categoria e i testi della card
-    const cardCatAttr = (card.getAttribute('data-category') || '').toLowerCase();
+    const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
     const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
     const cardText = card.textContent.toLowerCase();
 
-    // Verifica categoria
-    const activeCat = currentCategory.toLowerCase();
-    const matchCat = (activeCat === 'all') || cardCatAttr.includes(activeCat);
-
-    // Verifica parola cercata
+    // Verifico la categoria e la parola cercata
+    const matchCat = (currentCategory === 'all') || cardCat.includes(currentCategory.toLowerCase());
     const matchSearch = (query === '') || cardTitle.includes(query) || cardText.includes(query);
 
-    // Mostra o nasconde la card
     if (matchCat && matchSearch) {
-      card.style.display = '';
+      card.style.display = ''; // Mostra la card
       visibleCount++;
     } else {
-      card.style.display = 'none';
+      card.style.display = 'none'; // Nasconde la card
     }
   });
 
-  // Mostra o nasconde l'avviso se non ci sono risultati
   const noResults = document.getElementById('noResultsState');
   if (noResults) {
     if (visibleCount === 0) {
+      noResults.classList.remove('hidden');
       noResults.style.display = 'block';
     } else {
+      noResults.classList.add('hidden');
       noResults.style.display = 'none';
     }
   }
 }
 
-  // Mostra o nasconde l'avviso se non ci sono risultati
-  const noResults = document.getElementById('noResultsState');
-  if (noResults) {
-    if (visibleCount === 0) {
-      noResults.style.display = 'block';
-    } else {
-      noResults.style.display = 'none';
-    }
-  }
-}
     
         /* ==========================================================================
            4. CALENDARIO DINAMICO (Mese, Anno, Ideogrammi, Giorni)
