@@ -2018,47 +2018,102 @@
       }
     
       // 4. Applica il filtro sulle card
-    // Dichiarazione della variabile globale (se non l'hai già in alto nel file)
-let currentCategory = 'all';
+   // Variable globale per la categoria
+window.currentCategory = 'all';
+
+function filterCategory(category, btnElement) {
+  window.currentCategory = category;
+
+  // 1. Rimuovi la classe 'active' da tutti i bottoni
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  // 2. Aggiungi 'active' solo al bottone cliccato
+  if (btnElement) {
+    btnElement.classList.add('active');
+  }
+
+  // 3. Aggiorna eventuale testo del banner info
+  const infoBanner = document.getElementById('categoryActiveInfo');
+  const labelText = document.getElementById('categoryLabelText');
+  if (infoBanner && labelText) {
+    if (category === 'all') {
+      infoBanner.classList.add('hidden');
+    } else {
+      infoBanner.classList.remove('hidden');
+      const names = {
+        'studio': '📚 Grammatica & Studio',
+        'flashcard': '🎴 Flashcard & Caratteri',
+        'media': '🎬 Video & Frame',
+        'audio': '🎧 Audio & Racconti',
+        'utility': '🛠️ Strumenti & Utility'
+      };
+      labelText.textContent = `Categoria attiva: ${names[category] || category}`;
+    }
+  }
+
+  // 4. Applica il filtro sulle card
+  applyFilters();
+}
+
+function searchCards(query) {
+  const clearBtn = document.getElementById('clearSearchBtn');
+  if (clearBtn) {
+    if (query.trim().length > 0) {
+      clearBtn.classList.remove('hidden');
+    } else {
+      clearBtn.classList.add('hidden');
+    }
+  }
+  applyFilters();
+}
+
+function clearSearch() {
+  const input = document.getElementById('cardSearchInput');
+  if (input) input.value = '';
+  
+  const clearBtn = document.getElementById('clearSearchBtn');
+  if (clearBtn) clearBtn.classList.add('hidden');
+  
+  applyFilters();
+}
 
 function applyFilters() {
-  const query = (document.getElementById('cardSearchInput')?.value || '').toLowerCase().trim();
+  const searchInput = document.getElementById('cardSearchInput');
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
   const cards = document.querySelectorAll('.bento-card');
   let visibleCount = 0;
 
   cards.forEach(card => {
-    // Legge le categorie della card (es. "studio flashcard") e le separa in parole singole
+    // Legge la categoria e i testi della card
     const cardCatAttr = (card.getAttribute('data-category') || '').toLowerCase();
-    const cardCategories = cardCatAttr.split(/\s+/); // Separa per spazi
-    
-    // Legge titolo e contenuto di testo della card
     const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
     const cardText = card.textContent.toLowerCase();
 
-    // 1. Verifica Filtro Categoria
-    const matchCat = (currentCategory === 'all') || cardCategories.includes(currentCategory.toLowerCase());
+    // Verifica categoria
+    const activeCat = window.currentCategory.toLowerCase();
+    const matchCat = (activeCat === 'all') || cardCatAttr.includes(activeCat);
 
-    // 2. Verifica Barra di Ricerca (cerca nel data-title o nel testo della card)
+    // Verifica parola cercata
     const matchSearch = (query === '') || cardTitle.includes(query) || cardText.includes(query);
 
-    // Se entrambi i filtri sono validi mostra la card, altrimenti la nasconde
+    // Mostra o nasconde la card direttamente nello stile
     if (matchCat && matchSearch) {
-      card.classList.remove('hidden');
-      card.classList.remove('card-hidden'); // Rimuove anche se usavi questa classe in CSS
+      card.style.display = '';
       visibleCount++;
     } else {
-      card.classList.add('hidden');
-      card.classList.add('card-hidden');
+      card.style.display = 'none';
     }
   });
 
-  // Gestione eventuale messaggio "Nessun Risultato"
+  // Mostra o nasconde l'avviso se non ci sono risultati
   const noResults = document.getElementById('noResultsState');
   if (noResults) {
     if (visibleCount === 0) {
-      noResults.classList.remove('hidden');
+      noResults.style.display = 'block';
     } else {
-      noResults.classList.add('hidden');
+      noResults.style.display = 'none';
     }
   }
 }
