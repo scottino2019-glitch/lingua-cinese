@@ -2018,54 +2018,50 @@
       }
     
       // 4. Applica il filtro sulle card
-      applyFilters();
+    // Dichiarazione della variabile globale (se non l'hai già in alto nel file)
+let currentCategory = 'all';
+
+function applyFilters() {
+  const query = (document.getElementById('cardSearchInput')?.value || '').toLowerCase().trim();
+  const cards = document.querySelectorAll('.bento-card');
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    // Legge le categorie della card (es. "studio flashcard") e le separa in parole singole
+    const cardCatAttr = (card.getAttribute('data-category') || '').toLowerCase();
+    const cardCategories = cardCatAttr.split(/\s+/); // Separa per spazi
+    
+    // Legge titolo e contenuto di testo della card
+    const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
+    const cardText = card.textContent.toLowerCase();
+
+    // 1. Verifica Filtro Categoria
+    const matchCat = (currentCategory === 'all') || cardCategories.includes(currentCategory.toLowerCase());
+
+    // 2. Verifica Barra di Ricerca (cerca nel data-title o nel testo della card)
+    const matchSearch = (query === '') || cardTitle.includes(query) || cardText.includes(query);
+
+    // Se entrambi i filtri sono validi mostra la card, altrimenti la nasconde
+    if (matchCat && matchSearch) {
+      card.classList.remove('hidden');
+      card.classList.remove('card-hidden'); // Rimuove anche se usavi questa classe in CSS
+      visibleCount++;
+    } else {
+      card.classList.add('hidden');
+      card.classList.add('card-hidden');
     }
-    
-        function searchCards(query) {
-          const clearBtn = document.getElementById('clearSearchBtn');
-          if (query.trim().length > 0) {
-            clearBtn.classList.remove('hidden');
-          } else {
-            clearBtn.classList.add('hidden');
-          }
-          applyFilters();
-        }
-    
-        function clearSearch() {
-          const input = document.getElementById('cardSearchInput');
-          if (input) input.value = '';
-          document.getElementById('clearSearchBtn').classList.add('hidden');
-          applyFilters();
-        }
-    
-        function applyFilters() {
-          const query = (document.getElementById('cardSearchInput')?.value || '').toLowerCase().trim();
-          const cards = document.querySelectorAll('.bento-card');
-          let visibleCount = 0;
-    
-          cards.forEach(card => {
-            const cardCat = card.getAttribute('data-category') || '';
-            const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
-            const cardText = card.textContent.toLowerCase();
-    
-            const matchCat = (currentCategory === 'all') || cardCat.includes(currentCategory);
-            const matchSearch = (query === '') || cardTitle.includes(query) || cardText.includes(query);
-    
-            if (matchCat && matchSearch) {
-              card.classList.remove('card-hidden');
-              visibleCount++;
-            } else {
-              card.classList.add('card-hidden');
-            }
-          });
-    
-          const noResults = document.getElementById('noResultsState');
-          if (visibleCount === 0) {
-            noResults.classList.remove('hidden');
-          } else {
-            noResults.classList.add('hidden');
-          }
-        }
+  });
+
+  // Gestione eventuale messaggio "Nessun Risultato"
+  const noResults = document.getElementById('noResultsState');
+  if (noResults) {
+    if (visibleCount === 0) {
+      noResults.classList.remove('hidden');
+    } else {
+      noResults.classList.add('hidden');
+    }
+  }
+}
     
         /* ==========================================================================
            4. CALENDARIO DINAMICO (Mese, Anno, Ideogrammi, Giorni)
