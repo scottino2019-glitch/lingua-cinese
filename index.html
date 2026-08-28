@@ -647,56 +647,6 @@
               <span id="cal-selected-hint" class="text-blue-100 font-sans text-[8px]">Oggi: Studio Cinese</span>
             </div>
           </div>
- <!-- BENTO CARD: NOTIZIE FLASH / ANNUNCI AUTOMATICI -->
-<div class="bento-card col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px] relative overflow-hidden"
-     onmouseenter="pauseAutoPlay()" 
-     onmouseleave="startAutoPlay()">
-  
-  <!-- Content Header con Tag e Badge LIVE -->
-  <div class="flex items-center justify-between text-emerald-200 text-xs font-bold uppercase tracking-wider">
-    <span id="newsTag">快报 / NEWS</span>
-    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 text-xs font-extrabold border border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)]">
-      <span class="animate-ping inline-flex h-2 w-2 rounded-full bg-amber-900 opacity-75"></span>
-      LIVE
-    </span>
-  </div>
-
-  <!-- Announcement / News Box -->
-  <div id="newsContainer" class="my-auto flex flex-col gap-2 bg-amber-400 text-amber-950 p-3.5 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all duration-500 ease-in-out">
-    <div class="flex items-start gap-2.5 min-w-0">
-      <span class="animate-bounce shrink-0 text-lg">⚡</span>
-      <div class="flex flex-col min-w-0">
-        <h4 id="newsTitle" class="text-xs sm:text-sm font-bold truncate leading-snug">
-          Caricamento...
-        </h4>
-        <p id="newsDesc" class="text-xs font-medium text-amber-900 truncate">
-          Caricamento notizie...
-        </p>
-      </div>
-    </div>
-    
-    <!-- Controlli di Navigazione Manuale e Data -->
-    <div class="flex items-center justify-between border-t border-amber-950/20 pt-2 mt-1">
-      <div class="flex items-center gap-2">
-        <button onclick="prevNews(event)" class="hover:bg-amber-500/50 px-2 py-0.5 rounded-lg font-bold text-xs transition-colors border border-amber-950/30" aria-label="Precedente">
-          ❮
-        </button>
-        <button onclick="nextNews(event)" class="hover:bg-amber-500/50 px-2 py-0.5 rounded-lg font-bold text-xs transition-colors border border-amber-950/30" aria-label="Successiva">
-          ❯
-        </button>
-        <span id="newsCounter" class="text-[10px] font-bold text-amber-950/80">1/1</span>
-      </div>
-      <span id="newsDate" class="text-[10px] font-bold text-amber-950/80">-</span>
-    </div>
-  </div>
-
-  <!-- Footer Indicator -->
-  <div class="flex justify-end">
-    <span class="text-[10px] text-emerald-200/70 font-mono">Notizie Flash</span>
-  </div>
-
-</div>
-
   </div>
   </section>
      <!-- ========================================================= -->
@@ -2018,91 +1968,7 @@
             speakText(currentQuoteData.hanzi);
           }
         }
-//News 
     
-   const newsData = [
-    {
-      titolo: "Newsletter",
-      descrizione: "Ricevi materiale e news.",
-      data: "28 Ago",
-      tag: "快报 / NEWS"
-    },
-    {
-      titolo: "Prossimamente",
-      descrizione: "Libri di fiabe e leggende.",
-      data: "28 Ago",
-      tag: "CULTURA"
-    },
-    {
-      titolo: "Aggiornamento Scrivolinguo",
-      descrizione: "Presto nuove lezioni.",
-      data: "28 Ago",
-      tag: "APP"
-    }
-  ];
-
-  let currentNewsIndex = 0;
-  let newsInterval = null;
-
-  function updateNewsCard(index) {
-    if (!newsData || newsData.length === 0) return;
-
-    const container = document.getElementById('newsContainer');
-    
-    // Effetto dissolvenza (Fade Out)
-    if (container) container.style.opacity = '0.3';
-
-    setTimeout(() => {
-      const item = newsData[index];
-      
-      const titleEl = document.getElementById('newsTitle');
-      const descEl = document.getElementById('newsDesc');
-      const dateEl = document.getElementById('newsDate');
-      const counterEl = document.getElementById('newsCounter');
-      const tagEl = document.getElementById('newsTag');
-
-      if (titleEl) titleEl.innerText = item.titolo;
-      if (descEl) descEl.innerText = item.descrizione;
-      if (dateEl) dateEl.innerText = item.data;
-      if (counterEl) counterEl.innerText = `${index + 1}/${newsData.length}`;
-      if (tagEl) tagEl.innerText = item.tag;
-
-      // Ripristino opacità (Fade In)
-      if (container) container.style.opacity = '1';
-    }, 200);
-  }
-
-  function nextNews(event) {
-    if (event) event.stopPropagation();
-    currentNewsIndex = (currentNewsIndex + 1) % newsData.length;
-    updateNewsCard(currentNewsIndex);
-  }
-
-  function prevNews(event) {
-    if (event) event.stopPropagation();
-    currentNewsIndex = (currentNewsIndex - 1 + newsData.length) % newsData.length;
-    updateNewsCard(currentNewsIndex);
-  }
-
-  // Gestione Autoplay (Cambio ogni 4 secondi = 4000ms)
-  function startAutoPlay() {
-    if (!newsInterval) {
-      newsInterval = setInterval(() => {
-        nextNews();
-      }, 4000);
-    }
-  }
-
-  function pauseAutoPlay() {
-    clearInterval(newsInterval);
-    newsInterval = null;
-  }
-
-  // Avvio all'apertura
-  document.addEventListener('DOMContentLoaded', () => {
-    updateNewsCard(currentNewsIndex);
-    startAutoPlay();
-  });
         /* ==========================================================================
            2. SINTESI VOCALE PRONUNCIA CINESE (Web Speech API)
            ========================================================================== */
