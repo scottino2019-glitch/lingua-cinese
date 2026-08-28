@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grazie per l'iscrizione! 谢谢!</title>
+    <style>
+        :root {
+            --china-red: #c8102e;
+            --gold: #f4c20d;
+            --rice-paper: #fdf6e3;
+            --ink: #2b2b2b;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--china-red);
+            background-image: repeating-conic-gradient(
+                #d11a38 0%, 
+                #d11a38 5%, 
+                #c8102e 5%, 
+                #c8102e 10%
+            );
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: var(--rice-paper);
+        }
+
+        .thank-you-text {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 0.3s;
+            z-index: 10;
+        }
+
+        .title-it {
+            font-size: 2.8rem;
+            margin: 0;
+            font-weight: 900;
+            text-shadow: 3px 3px 0px var(--ink);
+            letter-spacing: 2px;
+            color: var(--gold);
+        }
+
+        .title-cn {
+            font-size: 3.8rem;
+            margin: 5px 0;
+            font-family: "Kaiti", "STKaiti", serif;
+            text-shadow: 3px 3px 0px var(--ink);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            background: var(--ink);
+            padding: 10px 22px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 2px solid var(--gold);
+        }
+
+        .mascot-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        .spirit {
+            width: 120px;
+            height: 120px;
+            background: var(--rice-paper);
+            border-radius: 50% 50% 10px 10px;
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            box-shadow: inset -10px -10px 0px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.3);
+            border: 4px solid var(--ink);
+        }
+
+        .spirit::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top: 20px solid var(--rice-paper);
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            filter: drop-shadow(0 4px 0 var(--ink));
+        }
+
+        .eye {
+            position: absolute;
+            top: 45px;
+            width: 25px;
+            height: 10px;
+            border-top: 5px solid var(--ink);
+            border-radius: 50%;
+        }
+
+        .eye.left { left: 25px; transform: rotate(15deg); }
+        .eye.right { right: 25px; transform: rotate(-15deg); }
+
+        .blush {
+            position: absolute;
+            top: 60px;
+            width: 20px;
+            height: 10px;
+            background: rgba(200, 16, 46, 0.4);
+            border-radius: 50%;
+            animation: pulsate 2s infinite alternate;
+        }
+
+        .blush.left { left: 15px; }
+        .blush.right { right: 15px; }
+
+        .mouth {
+            position: absolute;
+            top: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 10px;
+            border-bottom: 4px solid var(--ink);
+            border-radius: 50%;
+        }
+
+        .back-btn {
+            margin-top: 35px;
+            text-decoration: none;
+            color: var(--ink);
+            background-color: var(--gold);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: 3px solid var(--ink);
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 0.9s;
+            transition: transform 0.2s, background-color 0.2s;
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.08);
+            background-color: #fff;
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+
+        @keyframes pulsate {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 0.8; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mascot-container">
+        <div class="spirit">
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+            <div class="blush left"></div>
+            <div class="blush right"></div>
+            <div class="mouth"></div>
+        </div>
+    </div>
+
+    <div class="thank-you-text">
+        <h1 class="title-it">GRAZIE!</h1>
+        <h2 class="title-cn">谢谢你</h2>
+        <div class="subtitle">Ti sei iscritto alla newsletter con successo!</div>
+    </div>
+
+    <a href="https://scottino2019-glitch.github.io/lingua-cinese/" class="back-btn">Torna alla Home 🏠</a>
+
+</body>
+</html>
