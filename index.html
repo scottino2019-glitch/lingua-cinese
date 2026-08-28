@@ -648,36 +648,38 @@
             </div>
           </div>
    <!--Notizie Flash-->
-        <div class="bento-card col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px] relative overflow-hidden">
-  
-  <!-- Content Header -->
-  <div class="flex items-center justify-between text-emerald-200 text-xs font-bold uppercase tracking-wider">
-    <span>Annunci</span>
-    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 text-xs font-extrabold border border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)]">
-      <span class="animate-ping inline-flex h-2 w-2 rounded-full bg-amber-900 opacity-75"></span>
-      LIVE
-    </span>
-  </div>
+       <div class="card card-news-flash" onclick="window.location.href='blog.html'">
+  <div class="card-inner flex-between">
+    <div class="card-left">
+      <!-- Aggiunto ID newsTag -->
+      <div class="tag-badge" id="newsTag">
+        <span class="dot"></span> 
+        <span>快报 / NEWS</span>
+      </div>
+      
+      <!-- Aggiunto ID newsTitle -->
+      <h3 class="card-title bold" id="newsTitle">Titolo Notizia</h3>
+      
+      <!-- Aggiunto ID newsDesc -->
+      <p class="card-desc text-muted" id="newsDesc">Caricamento notizie...</p>
 
-  <!-- Announcement Bar (Tailwind) -->
-  <div id="announcement-bar" class="my-auto flex items-center justify-between gap-3 bg-amber-400 text-amber-950 p-3.5 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-opacity duration-300">
-    <div class="flex items-center gap-2.5 min-w-0">
-      <span class="animate-bounce shrink-0 text-lg">⚡</span>
-      <p id="announcement-text" class="text-xs sm:text-sm font-semibold truncate leading-snug">
-        <strong>Newsletter:</strong>Iscriviti alla newsletter 
-      </p>
+      <div class="news-footer flex-align">
+        <!-- Modificati gli eventi onclick: prevNews(event) e nextNews(event) -->
+        <button class="nav-btn" onclick="prevNews(event)" aria-label="Notizia precedente">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn" onclick="nextNews(event)" aria-label="Notizia successiva">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Aggiunto ID newsCounter e ID newsDate -->
+        <span class="news-counter" id="newsCounter">1/1</span>
+        <span class="news-date" id="newsDate">-</span>
+      </div>
     </div>
-    <button onclick="this.parentElement.style.display='none'" class="shrink-0 text-amber-950 hover:bg-amber-500/50 p-1 rounded-lg font-bold transition-colors text-sm" aria-label="Chiudi">
-      ✕
-    </button>
   </div>
-
-  <!-- Footer indicator -->
-  <div class="flex justify-end">
-    <span class="text-[10px] text-emerald-200/70 font-mono">Aggiornato ora</span>
-  </div>
-
 </div>
+
   </div>
   </section>
      <!-- ========================================================= -->
@@ -2001,32 +2003,72 @@
         }
 //News 
     
-    const newsList = [
-    "<strong>Newsletter:</strong> Iscriviti alla newsletter",
-    "<strong>Perché:</strong> Per ricevere materiale , quiz e tanto altro!",
-    "<strong>Non invasiva:</strong> Solo materiale utile massimo 2 volte a settimana!"
+   // Array statico con le tue notizie
+  const newsData = [
+    {
+      titolo: "Nuovo Corso HSK 1 Disponibile",
+      descrizione: "Scopri i nuovi moduli interattivi per la preparazione agli esami ufficiali.",
+      data: "28 Ago",
+      tag: "快报 / NEWS",
+      link: "blog.html"
+    },
+    {
+      titolo: "La Festa di Mezzo Autunno",
+      descrizione: "Storia, tradizioni e i famosi dolcetti della luna (Mooncakes).",
+      data: "27 Ago",
+      tag: "CULTURA",
+      link: "blog.html"
+    },
+    {
+      titolo: "Aggiornamento App Mobile",
+      descrizione: "Nuove funzionalità per il ripasso dei caratteri offline disponibili.",
+      data: "25 Ago",
+      tag: "APP",
+      link: "blog.html"
+    }
   ];
 
   let currentNewsIndex = 0;
 
-  setInterval(() => {
-    const bar = document.getElementById('announcement-bar');
-    const textEl = document.getElementById('announcement-text');
+  // Funzione per aggiornare il testo nella card
+  function updateNewsCard(index) {
+    if (!newsData || newsData.length === 0) return;
+
+    const item = newsData[index];
     
-    if (!bar || bar.style.display === 'none') return;
-
-    // Fade out
-    bar.style.opacity = '0';
-
-    setTimeout(() => {
-      currentNewsIndex = (currentNewsIndex + 1) % newsList.length;
-      textEl.innerHTML = newsList[currentNewsIndex];
-      // Fade in
-      bar.style.opacity = '1';
-    }, 300);
-
-  }, 4000); // Cambia notizia ogni 4 secondi
+    // Aggiornamento elementi
+    document.getElementById('newsTitle').innerText = item.titolo;
+    document.getElementById('newsDesc').innerText = item.descrizione;
+    document.getElementById('newsDate').innerText = item.data;
     
+    // Aggiornamento tag se presente
+    const tagElement = document.getElementById('newsTag');
+    if (tagElement) {
+      tagElement.querySelector('span:last-child').innerText = item.tag;
+    }
+
+    // Aggiornamento contatore (es. 1/3)
+    document.getElementById('newsCounter').innerText = `${index + 1}/${newsData.length}`;
+  }
+
+  // Notizia Successiva (event.stopPropagation blocca il click sulla card principale)
+  function nextNews(event) {
+    if (event) event.stopPropagation();
+    currentNewsIndex = (currentNewsIndex + 1) % newsData.length;
+    updateNewsCard(currentNewsIndex);
+  }
+
+  // Notizia Precedente
+  function prevNews(event) {
+    if (event) event.stopPropagation();
+    currentNewsIndex = (currentNewsIndex - 1 + newsData.length) % newsData.length;
+    updateNewsCard(currentNewsIndex);
+  }
+
+  // Inizializza la prima notizia al caricamento
+  document.addEventListener('DOMContentLoaded', () => {
+    updateNewsCard(currentNewsIndex);
+  });
         /* ==========================================================================
            2. SINTESI VOCALE PRONUNCIA CINESE (Web Speech API)
            ========================================================================== */
