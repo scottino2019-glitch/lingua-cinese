@@ -647,6 +647,25 @@
               <span id="cal-selected-hint" class="text-blue-100 font-sans text-[8px]">Oggi: Studio Cinese</span>
             </div>
           </div>
+  <!-- Announcement Bar (Tailwind) -->
+  <div id="announcement-bar" class="my-auto flex items-center justify-between gap-3 bg-amber-400 text-amber-950 p-3.5 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-opacity duration-300">
+    <div class="flex items-center gap-2.5 min-w-0">
+      <span class="animate-bounce shrink-0 text-lg">⚡</span>
+      <p id="announcement-text" class="text-xs sm:text-sm font-semibold truncate leading-snug">
+        <strong>Newsletter:</strong> Sciviti alla newsletter 
+      </p>
+    </div>
+    <button onclick="this.parentElement.style.display='none'" class="shrink-0 text-amber-950 hover:bg-amber-500/50 p-1 rounded-lg font-bold transition-colors text-sm" aria-label="Chiudi">
+      ✕
+    </button>
+  </div>
+
+  <!-- Footer indicator -->
+  <div class="flex justify-end">
+    <span class="text-[10px] text-emerald-200/70 font-mono">Aggiornato ora</span>
+  </div>
+
+</div>
   </div>
   </section>
      <!-- ========================================================= -->
@@ -1968,6 +1987,33 @@
             speakText(currentQuoteData.hanzi);
           }
         }
+//News 
+    
+    const newsList = [
+    "<strong>Newsletter:</strong> Scriviti alla newsletter",
+    "<strong>Perché:</strong> Per ricevere materiale , quiz e tanto altro!",
+    "<strong>Non invasiva:</strong> Solo materiale utile massimo 2 volte a settimana!"
+  ];
+
+  let currentNewsIndex = 0;
+
+  setInterval(() => {
+    const bar = document.getElementById('announcement-bar');
+    const textEl = document.getElementById('announcement-text');
+    
+    if (!bar || bar.style.display === 'none') return;
+
+    // Fade out
+    bar.style.opacity = '0';
+
+    setTimeout(() => {
+      currentNewsIndex = (currentNewsIndex + 1) % newsList.length;
+      textEl.innerHTML = newsList[currentNewsIndex];
+      // Fade in
+      bar.style.opacity = '1';
+    }, 300);
+
+  }, 4000); // Cambia notizia ogni 4 secondi
     
         /* ==========================================================================
            2. SINTESI VOCALE PRONUNCIA CINESE (Web Speech API)
