@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mazzo Schede Quiz Vocabolario Cinese</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --danger: #f43f5e;
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .deck-top-bar {
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .deck-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .deck-badges {
+      display: flex;
+      gap: 6px;
+      background: #111827;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+    .deck-badge-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: #1f293d;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .deck-badge-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: #818cf8;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+    }
+    .widget-container {
+      width: 100%;
+      max-width: 580px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      background: rgba(79, 70, 229, 0.18);
+      color: #818cf8;
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .title .hanzi {
+      font-family: 'Noto Sans SC', sans-serif;
+      color: #a5b4fc;
+    }
+    .instructions {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .image-box {
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      position: relative;
+      background: #0f172a;
+      aspect-ratio: 4 / 3;
+      margin-bottom: 16px;
+    }
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .item-card {
+      background: #0f172a;
+      border: 1.5px solid var(--card-border);
+      border-radius: 14px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+      position: relative;
+      min-height: 84px;
+    }
+    .item-card:hover {
+      border-color: #4338ca;
+      transform: translateY(-2px);
+    }
+    .item-card.selected {
+      background: rgba(79, 70, 229, 0.18);
+      border-color: #6366f1;
+      box-shadow: 0 0 14px rgba(99, 102, 241, 0.25);
+    }
+    .item-card.correct {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: #10b981;
+    }
+    .item-card.wrong {
+      background: rgba(244, 63, 94, 0.18);
+      border-color: #f43f5e;
+    }
+    .hanzi-text {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .pinyin-text {
+      font-size: 11px;
+      font-weight: 600;
+      color: #a5b4fc;
+    }
+    .italian-text {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+    .check-circle {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: white;
+      transition: all 0.15s;
+    }
+    .item-card.selected .check-circle {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+    .audio-btn {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: transparent;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+    .audio-btn:hover {
+      color: #a5b4fc;
+      background: rgba(255,255,255,0.05);
+    }
+    .audio-btn svg {
+      width: 13px;
+      height: 13px;
+    }
+    .footer {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      flex: 1;
+      padding: 11px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .btn-secondary {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+    }
+    .btn-secondary:hover {
+      background: #334155;
+      color: white;
+    }
+    .nav-btn {
+      flex: 0 0 44px;
+      padding: 0;
+    }
+    .result-banner {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      animation: fadeIn 0.2s ease;
+    }
+    .result-banner.show {
+      display: block;
+    }
+    .result-banner.perfect {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid #10b981;
+      color: #34d399;
+    }
+    .result-banner.partial {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-top-bar">
+    <div class="deck-title">Mazzo Quiz Cinese (4 schede)</div>
+    <div class="deck-badges" id="deck-badges-container"></div>
+  </div>
+
+  <div class="widget-container">
+    <div class="header">
+      <span class="badge" id="card-badge">SCHEDA #1</span>
+      <div class="title">
+        <span class="hanzi" id="card-title-zh"></span>
+        <span>•</span>
+        <span id="card-title-it"></span>
+      </div>
+      <p class="instructions" id="card-instruction"></p>
+    </div>
+
+    <div class="image-box">
+      <img id="card-img" src="" alt="Quiz Illustration">
+    </div>
+
+    <div class="grid" id="items-grid"></div>
+
+    <div class="footer">
+      <div id="result-banner" class="result-banner"></div>
+      <div class="btn-row">
+        <button class="btn btn-secondary nav-btn" id="prev-btn" onclick="prevCard()" title="Scheda precedente">◀</button>
+        <button class="btn btn-secondary" onclick="resetQuiz()">Ricomincia</button>
+        <button class="btn btn-primary" id="verify-btn" onclick="verifyAnswers()">Verifica</button>
+        <button class="btn btn-secondary nav-btn" id="next-btn" onclick="nextCard()" title="Scheda successiva">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const deck = [{"id":"card-1-rain","cardNumber":1,"titleZh":"汉字捉迷藏","titleIt":"Caccia ai Caratteri: Giorno di Pioggia","titleEn":"Character Hide & Seek: Rainy Day","instructionZh":"仔细看看图里有什么，找到对应的汉字打 \"✓\"","instructionIt":"Osserva attentamente l'immagine e seleziona i vocaboli presenti!","instructionEn":"Look closely at what is in the picture, check the matching words!","imageSrc":"/img/rainy_day_scene.jpg","themeColor":"sky","items":[{"id":"c1-rain","character":"雨","pinyin":"yǔ","italian":"Pioggia","english":"Rain","inImage":true,"explanationIt":"Le gocce di pioggia scendono fitte dal cielo grigio.","explanationEn":"Heavy raindrops are falling from the cloudy sky.","explanationZh":"大雨正从空中哗哗地下着。","boundingLocation":{"x":35,"y":25}},{"id":"c1-cloud","character":"云","pinyin":"yún","italian":"Nuvola","english":"Cloud","inImage":true,"explanationIt":"Ci sono nuvole scure e temporalesche in cielo.","explanationEn":"Dark storm clouds gather in the upper sky.","explanationZh":"天空中聚满了灰黑色的乌云。","boundingLocation":{"x":50,"y":12}},{"id":"c1-water","character":"水","pinyin":"shuǐ","italian":"Acqua / Pozzanghera","english":"Water / Puddle","inImage":true,"explanationIt":"Ci sono grandi pozzanghere d'acqua sul sentiero.","explanationEn":"Puddles of clear water formed all along the trail.","explanationZh":"小路上积满了清澈的水洼。","boundingLocation":{"x":45,"y":64}},{"id":"c1-wind","character":"风","pinyin":"fēng","italian":"Vento","english":"Wind","inImage":true,"explanationIt":"La pioggia inclinata e i rami mostrano il soffio del vento.","explanationEn":"Slanted raindrops and swaying branches reveal the wind.","explanationZh":"斜斜的雨丝和微动的枝叶表明有风在吹。","boundingLocation":{"x":75,"y":30}},{"id":"c1-umbrella","character":"伞","pinyin":"sǎn","italian":"Ombrello","english":"Umbrella","inImage":true,"explanationIt":"Il bambino regge un luminoso ombrello giallo aperto.","explanationEn":"The kid holds a bright yellow open umbrella.","explanationZh":"小朋友手里撑着一把鲜艳的黄色雨伞。","boundingLocation":{"x":52,"y":32}},{"id":"c1-tree","character":"树","pinyin":"shù","italian":"Albero","english":"Tree","inImage":true,"explanationIt":"C'è un grande albero verde vicino al recinto di legno.","explanationEn":"There is a lush green tree beside the wooden fence.","explanationZh":"木栅栏旁边有一棵茂密的大树。","boundingLocation":{"x":22,"y":32}},{"id":"c1-fire","character":"火","pinyin":"huǒ","italian":"Fuoco","english":"Fire","inImage":false,"explanationIt":"Non c'è fuoco: piove ovunque ed è tutto bagnato!","explanationEn":"No fire here: it is raining and wet everywhere!","explanationZh":"下雨天四处湿漉漉的，图里没有火。"},{"id":"c1-moon","character":"月","pinyin":"yuè","italian":"Luna","english":"Moon","inImage":false,"explanationIt":"È pieno giorno! La luna non è visibile nel cielo temporalesco.","explanationEn":"It is daytime! The moon is not in the sky.","explanationZh":"现在是白天雨天，天上没有月亮。"}]},{"id":"card-2-picnic","cardNumber":2,"titleZh":"汉字捉迷藏","titleIt":"Caccia ai Caratteri: Picnic nel Prato","titleEn":"Character Hide & Seek: Sunny Picnic","instructionZh":"仔细看看野餐图里有什么，找到对应的汉字打 \"✓\"","instructionIt":"Osserva cosa c'è nella scena del picnic e seleziona i vocaboli corretti!","instructionEn":"Look closely at the picnic scene and check the items that appear!","imageSrc":"img/sunny_picnic_scene.jpg","themeColor":"emerald","items":[{"id":"c2-sun","character":"日","pinyin":"rì","italian":"Sole","english":"Sun","inImage":true,"explanationIt":"Il sole luminoso splende caldo nel cielo azzurro.","explanationEn":"A warm bright sun is shining high in the blue sky.","explanationZh":"蓝天中挂着一轮温暖明亮的太阳。","boundingLocation":{"x":82,"y":15}},{"id":"c2-grass","character":"草","pinyin":"cǎo","italian":"Erba / Prato","english":"Grass / Meadow","inImage":true,"explanationIt":"Un soffice prato d'erba verde circonda la coperta da picnic.","explanationEn":"Lush green grass carpets the entire picnic ground.","explanationZh":"野餐垫周围是一片碧绿青翠的草地。","boundingLocation":{"x":30,"y":75}},{"id":"c2-flower","character":"花","pinyin":"huā","italian":"Fiore","english":"Flower","inImage":true,"explanationIt":"Girasoli e fiorellini colorati sbocciano nel campo.","explanationEn":"Sunflowers and colorful wild flowers bloom in the meadow.","explanationZh":"草地上开着向日葵和缤纷的小花。","boundingLocation":{"x":75,"y":65}},{"id":"c2-dog","character":"犬","pinyin":"quǎn","italian":"Cane","english":"Dog","inImage":true,"explanationIt":"Un allegro cagnolino gioca felice sull'erba.","explanationEn":"A friendly golden puppy is happily playing on the grass.","explanationZh":"一只活泼可爱的小狗正在草地上欢快玩耍。","boundingLocation":{"x":68,"y":55}},{"id":"c2-fruit","character":"果","pinyin":"guǒ","italian":"Frutto / Mela","english":"Fruit / Apple","inImage":true,"explanationIt":"Ci sono mele rosse gustose sia sull'albero che nel cesto.","explanationEn":"Red juicy apples are on the tree branch and in the basket.","explanationZh":"树上挂着红苹果，野餐篮里也有新鲜水果。","boundingLocation":{"x":42,"y":60}},{"id":"c2-mountain","character":"山","pinyin":"shān","italian":"Montagna","english":"Mountain","inImage":true,"explanationIt":"In lontananza si stagliano colline e vette montuose.","explanationEn":"Mountain ridges and gentle hills rest on the distant horizon.","explanationZh":"地平线远方矗立着青翠连绵的高山。","boundingLocation":{"x":20,"y":30}},{"id":"c2-snow","character":"雪","pinyin":"xuě","italian":"Neve","english":"Snow","inImage":false,"explanationIt":"È una calda giornata estiva di sole, non c'è affatto neve!","explanationEn":"It is a warm sunny summer day, there is no snow here!","explanationZh":"这是一个阳光明媚的暖夏，没有下雪。"},{"id":"c2-fish","character":"鱼","pinyin":"yú","italian":"Pesce","english":"Fish","inImage":false,"explanationIt":"Siamo in mezzo a un prato verde, non ci sono fiumi o pesci.","explanationEn":"We are on a grass field with no pond or fish.","explanationZh":"这里是开阔的草坪，并没有池塘或游鱼。"}]},{"id":"card-3-camping","cardNumber":3,"titleZh":"汉字捉迷藏","titleIt":"Caccia ai Caratteri: Notte Stellata","titleEn":"Character Hide & Seek: Starry Camping","instructionZh":"仔细看看露营夜景有什么，找到对应的汉字打 \"✓\"","instructionIt":"Esplora il campeggio notturno e trova tutti gli elementi presenti!","instructionEn":"Look closely at the night camping scene and tick what you see!","imageSrc":"img/night_camping_scene.jpg","themeColor":"indigo","items":[{"id":"c3-moon","character":"月","pinyin":"yuè","italian":"Luna","english":"Moon","inImage":true,"explanationIt":"Una falce di luna luminosa splende nel cielo scuro.","explanationEn":"A glowing crescent moon shines brightly in the night sky.","explanationZh":"深蓝夜空中高悬着一弯明亮的月牙。","boundingLocation":{"x":75,"y":15}},{"id":"c3-star","character":"星","pinyin":"xīng","italian":"Stella","english":"Star","inImage":true,"explanationIt":"Tante stelle scintillano attorno alla luna.","explanationEn":"Sparkling golden stars dot the deep night sky.","explanationZh":"夜空中缀满了闪闪发光的小星星。","boundingLocation":{"x":40,"y":18}},{"id":"c3-fire","character":"火","pinyin":"huǒ","italian":"Fuoco / Falò","english":"Fire / Campfire","inImage":true,"explanationIt":"Un caldo falò accogliente crepita al centro del campo.","explanationEn":"A cozy campfire crackles with warm orange flames.","explanationZh":"营地中央生着一堆温暖红火的营火。","boundingLocation":{"x":38,"y":68}},{"id":"c3-wood","character":"木","pinyin":"mù","italian":"Legno / Tronco","english":"Wood / Timber","inImage":true,"explanationIt":"Ciocchi e tronchi di legno alimentano il fuoco e fanno da seduta.","explanationEn":"Wooden logs fuel the fire and serve as natural seats.","explanationZh":"火堆边摆放着作为燃料和坐凳的木头原木。","boundingLocation":{"x":28,"y":78}},{"id":"c3-bird","character":"鸟","pinyin":"niǎo","italian":"Uccello / Gufo","english":"Bird / Owl","inImage":true,"explanationIt":"Un simpatico gufo è appollaiato sul ramo del pino.","explanationEn":"A watchful friendly owl rests quietly on a pine tree branch.","explanationZh":"松树树枝上停栖着一只好奇的小猫头鹰。","boundingLocation":{"x":80,"y":45}},{"id":"c3-night","character":"夜","pinyin":"yè","italian":"Notte","english":"Night","inImage":true,"explanationIt":"Il cielo blu cobalto e la penombra creano una suggestiva notte.","explanationEn":"The deep indigo sky and cozy shadows portray the peaceful night.","explanationZh":"静谧深邃的夜色笼罩着整座森林。","boundingLocation":{"x":50,"y":10}},{"id":"c3-sun","character":"日","pinyin":"rì","italian":"Sole","english":"Sun","inImage":false,"explanationIt":"È notte fonda, il sole è tramontato da tempo!","explanationEn":"It is nighttime, the sun has set long ago!","explanationZh":"夜幕已降临，天空中没有太阳。"},{"id":"c3-boat","character":"舟","pinyin":"zhōu","italian":"Barca","english":"Boat","inImage":false,"explanationIt":"Siamo accampati nel bosco montano, non ci sono barche.","explanationEn":"We are in a mountain pine forest, there are no boats here.","explanationZh":"这是森林露营地，周围没有小舟或水域。"}]},{"id":"card-4-beach","cardNumber":4,"titleZh":"汉字捉迷藏","titleIt":"Caccia ai Caratteri: Riva del Mare","titleEn":"Character Hide & Seek: Ocean Beach","instructionZh":"仔细看看海滩风景有什么，找到对应的汉字打 \"✓\"","instructionIt":"Guarda la splendida spiaggia marina e spunta le parole presenti!","instructionEn":"Look at the tropical beach and check the elements you can spot!","imageSrc":"img/ocean_beach_scene.jpg","themeColor":"amber","items":[{"id":"c4-sea","character":"海","pinyin":"hǎi","italian":"Mare","english":"Sea / Ocean","inImage":true,"explanationIt":"L'acqua turchese del mare si infrange con dolci onde.","explanationEn":"Turquoise ocean waves are gently rolling onto the shore.","explanationZh":"清澈碧蓝的大海泛着柔和的波浪。","boundingLocation":{"x":60,"y":40}},{"id":"c4-sand","character":"沙","pinyin":"shā","italian":"Sabbia","english":"Sand","inImage":true,"explanationIt":"Una distesa di sabbia calda e dorata copre la riva.","explanationEn":"Golden warm sand stretches along the shoreline.","explanationZh":"岸边铺展着一片金黄细腻的沙滩。","boundingLocation":{"x":45,"y":75}},{"id":"c4-boat","character":"舟","pinyin":"zhōu","italian":"Barca / Vele","english":"Boat / Sailboat","inImage":true,"explanationIt":"Una piccola barca a vela naviga all'orizzonte sul mare.","explanationEn":"A graceful small sailboat glides along the sea horizon.","explanationZh":"海天相接的地平线上漂行着一艘小白帆船。","boundingLocation":{"x":78,"y":35}},{"id":"c4-tree","character":"树","pinyin":"shù","italian":"Albero / Palma","english":"Tree / Palm","inImage":true,"explanationIt":"Una palma da cocco dalle grandi fronde verdi si piega verso il mare.","explanationEn":"A tropical coconut palm tree sways towards the ocean.","explanationZh":"海滩边挺拔着一棵硕大的热带椰子树。","boundingLocation":{"x":18,"y":38}},{"id":"c4-shell","character":"贝","pinyin":"bèi","italian":"Conchiglia","english":"Seashell","inImage":true,"explanationIt":"Una conchiglia marina colorata poggia sulla battigia.","explanationEn":"A shiny patterned seashell rests upon the wet sand.","explanationZh":"沙滩上躺着一枚可爱的彩色贝壳。","boundingLocation":{"x":65,"y":72}},{"id":"c4-crab","character":"蟹","pinyin":"xiè","italian":"Granchio","english":"Crab","inImage":true,"explanationIt":"Un allegro granchietto rosso cammina sulla sabbia.","explanationEn":"A friendly cheerful little crab scuttles across the sand.","explanationZh":"沙滩上爬着一只笑眯眯的红头小螃蟹。","boundingLocation":{"x":32,"y":68}},{"id":"c4-ice","character":"冰","pinyin":"bīng","italian":"Ghiaccio","english":"Ice","inImage":false,"explanationIt":"Siamo ai tropici sotto il sole estivo, niente ghiaccio!","explanationEn":"Tropical beach under hot sunshine: there is no ice!","explanationZh":"热带海岛骄阳似火，没有冰块或结冰。"},{"id":"c4-car","character":"车","pinyin":"chē","italian":"Auto / Macchina","english":"Car / Vehicle","inImage":false,"explanationIt":"La spiaggia è pedonale e naturale, non ci sono automobili!","explanationEn":"Natural shoreline: no cars or vehicles here.","explanationZh":"这是纯天然的海边沙滩，没有任何车辆。"}]}];
+    let currentIdx = 0;
+    let selectedMap = {}; // { [cardId]: Set<itemId> }
+    let verifiedMap = {}; // { [cardId]: boolean }
+
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    function playBeep(freq, type, duration) {
+      try {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function initBadges() {
+      const container = document.getElementById('deck-badges-container');
+      container.innerHTML = deck.map((c, i) => `
+        <button class="deck-badge-btn ${i === currentIdx ? 'active' : ''}" onclick="goToCard(${i})">${i + 1}</button>
+      `).join('');
+    }
+
+    function renderCurrentCard() {
+      const card = deck[currentIdx];
+      if (!selectedMap[card.id]) selectedMap[card.id] = new Set();
+
+      document.getElementById('card-badge').textContent = 'SCHEDA #' + (currentIdx + 1);
+      document.getElementById('card-title-zh').textContent = card.titleZh;
+      document.getElementById('card-title-it').textContent = card.titleIt;
+      document.getElementById('card-instruction').textContent = card.instructionIt;
+      document.getElementById('card-img').src = card.imageSrc;
+
+      const grid = document.getElementById('items-grid');
+      const isCardVerified = verifiedMap[card.id] || false;
+
+      grid.innerHTML = card.items.map(it => {
+        const isSelected = selectedMap[card.id].has(it.id);
+        let classes = 'item-card';
+        if (isSelected) classes += ' selected';
+        if (isCardVerified) {
+          const correct = (isSelected && it.inImage) || (!isSelected && !it.inImage);
+          if (correct && isSelected) classes += ' correct';
+          else if (!correct) classes += ' wrong';
+        }
+        return `
+          <div class="${classes}" data-id="${it.id}" onclick="toggleItem('${it.id}')">
+            <span class="check-circle">${isSelected ? '✓' : ''}</span>
+            <div class="hanzi-text">${it.character}</div>
+            <div class="pinyin-text">${it.pinyin}</div>
+            <div class="italian-text">${it.italian}</div>
+            <button class="audio-btn" title="Pronuncia" onclick="event.stopPropagation(); playVoice('${it.character}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      const banner = document.getElementById('result-banner');
+      if (isCardVerified) {
+        banner.className = 'result-banner show';
+        banner.textContent = 'Scheda verificata!';
+        document.getElementById('verify-btn').style.display = 'none';
+      } else {
+        banner.className = 'result-banner';
+        banner.textContent = '';
+        document.getElementById('verify-btn').style.display = 'flex';
+      }
+
+      document.getElementById('prev-btn').disabled = currentIdx === 0;
+      document.getElementById('next-btn').disabled = currentIdx === deck.length - 1;
+      initBadges();
+    }
+
+    function toggleItem(id) {
+      const card = deck[currentIdx];
+      if (verifiedMap[card.id]) return;
+
+      const set = selectedMap[card.id];
+      if (set.has(id)) {
+        set.delete(id);
+        playBeep(320, 'sine', 0.08);
+      } else {
+        set.add(id);
+        playBeep(520, 'triangle', 0.1);
+      }
+      renderCurrentCard();
+    }
+
+    function playVoice(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 0.85;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function verifyAnswers() {
+      const card = deck[currentIdx];
+      verifiedMap[card.id] = true;
+      const set = selectedMap[card.id];
+      let score = 0;
+      card.items.forEach(it => {
+        const sel = set.has(it.id);
+        if ((sel && it.inImage) || (!sel && !it.inImage)) score++;
+      });
+      renderCurrentCard();
+
+      const banner = document.getElementById('result-banner');
+      if (score === card.items.length) {
+        banner.className = 'result-banner show perfect';
+        banner.textContent = '🎉 Perfetto! ' + score + '/' + card.items.length + ' Esatto!';
+        playBeep(523, 'sine', 0.15);
+        setTimeout(() => playBeep(659, 'sine', 0.15), 100);
+        setTimeout(() => playBeep(784, 'sine', 0.25), 200);
+      } else {
+        banner.className = 'result-banner show partial';
+        banner.textContent = '✨ Punteggio: ' + score + '/' + card.items.length + ' - Guarda le caselle colorate!';
+        playBeep(440, 'sine', 0.15);
+      }
+    }
+
+    function resetQuiz() {
+      const card = deck[currentIdx];
+      verifiedMap[card.id] = false;
+      selectedMap[card.id].clear();
+      renderCurrentCard();
+      playBeep(400, 'sine', 0.08);
+    }
+
+    function goToCard(idx) {
+      currentIdx = idx;
+      renderCurrentCard();
+    }
+    function prevCard() {
+      if (currentIdx > 0) goToCard(currentIdx - 1);
+    }
+    function nextCard() {
+      if (currentIdx < deck.length - 1) goToCard(currentIdx + 1);
+    }
+
+    // Start
+    renderCurrentCard();
+  </script>
+</body>
+</html>
