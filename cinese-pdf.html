@@ -188,6 +188,58 @@
         }
         .pdf-btn { background: #444; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
         .pdf-btn:hover { background: #555; }
+
+      /* Modal Interattiva Esercizio */
+.activity-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-surface);
+    z-index: 200;
+    flex-direction: column;
+}
+.activity-modal.active {
+    display: flex;
+}
+.modal-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.modal-body {
+    flex-grow: 1;
+    padding: 20px 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-strong);
+}
+/* Spinner di caricamento */
+.loader {
+    border: 4px solid var(--border);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    animation: spin 1s linear infinite;
+    margin-top: 40px;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
     </style>
 </head>
 <body>
@@ -302,10 +354,82 @@
         <!-- SEZIONE ESERCIZI -->
         <div id="esercizi-section" class="section-container">
             <h2 class="section-title">Area Esercizi</h2>
-            <div style="padding: 16px; text-align: center; color: var(--text-muted); margin-top: 50px;">
-                <span style="font-size: 50px;">📝</span>
-                <p>Sezione quiz in costruzione. Qui potrai testare le tue competenze.</p>
+             <div class="grid-container">
+            
+            <div class="grid-item" onclick="openExternalExercise('Il Coniglietto', 'esercizi/coniglietto.html')">
+                <div class="grid-cover" style="background-image: url('https://cdn.pixabay.com/photo/2013/07/13/11/33/bunny-158371_1280.png');">
+                    <span class="badge-type">Quiz</span>
+                </div>
+                <h4 class="grid-title">Il Coniglietto</h4>
+                <p class="grid-desc">Comprensione</p>
             </div>
+
+            <div class="grid-item" onclick="openExternalExercise('Storie Tradizionali', 'esercizi/storie-tradizionali.html')">
+                <div class="grid-cover" style="background-image: url('https://cdn.pixabay.com/photo/2024/03/20/05/27/ai-generated-8644650_1280.png');">
+                    <span class="badge-type">Flashcard</span>
+                </div>
+                <h4 class="grid-title">Storie tradizionali</h4>
+                <p class="grid-desc">Vocaboli Poesie</p>
+            </div>
+
+            <div class="grid-item" onclick="openExternalExercise('Modi di dire Cinesi', 'esercizi/modi-di-dire.html')">
+                <div class="grid-cover" style="background-image: url('https://cdn.pixabay.com/photo/2020/04/03/02/11/toys-4997211_1280.png');">
+                    <span class="badge-type">Quiz</span>
+                </div>
+                <h4 class="grid-title">Modi di dire Cinesi</h4>
+                <p class="grid-desc">Test Espressioni</p>
+            </div>
+
+            <div class="grid-item" onclick="openExternalExercise('Favole', 'esercizi/favole.html')">
+                <div class="grid-cover" style="background-image: url('https://cdn.pixabay.com/photo/2016/10/03/16/35/book-illustration-1712100_1280.jpg');">
+                    <span class="badge-type">Quiz</span>
+                </div>
+                <h4 class="grid-title">Favole</h4>
+                <p class="grid-desc">Esercizio Frasi</p>
+            </div>
+
+            <div class="grid-item" onclick="openExternalExercise('La lumachina', 'esercizi/lumachina.html')">
+                <div class="grid-cover" style="background-image: url('https://cdn.pixabay.com/photo/2025/03/02/01/45/snail-9441134_1280.png');">
+                    <span class="badge-type">Flashcard</span>
+                </div>
+                <h4 class="grid-title">La lumachina</h4>
+                <p class="grid-desc">Parole chiave</p>
+            </div>
+
+        </div>
+
+        <!-- Esercizi sui Libri di Grammatica -->
+        <h2 class="section-title">Esercizi sui Testi di Grammatica</h2>
+        <div class="grid-container">
+            
+            <div class="grid-item" onclick="openExternalExercise('HSK1 Caratteri', 'esercizi/hsk1-caratteri.html')">
+                <div class="grid-cover" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://media.istockphoto.com/id/881903968/it/vettoriale/geroglifico-disegnato-a-mano-traduce-tradizione-simbolo-nero-giapponese-vettoriale-su.jpg?s=2048x2048&w=is&k=20&c=uIsWy_EbvyXEKbbFzh5UQvhpsx3EImsbY2KRtLastEc=');">
+                    <span class="badge-type">Scrittura</span>
+                </div>
+                <h4 class="grid-title">HSK1 Caratteri</h4>
+                <p class="grid-desc">Tracciamento</p>
+            </div>
+
+            <div class="grid-item" onclick="openExternalExercise('Classificatori', 'esercizi/classificatori.html')">
+                <div class="grid-cover" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://media.istockphoto.com/id/1014974550/it/vettoriale/geroglifico-disegnato-a-mano-traduce-la-crisi-simbolo-nero-giapponese-vettoriale-su.jpg?s=2048x2048&w=is&k=20&c=W6MJVShFAj0W3qOLuwOhlGk35wNYihWj54M-3J0ZdWo=');">
+                    <span class="badge-type">Quiz</span>
+                </div>
+                <h4 class="grid-title">Classificatori</h4>
+                <p class="grid-desc">Abbinamenti</p>
+            </div>
+
+        </div>
+
+        <!-- Modal Esercizio -->
+        <div class="activity-modal" id="activityModal">
+            <div class="modal-header">
+                <span id="modalTitle" style="font-weight: bold; font-size: 16px;">Esercizio Libro</span>
+                <button class="back-btn" onclick="closeExercise()">✕</button>
+            </div>
+            <div class="modal-body" id="modalContent"></div>
+        </div>
+
+    </div>
         </div>
 
         <!-- Bottom Nav -->
@@ -574,6 +698,54 @@
             if(ctx) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
+        }
+       async function openExternalExercise(bookTitle, filePath) {
+            const modal = document.getElementById('activityModal');
+            const content = document.getElementById('modalContent');
+            const title = document.getElementById('modalTitle');
+            
+            modal.classList.add('active');
+            title.innerText = "Esercizio: " + bookTitle;
+            
+            // Mostra lo spinner di caricamento
+            content.innerHTML = '<div class="loader"></div>';
+
+            try {
+                const response = await fetch(filePath);
+                
+                if (!response.ok) {
+                    throw new Error(`Errore HTTP ${response.status}: Impossibile caricare l'esercizio.`);
+                }
+                
+                const htmlText = await response.text();
+                content.innerHTML = htmlText;
+
+                // Esegue eventuali tag <script> contenuti nell'HTML esterno caricato
+                executeScripts(content);
+
+            } catch (error) {
+                content.innerHTML = `
+                    <div style="text-align:center; padding: 20px; color: #dc3545;">
+                        <p style="font-size: 18px; font-weight: bold;">Impossibile caricare il contenuto</p>
+                        <p style="font-size: 13px; color: var(--text-muted);">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function closeExercise() {
+            document.getElementById('activityModal').classList.remove('active');
+        }
+
+        // Funzione di supporto per eseguire script JavaScript dentro gli HTML esterni caricati
+        function executeScripts(container) {
+            const scripts = container.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
         }
     </script>
 </body>
