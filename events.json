@@ -1,12 +1,20 @@
 [
   {
   "id": 1,
-  "date": "2026-08-25",
-  "title": "Facebook",
-  "description": "Nuovi Post",
-  "category": "social",
-  "link":  "https://lingua-cinese.vercel.app/facebook/facebook_page.html"  
+  "date": "2026-09-07",
+  "title": "Proverbi",
+  "description": "Nuova card",
+  "category": "generale",
+  "link":  "https://lingua-cinese.vercel.app/proverbi/proverbi.html"  
+},
+   {
+  "id": 2,
+  "date": "2026-09-07",
+  "title": "Libreria",
+  "description": "Nuova App ",
+  "category": "app",
+  "link":  "https://libreria-cinese.vercel.app/"  
 }
-   ]
+]
 
 
