@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progetto Tailwind CSS</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  
+  <meta charset="UTF-8">
+  
+  
+  <!-- FONT ESTERNI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&family=Ma+Shan+Zheng&family=Dancing+Script:wght@700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+
+  <style>
+    /* FORZATURA DEL ROSSO PURO SENZA INTERFERENZE */
+    html, body {
+      background-color: #ff0000 !important;
+      background: #ff0000 !important;
+      color: #006064; 
+      font-family: "Mr Dafoe", cursive;
+      overflow-x: hidden; 
+      margin: 0; 
+      padding: 0;
+    }
+
+    .chinese-element {
+      position: absolute;
+      font-family: 'Ma Shan Zheng', cursive, serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Stile per i Sigilli Rossi (Timbri) */
+    .seal-box {
+      border: 6px solid #991b1b;
+      color: #991b1b;
+      background-color: rgba(254, 242, 242, 0.9);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(153, 27, 27, 0.25);
+      backdrop-filter: blur(4px);
+      animation: floatSlow 8s infinite alternate ease-in-out;
+    }
+
+    /* Stile per la Calligrafia Libera */
+    .ink-text {
+      color: rgba(30, 41, 59, 0.15);
+      line-height: 1;
+      filter: drop-shadow(2px 4px 10px rgba(0,0,0,0.05));
+      animation: floatWide 10s infinite alternate ease-in-out;
+    }
+
+    /* Glass Card Base dal tuo codice (Bordo 7px #d4af37) */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.2); 
+      backdrop-filter: blur(20px);
+      border: 7px solid #d4af37;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      border-radius: 24px;
+    }
+
+    .chinese-title {
+      font-family: 'Zhi Mang Xing', cursive, serif;
+      color: #991b1b;
+    }
+
+    .italian-title {
+      font-family: 'Dancing Script', 'Mr Dafoe', cursive;
+      color: #1e293b;
+    }
+
+    @keyframes floatSlow {
+      from { transform: translateY(0px) rotate(-4deg) scale(1); }
+      to { transform: translateY(-60px) rotate(6deg) scale(1.05); }
+    }
+
+    @keyframes floatWide {
+      from { transform: translateY(0px) translateX(0px) rotate(3deg); }
+      to { transform: translateY(-90px) translateX(-30px) rotate(-5deg); }
+    }
+  </style>
+
+
+  <!-- Tailwind CSS Config -->
+  <script>
+    
+window.tailwind = window.tailwind || {};
+window.module = window.module || { exports: {} };
+window.exports = window.exports || {};
+try {
+  // Configurazione Tailwind
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#0ea5e9',
+      }
+    }
+  }
+}
+  if (window.module && window.module.exports && Object.keys(window.module.exports).length > 0) {
+    window.tailwind.config = window.module.exports;
+  }
+} catch(e) {
+  console.warn('Errore esecuzione tailwind.config:', e.message);
+}
+    if (window.tailwind && window.tailwind.config && !window.tailwind.config.darkMode) {
+      window.tailwind.config.darkMode = 'class';
+    }
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+
+  <!-- Custom CSS & Tailwind Directives -->
+  
+</head>
+<body class="bg-[#0b0f19] text-[#f1f5f9] min-h-screen p-6 md:p-12 flex flex-col items-center min-h-screen">
+
+
+  <!-- SIGILLI ED ELEMENTI CINESI DI SFONDO -->
+  <div class="chinese-element seal-box w-64 h-64 text-6xl top-10 -left-10 z-0" style="animation-delay: 0s;">
+    饮水思源
+  </div>
+
+  <div class="chinese-element ink-text text-[12rem] bottom-10 -right-10 leading-none z-0" style="animation-delay: -3s;">
+    顺其自然
+  </div>
+
+  <div class="chinese-element seal-box w-48 h-80 text-5xl top-[30%] right-[5%] z-0" style="animation-delay: -1.5s;">
+    千里之行
+  </div>
+
+  <!-- HEADER TRASPARENTE IN STILE GLASS-CARD -->
+  <header class="glass-card w-full max-w-5xl p-8 mb-12 text-center z-10">
+    <div class="chinese-title text-5xl md:text-6xl tracking-widest mb-2">
+      中華諺語
+    </div>
+    <h1 class="italian-title text-5xl md:text-7xl font-bold tracking-wide">
+      🀄 𝒫𝓇ℴ𝓋ℯ𝓇𝒷𝒾 𝒞𝒾𝓃ℯ𝓈𝒾 🀄
+    </h1>
+  </header>
+
+  <!-- GRID CARD PER LE IMMAGINI DEI PROVERBI -->
+  <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full max-w-6xl z-10 mb-16">
+
+    <div class="glass-card p-4 overflow-hidden transition-transform duration-300 hover:scale-105">
+      <img src="card_Il_Fiorire_nel_Rigore.png" alt="Proverbio 1" class="w-full h-auto rounded-xl object-contain">
+    </div>
+
+    <div class="glass-card p-4 overflow-hidden transition-transform duration-300 hover:scale-105">
+      <img src="card_Il_Cerchio_dell_Armonia.png" alt="Proverbio 2" class="w-full h-auto rounded-xl object-contain">
+    </div>
+
+    <div class="glass-card p-4 overflow-hidden transition-transform duration-300 hover:scale-105">
+      <img src="card_Il_Primo_Passo_di_Mille_Miglia.png" alt="Proverbio 3" class="w-full h-auto rounded-xl object-contain">
+    </div>
+
+    <div class="glass-card p-4 overflow-hidden transition-transform duration-300 hover:scale-105">
+      <img src="card_Il_Silenzio_dell_Oro.png" alt="Proverbio 4" class="w-full h-auto rounded-xl object-contain">
+    </div>
+
+    <div class="glass-card p-4 overflow-hidden transition-transform duration-300 hover:scale-105">
+      <img src="card_Il_Vecchio_che_Spost__le_Monta.png" alt="Proverbio 5" class="w-full h-auto rounded-xl object-contain">
+    </div>
+
+    <div class="glass-card p-4 overflow-hidden transition-transform duration-300 hover:scale-105">
+      <img src="card_La_Benedizione_Nascosta.png" alt="Proverbio 6" class="w-full h-auto rounded-xl object-contain">
+    </div>
+
+  </main>
+
+
+
+
+</body>
+</html>
