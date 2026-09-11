@@ -1,11 +1,11 @@
 [
   {
   "id": 1,
-  "date": "2026-09-07",
-  "title": "Proverbi",
-  "description": "Nuova card",
-  "category": "generale",
-  "link":  "https://lingua-cinese.vercel.app/proverbi/proverbi.html"  
+  "date": "2026-09-11",
+  "title": "Facebook",
+  "description": "Nuovi post",
+  "category": "facebook",
+  "link":  "https://lingua-cinese.vercel.app/facebook/facebook_page.html"  
 },
    {
   "id": 2,
@@ -14,6 +14,14 @@
   "description": "Nuova App ",
   "category": "app",
   "link":  "https://libreria-cinese.vercel.app/"  
+},
+   {
+  "id": 3,
+  "date": "2026-09-07",
+  "title": "Proverbi",
+  "description": "Nuova card",
+  "category": "generale",
+  "link":  "https://lingua-cinese.vercel.app/proverbi/proverbi.html"  
 }
 ]
 
