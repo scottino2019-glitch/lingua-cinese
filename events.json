@@ -1,27 +1,19 @@
 [
   {
   "id": 1,
-  "date": "2026-09-11",
-  "title": "Facebook",
-  "description": "Nuovi post",
-  "category": "facebook",
-  "link":  "https://lingua-cinese.vercel.app/facebook/facebook_page.html"  
+  "date": "2026-09-18",
+  "title": "Temi",
+  "description": "Nuova sessione",
+  "category": "generale",
+  "link":  "https://temi-cinesi.vercel.app/"  
 },
    {
   "id": 2,
-  "date": "2026-09-07",
+  "date": "2026-09-18",
   "title": "Libreria",
-  "description": "Nuova App ",
-  "category": "app",
-  "link":  "https://libreria-cinese.vercel.app/"  
-},
-   {
-  "id": 3,
-  "date": "2026-09-07",
-  "title": "Proverbi",
-  "description": "Nuova card",
-  "category": "generale",
-  "link":  "https://lingua-cinese.vercel.app/proverbi/proverbi.html"  
+  "description": "Nuovi libri ",
+  "category": "libri",
+  "link":  "https://libri-cinese.vercel.app/"  
 }
 ]
 
