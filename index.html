@@ -1,16 +1,6 @@
 <!DOCTYPE html>
-<html lang="it" class="dark">
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Progetto Tailwind CSS</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法和练习。">
@@ -26,7 +16,7 @@
   <meta property="og:description" content="Grammatica • Ideogrammi • Risorse • App • Video • Audio • Esercizi • Pdf.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lingua-cinese.vercel.app/">
-
+<title>中文🇨🇳-Lingus Cinese</title>
     <style>
     /* ==========================================================================
            Bento Studio - Custom Styles & Warm Rice Paper Background
@@ -453,44 +443,8 @@
       font-weight: 700;
     }
   </style>
-
-
-  <!-- Tailwind CSS Config -->
-  <script>
-    
-window.tailwind = window.tailwind || {};
-window.module = window.module || { exports: {} };
-window.exports = window.exports || {};
-try {
-  // Configurazione Tailwind
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        brand: '#0ea5e9',
-      }
-    }
-  }
-}
-  if (window.module && window.module.exports && Object.keys(window.module.exports).length > 0) {
-    window.tailwind.config = window.module.exports;
-  }
-} catch(e) {
-  console.warn('Errore esecuzione tailwind.config:', e.message);
-}
-    if (window.tailwind && window.tailwind.config && !window.tailwind.config.darkMode) {
-      window.tailwind.config.darkMode = 'class';
-    }
-  </script>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-
-  <!-- Custom CSS & Tailwind Directives -->
-  
 </head>
-<body class="bg-[#0b0f19] text-[#f1f5f9] min-h-screen ">
-
+<body>
   <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -825,7 +779,7 @@ tailwind.config = {
    <!-- ========================================================= -->
         <!-- SEZIONE 3: MODULI DIDATTICI, VOCABOLARIO  -->
         <!-- ========================================================= -->
-         <section id="sezione-grammatica" class="space-y-3">
+       <section id="sezione-grammatica" class="space-y-3">
       <div class="flex items-center justify-between border-b-2 border-slate-400 pb-2">
         <div class="flex items-center gap-2">
           <span class="w-3 h-3 bg-purple-500 rounded-full border border-slate-900"></span>
@@ -1053,8 +1007,6 @@ tailwind.config = {
 
       </div>
     </section>
-        
-      
    <!-- ========================================================= -->
         <!-- SEZIONE 4: Caratteri e esercizi -->
         <!-- ========================================================= -->
@@ -2535,8 +2487,5 @@ function applyFilters() {
         document.addEventListener('DOMContentLoaded', renderQuizQuestion);
 
   </script>
-
-
-
 </body>
 </html>
