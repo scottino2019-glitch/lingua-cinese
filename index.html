@@ -1,6 +1,16 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="dark">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progetto Tailwind CSS</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法和练习。">
@@ -16,7 +26,7 @@
   <meta property="og:description" content="Grammatica • Ideogrammi • Risorse • App • Video • Audio • Esercizi • Pdf.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lingua-cinese.vercel.app/">
-<title>中文🇨🇳-Lingus Cinese</title>
+
     <style>
     /* ==========================================================================
            Bento Studio - Custom Styles & Warm Rice Paper Background
@@ -443,8 +453,44 @@
       font-weight: 700;
     }
   </style>
+
+
+  <!-- Tailwind CSS Config -->
+  <script>
+    
+window.tailwind = window.tailwind || {};
+window.module = window.module || { exports: {} };
+window.exports = window.exports || {};
+try {
+  // Configurazione Tailwind
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#0ea5e9',
+      }
+    }
+  }
+}
+  if (window.module && window.module.exports && Object.keys(window.module.exports).length > 0) {
+    window.tailwind.config = window.module.exports;
+  }
+} catch(e) {
+  console.warn('Errore esecuzione tailwind.config:', e.message);
+}
+    if (window.tailwind && window.tailwind.config && !window.tailwind.config.darkMode) {
+      window.tailwind.config.darkMode = 'class';
+    }
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+
+  <!-- Custom CSS & Tailwind Directives -->
+  
 </head>
-<body>
+<body class="bg-[#0b0f19] text-[#f1f5f9] min-h-screen ">
+
   <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -779,192 +825,236 @@
    <!-- ========================================================= -->
         <!-- SEZIONE 3: MODULI DIDATTICI, VOCABOLARIO  -->
         <!-- ========================================================= -->
-        <section id=" class="space-y-3">
-          <div class="flex items-center justify-between border-b-2 border-slate-400 pb-2">
-            <div class="flex items-center gap-2">
-              <span class="w-3 h-3 bg-purple-500 rounded-full border border-slate-900"></span>
-              <h2 class="text-sm font-black font-mono uppercase tracking-wider text-slate-900">3. Grammatica & Vocabolario</h2>
-            </div>
-            <span class="text-xs font-mono font-bold text-slate-700">Grammatica-Vocabolari</span>
+         <section id="sezione-grammatica" class="space-y-3">
+      <div class="flex items-center justify-between border-b-2 border-slate-400 pb-2">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 bg-purple-500 rounded-full border border-slate-900"></span>
+          <h2 class="text-sm font-black font-mono uppercase tracking-wider text-slate-900">3. Grammatica & Vocabolario</h2>
+        </div>
+        <span class="text-xs font-mono font-bold text-slate-700">Grammatica-Vocabolari</span>
+      </div>
+      <br>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- 18. HERO COBALTO GRAMMATICA CON WASHI TAPE -->
+        <div class="bento-card relative col-span-1 sm:col-span-2 row-span-2 p-5 sm:p-8 bg-[#A1173A] text-white rounded-[2.5rem] rounded-tr-lg border-[3px] border-slate-950 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between overflow-hidden min-h-[320px]" data-category="studio" data-title="grammatica regole frasi aggettivi classificatori verbi sintassi">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/30 text-xs font-mono font-bold">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span> 语法 / GRAMMAR
           </div>
-  <br>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-  <!-- ==========================================
-               18. HERO COBALTO GRAMMATICA CON WASHI TAPE
-               ========================================== -->
-       <div class="bento-card relative col-span-1 sm:col-span-2 row-span-2 p-5 sm:p-8 bg-blue-600 text-white rounded-[2.5rem] rounded-tr-lg border-3 border-slate-950 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between overflow-hidden min-h-[320px]" data-category="studio" data-title="grammatica regole frasi aggettivi classificatori verbi sintassi">
-            <!-- Nastro Washi Tape Inclinato -->
-            <div class="absolute -top-3 right-6 sm:right-12 bg-amber-300 text-amber-950 text-[10px] font-mono font-black px-4 py-1.5 sm:py-2.5 rotate-3 shadow-md uppercase tracking-wider border-t border-b border-amber-400">
-              ★ GRAMMATICA CINESE
-            </div>
-  
-            <div class="flex items-center justify-between">
-              <span class="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-mono font-black rounded-full border border-white/30">
-                语法 / GRAMMAR
-              </span>
-              <span class="w-3 h-3 rounded-full bg-emerald-400 ring-4 ring-white/30 animate-pulse"></span>
-            </div>
-  
-            <div class="my-4 space-y-2">
-              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
-                所有汉语语法规则
-              </h2>
-              <a href="grammatica.html" class="block text-sm sm:text-base text-blue-100 font-medium leading-relaxed max-w-md hover:underline">
-                Tutte le regole della Grammatica cinese, strutture della frase e particelle modali.
-              </a>
-            </div>
-  
-            <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-blue-500/60">
-              <a href="grammatica.html" class="px-3 py-1 bg-blue-700/80 hover:bg-blue-800 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40 cursor-pointer">形容词 Aggettivi</a>
-              <a href="grammatica.html" class="px-3 py-1 bg-blue-700/80 hover:bg-blue-800 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40 cursor-pointer">分类词 Classificatori</a>
-              <a href="grammatica.html" class="px-3 py-1 bg-blue-700/80 hover:bg-blue-800 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40 cursor-pointer">副词 Avverbi</a>
-            </div>
+          <!-- Nastro Washi Tape Inclinato -->
+          <div class="absolute -top-3 right-6 sm:right-12 bg-amber-300 text-amber-950 text-[10px] font-mono font-black px-4 py-1.5 sm:py-2.5 rotate-3 shadow-md uppercase tracking-wider border-t border-b border-amber-400">
+            ★ GRAMMATICA CINESE
           </div>
-  <!-- ==========================================
-               13. VOCABOLARIO MODAL
-               ========================================== -->
-          <div class="bento-card col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px]" data-category="studio" data-title="vocabolario parole modal dizionario">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/80 px-2 py-0.5 rounded-full">
-                词汇 · VOCABOLARIO
-              </span>
-              <button onclick="openModal()" class="text-xs font-bold text-emerald-300 bg-emerald-900 hover:bg-emerald-950 px-2.5 py-1 rounded-md border border-emerald-700/50 cursor-pointer">
-                apri ↗
-              </button>
-            </div>
-  
-            <div class="my-1">
-              <div class="text-2xl sm:text-3xl font-black tracking-tight text-white">Vocabolario</div>
-              <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Nuovo vocabolario interattivo popup.</p>
-            </div>
-  
-            <div class="w-full bg-emerald-800 rounded-full h-1.5 overflow-hidden">
-              <div class="bg-emerald-300 h-full w-[94%] rounded-full"></div>
-            </div>
+          <h2 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-white">
+            所有汉语语法规则
+          </h2>
+
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans max-w-2xl">
+            Tutte le regole della Grammatica cinese, strutture della frase e particelle modali.
+          </p>
+
+          <!-- Bottoni di Navigazione Neutri -->
+          <div class="pt-2 flex flex-wrap items-center gap-3 font-mono text-xs">
+            <a href="grammatica.html" class="inline-block px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl border border-amber-300 shadow-xs transition cursor-pointer">
+              Esplora i Contenuti ➔
+            </a>
           </div>
-    <!-- ==========================================
-               20. CARD VOCABOLARIO TEMATICO 📌 (Grid Paper)
-               ========================================== -->
-         <div class="bento-card relative overflow-hidden col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#fefce8] text-slate-900 border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between min-h-[160px]" data-category="studio" data-title="vocabolario tematico temi argomenti parole contesti">
-            <!-- Trama a quadretti (Grid Paper) -->
-            <div class="absolute inset-0 pointer-events-none opacity-30" style="background-image: linear-gradient(#ca8a04 1px, transparent 1px), linear-gradient(90deg, #ca8a04 1px, transparent 1px); background-size: 14px 14px;"></div>
-  
-            <!-- Spilla 📌 in alto al centro -->
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-lg select-none z-10">
-              📌
-            </div>
-  
-            <!-- Header Card -->
-            <div class="flex items-center justify-between pt-1 relative z-10">
-              <span class="text-[10px] font-black uppercase tracking-wider text-amber-950 bg-amber-300/90 px-2 py-0.5 rounded border border-amber-400">
-                分类词汇 / TEMI
+
+          <!-- Indicatori Descrittivi delle Sezioni -->
+          <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-blue-500/60">
+            <a href="grammatica.html" class="px-3 py-1 bg-blue-700/80 hover:bg-blue-800 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40 cursor-pointer">形容词 Aggettivi</a>
+            <a href="grammatica.html" class="px-3 py-1 bg-blue-700/80 hover:bg-blue-800 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40 cursor-pointer">分类词 Classificatori</a>
+            <a href="grammatica.html" class="px-3 py-1 bg-blue-700/80 hover:bg-blue-800 text-white text-xs font-mono font-bold rounded-xl border border-blue-400/40 cursor-pointer">副词 Avverbi</a>
+          </div>
+        </div>
+
+        <!-- Card Cartella d'Archivio Manila con Tab & Graffetta -->
+        <div class="bento-card col-span-1 sm:col-span-1 row-span-1 p-5 relative w-full h-full min-h-[260px] pt-4 select-none group font-sans" data-category="studio" data-title="libro grammatica racconti lezioni archivio">
+          <!-- Linguetta Sagomata Sporgente Superiore (Tab della Cartella) -->
+          <div class="absolute top-0 left-6 h-6 px-4 bg-[#deb881] text-[#4a2e10] font-mono text-[10px] font-bold uppercase tracking-wider rounded-t-xl border-t-2 border-x-2 border-[#b89156] flex items-center gap-1.5 shadow-xs z-10">
+            <span>📁</span>
+            <span>语法 // 故事 </span>
+          </div>
+
+          <!-- Graffetta Metallica Cromata 3D Incastrata sul Bordo Superiore -->
+          <div class="absolute top-1 right-8 z-20 pointer-events-none drop-shadow-md">
+            <div class="w-4 h-9 rounded-full border-2 border-slate-400 bg-gradient-to-b from-slate-200 to-slate-400 shadow-sm"></div>
+          </div>
+
+          <!-- Corpo Principale della Cartellina Manila -->
+          <div class="relative w-full h-full p-5 sm:p-6 bg-[#ecd5ab] text-[#3e2712] rounded-3xl rounded-tl-sm border-2 border-[#b89156] shadow-[6px_6px_0px_0px_rgba(74,46,16,0.18)] flex flex-col justify-between overflow-hidden">
+            <!-- Timbro Vintage ad Anello Circolare Impresso sullo Sfondo -->
+            <div class="absolute right-4 bottom-3 w-24 h-24 rounded-full border-2 border-dashed border-[#8c5d2c]/30 flex items-center justify-center -rotate-12 pointer-events-none select-none">
+              <span class="text-[9px] font-mono font-bold text-[#8c5d2c]/40 tracking-widest uppercase text-center">
+                ARCHIVIO<br/>LIBERO<br/>2026
               </span>
-              <span class="text-xs font-mono font-bold text-amber-900">#03</span>
             </div>
-  
-            <!-- Contenuto -->
-            <div class="my-1 relative z-10">
-              <h4 class="text-xs sm:text-sm font-black text-slate-900 font-sans leading-snug">
-                Vocabolario Tematico
-              </h4>
-              <p class="text-[10px] text-amber-900/90 font-medium mt-0.5">
-                Parole, verbi e termini divisi per argomento e contesto
+
+            <!-- Intestazione del Dossier -->
+            <div class="flex items-center justify-between border-b border-[#cbb084] pb-2 relative z-10">
+              <span class="text-xs font-mono font-black text-[#5c3a17] uppercase tracking-wider">
+                完整课程 - Lezioni complete
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#deb881] text-[#3e2712] border border-[#b89156] font-bold">
+                语法
+              </span>
+            </div>
+
+            <!-- Contenuto del Fascicolo -->
+            <div class="my-auto py-3 space-y-1.5 relative z-10">
+              <h3 class="text-lg sm:text-xl font-bold text-[#2d1b09] font-serif tracking-tight leading-snug">
+                Libro cinese
+              </h3>
+              <p class="text-xs text-[#52391e] leading-relaxed font-normal">
+                Racconti, grammatica e vocaboli 
               </p>
             </div>
-  
-            <!-- Footer con Link -->
-            <div class="text-[10px] font-mono text-amber-950 font-bold flex justify-between items-center border-t border-amber-300/80 pt-1 relative z-10">
-              <span class="text-slate-600">Schede tematiche</span>
-              <a href="vocabolario.html">
-                <button class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-black px-2 py-0.5 rounded border border-amber-900/30 shadow-xs cursor-pointer">
-                  Esplora ➔
-                </button>
+
+            <!-- Barra Inferiore con Dettagli della Cartella -->
+            <div class="pt-2 border-t border-[#cbb084] flex items-center justify-between text-[11px] font-mono text-[#5c3a17] relative z-10">
+              <span>12 Schede inserite</span>
+              <a href="libro-grammatica.html">
+                <button class="font-bold hover:underline cursor-pointer text-[#2d1b09]">Apri Cartella</button>
               </a>
             </div>
           </div>
-    <!-- ==========================================
-               15. VERA E PROPRIA FLASHCARD INTERATTIVA 3D (Novità richiesta!)
-               ========================================== -->
-       <div class="bento-card relative col-span-1 sm:col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform min-h-[320px]" data-category="flashcard studio" data-title="flashcard interattiva 3d hanzi pinyin traduzione carta">
-            
-            <!-- Washi tape in alto centrato -->
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/95 text-amber-950 text-[9px] font-mono font-black px-4 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400 z-30">
-              🎴 闪卡 / FLASHCARD VERA
-            </div>
-  
-            <!-- Flashcard 3D Flipper Box -->
-            <div class="flashcard-3d-wrap w-full h-[210px] mt-1 relative select-none" onclick="toggleFlashcardFlip()" title="Clicca per girare la carta!">
-              <div id="interactiveFlashcard" class="flashcard-inner w-full h-full">
-                
-                <!-- FRONTE FLASHCARD (Ideogramma grande + Pinyin + Audio) -->
-                <div class="flashcard-face flashcard-front bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-400/80 p-3.5 flex flex-col justify-between shadow-md">
-                  <div class="flex items-center justify-between text-[9px] font-mono font-bold text-amber-900">
-                    <span id="fcCategory" class="bg-amber-200 px-1.5 py-0.5 rounded border border-amber-300">HSK 1</span>
-                    <span id="fcIndex" class="text-slate-500">1 / 10</span>
-                  </div>
-  
-                  <div class="my-auto py-1">
-                    <div id="fcHanzi" class="text-5xl font-calligrafico font-black text-slate-900 tracking-wider">你好</div>
-                    <div id="fcPinyin" class="text-sm font-mono font-bold text-amber-800 mt-1">nǐ hǎo</div>
-                  </div>
-  
-                  <div class="flex items-center justify-between text-[10px] text-amber-950 font-bold border-t border-amber-200/80 pt-1">
-                    <span class="text-slate-500 text-[9px]">🔄 Clicca per girare</span>
-                    <button type="button" onclick="event.stopPropagation(); speakFlashcard();" class="p-1 hover:scale-125 transition-transform" title="Ascolta">
-                      🔊
-                    </button>
-                  </div>
-                </div>
-  
-                <!-- RETRO FLASHCARD (Traduzione italiana + Esempio d'uso) -->
-                <div class="flashcard-face flashcard-back bg-gradient-to-br from-slate-900 to-indigo-950 border-2 border-indigo-500 text-white p-3.5 flex flex-col justify-between shadow-xl">
-                  <div class="flex items-center justify-between text-[9px] font-mono text-indigo-300">
-                    <span class="bg-indigo-900/80 px-1.5 py-0.5 rounded border border-indigo-700">Traduzione & Esempio</span>
-                    <span>🇮🇹 Italiano</span>
-                  </div>
-  
-                  <div class="my-auto py-1 text-center">
-                    <div id="fcMeaning" class="text-base font-bold text-amber-300">Ciao / Salve</div>
-                    <div id="fcExample" class="text-[11px] text-slate-200 mt-2 font-mono bg-black/40 p-1.5 rounded-lg border border-indigo-800/60 leading-snug">
-                      “你好，很高兴认识你！”<br>
-                      <span class="text-cyan-300 text-[9px]">Piacere di conoscerti!</span>
-                    </div>
-                  </div>
-  
-                  <div class="flex items-center justify-between text-[9px] font-mono text-indigo-300 border-t border-indigo-800/80 pt-1">
-                    <span id="fcStrokes">Tratti: 13</span>
-                    <span class="text-amber-400">Gira 🔄</span>
-                  </div>
-                </div>
-  
-              </div>
-            </div>
-  
-            <!-- Controlli Flashcard: Precedente / Gira / Successiva / Casuale -->
-            <div class="pt-2 flex items-center justify-between gap-1">
-              <button onclick="prevFlashcard()" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg text-[10px] font-bold text-slate-800 cursor-pointer shadow-2xs">
-                ◀
-              </button>
-              <button onclick="toggleFlashcardFlip()" class="px-2 py-1 bg-amber-400 hover:bg-amber-300 border border-slate-900 rounded-lg text-[10px] font-black text-slate-950 cursor-pointer shadow-xs">
-                🔄 Gira
-              </button>
-              <button onclick="nextFlashcard()" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg text-[10px] font-bold text-slate-800 cursor-pointer shadow-2xs">
-                ▶
-              </button>
-              <button onclick="randomFlashcard()" class="px-2 py-1 bg-emerald-100 hover:bg-emerald-200 border border-emerald-300 rounded-lg text-[10px] font-bold text-emerald-800 cursor-pointer shadow-2xs" title="Carta Casuale">
-                🎲
-              </button>
-            </div>
-  
-            <!-- Didascalia e Link a flashcards.html -->
-            <div class="pt-1.5 text-center font-mono border-t border-slate-200 mt-1 flex items-center justify-between text-[10px]">
-              <span class="text-slate-600 font-bold">Banco Studio</span>
-              <a href="flashcards.html" class="text-blue-600 font-bold hover:underline">Tutte ➔</a>
-            </div>
-  
+        </div>
+
+        <!-- 13. VOCABOLARIO MODAL -->
+        <div class="bento-card col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#065f46] text-white border-2 border-slate-900 rounded-[2rem] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between min-h-[160px]" data-category="studio" data-title="vocabolario parole modal dizionario">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono font-black uppercase text-emerald-200 bg-emerald-800/80 px-2 py-0.5 rounded-full">
+              词汇 · VOCABOLARIO
+            </span>
+            <button onclick="openModal()" class="text-xs font-bold text-emerald-300 bg-emerald-900 hover:bg-emerald-950 px-2.5 py-1 rounded-md border border-emerald-700/50 cursor-pointer">
+              apri ↗
+            </button>
           </div>
-  </div>
-  </section>
+
+          <div class="my-1">
+            <div class="text-2xl sm:text-3xl font-black tracking-tight text-white">Vocabolario</div>
+            <p class="text-[11px] text-emerald-100 font-medium mt-0.5">Nuovo vocabolario interattivo popup.</p>
+          </div>
+
+          <div class="w-full bg-emerald-800 rounded-full h-1.5 overflow-hidden">
+            <div class="bg-emerald-300 h-full w-[94%] rounded-full"></div>
+          </div>
+        </div>
+
+        <!-- 20. CARD VOCABOLARIO TEMATICO 📌 (Grid Paper) -->
+        <div class="bento-card relative overflow-hidden col-span-1 sm:col-span-1 row-span-1 p-5 bg-[#fefce8] text-slate-900 border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] rotate-[-1.5deg] hover:rotate-0 transition-transform flex flex-col justify-between min-h-[160px]" data-category="studio" data-title="vocabolario tematico temi argomenti parole contesti">
+          <div class="absolute inset-0 pointer-events-none opacity-30" style="background-image: linear-gradient(#ca8a04 1px, transparent 1px), linear-gradient(90deg, #ca8a04 1px, transparent 1px); background-size: 14px 14px;"></div>
+
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 text-lg select-none z-10">
+            📌
+          </div>
+
+          <div class="flex items-center justify-between pt-1 relative z-10">
+            <span class="text-[10px] font-black uppercase tracking-wider text-amber-950 bg-amber-300/90 px-2 py-0.5 rounded border border-amber-400">
+              分类词汇 / TEMI
+            </span>
+            <span class="text-xs font-mono font-bold text-amber-900">#03</span>
+          </div>
+
+          <div class="my-1 relative z-10">
+            <h4 class="text-xs sm:text-sm font-black text-slate-900 font-sans leading-snug">
+              Vocabolario Tematico
+            </h4>
+            <p class="text-[10px] text-amber-900/90 font-medium mt-0.5">
+              Parole, verbi e termini divisi per argomento e contesto
+            </p>
+          </div>
+
+          <div class="text-[10px] font-mono text-amber-950 font-bold flex justify-between items-center border-t border-amber-300/80 pt-1 relative z-10">
+            <span class="text-slate-600">Schede tematiche</span>
+            <a href="vocabolario.html">
+              <button class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-black px-2 py-0.5 rounded border border-amber-900/30 shadow-xs cursor-pointer">
+                Esplora ➔
+              </button>
+            </a>
+          </div>
+        </div>
+
+        <!-- 15. VERA E PROPRIA FLASHCARD INTERATTIVA 3D -->
+        <div class="bento-card relative col-span-1 sm:col-span-1 row-span-2 p-3.5 bg-white border-2 border-slate-900 rounded-3xl shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between rotate-1 hover:rotate-0 transition-transform min-h-[320px]" data-category="flashcard studio" data-title="flashcard interattiva 3d hanzi pinyin traduzione carta">
+          
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-300/95 text-amber-950 text-[9px] font-mono font-black px-4 py-0.5 -rotate-2 shadow-xs border-t border-b border-amber-400 z-30">
+            🎴 闪卡 / FLASHCARD VERA
+          </div>
+
+          <div class="flashcard-3d-wrap w-full h-[210px] mt-1 relative select-none" onclick="toggleFlashcardFlip()" title="Clicca per girare la carta!">
+            <div id="interactiveFlashcard" class="flashcard-inner w-full h-full">
+              
+              <!-- FRONTE FLASHCARD -->
+              <div class="flashcard-face flashcard-front bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-400/80 p-3.5 flex flex-col justify-between shadow-md">
+                <div class="flex items-center justify-between text-[9px] font-mono font-bold text-amber-900">
+                  <span id="fcCategory" class="bg-amber-200 px-1.5 py-0.5 rounded border border-amber-300">HSK 1</span>
+                  <span id="fcIndex" class="text-slate-500">1 / 10</span>
+                </div>
+
+                <div class="my-auto py-1">
+                  <div id="fcHanzi" class="text-5xl font-calligrafico font-black text-slate-900 tracking-wider">你好</div>
+                  <div id="fcPinyin" class="text-sm font-mono font-bold text-amber-800 mt-1">nǐ hǎo</div>
+                </div>
+
+                <div class="flex items-center justify-between text-[10px] text-amber-950 font-bold border-t border-amber-200/80 pt-1">
+                  <span class="text-slate-500 text-[9px]">🔄 Clicca per girare</span>
+                  <button type="button" onclick="event.stopPropagation(); speakFlashcard();" class="p-1 hover:scale-125 transition-transform" title="Ascolta">
+                    🔊
+                  </button>
+                </div>
+              </div>
+
+              <!-- RETRO FLASHCARD -->
+              <div class="flashcard-face flashcard-back bg-gradient-to-br from-slate-900 to-indigo-950 border-2 border-indigo-500 text-white p-3.5 flex flex-col justify-between shadow-xl">
+                <div class="flex items-center justify-between text-[9px] font-mono text-indigo-300">
+                  <span class="bg-indigo-900/80 px-1.5 py-0.5 rounded border border-indigo-700">Traduzione & Esempio</span>
+                  <span>🇮🇹 Italiano</span>
+                </div>
+
+                <div class="my-auto py-1 text-center">
+                  <div id="fcMeaning" class="text-base font-bold text-amber-300">Ciao / Salve</div>
+                  <div id="fcExample" class="text-[11px] text-slate-200 mt-2 font-mono bg-black/40 p-1.5 rounded-lg border border-indigo-800/60 leading-snug">
+                    “你好，很高兴认识你！”<br>
+                    <span class="text-cyan-300 text-[9px]">Piacere di conoscerti!</span>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between text-[9px] font-mono text-indigo-300 border-t border-indigo-800/80 pt-1">
+                  <span id="fcStrokes">Tratti: 13</span>
+                  <span class="text-amber-400">Gira 🔄</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between gap-1">
+            <button onclick="prevFlashcard()" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg text-[10px] font-bold text-slate-800 cursor-pointer shadow-2xs">
+              ◀
+            </button>
+            <button onclick="toggleFlashcardFlip()" class="px-2 py-1 bg-amber-400 hover:bg-amber-300 border border-slate-900 rounded-lg text-[10px] font-black text-slate-950 cursor-pointer shadow-xs">
+              🔄 Gira
+            </button>
+            <button onclick="nextFlashcard()" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg text-[10px] font-bold text-slate-800 cursor-pointer shadow-2xs">
+              ▶
+            </button>
+            <button onclick="randomFlashcard()" class="px-2 py-1 bg-emerald-100 hover:bg-emerald-200 border border-emerald-300 rounded-lg text-[10px] font-bold text-emerald-800 cursor-pointer shadow-2xs" title="Carta Casuale">
+              🎲
+            </button>
+          </div>
+
+          <div class="pt-1.5 text-center font-mono border-t border-slate-200 mt-1 flex items-center justify-between text-[10px]">
+            <span class="text-slate-600 font-bold">Banco Studio</span>
+            <a href="flashcards.html" class="text-blue-600 font-bold hover:underline">Tutte ➔</a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+        
+      
    <!-- ========================================================= -->
         <!-- SEZIONE 4: Caratteri e esercizi -->
         <!-- ========================================================= -->
@@ -2445,5 +2535,8 @@ function applyFilters() {
         document.addEventListener('DOMContentLoaded', renderQuizQuestion);
 
   </script>
+
+
+
 </body>
 </html>
