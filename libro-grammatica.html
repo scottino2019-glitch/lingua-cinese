@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App Hub - Indice Libri</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts Integrati -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Inter:wght@400;500;600;700;800&family=Ma+Shan+Zheng&family=Rock+Salt&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Classi CSS per i font caricati */
+    .font-rock-salt { font-family: 'Rock Salt', cursive; }
+    .font-ma-shan { font-family: 'Ma Shan Zheng', cursive; }
+    .font-gloria { font-family: 'Gloria Hallelujah', cursive; }
+
+    /* Nasconde la barra di scorrimento mantenendo la funzionalità */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-slate-900 text-gray-100 h-screen flex flex-col font-sans overflow-hidden">
+
+  <!-- NAVBAR / TOOLBAR FISSA -->
+  <header class="bg-slate-950 border-b border-indigo-900/50 px-4 sm:px-6 py-3 flex items-center justify-between gap-3 shadow-lg relative z-20 shrink-0 min-w-0">
+    
+    <!-- Titolo e Controlli Finestra -->
+    <div class="flex items-center space-x-3 shrink-0">
+      <div class="flex space-x-1.5 mr-1 sm:mr-2">
+        <span class="w-3 h-3 bg-rose-500 rounded-full inline-block shadow-sm"></span>
+        <span class="w-3 h-3 bg-amber-400 rounded-full inline-block shadow-sm"></span>
+        <span class="w-3 h-3 bg-emerald-400 rounded-full inline-block shadow-sm"></span>
+      </div>
+      
+      <div class="flex items-center space-x-2 border-l border-slate-800 pl-3 sm:pl-4">
+        <span class="text-[10px] sm:text-xs bg-indigo-500/20 text-indigo-300 font-semibold px-2 py-0.5 rounded border border-indigo-500/30">LIBRERIA</span>
+        <!-- Titolo in piccolo in alto con font Gloria Hallelujah -->
+        <span id="nav-title" class="text-xs sm:text-sm font-gloria text-indigo-300 truncate max-w-[180px] sm:max-w-none">Racconti</span>
+      </div>
+    </div>
+
+    <!-- CONTROLLO MENU A SCOMPARSA (TOGGLE) -->
+    <div class="flex items-center space-x-2">
+      <button 
+        id="btn-menu-toggle" 
+        onclick="toggleMenu()" 
+        aria-label="Apri o chiudi il menu dei racconti"
+        aria-expanded="false"
+        class="flex items-center space-x-2 px-3.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-indigo-600/40 active:bg-indigo-600/60 text-indigo-200 border border-indigo-500/30 hover:border-indigo-400/50 shadow-md font-gloria text-xs sm:text-sm transition-all duration-200 cursor-pointer select-none group"
+      >
+        <span id="menu-icon-bars" class="inline-block transition-transform duration-200 group-hover:scale-110 text-sm">☰</span>
+        <span id="menu-toggle-label">Menu Libri</span>
+        <span class="text-[10px] text-indigo-400/80 bg-indigo-900/40 px-1.5 py-0.5 rounded border border-indigo-700/40">a scomparsa</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MENU A SCOMPARSA (DRAWER LATERALE CON SFONDO SFOCATO) -->
+  <!-- Backdrop per chiudere al clic all'esterno -->
+  <div 
+    id="menu-backdrop" 
+    onclick="toggleMenu(false)" 
+    class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-30 transition-opacity duration-300 opacity-0 pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Pannello Menu a Scomparsa (Slide da destra) -->
+  <aside 
+    id="menu-drawer" 
+    aria-label="Menu navigazione libri a scomparsa"
+    class="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-slate-950 border-l border-indigo-900/60 shadow-2xl z-40 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out font-gloria"
+  >
+    <!-- Intestazione del Menu a Scomparsa -->
+    <div>
+      <div class="p-4 sm:p-5 border-b border-indigo-900/40 flex items-center justify-between bg-slate-900/70">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-xl">🏮</span>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-indigo-200 tracking-wide">Indice Libri</h3>
+            <p class="text-[10px] text-slate-400 font-sans">Seleziona un racconto o l'indice</p>
+          </div>
+        </div>
+        <button 
+          onclick="toggleMenu(false)" 
+          aria-label="Chiudi menu"
+          class="w-8 h-8 rounded-lg bg-slate-800/80 hover:bg-rose-500/20 text-slate-400 hover:text-rose-300 border border-slate-700/50 flex items-center justify-center transition cursor-pointer text-sm"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Elenco Pulsanti Navigazione -->
+      <nav id="nav-buttons" class="p-4 space-y-2.5 overflow-y-auto max-h-[calc(100vh-160px)] no-scrollbar">
+        <!-- Bottone Indice / Home -->
+        <button 
+          onclick="showHome()" 
+          id="btn-home" 
+          class="w-full text-left px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium shadow-md transition flex items-center justify-between group cursor-pointer"
+        >
+          <div class="flex items-center space-x-3">
+            <span class="text-lg">🏮</span>
+            <div>
+              <div class="text-xs sm:text-sm font-semibold">指数 — Indice Generale</div>
+              <div class="text-[10px] text-indigo-200 font-sans">Torna alla schermata principale</div>
+            </div>
+          </div>
+          <span class="text-xs opacity-80 group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+
+        <div class="pt-3 pb-1 px-1">
+          <span class="text-[10px] uppercase tracking-wider text-slate-500 font-sans font-semibold">Racconti Disponibili</span>
+        </div>
+
+        <!-- Libro 1 -->
+        <button 
+          onclick="openBook('la-mia-cuginetta.html', 'La mia cuginetta', 'btn-b1')" 
+          id="btn-b1" 
+          class="nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-amber-600/25 text-amber-300 border border-amber-500/20 transition flex items-center justify-between group cursor-pointer"
+        >
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center font-bold text-sm shrink-0">🌙</div>
+            <div>
+              <div class="text-xs sm:text-sm font-semibold">我的小表弟</div>
+              <div class="text-[10px] text-amber-200/70 font-sans">1. La mia cuginetta</div>
+            </div>
+          </div>
+          <span class="text-xs text-amber-400 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+
+        <!-- Libro 2 -->
+        <button 
+          onclick="openBook('Momo.html', 'Piccola elfa Momo', 'btn-b2')" 
+          id="btn-b2" 
+          class="nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-purple-600/25 text-purple-300 border border-purple-500/20 transition flex items-center justify-between group cursor-pointer"
+        >
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center font-bold text-sm shrink-0">🧚</div>
+            <div>
+              <div class="text-xs sm:text-sm font-semibold">小精靈末末</div>
+              <div class="text-[10px] text-purple-200/70 font-sans">2. Piccola elfa Momo</div>
+            </div>
+          </div>
+          <span class="text-xs text-purple-400 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-transform">→</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Piede del Menu a Scomparsa -->
+    <div class="p-4 border-t border-indigo-900/40 bg-slate-900/40 text-xs text-slate-400 flex items-center justify-between">
+      <span class="flex items-center gap-1.5 text-[11px]"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Menu a scomparsa attivo</span>
+      <span class="text-[10px] text-slate-500 font-sans">Esc per chiudere</span>
+    </div>
+  </aside>
+
+  <!-- CONTENITORE PRINCIPALE DINAMICO -->
+  <main class="flex-1 bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 relative overflow-hidden">
+    
+    <!-- VISTA 1: HOMEPAGE / INDICE -->
+    <div id="page-home" class="w-full h-full p-4 md:p-8 flex justify-center items-center overflow-y-auto">
+      <div class="bg-white text-slate-900 w-full max-w-2xl min-h-[550px] shadow-2xl rounded-xl p-6 sm:p-8 md:p-10 flex flex-col justify-between border border-slate-200/80 my-auto">
+        <div>
+          <div class="border-b-2 border-indigo-100 pb-5 mb-6 flex justify-between items-start">
+            <div>
+              <span class="inline-block px-2.5 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded-full mb-2 uppercase tracking-wide">
+                中国小说
+              </span>
+              <!-- TITOLO PAGINA CON FONT ROCK SALT -->
+              <h1 class="text-xl sm:text-2xl font-rock-salt text-indigo-900 tracking-tight mt-1">
+🀄NaRrAtiVa CinESe🀄
+              </h1>
+            </div>
+            <span class="text-[10px] bg-slate-100 text-slate-600 font-gloria px-2 py-1 rounded">v3.0</span>
+          </div>
+
+          <!-- PARAGRAFO P CON FONT GLORIA HALLELUJAH -->
+          <p class="text-sm font-gloria text-slate-600 leading-relaxed mb-8">
+           Piccoli testi con spiegazione grammaticale e vocaboli
+          </p>
+
+          <!-- CARDS LINK RAPIDI AI LIBRI -->
+          <div class="space-y-4">
+            
+            <!-- LIBRO 1 -->
+            <button onclick="openBook('la-mia-cuginetta.html', 'La mia cuginetta', 'btn-b1')" class="group w-full block p-4 rounded-xl border border-amber-100 bg-gradient-to-r from-amber-50/50 to-orange-50/30 hover:from-amber-100 hover:to-orange-100 transition shadow-sm text-left cursor-pointer">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-lg shadow-md shrink-0">🌙</div>
+                  <div>
+                    <!-- TITOLO LIBRO CON FONT MA SHAN ZHENG -->
+                    <h2 class="text-lg font-ma-shan text-amber-950 group-hover:text-amber-600">
+                      1. 我的小表弟 
+                    </h2>
+                    <!-- PARAGRAFO P CON FONT GLORIA HALLELUJAH -->
+                    <p class="text-xs font-gloria text-amber-900/70 mt-1">
+                      La mia cuginetta
+                    </p>
+                  </div>
+                </div>
+                <span class="text-xs font-bold text-amber-600 group-hover:translate-x-1 transition-transform ml-2">&rarr;</span>
+              </div>
+            </button>
+
+            <!-- LIBRO 2 -->
+            <button onclick="openBook('Momo.html', 'Piccola elfa Momo', 'btn-b2')" class="group w-full block p-4 rounded-xl border border-purple-100 bg-gradient-to-r from-purple-50/50 to-pink-50/30 hover:from-purple-100 hover:to-pink-100 transition shadow-sm text-left cursor-pointer">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-lg shadow-md shrink-0">🧚</div>
+                  <div>
+                    <!-- TITOLO LIBRO CON FONT MA SHAN ZHENG -->
+                    <h2 class="text-lg font-ma-shan text-purple-950 group-hover:text-purple-600">
+                      2. 小精靈末末 — Piccola elfa Momo
+                    </h2>
+                    <!-- PARAGRAFO P CON FONT GLORIA HALLELUJAH -->
+                    <p class="text-xs font-gloria text-purple-900/70 mt-1">
+                      Scrittore Sconosciuto • Narrativa Classica
+                    </p>
+                  </div>
+                </div>
+                <span class="text-xs font-bold text-purple-600 group-hover:translate-x-1 transition-transform ml-2">&rarr;</span>
+              </div>
+            </button>
+
+          </div>
+        </div>
+
+        <div class="border-t border-slate-100 pt-4 mt-8 flex justify-between items-center text-xs text-slate-400">
+          <span class="flex items-center gap-1.5 font-gloria"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Libreria Pronta</span>
+          <span class="font-gloria text-xs text-slate-500">iFrame Reader</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA 2: IFRAME UNICO PER LA LETTURA DEI FILE HTML -->
+    <iframe id="book-frame" class="w-full h-full border-0 hidden bg-slate-900" src="about:blank"></iframe>
+
+  </main>
+
+  <!-- LOGICA DI NAVIGAZIONE, GESTIONE IFRAME E MENU A SCOMPARSA -->
+  <script>
+    const homePage = document.getElementById('page-home');
+    const bookFrame = document.getElementById('book-frame');
+    const navTitle = document.getElementById('nav-title');
+    const btnHome = document.getElementById('btn-home');
+    const menuDrawer = document.getElementById('menu-drawer');
+    const menuBackdrop = document.getElementById('menu-backdrop');
+    const btnMenuToggle = document.getElementById('btn-menu-toggle');
+    const menuIconBars = document.getElementById('menu-icon-bars');
+
+    // Funzione per aprire o chiudere il menu a scomparsa
+    function toggleMenu(forceState) {
+      const isCurrentlyOpen = !menuDrawer.classList.contains('translate-x-full');
+      const shouldOpen = typeof forceState === 'boolean' ? forceState : !isCurrentlyOpen;
+
+      if (shouldOpen) {
+        menuDrawer.classList.remove('translate-x-full');
+        menuBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+        menuBackdrop.classList.add('opacity-100', 'pointer-events-auto');
+        btnMenuToggle.setAttribute('aria-expanded', 'true');
+        menuIconBars.innerText = '✕';
+      } else {
+        menuDrawer.classList.add('translate-x-full');
+        menuBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        menuBackdrop.classList.add('opacity-0', 'pointer-events-none');
+        btnMenuToggle.setAttribute('aria-expanded', 'false');
+        menuIconBars.innerText = '☰';
+      }
+    }
+
+    // Chiudi il menu a scomparsa premendo il tasto ESC
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        toggleMenu(false);
+      }
+    });
+
+    function showHome() {
+      bookFrame.classList.add('hidden');
+      bookFrame.src = "about:blank";
+      homePage.classList.remove('hidden');
+      navTitle.innerText = "Indice_Libri.html";
+
+      resetNavStyle();
+      btnHome.className = "w-full text-left px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium shadow-md transition flex items-center justify-between group cursor-pointer";
+      
+      // Chiude automaticamente il menu a scomparsa dopo la selezione
+      toggleMenu(false);
+    }
+
+    function openBook(fileUrl, title, btnId) {
+      homePage.classList.add('hidden');
+      bookFrame.classList.remove('hidden');
+      bookFrame.src = fileUrl;
+      navTitle.innerText = "Lettore > " + title;
+
+      resetNavStyle();
+      if (btnId) {
+        const activeBtn = document.getElementById(btnId);
+        if (activeBtn) {
+          activeBtn.className = "nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white border border-indigo-400/50 shadow-md transition flex items-center justify-between group cursor-pointer";
+        }
+      }
+
+      // Chiude automaticamente il menu a scomparsa per lasciare spazio al testo
+      toggleMenu(false);
+    }
+
+    function resetNavStyle() {
+      btnHome.className = "w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/20 transition flex items-center justify-between group cursor-pointer";
+      
+      const b1 = document.getElementById('btn-b1');
+      if (b1) {
+        b1.className = "nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-amber-600/25 text-amber-300 border border-amber-500/20 transition flex items-center justify-between group cursor-pointer";
+      }
+
+      const b2 = document.getElementById('btn-b2');
+      if (b2) {
+        b2.className = "nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-purple-600/25 text-purple-300 border border-purple-500/20 transition flex items-center justify-between group cursor-pointer";
+      }
+    }
+  </script>
+
+</body>
+</html>
