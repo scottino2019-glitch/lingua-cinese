@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Scheda Didattica di Cinese: Lettura e Scrittura - CINESE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Caveat:wght@400;600;700&family=Gaegu:wght@400;700&family=Ma+Shan+Zheng&family=Marck+Script&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+KR:wght@400;600&family=Noto+Serif+SC:wght@400;600&family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+      padding: 24px;
+    }
+    .sheet-page {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 32px 36px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+    }
+    .font-target {
+      font-family: 'Noto Serif SC', 'Noto Sans SC', serif;
+    }
+    .sheet-header {
+      background-color: #fef7ee;
+      border: 1.5px solid #f0d9bc;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .sheet-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .lang-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #b45309;
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 4px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .sheet-main-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .sheet-subtitle {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 12px;
+    }
+    .student-fields {
+      display: flex;
+      gap: 20px;
+      border-top: 1px dashed #f0d9bc;
+      padding-top: 10px;
+      font-size: 14px;
+      color: #334155;
+    }
+    .field-line {
+      flex: 1;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .field-blank {
+      flex: 1;
+      border-bottom: 1.5px dotted #94a3b8;
+      min-height: 20px;
+    }
+    
+    /* Sections */
+    .section {
+      border-radius: 8px;
+      border: 1.5px solid;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      position: relative;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .section-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Story Text Section */
+    .story-title {
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .story-content {
+      font-size: 20px;
+      line-height: 2.3;
+      letter-spacing: 1px;
+      word-break: break-word;
+    }
+    
+    /* Ruby styling */
+    ruby.ruby-char {
+      ruby-position: over;
+      display: inline-ruby;
+      margin: 0 1px;
+    }
+    rt.ruby-pinyin {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #0369a1;
+      user-select: none;
+      line-height: 1;
+    }
+    
+    /* Translation Section */
+    .translation-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1e293b;
+      font-style: italic;
+    }
+    .notes-box {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 13px;
+      color: #475569;
+    }
+    
+    /* Vocabulary Table */
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 8px;
+      background: #ffffff;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .vocab-table th {
+      background-color: #f1f5f9;
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 600;
+      color: #334155;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .vocab-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: top;
+    }
+    .vocab-word {
+      font-size: 17px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+    .vocab-transcription {
+      color: #0284c7;
+      font-family: 'PT Sans', sans-serif;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #475569;
+    }
+    .ex-trans {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+    }
+    
+    /* Grammar Cards */
+    .grammar-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .grammar-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .grammar-pattern code {
+      display: inline-block;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: monospace;
+      color: #0369a1;
+      margin-bottom: 6px;
+    }
+    .grammar-exp {
+      font-size: 14px;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+    .grammar-examples {
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .grammar-examples ul {
+      margin-left: 16px;
+      margin-top: 4px;
+    }
+    .ex-pinyin {
+      color: #0284c7;
+      font-size: 12px;
+      margin: 0 4px;
+    }
+    .ex-it {
+      color: #475569;
+    }
+    
+    /* Practice Grids */
+    .practice-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+    .practice-lead {
+      width: 44px;
+      height: 44px;
+      border: 1.5px solid #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: #ffffff;
+      border-radius: 4px;
+    }
+    .practice-line-boxes {
+      display: flex;
+      flex: 1;
+      gap: 6px;
+    }
+    .box-cell {
+      flex: 1;
+      height: 44px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 2px;
+      position: relative;
+    }
+    /* Tianzige cross inside cell */
+    .tianzige .box-cell::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      border-top: 1px dashed #e2e8f0;
+    }
+    .tianzige .box-cell::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      border-left: 1px dashed #e2e8f0;
+    }
+    
+    /* Print Styles */
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+        margin: 0;
+      }
+      .sheet-page {
+        box-shadow: none;
+        padding: 10mm;
+        max-width: 100%;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+      .no-print {
+        display: none !important;
+      }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet-page">
+    <header class="sheet-header">
+      <div class="sheet-meta-bar">
+        <span class="lang-badge">cinese • stampatello</span>
+        <span>Livello Elementare (HSK 2-3)</span>
+      </div>
+      <h1 class="sheet-main-title">Scheda Didattica di Cinese: Lettura e Scrittura</h1>
+      <div class="sheet-subtitle">Tema • Caratteri, Pinyin e Traduzione</div>
+      <div class="student-fields">
+        <div class="field-line">
+          <span>Nome Studente:</span>
+          <div class="field-blank"></div>
+        </div>
+        <div class="field-line" style="flex: 0 0 220px;">
+          <span>Data:</span>
+          <div class="field-blank"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: Testo / Racconto -->
+    <section class="section section-text" style="background-color: #faf5ef; border-color: #e4cdb4;">
+      <div class="section-badge" style="background-color: #b45309;">📖 Testo di Lettura</div>
+      <h2 class="story-title font-target"><ruby class="ruby-char">我<rt class="ruby-pinyin">wǒ</rt></ruby><ruby class="ruby-char">的<rt class="ruby-pinyin">de</rt></ruby><ruby class="ruby-char">周<rt class="ruby-pinyin">zhōu</rt></ruby><ruby class="ruby-char">末<rt class="ruby-pinyin">mò</rt></ruby><ruby class="ruby-char">生<rt class="ruby-pinyin">shēng</rt></ruby><ruby class="ruby-char">活<rt class="ruby-pinyin">huó</rt></ruby></h2>
+      <div class="story-content font-target"><ruby class="ruby-char">上<rt class="ruby-pinyin">shàng</rt></ruby><ruby class="ruby-char">个<rt class="ruby-pinyin">gè</rt></ruby><ruby class="ruby-char">周<rt class="ruby-pinyin">zhōu</rt></ruby><ruby class="ruby-char">末<rt class="ruby-pinyin">mò</rt></ruby><ruby class="ruby-char">天<rt class="ruby-pinyin">tiān</rt></ruby><ruby class="ruby-char">气<rt class="ruby-pinyin">qì</rt></ruby><ruby class="ruby-char">非<rt class="ruby-pinyin">fēi</rt></ruby><ruby class="ruby-char">常<rt class="ruby-pinyin">cháng</rt></ruby><ruby class="ruby-char">好<rt class="ruby-pinyin">hǎo</rt></ruby><span class="punct">，</span><ruby class="ruby-char">阳<rt class="ruby-pinyin">yáng</rt></ruby><ruby class="ruby-char">光<rt class="ruby-pinyin">guāng</rt></ruby><ruby class="ruby-char">明<rt class="ruby-pinyin">míng</rt></ruby><ruby class="ruby-char">媚<rt class="ruby-pinyin">mèi</rt></ruby><span class="punct">。</span><ruby class="ruby-char">我<rt class="ruby-pinyin">wǒ</rt></ruby><ruby class="ruby-char">和<rt class="ruby-pinyin">hé</rt></ruby><ruby class="ruby-char">几<rt class="ruby-pinyin">jǐ</rt></ruby><ruby class="ruby-char">个<rt class="ruby-pinyin">gè</rt></ruby><ruby class="ruby-char">朋<rt class="ruby-pinyin">péng</rt></ruby><ruby class="ruby-char">友<rt class="ruby-pinyin">yǒu</rt></ruby><ruby class="ruby-char">一<rt class="ruby-pinyin">yī</rt></ruby><ruby class="ruby-char">起<rt class="ruby-pinyin">qǐ</rt></ruby><ruby class="ruby-char">去<rt class="ruby-pinyin">qù</rt></ruby><ruby class="ruby-char">了<rt class="ruby-pinyin">liǎo</rt></ruby><ruby class="ruby-char">市<rt class="ruby-pinyin">shì</rt></ruby><ruby class="ruby-char">中<rt class="ruby-pinyin">zhōng</rt></ruby><ruby class="ruby-char">心<rt class="ruby-pinyin">xīn</rt></ruby><ruby class="ruby-char">的<rt class="ruby-pinyin">de</rt></ruby><ruby class="ruby-char">一<rt class="ruby-pinyin">yī</rt></ruby><ruby class="ruby-char">个<rt class="ruby-pinyin">gè</rt></ruby><ruby class="ruby-char">公<rt class="ruby-pinyin">gōng</rt></ruby><ruby class="ruby-char">园<rt class="ruby-pinyin">yuán</rt></ruby><span class="punct">。</span><ruby class="ruby-char">我<rt class="ruby-pinyin">wǒ</rt></ruby><ruby class="ruby-char">们<rt class="ruby-pinyin">men</rt></ruby><ruby class="ruby-char">边<rt class="ruby-pinyin">biān</rt></ruby><ruby class="ruby-char">喝<rt class="ruby-pinyin">hē</rt></ruby><ruby class="ruby-char">茶<rt class="ruby-pinyin">chá</rt></ruby><ruby class="ruby-char">边<rt class="ruby-pinyin">biān</rt></ruby><ruby class="ruby-char">沿<rt class="ruby-pinyin">yán</rt></ruby><ruby class="ruby-char">着<rt class="ruby-pinyin">zhe</rt></ruby><ruby class="ruby-char">湖<rt class="ruby-pinyin">hú</rt></ruby><ruby class="ruby-char">边<rt class="ruby-pinyin">biān</rt></ruby><ruby class="ruby-char">散<rt class="ruby-pinyin">sàn</rt></ruby><ruby class="ruby-char">步<rt class="ruby-pinyin">bù</rt></ruby><span class="punct">，</span><ruby class="ruby-char">聊<rt class="ruby-pinyin">liáo</rt></ruby><ruby class="ruby-char">了<rt class="ruby-pinyin">liǎo</rt></ruby><ruby class="ruby-char">很<rt class="ruby-pinyin">hěn</rt></ruby><ruby class="ruby-char">久<rt class="ruby-pinyin">jiǔ</rt></ruby><span class="punct">。</span><ruby class="ruby-char">下<rt class="ruby-pinyin">xià</rt></ruby><ruby class="ruby-char">午<rt class="ruby-pinyin">wǔ</rt></ruby><ruby class="ruby-char">我<rt class="ruby-pinyin">wǒ</rt></ruby><ruby class="ruby-char">们<rt class="ruby-pinyin">men</rt></ruby><ruby class="ruby-char">去<rt class="ruby-pinyin">qù</rt></ruby><ruby class="ruby-char">了<rt class="ruby-pinyin">liǎo</rt></ruby><ruby class="ruby-char">图<rt class="ruby-pinyin">tú</rt></ruby><ruby class="ruby-char">书<rt class="ruby-pinyin">shū</rt></ruby><ruby class="ruby-char">馆<rt class="ruby-pinyin">guǎn</rt></ruby><span class="punct">，</span><ruby class="ruby-char">读<rt class="ruby-pinyin">dú</rt></ruby><ruby class="ruby-char">了<rt class="ruby-pinyin">liǎo</rt></ruby><ruby class="ruby-char">很<rt class="ruby-pinyin">hěn</rt></ruby><ruby class="ruby-char">多<rt class="ruby-pinyin">duō</rt></ruby><ruby class="ruby-char">有<rt class="ruby-pinyin">yǒu</rt></ruby><ruby class="ruby-char">趣<rt class="ruby-pinyin">qù</rt></ruby><ruby class="ruby-char">的<rt class="ruby-pinyin">de</rt></ruby><ruby class="ruby-char">中<rt class="ruby-pinyin">zhōng</rt></ruby><ruby class="ruby-char">文<rt class="ruby-pinyin">wén</rt></ruby><ruby class="ruby-char">书<rt class="ruby-pinyin">shū</rt></ruby><span class="punct">。</span><ruby class="ruby-char">虽<rt class="ruby-pinyin">suī</rt></ruby><ruby class="ruby-char">然<rt class="ruby-pinyin">rán</rt></ruby><ruby class="ruby-char">学<rt class="ruby-pinyin">xué</rt></ruby><ruby class="ruby-char">习<rt class="ruby-pinyin">xí</rt></ruby><ruby class="ruby-char">中<rt class="ruby-pinyin">zhōng</rt></ruby><ruby class="ruby-char">文<rt class="ruby-pinyin">wén</rt></ruby><ruby class="ruby-char">有<rt class="ruby-pinyin">yǒu</rt></ruby><ruby class="ruby-char">点<rt class="ruby-pinyin">diǎn</rt></ruby><ruby class="ruby-char">儿<rt class="ruby-pinyin">ér</rt></ruby><ruby class="ruby-char">难<rt class="ruby-pinyin">nán</rt></ruby><span class="punct">，</span><ruby class="ruby-char">但<rt class="ruby-pinyin">dàn</rt></ruby><ruby class="ruby-char">是<rt class="ruby-pinyin">shì</rt></ruby><ruby class="ruby-char">每<rt class="ruby-pinyin">měi</rt></ruby><ruby class="ruby-char">天<rt class="ruby-pinyin">tiān</rt></ruby><ruby class="ruby-char">我<rt class="ruby-pinyin">wǒ</rt></ruby><ruby class="ruby-char">都<rt class="ruby-pinyin">dōu</rt></ruby><ruby class="ruby-char">觉<rt class="ruby-pinyin">jué</rt></ruby><ruby class="ruby-char">得<rt class="ruby-pinyin">dé</rt></ruby><ruby class="ruby-char">很<rt class="ruby-pinyin">hěn</rt></ruby><ruby class="ruby-char">有<rt class="ruby-pinyin">yǒu</rt></ruby><ruby class="ruby-char">趣<rt class="ruby-pinyin">qù</rt></ruby><span class="punct">、</span><ruby class="ruby-char">很<rt class="ruby-pinyin">hěn</rt></ruby><ruby class="ruby-char">充<rt class="ruby-pinyin">chōng</rt></ruby><ruby class="ruby-char">实<rt class="ruby-pinyin">shí</rt></ruby><span class="punct">。</span></div>
+    </section>
+
+    <!-- SECTION 2: Traduzione Italiana -->
+    <section class="section section-translation" style="background-color: #f2f8f5; border-color: #cce6d8;">
+      <div class="section-badge" style="background-color: #059669;">🇮🇹 Traduzione Italiana</div>
+      <p class="translation-text">Lo scorso fine settimana il tempo è stato bellissimo, c&#039;era un sole splendido. Sono andato al parco in centro città insieme ad alcuni amici. Abbiamo fatto una passeggiata lungo il lago, chiacchierando a lungo mentre bevevamo del tè. Nel pomeriggio siamo andati in biblioteca e abbiamo letto molti libri in cinese
+interessanti. Sebbene studiare il cinese sia un po&#039; difficile, ogni giorno mi sento molto interessato e soddisfatto (appagato).</p>
+      <div class="notes-box"><strong>Nota didattica:</strong> Testo classico per imparare i complementi di tempo, azioni e preposizioni , avverbi e congiunzioni avversative.</div>
+    </section>
+
+    <!-- SECTION 3: Vocabolario -->
+    <section class="section section-vocab" style="background-color: #f0f6fa; border-color: #cce1ef;">
+      <div class="section-badge" style="background-color: #0284c7;">📚 Vocabolario & Lessico Chiave</div>
+      <table class="vocab-table">
+        <thead>
+          <tr>
+            <th>Termine</th>
+            <th>Trascrizione</th>
+            <th>Tipo</th>
+            <th>Significato</th>
+            <th>Esempio</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+      <tr>
+        <td class="vocab-word font-target">上个</td>
+        <td class="vocab-transcription">shàng gè</td>
+        <td class="vocab-pos"><span class="badge">aggettivo</span></td>
+        <td class="vocab-translation">scorso</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">周末</td>
+        <td class="vocab-transcription">zhōumò</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">fine settimana</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">天气</td>
+        <td class="vocab-transcription">tiānqì</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">tempo atmosferico</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">非常 </td>
+        <td class="vocab-transcription">fēi cháng   -</td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">estremamente</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">好 </td>
+        <td class="vocab-transcription">hǎo   </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">bello</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">阳光</td>
+        <td class="vocab-transcription">yángguāng</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">luce del sole</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">明媚 </td>
+        <td class="vocab-transcription">míng mèi  </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">splendente</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">我</td>
+        <td class="vocab-transcription">wǒ</td>
+        <td class="vocab-pos"><span class="badge">pronome</span></td>
+        <td class="vocab-translation">io</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">和 </td>
+        <td class="vocab-transcription">hé </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">con</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">几个 </td>
+        <td class="vocab-transcription">jǐ gè   </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">diversi</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">朋友</td>
+        <td class="vocab-transcription">péngyǒu</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">amico</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">一起</td>
+        <td class="vocab-transcription">yīqǐ</td>
+        <td class="vocab-pos"><span class="badge">avverbio</span></td>
+        <td class="vocab-translation">insieme</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">去</td>
+        <td class="vocab-transcription">qù</td>
+        <td class="vocab-pos"><span class="badge">verbo</span></td>
+        <td class="vocab-translation">andare</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">了</td>
+        <td class="vocab-transcription">le</td>
+        <td class="vocab-pos"><span class="badge">particella</span></td>
+        <td class="vocab-translation">(indica un&#039;azione compiuta)</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">市中心</td>
+        <td class="vocab-transcription">shì zhōngxīn</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">centro città</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">的</td>
+        <td class="vocab-transcription">de</td>
+        <td class="vocab-pos"><span class="badge">particella</span></td>
+        <td class="vocab-translation">(indica possesso o relazione)</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">一个 </td>
+        <td class="vocab-transcription">yí gè  </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">uno</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">公园</td>
+        <td class="vocab-transcription">gōngyuán</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">parco</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">我们</td>
+        <td class="vocab-transcription">wǒmen</td>
+        <td class="vocab-pos"><span class="badge">pronome</span></td>
+        <td class="vocab-translation">noi</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">边...边...</td>
+        <td class="vocab-transcription">biān... biān...</td>
+        <td class="vocab-pos"><span class="badge">congiunzione</span></td>
+        <td class="vocab-translation">mentre... (indica azioni simultanee)</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">喝</td>
+        <td class="vocab-transcription">hē</td>
+        <td class="vocab-pos"><span class="badge">verbo</span></td>
+        <td class="vocab-translation">bere</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">茶</td>
+        <td class="vocab-transcription">chá</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">tè</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">沿着 </td>
+        <td class="vocab-transcription">yán zhe  </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">seguendo</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">湖边</td>
+        <td class="vocab-transcription">hú biān</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">riva del lago</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">散步</td>
+        <td class="vocab-transcription">sànbù</td>
+        <td class="vocab-pos"><span class="badge">verbo</span></td>
+        <td class="vocab-translation">passeggiare</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">聊</td>
+        <td class="vocab-transcription">liáo</td>
+        <td class="vocab-pos"><span class="badge">verbo</span></td>
+        <td class="vocab-translation">chiacchierare</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">很久</td>
+        <td class="vocab-transcription">hěn jiǔ</td>
+        <td class="vocab-pos"><span class="badge">avverbio</span></td>
+        <td class="vocab-translation">per molto tempo</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">下午</td>
+        <td class="vocab-transcription">xiàwǔ</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">pomeriggio</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">图书馆</td>
+        <td class="vocab-transcription">túshūguǎn</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">biblioteca</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">读</td>
+        <td class="vocab-transcription">dú</td>
+        <td class="vocab-pos"><span class="badge">verbo</span></td>
+        <td class="vocab-translation">leggere</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">很多</td>
+        <td class="vocab-transcription">hěn duō</td>
+        <td class="vocab-pos"><span class="badge">aggettivo</span></td>
+        <td class="vocab-translation">molti</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">有趣 </td>
+        <td class="vocab-transcription">yǒu qù </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">divertente</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">中文</td>
+        <td class="vocab-transcription">zhōngwén</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">lingua cinese</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">书</td>
+        <td class="vocab-transcription">shū</td>
+        <td class="vocab-pos"><span class="badge">sostantivo</span></td>
+        <td class="vocab-translation">libro</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">虽然 </td>
+        <td class="vocab-transcription">suī rán   </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">anche se</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">学习</td>
+        <td class="vocab-transcription">xuéxí</td>
+        <td class="vocab-pos"><span class="badge">verbo</span></td>
+        <td class="vocab-translation">studiare</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">有点儿</td>
+        <td class="vocab-transcription">yǒudiǎnr</td>
+        <td class="vocab-pos"><span class="badge">avverbio</span></td>
+        <td class="vocab-translation">un po&#039;</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">难</td>
+        <td class="vocab-transcription">nán</td>
+        <td class="vocab-pos"><span class="badge">aggettivo</span></td>
+        <td class="vocab-translation">difficile</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">但是</td>
+        <td class="vocab-transcription">dànshì</td>
+        <td class="vocab-pos"><span class="badge">congiunzione</span></td>
+        <td class="vocab-translation">ma</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">每天</td>
+        <td class="vocab-transcription">měitiān</td>
+        <td class="vocab-pos"><span class="badge">sostantivo/avverbio</span></td>
+        <td class="vocab-translation">ogni giorno</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">都</td>
+        <td class="vocab-transcription">dōu   </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">tutti</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">觉得</td>
+        <td class="vocab-transcription">jué de   </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">ritenere</td>
+        <td>-</td>
+      </tr>
+    
+      <tr>
+        <td class="vocab-word font-target">充实 </td>
+        <td class="vocab-transcription">chōng shí  </td>
+        <td class="vocab-pos"><span class="badge">Sostantivo</span></td>
+        <td class="vocab-translation">pieno (di attività)</td>
+        <td>-</td>
+      </tr>
+    
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SECTION 4: Grammatica -->
+    <section class="section section-grammar" style="background-color: #f5f3fa; border-color: #dcd4eb;">
+      <div class="section-badge" style="background-color: #7c3aed;">📝 Punti di Grammatica & Strutture</div>
+      <div class="grammar-list">
+        
+      <div class="grammar-card">
+        <h4 class="grammar-title">1. La particella aspettuale 了 (le) di completamento</h4>
+        <div class="grammar-pattern"><code>Verbo + 了 (+ Oggetto)</code></div>
+        <p class="grammar-exp">Indica che un&#039;azione o un evento si è verificato o completato nel contesto temporale di riferimento.  esempio: 读了 (dú le):** Abbiamo letto.
+In questo contesto, *了* indica che l&#039;azione è stata **completata nel passato**. È fondamentale per narrare eventi.</p>
+        
+          <div class="grammar-examples">
+            <span class="ex-label">Esempi:</span>
+            <ul>
+              
+                <li>
+                  <strong class="font-target">去了 。</strong>
+                  <span class="ex-pinyin">(qù le)</span>
+                  <span class="ex-it">— Siamo andati.</span>
+                </li>
+              
+                <li>
+                  <strong class="font-target">聊了。</strong>
+                  <span class="ex-pinyin">(liáo le)</span>
+                  <span class="ex-it">— Abbiamo chiacchierato.</span>
+                </li>
+              
+            </ul>
+          </div>
+        
+      </div>
+    
+      <div class="grammar-card">
+        <h4 class="grammar-title">2. Espressioni di Tempo e Posizione</h4>
+        <div class="grammar-pattern"><code>espressione del tempo + verbo</code></div>
+        <p class="grammar-exp">Posizione del tempo:** In cinese il tempo va sempre **prima del verbo** (es. &quot;Ieri io sono andato&quot; e non &quot;Io sono andato ieri&quot;). Infatti nel testo abbiamo: *上个周末... 我们去了...* (Lo scorso weekend... noi siamo andati...).</p>
+        
+          <div class="grammar-examples">
+            <span class="ex-label">Esempi:</span>
+            <ul>
+              
+                <li>
+                  <strong class="font-target">上个周末</strong>
+                  <span class="ex-pinyin">(shàng gè zhūmò))</span>
+                  <span class="ex-it">— Lo scorso fine settimana</span>
+                </li>
+              
+                <li>
+                  <strong class="font-target">上个周末... 我们去了</strong>
+                  
+                  <span class="ex-it">— Lo scorso weekend... noi siamo andati...</span>
+                </li>
+              
+            </ul>
+          </div>
+        
+      </div>
+    
+      <div class="grammar-card">
+        <h4 class="grammar-title">3. Azioni Contemporanee: 边...边... (biān... biān...)</h4>
+        
+        <p class="grammar-exp">Si usa per indicare **due azioni che si svolgono contemporaneamente**. Ricorda: il soggetto va prima della prima &quot;边&quot;.</p>
+        
+          <div class="grammar-examples">
+            <span class="ex-label">Esempi:</span>
+            <ul>
+              
+                <li>
+                  <strong class="font-target">我们边喝茶边...散步 </strong>
+                  <span class="ex-pinyin">(Wǒmen biān hē chá biān... sànbù)</span>
+                  <span class="ex-it">— Mentre bevevamo il tè, passeggiavamo</span>
+                </li>
+              
+            </ul>
+          </div>
+        
+      </div>
+    
+      <div class="grammar-card">
+        <h4 class="grammar-title">3. La Durata dell&#039;Azione</h4>
+        <div class="grammar-pattern"><code>durata + verbo o durata + *了* + verbo</code></div>
+        <p class="grammar-exp">La durata (*很久*) si mette **dopo il verbo** (*聊*). Se l&#039;azione è conclusa, metti il *了* in mezzo.</p>
+        
+          <div class="grammar-examples">
+            <span class="ex-label">Esempi:</span>
+            <ul>
+              
+                <li>
+                  <strong class="font-target">聊了很久 </strong>
+                  <span class="ex-pinyin">(liáo le hěn jiǔ)</span>
+                  <span class="ex-it">— Abbiamo chiacchierato per molto tempo</span>
+                </li>
+              
+            </ul>
+          </div>
+        
+      </div>
+    
+      <div class="grammar-card">
+        <h4 class="grammar-title">5. Congiunzioni Avversative: 虽然...但是... (suīrán... dànshì...)</h4>
+        
+        <p class="grammar-exp">n cinese, a differenza dell&#039;italiano, si usano spesso in coppia: se metti &quot;sebbene&quot; (虽然), nella seconda frase devi quasi sempre mettere &quot;ma&quot; (但是).</p>
+        
+          <div class="grammar-examples">
+            <span class="ex-label">Esempi:</span>
+            <ul>
+              
+                <li>
+                  <strong class="font-target">虽然...难，但是...很有趣</strong>
+                  <span class="ex-pinyin">(Suīrán... nán, dànshì... hěn yǒuqù)</span>
+                  <span class="ex-it">— Sebbene sia difficile, è molto interessante</span>
+                </li>
+              
+            </ul>
+          </div>
+        
+      </div>
+    
+      <div class="grammar-card">
+        <h4 class="grammar-title">6. Gli Avverbi di Grado</h4>
+        <div class="grammar-pattern"><code>avverbio + aggettivi</code></div>
+        <p class="grammar-exp">*   **非常 (fēicháng):** &quot;Moltissimo/Estremamente&quot; (molto forte).
+*   **很 (hěn):** &quot;Molto&quot; (è l&#039;avverbio standard, spesso obbligatorio davanti agli aggettivi).
+*   **有点儿 (yǒudiǎnr):** &quot;Un po&#039;&quot;. Si usa solitamente davanti ad aggettivi con una connotazione negativa o di &quot;lieve fastidio&quot; (es. *有点儿难* - un po&#039; difficile).</p>
+        
+          <div class="grammar-examples">
+            <span class="ex-label">Esempi:</span>
+            <ul>
+              
+                <li>
+                  <strong class="font-target"></strong>
+                  
+                  <span class="ex-it">— </span>
+                </li>
+              
+            </ul>
+          </div>
+        
+      </div>
+    
+      <div class="grammar-card">
+        <h4 class="grammar-title">7. Complementi e Preposizioni</h4>
+        
+        <p class="grammar-exp">*   **和...一起 (hé... yìqǐ):** &quot;Insieme a...&quot;. Struttura: *Soggetto A + 和 + Soggetto B + 一起 + Verbo*.
+*   **沿着 (yánzhe):** &quot;Lungo/Seguendo&quot;. Usato qui per dire &quot;lungo la riva del lago&quot; (沿着湖边).
+*   **的 (de):** Il mitico possessivo/attributivo.
+    *   *市中心的一个公园:* Un parco del centro città.
+    *   *有趣的中文书:* Libri di cinese interessanti.</p>
+        
+          <div class="grammar-examples">
+            <span class="ex-label">Esempi:</span>
+            <ul>
+              
+                <li>
+                  <strong class="font-target"></strong>
+                  
+                  <span class="ex-it">— </span>
+                </li>
+              
+            </ul>
+          </div>
+        
+      </div>
+    
+      </div>
+    </section>
+
+    <!-- SECTION 5: Spazio Calligrafia (Opzionale) -->
+    
+      <section class="section section-practice" style="background-color: #fffaf5; border-color: #eedbc7;">
+        <div class="section-badge" style="background-color: #b45309;">✍️ Spazio Calligrafia & Pratica di Scrittura (TIANZIGE)</div>
+        <div class="practice-controls">
+          <p class="practice-desc">Traccia e ricopia i caratteri/parole chiave:</p>
+        </div>
+        <div class="practice-grid-container tianzige">
+          
+            <div class="practice-row">
+              <div class="practice-lead font-target">猫</div>
+              <div class="practice-line-boxes">
+                <div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div>
+              </div>
+            </div>
+          
+            <div class="practice-row">
+              <div class="practice-lead font-target">鱼</div>
+              <div class="practice-line-boxes">
+                <div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div>
+              </div>
+            </div>
+          
+            <div class="practice-row">
+              <div class="practice-lead font-target">河</div>
+              <div class="practice-line-boxes">
+                <div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div><div class="box-cell"></div>
+              </div>
+            </div>
+          
+        </div>
+      </section>
+    
+
+    <!-- SECTION 6: Istruzioni / Note Docente (Opzionale) -->
+    
+    <section class="section section-instructions" style="background-color: #f2f8f5; border-color: #cce6d8;">
+      <div class="section-badge" style="background-color: #b45309;">📌 Note & Istruzioni per lo Studente</div>
+      <div class="instructions-text"> In sintesi, ecco cosa hai imparato da questo testo:<br/>1. Come raccontare una giornata passata (**了**).<br/>2. Come collegare due azioni simultanee (**边...边**).<br/>3. Come fare un contrasto (**虽然...但是**).<br/>4. Come descrivere la qualità di qualcosa (**很, 非常, 有点儿**).</div>
+    </section>
+    
+  </div>
+</body>
+</html>
