@@ -21,6 +21,23 @@
     /* Nasconde la barra di scorrimento mantenendo la funzionalità */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      .btn-gradient {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #0f172a;
+      background: linear-gradient(135deg, #2dd4bf, #06b6d4);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(45, 212, 191, 0.25);
+      transition: all 0.25s ease;
+    }
+    
   </style>
 </head>
 <body class="bg-slate-900 text-gray-100 h-screen flex flex-col font-sans overflow-hidden">
@@ -41,6 +58,17 @@
         <!-- Titolo in piccolo in alto con font Gloria Hallelujah -->
         <span id="nav-title" class="text-xs sm:text-sm font-gloria text-indigo-300 truncate max-w-[180px] sm:max-w-none">Racconti</span>
       </div>
+            <div class="flex items-center space-x-2 border-l border-slate-800 pl-3 sm:pl-4">
+<a href="https://angolo-pdf.vercel.app/>        <button
+    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-red-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+    type="button"
+    data-ripple-light="true"
+  >
+    <span class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 transform">
+      Pdf
+    </span>
+  </button> </a>
+            </div>
     </div>
 
     <!-- CONTROLLO MENU A SCOMPARSA (TOGGLE) -->
@@ -133,15 +161,15 @@
 
         <!-- Libro 2 -->
         <button 
-          onclick="openBook('Momo.html', 'Piccola elfa Momo', 'btn-b2')" 
+          onclick="openBook('il-fine-settimana.html', 'Il mio weekend', 'btn-b2')" 
           id="btn-b2" 
           class="nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-purple-600/25 text-purple-300 border border-purple-500/20 transition flex items-center justify-between group cursor-pointer"
         >
           <div class="flex items-center space-x-3">
             <div class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center font-bold text-sm shrink-0">🧚</div>
             <div>
-              <div class="text-xs sm:text-sm font-semibold">小精靈末末</div>
-              <div class="text-[10px] text-purple-200/70 font-sans">2. Piccola elfa Momo</div>
+              <div class="text-xs sm:text-sm font-semibold">我的周末</div>
+              <div class="text-[10px] text-purple-200/70 font-sans">2. Il mio weekend</div>
             </div>
           </div>
           <span class="text-xs text-purple-400 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-transform">→</span>
