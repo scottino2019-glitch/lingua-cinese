@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cinese Storie</title>
-   <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法和练习。">
-  <meta name="keywords" content="lingua cinese, cinese semplificato, vocaboli cinesi, grammatica cinese, esercizi cinesi, giochi cinesi, pdf cinesi,video cinesi, audio cinese  中文学习, 汉语, 词汇, 语法, 练习">
+  <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法和练习。">
+  <meta name="keywords" content="lingua cinese, cinese semplificato, vocaboli cinesi, grammatica cinese, esercizi cinesi, giochi cinesi, pdf cinesi,video cinesi, audio cinese 中文学习, 汉语, 词汇, 语法, 练习">
   <meta name="robots" content="index, follow">
 
   <link rel="canonical" href="https://lingua-cinese.vercel.app/">
@@ -17,29 +17,52 @@
   <meta property="og:description" content="Grammatica • Ideogrammi • Risorse • App • Video • Audio • Esercizi • Pdf.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lingua-cinese.vercel.app/">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #1e1e2e;
-      color: #cdd6f4;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* --- HEADER --- */
+    /* --- SFONDO ORIGINALE SCURO A FORTE CONTRASTO --- */
+    body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background-image: url("https://images.unsplash.com/photo-1540198163009-7afda7da2945?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwzMHx8V2hhdHNhcHB8ZW58MHx8fHwxNzkwMjgxNzEyfDA&ixlib=rb-4.1.0&q=85");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #cdd6f4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+
+    /* --- HEADER ESTERNO (ORIGINALE) --- */
     .app-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      padding: 20px 20px 4px 20px;
+      padding: 16px 22px 6px 22px;
       background: #181825;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .app-header .header-icon {
       font-size: 26px;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
 
     .app-header h1 {
@@ -49,27 +72,40 @@
       letter-spacing: 0.5px;
     }
 
-    /* Container delle mini-card con SCROLL ORIZZONTALE */
+    .header-badge {
+      font-size: 11px;
+      font-weight: 600;
+      background: #008069;
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.4px;
+      box-shadow: 0 2px 6px rgba(0, 128, 105, 0.35);
+    }
+
+    /* --- CONTAINER DELLE MINI-CARD CON SCROLL ORIZZONTALE (ESTERNO AL CELLULARE) --- */
     .card-nav {
       display: flex;
       gap: 12px;
-      padding: 16px 20px;
+      padding: 14px 20px;
       background: #181825;
       border-bottom: 2px solid #313244;
-      
       flex-wrap: nowrap;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; 
+      scrollbar-width: none;
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
 
     .card-nav::-webkit-scrollbar {
-      display: none; 
+      display: none;
     }
 
-    /* Stile base delle mini card */
+    /* Stile base delle mini card (I tuoi originali) */
     .mini-card {
-      flex: 0 0 auto; 
+      flex: 0 0 auto;
       width: 85px;
       height: 85px;
       border-radius: 20px;
@@ -80,13 +116,15 @@
       cursor: pointer;
       background: #313244;
       border: 2px solid transparent;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
       user-select: none;
+      position: relative;
     }
 
     .mini-card:hover {
       transform: translateY(-4px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
     }
 
     .mini-card .icon {
@@ -104,77 +142,358 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90%;
     }
 
-    /* --- COLORI TEMATICI (Originali + Nuovi) --- */
-    .card-study { border-color: #89b4fa; color: #89b4fa; }
-    .card-study.active { background: #89b4fa; color: #11111b; box-shadow: 0 8px 15px rgba(137, 180, 250, 0.3); }
+    /* --- COLORI TEMATICI ORIGINALI --- */
+    .card-study { border-color: #3b82f6; color: #60a5fa; }
+    .card-study.active { background: #3b82f6; color: #ffffff; box-shadow: 0 0 16px rgba(59, 130, 246, 0.6); }
 
-    .card-fight { border-color: #f38ba8; color: #f38ba8; }
-    .card-fight.active { background: #f38ba8; color: #11111b; box-shadow: 0 8px 15px rgba(243, 139, 168, 0.3); }
+    .card-fight { border-color: #ef4444; color: #f87171; }
+    .card-fight.active { background: #ef4444; color: #ffffff; box-shadow: 0 0 16px rgba(239, 68, 68, 0.6); }
 
-    .card-gym { border-color: #a6e3a1; color: #a6e3a1; }
-    .card-gym.active { background: #a6e3a1; color: #11111b; box-shadow: 0 8px 15px rgba(166, 227, 161, 0.3); }
+    .card-gym { border-color: #10b981; color: #34d399; }
+    .card-gym.active { background: #10b981; color: #ffffff; box-shadow: 0 0 16px rgba(16, 185, 129, 0.6); }
 
-    /* NUOVI COLORI */
-    /* Scuola (Verde Acqua) */
-    .card-school { border-color: #94e2d5; color: #94e2d5; }
-    .card-school.active { background: #94e2d5; color: #11111b; box-shadow: 0 8px 15px rgba(148, 226, 213, 0.3); }
+    .card-school { border-color: #06b6d4; color: #22d3ee; }
+    .card-school.active { background: #06b6d4; color: #ffffff; box-shadow: 0 0 16px rgba(6, 182, 212, 0.6); }
 
-       /* Scuola (Verde Acqua) */
-    .card-school2 { border-color: #94e2d5; color: #94e2d5; }
-    .card-school2.active { background: #94e2d5; color: #11111b; box-shadow: 0 8px 15px rgba(148, 226, 213, 0.3); }
+    .card-school2 { border-color: #06b6d4; color: #22d3ee; }
+    .card-school2.active { background: #06b6d4; color: #ffffff; box-shadow: 0 0 16px rgba(6, 182, 212, 0.6); }
 
-    
-    /* Hotel (Lavanda) */
-    .card-hotel { border-color: #b4befe; color: #b4befe; }
-    .card-hotel.active { background: #b4befe; color: #11111b; box-shadow: 0 8px 15px rgba(180, 190, 254, 0.3); }
+    .card-hotel { border-color: #6366f1; color: #818cf8; }
+    .card-hotel.active { background: #6366f1; color: #ffffff; box-shadow: 0 0 16px rgba(99, 102, 241, 0.6); }
 
-    /* Bar (Rosso Mattone/Pesca scuro) */
-    .card-bar { border-color: #eba0ac; color: #eba0ac; }
-    .card-bar.active { background: #eba0ac; color: #11111b; box-shadow: 0 8px 15px rgba(235, 160, 172, 0.3); }
+    .card-bar { border-color: #f97316; color: #fb923c; }
+    .card-bar.active { background: #f97316; color: #ffffff; box-shadow: 0 0 16px rgba(249, 115, 22, 0.6); }
 
-    /* Telefono (Azzurro Cielo) */
-    .card-phone { border-color: #89dceb; color: #89dceb; }
-    .card-phone.active { background: #89dceb; color: #11111b; box-shadow: 0 8px 15px rgba(137, 220, 235, 0.3); }
+    .card-phone { border-color: #0284c7; color: #38bdf8; }
+    .card-phone.active { background: #0284c7; color: #ffffff; box-shadow: 0 0 16px rgba(2, 132, 199, 0.6); }
 
-    /* Incontro (Rosa Fenicottero) */
-    .card-meeting { border-color: #f2cdcd; color: #f2cdcd; }
-    .card-meeting.active { background: #f2cdcd; color: #11111b; box-shadow: 0 8px 15px rgba(242, 205, 205, 0.3); }
+    .card-meeting { border-color: #ec4899; color: #f472b6; }
+    .card-meeting.active { background: #ec4899; color: #ffffff; box-shadow: 0 0 16px rgba(236, 72, 153, 0.6); }
 
-    /* Shopping (Rosa/Fucsia chiaro) */
-    .card-shop { border-color: #f5c2e7; color: #f5c2e7; }
-    .card-shop.active { background: #f5c2e7; color: #11111b; box-shadow: 0 8px 15px rgba(245, 194, 231, 0.3); }
+    .card-shop { border-color: #d946ef; color: #e879f9; }
+    .card-shop.active { background: #d946ef; color: #ffffff; box-shadow: 0 0 16px rgba(217, 70, 239, 0.6); }
 
-    .card-food { border-color: #fab387; color: #fab387; }
-    .card-food.active { background: #fab387; color: #11111b; box-shadow: 0 8px 15px rgba(250, 179, 135, 0.3); }
+    .card-food { border-color: #ea580c; color: #fb923c; }
+    .card-food.active { background: #ea580c; color: #ffffff; box-shadow: 0 0 16px rgba(234, 88, 12, 0.6); }
 
-    .card-work { border-color: #cba6f7; color: #cba6f7; }
-    .card-work.active { background: #cba6f7; color: #11111b; box-shadow: 0 8px 15px rgba(203, 166, 247, 0.3); }
-     .card-travel { border-color: #f38ba8; color: #f38ba8; }
-    .card-travel.active { background: #f38ba8; color: #11111b; box-shadow: 0 8px 15px rgba(243, 139, 168, 0.3); }
-     .card-restourant { border-color: #2759EF; color: #2759EF; }
-    .card-restourant.active { background: #2759EF; color: #11111b; box-shadow: 0 8px 15px rgba(243, 139, 168, 0.3); }
-     .card-friend { border-color: #E61F48; color: #E61F48; }
-    .card-friend.active { background: #E61F48; color: #11111b; box-shadow: 0 8px 15px rgba(243, 139, 168, 0.3); }
- .card-wechat { border-color: #A824A7; color: #A824A7; }
- .card-wechat.active { background: #88F256; color: #11111b; box-shadow: 0 8px 15px rgba(243, 139, 168, 0.3); }
+    .card-work { border-color: #8b5cf6; color: #a78bfa; }
+    .card-work.active { background: #8b5cf6; color: #ffffff; box-shadow: 0 0 16px rgba(139, 92, 246, 0.6); }
 
-.card-Amici { border-color: #00D24C; color: #7AF8FC; }
- .card-Amici.active { background: #5FE2A3; color: #11111b; box-shadow: 0 8px 15px rgba(243, 139, 168, 0.3); }
-    .card-pasticceria { border-color: #9449EA; color: #7AF8FC; }
- .card-pasticceria.active { background: #AFF48E; color: #11111b; box-shadow: 0 8px 15px rgba(243, 139, 168, 0.3); }
+    .card-travel { border-color: #f43f5e; color: #fb7185; }
+    .card-travel.active { background: #f43f5e; color: #ffffff; box-shadow: 0 0 16px rgba(244, 63, 94, 0.6); }
 
+    .card-restourant { border-color: #2563eb; color: #60a5fa; }
+    .card-restourant.active { background: #2563eb; color: #ffffff; box-shadow: 0 0 16px rgba(37, 99, 235, 0.6); }
 
+    .card-friend { border-color: #e11d48; color: #fb7185; }
+    .card-friend.active { background: #e11d48; color: #ffffff; box-shadow: 0 0 16px rgba(225, 29, 72, 0.6); }
 
+    .card-wechat { border-color: #07c160; color: #25d366; }
+    .card-wechat.active { background: #07c160; color: #ffffff; box-shadow: 0 0 16px rgba(7, 193, 96, 0.6); }
 
+    .card-Amici { border-color: #10b981; color: #34d399; }
+    .card-Amici.active { background: #10b981; color: #ffffff; box-shadow: 0 0 16px rgba(16, 185, 129, 0.6); }
 
+    .card-pasticceria { border-color: #a855f7; color: #c084fc; }
+    .card-pasticceria.active { background: #a855f7; color: #ffffff; box-shadow: 0 0 16px rgba(168, 85, 247, 0.6); }
 
-    /* Area degli Iframe */
-    .frame-wrapper {
+    /* --- AREA CENTRALE CON IL CELLULARE FRAME PER I DIALOGHI --- */
+    .stage-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 16px 36px 16px;
+      position: relative;
+    }
+
+    /* --- SCOCCA DELLO SMARTPHONE: FORME E BORDI DECISI E REALISTICI --- */
+    .smartphone-chassis {
+      position: relative;
+      width: 100%;
+      max-width: 430px;
+      height: 840px;
+      max-height: calc(100vh - 180px);
+      min-height: 580px;
+
+      /* Bordi decisi in titanio/metallo scuro con smussatura multilivello */
+      background: #18191c;
+      border-radius: 50px;
+      padding: 12px;
+      
+      /* Effetto hardware: telaio esterno in metallo tornito, riflessi netti e ombra profonda */
+      border: 3px solid #383a42;
+      box-shadow: 
+        0 0 0 2px #1e2024,
+        0 0 0 5px #0f1013,
+        0 24px 60px -12px rgba(0, 0, 0, 0.8),
+        0 10px 25px rgba(0, 0, 0, 0.6),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.8);
+      
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Pulsanti fisici laterali dello smartphone (Volume e Power) */
+    .phone-btn-volume-up,
+    .phone-btn-volume-down,
+    .phone-btn-power {
+      position: absolute;
+      background: #2b2d33;
+      border: 1px solid #444750;
+      border-radius: 3px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .phone-btn-volume-up {
+      left: -6px;
+      top: 110px;
+      width: 4px;
+      height: 48px;
+    }
+
+    .phone-btn-volume-down {
+      left: -6px;
+      top: 172px;
+      width: 4px;
+      height: 48px;
+    }
+
+    .phone-btn-power {
+      right: -6px;
+      top: 130px;
+      width: 4px;
+      height: 64px;
+    }
+
+    /* Schermo del telefono (Bezel interno nero lucido + display) */
+    .smartphone-display {
+      width: 100%;
+      height: 100%;
+      background: #efeae2;
+      border-radius: 38px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 2px solid #000000;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* BARRA DI STATO SMARTPHONE */
+    .phone-status-bar {
+      height: 34px;
+      padding: 0 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #008069;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      user-select: none;
+      z-index: 30;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* Dynamic Island / Fotocamera frontale e capsula auricolare */
+    .dynamic-island {
+      width: 92px;
+      height: 18px;
+      background: #000000;
+      border-radius: 20px;
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 35;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .speaker-grill {
+      width: 34px;
+      height: 3px;
+      background: #222;
+      border-radius: 2px;
+    }
+
+    .camera-lens {
+      width: 8px;
+      height: 8px;
+      background: #111;
+      border-radius: 50%;
+      box-shadow: inset 0 0 2px #00a884;
+    }
+
+    /* --- HEADER WHATSAPP DENTRO LO SMARTPHONE --- */
+    .wa-chat-header {
+      background: #008069;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+      z-index: 25;
+      flex-shrink: 0;
+    }
+
+    .wa-header-contact {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .btn-wa-back {
+      background: none;
+      border: none;
+      color: #ffffff;
+      padding: 4px 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-avatar-box {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+    }
+
+    .avatar-bubble {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #111b21;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .badge-online {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      width: 10px;
+      height: 10px;
+      background: #25d366;
+      border: 2px solid #008069;
+      border-radius: 50%;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .contact-name-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+
+    .contact-status-sub {
+      font-size: 11.5px;
+      color: #d1fae5;
+      font-weight: 500;
+    }
+
+    .wa-header-icons {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #ffffff;
+    }
+
+    .wa-icon-action {
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .wa-icon-action:hover {
+      opacity: 0.8;
+    }
+
+    /* Menu a 3 Puntini WhatsApp */
+    .menu-anchor {
+      position: relative;
+    }
+
+    .wa-dropdown-menu {
+      position: absolute;
+      top: 36px;
+      right: 0;
+      width: 200px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      border: 1px solid #e2e8f0;
+      padding: 6px 0;
+      display: none;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .wa-dropdown-menu.visible {
+      display: flex;
+    }
+
+    .wa-menu-entry {
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .wa-menu-entry:hover {
+      background: #f1f5f9;
+      color: #008069;
+    }
+
+    /* --- CORPO DEL CELLULARE: FRAME DEDICATO AI DIALOGHI --- */
+    .dialogue-frame-box {
       flex: 1;
       position: relative;
-      background: #1e1e2e;
+      background-color: #efeae2;
+      background-image: radial-gradient(#d5cdc1 1.2px, transparent 1.2px), radial-gradient(#d5cdc1 1.2px, #efeae2 1.2px);
+      background-size: 26px 26px;
+      background-position: 0 0, 13px 13px;
+      overflow: hidden;
     }
 
     iframe {
@@ -185,8 +504,9 @@
       border: none;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      transform: translateY(10px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      transform: translateY(6px);
+      background: transparent;
     }
 
     iframe.visible {
@@ -194,47 +514,329 @@
       pointer-events: all;
       transform: translateY(0);
     }
+
+    /* --- BARRA INPUT WHATSAPP IN BASSO AL CELLULARE --- */
+    .wa-chat-input-bar {
+      background: #f0f2f5;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid #d1d7db;
+      z-index: 25;
+      flex-shrink: 0;
+    }
+
+    .wa-input-icon {
+      background: none;
+      border: none;
+      color: #54656f;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.15s;
+    }
+
+    .wa-input-icon:hover {
+      color: #111b21;
+    }
+
+    .wa-text-box {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid #e9edef;
+      outline: none;
+      color: #111b21;
+      font-size: 13.5px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-family: inherit;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .wa-text-box::placeholder {
+      color: #8696a0;
+    }
+
+    .wa-send-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #008069;
+      border: none;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 128, 105, 0.35);
+      flex-shrink: 0;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .wa-send-btn:hover {
+      background: #00a884;
+      transform: scale(1.05);
+    }
+
+    /* Indicatore Home del telefono in basso */
+    .phone-home-indicator {
+      height: 14px;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .phone-home-bar {
+      width: 110px;
+      height: 4px;
+      background: #8696a0;
+      border-radius: 4px;
+    }
+
+    /* Modalità Schermo Intero per il cellulare se desiderato */
+    .stage-container.fullscreen .smartphone-chassis {
+      max-width: 100%;
+      height: calc(100vh - 140px);
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+    }
+    .stage-container.fullscreen .smartphone-display {
+      border-radius: 0;
+      border: none;
+    }
+    .stage-container.fullscreen .dynamic-island,
+    .stage-container.fullscreen .phone-btn-volume-up,
+    .stage-container.fullscreen .phone-btn-volume-down,
+    .stage-container.fullscreen .phone-btn-power {
+      display: none;
+    }
+
+    /* Responsività per dispositivi mobili */
+    @media (max-width: 500px) {
+      .app-header {
+        padding: 14px 16px 4px 16px;
+      }
+      .card-nav {
+        padding: 12px 14px;
+        gap: 10px;
+      }
+      .mini-card {
+        width: 76px;
+        height: 76px;
+      }
+      .stage-container {
+        padding: 10px 8px 16px 8px;
+      }
+      .smartphone-chassis {
+        max-width: 100%;
+        height: calc(100vh - 165px);
+        min-height: 450px;
+        border-radius: 28px;
+        padding: 6px;
+      }
+      .smartphone-display {
+        border-radius: 22px;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- 1. HEADER ESTERNO ORIGINALE -->
   <header class="app-header">
-    <div class="header-icon">💬</div>
-    <h1>Cinese Storie</h1>
+    <div class="header-left">
+      <span class="header-icon">💬</span>
+      <h1>Cinese Storie</h1>
+    </div>
+    <span class="header-badge" id="activeTopicBadge">Libreria</span>
   </header>
 
+  <!-- 2. CONTAINER DELLE MINI-CARD ESTERNO (TUTTI I DIALOGHI VISIBILI E SCORREVOLI) -->
   <nav class="card-nav" id="tabs"></nav>
-  <div class="frame-wrapper" id="frames"></div>
+
+  <!-- 3. AREA CENTRALE: SMARTPHONE COME FRAME REALE PER I DIALOGHI -->
+  <main class="stage-container" id="stageContainer">
+
+    <!-- SCOCCA FISICA DELLO SMARTPHONE -->
+    <div class="smartphone-chassis">
+      <!-- Pulsanti fisici laterali del cellulare -->
+      <div class="phone-btn-volume-up"></div>
+      <div class="phone-btn-volume-down"></div>
+      <div class="phone-btn-power"></div>
+
+      <!-- DISPLAY DEL TELEFONO -->
+      <div class="smartphone-display">
+
+        <!-- Barra di stato del cellulare -->
+        <div class="phone-status-bar">
+          <span id="phoneClock">09:41</span>
+          <div class="dynamic-island">
+            <div class="speaker-grill"></div>
+            <div class="camera-lens"></div>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span>5G</span>
+            <span>📶</span>
+            <span>98% 🔋</span>
+          </div>
+        </div>
+
+        <!-- Header WhatsApp del contatto attivo -->
+        <div class="wa-chat-header">
+          <div class="wa-header-contact">
+            <button class="btn-wa-back" title="Indietro">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+            </button>
+            <div class="contact-avatar-box">
+              <div class="avatar-bubble" id="activeAvatar">📚</div>
+              <div class="badge-online"></div>
+            </div>
+            <div class="contact-details">
+              <span class="contact-name-title" id="activeTitle">Libreria</span>
+              <span class="contact-status-sub">online</span>
+            </div>
+          </div>
+
+          <div class="wa-header-icons">
+            <button class="wa-icon-action" title="Videochiamata">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+              </svg>
+            </button>
+
+            <button class="wa-icon-action" title="Chiamata">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </button>
+
+            <!-- Menu a 3 Puntini WhatsApp -->
+            <div class="menu-anchor">
+              <button class="wa-icon-action" id="btnMenuDots" title="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="5" r="2"></circle>
+                  <circle cx="12" cy="12" r="2"></circle>
+                  <circle cx="12" cy="19" r="2"></circle>
+                </svg>
+              </button>
+
+              <div class="wa-dropdown-menu" id="waDropdownMenu">
+                <div class="wa-menu-entry" onclick="reloadCurrentIframe()">
+                  <span>Ricarica dialogo</span>
+                  <span>🔄</span>
+                </div>
+                <div class="wa-menu-entry" onclick="openCurrentInNewTab()">
+                  <span>Apri a tutto schermo</span>
+                  <span>↗️</span>
+                </div>
+                <div class="wa-menu-entry" onclick="toggleFullscreenFrame()">
+                  <span>Schermo intero</span>
+                  <span>⛶</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FRAME DEDICATO INTERAMENTE AL DIALOGO (IFRAME) -->
+        <div class="dialogue-frame-box" id="frames"></div>
+
+        <!-- BARRA INPUT WHATSAPP IN BASSO -->
+        <div class="wa-chat-input-bar">
+          <button class="wa-input-icon" title="Emoji">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+              <line x1="9" y1="9" x2="9.01" y2="9"></line>
+              <line x1="15" y1="9" x2="15.01" y2="9"></line>
+            </svg>
+          </button>
+          <button class="wa-input-icon" title="Allega">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+            </svg>
+          </button>
+
+          <input type="text" class="wa-text-box" placeholder="Scrivi un messaggio..." />
+
+          <button class="wa-send-btn" title="Invia">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Indicatore Home Phone -->
+        <div class="phone-home-indicator">
+          <div class="phone-home-bar"></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
 
   <script>
+    // I TUOI 18 COLLEGAMENTI ORIGINALI ESATTI
     const dialogues = [
-      // Le tue 3 chat originali
-      { label: "Libreria", icon: "📚", colorClass: "card-study", src: "dialoghi/libreria.html" },
-      { label: "La Sfida", icon: "⚔️", colorClass: "card-fight", src: "dialoghi/la-sfida.html" },
-      { label: "Palestra", icon: "🏋️", colorClass: "card-gym", src: "dialoghi/palestra.html" },
-       { label: "Viaggio", icon: "✈️", colorClass: "card-travel", src: "dialoghi/viaggio.html" },
-      // Le NUOVE card richieste (ricorda di cambiare i nomi dei file 'src' quando li crei!)
-      { label: "Scuola",   icon: "🏫", colorClass: "card-school",  src: "dialoghi/scuola.html" },
-      { label: "Scuola2",   icon: "🏫", colorClass: "card-school2",  src: "dialoghi/scuola2.html" },
-      { label: "Hotel",    icon: "🏨", colorClass: "card-hotel",   src: "dialoghi/hotel.html" },
-      { label: "Bar",      icon: "☕", colorClass: "card-bar",     src: "dialoghi/bar.html" },
-      { label: "Telefono", icon: "📱", colorClass: "card-phone",   src: "dialoghi/telefono.html" },
-      { label: "Incontro", icon: "🤝", colorClass: "card-meeting", src: "dialoghi/incontro.html" },
-      { label: "Cena", icon: "🍜", colorClass: "card-food", src: "dialoghi/cena.html" },
-      { label: "Lavoro", icon: "💼", colorClass: "card-work", src: "dialoghi/lavoro.html" },
-      { label: "Shopping", icon: "🛍️", colorClass: "card-shop",    src: "dialoghi/shopping.html" },
-       { label: "Ristorante", icon: "🥠", colorClass: "card-restourant",    src: "dialoghi/ristorante.html" },
-       { label: "Amici", icon: "👫", colorClass: "card-friend",    src: "dialoghi/tra-amici.html" },
-{ label: "WeChat", icon: "🗨️", colorClass: "card-wechat",    src: "dialoghi/WeChat.html" },
-{ label: "Amici", icon: "🤼‍♀️", colorClass: "card-Amici",    src: "dialoghi/dive-sei-stato.html" },
-      { label: "Pasticceria", icon: "🎂", colorClass: "card-pasticceria",    src: "dialoghi/pasticceria.html" }
+      // Le 4 chat originali
+      { label: "Libreria",    icon: "📚", colorClass: "card-study",      src: "dialoghi/libreria.html" },
+      { label: "La Sfida",    icon: "⚔️", colorClass: "card-fight",      src: "dialoghi/la-sfida.html" },
+      { label: "Palestra",    icon: "🏋️", colorClass: "card-gym",        src: "dialoghi/palestra.html" },
+      { label: "Viaggio",     icon: "✈️", colorClass: "card-travel",     src: "dialoghi/viaggio.html" },
+      // Le altre card
+      { label: "Scuola",      icon: "🏫", colorClass: "card-school",     src: "dialoghi/scuola.html" },
+      { label: "Scuola2",     icon: "🏫", colorClass: "card-school2",    src: "dialoghi/scuola2.html" },
+      { label: "Hotel",       icon: "🏨", colorClass: "card-hotel",      src: "dialoghi/hotel.html" },
+      { label: "Bar",         icon: "☕", colorClass: "card-bar",        src: "dialoghi/bar.html" },
+      { label: "Telefono",    icon: "📱", colorClass: "card-phone",      src: "dialoghi/telefono.html" },
+      { label: "Incontro",    icon: "🤝", colorClass: "card-meeting",    src: "dialoghi/incontro.html" },
+      { label: "Cena",        icon: "🍜", colorClass: "card-food",       src: "dialoghi/cena.html" },
+      { label: "Lavoro",      icon: "💼", colorClass: "card-work",       src: "dialoghi/lavoro.html" },
+      { label: "Shopping",    icon: "🛍️", colorClass: "card-shop",       src: "dialoghi/shopping.html" },
+      { label: "Ristorante",  icon: "🥠", colorClass: "card-restourant", src: "dialoghi/ristorante.html" },
+      { label: "Amici",       icon: "👫", colorClass: "card-friend",     src: "dialoghi/tra-amici.html" },
+      { label: "WeChat",      icon: "🗨️", colorClass: "card-wechat",     src: "dialoghi/WeChat.html" },
+      { label: "Amici",       icon: "🤼♀️", colorClass: "card-Amici",     src: "dialoghi/dive-sei-stato.html" },
+      { label: "Pasticceria", icon: "🎂", colorClass: "card-pasticceria", src: "dialoghi/pasticceria.html" }
     ];
 
     const nav = document.getElementById('tabs');
     const frames = document.getElementById('frames');
+    const activeAvatar = document.getElementById('activeAvatar');
+    const activeTitle = document.getElementById('activeTitle');
+    const activeTopicBadge = document.getElementById('activeTopicBadge');
+    const waDropdownMenu = document.getElementById('waDropdownMenu');
+    const btnMenuDots = document.getElementById('btnMenuDots');
+    const stageContainer = document.getElementById('stageContainer');
+    const phoneClock = document.getElementById('phoneClock');
 
+    let currentActiveIndex = 0;
+
+    // Aggiornamento orologio telefono
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      if (phoneClock) phoneClock.textContent = `${h}:${m}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    // Creazione delle card esterne e degli iframe dentro il cellulare
     dialogues.forEach((d, index) => {
-      // Creazione Mini Card
+      // 1. Creazione Mini Card (Esterna al cellulare, come nel tuo originale)
       const card = document.createElement('div');
       card.className = `mini-card ${d.colorClass}`;
       if (index === 0) card.classList.add('active');
@@ -250,19 +852,62 @@
       });
       nav.appendChild(card);
 
-      // Creazione Iframe
+      // 2. Creazione Iframe dentro lo schermo del cellulare
       const iframe = document.createElement('iframe');
       iframe.src = d.src;
       if (index === 0) iframe.classList.add('visible');
       frames.appendChild(iframe);
     });
 
+    // Funzione cambio tab/dialogo
     function switchTab(selectedIndex) {
+      currentActiveIndex = selectedIndex;
+      const d = dialogues[selectedIndex];
+
+      // Aggiorna l'header WhatsApp con il contatto attivo
+      activeAvatar.textContent = d.icon;
+      activeTitle.textContent = d.label;
+      if (activeTopicBadge) activeTopicBadge.textContent = d.label;
+
+      // Aggiorna classi card esterne
       const cards = nav.querySelectorAll('.mini-card');
       cards.forEach((card, i) => card.classList.toggle('active', i === selectedIndex));
 
+      // Aggiorna visibilità iframe nel cellulare
       const allFrames = frames.querySelectorAll('iframe');
       allFrames.forEach((frame, i) => frame.classList.toggle('visible', i === selectedIndex));
+    }
+
+    // Toggle menu a 3 puntini WhatsApp
+    btnMenuDots.addEventListener('click', (e) => {
+      e.stopPropagation();
+      waDropdownMenu.classList.toggle('visible');
+    });
+
+    document.addEventListener('click', () => {
+      waDropdownMenu.classList.remove('visible');
+    });
+
+    // Ricarica dialogo corrente
+    function reloadCurrentIframe() {
+      const allFrames = frames.querySelectorAll('iframe');
+      if (allFrames[currentActiveIndex]) {
+        allFrames[currentActiveIndex].src = dialogues[currentActiveIndex].src;
+      }
+      waDropdownMenu.classList.remove('visible');
+    }
+
+    // Apri dialogo in una nuova scheda
+    function openCurrentInNewTab() {
+      const targetSrc = dialogues[currentActiveIndex].src;
+      window.open(targetSrc, '_blank');
+      waDropdownMenu.classList.remove('visible');
+    }
+
+    // Toggle schermo intero
+    function toggleFullscreenFrame() {
+      stageContainer.classList.toggle('fullscreen');
+      waDropdownMenu.classList.remove('visible');
     }
   </script>
 
