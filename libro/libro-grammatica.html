@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>App Hub - Indice Libri</title>
+  <meta name="description" content="Indice e lettore per narrativa cinese con menu a scomparsa e visualizzatore." />
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -13,31 +15,59 @@
   <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Inter:wght@400;500;600;700;800&family=Ma+Shan+Zheng&family=Rock+Salt&display=swap" rel="stylesheet">
   
   <style>
-    /* Classi CSS per i font caricati */
+    /* Classi tipografiche */
     .font-rock-salt { font-family: 'Rock Salt', cursive; }
     .font-ma-shan { font-family: 'Ma Shan Zheng', cursive; }
     .font-gloria { font-family: 'Gloria Hallelujah', cursive; }
 
-    /* Nasconde la barra di scorrimento mantenendo la funzionalità */
+    /* Nasconde la scrollbar */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      .btn-gradient {
+
+    /* Stile pulsante gradiente PDF */
+    .btn-gradient {
       position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      font-size: 15px;
+      gap: 8px;
+      padding: 6px 14px;
+      font-size: 13px;
       font-weight: 600;
       color: #0f172a;
       background: linear-gradient(135deg, #2dd4bf, #06b6d4);
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(45, 212, 191, 0.25);
+      box-shadow: 0 2px 10px rgba(45, 212, 191, 0.25);
       transition: all 0.25s ease;
     }
-    
+    .btn-gradient:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(45, 212, 191, 0.35);
+      background: linear-gradient(135deg, #14b8a6, #0891b2);
+      color: #ffffff;
+    }
+    .btn-gradient:active {
+      transform: translateY(0);
+    }
+
+    /* Gestione stato attivo nav senza duplicare stringhe di classi in JS */
+    .nav-btn {
+      transition: all 0.2s ease;
+    }
+    .nav-btn.active {
+      background-color: #4f46e5 !important; /* bg-indigo-600 */
+      color: #ffffff !important;
+      border-color: rgba(129, 140, 248, 0.6) !important;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+    }
+    .nav-btn.active .nav-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+    .nav-btn.active .nav-sub {
+      color: rgba(224, 231, 255, 0.9) !important;
+    }
   </style>
 </head>
 <body class="bg-slate-900 text-gray-100 h-screen flex flex-col font-sans overflow-hidden">
@@ -55,20 +85,19 @@
       
       <div class="flex items-center space-x-2 border-l border-slate-800 pl-3 sm:pl-4">
         <span class="text-[10px] sm:text-xs bg-indigo-500/20 text-indigo-300 font-semibold px-2 py-0.5 rounded border border-indigo-500/30">LIBRERIA</span>
-        <!-- Titolo in piccolo in alto con font Gloria Hallelujah -->
+        <!-- Titolo dinamico in alto con font Gloria Hallelujah -->
         <span id="nav-title" class="text-xs sm:text-sm font-gloria text-indigo-300 truncate max-w-[180px] sm:max-w-none">Racconti</span>
       </div>
-            <div class="flex items-center space-x-2 border-l border-slate-800 pl-3 sm:pl-4">
-<a href="https://angolo-pdf.vercel.app/>        <button
-    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-red-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-    type="button"
-    data-ripple-light="true"
-  >
-    <span class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 transform">
-      Pdf
-    </span>
-  </button> </a>
-            </div>
+
+      <div class="flex items-center space-x-2 border-l border-slate-800 pl-3 sm:pl-4">
+        <button type="button" class="btn-gradient" title="Documenti PDF">
+          <span>📁 Pdf</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- CONTROLLO MENU A SCOMPARSA (TOGGLE) -->
@@ -88,7 +117,6 @@
   </header>
 
   <!-- MENU A SCOMPARSA (DRAWER LATERALE CON SFONDO SFOCATO) -->
-  <!-- Backdrop per chiudere al clic all'esterno -->
   <div 
     id="menu-backdrop" 
     onclick="toggleMenu(false)" 
@@ -102,7 +130,7 @@
     aria-label="Menu navigazione libri a scomparsa"
     class="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-slate-950 border-l border-indigo-900/60 shadow-2xl z-40 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out font-gloria"
   >
-    <!-- Intestazione del Menu a Scomparsa -->
+    <!-- Intestazione del Menu -->
     <div>
       <div class="p-4 sm:p-5 border-b border-indigo-900/40 flex items-center justify-between bg-slate-900/70">
         <div class="flex items-center space-x-2.5">
@@ -127,52 +155,52 @@
         <button 
           onclick="showHome()" 
           id="btn-home" 
-          class="w-full text-left px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium shadow-md transition flex items-center justify-between group cursor-pointer"
+          class="nav-btn active w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/20 font-medium shadow-md flex items-center justify-between group cursor-pointer"
         >
           <div class="flex items-center space-x-3">
             <span class="text-lg">🏮</span>
             <div>
               <div class="text-xs sm:text-sm font-semibold">指数 — Indice Generale</div>
-              <div class="text-[10px] text-indigo-200 font-sans">Torna alla schermata principale</div>
+              <div class="text-[10px] text-indigo-200 font-sans nav-sub">Torna alla schermata principale</div>
             </div>
           </div>
-          <span class="text-xs opacity-80 group-hover:translate-x-1 transition-transform">→</span>
+          <span class="nav-arrow text-xs opacity-80 group-hover:translate-x-1 transition-transform">→</span>
         </button>
 
         <div class="pt-3 pb-1 px-1">
           <span class="text-[10px] uppercase tracking-wider text-slate-500 font-sans font-semibold">Racconti Disponibili</span>
         </div>
 
-        <!-- Libro 1 -->
+        <!-- Libro 1 nel drawer -->
         <button 
           onclick="openBook('la-mia-cuginetta.html', 'La mia cuginetta', 'btn-b1')" 
           id="btn-b1" 
-          class="nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-amber-600/25 text-amber-300 border border-amber-500/20 transition flex items-center justify-between group cursor-pointer"
+          class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-amber-600/25 text-amber-300 border border-amber-500/20 flex items-center justify-between group cursor-pointer"
         >
           <div class="flex items-center space-x-3">
             <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center font-bold text-sm shrink-0">🌙</div>
             <div>
               <div class="text-xs sm:text-sm font-semibold">我的小表弟</div>
-              <div class="text-[10px] text-amber-200/70 font-sans">1. La mia cuginetta</div>
+              <div class="text-[10px] text-amber-200/70 font-sans nav-sub">1. La mia cuginetta</div>
             </div>
           </div>
-          <span class="text-xs text-amber-400 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-transform">→</span>
+          <span class="nav-arrow text-xs text-amber-400 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-transform">→</span>
         </button>
 
-        <!-- Libro 2 -->
+        <!-- Libro 2 nel drawer -->
         <button 
-          onclick="openBook('il-fine-settimana.html', 'Il mio weekend', 'btn-b2')" 
+          onclick="openBook('Momo.html', 'Piccola elfa Momo', 'btn-b2')" 
           id="btn-b2" 
-          class="nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-purple-600/25 text-purple-300 border border-purple-500/20 transition flex items-center justify-between group cursor-pointer"
+          class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-purple-600/25 text-purple-300 border border-purple-500/20 flex items-center justify-between group cursor-pointer"
         >
           <div class="flex items-center space-x-3">
             <div class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center font-bold text-sm shrink-0">🧚</div>
             <div>
-              <div class="text-xs sm:text-sm font-semibold">我的周末</div>
-              <div class="text-[10px] text-purple-200/70 font-sans">2. Il mio weekend</div>
+              <div class="text-xs sm:text-sm font-semibold">小精靈末末</div>
+              <div class="text-[10px] text-purple-200/70 font-sans nav-sub">2. Piccola elfa Momo</div>
             </div>
           </div>
-          <span class="text-xs text-purple-400 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-transform">→</span>
+          <span class="nav-arrow text-xs text-purple-400 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-transform">→</span>
         </button>
       </nav>
     </div>
@@ -212,19 +240,17 @@
           <!-- CARDS LINK RAPIDI AI LIBRI -->
           <div class="space-y-4">
             
-            <!-- LIBRO 1 -->
+            <!-- LIBRO 1 CARD -->
             <button onclick="openBook('la-mia-cuginetta.html', 'La mia cuginetta', 'btn-b1')" class="group w-full block p-4 rounded-xl border border-amber-100 bg-gradient-to-r from-amber-50/50 to-orange-50/30 hover:from-amber-100 hover:to-orange-100 transition shadow-sm text-left cursor-pointer">
               <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                   <div class="w-10 h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-lg shadow-md shrink-0">🌙</div>
                   <div>
-                    <!-- TITOLO LIBRO CON FONT MA SHAN ZHENG -->
                     <h2 class="text-lg font-ma-shan text-amber-950 group-hover:text-amber-600">
-                      1. 我的小表弟 
+                      1. 我的小表弟 - La mia cuginetta
                     </h2>
-                    <!-- PARAGRAFO P CON FONT GLORIA HALLELUJAH -->
                     <p class="text-xs font-gloria text-amber-900/70 mt-1">
-                      La mia cuginetta
+                      Una bimba felice
                     </p>
                   </div>
                 </div>
@@ -232,19 +258,17 @@
               </div>
             </button>
 
-            <!-- LIBRO 2 -->
-            <button onclick="openBook('Momo.html', 'Piccola elfa Momo', 'btn-b2')" class="group w-full block p-4 rounded-xl border border-purple-100 bg-gradient-to-r from-purple-50/50 to-pink-50/30 hover:from-purple-100 hover:to-pink-100 transition shadow-sm text-left cursor-pointer">
+            <!-- LIBRO 2 CARD -->
+            <button onclick="openBook('il-mio-weekend.html', 'Il mio weekend', 'btn-b2')" class="group w-full block p-4 rounded-xl border border-purple-100 bg-gradient-to-r from-purple-50/50 to-pink-50/30 hover:from-purple-100 hover:to-pink-100 transition shadow-sm text-left cursor-pointer">
               <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                   <div class="w-10 h-10 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-lg shadow-md shrink-0">🧚</div>
                   <div>
-                    <!-- TITOLO LIBRO CON FONT MA SHAN ZHENG -->
                     <h2 class="text-lg font-ma-shan text-purple-950 group-hover:text-purple-600">
-                      2. 小精靈末末 — Piccola elfa Momo
+                      2. 我的周末 — Il mio weekend
                     </h2>
-                    <!-- PARAGRAFO P CON FONT GLORIA HALLELUJAH -->
                     <p class="text-xs font-gloria text-purple-900/70 mt-1">
-                      Scrittore Sconosciuto • Narrativa Classica
+                      Una giornata felice
                     </p>
                   </div>
                 </div>
@@ -267,87 +291,64 @@
 
   </main>
 
-  <!-- LOGICA DI NAVIGAZIONE, GESTIONE IFRAME E MENU A SCOMPARSA -->
+  <!-- LOGICA DI NAVIGAZIONE E MENU RIPULITA SENZA DUPLICATI -->
   <script>
+    // Elementi DOM principali
     const homePage = document.getElementById('page-home');
     const bookFrame = document.getElementById('book-frame');
     const navTitle = document.getElementById('nav-title');
-    const btnHome = document.getElementById('btn-home');
     const menuDrawer = document.getElementById('menu-drawer');
     const menuBackdrop = document.getElementById('menu-backdrop');
     const btnMenuToggle = document.getElementById('btn-menu-toggle');
     const menuIconBars = document.getElementById('menu-icon-bars');
 
-    // Funzione per aprire o chiudere il menu a scomparsa
+    // Apertura/Chiusura drawer con gestione stato unificata
     function toggleMenu(forceState) {
       const isCurrentlyOpen = !menuDrawer.classList.contains('translate-x-full');
-      const shouldOpen = typeof forceState === 'boolean' ? forceState : !isCurrentlyOpen;
+      const open = typeof forceState === 'boolean' ? forceState : !isCurrentlyOpen;
 
-      if (shouldOpen) {
-        menuDrawer.classList.remove('translate-x-full');
-        menuBackdrop.classList.remove('opacity-0', 'pointer-events-none');
-        menuBackdrop.classList.add('opacity-100', 'pointer-events-auto');
-        btnMenuToggle.setAttribute('aria-expanded', 'true');
-        menuIconBars.innerText = '✕';
-      } else {
-        menuDrawer.classList.add('translate-x-full');
-        menuBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
-        menuBackdrop.classList.add('opacity-0', 'pointer-events-none');
-        btnMenuToggle.setAttribute('aria-expanded', 'false');
-        menuIconBars.innerText = '☰';
-      }
+      menuDrawer.classList.toggle('translate-x-full', !open);
+      menuBackdrop.classList.toggle('opacity-0', !open);
+      menuBackdrop.classList.toggle('pointer-events-none', !open);
+      menuBackdrop.classList.toggle('opacity-100', open);
+      menuBackdrop.classList.toggle('pointer-events-auto', open);
+
+      btnMenuToggle.setAttribute('aria-expanded', String(open));
+      menuIconBars.textContent = open ? '✕' : '☰';
     }
 
-    // Chiudi il menu a scomparsa premendo il tasto ESC
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') {
-        toggleMenu(false);
-      }
+    // Chiusura con tasto Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') toggleMenu(false);
     });
 
+    // Gestione dello stato attivo dei bottoni nel menu (senza duplicare stringhe di classi)
+    function setActiveNav(activeId) {
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id === activeId);
+      });
+    }
+
+    // Switch unificato della vista (evita codice duplicato tra home e libri)
+    function switchView(fileUrl, title, activeNavId) {
+      const isHome = !fileUrl;
+      bookFrame.classList.toggle('hidden', isHome);
+      homePage.classList.toggle('hidden', !isHome);
+      bookFrame.src = fileUrl || 'about:blank';
+      navTitle.textContent = title;
+
+      setActiveNav(activeNavId);
+      toggleMenu(false);
+    }
+
+    // Navigazione: Mostra Indice
     function showHome() {
-      bookFrame.classList.add('hidden');
-      bookFrame.src = "about:blank";
-      homePage.classList.remove('hidden');
-      navTitle.innerText = "Indice_Libri.html";
-
-      resetNavStyle();
-      btnHome.className = "w-full text-left px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium shadow-md transition flex items-center justify-between group cursor-pointer";
-      
-      // Chiude automaticamente il menu a scomparsa dopo la selezione
-      toggleMenu(false);
+      switchView('', 'Indice_Libri.html', 'btn-home');
     }
 
+    // Navigazione: Apri Libro nell'iFrame
     function openBook(fileUrl, title, btnId) {
-      homePage.classList.add('hidden');
-      bookFrame.classList.remove('hidden');
-      bookFrame.src = fileUrl;
-      navTitle.innerText = "Lettore > " + title;
-
-      resetNavStyle();
-      if (btnId) {
-        const activeBtn = document.getElementById(btnId);
-        if (activeBtn) {
-          activeBtn.className = "nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white border border-indigo-400/50 shadow-md transition flex items-center justify-between group cursor-pointer";
-        }
-      }
-
-      // Chiude automaticamente il menu a scomparsa per lasciare spazio al testo
-      toggleMenu(false);
-    }
-
-    function resetNavStyle() {
-      btnHome.className = "w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/20 transition flex items-center justify-between group cursor-pointer";
-      
-      const b1 = document.getElementById('btn-b1');
-      if (b1) {
-        b1.className = "nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-amber-600/25 text-amber-300 border border-amber-500/20 transition flex items-center justify-between group cursor-pointer";
-      }
-
-      const b2 = document.getElementById('btn-b2');
-      if (b2) {
-        b2.className = "nav-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-900/90 hover:bg-purple-600/25 text-purple-300 border border-purple-500/20 transition flex items-center justify-between group cursor-pointer";
-      }
+      switchView(fileUrl, 'Lettore > ' + title, btnId);
     }
   </script>
 
