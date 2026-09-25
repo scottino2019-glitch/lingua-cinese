@@ -758,22 +758,87 @@
 
 </div>
   
-          <!-- ==========================================
-               6. FRAME DINAMICO MICE ANIMAZIONE (Pulito senza barre superiori che coprono il contenuto)
-               ========================================== -->
-        <div class="bento-card col-span-1 sm:col-span-1 row-span-4 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl p-2.5 flex flex-col justify-between relative overflow-hidden min-h-[520px]" data-category="media" data-title="dinamico mice webm animazione video">
-            <div class="relative w-full h-[650px] max-h-[80vh] overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] rounded-3xl border-2 border-emerald-950 bg-slate-900 shadow-inner flex items-center justify-center">
-              <iframe 
-                src="post/social2.html" 
-                class="w-full h-full border-0 rounded-3xl"
-                title="Angolo Sociale"
-                loading="lazy">
-              </iframe>
+        <!-- ==========================================
+          FRAME TABLET IPAD LANDSCAPE CON DOCK LATERALE INTERATTIVO (Al posto dell'ultimo)
+          ========================================== -->
+          <div class="col-span-1 sm:col-span-2 lg:col-span-4 p-4 bg-slate-950 border-4 border-slate-800 rounded-[2.5rem] shadow-2xl flex flex-col justify-between min-h-[460px] relative overflow-hidden">
+            <!-- Bordo Cornice Superiore con Fotocamera Tablet -->
+            <div class="flex items-center justify-center pb-2 shrink-0">
+              <div class="w-3 h-3 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center">
+                <span class="w-1 h-1 rounded-full bg-slate-950"></span>
+              </div>
+            </div>
+          
+            <!-- Schermo Tablet Widescreen con Barra Laterale e Canvas -->
+            <div class="flex-1 w-full bg-slate-900 rounded-2xl border border-slate-800 flex overflow-hidden shadow-inner min-h-[400px]">
+              
+              <!-- Dock Laterale: I TASTI CARICANO I LINK NELL'IFRAME -->
+              <div class="w-14 bg-slate-950/90 border-r border-slate-800 p-2 flex flex-col justify-between items-center py-4 shrink-0">
+                <div class="space-y-3">
+                  <!-- TASTO 1: Inserisci qui il tuo link/pagina 1 -->
+                  <button type="button" onclick="caricaPaginaNelTablet('frame/mazzo-schede-quiz-4-schede.html')" class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-sm shadow-md cursor-pointer hover:scale-110 transition" title="Pagina 1">
+                    ★
+                  </button>
+
+                  <!-- TASTO 2: Inserisci qui il tuo link/pagina 2 -->
+                  <button type="button" onclick="caricaPaginaNelTablet('frame/pasticceria.html')" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 flex items-center justify-center text-sm cursor-pointer hover:scale-110 transition" title="Pagina 2">
+                    📊
+                  </button>
+
+                  <!-- TASTO 3: Inserisci qui il tuo link/pagina 3 -->
+                  <button type="button" onclick="caricaPaginaNelTablet('post/social.html')" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-400 flex items-center justify-center text-sm cursor-pointer hover:scale-110 transition" title="Pagina 3">
+                    🎨
+                  </button>
+                </div>
+
+                <!-- TASTO 4: Inserisci qui il tuo link/pagina 4 -->
+                <button type="button" onclick="caricaPaginaNelTablet('post/social2.html')" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs cursor-pointer hover:scale-110 transition" title="Pagina 4">
+                  ⚙️
+                </button>
+              </div>
+          
+              <!-- Area Canvas Principale Tablet con IFRAME -->
+              <div class="flex-1 p-3 sm:p-5 flex flex-col justify-between text-white overflow-hidden">
+                <!-- Barra Superiore con Indicatore URL e Tasti Avanti / Indietro -->
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="paginaPrecedente()" class="px-2 py-0.5 bg-slate-950 border border-slate-800 rounded text-xs text-slate-400 hover:text-white cursor-pointer" title="Pagina Precedente">◀</button>
+                    <button type="button" onclick="paginaSuccessiva()" class="px-2 py-0.5 bg-slate-950 border border-slate-800 rounded text-xs text-slate-400 hover:text-white cursor-pointer" title="Pagina Successiva">▶</button>
+                    <div class="bg-slate-950 border border-slate-800 rounded px-2.5 py-0.5 text-xs font-mono text-cyan-300">
+                      <span class="text-slate-500">🔗</span> <span id="tablet-url-display">frame/mazzo-schede-quiz-4-schede.html</span>
+                    </div>
+                  </div>
+                  <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-xs border border-emerald-500/30">
+                    Touch &amp; Pen Pronto
+                  </span>
+                </div>
+          
+                <!-- ===================================================================== -->
+                <!-- QUI È L'IFRAME CHE VISUALIZZA LA PAGINA DENTRO LO SCHERMO DEL TABLET  -->
+                <!-- ===================================================================== -->
+                <div class="relative flex-1 w-full my-2.5 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner">
+                  <iframe 
+                    id="schermo-tablet-iframe"
+                    src="frame/mazzo-schede-quiz-4-schede.html" 
+                    class="w-full h-full border-0 rounded-xl bg-slate-950"
+                    title="Tablet Screen"
+                    loading="lazy">
+                  </iframe>
+                </div>
+          
+                <!-- Piè di Pagina Canvas -->
+                <div class="flex items-center justify-between pt-2 border-t border-slate-800 text-xs font-mono text-slate-400">
+                  <span>Risoluzione 2560 × 1600</span>
+                  <span class="text-cyan-400">Interfaccia Multi-Finestra</span>
+                </div>
+              </div>
+
             </div>
           </div>
   
             </div>
           </div>
+
 
 </div>
   </section>
@@ -2402,6 +2467,35 @@ function applyFilters() {
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape') closeModal();
         });
+
+// Elenco dei percorsi/link che vuoi far scorrere con le frecce ◀ e ▶:
+  const listaLinkPagine = [
+    "frame/mazzo-schede-quiz-4-schede.html", // Link 1
+    "frame/pasticceria.html",                // Link 2
+    "post/social.html",                      // Link 3
+    "post/social2.html"                      // Link 4
+  ];
+
+  let indiceLink = 0;
+
+  // Questa funzione cambia il link dell'iframe al clic di qualsiasi tasto
+  function caricaPaginaNelTablet(url) {
+    document.getElementById('schermo-tablet-iframe').src = url;
+    document.getElementById('tablet-url-display').textContent = url;
+    const idx = listaLinkPagine.indexOf(url);
+    if (idx !== -1) indiceLink = idx;
+  }
+
+  function paginaPrecedente() {
+    indiceLink = (indiceLink - 1 + listaLinkPagine.length) % listaLinkPagine.length;
+    caricaPaginaNelTablet(listaLinkPagine[indiceLink]);
+  }
+
+  function paginaSuccessiva() {
+    indiceLink = (indiceLink + 1) % listaLinkPagine.length;
+    caricaPaginaNelTablet(listaLinkPagine[indiceLink]);
+  }
+
     
         /* ==========================================================================
            6. CAMPANELLA NOTIFICHE AGGIORNAMENTI
