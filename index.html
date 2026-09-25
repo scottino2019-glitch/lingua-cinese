@@ -758,8 +758,8 @@
 
 </div>
   
-         <!-- ==========================================
-          FRAME TABLET IPAD WIDESCREEN OTTIMIZZATO PER SMARTPHONE E COMPUTER (Al posto dell'ultimo)
+       <!-- ==========================================
+          FRAME TABLET IPAD WIDESCREEN OTTIMIZZATO (Al posto dell'ultimo)
           ========================================== -->
           <div class="col-span-1 sm:col-span-2 lg:col-span-4 p-2.5 sm:p-4 bg-slate-950 border-4 border-slate-800 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl flex flex-col justify-between min-h-[620px] sm:min-h-[500px] relative overflow-hidden">
             <!-- Bordo Cornice Superiore con Fotocamera Tablet -->
@@ -769,43 +769,43 @@
               </div>
             </div>
           
-            <!-- Schermo Tablet: flex-col su cellulare (dock in alto), flex-row su computer (dock a sinistra) -->
+            <!-- Schermo Tablet: orizzontale in alto su cellulare, a sinistra su computer -->
             <div class="flex-1 w-full bg-slate-900 rounded-2xl border border-slate-800 flex flex-col sm:flex-row overflow-hidden shadow-inner min-h-[560px] sm:min-h-[440px]">
               
-              <!-- Dock App: orizzontale in alto su mobile (lascia tutto lo spazio all'iframe), laterale su computer -->
+              <!-- Dock App: I tasti aprono l'indice corrispondente della lista -->
               <div class="w-full sm:w-14 bg-slate-950/95 border-b sm:border-b-0 sm:border-r border-slate-800 px-3 py-2 sm:py-4 flex flex-row sm:flex-col justify-between items-center shrink-0">
                 <div class="flex flex-row sm:flex-col items-center gap-2 sm:gap-0 sm:space-y-3">
-                  <!-- TASTO 1: Inserisci qui il tuo link 1 -->
-                  <button type="button" onclick="caricaPaginaNelTablet('frame/mazzo-schede-quiz-4-schede.html')" class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-sm shadow-md cursor-pointer hover:scale-110 transition" title="Pagina 1">
+                  <!-- Tasto 1 (★) -->
+                  <button type="button" onclick="apriPagina(0)" class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-sm shadow-md cursor-pointer hover:scale-110 transition">
                     ★
                   </button>
 
-                  <!-- TASTO 2: Inserisci qui il tuo link 2 -->
-                  <button type="button" onclick="caricaPaginaNelTablet('frame/pasticceria.html')" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 flex items-center justify-center text-sm cursor-pointer hover:scale-110 transition" title="Pagina 2">
-                    📊
+                  <!-- Tasto 2 (📰) -->
+                  <button type="button" onclick="apriPagina(1)" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 flex items-center justify-center text-sm cursor-pointer hover:scale-110 transition">
+                    📰
                   </button>
 
-                  <!-- TASTO 3: Inserisci qui il tuo link 3 -->
-                  <button type="button" onclick="caricaPaginaNelTablet('post/social.html')" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-400 flex items-center justify-center text-sm cursor-pointer hover:scale-110 transition" title="Pagina 3">
-                    🎨
+                  <!-- Tasto 3 (🇨🇳) -->
+                  <button type="button" onclick="apriPagina(2)" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-400 flex items-center justify-center text-sm cursor-pointer hover:scale-110 transition">
+                    🇨🇳
                   </button>
                 </div>
 
-                <!-- TASTO 4: Inserisci qui il tuo link 4 -->
-                <button type="button" onclick="caricaPaginaNelTablet('post/social2.html')" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl sm:rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs cursor-pointer hover:scale-110 transition" title="Pagina 4">
-                  ⚙️
+                <!-- Tasto 4 (🈸) -->
+                <button type="button" onclick="apriPagina(3)" class="w-9 h-9 sm:w-8 sm:h-8 rounded-xl sm:rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs cursor-pointer hover:scale-110 transition">
+                 🈸
                 </button>
               </div>
           
-              <!-- Area Canvas Tablet: 100% della larghezza sul cellulare! -->
+              <!-- Area Canvas Tablet -->
               <div class="flex-1 p-2 sm:p-4 flex flex-col justify-between text-white overflow-hidden w-full">
                 <!-- Barra Superiore con Indicatore URL e Tasti Avanti / Indietro -->
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2 gap-1.5 shrink-0">
                   <div class="flex items-center gap-1.5 min-w-0">
-                    <button type="button" onclick="paginaPrecedente()" class="px-2 py-1 bg-slate-950 border border-slate-800 rounded text-xs text-slate-300 hover:text-white cursor-pointer" title="Pagina Precedente">◀</button>
-                    <button type="button" onclick="paginaSuccessiva()" class="px-2 py-1 bg-slate-950 border border-slate-800 rounded text-xs text-slate-300 hover:text-white cursor-pointer" title="Pagina Successiva">▶</button>
+                    <button type="button" onclick="paginaPrecedente()" class="px-2 py-1 bg-slate-950 border border-slate-800 rounded text-xs text-slate-300 hover:text-white cursor-pointer" title="Precedente">◀</button>
+                    <button type="button" onclick="paginaSuccessiva()" class="px-2 py-1 bg-slate-950 border border-slate-800 rounded text-xs text-slate-300 hover:text-white cursor-pointer" title="Successiva">▶</button>
                     <div class="bg-slate-950 border border-slate-800 rounded px-2 py-1 text-[11px] font-mono text-cyan-300 truncate max-w-[150px] sm:max-w-xs">
-                      <span class="text-slate-500">🔗</span> <span id="tablet-url-display">frame/mazzo-schede-quiz-4-schede.html</span>
+                      <span class="text-slate-500">🔗</span> <span id="tablet-url-display">Caricamento...</span>
                     </div>
                   </div>
                   <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] border border-emerald-500/30 shrink-0">
@@ -813,13 +813,11 @@
                   </span>
                 </div>
           
-                <!-- ============================================================== -->
-                <!-- SCHERMO IFRAME A TUTTA LARGHEZZA E ALTEZZA SU CELLULARE        -->
-                <!-- ============================================================== -->
+                <!-- Schermo Iframe a tutta larghezza ed altezza -->
                 <div class="relative flex-1 w-full my-2 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner h-[480px] sm:h-[420px]">
                   <iframe 
                     id="schermo-tablet-iframe"
-                    src="frame/mazzo-schede-quiz-4-schede.html" 
+                    src="" 
                     class="w-full h-full border-0 rounded-xl bg-slate-950 [-webkit-overflow-scrolling:touch]"
                     title="Tablet Screen"
                     scrolling="yes"
@@ -839,7 +837,6 @@
   
             </div>
           </div>
-
 
 </div>
   </section>
@@ -2469,12 +2466,12 @@ function applyFilters() {
           if (e.key === 'Escape') closeModal();
         });
 
-// Elenco dei percorsi/link che vuoi far scorrere con le frecce ◀ e ▶:
+// Elenco dei percorsi/link tablet che vuoi far scorrere con le frecce ◀ e ▶:
   const listaLinkPagine = [
-    "frame/mazzo-schede-quiz-4-schede.html", // Link 1
-    "frame/pasticceria.html",                // Link 2
-    "post/social.html",                      // Link 3
-    "post/social2.html"                      // Link 4
+    "giornale.html", // Link 1
+    "frame/metro.html",                // Link 2
+    "frame/microcadvideo.html",                      // Link 3
+    "frame/passaporto.html"                      // Link 4
   ];
 
   let indiceLink = 0;
