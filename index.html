@@ -2466,37 +2466,52 @@ function applyFilters() {
           if (e.key === 'Escape') closeModal();
         });
 
-/* ==========================================================================
-          
-          Elenco dei percorsi/link tablet che vuoi far scorrere con le frecce ◀ e ▶: ========================================================================== */
+            /* ==========================================================================
+       Elenco dei percorsi/link tablet che vuoi far scorrere con le frecce ◀ e ▶: ========================================================================== */
   const listaLinkPagine = [
-    "frame/amici.html", // Link 1
-    "frame/metro.html",                // Link 2
-    "frame/microcardvideo.html",                      // Link 3
-    "frame/passaporto.html"                      // Link 4
+    "frame/amici.html",           // Link 1 (Indice 0)
+    "frame/metro.html",           // Link 2 (Indice 1)
+    "frame/microcardvideo.html",  // Link 3 (Indice 2)
+    "frame/passaporto.html"       // Link 4 (Indice 3)
   ];
 
   let indiceLink = 0;
 
-  // Questa funzione cambia il link dell'iframe al clic di qualsiasi tasto
+  // Cambia il link dell'iframe e aggiorna il testo dell'URL
   function caricaPaginaNelTablet(url) {
-    document.getElementById('schermo-tablet-iframe').src = url;
-    document.getElementById('tablet-url-display').textContent = url;
+    const iframe = document.getElementById('schermo-tablet-iframe');
+    const displayUrl = document.getElementById('tablet-url-display');
+
+    if (iframe) iframe.src = url;
+    if (displayUrl) displayUrl.textContent = url;
+
     const idx = listaLinkPagine.indexOf(url);
     if (idx !== -1) indiceLink = idx;
   }
 
+  // Scorri indietro
   function paginaPrecedente() {
     indiceLink = (indiceLink - 1 + listaLinkPagine.length) % listaLinkPagine.length;
     caricaPaginaNelTablet(listaLinkPagine[indiceLink]);
   }
 
+  // Scorri avanti
   function paginaSuccessiva() {
     indiceLink = (indiceLink + 1) % listaLinkPagine.length;
     caricaPaginaNelTablet(listaLinkPagine[indiceLink]);
   }
 
-    
+  // Apre una pagina tramite indice (utilizzato dai tasti della Dock)
+  function apriPagina(index) {
+    if (index >= 0 && index < listaLinkPagine.length) {
+      caricaPaginaNelTablet(listaLinkPagine[index]);
+    }
+  }
+
+  // Carica automaticamente la prima pagina appena la struttura della pagina è pronta
+  document.addEventListener("DOMContentLoaded", function() {
+    caricaPaginaNelTablet(listaLinkPagine[0]);
+  });
         /* ==========================================================================
            6. CAMPANELLA NOTIFICHE AGGIORNAMENTI
            ========================================================================== */
