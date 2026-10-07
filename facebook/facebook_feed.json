@@ -1,0 +1,148 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-10-07T16:41:29.250Z",
+  "profile": {
+    "name": "Lingua Cinese",
+    "category": "Video, reel, foto",
+    "isVerified": true,
+    "avatarUrl": "./profilo.webp",
+    "coverUrl": "./cartolina.png",
+    "friendsCount": "1 amici",
+    "mutualFriendsCount": "142 amici in comune",
+    "telegramUrl": "https://t.me/linguacinese2000",
+    "intro": {
+      "bio": "🇨🇳 Grammatica, vocaboli, curiosità, radicali, video e tanto altro per imparare divertendosi la lingua cinese",
+      "work": "Alla scoperta della cultura e della lingua CInese",
+      "education": "Scuola di LIngua Cinese",
+      "livesIn": "Cina",
+      "fromLocation": "Da Italia",
+      "relationshipStatus": "In una relazione",
+      "joinedDate": "Iscritto a Facebook da Maggio 2012",
+      "website": "https://lingua-cinese.vercel.app/blog,html",
+      "followersCount": "12,450 persone seguono questo profilo"
+    },
+    "featuredPhotos": []
+  },
+  "friendsList": [
+    {
+      "id": "f-1786616305693",
+      "name": "Lingue",
+      "avatar": "https://images.unsplash.com/photo-1706403615881-d83dc2067c5d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxfHxsaW5ndWV8ZW58MHx8fHwxNzg2NjE2Mjc0fDA&ixlib=rb-4.1.0&q=85",
+      "mutualFriends": "2 amici in comune"
+    }
+  ],
+  "notifications": [],
+  "posts": [
+    {
+      "id": "post-1791391245673",
+      "authorName": "Lingua Cinese",
+      "authorAvatar": "./profilo.webp",
+      "isVerified": true,
+      "timestamp": "Ora",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "video",
+      "content": "",
+      "videoUrl": "https://www.youtube.com/embed/PWhrP4nyNgQ",
+      "videoTitle": "Big vs Small 大 vs 小 ",
+      "isEmbedIframe": true,
+      "reactions": {
+        "like": 1,
+        "love": 0,
+        "care": 0,
+        "haha": 0,
+        "wow": 0,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 0,
+      "comments": []
+    },
+    {
+      "id": "post-1791391185077",
+      "authorName": "Lingua Cinese",
+      "authorAvatar": "./profilo.webp",
+      "isVerified": true,
+      "timestamp": "Ora",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "video",
+      "content": "",
+      "videoUrl": "cupecake.webm",
+      "isEmbedIframe": false,
+      "reactions": {
+        "like": 1,
+        "love": 0,
+        "care": 0,
+        "haha": 0,
+        "wow": 0,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 0,
+      "comments": []
+    },
+    {
+      "id": "post-1791391118070",
+      "authorName": "Lingua Cinese",
+      "authorAvatar": "./profilo.webp",
+      "isVerified": true,
+      "timestamp": "Ora",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "image",
+      "content": "",
+      "imageUrls": [
+        "./saluti.jpg"
+      ],
+      "images": [
+        "./saluti.jpg"
+      ],
+      "isEmbedIframe": false,
+      "reactions": {
+        "like": 1,
+        "love": 0,
+        "care": 0,
+        "haha": 0,
+        "wow": 0,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 0,
+      "comments": [],
+      "imageUrl": "./saluti.jpg",
+      "mediaUrl": "./saluti.jpg"
+    },
+    {
+      "id": "post-1791391062370",
+      "authorName": "Lingua Cinese",
+      "authorAvatar": "./profilo.webp",
+      "isVerified": true,
+      "timestamp": "Ora",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "image",
+      "content": "",
+      "imageUrls": [
+        "./otto.png"
+      ],
+      "images": [
+        "./otto.png"
+      ],
+      "isEmbedIframe": false,
+      "reactions": {
+        "like": 1,
+        "love": 0,
+        "care": 0,
+        "haha": 0,
+        "wow": 0,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 0,
+      "comments": [],
+      "imageUrl": "./otto.png",
+      "mediaUrl": "./otto.png"
+    }
+  ]
+}
