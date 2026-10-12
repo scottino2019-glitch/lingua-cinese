@@ -1,15 +1,15 @@
 [
   {
-    "tag": "STORIA E POLITICA",
-    "title": "La storia di Yang di Sui",
-    "description": "L’imperatore che scavò IL GRAN CANALE col sangue dei sudditi.",
+    "tag": "Festività",
+    "title": "中秋节",
+    "description": "La Festa di metà autunno",
     "date": "Oggi",
     "link": "blog.html"
   },
   {
-    "tag": "CRONACA E DELITTI",
-    "title": "Il massacro dei vermi di seta",
-    "description": "Il Delitto di palazzo che sconvolse la Cina",
+    "tag": "Dolce tradizionale",
+    "title": "MoonCake",
+    "description": "La ricetta dela torta lunare",
     "date": "Recente",
     "link": "blog.html"
   }
