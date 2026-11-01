@@ -1,489 +1,765 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TV CINESE - SINTONIZZATA -</title>
-  <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法 and 练习。">
-  <meta name="keywords" content="lingua cinese, cinese semplificato, vocaboli cinesi, grammatica cinese, esercizi cinesi, giochi cinesi, pdf cinesi,video cinesi, audio cinese 中文学习, 汉语, 词汇, 语法, 练习">
-  <meta name="robots" content="index, follow">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StreamTube - Video Streaming</title>
+    <meta name="description" content="Piattaforma di streaming video in stile YouTube con CSS Grid responsivo e categorie create automaticamente." />
 
-  <link rel="canonical" href="https://lingua-cinese.vercel.app/">
-  <link rel="alternate" hreflang="it" href="https://lingua-cinese.vercel.app/">
-  <link rel="alternate" hreflang="zh-CN" href="https://lingua-cinese.vercel.app/">
-  <link rel="alternate" hreflang="x-default" href="https://lingua-cinese.vercel.app/">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <meta property="og:title" content="Impara il cinese semplificato | Lingua Cinese">
-  <meta property="og:description" content="Grammatica • Ideogrammi • Risorse • App • Video • Audio • Esercizi • Pdf.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://lingua-cinese.vercel.app/">
+    <!-- ===================================================================
+         SEGNAPOSTO VIDEO TRAMITE TAG <link rel="video">
+         Per aggiungere o modificare i video, basta cambiare o duplicare questi tag:
+         - href: Link assoluto al file video (.mp4, .webm, ecc.)
+         - title: Titolo del video
+         - category: Categoria (la linguetta del filtro verrà creata automaticamente!)
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700;900&family=Courier+Prime:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-            newspaper: ['"Courier Prime"', 'serif'],
-            chineseCalligraphy: ['"Ma Shan Zheng"', 'cursive'],
+      3: { title: "Primo Incontro", url: "" },
+      4: { title: "Fare compere", url: "" },
+      5: { title: "Telefono", url: "tv/cell.webm" },
+      
+         =================================================================== -->
+    <link rel="video" 
+          href="tv/Meeting-mom's-boyfriend.webm" 
+          title="La mamma del mio ragazzo" 
+          category="Serie tv" />
+
+    <link rel="video" 
+          href="tv/primo-incontro.webm" 
+          title="Primo Incontro" 
+          category="Serie tv" />
+    <link rel="video" href="tv/compere.webm" title="telefono" category="Serie tv" />
+
+    <style>
+      :root {
+        --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        --yt-red: #cc0000;
+        
+        /* Palette Neutra Riposante (Né troppo scura né bianca abbagliante) */
+        --bg-page: #f1f3f5;
+        --bg-header: #ffffff;
+        --bg-card: #ffffff;
+        --border-header: #dcdfe4;
+        --border-card: #dcdfe4;
+        --border-search: #8c95a0;
+        --border-search-focus: #065fd4;
+        
+        --text-main: #111827;
+        --text-secondary: #4b5563;
+        --text-muted: #6b7280;
+
+        --chip-bg: #e5e7eb;
+        --chip-text: #1f2937;
+        --chip-active-bg: #1f2937;
+        --chip-active-text: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font-family);
+        background-color: var(--bg-page);
+        color: var(--text-main);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button, input {
+        font-family: inherit;
+        color: inherit;
+      }
+
+      /* ============================================================
+         HEADER CON BARRA DI RICERCA AD ALTA VISIBILITÀ
+         ============================================================ */
+      .app-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: 64px;
+        background-color: var(--bg-header);
+        border-bottom: 2px solid var(--border-header);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        gap: 16px;
+      }
+
+      .header-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .brand-icon {
+        width: 32px;
+        height: 32px;
+        fill: var(--yt-red);
+      }
+      .brand-name {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #111827;
+        letter-spacing: -0.03em;
+      }
+
+      /* Barra di Ricerca ad Alto Contrasto e Facile da Individuare */
+      .header-search {
+        flex: 1;
+        max-width: 620px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .search-form {
+        display: flex;
+        width: 100%;
+        align-items: center;
+      }
+
+      .search-input-container {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-input {
+        width: 100%;
+        height: 42px;
+        padding: 0 40px 0 16px;
+        background-color: #ffffff;
+        border: 2px solid var(--border-search);
+        border-right: none;
+        border-radius: 24px 0 0 24px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #111827;
+        outline: none;
+        transition: border-color 0.15s ease;
+      }
+      .search-input::placeholder {
+        color: #4b5563;
+        font-weight: 400;
+      }
+      .search-input:focus {
+        border-color: var(--border-search-focus);
+      }
+
+      .search-clear-btn {
+        position: absolute;
+        right: 12px;
+        background: transparent;
+        border: none;
+        color: #4b5563;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+      }
+
+      .search-btn {
+        height: 42px;
+        width: 64px;
+        background-color: #e5e7eb;
+        border: 2px solid var(--border-search);
+        border-radius: 0 24px 24px 0;
+        color: #111827;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+      }
+      .search-btn:hover {
+        background-color: #d1d5db;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .link-info-badge {
+        font-size: 0.8rem;
+        font-weight: 600;
+        background-color: #e5e7eb;
+        color: #374151;
+        padding: 6px 12px;
+        border-radius: 16px;
+        border: 1px solid #d1d5db;
+      }
+
+      /* ============================================================
+         BARRA DELLE CATEGORIE CREATE AUTOMATICAMENTE
+         ============================================================ */
+      .categories-bar {
+        position: sticky;
+        top: 64px;
+        z-index: 50;
+        background-color: #ffffff;
+        border-bottom: 1px solid var(--border-header);
+        padding: 10px 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow-x: auto;
+      }
+
+      .category-chip {
+        padding: 7px 16px;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border: 1px solid #d1d5db;
+        background-color: var(--chip-bg);
+        color: var(--chip-text);
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.15s ease;
+      }
+      .category-chip:hover {
+        background-color: #d1d5db;
+      }
+      .category-chip.active {
+        background-color: var(--chip-active-bg);
+        color: var(--chip-active-text);
+        border-color: var(--chip-active-bg);
+      }
+
+      /* ============================================================
+         GRIGLIA VIDEO RESPONSIVA (CSS GRID)
+         ============================================================ */
+      .main-content {
+        padding: 24px;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+
+      .grid-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .grid-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .grid-count {
+        font-size: 0.85rem;
+        color: #4b5563;
+        font-weight: 600;
+      }
+
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+        width: 100%;
+      }
+
+      @media (max-width: 640px) {
+        .video-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .main-content {
+          padding: 16px;
+        }
+        .categories-bar {
+          padding: 10px 16px;
+        }
+        .link-info-badge {
+          display: none;
+        }
+      }
+
+      /* Scheda Video */
+      .video-card {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        display: flex;
+        flex-direction: column;
+      }
+      .video-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .card-thumbnail {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .card-thumbnail video, 
+      .card-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .play-icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: var(--yt-red);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .category-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #111827;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-details {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .video-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #111827;
+        line-height: 1.4;
+      }
+
+      .video-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      /* ============================================================
+         PLAYER STREAMING VIDEO (VISTA DI RIPRODUZIONE)
+         ============================================================ */
+      .watch-view {
+        display: none;
+        padding: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .watch-view.active {
+        display: block;
+      }
+
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #ffffff;
+        border: 2px solid var(--border-card);
+        color: #111827;
+        font-size: 0.9rem;
+        font-weight: 700;
+        padding: 8px 18px;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-bottom: 16px;
+        transition: background-color 0.15s ease;
+      }
+      .back-btn:hover {
+        background-color: #e5e7eb;
+      }
+
+      .player-box {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background-color: #000000;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        margin-bottom: 16px;
+      }
+      .stream-player {
+        width: 100%;
+        height: 100%;
+        outline: none;
+      }
+
+      .watch-details {
+        background-color: #ffffff;
+        border: 1px solid var(--border-card);
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .watch-video-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #111827;
+      }
+      .watch-video-category {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #065fd4;
+      }
+      .watch-video-url {
+        font-size: 0.8rem;
+        word-break: break-all;
+        background-color: #f1f3f5;
+        padding: 8px 12px;
+        border-radius: 6px;
+        color: #4b5563;
+      }
+
+      /* Nessun Risultato */
+      .empty-box {
+        grid-column: 1 / -1;
+        background-color: #ffffff;
+        border: 1px solid var(--border-card);
+        border-radius: 12px;
+        padding: 40px 20px;
+        text-align: center;
+      }
+      .empty-box h3 {
+        font-size: 1.15rem;
+        margin-bottom: 8px;
+        color: #111827;
+      }
+      .empty-box p {
+        color: #4b5563;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-brand" id="logoHomeBtn" title="Torna alla Home">
+        <svg class="brand-icon" viewBox="0 0 24 24">
+          <path d="M21.58 7.19a2.76 2.76 0 0 0-1.95-1.96C17.9 4.75 12 4.75 12 4.75s-5.9 0-7.63.48A2.76 2.76 0 0 0 2.42 7.2 28.84 28.84 0 0 0 2 12c0 1.63.14 3.25.42 4.81.27.99 1.05 1.76 1.95 1.95C6.1 19.25 12 19.25 12 19.25s5.9 0 7.63-.49a2.76 2.76 0 0 0 1.95-1.95c.28-1.56.42-3.18.42-4.81 0-1.63-.14-3.25-.42-4.81z"/>
+          <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ffffff"/>
+        </svg>
+        <span class="brand-name">StreamTube</span>
+      </div>
+
+      <!-- Barra di Ricerca ad Alta Visibilità -->
+      <div class="header-search">
+        <form class="search-form" id="searchForm" onsubmit="event.preventDefault(); executeSearch();">
+          <div class="search-input-container">
+            <input 
+              type="text" 
+              id="searchInput" 
+              class="search-input" 
+              placeholder="Cerca video per titolo o categoria..." 
+              autocomplete="off" 
+            />
+            <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Cancella ricerca">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <button type="submit" class="search-btn" aria-label="Cerca">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="header-right">
+        <span class="link-info-badge" id="videoCounterBadge">2 video segnaposto</span>
+      </div>
+    </header>
+
+    <!-- Barra Categorie Generate Automaticamente -->
+    <nav class="categories-bar" id="categoriesBar">
+      <!-- Le linguette vengono generate automaticamente dai tag <link> -->
+    </nav>
+
+    <!-- Vista Principale (Griglia CSS Grid) -->
+    <main class="main-content" id="browseView">
+      <div class="grid-header">
+        <h2 class="grid-title" id="sectionHeading">Tutti i video</h2>
+        <span class="grid-count" id="countHeading">2 video</span>
+      </div>
+
+      <div class="video-grid" id="videoGrid">
+        <!-- Schede video generate via JS dai tag link -->
+      </div>
+    </main>
+
+    <!-- Vista Streaming Player -->
+    <div class="watch-view" id="watchView">
+      <button class="back-btn" id="closeWatchBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Torna ai video</span>
+      </button>
+
+      <div class="player-box">
+        <video id="videoPlayer" class="stream-player" controls playsinline></video>
+      </div>
+
+      <div class="watch-details">
+        <div class="watch-video-category" id="playerCategory">Categoria</div>
+        <h1 class="watch-video-title" id="playerTitle">Titolo del Video</h1>
+        <div class="watch-video-url">
+          <strong>Link sorgente assoluto:</strong> <span id="playerUrl"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script Semplificato: Estrazione Diretta dai Tag <link rel="video"> -->
+    <script>
+      (function() {
+        let videos = [];
+        let activeCategory = "Tutti";
+        let searchQuery = "";
+
+        // 1. Estrazione semplice dei video dai tag <link rel="video">
+        function loadVideos() {
+          const links = document.querySelectorAll('link[rel="video"]');
+          videos = [];
+
+          links.forEach((link, i) => {
+            const href = link.getAttribute('href') || '';
+            const title = link.getAttribute('title') || link.getAttribute('data-title') || `Video Segnaposto ${i + 1}`;
+            const category = link.getAttribute('category') || link.getAttribute('data-category') || 'Generale';
+
+            videos.push({
+              id: 'vid-' + (i + 1),
+              url: href,
+              title: title.trim(),
+              category: capitalize(category.trim())
+            });
+          });
+
+          const badge = document.getElementById('videoCounterBadge');
+          if (badge) {
+            badge.textContent = `${videos.length} video segnaposto`;
           }
         }
-      }
-    }
-  </script>
-  <style>
-    body {
-      background-color: #050505 !important;
-      background-image: 
-        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%),
-        linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.04)),
-        radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
-      background-size: 100% 4px, 6px 100%, 100% 100%;
-      position: relative;
-      overflow-x: hidden;
-    }
 
-    .bg-static-noise {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      opacity: 0.18; 
-      background-image: url('https://images.unsplash.com/photo-1501141178950-e7fa06e4adf5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwxOXx8c2ZhcmZhavfGVsZXZpc2l2ZXxlbnwwfHx8fDE3ODE0Njg5NDJ8MA&ixlib=rb-4.1.0&q=85');
-      background-size: 400px 400px; 
-      background-repeat: repeat; 
-      pointer-events: none;
-    }
+        // 2. Creazione automatica delle categorie uniche
+        function renderCategories() {
+          const bar = document.getElementById('categoriesBar');
+          bar.innerHTML = "";
 
-    .tv-vignette {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.95) 100%) !important;
-      pointer-events: none;
-      z-index: 1;
-    }
+          // Estrai categorie uniche presenti nei video caricati
+          const uniqueCats = new Set();
+          videos.forEach(v => uniqueCats.add(v.category));
+          const categoriesList = ["Tutti", ...Array.from(uniqueCats).sort()];
 
-    main {
-      position: relative;
-      z-index: 2;
-    }
-
-    .wood-grain {
-      background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 12px);
-    }
-
-    .blinking {
-      animation: blinker 1.5s linear infinite;
-    }
-
-    @keyframes blinker {
-      50% { opacity: 0; }
-    }
-  </style>
-</head>
-<body class="text-stone-900 font-sans min-h-screen flex flex-col items-center justify-start p-2 sm:p-4 md:p-8 antialiased overflow-y-auto">
-
-  <div class="bg-static-noise"></div>
-  <div class="tv-vignette"></div>
-
-  <main id="wrapper-main" class="w-full max-w-4xl flex flex-col justify-center items-center mt-2 sm:mt-6 mb-12">        
-
-    <!-- Struttura TV Esterna Grande (Formato Ampio per Ottima Visibilità Video) -->
-    <div 
-      id="device-body"
-      class="w-full rounded-[1.6rem] sm:rounded-[3rem] mb-6 p-2.5 sm:p-5 relative overflow-visible flex flex-col justify-between shadow-[0_30px_70px_-15px_rgba(0,0,0,0.95)]"
-      style="background: linear-gradient(135deg, #a0522d 0%, #ef4444 50%, #5c2c16 100%); border: 8px solid #4a210d; box-shadow: inset 0 4px 12px rgba(255,255,255,0.15), 0 10px 25px rgba(0,0,0,0.5);"
-    >
-      <div class="absolute inset-0 wood-grain pointer-events-none opacity-10"></div>
-
-      <svg class="absolute inset-0 w-full h-full opacity-70 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <line x1="5" y1="12" x2="25" y2="22" stroke="#4a4a4a" stroke-width="0.5" stroke-linecap="round" />
-        <line x1="25" y1="22" x2="20" y2="35" stroke="#4a4a4a" stroke-width="0.4" stroke-linecap="round" />
-        <line x1="85" y1="10" x2="70" y2="35" stroke="#1c1c1c" stroke-width="0.5" stroke-linecap="round" />
-        <line x1="72" y1="33" x2="88" y2="45" stroke="#ffffff" stroke-width="0.3" stroke-linecap="round" />
-        <line x1="12" y1="75" x2="45" y2="92" stroke="#2a2a2a" stroke-width="0.4" stroke-linecap="round" />
-      </svg>    
-
-      <div class="relative w-full h-full z-10">                
-        <div class="relative w-full h-full flex p-1 sm:p-2 gap-2 sm:gap-4 md:gap-6 text-neutral-800 items-stretch">
-
-          <!-- Antenne orientabili -->
-          <div class="absolute inset-x-0 top-0 h-4 flex justify-between px-16 pointer-events-none select-none">
-            <div id="tv-antenna-l" class="absolute left-10 sm:left-24 md:left-32 w-1.5 bg-stone-400 origin-bottom transition-all duration-300 pointer-events-none z-0" style="height: 55px; transform: rotate(-35deg) translateY(-100%);">
-              <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-600 rounded-full"></div>
-            </div>
-            <div id="tv-antenna-r" class="absolute right-16 sm:right-28 md:right-36 w-1.5 bg-stone-400 origin-bottom transition-all duration-300 pointer-events-none z-0" style="height: 55px; transform: rotate(35deg) translateY(-100%);">
-              <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-600 rounded-full"></div>
-            </div>
-          </div>
-
-          <!-- SCHERMO CRT OTTIMIZZATO A GRANDE FORMATO -->
-          <div class="flex-1 aspect-video rounded-[0.9rem] sm:rounded-[1.8rem] border-[4px] sm:border-[7px] border-neutral-700/60 bg-neutral-900 shadow-inner relative overflow-hidden ring-2 sm:ring-4 ring-black/45 z-10 select-none self-center">
-            <div class="absolute inset-0 bg-[#1e2a1e] overflow-hidden flex items-center justify-center font-mono" id="crt-screen">
-              <div id="crt-bg-glow" class="absolute inset-0 bg-[#344e34] pointer-events-none opacity-40 animate-pulse"></div>
-
-              <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.15)_50%,transparent_50%)] bg-[size:100%_4px] pointer-events-none z-10"></div>
-              <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_33%,rgba(255,0,0,0.03)_66%,rgba(0,0,255,0.03)_100%)] bg-[size:3px_100%] pointer-events-none z-10"></div>
-              <div class="absolute inset-0 bg-radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0)_60%) pointer-events-none z-15"></div>
-              <div class="absolute inset-0 shadow-[inset_0_4px_28px_rgba(0,0,0,0.85)] pointer-events-none z-15"></div>
-
-              <div id="tv-snow-layer" class="absolute inset-0 bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[size:4px_4px] mix-blend-difference pointer-events-none z-9 opacity-40 transition-opacity duration-300"></div>
-
-              <!-- CONTENITORE VIDEO AMPIO E NITIDO -->
-              <div id="tv-video-container" class="absolute inset-0 z-20 hidden flex items-center justify-center bg-black">
-                <video id="tv-player" class="w-full h-full object-contain bg-black" loop playsinline muted></video>
-              </div>
-
-              <!-- Schermata di stato CRT -->
-              <div id="tv-status-screen" class="z-25 text-center text-[#7cfc00] leading-tight tracking-wider flex flex-col items-center justify-center p-3 sm:p-5">
-                <span class="text-lg sm:text-3xl font-black italic block animate-bounce border-2 sm:border-3 border-[#7cfc00] px-3.5 py-1 rounded bg-black/60 shadow-[0_0_15px_rgba(124,252,0,0.4)]">CH 02</span>
-                <span class="text-white bg-red-650 text-[8px] sm:text-[11px] px-2.5 py-0.5 rounded mt-1.5 uppercase tracking-widest font-bold">ASSENZA SEGNALE</span>
-                <span class="text-[#7cfc00] text-[7.5px] sm:text-[9.5px] mt-1 opacity-75 font-mono">SELEZIONA CANALE O RUOTA MANOPOLA</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pannello laterale analogico -->
-          <div class="w-14 sm:w-26 md:w-28 bg-black/15 border border-black/5 rounded-xl sm:rounded-2xl flex flex-col justify-between items-center p-1 sm:p-3 pt-2 z-10 font-mono select-none shrink-0 shadow-inner">
-            <div class="text-[6px] sm:text-[9px] font-black uppercase text-black/60 tracking-wider text-center hidden sm:block">SUPER-CHRON</div>
-
-            <!-- Manopola rotante canale -->
-            <div class="flex flex-col items-center gap-0.5 sm:gap-1 mt-1">
-              <button 
-                id="tv-knob-ch" 
-                class="w-7 h-7 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-r from-stone-600 via-stone-400 to-stone-700 border border-stone-850 flex items-center justify-center shadow-md active:scale-95 transition-transform cursor-pointer relative"
-                aria-label="Cambia canale TV"
-              >
-                <div id="tv-knob-notch" class="absolute inset-0 pointer-events-none flex justify-center transform transition-transform" style="transform: rotate(0deg);">
-                  <div class="w-0.5 sm:w-1 h-2 sm:h-3.5 bg-stone-900 rounded-b"></div>
-                </div>
-                <div class="w-4 h-4 sm:w-7 sm:h-7 md:w-8 md:h-8 bg-stone-800 rounded-full border border-stone-900 flex items-center justify-center text-stone-200 font-bold text-[9px] sm:text-xs select-none shadow-inner" id="tv-ch-num">
-                  2
-                </div>
-              </button>
-              <span class="text-[5.5px] sm:text-[7.5px] text-black/60 font-bold mt-0.5 uppercase tracking-wide">CANALE</span>
-            </div>
-
-            <!-- Slider verticali per Antenna e Rumore Statico -->
-            <div class="w-full flex justify-around my-1 sm:my-2 px-0.5">
-              <div class="flex flex-col items-center">
-                <input 
-                  type="range" 
-                  id="tv-slider-ant" 
-                  min="20" 
-                  max="140" 
-                  value="60" 
-                  class="w-1.5 h-6 sm:h-11 bg-black/45 rounded-lg cursor-pointer" 
-                  style="writing-mode: vertical-lr; direction: rtl; -webkit-appearance: slider-vertical;" 
-                  aria-label="Regola antenna"
-                />
-                <span class="text-[5px] sm:text-[7px] text-black/55 font-bold mt-0.5 scale-90 uppercase">ANT</span>
-              </div>
-              <div class="flex flex-col items-center">
-                <input 
-                  type="range" 
-                  id="tv-slider-stat" 
-                  min="0" 
-                  max="100" 
-                  value="45" 
-                  class="w-1.5 h-6 sm:h-11 bg-black/45 rounded-lg cursor-pointer" 
-                  style="writing-mode: vertical-lr; direction: rtl; -webkit-appearance: slider-vertical;" 
-                  aria-label="Regola rumore statico"
-                />
-                <span class="text-[5px] sm:text-[7px] text-black/55 font-bold mt-0.5 scale-90 uppercase">STAT</span>
-              </div>
-            </div>
-
-            <!-- Griglia altoparlante -->
-            <div class="w-full h-4 sm:h-8 flex justify-between px-1.5 bg-black/20 rounded-md py-0.5 sm:py-1 hidden xs:flex">
-              <div class="w-0.5 sm:w-1 h-full bg-stone-900/40 rounded-full"></div>
-              <div class="w-0.5 sm:w-1 h-full bg-stone-900/40 rounded-full"></div>
-              <div class="w-0.5 sm:w-1 h-full bg-stone-900/40 rounded-full"></div>
-            </div>
-
-            <!-- Pulsante Power -->
-            <div class="flex flex-col items-center mt-1">
-              <button 
-                id="tv-toggle-power" 
-                class="w-6 h-6 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full border border-black/40 shadow-md flex items-center justify-center transition-all cursor-pointer bg-red-600 text-white active:translate-y-0.5"
-                aria-label="Accendi o spegni la TV"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-2.5 h-2.5 sm:w-4 sm:h-4">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
-                </svg>
-              </button>
-              <span class="text-[5.5px] sm:text-[7.5px] text-black/60 font-bold mt-0.5 tracking-wider">POWER</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Giornale di sotto (FISSO, fedele all'originale, proporzionato al televisore) -->
-    <div class="w-full bg-[#ebdcb9] border-2 border-[#ccbd96] text-stone-900 p-4 sm:p-6 rounded-sm shadow-2xl font-newspaper relative mt-2 border-t-[6px] border-t-stone-800">
-
-      <div class="border-b-4 border-stone-900 pb-2 mb-4 text-center relative">
-        <h1 class="text-3xl sm:text-5xl font-chineseCalligraphy text-stone-950 tracking-wide mb-1 select-none">
-          遠東无线电日报
-        </h1>
-        <p class="text-[10px] sm:text-[11px] tracking-[0.25em] text-stone-700 font-sans font-bold uppercase mb-2">
-          - THE FAR EAST WIRELESS DAILY -
-        </p>
-
-        <div class="flex justify-between text-[10px] sm:text-xs font-mono px-2 border-t-2 border-stone-900 mt-1 pt-1 font-bold text-stone-800">
-          <span>第 ... 號 (N. 947)</span>
-          <span>14 GIUGNO 1976</span>
-          <span>定價五角 (0.50 YUAN)</span>
-        </div>
-      </div>
-
-      <div class="w-full text-stone-950">
-        <div class="bg-stone-950 text-[#ebdcb9] text-[10px] sm:text-xs font-bold px-3 py-1.5 uppercase tracking-widest text-center mb-4 font-sans flex items-center justify-between">
-          <span>電視節目表</span>
-          <span>ANNUNCIO PROGRAMMI TELEVISIVI</span>
-          <span>電視節目表</span>
-        </div>
-
-        <div class="space-y-2 sm:space-y-2.5" id="tv-guide-list"></div>
-      </div>
-
-      <div class="border-t border-stone-400 mt-5 pt-3 grid grid-cols-2 text-[9px] sm:text-[10px] text-stone-700 leading-tight">
-        <div class="pr-2 border-r border-stone-300">
-          <span class="font-bold">SINTONIZZAZIONE AUTOMATICA:</span> Clicca su un programma o ruota il selettore analogico per rinfrescare la visione.
-        </div>
-        <div class="pl-2 font-sans text-right text-[8px] sm:text-[9px] uppercase tracking-wider self-center text-stone-600">
-          廠 電 导 半 华 中 ‧ 上海中央工厂
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <script>
-    const videoDatabase = {
-      2: { title: "La mamma del mio ragazzo", url: "tv/Meeting-mom's-boyfriend.webm" },
-      3: { title: "Primo Incontro", url: "tv/primo-incontro.webm" },
-      4: { title: "Fare compere", url: "tv/compere.webm" },
-      5: { title: "Telefono", url: "tv/cell.webm" },
-      6: { title: "Segnale Interrotto", url: null },
-      7: { title: "Segnale Interrotto", url: null },
-      8: { title: "Segnale Interrotto", url: null }
-    };
-
-    const channels = [2, 3, 4, 5, 6, 7, 8];
-    let chIndex = channels.indexOf(2);
-
-    const chKnob = document.getElementById('tv-knob-ch');
-    const chNotch = document.getElementById('tv-knob-notch');
-    const chNum = document.getElementById('tv-ch-num');
-    const powerToggle = document.getElementById('tv-toggle-power');
-    const screen = document.getElementById('crt-screen');
-    const screenLabel = document.getElementById('tv-status-screen');
-    const videoContainer = document.getElementById('tv-video-container');
-    const tvPlayer = document.getElementById('tv-player');
-    const tvSnowLayer = document.getElementById('tv-snow-layer');
-    const sliderAnt = document.getElementById('tv-slider-ant');
-    const sliderStat = document.getElementById('tv-slider-stat');
-    const antL = document.getElementById('tv-antenna-l');
-    const antR = document.getElementById('tv-antenna-r');
-    const guideList = document.getElementById('tv-guide-list');
-
-    let isOn = true;
-    let snowInterval = null;
-    let userHasInteracted = false; 
-
-    // Intercetta in modo sicuro eventuali errori di decodifica video
-    tvPlayer.addEventListener('error', (e) => {
-      videoContainer.classList.add('hidden');
-      screenLabel.classList.remove('hidden');
-      if (tvPlayer.hasAttribute('src')) {
-        tvPlayer.removeAttribute('src');
-      }
-    });
-
-    function setChannel(targetCh) {
-      const newIdx = channels.indexOf(targetCh);
-      if (newIdx !== -1) {
-        chIndex = newIdx;
-        chNum.textContent = channels[chIndex];
-        chNotch.style.transform = 'rotate(' + ((channels[chIndex] - 2) * 45) + 'deg)';
-        tvZipBeep();
-        if (isOn) {
-          updateScreenSignal();
-        } else {
-          renderTvGuide();
-        }
-      }
-    }
-
-    function renderTvGuide() {
-      guideList.innerHTML = "";
-      channels.forEach(ch => {
-        const info = videoDatabase[ch];
-        const isCurrent = channels[chIndex] === ch;
-
-        const item = document.createElement('button');
-        item.type = 'button';
-        item.className = `w-full text-left flex gap-3 items-center p-1.5 sm:p-2 rounded-md transition-all cursor-pointer ${isCurrent && isOn ? 'bg-stone-900 text-[#ebdcb9] font-bold shadow-md' : 'text-stone-900 hover:bg-stone-800/10'}`;
-        item.innerHTML = `
-          <span class="font-mono bg-stone-300 text-stone-950 px-2 py-0.5 rounded text-[10px] sm:text-xs font-black shrink-0 ${isCurrent && isOn ? '!bg-amber-500 !text-black' : ''}">CH ${ch.toString().padStart(2, '0')}</span>
-          <span class="truncate text-[11px] sm:text-sm uppercase tracking-wide font-sans">${info ? info.title : '頻道空置 - VUOTO'}</span>
-        `;
-        item.addEventListener('click', (e) => {
-          e.stopPropagation();
-          setChannel(ch);
-        });
-        guideList.appendChild(item);
-      });
-    }
-
-    function tvZipBeep() {
-      if (!userHasInteracted) return; 
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.1);
-      } catch(e){}
-    }
-
-    function updateScreenSignal() {
-      renderTvGuide();
-
-      if (!isOn) {
-        tvSnowLayer.style.opacity = '0';
-        if (snowInterval) clearInterval(snowInterval);
-        snowInterval = null;
-        tvPlayer.pause();
-        if (tvPlayer.hasAttribute('src')) {
-          tvPlayer.removeAttribute('src');
-          tvPlayer.load();
-        }
-        return;
-      }
-
-      const antVal = parseInt(sliderAnt.value);
-      antL.style.height = (antVal * 0.75) + 'px';
-      antR.style.height = (antVal * 0.75) + 'px';
-
-      const statStrength = parseFloat(sliderStat.value) / 100;
-      const currentChannel = channels[chIndex];
-      const channelData = videoDatabase[currentChannel];
-
-      if (channelData && channelData.url) {
-        videoContainer.classList.remove('hidden');
-        screenLabel.classList.add('hidden');
-
-        const currentSrc = tvPlayer.getAttribute('src');
-        if (currentSrc !== channelData.url) {
-          tvPlayer.setAttribute('src', channelData.url);
-          tvPlayer.load();
-        }
-
-        // Togliamo il muto dopo la prima interazione
-        tvPlayer.muted = !userHasInteracted;
-        
-        const playPromise = tvPlayer.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(err => {
-            tvPlayer.muted = true;
-            tvPlayer.play().catch(() => {});
+          categoriesList.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `category-chip ${cat === activeCategory ? 'active' : ''}`;
+            btn.textContent = cat;
+            btn.onclick = () => {
+              activeCategory = cat;
+              renderCategories();
+              renderGrid();
+            };
+            bar.appendChild(btn);
           });
         }
 
-        tvSnowLayer.style.opacity = '0';
-        if (snowInterval) clearInterval(snowInterval);
-        snowInterval = null;
-      } else {
-        videoContainer.classList.add('hidden');
-        screenLabel.classList.remove('hidden');
-        tvPlayer.pause();
-        if (tvPlayer.hasAttribute('src')) {
-          tvPlayer.removeAttribute('src');
-          tvPlayer.load();
+        // 3. Rendering della Griglia CSS Grid
+        function renderGrid() {
+          const grid = document.getElementById('videoGrid');
+          const titleEl = document.getElementById('sectionHeading');
+          const countEl = document.getElementById('countHeading');
+
+          // Filtraggio per categoria e per ricerca
+          const filtered = videos.filter(v => {
+            const matchCat = (activeCategory === "Tutti" || v.category.toLowerCase() === activeCategory.toLowerCase());
+            const q = searchQuery.toLowerCase().trim();
+            const matchSearch = (q === "" || v.title.toLowerCase().includes(q) || v.category.toLowerCase().includes(q));
+            return matchCat && matchSearch;
+          });
+
+          // Testi intestazione
+          if (searchQuery.trim() !== "") {
+            titleEl.textContent = `Risultati per "${searchQuery}"`;
+          } else if (activeCategory !== "Tutti") {
+            titleEl.textContent = `Categoria: ${activeCategory}`;
+          } else {
+            titleEl.textContent = "Tutti i video";
+          }
+          countEl.textContent = `${filtered.length} ${filtered.length === 1 ? 'video' : 'video'}`;
+
+          grid.innerHTML = "";
+
+          if (filtered.length === 0) {
+            grid.innerHTML = `
+              <div class="empty-box">
+                <h3>Nessun video trovato</h3>
+                <p>Nessun video corrisponde ai criteri di ricerca o alla categoria selezionata.</p>
+              </div>
+            `;
+            return;
+          }
+
+          filtered.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.onclick = () => playVideo(video);
+
+            card.innerHTML = `
+              <div class="card-thumbnail">
+                <div class="category-badge">${escapeHtml(video.category)}</div>
+                <div class="play-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="6 4 20 12 6 20 6 4"></polygon>
+                  </svg>
+                </div>
+              </div>
+              <div class="card-details">
+                <h3 class="video-title">${escapeHtml(video.title)}</h3>
+                <div class="video-meta-row">
+                  <span>${escapeHtml(video.category)}</span>
+                  <span>·</span>
+                  <span>Link assoluto pronto</span>
+                </div>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
         }
 
-        screenLabel.innerHTML = `
-          <div class="text-base sm:text-2xl font-black italic block animate-bounce border-2 border-[#7cfc00] px-3 py-0.5 rounded bg-black/50">CH ${currentChannel.toString().padStart(2, '0')}</div>
-          <div class="text-white bg-red-650 text-[7px] sm:text-[9px] px-2 py-0.5 rounded mt-1 uppercase tracking-widest font-bold">ASSENZA SEGNALE</div>
-          <div class="text-[7px] sm:text-[7.5px] mt-0.5 text-red-500 font-extrabold uppercase blinking">● NO SYNC SIGNAL</div>
-        `;
+        // 4. Riproduzione Video (Watch Mode)
+        function playVideo(video) {
+          const player = document.getElementById('videoPlayer');
+          player.pause();
+          player.src = video.url;
+          player.load();
+          player.play().catch(() => {});
 
-        if (!snowInterval) {
-          snowInterval = setInterval(() => {
-            tvSnowLayer.style.backgroundPosition = Math.random() * 10 + 'px ' + Math.random() * 10 + 'px';
-            tvSnowLayer.style.opacity = String((statStrength * 0.45) + Math.random() * 0.15);
-          }, 40);
+          document.getElementById('playerTitle').textContent = video.title;
+          document.getElementById('playerCategory').textContent = video.category;
+          document.getElementById('playerUrl').textContent = video.url;
+
+          document.getElementById('browseView').style.display = 'none';
+          document.getElementById('watchView').classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      }
-    }
 
-    function unlockAudio() {
-      if (userHasInteracted) return;
-      userHasInteracted = true;
-      updateScreenSignal();
-      tvZipBeep();
-      document.removeEventListener('click', unlockAudio);
-      document.removeEventListener('touchstart', unlockAudio);
-    }
+        function closeWatch() {
+          const player = document.getElementById('videoPlayer');
+          player.pause();
+          player.src = "";
 
-    document.addEventListener('click', unlockAudio);
-    document.addEventListener('touchstart', unlockAudio);
+          document.getElementById('watchView').classList.remove('active');
+          document.getElementById('browseView').style.display = 'block';
+        }
 
-    chNum.textContent = channels[chIndex];
-    chNotch.style.transform = 'rotate(' + ((channels[chIndex] - 2) * 45) + 'deg)';
-    updateScreenSignal();
+        // 5. Ricerca
+        window.executeSearch = function() {
+          const input = document.getElementById('searchInput');
+          searchQuery = input.value.trim();
+          activeCategory = "Tutti";
+          renderCategories();
+          renderGrid();
+          closeWatch();
+        };
 
-    chKnob.addEventListener('click', (e) => {
-      e.stopPropagation(); 
-      chIndex = (chIndex + 1) % channels.length;
-      chNum.textContent = channels[chIndex];
-      chNotch.style.transform = 'rotate(' + ((channels[chIndex] - 2) * 45) + 'deg)';
-      tvZipBeep();
-      if (isOn) {
-        updateScreenSignal();
-      } else {
-        renderTvGuide();
-      }
-    });
+        const searchInput = document.getElementById('searchInput');
+        const searchClearBtn = document.getElementById('searchClearBtn');
 
-    sliderAnt.addEventListener('input', () => {
-      if (isOn) updateScreenSignal();
-    });
+        searchInput.addEventListener('input', function(e) {
+          if (e.target.value.length > 0) {
+            searchClearBtn.style.display = 'flex';
+          } else {
+            searchClearBtn.style.display = 'none';
+            if (searchQuery !== "") {
+              searchQuery = "";
+              renderGrid();
+            }
+          }
+        });
 
-    sliderStat.addEventListener('input', () => {
-      if (isOn) updateScreenSignal();
-    });
+        searchClearBtn.addEventListener('click', function() {
+          searchInput.value = "";
+          this.style.display = 'none';
+          searchQuery = "";
+          renderGrid();
+          searchInput.focus();
+        });
 
-    powerToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      isOn = !isOn;
-      if (isOn) {
-        screen.style.opacity = "1";
-        powerToggle.classList.remove('bg-stone-500');
-        powerToggle.classList.add('bg-red-600');
-        tvZipBeep();
-        updateScreenSignal();
-      } else {
-        screen.style.opacity = "0";
-        powerToggle.classList.remove('bg-red-600');
-        powerToggle.classList.add('bg-stone-500');
-        videoContainer.classList.add('hidden');
-        updateScreenSignal();
-      }
-    });
-  </script>
-</body>
+        // Click Logo per resettare
+        document.getElementById('logoHomeBtn').addEventListener('click', function() {
+          searchInput.value = "";
+          searchClearBtn.style.display = 'none';
+          searchQuery = "";
+          activeCategory = "Tutti";
+          renderCategories();
+          renderGrid();
+          closeWatch();
+        });
+
+        document.getElementById('closeWatchBtn').addEventListener('click', closeWatch);
+
+        // Helper
+        function capitalize(str) {
+          if (!str) return "";
+          return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function escapeHtml(str) {
+          if (!str) return "";
+          return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
+
+        // Avvio iniziale
+        loadVideos();
+        renderCategories();
+        renderGrid();
+      })();
+    </script>
+  </body>
 </html>
