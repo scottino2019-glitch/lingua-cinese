@@ -12,49 +12,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- ===================================================================
-         SEGNAPOSTO VIDEO TRAMITE TAG <link rel="video">
+         SOLO DUE SEGNAPOSTO VIDEO TRAMITE TAG <link rel="video">
          Per aggiungere o modificare i video, basta cambiare o duplicare questi tag:
-         - href: Link assoluto al file video (.mp4, .webm, ecc.)
+         - href: Link al file video (.mp4, .webm, ecc.)
          - title: Titolo del video
          - category: Categoria (la linguetta del filtro verrà creata automaticamente!)
+         - description: Descrizione del video
+    
 
-      3: { title: "Primo Incontro", url: "" },
-      4: { title: "Fare compere", url: "" },
-      5: { title: "Telefono", url: "tv/cell.webm" },
-      
+    
+    
+
          =================================================================== -->
     <link rel="video" 
           href="tv/Meeting-mom's-boyfriend.webm" 
           title="La mamma del mio ragazzo" 
-          category="Serie tv" />
+          category="Serie tv" 
+          description="La ragazza deve incontrare per la prima volta i genitori del suo ragazzo" />
 
     <link rel="video" 
           href="tv/primo-incontro.webm" 
           title="Primo Incontro" 
-          category="Serie tv" />
-    <link rel="video" href="tv/compere.webm" title="telefono" category="Serie tv" />
+          category="Storie" 
+          description="Una breve storie di un primo incontro" />
+
+<link rel="video" href="tv/compere.webm" title="Comprre" category="Storie" 
+description="Vocaboli utili per fare compere" />
 
     <style>
       :root {
         --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         --yt-red: #cc0000;
         
-        /* Palette Neutra Riposante (Né troppo scura né bianca abbagliante) */
+        /* Palette Neutra Riposante (Opaca, non abbagliante, nessun luccichio) */
         --bg-page: #f1f3f5;
         --bg-header: #ffffff;
         --bg-card: #ffffff;
-        --border-header: #dcdfe4;
-        --border-card: #dcdfe4;
-        --border-search: #8c95a0;
-        --border-search-focus: #065fd4;
+        --border-header: #cbd5e1;
+        --border-card: #d1d5db;
+        --border-search: #64748b;
+        --border-search-focus: #0f172a;
         
-        --text-main: #111827;
-        --text-secondary: #4b5563;
-        --text-muted: #6b7280;
+        --text-main: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #64748b;
 
-        --chip-bg: #e5e7eb;
-        --chip-text: #1f2937;
-        --chip-active-bg: #1f2937;
+        --chip-bg: #e2e8f0;
+        --chip-text: #1e293b;
+        --chip-active-bg: #0f172a;
         --chip-active-text: #ffffff;
       }
 
@@ -78,7 +83,7 @@
       }
 
       /* ============================================================
-         HEADER CON BARRA DI RICERCA AD ALTA VISIBILITÀ
+         HEADER CON BARRA DI RICERCA AD ALTA VISIBILITÀ (CHIARA E NETTA)
          ============================================================ */
       .app-header {
         position: sticky;
@@ -90,7 +95,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 20px;
+        padding: 0 24px;
         gap: 16px;
       }
 
@@ -109,14 +114,14 @@
       .brand-name {
         font-size: 1.25rem;
         font-weight: 800;
-        color: #111827;
+        color: var(--text-main);
         letter-spacing: -0.03em;
       }
 
-      /* Barra di Ricerca ad Alto Contrasto e Facile da Individuare */
+      /* Barra di Ricerca Ben Visibile con Bordo Scuro e Definito */
       .header-search {
         flex: 1;
-        max-width: 620px;
+        max-width: 600px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -144,14 +149,14 @@
         border-right: none;
         border-radius: 24px 0 0 24px;
         font-size: 0.95rem;
-        font-weight: 500;
-        color: #111827;
+        font-weight: 600;
+        color: #0f172a;
         outline: none;
         transition: border-color 0.15s ease;
       }
       .search-input::placeholder {
-        color: #4b5563;
-        font-weight: 400;
+        color: #64748b;
+        font-weight: 500;
       }
       .search-input:focus {
         border-color: var(--border-search-focus);
@@ -162,7 +167,7 @@
         right: 12px;
         background: transparent;
         border: none;
-        color: #4b5563;
+        color: #475569;
         cursor: pointer;
         display: none;
         align-items: center;
@@ -174,10 +179,10 @@
       .search-btn {
         height: 42px;
         width: 64px;
-        background-color: #e5e7eb;
+        background-color: #e2e8f0;
         border: 2px solid var(--border-search);
         border-radius: 0 24px 24px 0;
-        color: #111827;
+        color: #0f172a;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -185,7 +190,7 @@
         transition: background-color 0.15s ease;
       }
       .search-btn:hover {
-        background-color: #d1d5db;
+        background-color: #cbd5e1;
       }
 
       .header-right {
@@ -193,14 +198,14 @@
         align-items: center;
         gap: 12px;
       }
-      .link-info-badge {
-        font-size: 0.8rem;
-        font-weight: 600;
-        background-color: #e5e7eb;
-        color: #374151;
-        padding: 6px 12px;
+      .video-count-badge {
+        font-size: 0.82rem;
+        font-weight: 700;
+        background-color: #e2e8f0;
+        color: #334155;
+        padding: 6px 14px;
         border-radius: 16px;
-        border: 1px solid #d1d5db;
+        border: 1px solid #cbd5e1;
       }
 
       /* ============================================================
@@ -224,7 +229,7 @@
         border-radius: 8px;
         font-size: 0.875rem;
         font-weight: 600;
-        border: 1px solid #d1d5db;
+        border: 1px solid #cbd5e1;
         background-color: var(--chip-bg);
         color: var(--chip-text);
         cursor: pointer;
@@ -232,7 +237,7 @@
         transition: all 0.15s ease;
       }
       .category-chip:hover {
-        background-color: #d1d5db;
+        background-color: #cbd5e1;
       }
       .category-chip.active {
         background-color: var(--chip-active-bg);
@@ -245,7 +250,7 @@
          ============================================================ */
       .main-content {
         padding: 24px;
-        max-width: 1600px;
+        max-width: 1400px;
         margin: 0 auto;
       }
 
@@ -256,13 +261,13 @@
         margin-bottom: 20px;
       }
       .grid-title {
-        font-size: 1.15rem;
+        font-size: 1.2rem;
         font-weight: 700;
-        color: #111827;
+        color: #0f172a;
       }
       .grid-count {
         font-size: 0.85rem;
-        color: #4b5563;
+        color: #64748b;
         font-weight: 600;
       }
 
@@ -284,12 +289,12 @@
         .categories-bar {
           padding: 10px 16px;
         }
-        .link-info-badge {
+        .video-count-badge {
           display: none;
         }
       }
 
-      /* Scheda Video */
+      /* Scheda Video con Descrizione Reale */
       .video-card {
         background-color: var(--bg-card);
         border: 1px solid var(--border-card);
@@ -316,16 +321,9 @@
         overflow: hidden;
       }
 
-      .card-thumbnail video, 
-      .card-thumbnail img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
       .play-icon-box {
-        width: 48px;
-        height: 48px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         background-color: var(--yt-red);
         display: flex;
@@ -340,7 +338,7 @@
         top: 10px;
         left: 10px;
         background-color: rgba(255, 255, 255, 0.95);
-        color: #111827;
+        color: #0f172a;
         font-size: 0.75rem;
         font-weight: 700;
         padding: 4px 10px;
@@ -349,35 +347,49 @@
       }
 
       .card-details {
-        padding: 14px;
+        padding: 16px;
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 8px;
+        flex: 1;
       }
 
       .video-title {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         font-weight: 700;
-        color: #111827;
+        color: #0f172a;
         line-height: 1.4;
       }
 
+      .video-desc {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       .video-meta-row {
+        margin-top: auto;
+        padding-top: 8px;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
         font-size: 0.8rem;
-        color: var(--text-secondary);
-        font-weight: 500;
+        color: var(--text-muted);
+        font-weight: 600;
       }
 
       /* ============================================================
-         PLAYER STREAMING VIDEO (VISTA DI RIPRODUZIONE)
+         PLAYER STREAMING VIDEO CON DESCRIZIONE DETTAGLIATA
          ============================================================ */
       .watch-view {
         display: none;
         padding: 20px;
-        max-width: 1100px;
+        max-width: 1050px;
         margin: 0 auto;
       }
       .watch-view.active {
@@ -390,7 +402,7 @@
         gap: 8px;
         background-color: #ffffff;
         border: 2px solid var(--border-card);
-        color: #111827;
+        color: #0f172a;
         font-size: 0.9rem;
         font-weight: 700;
         padding: 8px 18px;
@@ -400,7 +412,7 @@
         transition: background-color 0.15s ease;
       }
       .back-btn:hover {
-        background-color: #e5e7eb;
+        background-color: #e2e8f0;
       }
 
       .player-box {
@@ -427,23 +439,38 @@
         flex-direction: column;
         gap: 12px;
       }
-      .watch-video-title {
-        font-size: 1.3rem;
-        font-weight: 800;
-        color: #111827;
-      }
       .watch-video-category {
         font-size: 0.85rem;
         font-weight: 700;
-        color: #065fd4;
+        color: #0369a1;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
       }
-      .watch-video-url {
-        font-size: 0.8rem;
-        word-break: break-all;
-        background-color: #f1f3f5;
-        padding: 8px 12px;
-        border-radius: 6px;
-        color: #4b5563;
+      .watch-video-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #0f172a;
+      }
+
+      .watch-description-box {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 4px;
+      }
+      .desc-heading {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .desc-text {
+        font-size: 0.925rem;
+        color: #334155;
+        line-height: 1.6;
       }
 
       /* Nessun Risultato */
@@ -458,16 +485,16 @@
       .empty-box h3 {
         font-size: 1.15rem;
         margin-bottom: 8px;
-        color: #111827;
+        color: #0f172a;
       }
       .empty-box p {
-        color: #4b5563;
+        color: #64748b;
         font-size: 0.9rem;
       }
     </style>
   </head>
   <body>
-    <!-- Header -->
+    <!-- Header Chiaro e Opaco con Ricerca Ben Visibile -->
     <header class="app-header">
       <div class="header-brand" id="logoHomeBtn" title="Torna alla Home">
         <svg class="brand-icon" viewBox="0 0 24 24">
@@ -477,7 +504,7 @@
         <span class="brand-name">StreamTube</span>
       </div>
 
-      <!-- Barra di Ricerca ad Alta Visibilità -->
+      <!-- Barra di Ricerca ad Alta Visibilità (Bordo Scuro Ben Evidente) -->
       <div class="header-search">
         <form class="search-form" id="searchForm" onsubmit="event.preventDefault(); executeSearch();">
           <div class="search-input-container">
@@ -485,7 +512,7 @@
               type="text" 
               id="searchInput" 
               class="search-input" 
-              placeholder="Cerca video per titolo o categoria..." 
+              placeholder="Cerca video per titolo, categoria o testo..." 
               autocomplete="off" 
             />
             <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Cancella ricerca">
@@ -505,7 +532,7 @@
       </div>
 
       <div class="header-right">
-        <span class="link-info-badge" id="videoCounterBadge">2 video segnaposto</span>
+        <span class="video-count-badge" id="videoCounterBadge">2 video</span>
       </div>
     </header>
 
@@ -522,7 +549,7 @@
       </div>
 
       <div class="video-grid" id="videoGrid">
-        <!-- Schede video generate via JS dai tag link -->
+        <!-- Schede video con descrizione reale generate via JS dai tag link -->
       </div>
     </main>
 
@@ -543,8 +570,11 @@
       <div class="watch-details">
         <div class="watch-video-category" id="playerCategory">Categoria</div>
         <h1 class="watch-video-title" id="playerTitle">Titolo del Video</h1>
-        <div class="watch-video-url">
-          <strong>Link sorgente assoluto:</strong> <span id="playerUrl"></span>
+        
+        <!-- Descrizione del Video Reale -->
+        <div class="watch-description-box">
+          <div class="desc-heading">Descrizione del video</div>
+          <p class="desc-text" id="playerDescription">Descrizione del video...</p>
         </div>
       </div>
     </div>
@@ -556,7 +586,7 @@
         let activeCategory = "Tutti";
         let searchQuery = "";
 
-        // 1. Estrazione semplice dei video dai tag <link rel="video">
+        // 1. Estrazione semplice dei video e delle descrizioni dai tag <link rel="video">
         function loadVideos() {
           const links = document.querySelectorAll('link[rel="video"]');
           videos = [];
@@ -565,18 +595,20 @@
             const href = link.getAttribute('href') || '';
             const title = link.getAttribute('title') || link.getAttribute('data-title') || `Video Segnaposto ${i + 1}`;
             const category = link.getAttribute('category') || link.getAttribute('data-category') || 'Generale';
+            const description = link.getAttribute('description') || link.getAttribute('data-description') || 'Nessuna descrizione disponibile per questo video.';
 
             videos.push({
               id: 'vid-' + (i + 1),
               url: href,
               title: title.trim(),
-              category: capitalize(category.trim())
+              category: capitalize(category.trim()),
+              description: description.trim()
             });
           });
 
           const badge = document.getElementById('videoCounterBadge');
           if (badge) {
-            badge.textContent = `${videos.length} video segnaposto`;
+            badge.textContent = `${videos.length} video`;
           }
         }
 
@@ -604,7 +636,7 @@
           });
         }
 
-        // 3. Rendering della Griglia CSS Grid
+        // 3. Rendering della Griglia CSS Grid con Descrizione del Video
         function renderGrid() {
           const grid = document.getElementById('videoGrid');
           const titleEl = document.getElementById('sectionHeading');
@@ -614,7 +646,12 @@
           const filtered = videos.filter(v => {
             const matchCat = (activeCategory === "Tutti" || v.category.toLowerCase() === activeCategory.toLowerCase());
             const q = searchQuery.toLowerCase().trim();
-            const matchSearch = (q === "" || v.title.toLowerCase().includes(q) || v.category.toLowerCase().includes(q));
+            const matchSearch = (
+              q === "" || 
+              v.title.toLowerCase().includes(q) || 
+              v.category.toLowerCase().includes(q) ||
+              v.description.toLowerCase().includes(q)
+            );
             return matchCat && matchSearch;
           });
 
@@ -656,10 +693,9 @@
               </div>
               <div class="card-details">
                 <h3 class="video-title">${escapeHtml(video.title)}</h3>
+                <p class="video-desc">${escapeHtml(video.description)}</p>
                 <div class="video-meta-row">
                   <span>${escapeHtml(video.category)}</span>
-                  <span>·</span>
-                  <span>Link assoluto pronto</span>
                 </div>
               </div>
             `;
@@ -677,7 +713,7 @@
 
           document.getElementById('playerTitle').textContent = video.title;
           document.getElementById('playerCategory').textContent = video.category;
-          document.getElementById('playerUrl').textContent = video.url;
+          document.getElementById('playerDescription').textContent = video.description;
 
           document.getElementById('browseView').style.display = 'none';
           document.getElementById('watchView').classList.add('active');
