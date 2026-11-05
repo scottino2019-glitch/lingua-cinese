@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartphone Web Apps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bonbon&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+             background: url('https://images.unsplash.com/photo-1604478373812-0ef15d185d90?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4MDc1Mjd8MHwxfHNlYXJjaHwyMXx8YXBwJTIwaXBob25lfGVufDB8fHx8MTc5MzkwNDM0M3ww&ixlib=rb-4.1.0&q=85') center/cover no-repeat fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Scocca dello Smartphone (ingrandita) */
+        .phone {
+            width: 360px;
+            height: 720px;
+            background: #111;
+            border-radius: 48px;
+            padding: 14px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7),
+                        0 0 0 12px #262626,
+                        0 0 0 14px #404040;
+            position: relative;
+        }
+
+        /* Schermo */
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f72008, #ecc846);
+            border-radius: 36px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Notch / Dynamic Island */
+        .notch {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 26px;
+            background-color: #000;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        /* Barra di Stato */
+        .status-bar {
+            height: 44px;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 5;
+            margin-top: 2px;
+        }
+
+        .status-icons {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        /* Titolo APP integrato nello sfondo */
+        .app-header-title {
+            font-family: "Bonbon", cursive;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: rgb(242, 230, 100);
+            letter-spacing: 4px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            user-select: none;
+        }
+
+        /* Griglia delle App */
+        .apps-container {
+            padding: 10px 18px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px 14px;
+            align-content: start;
+            flex-grow: 1;
+        }
+
+        /* Collegamento e Icona App */
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            transition: transform 0.15s ease;
+        }
+
+        .app-item:active {
+            transform: scale(0.92);
+        }
+
+        .app-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            margin-bottom: 8px;
+        }
+
+        .app-icon i {
+            width: 32px;
+            height: 32px;
+            color: #fff;
+        }
+
+        .app-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80px;
+        }
+
+        /* Style Icon Gradient */
+        .bg-temi { background: linear-gradient(135deg, #ec4899, #8b5cf6); }
+        .bg-libreria { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .bg-hanzi-pwa { background: linear-gradient(135deg, #10b981, #047857); }
+        .bg-hanzilab { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .bg-walkman { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .bg-scrivolingo { background: linear-gradient(135deg, #a855f7, #6b21a8); }
+        .bg-sito { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+        .bg-utility { background: linear-gradient(135deg, #64748b, #334155); }
+        .bg-roji { background: linear-gradient(135deg, #84cc16, #4d7c0f); }
+
+        /* Dock Inferiore */
+        .dock-container {
+            padding: 0 16px 14px 16px;
+        }
+
+        .dock {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 26px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .dock .app-icon {
+            margin-bottom: 0;
+            width: 58px;
+            height: 58px;
+        }
+
+        /* Home Indicator Bar */
+        .home-bar {
+            width: 130px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 2px;
+            margin: 6px auto 4px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone">
+        <div class="screen">
+            <!-- Notch -->
+            <div class="notch"></div>
+
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <span id="time">09:41</span>
+                <div class="status-icons">
+                    <i data-lucide="wifi" style="width:16px; height:16px;"></i>
+                    <i data-lucide="battery" style="width:18px; height:18px;"></i>
+                </div>
+            </div>
+
+            <!-- Titolo integrato nello sfondo -->
+            <div class="app-header-title">APP</div>
+
+            <!-- Griglia Applicazioni Centrali -->
+            <div class="apps-container">
+                <a href="https://temi-cinesi.vercel.app/" class="app-item" target="_blank">
+                    <div class="app-icon bg-temi">
+                        <i data-lucide="palette"></i>
+                    </div>
+                    <span class="app-label">Temi Cinesi</span>
+                </a>
+
+                <a href="https://libreria-cinese.vercel.app/" class="app-item" target="_blank">
+                    <div class="app-icon bg-libreria">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                    <span class="app-label">Libreria</span>
+                </a>
+
+                <a href="https://hanzi-pwa-five.vercel.app/" class="app-item" target="_blank">
+                    <div class="app-icon bg-hanzi-pwa">
+                        <i data-lucide="languages"></i>
+                    </div>
+                    <span class="app-label">Hanzi PWA</span>
+                </a>
+
+                <a href="https://hanzilab.vercel.app/" class="app-item" target="_blank">
+                    <div class="app-icon bg-hanzilab">
+                        <i data-lucide="flask-conical"></i>
+                    </div>
+                    <span class="app-label">HanziLab</span>
+                </a>
+
+                <a href="https://hanziwalkman.vercel.app/" class="app-item" target="_blank">
+                    <div class="app-icon bg-walkman">
+                        <i data-lucide="headphones"></i>
+                    </div>
+                    <span class="app-label">Walkman</span>
+                </a>
+
+                <a href="https://scrivolingo-hub.vercel.app/" class="app-item" target="_blank">
+                    <div class="app-icon bg-scrivolingo">
+                        <i data-lucide="pen-tool"></i>
+                    </div>
+                    <span class="app-label">Scrivolingo</span>
+                </a>
+            </div>
+
+            <!-- Dock Inferiore (Stile iOS/Cinese) -->
+            <div class="dock-container">
+                <div class="dock">
+                    <a href="https://lingua-cinese.vercel.app/" class="app-item" target="_blank">
+                        <div class="app-icon bg-sito">
+                            <i data-lucide="globe"></i>
+                        </div>
+                    </a>
+
+                    <a href="https://lingua-cinese.vercel.app/utility.html" class="app-item" target="_blank">
+                        <div class="app-icon bg-utility">
+                            <i data-lucide="wrench"></i>
+                        </div>
+                    </a>
+
+                    <a href="https://roji-tawny.vercel.app/" class="app-item" target="_blank">
+                        <div class="app-icon bg-roji">
+                            <i data-lucide="compass"></i>
+                        </div>
+                    </a>
+                </div>
+                <div class="home-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inizializza icone Lucide
+        lucide.createIcons();
+
+        // Orologio in tempo reale
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('time').textContent = `${hours}:${minutes}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
