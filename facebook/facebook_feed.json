@@ -1,12 +1,12 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-10-07T16:41:29.250Z",
+  "updatedAt": "2026-11-05T16:57:10.920Z",
   "profile": {
-    "name": "Lingua Cinese",
+    "name": "✧・゚:* 𝓛𝓲𝓷𝓰𝓾𝓪 𝓒𝓲𝓷𝓮𝓼𝓮 *:・゚✧",
     "category": "Video, reel, foto",
     "isVerified": true,
     "avatarUrl": "./profilo.webp",
-    "coverUrl": "./cartolina.png",
+    "coverUrl": "./image.jpg",
     "friendsCount": "1 amici",
     "mutualFriendsCount": "142 amici in comune",
     "telegramUrl": "https://t.me/linguacinese2000",
@@ -31,20 +31,90 @@
       "mutualFriends": "2 amici in comune"
     }
   ],
-  "notifications": [],
+  "notifications": [
+    {
+      "id": "n-1793897777881",
+      "avatar": "./profilo.webp",
+      "title": "Lingua Cinese",
+      "text": "Iscriviti alla news letter",
+      "timestamp": "Adesso",
+      "isUnread": true
+    }
+  ],
   "posts": [
     {
-      "id": "post-1791391245673",
-      "authorName": "Lingua Cinese",
+      "id": "post-1793897705754",
+      "authorName": "✧・゚:* 𝓛𝓲𝓷𝓰𝓾𝓪 𝓒𝓲𝓷𝓮𝓼𝓮 *:・゚✧",
+      "authorAvatar": "./profilo.webp",
+      "isVerified": true,
+      "timestamp": "Ora",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "image",
+      "content": "",
+      "imageUrls": [
+        "./domande.jpg"
+      ],
+      "images": [
+        "./domande.jpg"
+      ],
+      "isEmbedIframe": false,
+      "reactions": {
+        "like": 1,
+        "love": 0,
+        "care": 0,
+        "haha": 0,
+        "wow": 0,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 0,
+      "comments": [],
+      "imageUrl": "./domande.jpg",
+      "mediaUrl": "./domande.jpg"
+    },
+    {
+      "id": "post-1793897644515",
+      "authorName": "✧・゚:* 𝓛𝓲𝓷𝓰𝓾𝓪 𝓒𝓲𝓷𝓮𝓼𝓮 *:・゚✧",
+      "authorAvatar": "./profilo.webp",
+      "isVerified": true,
+      "timestamp": "Ora",
+      "privacy": "public",
+      "isPinned": false,
+      "type": "image",
+      "content": "",
+      "imageUrls": [
+        "./wodei.jpg"
+      ],
+      "images": [
+        "./wodei.jpg"
+      ],
+      "isEmbedIframe": false,
+      "reactions": {
+        "like": 1,
+        "love": 0,
+        "care": 0,
+        "haha": 0,
+        "wow": 0,
+        "sad": 0,
+        "angry": 0
+      },
+      "sharesCount": 0,
+      "comments": [],
+      "imageUrl": "./wodei.jpg",
+      "mediaUrl": "./wodei.jpg"
+    },
+    {
+      "id": "post-1793897163112",
+      "authorName": "✧・゚:* 𝓛𝓲𝓷𝓰𝓾𝓪 𝓒𝓲𝓷𝓮𝓼𝓮 *:・゚✧",
       "authorAvatar": "./profilo.webp",
       "isVerified": true,
       "timestamp": "Ora",
       "privacy": "public",
       "isPinned": false,
       "type": "video",
-      "content": "",
-      "videoUrl": "https://www.youtube.com/embed/PWhrP4nyNgQ",
-      "videoTitle": "Big vs Small 大 vs 小 ",
+      "content": "Start learning Chinese with 100 simple and useful characters!\n\nIn this video, you'll learn:\n\nChinese characters and Pinyin pronunciation\n\nEnglish meanings\n\nTraditional and Simplified Chinese\n\nStep-by-step handwriting practice",
+      "videoUrl": "https://www.youtube.com/embed/67dLIgx87kw",
       "isEmbedIframe": true,
       "reactions": {
         "like": 1,
@@ -59,17 +129,17 @@
       "comments": []
     },
     {
-      "id": "post-1791391185077",
-      "authorName": "Lingua Cinese",
+      "id": "post-1793897042659",
+      "authorName": "✧・゚:* 𝓛𝓲𝓷𝓰𝓾𝓪 𝓒𝓲𝓷𝓮𝓼𝓮 *:・゚✧",
       "authorAvatar": "./profilo.webp",
       "isVerified": true,
       "timestamp": "Ora",
       "privacy": "public",
       "isPinned": false,
       "type": "video",
-      "content": "",
-      "videoUrl": "cupecake.webm",
-      "isEmbedIframe": false,
+      "content": "\nIn this video, you’ll learn 30 common body parts in Chinese with Chinese characters, Pinyin, English meanings, and practical example sentences. This lesson is designed to help beginner Chinese learners build useful vocabulary and understand how these words are used in everyday Chinese.\n\nYou’ll learn words for:\n头 — tóu — head\n头发 — tóufa — hair\n脸 — liǎn — face\n眼睛 — yǎnjing — eyes \n....\nEach word comes with practical Chinese example sentences to help you remember the vocabulary and use it in real-life situations.",
+      "videoUrl": "https://www.youtube.com/embed/OvIhzQKveHI",
+      "isEmbedIframe": true,
       "reactions": {
         "like": 1,
         "love": 0,
@@ -81,68 +151,6 @@
       },
       "sharesCount": 0,
       "comments": []
-    },
-    {
-      "id": "post-1791391118070",
-      "authorName": "Lingua Cinese",
-      "authorAvatar": "./profilo.webp",
-      "isVerified": true,
-      "timestamp": "Ora",
-      "privacy": "public",
-      "isPinned": false,
-      "type": "image",
-      "content": "",
-      "imageUrls": [
-        "./saluti.jpg"
-      ],
-      "images": [
-        "./saluti.jpg"
-      ],
-      "isEmbedIframe": false,
-      "reactions": {
-        "like": 1,
-        "love": 0,
-        "care": 0,
-        "haha": 0,
-        "wow": 0,
-        "sad": 0,
-        "angry": 0
-      },
-      "sharesCount": 0,
-      "comments": [],
-      "imageUrl": "./saluti.jpg",
-      "mediaUrl": "./saluti.jpg"
-    },
-    {
-      "id": "post-1791391062370",
-      "authorName": "Lingua Cinese",
-      "authorAvatar": "./profilo.webp",
-      "isVerified": true,
-      "timestamp": "Ora",
-      "privacy": "public",
-      "isPinned": false,
-      "type": "image",
-      "content": "",
-      "imageUrls": [
-        "./otto.png"
-      ],
-      "images": [
-        "./otto.png"
-      ],
-      "isEmbedIframe": false,
-      "reactions": {
-        "like": 1,
-        "love": 0,
-        "care": 0,
-        "haha": 0,
-        "wow": 0,
-        "sad": 0,
-        "angry": 0
-      },
-      "sharesCount": 0,
-      "comments": [],
-      "imageUrl": "./otto.png",
-      "mediaUrl": "./otto.png"
     }
   ]
 }
