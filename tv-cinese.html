@@ -3,45 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-  <title>TV CINESE - SINTONIZZATA -</title>
-  <meta name="description" content="Impara il cinese con lezioni, vocaboli, grammatica ed esercizi interattivi. 学习中文，提供词汇、语法 and 练习。">
-  <meta name="keywords" content="lingua cinese, cinese semplificato, vocaboli cinesi, grammatica cinese, esercizi cinesi, giochi cinesi, pdf cinesi,video cinesi, audio cinese 中文学习, 汉语, 词汇, 语法, 练习">
+    <title>StreamTube - Video Streaming</title>
+    <meta name="description" content="Piattaforma di streaming video in stile YouTube con CSS Grid responsivo, auto cattura frame per le copertine e categorie create automaticamente." />
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Klee+One&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <!-- ===================================================================
          SOLO DUE SEGNAPOSTO VIDEO TRAMITE TAG <link rel="video">
-         Per aggiungere o modificare i video, basta cambiare o duplicare questi tag:
          - href: Link al file video (.mp4, .webm, ecc.)
          - title: Titolo del video
          - category: Categoria (la linguetta del filtro verrà creata automaticamente!)
          - description: Descrizione del video
-    
-
-    
-    
-
+         La copertina viene catturata in automatico direttamente dai frame del video!
          =================================================================== -->
     <link rel="video" 
-          href="tv/Meeting-mom's-boyfriend.webm" 
-          title="La mamma del mio ragazzo" 
-          category="Serie tv" 
-          description="La ragazza deve incontrare per la prima volta i genitori del suo ragazzo" />
+          href="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
+          title="Big Buck Bunny" 
+          category="Animazione" 
+          description="Simpatica e divertente animazione open-source con protagonisti gli animali del bosco alle prese con un coniglio dal cuore d'oro." />
 
     <link rel="video" 
-          href="tv/primo-incontro.webm" 
-          title="Primo Incontro" 
-          category="Storie" 
-          description="Una breve storie di un primo incontro" />
-
-<link rel="video" href="tv/compere.webm" title="Comprre" category="Storie" 
-description="Vocaboli utili per fare compere" />
+          href="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" 
+          title="For Bigger Blazes" 
+          category="Natura" 
+          description="Un viaggio visivo attraverso paesaggi naturali incontaminati, fiumi impetuosi e canyon spettacolari ripresi ad alta definizione." />
 
     <style>
       :root {
@@ -87,7 +75,7 @@ description="Vocaboli utili per fare compere" />
       }
 
       /* ============================================================
-         HEADER CON BARRA DI RICERCA AD ALTA VISIBILITÀ (CHIARA E NETTA)
+         HEADER CON BARRA DI RICERCA AD ALTA VISIBILITÀ
          ============================================================ */
       .app-header {
         position: sticky;
@@ -116,14 +104,12 @@ description="Vocaboli utili per fare compere" />
         fill: var(--yt-red);
       }
       .brand-name {
-        font-size: 2.25rem;
+        font-size: 1.25rem;
         font-weight: 800;
         color: var(--text-main);
         letter-spacing: -0.03em;
-        font-family: "Ma Shan Zheng", cursive;
       }
 
-      /* Barra di Ricerca Ben Visibile con Bordo Scuro e Definito */
       .header-search {
         flex: 1;
         max-width: 600px;
@@ -299,7 +285,9 @@ description="Vocaboli utili per fare compere" />
         }
       }
 
-      /* Scheda Video con Descrizione Reale */
+      /* ============================================================
+         SCHEDA VIDEO CON AUTO-CATTURA FRAME (NESSUN BLU!)
+         ============================================================ */
       .video-card {
         background-color: var(--bg-card);
         border: 1px solid var(--border-card);
@@ -319,36 +307,69 @@ description="Vocaboli utili per fare compere" />
         position: relative;
         width: 100%;
         aspect-ratio: 16 / 9;
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        background-color: #000000;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
       }
 
+      /* Elemento Video per Cattura Frame & Anteprima */
+      .card-thumbnail video,
+      .card-thumbnail img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.25s ease;
+      }
+
+      .video-card:hover .card-thumbnail video,
+      .video-card:hover .card-thumbnail img {
+        transform: scale(1.03);
+      }
+
+      .thumbnail-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, transparent 55%);
+        pointer-events: none;
+      }
+
       .play-icon-box {
-        width: 50px;
-        height: 50px;
+        position: relative;
+        z-index: 2;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
-        background-color: var(--yt-red);
+        background-color: rgba(204, 0, 0, 0.9);
         display: flex;
         align-items: center;
         justify-content: center;
         color: #ffffff;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+      }
+      .video-card:hover .play-icon-box {
+        transform: scale(1.1);
+        background-color: var(--yt-red);
       }
 
       .category-badge {
         position: absolute;
         top: 10px;
         left: 10px;
+        z-index: 3;
         background-color: rgba(255, 255, 255, 0.95);
         color: #0f172a;
         font-size: 0.75rem;
         font-weight: 700;
         padding: 4px 10px;
         border-radius: 6px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
       }
 
       .card-details {
@@ -389,7 +410,7 @@ description="Vocaboli utili per fare compere" />
       }
 
       /* ============================================================
-         PLAYER STREAMING VIDEO CON DESCRIZIONE DETTAGLIATA
+         PLAYER STREAMING VIDEO
          ============================================================ */
       .watch-view {
         display: none;
@@ -506,10 +527,10 @@ description="Vocaboli utili per fare compere" />
           <path d="M21.58 7.19a2.76 2.76 0 0 0-1.95-1.96C17.9 4.75 12 4.75 12 4.75s-5.9 0-7.63.48A2.76 2.76 0 0 0 2.42 7.2 28.84 28.84 0 0 0 2 12c0 1.63.14 3.25.42 4.81.27.99 1.05 1.76 1.95 1.95C6.1 19.25 12 19.25 12 19.25s5.9 0 7.63-.49a2.76 2.76 0 0 0 1.95-1.95c.28-1.56.42-3.18.42-4.81 0-1.63-.14-3.25-.42-4.81z"/>
           <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ffffff"/>
         </svg>
-        <span class="brand-name">视频库</span>
+        <span class="brand-name">StreamTube</span>
       </div>
 
-      <!-- Barra di Ricerca ad Alta Visibilità (Bordo Scuro Ben Evidente) -->
+      <!-- Barra di Ricerca ad Alta Visibilità -->
       <div class="header-search">
         <form class="search-form" id="searchForm" onsubmit="event.preventDefault(); executeSearch();">
           <div class="search-input-container">
@@ -554,7 +575,7 @@ description="Vocaboli utili per fare compere" />
       </div>
 
       <div class="video-grid" id="videoGrid">
-        <!-- Schede video con descrizione reale generate via JS dai tag link -->
+        <!-- Schede video generate via JS dai tag link con auto-cattura copertina -->
       </div>
     </main>
 
@@ -584,14 +605,15 @@ description="Vocaboli utili per fare compere" />
       </div>
     </div>
 
-    <!-- Script Semplificato: Estrazione Diretta dai Tag <link rel="video"> -->
+    <!-- Script: Auto Cattura Frame e Rendering -->
     <script>
       (function() {
         let videos = [];
         let activeCategory = "Tutti";
         let searchQuery = "";
+        const frameCache = new Map(); // Cache dei frame catturati
 
-        // 1. Estrazione semplice dei video e delle descrizioni dai tag <link rel="video">
+        // 1. Estrazione dei video dai tag <link rel="video">
         function loadVideos() {
           const links = document.querySelectorAll('link[rel="video"]');
           videos = [];
@@ -601,13 +623,15 @@ description="Vocaboli utili per fare compere" />
             const title = link.getAttribute('title') || link.getAttribute('data-title') || `Video Segnaposto ${i + 1}`;
             const category = link.getAttribute('category') || link.getAttribute('data-category') || 'Generale';
             const description = link.getAttribute('description') || link.getAttribute('data-description') || 'Nessuna descrizione disponibile per questo video.';
+            const manualThumb = link.getAttribute('thumbnail') || link.getAttribute('data-thumbnail') || '';
 
             videos.push({
               id: 'vid-' + (i + 1),
               url: href,
               title: title.trim(),
               category: capitalize(category.trim()),
-              description: description.trim()
+              description: description.trim(),
+              manualThumb: manualThumb
             });
           });
 
@@ -617,12 +641,69 @@ description="Vocaboli utili per fare compere" />
           }
         }
 
-        // 2. Creazione automatica delle categorie uniche
+        // 2. Funzione di Auto Cattura Frame da Video tramite Canvas
+        function autoCaptureVideoFrame(videoUrl, targetImgId, seekSecond = 1.5) {
+          if (frameCache.has(videoUrl)) {
+            const cachedUrl = frameCache.get(videoUrl);
+            const img = document.getElementById(targetImgId);
+            if (img && cachedUrl) {
+              img.src = cachedUrl;
+              img.style.display = 'block';
+            }
+            return;
+          }
+
+          const tempVideo = document.createElement('video');
+          tempVideo.crossOrigin = 'anonymous';
+          tempVideo.src = videoUrl;
+          tempVideo.muted = true;
+          tempVideo.preload = 'metadata';
+          tempVideo.playsInline = true;
+
+          let hasSeeked = false;
+
+          tempVideo.addEventListener('loadedmetadata', () => {
+            const seekTime = Math.min(seekSecond, (tempVideo.duration || 10) * 0.2);
+            tempVideo.currentTime = seekTime;
+          });
+
+          tempVideo.addEventListener('seeked', () => {
+            if (hasSeeked) return;
+            hasSeeked = true;
+            try {
+              const canvas = document.createElement('canvas');
+              canvas.width = tempVideo.videoWidth || 640;
+              canvas.height = tempVideo.videoHeight || 360;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
+              
+              const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+              frameCache.set(videoUrl, dataUrl);
+
+              const img = document.getElementById(targetImgId);
+              if (img) {
+                img.src = dataUrl;
+                img.style.display = 'block';
+              }
+            } catch (err) {
+              // In caso di limitazioni CORS esterne, l'elemento <video> nativo di fallback
+              // posizionato a #t=1.5 continuerà a mostrare il frame catturato dal browser.
+            } finally {
+              tempVideo.src = '';
+              tempVideo.remove();
+            }
+          });
+
+          tempVideo.addEventListener('error', () => {
+            tempVideo.remove();
+          });
+        }
+
+        // 3. Creazione automatica delle categorie uniche
         function renderCategories() {
           const bar = document.getElementById('categoriesBar');
           bar.innerHTML = "";
 
-          // Estrai categorie uniche presenti nei video caricati
           const uniqueCats = new Set();
           videos.forEach(v => uniqueCats.add(v.category));
           const categoriesList = ["Tutti", ...Array.from(uniqueCats).sort()];
@@ -641,13 +722,12 @@ description="Vocaboli utili per fare compere" />
           });
         }
 
-        // 3. Rendering della Griglia CSS Grid con Descrizione del Video
+        // 4. Rendering della Griglia CSS Grid con Auto Cattura Frame
         function renderGrid() {
           const grid = document.getElementById('videoGrid');
           const titleEl = document.getElementById('sectionHeading');
           const countEl = document.getElementById('countHeading');
 
-          // Filtraggio per categoria e per ricerca
           const filtered = videos.filter(v => {
             const matchCat = (activeCategory === "Tutti" || v.category.toLowerCase() === activeCategory.toLowerCase());
             const q = searchQuery.toLowerCase().trim();
@@ -660,7 +740,6 @@ description="Vocaboli utili per fare compere" />
             return matchCat && matchSearch;
           });
 
-          // Testi intestazione
           if (searchQuery.trim() !== "") {
             titleEl.textContent = `Risultati per "${searchQuery}"`;
           } else if (activeCategory !== "Tutti") {
@@ -687,15 +766,40 @@ description="Vocaboli utili per fare compere" />
             card.className = 'video-card';
             card.onclick = () => playVideo(video);
 
+            const imgId = `captured-thumb-${video.id}`;
+            const videoElemId = `preview-vid-${video.id}`;
+
             card.innerHTML = `
               <div class="card-thumbnail">
+                <!-- Video nativo posizionato al secondo 1.5 per estrarre la copertina reale -->
+                <video 
+                  id="${videoElemId}"
+                  preload="metadata" 
+                  muted 
+                  playsinline 
+                  loop
+                >
+                  <source src="${escapeHtml(video.url)}#t=1.5" type="video/mp4">
+                </video>
+
+                <!-- Immagine catturata dinamicamente via Canvas (se supportato) o manuale -->
+                <img 
+                  id="${imgId}" 
+                  alt="${escapeHtml(video.title)}" 
+                  style="${video.manualThumb ? 'display:block;' : 'display:none;'}"
+                  src="${video.manualThumb ? escapeHtml(video.manualThumb) : ''}"
+                />
+
+                <div class="thumbnail-overlay"></div>
                 <div class="category-badge">${escapeHtml(video.category)}</div>
+                
                 <div class="play-icon-box">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                     <polygon points="6 4 20 12 6 20 6 4"></polygon>
                   </svg>
                 </div>
               </div>
+
               <div class="card-details">
                 <h3 class="video-title">${escapeHtml(video.title)}</h3>
                 <p class="video-desc">${escapeHtml(video.description)}</p>
@@ -704,11 +808,42 @@ description="Vocaboli utili per fare compere" />
                 </div>
               </div>
             `;
+
+            // Hover preview opzionale: all'hover mostra l'animazione del video, al leave si ferma
+            const previewVid = card.querySelector(`#${videoElemId}`);
+            if (previewVid) {
+              previewVid.addEventListener('loadedmetadata', () => {
+                try {
+                  previewVid.currentTime = 1.5;
+                } catch(e) {}
+              });
+
+              card.addEventListener('mouseenter', () => {
+                const img = card.querySelector(`#${imgId}`);
+                if (img) img.style.opacity = '0';
+                previewVid.play().catch(() => {});
+              });
+
+              card.addEventListener('mouseleave', () => {
+                previewVid.pause();
+                try {
+                  previewVid.currentTime = 1.5;
+                } catch(e) {}
+                const img = card.querySelector(`#${imgId}`);
+                if (img) img.style.opacity = '1';
+              });
+            }
+
             grid.appendChild(card);
+
+            // Esegui l'auto cattura frame se non è già fornita una copertina manuale
+            if (!video.manualThumb) {
+              autoCaptureVideoFrame(video.url, imgId, 1.5);
+            }
           });
         }
 
-        // 4. Riproduzione Video (Watch Mode)
+        // 5. Riproduzione Video (Watch Mode)
         function playVideo(video) {
           const player = document.getElementById('videoPlayer');
           player.pause();
@@ -734,7 +869,7 @@ description="Vocaboli utili per fare compere" />
           document.getElementById('browseView').style.display = 'block';
         }
 
-        // 5. Ricerca
+        // 6. Ricerca
         window.executeSearch = function() {
           const input = document.getElementById('searchInput');
           searchQuery = input.value.trim();
